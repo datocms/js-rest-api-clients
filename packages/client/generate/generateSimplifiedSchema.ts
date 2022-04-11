@@ -1,0 +1,147 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+function simplifySchema(objectSchema) {
+  const { attributes, relationships, meta, id, type } = objectSchema.properties;
+
+  return {
+    ...objectSchema,
+    additionalProperties: false,
+    required: [
+      ...(objectSchema.required?.includes('attributes')
+        ? attributes?.required || []
+        : []),
+      ...(objectSchema.required?.includes('relationships')
+        ? relationships?.required || []
+        : []),
+      ...(objectSchema.required?.includes('meta') ? ['meta'] : []),
+    ],
+    properties: {
+      ...(id ? { id } : {}),
+      ...(type ? { type } : {}),
+      ...(attributes?.properties || {}),
+      ...(relationships?.properties || {}),
+      ...(meta ? { meta } : {}),
+    },
+  };
+}
+
+function simplifyEntity(objectSchema) {
+  const { attributes, relationships } = objectSchema.definitions;
+  const { id, type, meta } = objectSchema.properties;
+
+  objectSchema.required = [
+    'id',
+    'type',
+    ...(objectSchema.required?.includes('attributes')
+      ? objectSchema.definitions.attributes?.required || []
+      : []),
+    ...(objectSchema.required?.includes('relationships')
+      ? objectSchema.definitions.relationships?.required || []
+      : []),
+    ...(objectSchema.required?.includes('meta') ? ['meta'] : []),
+  ];
+
+  objectSchema.properties = {
+    ...(id ? { id } : {}),
+    ...(type ? { type } : {}),
+    ...(attributes?.properties
+      ? Object.keys(attributes.properties).reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: {
+              $ref: `${objectSchema.properties.attributes.$ref}/properties/${key}`,
+            },
+          }),
+          {},
+        )
+      : {}),
+    ...(relationships?.properties
+      ? Object.keys(relationships.properties).reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: {
+              $ref: `${objectSchema.properties.relationships.$ref}/properties/${key}`,
+            },
+          }),
+          {},
+        )
+      : {}),
+    ...(meta ? { meta } : {}),
+  };
+}
+
+function simplifyEntityRelationships(schema: any) {
+  if (schema.properties) {
+    simplifyEntity(schema);
+  }
+
+  if (schema.definitions.relationships) {
+    Object.entries(schema.definitions.relationships.properties).forEach(
+      ([rel, relSchema]) => {
+        schema.definitions.relationships.properties[rel] =
+          schema.definitions.relationships.properties[rel].properties.data;
+      },
+    );
+  }
+}
+
+function applyToInnerObject(
+  name: string,
+  schema: any,
+  apply: (schema: any) => any,
+) {
+  if (!schema) {
+    return schema;
+  }
+
+  if (schema.$ref) {
+    return schema;
+  }
+
+  if (schema.type === 'object') {
+    return apply(schema);
+  }
+
+  if (schema.anyOf) {
+    schema.anyOf = schema.anyOf.map((i) => applyToInnerObject(name, i, apply));
+    return schema;
+  }
+
+  if (schema.type === 'array') {
+    if (schema.items && Array.isArray(schema.items)) {
+      schema.items = schema.items.map((i) =>
+        applyToInnerObject(name, i, apply),
+      );
+    } else if (schema.items) {
+      schema.items = applyToInnerObject(name, schema.items, apply);
+    }
+
+    return schema;
+  }
+
+  throw new Error(`Problem with ${name}: ${JSON.stringify(schema, null, 2)}!`);
+}
+
+function simplifyTargetSchema(schema: any) {
+  return schema;
+}
+
+export default function simplifyLinks(schema: any) {
+  Object.entries<any>(schema.definitions).forEach(([jsonApiType, schema]) => {
+    simplifyEntityRelationships(schema);
+    if (schema.links) {
+      schema.links.forEach((link) => {
+        link.schema = applyToInnerObject(
+          `${jsonApiType} ${link.rel} schema`,
+          link.schema?.properties?.data,
+          simplifySchema,
+        );
+
+        link.targetSchema = simplifyTargetSchema(
+          link.targetSchema?.properties?.data,
+        );
+        link.jobSchema = simplifyTargetSchema(link.jobSchema?.properties?.data);
+      });
+    }
+  });
+}

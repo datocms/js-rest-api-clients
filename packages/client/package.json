@@ -30,10 +30,20 @@
     "url": "git+https://github.com/datocms/js-toolkit.git"
   },
   "scripts": {
-    "build": "tsc && tsc --project ./tsconfig.esnext.json && node ./esbuild.js",
+    "build": "npm run generate && npm run compile",
+    "generate": "./generate/index.ts",
+    "compile": "tsc && tsc --project ./tsconfig.esnext.json && ts-node ./esbuild.ts",
     "prebuild": "rimraf dist"
   },
   "bugs": {
     "url": "https://github.com/datocms/js-toolkit/issues"
+  },
+  "devDependencies": {
+    "handlebars": "^4.7.7",
+    "hyperschema-to-ts": "^0.0.10"
+  },
+  "dependencies": {
+    "pusher-js": "^7.0.6",
+    "qs": "^6.10.3"
   }
 }

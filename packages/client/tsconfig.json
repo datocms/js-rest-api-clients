@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "target": "es6",
     "declarationDir": "dist/types",
     "outDir": "dist/cjs",
     "typeRoots": [

@@ -1,0 +1,163 @@
+import BaseResource from '../BaseResource';
+import serializeRequestBody from '../../serializeRequestBody';
+import deserializeResponseBody from '../../deserializeResponseBody';
+import toId from '../../toId';
+import * as SchemaTypes from '../SchemaTypes';
+import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+
+export default class ItemTypeFilter extends BaseResource {
+  static readonly TYPE: 'item_type_filter' = 'item_type_filter';
+
+  /**
+   * Create a new filter
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/create
+   */
+  create(body: SimpleSchemaTypes.ItemTypeFilterCreateSchema) {
+    return this.rawCreate(
+      serializeRequestBody<SchemaTypes.ItemTypeFilterCreateSchema>({
+        body,
+        type: ItemTypeFilter.TYPE,
+      }),
+    ).then((body) =>
+      deserializeResponseBody<SimpleSchemaTypes.ItemTypeFilterCreateTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Create a new filter
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/create
+   */
+  rawCreate(
+    body: SchemaTypes.ItemTypeFilterCreateSchema,
+  ): Promise<SchemaTypes.ItemTypeFilterCreateTargetSchema> {
+    return this.client.request<SchemaTypes.ItemTypeFilterCreateTargetSchema>({
+      method: 'POST',
+      url: `/item-type-filters`,
+      body,
+    });
+  }
+
+  /**
+   * Update a filter
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/update
+   */
+  update(
+    itemTypeFilterId: string | SimpleSchemaTypes.ItemTypeFilterData,
+    body: SimpleSchemaTypes.ItemTypeFilterUpdateSchema,
+  ) {
+    return this.rawUpdate(
+      toId(itemTypeFilterId),
+      serializeRequestBody<SchemaTypes.ItemTypeFilterUpdateSchema>({
+        body,
+        id: toId(itemTypeFilterId),
+        type: ItemTypeFilter.TYPE,
+      }),
+    ).then((body) =>
+      deserializeResponseBody<SimpleSchemaTypes.ItemTypeFilterUpdateTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Update a filter
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/update
+   */
+  rawUpdate(
+    itemTypeFilterId: string,
+    body: SchemaTypes.ItemTypeFilterUpdateSchema,
+  ): Promise<SchemaTypes.ItemTypeFilterUpdateTargetSchema> {
+    return this.client.request<SchemaTypes.ItemTypeFilterUpdateTargetSchema>({
+      method: 'PUT',
+      url: `/item-type-filters/${itemTypeFilterId}`,
+      body,
+    });
+  }
+
+  /**
+   * List all filters
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/instances
+   */
+  list() {
+    return this.rawList().then((body) =>
+      deserializeResponseBody<SimpleSchemaTypes.ItemTypeFilterInstancesTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * List all filters
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/instances
+   */
+  rawList(): Promise<SchemaTypes.ItemTypeFilterInstancesTargetSchema> {
+    return this.client.request<SchemaTypes.ItemTypeFilterInstancesTargetSchema>(
+      {
+        method: 'GET',
+        url: `/item-type-filters`,
+      },
+    );
+  }
+
+  /**
+   * Retrieve a filter
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/self
+   */
+  find(itemTypeFilterId: string | SimpleSchemaTypes.ItemTypeFilterData) {
+    return this.rawFind(toId(itemTypeFilterId)).then((body) =>
+      deserializeResponseBody<SimpleSchemaTypes.ItemTypeFilterSelfTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Retrieve a filter
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/self
+   */
+  rawFind(
+    itemTypeFilterId: string,
+  ): Promise<SchemaTypes.ItemTypeFilterSelfTargetSchema> {
+    return this.client.request<SchemaTypes.ItemTypeFilterSelfTargetSchema>({
+      method: 'GET',
+      url: `/item-type-filters/${itemTypeFilterId}`,
+    });
+  }
+
+  /**
+   * Delete a filter
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/destroy
+   */
+  destroy(itemTypeFilterId: string | SimpleSchemaTypes.ItemTypeFilterData) {
+    return this.rawDestroy(toId(itemTypeFilterId)).then((body) =>
+      deserializeResponseBody<SimpleSchemaTypes.ItemTypeFilterDestroyTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Delete a filter
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/destroy
+   */
+  rawDestroy(
+    itemTypeFilterId: string,
+  ): Promise<SchemaTypes.ItemTypeFilterDestroyTargetSchema> {
+    return this.client.request<SchemaTypes.ItemTypeFilterDestroyTargetSchema>({
+      method: 'DELETE',
+      url: `/item-type-filters/${itemTypeFilterId}`,
+    });
+  }
+}

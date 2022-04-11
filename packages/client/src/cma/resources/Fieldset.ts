@@ -1,0 +1,164 @@
+import BaseResource from '../BaseResource';
+import serializeRequestBody from '../../serializeRequestBody';
+import deserializeResponseBody from '../../deserializeResponseBody';
+import toId from '../../toId';
+import * as SchemaTypes from '../SchemaTypes';
+import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+
+export default class Fieldset extends BaseResource {
+  static readonly TYPE: 'fieldset' = 'fieldset';
+
+  /**
+   * Create a new fieldset
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/create
+   */
+  create(
+    itemTypeId: string | SimpleSchemaTypes.FieldsetData,
+    body: SimpleSchemaTypes.FieldsetCreateSchema,
+  ) {
+    return this.rawCreate(
+      toId(itemTypeId),
+      serializeRequestBody<SchemaTypes.FieldsetCreateSchema>({
+        body,
+        type: Fieldset.TYPE,
+      }),
+    ).then((body) =>
+      deserializeResponseBody<SimpleSchemaTypes.FieldsetCreateTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Create a new fieldset
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/create
+   */
+  rawCreate(
+    itemTypeId: string,
+    body: SchemaTypes.FieldsetCreateSchema,
+  ): Promise<SchemaTypes.FieldsetCreateTargetSchema> {
+    return this.client.request<SchemaTypes.FieldsetCreateTargetSchema>({
+      method: 'POST',
+      url: `/item-types/${itemTypeId}/fieldsets`,
+      body,
+    });
+  }
+
+  /**
+   * Update a fieldset
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/update
+   */
+  update(
+    fieldsetId: string | SimpleSchemaTypes.FieldsetData,
+    body: SimpleSchemaTypes.FieldsetUpdateSchema,
+  ) {
+    return this.rawUpdate(
+      toId(fieldsetId),
+      serializeRequestBody<SchemaTypes.FieldsetUpdateSchema>({
+        body,
+        id: toId(fieldsetId),
+        type: Fieldset.TYPE,
+      }),
+    ).then((body) =>
+      deserializeResponseBody<SimpleSchemaTypes.FieldsetUpdateTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Update a fieldset
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/update
+   */
+  rawUpdate(
+    fieldsetId: string,
+    body: SchemaTypes.FieldsetUpdateSchema,
+  ): Promise<SchemaTypes.FieldsetUpdateTargetSchema> {
+    return this.client.request<SchemaTypes.FieldsetUpdateTargetSchema>({
+      method: 'PUT',
+      url: `/fieldsets/${fieldsetId}`,
+      body,
+    });
+  }
+
+  /**
+   * List all fieldsets
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/instances
+   */
+  list(itemTypeId: string | SimpleSchemaTypes.FieldsetData) {
+    return this.rawList(toId(itemTypeId)).then((body) =>
+      deserializeResponseBody<SimpleSchemaTypes.FieldsetInstancesTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * List all fieldsets
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/instances
+   */
+  rawList(
+    itemTypeId: string,
+  ): Promise<SchemaTypes.FieldsetInstancesTargetSchema> {
+    return this.client.request<SchemaTypes.FieldsetInstancesTargetSchema>({
+      method: 'GET',
+      url: `/item-types/${itemTypeId}/fieldsets`,
+    });
+  }
+
+  /**
+   * Retrieve a fieldset
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/self
+   */
+  find(fieldsetId: string | SimpleSchemaTypes.FieldsetData) {
+    return this.rawFind(toId(fieldsetId)).then((body) =>
+      deserializeResponseBody<SimpleSchemaTypes.FieldsetSelfTargetSchema>(body),
+    );
+  }
+
+  /**
+   * Retrieve a fieldset
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/self
+   */
+  rawFind(fieldsetId: string): Promise<SchemaTypes.FieldsetSelfTargetSchema> {
+    return this.client.request<SchemaTypes.FieldsetSelfTargetSchema>({
+      method: 'GET',
+      url: `/fieldsets/${fieldsetId}`,
+    });
+  }
+
+  /**
+   * Delete a fieldset
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/destroy
+   */
+  destroy(fieldsetId: string | SimpleSchemaTypes.FieldsetData) {
+    return this.rawDestroy(toId(fieldsetId)).then((body) =>
+      deserializeResponseBody<SimpleSchemaTypes.FieldsetDestroyTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Delete a fieldset
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/destroy
+   */
+  rawDestroy(
+    fieldsetId: string,
+  ): Promise<SchemaTypes.FieldsetDestroyTargetSchema> {
+    return this.client.request<SchemaTypes.FieldsetDestroyTargetSchema>({
+      method: 'DELETE',
+      url: `/fieldsets/${fieldsetId}`,
+    });
+  }
+}
