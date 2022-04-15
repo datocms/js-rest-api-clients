@@ -9,9 +9,9 @@
   "author": "Stefano Verna <s.verna@datocms.com>",
   "homepage": "https://github.com/datocms/js-toolkit/tree/main/packages/client#readme",
   "license": "MIT",
-  "browser": "dist/cjs/index.js",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "browser": "dist/browser/index.js",
+  "main": "dist/cjs/src/index.js",
+  "module": "dist/esm/src/index.js",
   "typings": "dist/types/index.d.ts",
   "sideEffects": false,
   "directories": {
