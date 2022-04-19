@@ -1,0 +1,55 @@
+import * as Resources from './resources';
+import { request, pollJobResult, LogLevel } from '@datocms/rest-client-utils';
+import { JobResult } from './SimpleSchemaTypes';
+
+export type RequestOptions = {
+  method: 'GET' | 'PUT' | 'POST' | 'DELETE';
+  url: string;
+  queryParams?: Record<string, unknown>;
+  body?: unknown;
+  preCallStack?: string;
+};
+
+export type ClientConfigOptions = {
+  apiToken: string | null;
+  baseUrl?: string;
+  environment?: string;
+  extraHeaders?: Record<string, string>;
+  logLevel?: LogLevel;
+  autoRetry?: boolean;
+  fetchJobResult?: (jobId: string) => Promise<JobResult>;
+};
+
+export class Client {
+  static readonly defaultBaseUrl = '{{{baseUrl}}}';
+
+  {{#each resources}}
+    {{{namespace}}}: Resources.{{{resourceClassName}}};
+  {{/each}}
+
+  private config: ClientConfigOptions;
+
+  constructor(config: ClientConfigOptions) {
+    this.config = config;
+    {{#each resources}}
+      this.{{{namespace}}} = new Resources.{{{resourceClassName}}}(this);
+    {{/each}}
+  }
+
+  get baseUrl() {
+    return this.config.baseUrl || Client.defaultBaseUrl;
+  }
+
+  request<T>(options: RequestOptions) {
+    return request<T>({
+      ...this.config,
+      ...options,
+      userAgent: `@datocms/{{prefix}}-client`,
+      baseUrl: this.baseUrl,
+      preCallStack: new Error().stack,
+      fetchJobResult: this.config.fetchJobResult ||
+        ((jobId: string) => pollJobResult(() => this.jobResults.find(jobId))),
+    });
+  }
+
+}

@@ -1,0 +1,42 @@
+{
+  "name": "@datocms/rest-events",
+  "version": "0.0.1-alpha.5",
+  "description": "Utilities to receive real-time events from DatoCMS REST APIs",
+  "keywords": [
+    "datocms",
+    "client"
+  ],
+  "author": "Stefano Verna <s.verna@datocms.com>",
+  "homepage": "https://github.com/datocms/js-toolkit/tree/main/packages/rest-events#readme",
+  "license": "MIT",
+  "main": "dist/cjs/src/index.js",
+  "module": "dist/esm/src/index.js",
+  "typings": "dist/types/src/index.d.ts",
+  "sideEffects": false,
+  "directories": {
+    "lib": "dist",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datocms/js-toolkit.git"
+  },
+  "scripts": {
+    "build": "tsc && tsc --project ./tsconfig.esnext.json",
+    "prebuild": "rimraf dist"
+  },
+  "bugs": {
+    "url": "https://github.com/datocms/js-toolkit/issues"
+  },
+  "dependencies": {
+    "pusher-js": "^7.0.6"
+  },
+  "gitHead": "fae9e1ad10db0dadb09b20d7863018400227c1f8"
+}

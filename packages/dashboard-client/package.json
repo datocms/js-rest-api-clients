@@ -1,0 +1,42 @@
+{
+  "name": "@datocms/dashboard-client",
+  "version": "0.0.1-alpha.5",
+  "description": "JS client for DatoCMS REST Content Management API",
+  "keywords": [
+    "datocms",
+    "client"
+  ],
+  "author": "Stefano Verna <s.verna@datocms.com>",
+  "homepage": "https://github.com/datocms/js-toolkit/tree/main/packages/cma-client#readme",
+  "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "typings": "dist/types/index.d.ts",
+  "sideEffects": false,
+  "directories": {
+    "lib": "dist",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datocms/js-toolkit.git"
+  },
+  "scripts": {
+    "build": "tsc && tsc --project ./tsconfig.esnext.json && ts-node ./esbuild.ts",
+    "prebuild": "rimraf dist"
+  },
+  "bugs": {
+    "url": "https://github.com/datocms/js-toolkit/issues"
+  },
+  "dependencies": {
+    "@datocms/rest-client-utils": "0.0.1-alpha.5"
+  },
+  "gitHead": "fae9e1ad10db0dadb09b20d7863018400227c1f8"
+}

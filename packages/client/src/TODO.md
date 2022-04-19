@@ -1,1 +1,0 @@
-- Esporre anche le risorse senza endpoints (per i type guards)
