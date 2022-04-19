@@ -1,27 +1,6 @@
-import { ApiError, Client, DashboardClient } from '../src';
+import { ApiError, Client } from '../src';
 import { LogLevel } from '../src/request';
-
-async function generateNewDashboardClient() {
-  const randomString = Math.random().toString(36).substring(7);
-
-  const client = new DashboardClient({
-    apiToken: null,
-    baseUrl: process.env.ACCOUNT_API_BASE_URL,
-    logLevel: LogLevel.INFO,
-  });
-
-  const account = await client.account.create({
-    email: `${randomString}@delete-this-at-midnight-utc.tk`,
-    password: 'STRONG_pass123!',
-    first_name: 'Test',
-    company: 'DatoCMS',
-  });
-
-  return new DashboardClient({
-    apiToken: account.id,
-    baseUrl: process.env.ACCOUNT_API_BASE_URL,
-  });
-}
+import generateNewDashboardClient from './helpers/generateNewDashboardClient';
 
 describe('@datocms/client', () => {
   it('first test', async () => {
@@ -48,15 +27,11 @@ describe('@datocms/client', () => {
       name: 'Foo bar',
     });
 
-    console.log(site);
-
     const cmaClient = new Client({
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       apiToken: site.readwrite_token!,
       logLevel: LogLevel.TRACE,
     });
-
-    // await cmaClient.subscribeToEvents();
 
     const itemType = await cmaClient.itemTypes.create({
       name: 'Foo',
@@ -80,9 +55,7 @@ describe('@datocms/client', () => {
       role,
     });
 
-    console.log(siteInvitation);
-
-    // cmaClient.unsubscribeToEvents();
+    expect(siteInvitation).toMatchSnapshot();
   });
 
   it('iterators', async () => {

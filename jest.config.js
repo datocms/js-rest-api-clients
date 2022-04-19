@@ -2,6 +2,7 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   testTimeout: 60000,
+  testMatch: ['**/*.test.ts'],
   // collectCoverage: true,
   // collectCoverageFrom: [
   //   'packages/**/*.[jt]s?(x)',
@@ -15,5 +16,4 @@ module.exports = {
   // transform: {
   //   '^.+\\.tsx?$': 'ts-jest',
   // },
-  // testMatch: ['**/*.test.[jt]s?(x)'],
 };
