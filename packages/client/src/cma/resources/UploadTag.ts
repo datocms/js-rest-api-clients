@@ -70,7 +70,14 @@ export default class UploadTag extends BaseResource {
   ) {
     return rawPageIterator<
       SchemaTypes.UploadTagInstancesTargetSchema['data'][0]
-    >((page) => this.rawList({ ...queryParams, page }), iteratorOptions);
+    >(
+      {
+        defaultLimit: 50,
+        maxLimit: 500,
+      },
+      (page) => this.rawList({ ...queryParams, page }),
+      iteratorOptions,
+    );
   }
 
   /**

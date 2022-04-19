@@ -20,7 +20,10 @@ export type EndpointInfo = {
   queryParamsType?: string;
   responseType?: string;
   deprecated?: string;
-  paginatedResponse?: boolean;
+  paginatedResponse?: {
+    defaultLimit: number;
+    maxLimit: number;
+  };
 };
 
 export type ResourceInfo = {
@@ -118,13 +121,23 @@ function generateResourceInfo(
         ? link.rel.replace('_instances', '_list')
         : link.rel;
 
-    const hrefHasPageParam =
+    const paginationLimitProperty =
       link.hrefSchema &&
       link.hrefSchema.properties &&
       'page' in link.hrefSchema.properties &&
       typeof link.hrefSchema.properties.page === 'object' &&
       link.hrefSchema.properties.page.properties &&
-      'offset' in link.hrefSchema.properties.page.properties;
+      'offset' in link.hrefSchema.properties.page.properties &&
+      'limit' in link.hrefSchema.properties.page.properties &&
+      typeof link.hrefSchema.properties.page.properties.limit === 'object' &&
+      link.hrefSchema.properties.page.properties.limit;
+
+    const pagination = paginationLimitProperty
+      ? {
+          defaultLimit: paginationLimitProperty.default as number,
+          maxLimit: paginationLimitProperty.maximum as number,
+        }
+      : undefined;
 
     return {
       returnsCollection: ['query', 'instances'].some((x) =>
@@ -153,7 +166,7 @@ function generateResourceInfo(
           )}HrefSchema`
         : undefined,
       responseType,
-      paginatedResponse: hrefHasPageParam,
+      paginatedResponse: pagination,
       deprecated: link.private
         ? 'This API call is to be considered private and might change without notice'
         : undefined,

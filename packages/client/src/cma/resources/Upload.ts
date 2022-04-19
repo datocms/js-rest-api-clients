@@ -100,6 +100,10 @@ export default class Upload extends BaseResource {
     iteratorOptions?: IteratorOptions,
   ) {
     return rawPageIterator<SchemaTypes.UploadInstancesTargetSchema['data'][0]>(
+      {
+        defaultLimit: 30,
+        maxLimit: 500,
+      },
       (page) => this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );

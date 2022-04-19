@@ -110,10 +110,16 @@ export default class {{{resourceClassName}}} extends BaseResource {
    {{/if}}
    */
     async *{{{name}}}PagedIterator(
+      {{#if urlPlaceholder}}
+        {{{urlPlaceholder}}}: string | SimpleSchemaTypes.{{{../entityRelType}}},
+      {{/if}}
       queryParams?: SimpleSchemaTypes.{{{queryParamsType}}},
       iteratorOptions?: IteratorOptions,
     ) {
       for await (const element of this.{{{rawName}}}PagedIterator(
+        {{#if urlPlaceholder}}
+          toId({{{urlPlaceholder}}}),
+        {{/if}}
         queryParams,
         iteratorOptions,
       )) {
@@ -140,6 +146,10 @@ export default class {{{resourceClassName}}} extends BaseResource {
       return rawPageIterator<
         SchemaTypes.{{{responseType}}}['data'][0]
       >(
+        {
+          defaultLimit: {{{paginatedResponse.defaultLimit}}},
+          maxLimit: {{{paginatedResponse.maxLimit}}},
+        },
         (page) => this.{{{rawName}}}(
           {{#if urlPlaceholder}}
             {{{urlPlaceholder}}},

@@ -488,11 +488,11 @@ export type ItemInstancesHrefSchema = {
    */
   page?: {
     /**
-     * Index of first record to fetch. Default: 0
+     * Index of first record to fetch (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of records to fetch. Maximum is 500 per page, default is 30.
+     * Number of records to fetch (defaults to 30, maximum is 500)
      */
     limit?: number;
     [k: string]: unknown;
@@ -620,11 +620,11 @@ export type ItemVersionInstancesHrefSchema = {
    */
   page?: {
     /**
-     * Index of first element to fetch. Default: 0
+     * Index of first element to fetch (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of elements to fetch. Maximum is 50 per page, default is 15.
+     * Number of elements to fetch  (defaults to 15, maximum is 50)
      */
     limit?: number;
     [k: string]: unknown;
@@ -686,11 +686,11 @@ export type UploadInstancesHrefSchema = {
    */
   page?: {
     /**
-     * Index of first upload to fetch. Default: 0
+     * Index of first upload to fetch (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of uplads to fetch. Maximum is 500 per page, default is 30.
+     * Number of uplads to fetch (defaults to 30, maximum is 500)
      */
     limit?: number;
     [k: string]: unknown;
@@ -820,9 +820,9 @@ export type SearchResultInstancesHrefSchema = {
    */
   locale?: string;
   /**
-   * Maximum number of results to return (Max: 100, default: 20)
+   * Maximum number of results to return (defaults to 20, maximum is 100)
    */
-  limit?: string;
+  limit?: number;
   /**
    * Number of records to offset for the search
    */
@@ -898,6 +898,27 @@ export type WebhookCallType = 'webhook_call';
  * via the `definition` "id".
  */
 export type WebhookCallIdentity = string;
+/**
+ * This interface was referenced by `WebhookCall`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type WebhookCallInstancesHrefSchema = {
+  /**
+   * Params to manage results pagination
+   */
+  page?: {
+    /**
+     * Index of first element to fetch (defaults to 0)
+     */
+    offset?: number;
+    /**
+     * Number of elements to fetch (defaults to 30, maximum is 500)
+     */
+    limit?: number;
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
+};
 /**
  * JSON API type field
  *
@@ -1117,11 +1138,11 @@ export type UploadTagInstancesHrefSchema = {
    */
   page?: {
     /**
-     * Index of first tag to fetch. Default: 0
+     * Index of first tag to fetch (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of tags to fetch. Maximum is 500 per page, default is 50.
+     * Number of tags to fetch (defaults to 50, maximum is 500)
      */
     limit?: number;
     [k: string]: unknown;
@@ -1165,11 +1186,11 @@ export type UploadSmartTagInstancesHrefSchema = {
    */
   page?: {
     /**
-     * Index of first tag to fetch. Default: 0
+     * Index of first tag to fetch (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of tags to fetch. Maximum is 500 per page, default is 50.
+     * Number of tags to fetch (defaults to 50, maximum is 500)
      */
     limit?: number;
     [k: string]: unknown;
@@ -7183,6 +7204,9 @@ export interface WebhookCallData {
  */
 export interface WebhookCallInstancesTargetSchema {
   data: WebhookCall[];
+  meta: {
+    total_count: number;
+  };
 }
 
 /**

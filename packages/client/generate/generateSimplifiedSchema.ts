@@ -68,6 +68,10 @@ function simplifyEntity(objectSchema) {
       : {}),
     ...(meta ? { meta } : {}),
   };
+
+  if (attributes && !attributes.properties) {
+    objectSchema.additionalProperties = true;
+  }
 }
 
 function simplifyEntityRelationships(schema: any) {

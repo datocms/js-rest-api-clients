@@ -72,6 +72,13 @@ export default class UploadSmartTag extends BaseResource {
   ) {
     return rawPageIterator<
       SchemaTypes.UploadSmartTagInstancesTargetSchema['data'][0]
-    >((page) => this.rawList({ ...queryParams, page }), iteratorOptions);
+    >(
+      {
+        defaultLimit: 50,
+        maxLimit: 500,
+      },
+      (page) => this.rawList({ ...queryParams, page }),
+      iteratorOptions,
+    );
   }
 }

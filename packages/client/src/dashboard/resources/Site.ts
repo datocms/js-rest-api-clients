@@ -80,6 +80,10 @@ export default class Site extends BaseResource {
     iteratorOptions?: IteratorOptions,
   ) {
     return rawPageIterator<SchemaTypes.SiteInstancesTargetSchema['data'][0]>(
+      {
+        defaultLimit: 20,
+        maxLimit: 50,
+      },
       (page) => this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );

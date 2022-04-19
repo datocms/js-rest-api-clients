@@ -236,11 +236,11 @@ export type SiteInstancesHrefSchema = {
    */
   page?: {
     /**
-     * Index of first element to fetch. Default: 0
+     * Index of first element to fetch (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of elements to fetch. Maximum is 50 per page, default is 15.
+     * Number of elements to fetch (defaults to 20, maximum is 50)
      */
     limit?: number;
     [k: string]: unknown;

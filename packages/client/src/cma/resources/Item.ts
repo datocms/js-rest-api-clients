@@ -69,6 +69,7 @@ export default class Item extends BaseResource {
     iteratorOptions?: IteratorOptions,
   ) {
     return rawPageIterator<SchemaTypes.ItemInstancesTargetSchema['data'][0]>(
+      { defaultLimit: 30, maxLimit: 500 },
       (page) => this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );

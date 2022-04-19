@@ -17,8 +17,8 @@ export default class WebhookCall extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/instances
    */
-  list() {
-    return this.rawList().then((body) =>
+  list(queryParams?: SimpleSchemaTypes.WebhookCallInstancesHrefSchema) {
+    return this.rawList(queryParams).then((body) =>
       deserializeResponseBody<SimpleSchemaTypes.WebhookCallInstancesTargetSchema>(
         body,
       ),
@@ -30,11 +30,54 @@ export default class WebhookCall extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/instances
    */
-  rawList(): Promise<SchemaTypes.WebhookCallInstancesTargetSchema> {
+  rawList(
+    queryParams?: SchemaTypes.WebhookCallInstancesHrefSchema,
+  ): Promise<SchemaTypes.WebhookCallInstancesTargetSchema> {
     return this.client.request<SchemaTypes.WebhookCallInstancesTargetSchema>({
       method: 'GET',
       url: `/webhook_calls`,
+      queryParams,
     });
+  }
+
+  /**
+   * Async iterator to auto-paginate over elements returned by list()
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/instances
+   */
+  async *listPagedIterator(
+    queryParams?: SimpleSchemaTypes.WebhookCallInstancesHrefSchema,
+    iteratorOptions?: IteratorOptions,
+  ) {
+    for await (const element of this.rawListPagedIterator(
+      queryParams,
+      iteratorOptions,
+    )) {
+      yield deserializeJsonEntity<
+        SimpleSchemaTypes.WebhookCallInstancesTargetSchema[0]
+      >(element);
+    }
+  }
+
+  /**
+   * Async iterator to auto-paginate over elements returned by rawList()
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/instances
+   */
+  rawListPagedIterator(
+    queryParams?: SchemaTypes.WebhookCallInstancesHrefSchema,
+    iteratorOptions?: IteratorOptions,
+  ) {
+    return rawPageIterator<
+      SchemaTypes.WebhookCallInstancesTargetSchema['data'][0]
+    >(
+      {
+        defaultLimit: 30,
+        maxLimit: 500,
+      },
+      (page) => this.rawList({ ...queryParams, page }),
+      iteratorOptions,
+    );
   }
 
   /**

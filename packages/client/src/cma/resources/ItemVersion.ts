@@ -77,10 +77,12 @@ export default class ItemVersion extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-version/instances
    */
   async *listPagedIterator(
+    itemId: string | SimpleSchemaTypes.ItemVersionData,
     queryParams?: SimpleSchemaTypes.ItemVersionInstancesHrefSchema,
     iteratorOptions?: IteratorOptions,
   ) {
     for await (const element of this.rawListPagedIterator(
+      toId(itemId),
       queryParams,
       iteratorOptions,
     )) {
@@ -103,6 +105,10 @@ export default class ItemVersion extends BaseResource {
     return rawPageIterator<
       SchemaTypes.ItemVersionInstancesTargetSchema['data'][0]
     >(
+      {
+        defaultLimit: 15,
+        maxLimit: 50,
+      },
       (page) => this.rawList(itemId, { ...queryParams, page }),
       iteratorOptions,
     );

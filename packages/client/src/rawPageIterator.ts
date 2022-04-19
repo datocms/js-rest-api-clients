@@ -5,20 +5,37 @@ export type IteratorOptions = {
   concurrency?: number;
 };
 
+type PaginationOptions = {
+  defaultLimit: number;
+  maxLimit: number;
+};
+
 type JsonApiPage<T> = {
   data: T[];
   meta: { total_count: number };
 };
 
 export async function* rawPageIterator<T>(
+  pagination: PaginationOptions,
   callPerformer: (page: {
     limit: number;
     offset: number;
   }) => Promise<JsonApiPage<T>>,
   iteratorOptions?: IteratorOptions,
 ) {
-  const perPage = iteratorOptions?.perPage || 100;
-  const concurrency = iteratorOptions?.concurrency || 5;
+  const perPage = iteratorOptions?.perPage || pagination.defaultLimit;
+
+  if (perPage > pagination.maxLimit) {
+    throw new Error(
+      `perPage option cannot exceed maximum value of ${pagination.maxLimit}`,
+    );
+  }
+
+  const concurrency = iteratorOptions?.concurrency || 1;
+
+  if (concurrency > 10) {
+    throw new Error(`concurrency option cannot exceed maximum value of 10`);
+  }
 
   const firstResponse = await callPerformer({ limit: perPage, offset: 0 });
 

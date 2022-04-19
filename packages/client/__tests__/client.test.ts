@@ -91,12 +91,9 @@ describe('@datocms/client', () => {
       logLevel: LogLevel.INFO,
     });
 
-    for await (const item of client.items.listPagedIterator(
-      {
-        filter: { type: 'blog_post' },
-      },
-      { perPage: 5 },
-    )) {
+    for await (const item of client.items.listPagedIterator({
+      filter: { type: 'blog_post' },
+    })) {
       console.log(item.title);
     }
   });
