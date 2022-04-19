@@ -1,7 +1,5 @@
 # `@datocms/dashboard-client`
 
-> TODO: description
-
 ## Usage (NodeJS)
 
 ```js

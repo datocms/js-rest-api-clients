@@ -43,7 +43,7 @@ export async function generateNewCmaClient(
     name: 'Foo bar',
   });
 
-  const cmaClient = new CmaClient({
+  return new CmaClient({
     ...config,
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     apiToken: site.readwrite_token!,
