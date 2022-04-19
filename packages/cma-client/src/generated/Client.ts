@@ -17,7 +17,6 @@ export type ClientConfigOptions = {
   extraHeaders?: Record<string, string>;
   logLevel?: LogLevel;
   autoRetry?: boolean;
-  fetchJobResult?: (jobId: string) => Promise<JobResult>;
 };
 
 export class Client {
@@ -65,7 +64,10 @@ export class Client {
   site: Resources.Site;
   workflows: Resources.Workflow;
 
-  private config: ClientConfigOptions;
+  config: ClientConfigOptions;
+  jobResultsFetcher?: (jobId: string) => Promise<JobResult>;
+
+  private cachedEventsChannelName: string | undefined;
 
   constructor(config: ClientConfigOptions) {
     this.config = config;
@@ -123,9 +125,32 @@ export class Client {
       userAgent: `@datocms/cma-client`,
       baseUrl: this.baseUrl,
       preCallStack: new Error().stack,
-      fetchJobResult:
-        this.config.fetchJobResult ||
-        ((jobId: string) => pollJobResult(() => this.jobResults.find(jobId))),
+      extraHeaders: {
+        ...(this.config.extraHeaders || {}),
+        ...(this.config.environment
+          ? { 'X-Environment': this.config.environment }
+          : {}),
+        'X-API-Version': '3',
+      },
+      fetchJobResult: (jobId: string) => {
+        return this.jobResultsFetcher
+          ? this.jobResultsFetcher(jobId)
+          : pollJobResult(() => this.jobResults.find(jobId));
+      },
     });
+  }
+
+  async eventsChannelName() {
+    if (this.cachedEventsChannelName) {
+      return this.cachedEventsChannelName;
+    }
+
+    const { data: site } = await this.site.rawFind();
+
+    this.cachedEventsChannelName = this.config.environment
+      ? `private-site-${site.id}-environment-${this.config.environment}`
+      : `private-site-${site.id}`;
+
+    return this.cachedEventsChannelName;
   }
 }

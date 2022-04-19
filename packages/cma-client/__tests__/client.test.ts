@@ -1,6 +1,6 @@
 import { ApiError, Client } from '../src';
 import { LogLevel } from '../src';
-import generateNewDashboardClient from './helpers/generateNewDashboardClient';
+import { generateNewDashboardClient } from './helpers/generateClients';
 
 describe('@datocms/client', () => {
   it('first test', async () => {
@@ -30,7 +30,6 @@ describe('@datocms/client', () => {
     const cmaClient = new Client({
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       apiToken: site.readwrite_token!,
-      logLevel: LogLevel.TRACE,
     });
 
     const itemType = await cmaClient.itemTypes.create({
@@ -59,7 +58,6 @@ describe('@datocms/client', () => {
   it('iterators', async () => {
     const client = new Client({
       apiToken: 'faeb9172e232a75339242faafb9e56de8c8f13b735f7090964',
-      logLevel: LogLevel.INFO,
     });
 
     for await (const item of client.items.listPagedIterator({

@@ -18,7 +18,6 @@ type RequestOptions = {
   baseUrl: string;
   fetchJobResult: (jobId: string) => Promise<JobResult>;
   apiToken: string | null;
-  environment?: string;
   extraHeaders?: Record<string, string>;
   logLevel?: LogLevel;
   autoRetry?: boolean;

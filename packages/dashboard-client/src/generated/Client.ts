@@ -13,11 +13,9 @@ export type RequestOptions = {
 export type ClientConfigOptions = {
   apiToken: string | null;
   baseUrl?: string;
-  environment?: string;
   extraHeaders?: Record<string, string>;
   logLevel?: LogLevel;
   autoRetry?: boolean;
-  fetchJobResult?: (jobId: string) => Promise<JobResult>;
 };
 
 export class Client {
@@ -40,7 +38,10 @@ export class Client {
   subscriptionLimits: Resources.SubscriptionLimit;
   subscriptionFeatures: Resources.SubscriptionFeature;
 
-  private config: ClientConfigOptions;
+  config: ClientConfigOptions;
+  jobResultsFetcher?: (jobId: string) => Promise<JobResult>;
+
+  private cachedEventsChannelName: string | undefined;
 
   constructor(config: ClientConfigOptions) {
     this.config = config;
@@ -75,9 +76,23 @@ export class Client {
       userAgent: `@datocms/dashboard-client`,
       baseUrl: this.baseUrl,
       preCallStack: new Error().stack,
-      fetchJobResult:
-        this.config.fetchJobResult ||
-        ((jobId: string) => pollJobResult(() => this.jobResults.find(jobId))),
+      fetchJobResult: (jobId: string) => {
+        return this.jobResultsFetcher
+          ? this.jobResultsFetcher(jobId)
+          : pollJobResult(() => this.jobResults.find(jobId));
+      },
     });
+  }
+
+  async eventsChannelName() {
+    if (this.cachedEventsChannelName) {
+      return this.cachedEventsChannelName;
+    }
+
+    const { data: account } = await this.account.rawFind();
+
+    this.cachedEventsChannelName = `private-account-${account.id}`;
+
+    return this.cachedEventsChannelName;
   }
 }

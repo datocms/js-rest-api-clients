@@ -13,11 +13,12 @@ export type RequestOptions = {
 export type ClientConfigOptions = {
   apiToken: string | null;
   baseUrl?: string;
+  {{#if isCma}}
   environment?: string;
+  {{/if}}
   extraHeaders?: Record<string, string>;
   logLevel?: LogLevel;
   autoRetry?: boolean;
-  fetchJobResult?: (jobId: string) => Promise<JobResult>;
 };
 
 export class Client {
@@ -27,7 +28,10 @@ export class Client {
     {{{namespace}}}: Resources.{{{resourceClassName}}};
   {{/each}}
 
-  private config: ClientConfigOptions;
+  config: ClientConfigOptions;
+  jobResultsFetcher?: (jobId: string) => Promise<JobResult>;
+
+  private cachedEventsChannelName: string | undefined;
 
   constructor(config: ClientConfigOptions) {
     this.config = config;
@@ -47,9 +51,40 @@ export class Client {
       userAgent: `@datocms/{{prefix}}-client`,
       baseUrl: this.baseUrl,
       preCallStack: new Error().stack,
-      fetchJobResult: this.config.fetchJobResult ||
-        ((jobId: string) => pollJobResult(() => this.jobResults.find(jobId))),
+      {{#if isCma}}
+        extraHeaders: {
+          ...(this.config.extraHeaders || {}),
+          ...(this.config.environment
+            ? { 'X-Environment': this.config.environment }
+            : {}),
+          'X-API-Version': '3',
+        },
+      {{/if}}
+      fetchJobResult: (jobId: string) => {
+        return this.jobResultsFetcher
+          ? this.jobResultsFetcher(jobId)
+          : pollJobResult(() => this.jobResults.find(jobId));
+      },
     });
   }
 
+  async eventsChannelName() {
+    if (this.cachedEventsChannelName) {
+      return this.cachedEventsChannelName;
+    }
+
+    {{#if isCma}}
+      const { data: site } = await this.site.rawFind();
+
+      this.cachedEventsChannelName = this.config.environment
+          ? `private-site-${site.id}-environment-${this.config.environment}`
+          : `private-site-${site.id}`;
+    {{else}}
+      const { data: account } = await this.account.rawFind();
+
+      this.cachedEventsChannelName = `private-account-${account.id}`;
+    {{/if}}
+
+    return this.cachedEventsChannelName;
+  }
 }
