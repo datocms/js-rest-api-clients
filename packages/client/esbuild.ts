@@ -9,6 +9,6 @@ esbuild
     minify: true,
     splitting: true,
     format: 'esm',
-    target: ['esnext'],
+    target: ['es2018'],
   })
   .catch(() => process.exit(1));

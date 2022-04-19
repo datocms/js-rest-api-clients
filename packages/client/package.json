@@ -9,7 +9,6 @@
   "author": "Stefano Verna <s.verna@datocms.com>",
   "homepage": "https://github.com/datocms/js-toolkit/tree/main/packages/client#readme",
   "license": "MIT",
-  "browser": "dist/browser/index.js",
   "main": "dist/cjs/src/index.js",
   "module": "dist/esm/src/index.js",
   "typings": "dist/types/src/index.d.ts",
@@ -43,7 +42,7 @@
     "hyperschema-to-ts": "^0.0.11"
   },
   "dependencies": {
-    "bottleneck": "^2.19.5",
+    "async-scheduler": "^1.4.4",
     "cross-fetch": "^3.1.5",
     "pusher-js": "^7.0.6",
     "qs": "^6.10.3"

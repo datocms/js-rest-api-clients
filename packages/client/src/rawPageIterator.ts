@@ -1,4 +1,4 @@
-import Bottleneck from 'bottleneck';
+import { Scheduler } from 'async-scheduler';
 
 export type IteratorOptions = {
   perPage?: number;
@@ -45,12 +45,12 @@ export async function* rawPageIterator<T>(
 
   const totalCount = firstResponse.meta.total_count;
 
-  const limiter = new Bottleneck({ maxConcurrent: concurrency });
+  const limiter = new Scheduler(concurrency);
   const promises: Promise<JsonApiPage<T>>[] = [];
 
   for (let offset = perPage; offset < totalCount; offset += perPage) {
     promises.push(
-      limiter.schedule<JsonApiPage<T>>(() =>
+      limiter.enqueue<JsonApiPage<T>, void>(() =>
         callPerformer({ limit: perPage, offset }),
       ),
     );
