@@ -1,7 +1,16 @@
 import * as Resources from './resources';
-import request, { RequestOptions, ClientConfigOptions } from '../request';
+import request, { RequestOptions, LogLevel } from '../request';
 import { subscribeToEvents, EventsSubscription } from '../subscribeToEvents';
 import pollJobResult from '../pollJobResult';
+
+export type ClientConfigOptions = {
+  apiToken: string | null;
+  baseUrl?: string;
+  environment?: string;
+  extraHeaders?: Record<string, string>;
+  logLevel?: LogLevel;
+  autoRetry?: boolean;
+};
 
 export class Client {
   static readonly defaultBaseUrl = 'https://account-api.datocms.com';

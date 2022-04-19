@@ -3,6 +3,7 @@ import fetch from 'cross-fetch';
 import pkg from '../package.json';
 import { ApiError, ApiErrorInitObject } from './ApiError';
 import { JobResult } from './cma/SchemaTypes';
+import { ClientConfigOptions } from './cma/Client';
 
 export type RequestOptions = {
   method: 'GET' | 'PUT' | 'POST' | 'DELETE';
@@ -13,20 +14,15 @@ export type RequestOptions = {
 };
 
 export enum LogLevel {
+  /** No logging */
   NONE = 0,
+  /** Logs HTTP requests (method, URL) and responses (status) */
   INFO = 1,
+  /** Logs HTTP requests (method, URL, headers) and responses (status, headers) */
   DEBUG = 2,
+  /** Logs HTTP requests (method, URL, headers, body) and responses (status, headers, body) */
   TRACE = 3,
 }
-
-export type ClientConfigOptions = {
-  apiToken: string | null;
-  baseUrl?: string;
-  environment?: string;
-  extraHeaders?: Record<string, string>;
-  logLevel?: LogLevel;
-  autoRetry?: boolean;
-};
 
 type InnerOptions = {
   retryCount?: number;

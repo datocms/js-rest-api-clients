@@ -54,8 +54,6 @@ describe('@datocms/client', () => {
       email: 'foo@bar.com',
       role,
     });
-
-    expect(siteInvitation).toMatchSnapshot();
   });
 
   it('iterators', async () => {
