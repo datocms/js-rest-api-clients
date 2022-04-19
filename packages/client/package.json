@@ -43,6 +43,7 @@
     "hyperschema-to-ts": "^0.0.11"
   },
   "dependencies": {
+    "bottleneck": "^2.19.5",
     "cross-fetch": "^3.1.5",
     "pusher-js": "^7.0.6",
     "qs": "^6.10.3"

@@ -1,9 +1,13 @@
 import BaseResource from '../BaseResource';
-import serializeRequestBody from '../../serializeRequestBody';
-import deserializeResponseBody from '../../deserializeResponseBody';
+import { serializeRequestBody } from '../../serialize';
+import {
+  deserializeResponseBody,
+  deserializeJsonEntity,
+} from '../../deserialize';
 import toId from '../../toId';
 import * as SchemaTypes from '../SchemaTypes';
 import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import { IteratorOptions, rawPageIterator } from '../../rawPageIterator';
 
 export default class Upload extends BaseResource {
   static readonly TYPE: 'upload' = 'upload';
@@ -65,6 +69,40 @@ export default class Upload extends BaseResource {
       url: `/uploads`,
       queryParams,
     });
+  }
+
+  /**
+   * Async iterator to auto-paginate over elements returned by list()
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/instances
+   */
+  async *listPagedIterator(
+    queryParams?: SimpleSchemaTypes.UploadInstancesHrefSchema,
+    iteratorOptions?: IteratorOptions,
+  ) {
+    for await (const element of this.rawListPagedIterator(
+      queryParams,
+      iteratorOptions,
+    )) {
+      yield deserializeJsonEntity<
+        SimpleSchemaTypes.UploadInstancesTargetSchema[0]
+      >(element);
+    }
+  }
+
+  /**
+   * Async iterator to auto-paginate over elements returned by rawList()
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/instances
+   */
+  rawListPagedIterator(
+    queryParams?: SchemaTypes.UploadInstancesHrefSchema,
+    iteratorOptions?: IteratorOptions,
+  ) {
+    return rawPageIterator<SchemaTypes.UploadInstancesTargetSchema['data'][0]>(
+      (page) => this.rawList({ ...queryParams, page }),
+      iteratorOptions,
+    );
   }
 
   /**

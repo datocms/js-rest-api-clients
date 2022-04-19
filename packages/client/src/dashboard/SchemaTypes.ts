@@ -177,6 +177,44 @@ export type SiteTransferType = 'site_transfer';
  */
 export type SiteTransferIdentity = string;
 /**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type SiteInstancesHrefSchema = {
+  /**
+   * Sorts projects (default sorting is by ascending name)
+   */
+  sort?:
+    | 'name'
+    | '-name'
+    | 'last_data_change_at'
+    | '-last_data_change_at'
+    | 'plan'
+    | '-plan';
+  filters?: {
+    /**
+     * Filter by project name
+     */
+    match?: string;
+    [k: string]: unknown;
+  };
+  /**
+   * Attributes to manage results pagination
+   */
+  page?: {
+    /**
+     * Index of first element to fetch. Default: 0
+     */
+    offset?: number;
+    /**
+     * Number of elements to fetch. Maximum is 50 per page, default is 15.
+     */
+    limit?: number;
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
+};
+/**
  * JSON API type field
  *
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
@@ -1181,7 +1219,7 @@ export interface SiteSelfTargetSchema {
 export interface SiteInstancesTargetSchema {
   data: Site[];
   meta: {
-    [k: string]: unknown;
+    total_count: number;
   };
 }
 

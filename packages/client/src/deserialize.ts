@@ -1,11 +1,11 @@
-import { Rel } from './serializeRequestBody';
+import { Rel } from './serialize';
 
 type JsonApiEntity = {
   id?: string;
   type?: string;
-  attributes?: Record<string, unknown>;
-  relationships?: Record<string, { data: null | Rel | Rel[] }>;
-  meta?: Record<string, unknown>;
+  attributes?: object;
+  relationships?: object;
+  meta?: object;
 };
 
 type ResponseWithData = {
@@ -16,13 +16,13 @@ function hasData(thing: unknown): thing is ResponseWithData {
   return typeof thing === 'object' && !!thing && 'data' in thing;
 }
 
-function deserializeJsonEntity({
+export function deserializeJsonEntity<S>({
   id,
   type,
   attributes,
   relationships,
   meta,
-}: JsonApiEntity) {
+}: JsonApiEntity): S {
   return {
     ...(id ? { id } : {}),
     ...(type ? { type } : {}),
@@ -36,10 +36,10 @@ function deserializeJsonEntity({
         )
       : {}),
     ...(meta ? { meta } : {}),
-  };
+  } as S;
 }
 
-export default function deserializeRequestBody<T>(body: unknown): T {
+export function deserializeResponseBody<T>(body: unknown): T {
   if (!hasData(body)) {
     throw new Error('Invalid body!');
   }

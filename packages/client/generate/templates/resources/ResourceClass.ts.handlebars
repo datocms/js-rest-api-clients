@@ -1,9 +1,10 @@
 import BaseResource from '../BaseResource';
-import serializeRequestBody from '../../serializeRequestBody';
-import deserializeResponseBody from '../../deserializeResponseBody';
+import { serializeRequestBody } from '../../serialize';
+import { deserializeResponseBody, deserializeJsonEntity } from '../../deserialize';
 import toId from '../../toId';
 import * as SchemaTypes from '../SchemaTypes';
 import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import { IteratorOptions, rawPageIterator } from '../../rawPageIterator';
 
 export default class {{{resourceClassName}}} extends BaseResource {
   static readonly TYPE: '{{jsonApiType}}' = '{{jsonApiType}}';
@@ -99,6 +100,56 @@ export default class {{{resourceClassName}}} extends BaseResource {
       {{/if}}
     });
   }
+
+  {{#if paginatedResponse}}
+  /**
+   * Async iterator to auto-paginate over elements returned by {{{name}}}()
+   {{#if docUrl}}
+   *
+   * Read more: {{{docUrl}}}
+   {{/if}}
+   */
+    async *{{{name}}}PagedIterator(
+      queryParams?: SimpleSchemaTypes.{{{queryParamsType}}},
+      iteratorOptions?: IteratorOptions,
+    ) {
+      for await (const element of this.{{{rawName}}}PagedIterator(
+        queryParams,
+        iteratorOptions,
+      )) {
+        yield deserializeJsonEntity<
+          SimpleSchemaTypes.{{{responseType}}}[0]
+        >(element);
+      }
+    }
+
+  /**
+   * Async iterator to auto-paginate over elements returned by {{{rawName}}}()
+   {{#if docUrl}}
+   *
+   * Read more: {{{docUrl}}}
+   {{/if}}
+   */
+    {{{rawName}}}PagedIterator(
+      {{#if urlPlaceholder}}
+        {{{urlPlaceholder}}}: string,
+      {{/if}}
+      queryParams?: SchemaTypes.{{{queryParamsType}}},
+      iteratorOptions?: IteratorOptions,
+    ) {
+      return rawPageIterator<
+        SchemaTypes.{{{responseType}}}['data'][0]
+      >(
+        (page) => this.{{{rawName}}}(
+          {{#if urlPlaceholder}}
+            {{{urlPlaceholder}}},
+          {{/if}}
+          { ...queryParams, page },
+        ),
+        iteratorOptions,
+      );
+    }
+  {{/if}}
 
   {{/each}}
 }

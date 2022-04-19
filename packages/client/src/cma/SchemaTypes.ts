@@ -607,6 +607,31 @@ export type ItemVersionType = 'item_version';
  */
 export type ItemVersionIdentity = string;
 /**
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type ItemVersionInstancesHrefSchema = {
+  /**
+   * For Modular Content fields and Structured Text fields. If set, returns full payload for nested blocks instead of IDs
+   */
+  nested?: string;
+  /**
+   * Attributes to manage results pagination
+   */
+  page?: {
+    /**
+     * Index of first element to fetch. Default: 0
+     */
+    offset?: number;
+    /**
+     * Number of elements to fetch. Maximum is 50 per page, default is 15.
+     */
+    limit?: number;
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
+};
+/**
  * JSON API type upload
  *
  * This interface was referenced by `Upload`'s JSON-Schema
@@ -5784,7 +5809,7 @@ export interface ItemVersionRestoreJobSchema {
  */
 export interface ItemVersionInstancesTargetSchema {
   data: ItemVersion[];
-  meta?: {
+  meta: {
     total_count: number;
   };
 }
@@ -6095,7 +6120,7 @@ export interface UploadCreateJobSchema {
  */
 export interface UploadInstancesTargetSchema {
   data: Upload[];
-  meta?: {
+  meta: {
     total_count: number;
   };
 }
@@ -8517,7 +8542,7 @@ export interface UploadTagData {
  */
 export interface UploadTagInstancesTargetSchema {
   data: UploadTag[];
-  meta?: {
+  meta: {
     total_count: number;
   };
 }
@@ -8588,7 +8613,7 @@ export interface UploadSmartTagData {
  */
 export interface UploadSmartTagInstancesTargetSchema {
   data: UploadSmartTag[];
-  meta?: {
+  meta: {
     total_count: number;
   };
 }

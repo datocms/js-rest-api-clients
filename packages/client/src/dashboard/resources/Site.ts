@@ -1,9 +1,13 @@
 import BaseResource from '../BaseResource';
-import serializeRequestBody from '../../serializeRequestBody';
-import deserializeResponseBody from '../../deserializeResponseBody';
+import { serializeRequestBody } from '../../serialize';
+import {
+  deserializeResponseBody,
+  deserializeJsonEntity,
+} from '../../deserialize';
 import toId from '../../toId';
 import * as SchemaTypes from '../SchemaTypes';
 import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import { IteratorOptions, rawPageIterator } from '../../rawPageIterator';
 
 export default class Site extends BaseResource {
   static readonly TYPE: 'site' = 'site';
@@ -30,8 +34,8 @@ export default class Site extends BaseResource {
   /**
    * List all projects
    */
-  list() {
-    return this.rawList().then((body) =>
+  list(queryParams?: SimpleSchemaTypes.SiteInstancesHrefSchema) {
+    return this.rawList(queryParams).then((body) =>
       deserializeResponseBody<SimpleSchemaTypes.SiteInstancesTargetSchema>(
         body,
       ),
@@ -41,11 +45,44 @@ export default class Site extends BaseResource {
   /**
    * List all projects
    */
-  rawList(): Promise<SchemaTypes.SiteInstancesTargetSchema> {
+  rawList(
+    queryParams?: SchemaTypes.SiteInstancesHrefSchema,
+  ): Promise<SchemaTypes.SiteInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SiteInstancesTargetSchema>({
       method: 'GET',
       url: `/sites`,
+      queryParams,
     });
+  }
+
+  /**
+   * Async iterator to auto-paginate over elements returned by list()
+   */
+  async *listPagedIterator(
+    queryParams?: SimpleSchemaTypes.SiteInstancesHrefSchema,
+    iteratorOptions?: IteratorOptions,
+  ) {
+    for await (const element of this.rawListPagedIterator(
+      queryParams,
+      iteratorOptions,
+    )) {
+      yield deserializeJsonEntity<
+        SimpleSchemaTypes.SiteInstancesTargetSchema[0]
+      >(element);
+    }
+  }
+
+  /**
+   * Async iterator to auto-paginate over elements returned by rawList()
+   */
+  rawListPagedIterator(
+    queryParams?: SchemaTypes.SiteInstancesHrefSchema,
+    iteratorOptions?: IteratorOptions,
+  ) {
+    return rawPageIterator<SchemaTypes.SiteInstancesTargetSchema['data'][0]>(
+      (page) => this.rawList({ ...queryParams, page }),
+      iteratorOptions,
+    );
   }
 
   /**

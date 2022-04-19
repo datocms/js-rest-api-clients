@@ -84,4 +84,20 @@ describe('@datocms/client', () => {
 
     // cmaClient.unsubscribeToEvents();
   });
+
+  it('iterators', async () => {
+    const client = new Client({
+      apiToken: 'faeb9172e232a75339242faafb9e56de8c8f13b735f7090964',
+      logLevel: LogLevel.INFO,
+    });
+
+    for await (const item of client.items.listPagedIterator(
+      {
+        filter: { type: 'blog_post' },
+      },
+      { perPage: 5 },
+    )) {
+      console.log(item.title);
+    }
+  });
 });

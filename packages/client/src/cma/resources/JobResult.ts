@@ -1,9 +1,13 @@
 import BaseResource from '../BaseResource';
-import serializeRequestBody from '../../serializeRequestBody';
-import deserializeResponseBody from '../../deserializeResponseBody';
+import { serializeRequestBody } from '../../serialize';
+import {
+  deserializeResponseBody,
+  deserializeJsonEntity,
+} from '../../deserialize';
 import toId from '../../toId';
 import * as SchemaTypes from '../SchemaTypes';
 import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import { IteratorOptions, rawPageIterator } from '../../rawPageIterator';
 
 export default class JobResult extends BaseResource {
   static readonly TYPE: 'job_result' = 'job_result';

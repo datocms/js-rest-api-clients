@@ -19,7 +19,7 @@ function isRelArray(object: unknown): object is Rel[] {
   return Array.isArray(object) && object.every(isRel);
 }
 
-export default function serializeRequestBody<T>(options: Options): T {
+export function serializeRequestBody<T>(options: Options): T {
   if (typeof options.body !== 'object' || !options.body) {
     throw new Error('Invalid body!');
   }

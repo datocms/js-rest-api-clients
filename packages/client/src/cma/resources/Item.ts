@@ -1,9 +1,13 @@
 import BaseResource from '../BaseResource';
-import serializeRequestBody from '../../serializeRequestBody';
-import deserializeResponseBody from '../../deserializeResponseBody';
+import { serializeRequestBody } from '../../serialize';
+import {
+  deserializeResponseBody,
+  deserializeJsonEntity,
+} from '../../deserialize';
 import toId from '../../toId';
 import * as SchemaTypes from '../SchemaTypes';
 import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import { IteratorOptions, rawPageIterator } from '../../rawPageIterator';
 
 export default class Item extends BaseResource {
   static readonly TYPE: 'item' = 'item';
@@ -34,6 +38,40 @@ export default class Item extends BaseResource {
       url: `/items`,
       queryParams,
     });
+  }
+
+  /**
+   * Async iterator to auto-paginate over elements returned by list()
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item/instances
+   */
+  async *listPagedIterator(
+    queryParams?: SimpleSchemaTypes.ItemInstancesHrefSchema,
+    iteratorOptions?: IteratorOptions,
+  ) {
+    for await (const element of this.rawListPagedIterator(
+      queryParams,
+      iteratorOptions,
+    )) {
+      yield deserializeJsonEntity<
+        SimpleSchemaTypes.ItemInstancesTargetSchema[0]
+      >(element);
+    }
+  }
+
+  /**
+   * Async iterator to auto-paginate over elements returned by rawList()
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item/instances
+   */
+  rawListPagedIterator(
+    queryParams?: SchemaTypes.ItemInstancesHrefSchema,
+    iteratorOptions?: IteratorOptions,
+  ) {
+    return rawPageIterator<SchemaTypes.ItemInstancesTargetSchema['data'][0]>(
+      (page) => this.rawList({ ...queryParams, page }),
+      iteratorOptions,
+    );
   }
 
   /**

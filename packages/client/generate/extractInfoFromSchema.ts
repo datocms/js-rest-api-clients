@@ -20,6 +20,7 @@ export type EndpointInfo = {
   queryParamsType?: string;
   responseType?: string;
   deprecated?: string;
+  paginatedResponse?: boolean;
 };
 
 export type ResourceInfo = {
@@ -117,6 +118,14 @@ function generateResourceInfo(
         ? link.rel.replace('_instances', '_list')
         : link.rel;
 
+    const hrefHasPageParam =
+      link.hrefSchema &&
+      link.hrefSchema.properties &&
+      'page' in link.hrefSchema.properties &&
+      typeof link.hrefSchema.properties.page === 'object' &&
+      link.hrefSchema.properties.page.properties &&
+      'offset' in link.hrefSchema.properties.page.properties;
+
     return {
       returnsCollection: ['query', 'instances'].some((x) =>
         link.rel.includes(x),
@@ -144,6 +153,7 @@ function generateResourceInfo(
           )}HrefSchema`
         : undefined,
       responseType,
+      paginatedResponse: hrefHasPageParam,
       deprecated: link.private
         ? 'This API call is to be considered private and might change without notice'
         : undefined,
