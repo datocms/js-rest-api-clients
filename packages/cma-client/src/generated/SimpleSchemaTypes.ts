@@ -5684,12 +5684,7 @@ export interface ItemValidateNewSchema {
  */
 export interface ItemCreateSchema {
   type?: ItemType1;
-  /**
-   * The record model
-   */
-  item_type: {
-    data: ItemTypeData;
-  };
+  item_type: ItemTypeData;
   /**
    * Meta information regarding the record
    */

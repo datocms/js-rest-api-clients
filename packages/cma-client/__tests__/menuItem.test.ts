@@ -3,7 +3,7 @@ import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('menu item', () => {
   test('create, find, list, update, destroy', async () => {
-    const client = await generateNewCmaClient({ logLevel: LogLevel.BODY });
+    const client = await generateNewCmaClient();
 
     const menuItem = await client.menuItems.create({
       label: 'Browse Articles',

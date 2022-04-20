@@ -39,7 +39,7 @@ export async function generateNewCmaClient(
   const dashboardClient = await generateNewDashboardClient();
 
   const site = await dashboardClient.sites.create({
-    name: 'Foo bar',
+    name: 'Project',
   });
 
   return new CmaClient({

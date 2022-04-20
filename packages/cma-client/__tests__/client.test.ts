@@ -1,4 +1,4 @@
-import { ApiError, Client } from '../src';
+import { ApiError, Client, SimpleSchemaTypes } from '../src';
 import { LogLevel } from '../src';
 import { generateNewDashboardClient } from './helpers/generateClients';
 
@@ -60,10 +60,17 @@ describe('@datocms/client', () => {
       apiToken: 'faeb9172e232a75339242faafb9e56de8c8f13b735f7090964',
     });
 
-    for await (const item of client.items.listPagedIterator({
-      filter: { type: 'blog_post' },
-    })) {
-      console.log(item.title);
+    const allItems: SimpleSchemaTypes.Item[] = [];
+
+    for await (const item of client.items.listPagedIterator(
+      {
+        filter: { type: 'blog_post' },
+      },
+      { perPage: 5 },
+    )) {
+      allItems.push(item);
     }
+
+    expect(allItems.length).toBeGreaterThan(5);
   });
 });

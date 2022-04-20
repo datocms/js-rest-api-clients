@@ -40,9 +40,7 @@ describe('item type', () => {
       title_field: field,
     });
     expect(updatedItemType.name).toEqual('UpdatedArticle');
-    expect(
-      updatedItemType.title_field && updatedItemType.title_field.id,
-    ).toEqual(field.id);
+    expect(updatedItemType.title_field?.id).toEqual(field.id);
 
     await client.itemTypes.destroy(itemType.id);
   });

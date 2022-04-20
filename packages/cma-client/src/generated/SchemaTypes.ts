@@ -5326,7 +5326,7 @@ export interface ItemCreateSchema {
     };
     relationships: {
       /**
-       * The record model
+       * The record's model
        */
       item_type: {
         data: ItemTypeData;
