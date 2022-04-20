@@ -13,9 +13,10 @@ export default class SiteInvitation extends BaseResource {
    */
   create(body: SimpleSchemaTypes.SiteInvitationCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.SiteInvitationCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.SiteInvitationCreateSchema>(body, {
         type: SiteInvitation.TYPE,
+        attributes: ['email'],
+        relationships: ['role'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SiteInvitationCreateTargetSchema>(
@@ -50,10 +51,11 @@ export default class SiteInvitation extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(siteInvitationId),
-      Utils.serializeRequestBody<SchemaTypes.SiteInvitationUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.SiteInvitationUpdateSchema>(body, {
         id: Utils.toId(siteInvitationId),
         type: SiteInvitation.TYPE,
+        attributes: [],
+        relationships: ['role'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SiteInvitationUpdateTargetSchema>(

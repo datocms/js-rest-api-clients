@@ -12,15 +12,17 @@ export default class ScheduledUnpublishing extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/scheduled-unpublishing/create
    */
   create(
-    itemId: string | SimpleSchemaTypes.ScheduledUnpublishingData,
+    itemId: string | SimpleSchemaTypes.ItemData,
     body: SimpleSchemaTypes.ScheduledUnpublishingCreateSchema,
   ) {
     return this.rawCreate(
       Utils.toId(itemId),
       Utils.serializeRequestBody<SchemaTypes.ScheduledUnpublishingCreateSchema>(
+        body,
         {
-          body,
           type: ScheduledUnpublishing.TYPE,
+          attributes: ['unpublishing_scheduled_at'],
+          relationships: [],
         },
       ),
     ).then((body) =>
@@ -53,7 +55,7 @@ export default class ScheduledUnpublishing extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/scheduled-unpublishing/destroy
    */
-  destroy(itemId: string | SimpleSchemaTypes.ScheduledUnpublishingData) {
+  destroy(itemId: string | SimpleSchemaTypes.ItemData) {
     return this.rawDestroy(Utils.toId(itemId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ScheduledUnpublishingDestroyTargetSchema>(
         body,

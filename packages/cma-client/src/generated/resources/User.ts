@@ -17,10 +17,11 @@ export default class User extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(userId),
-      Utils.serializeRequestBody<SchemaTypes.UserUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.UserUpdateSchema>(body, {
         id: Utils.toId(userId),
         type: User.TYPE,
+        attributes: ['is_active'],
+        relationships: ['role'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.UserUpdateTargetSchema>(

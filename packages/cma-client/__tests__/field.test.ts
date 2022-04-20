@@ -6,17 +6,10 @@ describe('field', () => {
 
     const itemType = await client.itemTypes.create({
       name: 'Article',
-      api_key: 'item_type',
-      singleton: true,
-      modular_block: false,
-      tree: false,
-      draft_mode_active: false,
-      sortable: false,
-      ordering_direction: null,
-      all_locales_required: true,
+      api_key: 'article',
     });
 
-    const field = await client.fields.create(itemType.id, {
+    const field = await client.fields.create(itemType, {
       label: 'Image',
       field_type: 'file',
       localized: false,
@@ -25,20 +18,20 @@ describe('field', () => {
     });
     expect(field.label).toEqual('Image');
 
-    const foundField = await client.fields.find(field.id);
+    const foundField = await client.fields.find(field);
     expect(foundField.id).toEqual(field.id);
 
-    const allFields = await client.fields.list(itemType.id);
+    const allFields = await client.fields.list(itemType);
     expect(allFields).toHaveLength(1);
 
-    const updatedField = await client.fields.update(field.id, {
+    const updatedField = await client.fields.update(field, {
       label: 'Updated',
     });
     expect(updatedField.label).toEqual('Updated');
 
-    const duplicated = await client.fields.duplicate(field.id);
+    const duplicated = await client.fields.duplicate(field);
     expect(duplicated.label).toEqual('Updated (copy #1)');
 
-    await client.fields.destroy(field.id);
+    await client.fields.destroy(field);
   });
 });

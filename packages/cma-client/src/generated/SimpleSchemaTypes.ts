@@ -3785,7 +3785,7 @@ export interface MenuItemUpdateSchema {
   /**
    * The label of the menu item
    */
-  label: string;
+  label?: string;
   /**
    * The URL to which the menu item points to
    */
@@ -3793,7 +3793,7 @@ export interface MenuItemUpdateSchema {
   /**
    * Ordering index
    */
-  position: number;
+  position?: number;
   /**
    * Opens link in new tab (used together with `external_url`)
    */

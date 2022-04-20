@@ -11,9 +11,17 @@ export default class Account extends BaseResource {
    */
   create(body: SimpleSchemaTypes.AccountCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.AccountCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.AccountCreateSchema>(body, {
         type: Account.TYPE,
+        attributes: [
+          'email',
+          'first_name',
+          'last_name',
+          'company',
+          'password',
+          'acquisition_method',
+        ],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccountCreateTargetSchema>(
@@ -40,9 +48,18 @@ export default class Account extends BaseResource {
    */
   update(body: SimpleSchemaTypes.AccountUpdateSchema) {
     return this.rawUpdate(
-      Utils.serializeRequestBody<SchemaTypes.AccountUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.AccountUpdateSchema>(body, {
         type: Account.TYPE,
+        attributes: [
+          'email',
+          'first_name',
+          'last_name',
+          'company',
+          'password',
+          'current_password',
+          'otp_code',
+        ],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccountUpdateTargetSchema>(
@@ -69,9 +86,10 @@ export default class Account extends BaseResource {
    */
   destroy(body: SimpleSchemaTypes.AccountDestroySchema) {
     return this.rawDestroy(
-      Utils.serializeRequestBody<SchemaTypes.AccountDestroySchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.AccountDestroySchema>(body, {
         type: Account.TYPE,
+        attributes: ['otp_code', 'password'],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccountDestroyJobSchema>(
@@ -119,9 +137,10 @@ export default class Account extends BaseResource {
    */
   resetPassword(body: SimpleSchemaTypes.AccountResetPasswordSchema) {
     return this.rawResetPassword(
-      Utils.serializeRequestBody<SchemaTypes.AccountResetPasswordSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.AccountResetPasswordSchema>(body, {
         type: Account.TYPE,
+        attributes: ['email'],
+        relationships: [],
       }),
     );
   }
@@ -144,9 +163,10 @@ export default class Account extends BaseResource {
    */
   activate_2Fa(body: SimpleSchemaTypes.AccountActivate_2FaSchema) {
     return this.rawActivate_2Fa(
-      Utils.serializeRequestBody<SchemaTypes.AccountActivate_2FaSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.AccountActivate_2FaSchema>(body, {
         type: Account.TYPE,
+        attributes: ['otp_code', 'password'],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccountActivate_2FaTargetSchema>(
@@ -194,10 +214,14 @@ export default class Account extends BaseResource {
    */
   deactivate_2Fa(body: SimpleSchemaTypes.AccountDeactivate_2FaSchema) {
     return this.rawDeactivate_2Fa(
-      Utils.serializeRequestBody<SchemaTypes.AccountDeactivate_2FaSchema>({
+      Utils.serializeRequestBody<SchemaTypes.AccountDeactivate_2FaSchema>(
         body,
-        type: Account.TYPE,
-      }),
+        {
+          type: Account.TYPE,
+          attributes: ['otp_code', 'password'],
+          relationships: [],
+        },
+      ),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccountDeactivate_2FaTargetSchema>(
         body,

@@ -65,9 +65,18 @@ export default class BuildTrigger extends BaseResource {
    */
   create(body: SimpleSchemaTypes.BuildTriggerCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.BuildTriggerCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.BuildTriggerCreateSchema>(body, {
         type: BuildTrigger.TYPE,
+        attributes: [
+          'name',
+          'webhook_token',
+          'adapter',
+          'indexing_enabled',
+          'frontend_url',
+          'autotrigger_on_scheduled_publications',
+          'adapter_settings',
+        ],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.BuildTriggerCreateTargetSchema>(
@@ -102,10 +111,18 @@ export default class BuildTrigger extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(buildTriggerId),
-      Utils.serializeRequestBody<SchemaTypes.BuildTriggerUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.BuildTriggerUpdateSchema>(body, {
         id: Utils.toId(buildTriggerId),
         type: BuildTrigger.TYPE,
+        attributes: [
+          'name',
+          'adapter',
+          'indexing_enabled',
+          'frontend_url',
+          'autotrigger_on_scheduled_publications',
+          'adapter_settings',
+        ],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.BuildTriggerUpdateTargetSchema>(

@@ -79,7 +79,7 @@ export default class WebhookCall extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/resend_webhook
    */
-  resendWebhook(userId: string | SimpleSchemaTypes.WebhookCallData) {
+  resendWebhook(userId: string | SimpleSchemaTypes.UserData) {
     return this.rawResendWebhook(Utils.toId(userId));
   }
 

@@ -38,9 +38,11 @@ export default class PerAccountPricingBillingProfile extends BaseResource {
   ) {
     return this.rawUpdateCreditCard(
       Utils.serializeRequestBody<SchemaTypes.PerAccountPricingBillingProfileUpdateCreditCardSchema>(
+        body,
         {
-          body,
           type: PerAccountPricingBillingProfile.TYPE,
+          attributes: ['payment_intent_id'],
+          relationships: [],
         },
       ),
     ).then((body) =>
@@ -73,9 +75,24 @@ export default class PerAccountPricingBillingProfile extends BaseResource {
   ) {
     return this.rawUpdateInfo(
       Utils.serializeRequestBody<SchemaTypes.PerAccountPricingBillingProfileUpdateInfoSchema>(
+        body,
         {
-          body,
           type: PerAccountPricingBillingProfile.TYPE,
+          attributes: [
+            'first_name',
+            'last_name',
+            'company',
+            'address_line',
+            'city',
+            'email',
+            'country',
+            'state',
+            'zip',
+            'vat_number',
+            'cf_cod_fiscale',
+            'po_number',
+          ],
+          relationships: [],
         },
       ),
     ).then((body) =>

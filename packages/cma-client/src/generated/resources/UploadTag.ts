@@ -81,9 +81,10 @@ export default class UploadTag extends BaseResource {
    */
   create(body: SimpleSchemaTypes.UploadTagCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.UploadTagCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.UploadTagCreateSchema>(body, {
         type: UploadTag.TYPE,
+        attributes: ['name'],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.UploadTagCreateTargetSchema>(

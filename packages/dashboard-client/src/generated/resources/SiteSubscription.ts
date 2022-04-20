@@ -9,26 +9,6 @@ export default class SiteSubscription extends BaseResource {
   /**
    * Create a new subscription
    */
-  create(
-    siteId: string | SimpleSchemaTypes.SiteSubscriptionData,
-    body: SimpleSchemaTypes.SiteSubscriptionCreateSchema,
-  ) {
-    return this.rawCreate(
-      Utils.toId(siteId),
-      Utils.serializeRequestBody<SchemaTypes.SiteSubscriptionCreateSchema>({
-        body,
-        type: SiteSubscription.TYPE,
-      }),
-    ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteSubscriptionCreateTargetSchema>(
-        body,
-      ),
-    );
-  }
-
-  /**
-   * Create a new subscription
-   */
   rawCreate(
     siteId: string,
     body: SchemaTypes.SiteSubscriptionCreateSchema,
@@ -38,26 +18,6 @@ export default class SiteSubscription extends BaseResource {
       url: `/sites/${siteId}/subscriptions`,
       body,
     });
-  }
-
-  /**
-   * Simulate
-   */
-  simulate(
-    siteId: string | SimpleSchemaTypes.SiteSubscriptionData,
-    body: SimpleSchemaTypes.SiteSubscriptionSimulateSchema,
-  ) {
-    return this.rawSimulate(
-      Utils.toId(siteId),
-      Utils.serializeRequestBody<SchemaTypes.SiteSubscriptionSimulateSchema>({
-        body,
-        type: SiteSubscription.TYPE,
-      }),
-    ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteSubscriptionSimulateTargetSchema>(
-        body,
-      ),
-    );
   }
 
   /**
@@ -80,15 +40,19 @@ export default class SiteSubscription extends BaseResource {
    * Validate a new subscription
    */
   validate(
-    siteId: string | SimpleSchemaTypes.SiteSubscriptionData,
+    siteId: string | SimpleSchemaTypes.SiteData,
     body: SimpleSchemaTypes.SiteSubscriptionValidateSchema,
   ) {
     return this.rawValidate(
       Utils.toId(siteId),
-      Utils.serializeRequestBody<SchemaTypes.SiteSubscriptionValidateSchema>({
+      Utils.serializeRequestBody<SchemaTypes.SiteSubscriptionValidateSchema>(
         body,
-        type: SiteSubscription.TYPE,
-      }),
+        {
+          type: SiteSubscription.TYPE,
+          attributes: ['extra_packets', 'ignore_content', 'is_duplicate'],
+          relationships: ['plan'],
+        },
+      ),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SiteSubscriptionValidateTargetSchema>(
         body,

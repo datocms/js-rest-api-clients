@@ -4,8 +4,7 @@ describe('item type', () => {
   test('create, find, all, duplicate, update, destroy', async () => {
     const client = await generateNewCmaClient();
 
-    // TODO Error: POST https://site-api.datocms.com/item-types: 422 Unprocessable Entity (INVALID_FORMAT, {"messages":["#/data/attributes: failed schema #/definitions/item_type/links/0/schema/properties/data/properties/attributes: \"ordering_field\", \"title_field\" are not permitted keys."]})
-    const myModel = await client.itemTypes.create({
+    const itemType = await client.itemTypes.create({
       name: 'Article',
       api_key: 'article',
       singleton: true,
@@ -18,36 +17,33 @@ describe('item type', () => {
       ordering_field: null,
       title_field: null,
     });
-    expect(myModel.name).toEqual('Article');
+    expect(itemType.name).toEqual('Article');
 
-    const foundItemType = await client.itemTypes.find(myModel.id);
-    expect(foundItemType.id).toEqual(myModel.id);
+    const foundItemType = await client.itemTypes.find(itemType);
+    expect(foundItemType.id).toEqual(itemType.id);
 
-    const duplicated = await client.itemTypes.duplicate(myModel.id);
+    const duplicated = await client.itemTypes.duplicate(itemType);
     expect(duplicated.name).toEqual('Article (copy #1)');
 
     const allItemTypes = await client.itemTypes.list();
     expect(allItemTypes).toHaveLength(2);
 
-    const field = await client.fields.create(myModel.id, {
+    const field = await client.fields.create(itemType, {
       label: 'Title',
       api_key: 'title',
       field_type: 'string',
     });
     expect(field.label).toEqual('Title');
 
-    const updatedItemType = await client.itemTypes.update(myModel.id, {
+    const updatedItemType = await client.itemTypes.update(itemType, {
       name: 'UpdatedArticle',
-      title_field: {
-        type: 'field',
-        id: field.id,
-      },
+      title_field: field,
     });
     expect(updatedItemType.name).toEqual('UpdatedArticle');
     expect(
       updatedItemType.title_field && updatedItemType.title_field.id,
     ).toEqual(field.id);
 
-    await client.itemTypes.destroy(myModel.id);
+    await client.itemTypes.destroy(itemType.id);
   });
 });

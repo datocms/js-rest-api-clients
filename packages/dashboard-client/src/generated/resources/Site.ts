@@ -92,9 +92,10 @@ export default class Site extends BaseResource {
    */
   create(body: SimpleSchemaTypes.SiteCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.SiteCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.SiteCreateSchema>(body, {
         type: Site.TYPE,
+        attributes: ['name', 'internal_subdomain', 'template'],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SiteCreateJobSchema>(
@@ -125,10 +126,16 @@ export default class Site extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(siteId),
-      Utils.serializeRequestBody<SchemaTypes.SiteUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.SiteUpdateSchema>(body, {
         id: Utils.toId(siteId),
         type: Site.TYPE,
+        attributes: [
+          'name',
+          'domain',
+          'internal_subdomain',
+          'is_public_template',
+        ],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SiteUpdateTargetSchema>(
@@ -170,27 +177,6 @@ export default class Site extends BaseResource {
       method: 'DELETE',
       url: `/sites/${siteId}`,
     });
-  }
-
-  /**
-   * Duplicate an existing project
-   */
-  duplicate(
-    siteId: string | SimpleSchemaTypes.SiteData,
-    body: SimpleSchemaTypes.SiteDuplicateSchema,
-  ) {
-    return this.rawDuplicate(
-      Utils.toId(siteId),
-      Utils.serializeRequestBody<SchemaTypes.SiteDuplicateSchema>({
-        body,
-        id: Utils.toId(siteId),
-        type: Site.TYPE,
-      }),
-    ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteDuplicateJobSchema>(
-        body,
-      ),
-    );
   }
 
   /**

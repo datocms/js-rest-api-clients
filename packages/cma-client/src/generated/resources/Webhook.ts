@@ -13,9 +13,21 @@ export default class Webhook extends BaseResource {
    */
   create(body: SimpleSchemaTypes.WebhookCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.WebhookCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.WebhookCreateSchema>(body, {
         type: Webhook.TYPE,
+        attributes: [
+          'name',
+          'url',
+          'custom_payload',
+          'headers',
+          'events',
+          'http_basic_user',
+          'http_basic_password',
+          'enabled',
+          'payload_api_version',
+          'nested_items_in_payload',
+        ],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.WebhookCreateTargetSchema>(
@@ -45,14 +57,26 @@ export default class Webhook extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook/update
    */
   update(
-    userId: string | SimpleSchemaTypes.WebhookData,
+    userId: string | SimpleSchemaTypes.UserData,
     body: SimpleSchemaTypes.WebhookUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(userId),
-      Utils.serializeRequestBody<SchemaTypes.WebhookUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.WebhookUpdateSchema>(body, {
         type: Webhook.TYPE,
+        attributes: [
+          'name',
+          'url',
+          'custom_payload',
+          'headers',
+          'events',
+          'http_basic_user',
+          'http_basic_password',
+          'enabled',
+          'payload_api_version',
+          'nested_items_in_payload',
+        ],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.WebhookUpdateTargetSchema>(
@@ -107,7 +131,7 @@ export default class Webhook extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook/self
    */
-  find(userId: string | SimpleSchemaTypes.WebhookData) {
+  find(userId: string | SimpleSchemaTypes.UserData) {
     return this.rawFind(Utils.toId(userId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.WebhookSelfTargetSchema>(
         body,
@@ -132,7 +156,7 @@ export default class Webhook extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook/destroy
    */
-  destroy(userId: string | SimpleSchemaTypes.WebhookData) {
+  destroy(userId: string | SimpleSchemaTypes.UserData) {
     return this.rawDestroy(Utils.toId(userId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.WebhookDestroyTargetSchema>(
         body,

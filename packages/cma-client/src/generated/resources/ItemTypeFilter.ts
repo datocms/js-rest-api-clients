@@ -13,9 +13,10 @@ export default class ItemTypeFilter extends BaseResource {
    */
   create(body: SimpleSchemaTypes.ItemTypeFilterCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.ItemTypeFilterCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.ItemTypeFilterCreateSchema>(body, {
         type: ItemTypeFilter.TYPE,
+        attributes: ['name', 'filter', 'shared'],
+        relationships: ['item_type'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeFilterCreateTargetSchema>(
@@ -50,10 +51,11 @@ export default class ItemTypeFilter extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(itemTypeFilterId),
-      Utils.serializeRequestBody<SchemaTypes.ItemTypeFilterUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.ItemTypeFilterUpdateSchema>(body, {
         id: Utils.toId(itemTypeFilterId),
         type: ItemTypeFilter.TYPE,
+        attributes: ['name', 'shared', 'filter'],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeFilterUpdateTargetSchema>(

@@ -9,7 +9,7 @@ export default class SubscriptionFeature extends BaseResource {
   /**
    * Get all the subscription features
    */
-  list(siteId: string | SimpleSchemaTypes.SubscriptionFeatureData) {
+  list(siteId: string | SimpleSchemaTypes.SiteData) {
     return this.rawList(Utils.toId(siteId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SubscriptionFeatureInstancesTargetSchema>(
         body,

@@ -69,10 +69,11 @@ export default class SsoGroup extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(ssoGroupId),
-      Utils.serializeRequestBody<SchemaTypes.SsoGroupUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.SsoGroupUpdateSchema>(body, {
         id: Utils.toId(ssoGroupId),
         type: SsoGroup.TYPE,
+        attributes: ['priority'],
+        relationships: ['role'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SsoGroupUpdateTargetSchema>(

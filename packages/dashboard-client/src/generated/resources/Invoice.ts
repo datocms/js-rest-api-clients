@@ -33,7 +33,9 @@ export default class Invoice extends BaseResource {
    * Retrieve all invoices
    */
   perSitePricingBillingProfileList(
-    perSitePricingBillingProfileId: string | SimpleSchemaTypes.InvoiceData,
+    perSitePricingBillingProfileId:
+      | string
+      | SimpleSchemaTypes.PerSitePricingBillingProfileData,
   ) {
     return this.rawPerSitePricingBillingProfileList(
       Utils.toId(perSitePricingBillingProfileId),
@@ -66,9 +68,11 @@ export default class Invoice extends BaseResource {
   ) {
     return this.rawPerAccountPricingBillingProfileCollectUnpaid(
       Utils.serializeRequestBody<SchemaTypes.InvoicePerAccountPricingBillingProfileCollectUnpaidSchema>(
+        body,
         {
-          body,
           type: Invoice.TYPE,
+          attributes: ['payment_intent_id'],
+          relationships: [],
         },
       ),
     ).then((body) =>
@@ -97,15 +101,19 @@ export default class Invoice extends BaseResource {
    * Collect all unpaid invoices
    */
   perSitePricingBillingProfileCollectUnpaid(
-    perSitePricingBillingProfileId: string | SimpleSchemaTypes.InvoiceData,
+    perSitePricingBillingProfileId:
+      | string
+      | SimpleSchemaTypes.PerSitePricingBillingProfileData,
     body: SimpleSchemaTypes.InvoicePerSitePricingBillingProfileCollectUnpaidSchema,
   ) {
     return this.rawPerSitePricingBillingProfileCollectUnpaid(
       Utils.toId(perSitePricingBillingProfileId),
       Utils.serializeRequestBody<SchemaTypes.InvoicePerSitePricingBillingProfileCollectUnpaidSchema>(
+        body,
         {
-          body,
           type: Invoice.TYPE,
+          attributes: ['payment_intent_id'],
+          relationships: [],
         },
       ),
     ).then((body) =>

@@ -87,10 +87,11 @@ export default class Item extends BaseResource {
   ) {
     return this.rawValidateExisting(
       Utils.toId(itemId),
-      Utils.serializeRequestBody<SchemaTypes.ItemValidateExistingSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.ItemValidateExistingSchema>(body, {
         id: Utils.toId(itemId),
         type: Item.TYPE,
+        attributes: '*',
+        relationships: ['item_type', 'creator'],
       }),
     );
   }
@@ -122,9 +123,10 @@ export default class Item extends BaseResource {
    */
   validateNew(body: SimpleSchemaTypes.ItemValidateNewSchema) {
     return this.rawValidateNew(
-      Utils.serializeRequestBody<SchemaTypes.ItemValidateNewSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.ItemValidateNewSchema>(body, {
         type: Item.TYPE,
+        attributes: '*',
+        relationships: ['item_type'],
       }),
     );
   }
@@ -151,9 +153,10 @@ export default class Item extends BaseResource {
    */
   create(body: SimpleSchemaTypes.ItemCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.ItemCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.ItemCreateSchema>(body, {
         type: Item.TYPE,
+        attributes: '*',
+        relationships: ['item_type'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemCreateTargetSchema>(
@@ -213,10 +216,11 @@ export default class Item extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(itemId),
-      Utils.serializeRequestBody<SchemaTypes.ItemUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.ItemUpdateSchema>(body, {
         id: Utils.toId(itemId),
         type: Item.TYPE,
+        attributes: '*',
+        relationships: ['creator'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemUpdateTargetSchema>(
@@ -497,9 +501,10 @@ export default class Item extends BaseResource {
    */
   bulkPublish(body: SimpleSchemaTypes.ItemBulkPublishSchema) {
     return this.rawBulkPublish(
-      Utils.serializeRequestBody<SchemaTypes.ItemBulkPublishSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.ItemBulkPublishSchema>(body, {
         type: Item.TYPE,
+        attributes: [],
+        relationships: ['items'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemBulkPublishJobSchema>(
@@ -530,9 +535,10 @@ export default class Item extends BaseResource {
    */
   bulkUnpublish(body: SimpleSchemaTypes.ItemBulkUnpublishSchema) {
     return this.rawBulkUnpublish(
-      Utils.serializeRequestBody<SchemaTypes.ItemBulkUnpublishSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.ItemBulkUnpublishSchema>(body, {
         type: Item.TYPE,
+        attributes: [],
+        relationships: ['items'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemBulkUnpublishJobSchema>(
@@ -563,9 +569,10 @@ export default class Item extends BaseResource {
    */
   bulkDestroy(body: SimpleSchemaTypes.ItemBulkDestroySchema) {
     return this.rawBulkDestroy(
-      Utils.serializeRequestBody<SchemaTypes.ItemBulkDestroySchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.ItemBulkDestroySchema>(body, {
         type: Item.TYPE,
+        attributes: [],
+        relationships: ['items'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemBulkDestroyJobSchema>(
@@ -596,9 +603,10 @@ export default class Item extends BaseResource {
    */
   bulkMoveToStage(body: SimpleSchemaTypes.ItemBulkMoveToStageSchema) {
     return this.rawBulkMoveToStage(
-      Utils.serializeRequestBody<SchemaTypes.ItemBulkMoveToStageSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.ItemBulkMoveToStageSchema>(body, {
         type: Item.TYPE,
+        attributes: ['stage'],
+        relationships: ['items'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemBulkMoveToStageJobSchema>(

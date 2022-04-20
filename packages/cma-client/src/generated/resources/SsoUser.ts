@@ -36,7 +36,7 @@ export default class SsoUser extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-user/self
    */
-  find(userId: string | SimpleSchemaTypes.SsoUserData) {
+  find(userId: string | SimpleSchemaTypes.UserData) {
     return this.rawFind(Utils.toId(userId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SsoUserSelfTargetSchema>(
         body,
@@ -87,7 +87,7 @@ export default class SsoUser extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-user/destroy
    */
   destroy(
-    userId: string | SimpleSchemaTypes.SsoUserData,
+    userId: string | SimpleSchemaTypes.UserData,
     queryParams?: SimpleSchemaTypes.SsoUserDestroyHrefSchema,
   ) {
     return this.rawDestroy(Utils.toId(userId), queryParams).then((body) =>

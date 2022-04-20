@@ -11,10 +11,14 @@ export default class AccountSubscription extends BaseResource {
    */
   create(body: SimpleSchemaTypes.AccountSubscriptionCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.AccountSubscriptionCreateSchema>({
+      Utils.serializeRequestBody<SchemaTypes.AccountSubscriptionCreateSchema>(
         body,
-        type: AccountSubscription.TYPE,
-      }),
+        {
+          type: AccountSubscription.TYPE,
+          attributes: ['payment_intent_id', 'recurrence', 'billing_profile'],
+          relationships: ['plan'],
+        },
+      ),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccountSubscriptionCreateTargetSchema>(
         body,
@@ -43,9 +47,11 @@ export default class AccountSubscription extends BaseResource {
   simulate(body: SimpleSchemaTypes.AccountSubscriptionSimulateSchema) {
     return this.rawSimulate(
       Utils.serializeRequestBody<SchemaTypes.AccountSubscriptionSimulateSchema>(
+        body,
         {
-          body,
           type: AccountSubscription.TYPE,
+          attributes: ['recurrence', 'billing_profile'],
+          relationships: ['plan'],
         },
       ),
     ).then((body) =>
@@ -76,9 +82,11 @@ export default class AccountSubscription extends BaseResource {
   validate(body: SimpleSchemaTypes.AccountSubscriptionValidateSchema) {
     return this.rawValidate(
       Utils.serializeRequestBody<SchemaTypes.AccountSubscriptionValidateSchema>(
+        body,
         {
-          body,
           type: AccountSubscription.TYPE,
+          attributes: [],
+          relationships: ['plan'],
         },
       ),
     ).then((body) =>

@@ -12,15 +12,19 @@ export default class ScheduledPublication extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/scheduled-publication/create
    */
   create(
-    itemId: string | SimpleSchemaTypes.ScheduledPublicationData,
+    itemId: string | SimpleSchemaTypes.ItemData,
     body: SimpleSchemaTypes.ScheduledPublicationCreateSchema,
   ) {
     return this.rawCreate(
       Utils.toId(itemId),
-      Utils.serializeRequestBody<SchemaTypes.ScheduledPublicationCreateSchema>({
+      Utils.serializeRequestBody<SchemaTypes.ScheduledPublicationCreateSchema>(
         body,
-        type: ScheduledPublication.TYPE,
-      }),
+        {
+          type: ScheduledPublication.TYPE,
+          attributes: ['publication_scheduled_at'],
+          relationships: [],
+        },
+      ),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ScheduledPublicationCreateTargetSchema>(
         body,
@@ -51,7 +55,7 @@ export default class ScheduledPublication extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/scheduled-publication/destroy
    */
-  destroy(itemId: string | SimpleSchemaTypes.ScheduledPublicationData) {
+  destroy(itemId: string | SimpleSchemaTypes.ItemData) {
     return this.rawDestroy(Utils.toId(itemId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ScheduledPublicationDestroyTargetSchema>(
         body,

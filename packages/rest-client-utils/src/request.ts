@@ -7,11 +7,11 @@ export enum LogLevel {
   /** No logging */
   NONE = 0,
   /** Logs HTTP requests (method, URL) and responses (status) */
-  INFO = 1,
-  /** Logs HTTP requests (method, URL, headers) and responses (status, headers) */
-  DEBUG = 2,
+  BASIC = 1,
+  /** Logs HTTP requests (method, URL, body) and responses (status, body) */
+  BODY = 2,
   /** Logs HTTP requests (method, URL, headers, body) and responses (status, headers, body) */
-  TRACE = 3,
+  BODY_AND_HEADERS = 3,
 }
 
 type RequestOptions = {
@@ -132,14 +132,14 @@ export async function request<T>(options: RequestOptions): Promise<T> {
 
   const url = `${baseUrl}${options.url}${queryString}`;
 
-  if (logLevel) {
+  if (logLevel >= LogLevel.BASIC) {
     console.log(`[${requestId}] ${options.method} ${url}`);
-    if (logLevel >= 2) {
+    if (logLevel >= LogLevel.BODY_AND_HEADERS) {
       for (const [key, value] of Object.entries(headers || {})) {
         console.log(`[${requestId}] ${key}: ${value}`);
       }
     }
-    if (logLevel >= 3 && body) {
+    if (logLevel >= LogLevel.BODY && body) {
       console.log(`[${requestId}] ${body}`);
     }
   }
@@ -171,7 +171,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
           parseInt(response.headers.get('X-RateLimit-Reset')!, 10)
         : retryCount;
 
-      if (logLevel) {
+      if (logLevel >= LogLevel.BASIC) {
         console.log(
           `[${requestId}] Rate limit exceeded, waiting ${waitTimeInSecs} seconds...`,
         );
@@ -182,11 +182,11 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       return request({ ...options, retryCount: retryCount + 1 });
     }
 
-    if (logLevel) {
+    if (logLevel >= LogLevel.BASIC) {
       console.log(
         `[${requestId}] Status: ${response.status} (${response.statusText})`,
       );
-      if (logLevel >= 2) {
+      if (logLevel >= LogLevel.BODY_AND_HEADERS) {
         [
           'content-type',
           'x-api-version',
@@ -205,7 +205,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
     let responseBody =
       response.status === 204 ? undefined : await response.json();
 
-    if (logLevel >= 3 && responseBody) {
+    if (logLevel >= LogLevel.BODY && responseBody) {
       console.log(`[${requestId}] ${JSON.stringify(responseBody, null, 2)}`);
     }
 
@@ -249,7 +249,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       autoRetry &&
       error.findErrorWithCode('BATCH_DATA_VALIDATION_IN_PROGRESS')
     ) {
-      if (logLevel) {
+      if (logLevel >= LogLevel.BASIC) {
         console.log(
           `[${requestId}] Data validation in progress, waiting ${retryCount} seconds...`,
         );
@@ -263,7 +263,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
     throw error;
   } catch (error) {
     if (isErrorWithCode(error) && error.code.includes('ETIMEDOUT')) {
-      if (logLevel) {
+      if (logLevel >= LogLevel.BASIC) {
         console.log(
           `[${requestId}] Error ${error.code}, waiting ${retryCount} seconds...`,
         );

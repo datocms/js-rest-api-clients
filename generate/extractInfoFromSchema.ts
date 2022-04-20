@@ -14,9 +14,18 @@ export type EndpointInfo = {
   urlTemplate: string;
   method: string;
   comment: string;
-  urlPlaceholder?: string;
-  urlPlaceholderIsEntityId?: boolean;
+  docUrl?: string;
+  urlPlaceholder?: {
+    variableName: string;
+    isEntityId: boolean;
+    relType: string;
+  };
+  simpleMethodAvailable: boolean;
   requestBodyType?: string;
+  requestStructure?: {
+    attributes: string[] | '*';
+    relationships: string[] | '*';
+  };
   queryParamsType?: string;
   responseType?: string;
   deprecated?: string;
@@ -31,7 +40,6 @@ export type ResourceInfo = {
   namespace: string;
   resourceClassName: string;
   endpoints: EndpointInfo[];
-  entityRelType: string;
 };
 
 export type SchemaInfo = {
@@ -69,6 +77,72 @@ async function downloadHyperschema(url: string) {
   return await response.json();
 }
 
+function recursivelyFindSchemaKeys(schema: JsonRefParser.JSONSchema): string[] {
+  if (schema.type === 'object') {
+    if (!schema.properties || typeof schema.properties !== 'object') {
+      throw new NoPropertiesDefinedError('Missing properties!');
+    }
+    return Object.keys(schema.properties);
+  }
+
+  if (schema.anyOf) {
+    return schema.anyOf.map((x) => recursivelyFindSchemaKeys(x)).flat();
+  }
+
+  throw new Error('Ouch! 2');
+}
+
+class NoPropertiesDefinedError extends Error {}
+
+function findPropertiesInProperty(
+  schema: JsonRefParser.JSONSchema,
+  property: string,
+): string[] {
+  if (schema.type === 'object') {
+    if (!schema.properties || typeof schema.properties !== 'object') {
+      throw new Error('Ouch');
+    }
+
+    const propertySchema = schema.properties[property];
+
+    if (!propertySchema) {
+      return [];
+    }
+
+    if (typeof propertySchema !== 'object') {
+      throw new Error('Ouch');
+    }
+
+    return recursivelyFindSchemaKeys(propertySchema);
+  }
+
+  if (schema.anyOf) {
+    return schema.anyOf
+      .map((x) => findPropertiesInProperty(x, property))
+      .flat();
+  }
+
+  throw new Error("Don't know how to handle!");
+}
+
+function findPropertiesInDataProperty(
+  schema: JsonRefParser.JSONSchema,
+  property: string,
+): string[] | '*' {
+  if (typeof schema.properties?.data !== 'object') {
+    return [];
+  }
+
+  try {
+    return findPropertiesInProperty(schema.properties.data, property);
+  } catch (e) {
+    if (e instanceof NoPropertiesDefinedError) {
+      return '*';
+    }
+    throw e;
+  }
+}
+
 function generateResourceInfo(
   isCma: boolean,
   jsonApiType: string,
@@ -79,17 +153,17 @@ function generateResourceInfo(
   }
 
   const endpoints = schema.links.map<EndpointInfo>((link) => {
-    const urlPlaceholders: string[] = [];
-    let urlPlaceholderIsEntityId = false;
+    const urlPlaceholders: EndpointInfo['urlPlaceholder'][] = [];
 
     const urlTemplate = link.href.replace(
       identityRegexp,
       (match, placeholder) => {
         const variableName = toSafeName(`${placeholder}_id`, false);
-        urlPlaceholders.push(variableName);
-        if (placeholder === jsonApiType) {
-          urlPlaceholderIsEntityId = true;
-        }
+        urlPlaceholders.push({
+          variableName,
+          isEntityId: placeholder === jsonApiType,
+          relType: toSafeName(`${placeholder}_data`, true),
+        });
         return '${' + variableName + '}';
       },
     );
@@ -139,7 +213,7 @@ function generateResourceInfo(
         }
       : undefined;
 
-    return {
+    const endpointInfo: EndpointInfo = {
       returnsCollection: ['query', 'instances'].some((x) =>
         link.rel.includes(x),
       ),
@@ -155,9 +229,18 @@ function generateResourceInfo(
       method: link.method,
       comment: link.title,
       urlPlaceholder: urlPlaceholders[0] || undefined,
-      urlPlaceholderIsEntityId,
       requestBodyType: link.schema
         ? `${toSafeName(baseTypeName, true)}${toSafeName(link.rel, true)}Schema`
+        : undefined,
+      simpleMethodAvailable: true,
+      requestStructure: link.schema
+        ? {
+            attributes: findPropertiesInDataProperty(link.schema, 'attributes'),
+            relationships: findPropertiesInDataProperty(
+              link.schema,
+              'relationships',
+            ),
+          }
         : undefined,
       queryParamsType: link.hrefSchema
         ? `${toSafeName(baseTypeName, true)}${toSafeName(
@@ -171,6 +254,23 @@ function generateResourceInfo(
         ? 'This API call is to be considered private and might change without notice'
         : undefined,
     };
+
+    if (
+      endpointInfo.requestStructure &&
+      ((endpointInfo.requestStructure.attributes === '*' &&
+        endpointInfo.requestStructure.relationships === '*') ||
+        (Array.isArray(endpointInfo.requestStructure.attributes) &&
+          Array.isArray(endpointInfo.requestStructure.relationships) &&
+          endpointInfo.requestStructure.attributes.some((x) =>
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            endpointInfo.requestStructure!.relationships.includes(x),
+          )))
+    ) {
+      endpointInfo.simpleMethodAvailable = false;
+      console.log(`Too much ambiguity! ${jsonApiType}.${link.rel}`);
+    }
+
+    return endpointInfo;
   });
 
   return {
@@ -185,7 +285,6 @@ function generateResourceInfo(
       false,
     ),
     resourceClassName: toSafeName(jsonApiType, true),
-    entityRelType: toSafeName(`${jsonApiType}_data`, true),
   };
 }
 

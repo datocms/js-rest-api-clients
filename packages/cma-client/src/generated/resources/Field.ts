@@ -12,14 +12,26 @@ export default class Field extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/create
    */
   create(
-    itemTypeId: string | SimpleSchemaTypes.FieldData,
+    itemTypeId: string | SimpleSchemaTypes.ItemTypeData,
     body: SimpleSchemaTypes.FieldCreateSchema,
   ) {
     return this.rawCreate(
       Utils.toId(itemTypeId),
-      Utils.serializeRequestBody<SchemaTypes.FieldCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.FieldCreateSchema>(body, {
         type: Field.TYPE,
+        attributes: [
+          'label',
+          'field_type',
+          'api_key',
+          'localized',
+          'validators',
+          'appeareance',
+          'appearance',
+          'position',
+          'hint',
+          'default_value',
+        ],
+        relationships: ['fieldset'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.FieldCreateJobSchema>(
@@ -55,10 +67,22 @@ export default class Field extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(fieldId),
-      Utils.serializeRequestBody<SchemaTypes.FieldUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.FieldUpdateSchema>(body, {
         id: Utils.toId(fieldId),
         type: Field.TYPE,
+        attributes: [
+          'default_value',
+          'label',
+          'api_key',
+          'localized',
+          'validators',
+          'appeareance',
+          'appearance',
+          'position',
+          'field_type',
+          'hint',
+        ],
+        relationships: ['fieldset'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.FieldUpdateJobSchema>(
@@ -88,7 +112,7 @@ export default class Field extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/instances
    */
-  list(itemTypeId: string | SimpleSchemaTypes.FieldData) {
+  list(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
     return this.rawList(Utils.toId(itemTypeId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.FieldInstancesTargetSchema>(
         body,
@@ -115,7 +139,7 @@ export default class Field extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  referencing(itemTypeId: string | SimpleSchemaTypes.FieldData) {
+  referencing(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
     return this.rawReferencing(Utils.toId(itemTypeId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.FieldReferencingTargetSchema>(
         body,
@@ -146,7 +170,7 @@ export default class Field extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  related(itemTypeId: string | SimpleSchemaTypes.FieldData) {
+  related(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
     return this.rawRelated(Utils.toId(itemTypeId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.FieldRelatedTargetSchema>(
         body,

@@ -13,9 +13,10 @@ export default class MenuItem extends BaseResource {
    */
   create(body: SimpleSchemaTypes.MenuItemCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.MenuItemCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.MenuItemCreateSchema>(body, {
         type: MenuItem.TYPE,
+        attributes: ['label', 'external_url', 'position', 'open_in_new_tab'],
+        relationships: ['item_type', 'parent'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.MenuItemCreateTargetSchema>(
@@ -50,10 +51,11 @@ export default class MenuItem extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(menuItemId),
-      Utils.serializeRequestBody<SchemaTypes.MenuItemUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.MenuItemUpdateSchema>(body, {
         id: Utils.toId(menuItemId),
         type: MenuItem.TYPE,
+        attributes: ['label', 'external_url', 'position', 'open_in_new_tab'],
+        relationships: ['item_type', 'parent'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.MenuItemUpdateTargetSchema>(

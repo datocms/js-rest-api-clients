@@ -13,9 +13,30 @@ export default class ItemType extends BaseResource {
    */
   create(body: SimpleSchemaTypes.ItemTypeCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.ItemTypeCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.ItemTypeCreateSchema>(body, {
         type: ItemType.TYPE,
+        attributes: [
+          'name',
+          'api_key',
+          'singleton',
+          'all_locales_required',
+          'sortable',
+          'modular_block',
+          'draft_mode_active',
+          'tree',
+          'ordering_direction',
+          'ordering_meta',
+          'collection_appeareance',
+          'collection_appearance',
+          'hint',
+        ],
+        relationships: [
+          'ordering_field',
+          'title_field',
+          'image_preview_field',
+          'excerpt_field',
+          'workflow',
+        ],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeCreateTargetSchema>(
@@ -50,10 +71,32 @@ export default class ItemType extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(itemTypeId),
-      Utils.serializeRequestBody<SchemaTypes.ItemTypeUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.ItemTypeUpdateSchema>(body, {
         id: Utils.toId(itemTypeId),
         type: ItemType.TYPE,
+        attributes: [
+          'name',
+          'api_key',
+          'collection_appeareance',
+          'collection_appearance',
+          'singleton',
+          'all_locales_required',
+          'sortable',
+          'modular_block',
+          'draft_mode_active',
+          'tree',
+          'ordering_direction',
+          'ordering_meta',
+          'has_singleton_item',
+          'hint',
+        ],
+        relationships: [
+          'ordering_field',
+          'title_field',
+          'image_preview_field',
+          'excerpt_field',
+          'workflow',
+        ],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeUpdateJobSchema>(

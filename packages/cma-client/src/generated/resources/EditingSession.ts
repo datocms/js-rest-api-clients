@@ -50,10 +50,11 @@ export default class EditingSession extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(editingSessionId),
-      Utils.serializeRequestBody<SchemaTypes.EditingSessionUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.EditingSessionUpdateSchema>(body, {
         id: Utils.toId(editingSessionId),
         type: EditingSession.TYPE,
+        attributes: [],
+        relationships: ['item', 'item', 'item'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.EditingSessionUpdateTargetSchema>(

@@ -13,9 +13,15 @@ export default class AccessToken extends BaseResource {
    */
   create(body: SimpleSchemaTypes.AccessTokenCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.AccessTokenCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.AccessTokenCreateSchema>(body, {
         type: AccessToken.TYPE,
+        attributes: [
+          'name',
+          'can_access_cda',
+          'can_access_cda_preview',
+          'can_access_cma',
+        ],
+        relationships: ['role'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenCreateTargetSchema>(
@@ -45,14 +51,20 @@ export default class AccessToken extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/update
    */
   update(
-    userId: string | SimpleSchemaTypes.AccessTokenData,
+    userId: string | SimpleSchemaTypes.UserData,
     body: SimpleSchemaTypes.AccessTokenUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(userId),
-      Utils.serializeRequestBody<SchemaTypes.AccessTokenUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.AccessTokenUpdateSchema>(body, {
         type: AccessToken.TYPE,
+        attributes: [
+          'name',
+          'can_access_cda',
+          'can_access_cda_preview',
+          'can_access_cma',
+        ],
+        relationships: ['role'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenUpdateTargetSchema>(
@@ -107,7 +119,7 @@ export default class AccessToken extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/self
    */
-  find(userId: string | SimpleSchemaTypes.AccessTokenData) {
+  find(userId: string | SimpleSchemaTypes.UserData) {
     return this.rawFind(Utils.toId(userId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenSelfTargetSchema>(
         body,
@@ -132,7 +144,7 @@ export default class AccessToken extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/regenerate_token
    */
-  regenerateToken(userId: string | SimpleSchemaTypes.AccessTokenData) {
+  regenerateToken(userId: string | SimpleSchemaTypes.UserData) {
     return this.rawRegenerateToken(Utils.toId(userId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenRegenerateTokenTargetSchema>(
         body,
@@ -162,7 +174,7 @@ export default class AccessToken extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/destroy
    */
   destroy(
-    userId: string | SimpleSchemaTypes.AccessTokenData,
+    userId: string | SimpleSchemaTypes.UserData,
     queryParams?: SimpleSchemaTypes.AccessTokenDestroyHrefSchema,
   ) {
     return this.rawDestroy(Utils.toId(userId), queryParams).then((body) =>

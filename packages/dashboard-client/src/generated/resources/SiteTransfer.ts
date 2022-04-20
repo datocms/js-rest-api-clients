@@ -54,14 +54,15 @@ export default class SiteTransfer extends BaseResource {
    * Create a new site transfer request
    */
   create(
-    siteId: string | SimpleSchemaTypes.SiteTransferData,
+    siteId: string | SimpleSchemaTypes.SiteData,
     body: SimpleSchemaTypes.SiteTransferCreateSchema,
   ) {
     return this.rawCreate(
       Utils.toId(siteId),
-      Utils.serializeRequestBody<SchemaTypes.SiteTransferCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.SiteTransferCreateSchema>(body, {
         type: SiteTransfer.TYPE,
+        attributes: ['account_email'],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SiteTransferCreateTargetSchema>(
@@ -87,7 +88,7 @@ export default class SiteTransfer extends BaseResource {
   /**
    * Destroy a site transfer request
    */
-  destroy(siteId: string | SimpleSchemaTypes.SiteTransferData) {
+  destroy(siteId: string | SimpleSchemaTypes.SiteData) {
     return this.rawDestroy(Utils.toId(siteId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SiteTransferDestroyTargetSchema>(
         body,
@@ -110,27 +111,6 @@ export default class SiteTransfer extends BaseResource {
   /**
    * Simulate accept
    */
-  simulateAccept(
-    siteTransferId: string | SimpleSchemaTypes.SiteTransferData,
-    body: SimpleSchemaTypes.SiteTransferSimulateAcceptSchema,
-  ) {
-    return this.rawSimulateAccept(
-      Utils.toId(siteTransferId),
-      Utils.serializeRequestBody<SchemaTypes.SiteTransferSimulateAcceptSchema>({
-        body,
-        id: Utils.toId(siteTransferId),
-        type: SiteTransfer.TYPE,
-      }),
-    ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteTransferSimulateAcceptTargetSchema>(
-        body,
-      ),
-    );
-  }
-
-  /**
-   * Simulate accept
-   */
   rawSimulateAccept(
     siteTransferId: string,
     body: SchemaTypes.SiteTransferSimulateAcceptSchema,
@@ -141,27 +121,6 @@ export default class SiteTransfer extends BaseResource {
         url: `/site-transfers/${siteTransferId}/simulate-accept`,
         body,
       },
-    );
-  }
-
-  /**
-   * Accept a site transfer request
-   */
-  accept(
-    siteTransferId: string | SimpleSchemaTypes.SiteTransferData,
-    body: SimpleSchemaTypes.SiteTransferAcceptSchema,
-  ) {
-    return this.rawAccept(
-      Utils.toId(siteTransferId),
-      Utils.serializeRequestBody<SchemaTypes.SiteTransferAcceptSchema>({
-        body,
-        id: Utils.toId(siteTransferId),
-        type: SiteTransfer.TYPE,
-      }),
-    ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteTransferAcceptTargetSchema>(
-        body,
-      ),
     );
   }
 

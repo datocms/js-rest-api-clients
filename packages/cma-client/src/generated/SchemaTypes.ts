@@ -3124,7 +3124,7 @@ export interface MenuItemCreateSchema {
        */
       open_in_new_tab?: boolean;
     };
-    relationships: {
+    relationships?: {
       /**
        * item type associated with the menu item
        */
@@ -3160,7 +3160,7 @@ export interface MenuItemUpdateSchema {
     /**
      * JSON API attributes
      */
-    attributes: {
+    attributes?: {
       /**
        * The label of the menu item
        */
@@ -3178,7 +3178,7 @@ export interface MenuItemUpdateSchema {
        */
       open_in_new_tab?: boolean;
     };
-    relationships: {
+    relationships?: {
       /**
        * item type associated with the menu item
        */

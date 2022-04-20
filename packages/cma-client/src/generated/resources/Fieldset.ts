@@ -12,14 +12,21 @@ export default class Fieldset extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/create
    */
   create(
-    itemTypeId: string | SimpleSchemaTypes.FieldsetData,
+    itemTypeId: string | SimpleSchemaTypes.ItemTypeData,
     body: SimpleSchemaTypes.FieldsetCreateSchema,
   ) {
     return this.rawCreate(
       Utils.toId(itemTypeId),
-      Utils.serializeRequestBody<SchemaTypes.FieldsetCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.FieldsetCreateSchema>(body, {
         type: Fieldset.TYPE,
+        attributes: [
+          'title',
+          'hint',
+          'position',
+          'collapsible',
+          'start_collapsed',
+        ],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.FieldsetCreateTargetSchema>(
@@ -55,10 +62,17 @@ export default class Fieldset extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(fieldsetId),
-      Utils.serializeRequestBody<SchemaTypes.FieldsetUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.FieldsetUpdateSchema>(body, {
         id: Utils.toId(fieldsetId),
         type: Fieldset.TYPE,
+        attributes: [
+          'title',
+          'hint',
+          'position',
+          'collapsible',
+          'start_collapsed',
+        ],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.FieldsetUpdateTargetSchema>(
@@ -88,7 +102,7 @@ export default class Fieldset extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/instances
    */
-  list(itemTypeId: string | SimpleSchemaTypes.FieldsetData) {
+  list(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
     return this.rawList(Utils.toId(itemTypeId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.FieldsetInstancesTargetSchema>(
         body,

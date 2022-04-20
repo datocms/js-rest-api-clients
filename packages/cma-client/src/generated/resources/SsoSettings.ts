@@ -65,9 +65,10 @@ export default class SsoSettings extends BaseResource {
    */
   update(body: SimpleSchemaTypes.SsoSettingsUpdateSchema) {
     return this.rawUpdate(
-      Utils.serializeRequestBody<SchemaTypes.SsoSettingsUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.SsoSettingsUpdateSchema>(body, {
         type: SsoSettings.TYPE,
+        attributes: ['idp_saml_metadata_url'],
+        relationships: ['default_role'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SsoSettingsUpdateTargetSchema>(

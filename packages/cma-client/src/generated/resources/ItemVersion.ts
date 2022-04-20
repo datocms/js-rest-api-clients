@@ -39,7 +39,7 @@ export default class ItemVersion extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-version/instances
    */
   list(
-    itemId: string | SimpleSchemaTypes.ItemVersionData,
+    itemId: string | SimpleSchemaTypes.ItemData,
     queryParams?: SimpleSchemaTypes.ItemVersionInstancesHrefSchema,
   ) {
     return this.rawList(Utils.toId(itemId), queryParams).then((body) =>
@@ -71,7 +71,7 @@ export default class ItemVersion extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-version/instances
    */
   async *listPagedIterator(
-    itemId: string | SimpleSchemaTypes.ItemVersionData,
+    itemId: string | SimpleSchemaTypes.ItemData,
     queryParams?: SimpleSchemaTypes.ItemVersionInstancesHrefSchema,
     iteratorOptions?: Utils.IteratorOptions,
   ) {

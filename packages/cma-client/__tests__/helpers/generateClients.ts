@@ -17,7 +17,6 @@ export async function generateNewDashboardClient(
   const client = new DashboardClient({
     apiToken: null,
     baseUrl: process.env.ACCOUNT_API_BASE_URL,
-    logLevel: LogLevel.INFO,
   });
 
   const account = await client.account.create({
@@ -47,6 +46,5 @@ export async function generateNewCmaClient(
     ...config,
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     apiToken: site.readwrite_token!,
-    logLevel: LogLevel.TRACE,
   });
 }

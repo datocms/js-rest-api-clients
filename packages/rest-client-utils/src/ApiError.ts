@@ -120,9 +120,7 @@ export class ApiError extends Error {
     let message = `${initObject.request.method} ${initObject.request.url}: ${this.response.status} ${this.response.statusText}`;
 
     if (this.errors.length > 0) {
-      message += ` (${this.errors
-        .map((e) => e.attributes.code)
-        .join(', ')}, ${JSON.stringify(this.errors[0].attributes.details)})`;
+      message += `\n\n${JSON.stringify(this.errors, null, 2)}`;
     }
 
     this.message = message;

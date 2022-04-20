@@ -10,7 +10,11 @@ import extractInfoFromSchema, {
 import prettier from 'prettier';
 import toSafeName from './toSafeName';
 
-const handlebarOptions: Handlebars.RuntimeOptions = {};
+const handlebarOptions: Handlebars.RuntimeOptions = {
+  helpers: {
+    stringify: (x: unknown) => JSON.stringify(x, null, 2),
+  },
+};
 
 function readTemplate<T>(template: string) {
   return Handlebars.compile<T>(
@@ -45,6 +49,12 @@ async function generate(prefix: string, hyperschemaUrl: string) {
   rimraf.sync(`./packages/${prefix}-client/src/generated`);
   mkdirSync(`./packages/${prefix}-client/src/generated`);
   mkdirSync(`./packages/${prefix}-client/src/generated/resources`);
+
+  await writeTemplate<{ schemaInfo: string }>(
+    'schemaInfo.ts',
+    { schemaInfo: JSON.stringify(schemaInfo, null, 2) },
+    `./packages/${prefix}-client/src/generated/schemaInfo.ts`,
+  );
 
   await writeTemplate<
     SchemaInfo & { baseUrl: string; isCma: boolean; prefix: string }

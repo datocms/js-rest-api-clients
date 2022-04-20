@@ -38,9 +38,20 @@ export default class Site extends BaseResource {
    */
   update(body: SimpleSchemaTypes.SiteUpdateSchema) {
     return this.rawUpdate(
-      Utils.serializeRequestBody<SchemaTypes.SiteUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.SiteUpdateSchema>(body, {
         type: Site.TYPE,
+        attributes: [
+          'no_index',
+          'favicon',
+          'global_seo',
+          'name',
+          'theme',
+          'locales',
+          'timezone',
+          'require_2fa',
+          'ip_tracking_enabled',
+        ],
+        relationships: ['sso_default_role'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SiteUpdateJobSchema>(

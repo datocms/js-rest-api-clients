@@ -7,50 +7,56 @@ export default class {{{resourceClassName}}} extends BaseResource {
   static readonly TYPE: '{{jsonApiType}}' = '{{jsonApiType}}';
 
   {{#each endpoints}}
-  /**
-   * {{{comment}}}
-   {{#if docUrl}}
-   *
-   * Read more: {{{docUrl}}}
-   {{/if}}
-   {{#if deprecated}}
-   *
-   * @deprecated {{{deprecated}}}
-  {{/if}}
-   */
-  {{{name}}}(
-    {{#if urlPlaceholder}}
-      {{{urlPlaceholder}}}: string | SimpleSchemaTypes.{{{../entityRelType}}},
-    {{/if}}
-    {{#if queryParamsType}}
-      queryParams{{#unless requestBodyType}}?{{/unless}}: SimpleSchemaTypes.{{{queryParamsType}}},
-    {{/if}}
-    {{#if requestBodyType}}
-      body: SimpleSchemaTypes.{{{requestBodyType}}},
-    {{/if}}
-  ) {
-    return this.{{{rawName}}}(
+    {{#if simpleMethodAvailable}}
+      /**
+      * {{{comment}}}
+      {{#if docUrl}}
+      *
+      * Read more: {{{docUrl}}}
+      {{/if}}
+      {{#if deprecated}}
+      *
+      * @deprecated {{{deprecated}}}
+      {{/if}}
+      */
+      {{{name}}}(
         {{#if urlPlaceholder}}
-          Utils.toId({{{urlPlaceholder}}}),
+          {{{urlPlaceholder.variableName}}}: string | SimpleSchemaTypes.{{{urlPlaceholder.relType}}},
         {{/if}}
         {{#if queryParamsType}}
-          queryParams,
+          queryParams{{#unless requestBodyType}}?{{/unless}}: SimpleSchemaTypes.{{{queryParamsType}}},
         {{/if}}
         {{#if requestBodyType}}
-          Utils.serializeRequestBody<SchemaTypes.{{{requestBodyType}}}>({
-            body,
-            {{#if urlPlaceholderIsEntityId}}
-              id: Utils.toId({{{urlPlaceholder}}}),
-            {{/if}}
-            type: {{{../resourceClassName}}}.TYPE,
-          }),
+          body: SimpleSchemaTypes.{{{requestBodyType}}},
         {{/if}}
-      )
-      {{#if responseType}}
-      .then(body => Utils.deserializeResponseBody<SimpleSchemaTypes.{{{responseType}}}>(body))
-      {{/if}}
-    ;
-  }
+      ) {
+        return this.{{{rawName}}}(
+            {{#if urlPlaceholder}}
+              Utils.toId({{{urlPlaceholder.variableName}}}),
+            {{/if}}
+            {{#if queryParamsType}}
+              queryParams,
+            {{/if}}
+            {{#if requestBodyType}}
+              Utils.serializeRequestBody<SchemaTypes.{{{requestBodyType}}}>(
+                body,
+                {
+                  {{#if urlPlaceholder.isEntityId}}
+                    id: Utils.toId({{{urlPlaceholder.variableName}}}),
+                  {{/if}}
+                  type: {{{../resourceClassName}}}.TYPE,
+                  attributes: {{{stringify requestStructure.attributes}}},
+                  relationships: {{{stringify requestStructure.relationships}}},
+                },
+              ),
+            {{/if}}
+          )
+          {{#if responseType}}
+          .then(body => Utils.deserializeResponseBody<SimpleSchemaTypes.{{{responseType}}}>(body))
+          {{/if}}
+        ;
+      }
+    {{/if}}
 
   /**
    * {{{comment}}}
@@ -65,7 +71,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
    */
   {{{rawName}}}(
     {{#if urlPlaceholder}}
-      {{{urlPlaceholder}}}: string,
+      {{{urlPlaceholder.variableName}}}: string,
     {{/if}}
     {{#if queryParamsType}}
       queryParams{{#unless requestBodyType}}?{{/unless}}: SchemaTypes.{{{queryParamsType}}},
@@ -99,32 +105,35 @@ export default class {{{resourceClassName}}} extends BaseResource {
   }
 
   {{#if paginatedResponse}}
-  /**
-   * Async iterator to auto-paginate over elements returned by {{{name}}}()
-   {{#if docUrl}}
-   *
-   * Read more: {{{docUrl}}}
-   {{/if}}
-   */
-    async *{{{name}}}PagedIterator(
-      {{#if urlPlaceholder}}
-        {{{urlPlaceholder}}}: string | SimpleSchemaTypes.{{{../entityRelType}}},
-      {{/if}}
-      queryParams?: SimpleSchemaTypes.{{{queryParamsType}}},
-      iteratorOptions?: Utils.IteratorOptions,
-    ) {
-      for await (const element of this.{{{rawName}}}PagedIterator(
+    {{#if simpleMethodAvailable}}
+
+    /**
+    * Async iterator to auto-paginate over elements returned by {{{name}}}()
+    {{#if docUrl}}
+    *
+    * Read more: {{{docUrl}}}
+    {{/if}}
+    */
+      async *{{{name}}}PagedIterator(
         {{#if urlPlaceholder}}
-          Utils.toId({{{urlPlaceholder}}}),
+          {{{urlPlaceholder.variableName}}}: string | SimpleSchemaTypes.{{{urlPlaceholder.relType}}},
         {{/if}}
-        queryParams,
-        iteratorOptions,
-      )) {
-        yield Utils.deserializeJsonEntity<
-          SimpleSchemaTypes.{{{responseType}}}[0]
-        >(element);
+        queryParams?: SimpleSchemaTypes.{{{queryParamsType}}},
+        iteratorOptions?: Utils.IteratorOptions,
+      ) {
+        for await (const element of this.{{{rawName}}}PagedIterator(
+          {{#if urlPlaceholder}}
+            Utils.toId({{{urlPlaceholder.variableName}}}),
+          {{/if}}
+          queryParams,
+          iteratorOptions,
+        )) {
+          yield Utils.deserializeJsonEntity<
+            SimpleSchemaTypes.{{{responseType}}}[0]
+          >(element);
+        }
       }
-    }
+    {{/if}}
 
   /**
    * Async iterator to auto-paginate over elements returned by {{{rawName}}}()
@@ -135,7 +144,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
    */
     {{{rawName}}}PagedIterator(
       {{#if urlPlaceholder}}
-        {{{urlPlaceholder}}}: string,
+        {{{urlPlaceholder.variableName}}}: string,
       {{/if}}
       queryParams?: SchemaTypes.{{{queryParamsType}}},
       iteratorOptions?: Utils.IteratorOptions,
@@ -149,7 +158,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
         },
         (page) => this.{{{rawName}}}(
           {{#if urlPlaceholder}}
-            {{{urlPlaceholder}}},
+            {{{urlPlaceholder.variableName}}},
           {{/if}}
           { ...queryParams, page },
         ),

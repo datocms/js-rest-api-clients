@@ -5,30 +5,33 @@ describe('build triggers', () => {
     const client = await generateNewCmaClient();
 
     const trigger = await client.buildTriggers.create({
-      adapter: 'custom',
       autotrigger_on_scheduled_publications: false,
-      adapter_settings: { trigger_url: 'https://www.google.com' },
+      adapter: 'custom',
+      adapter_settings: {
+        trigger_url: 'https://www.google.com',
+        headers: {},
+        payload: {},
+      },
       frontend_url: null,
       name: 'Foo',
       indexing_enabled: false,
     });
 
-    const foundBuildTriggers = await client.buildTriggers.find(trigger.id);
+    const foundBuildTriggers = await client.buildTriggers.find(trigger);
     expect(foundBuildTriggers.id).toEqual(trigger.id);
 
     const allBuildTriggers = await client.buildTriggers.list();
     expect(allBuildTriggers).toHaveLength(1);
 
-    await client.buildTriggers.trigger(trigger.id);
-    await client.buildTriggers.reindex(trigger.id);
+    await client.buildTriggers.trigger(trigger);
+    await client.buildTriggers.reindex(trigger);
 
-    // TODO Error: PUT https://site-api.datocms.com/build-triggers/20159: 422 Unprocessable Entity (INVALID_FIELD, {"field":"adapter_settings","code":"INVALID_FORMAT"})
-    const updatedTrigger = await client.buildTriggers.update(trigger.id, {
+    const updatedTrigger = await client.buildTriggers.update(trigger, {
       name: 'Updated',
     });
     expect(updatedTrigger.name).toEqual('Updated');
 
-    await client.buildTriggers.destroy(trigger.id);
+    await client.buildTriggers.destroy(trigger);
     expect(await client.buildTriggers.list()).toHaveLength(0);
   });
 });

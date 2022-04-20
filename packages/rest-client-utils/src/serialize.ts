@@ -1,8 +1,22 @@
-type Options = {
-  body: unknown;
-  id?: string;
-  type: string;
-};
+type Options =
+  | {
+      id?: string;
+      type: string;
+      attributes: '*';
+      relationships: string[];
+    }
+  | {
+      id?: string;
+      type: string;
+      attributes: string[];
+      relationships: '*';
+    }
+  | {
+      id?: string;
+      type: string;
+      attributes: string[];
+      relationships: string[];
+    };
 
 export type Rel = {
   id: string;
@@ -19,29 +33,75 @@ function isRelArray(object: unknown): object is Rel[] {
   return Array.isArray(object) && object.every(isRel);
 }
 
-export function serializeRequestBody<T>(options: Options): T {
-  if (typeof options.body !== 'object' || !options.body) {
+export function serializeRequestBody<T>(body: unknown, options: Options): T {
+  if (typeof body !== 'object' || !body) {
     throw new Error('Invalid body!');
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { id, type, meta, ...otherProperties } = options.body as any;
+  const { id, type, meta, ...otherProperties } = body as any;
 
   const attributes = {};
   const relationships = {};
 
-  Object.entries(otherProperties).forEach(([key, value]) => {
-    if (isRel(value)) {
-      const { id, type } = value;
-      relationships[key] = { data: { id, type } };
-    } else if (isRelArray(value)) {
-      relationships[key] = {
-        data: value.map(({ id, type }) => ({ id, type })),
-      };
-    } else {
-      attributes[key] = value;
-    }
-  });
+  if (options.attributes === '*') {
+    Object.entries(otherProperties).forEach(([key, value]) => {
+      if (options.relationships.includes(key)) {
+        if (isRel(value)) {
+          const { id, type } = value;
+          relationships[key] = { data: { id, type } };
+        } else if (isRelArray(value)) {
+          relationships[key] = {
+            data: value.map(({ id, type }) => ({ id, type })),
+          };
+        } else {
+          relationships[key] = {
+            data: null,
+          };
+        }
+      } else {
+        attributes[key] = value;
+      }
+    });
+  } else if (options.relationships === '*') {
+    Object.entries(otherProperties).forEach(([key, value]) => {
+      if (options.attributes.includes(key)) {
+        attributes[key] = value;
+      } else {
+        if (isRel(value)) {
+          const { id, type } = value;
+          relationships[key] = { data: { id, type } };
+        } else if (isRelArray(value)) {
+          relationships[key] = {
+            data: value.map(({ id, type }) => ({ id, type })),
+          };
+        } else {
+          relationships[key] = {
+            data: null,
+          };
+        }
+      }
+    });
+  } else {
+    Object.entries(otherProperties).forEach(([key, value]) => {
+      if (options.attributes.includes(key)) {
+        attributes[key] = value;
+      } else if (options.relationships.includes(key)) {
+        if (isRel(value)) {
+          const { id, type } = value;
+          relationships[key] = { data: { id, type } };
+        } else if (isRelArray(value)) {
+          relationships[key] = {
+            data: value.map(({ id, type }) => ({ id, type })),
+          };
+        } else {
+          relationships[key] = {
+            data: null,
+          };
+        }
+      }
+    });
+  }
 
   return {
     data: {

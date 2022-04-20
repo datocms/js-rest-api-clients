@@ -9,7 +9,7 @@ export default class SubscriptionLimit extends BaseResource {
   /**
    * Get all the subscription limits
    */
-  list(siteId: string | SimpleSchemaTypes.SubscriptionLimitData) {
+  list(siteId: string | SimpleSchemaTypes.SiteData) {
     return this.rawList(Utils.toId(siteId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SubscriptionLimitInstancesTargetSchema>(
         body,

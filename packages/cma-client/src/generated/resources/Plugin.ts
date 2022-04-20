@@ -13,9 +13,20 @@ export default class Plugin extends BaseResource {
    */
   create(body: SimpleSchemaTypes.PluginCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.PluginCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.PluginCreateSchema>(body, {
         type: Plugin.TYPE,
+        attributes: [
+          'package_name',
+          'name',
+          'description',
+          'url',
+          'permissions',
+          'plugin_type',
+          'field_types',
+          'parameter_definitions',
+          'package_version',
+        ],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.PluginCreateTargetSchema>(
@@ -50,10 +61,18 @@ export default class Plugin extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(pluginId),
-      Utils.serializeRequestBody<SchemaTypes.PluginUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.PluginUpdateSchema>(body, {
         id: Utils.toId(pluginId),
         type: Plugin.TYPE,
+        attributes: [
+          'name',
+          'description',
+          'url',
+          'parameters',
+          'package_version',
+          'permissions',
+        ],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.PluginUpdateTargetSchema>(

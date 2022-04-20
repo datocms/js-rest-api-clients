@@ -72,10 +72,12 @@ export default class PerSitePricingBillingProfile extends BaseResource {
     return this.rawUpdateCreditCard(
       Utils.toId(perSitePricingBillingProfileId),
       Utils.serializeRequestBody<SchemaTypes.PerSitePricingBillingProfileUpdateCreditCardSchema>(
+        body,
         {
-          body,
           id: Utils.toId(perSitePricingBillingProfileId),
           type: PerSitePricingBillingProfile.TYPE,
+          attributes: ['payment_intent_id'],
+          relationships: [],
         },
       ),
     ).then((body) =>
@@ -113,10 +115,24 @@ export default class PerSitePricingBillingProfile extends BaseResource {
     return this.rawUpdateInfo(
       Utils.toId(perSitePricingBillingProfileId),
       Utils.serializeRequestBody<SchemaTypes.PerSitePricingBillingProfileUpdateInfoSchema>(
+        body,
         {
-          body,
           id: Utils.toId(perSitePricingBillingProfileId),
           type: PerSitePricingBillingProfile.TYPE,
+          attributes: [
+            'first_name',
+            'last_name',
+            'company',
+            'address_line',
+            'city',
+            'email',
+            'country',
+            'state',
+            'zip',
+            'vat_number',
+            'cf_cod_fiscale',
+          ],
+          relationships: [],
         },
       ),
     ).then((body) =>

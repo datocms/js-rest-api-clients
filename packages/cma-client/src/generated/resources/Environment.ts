@@ -17,10 +17,11 @@ export default class Environment extends BaseResource {
   ) {
     return this.rawFork(
       Utils.toId(environmentId),
-      Utils.serializeRequestBody<SchemaTypes.EnvironmentForkSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.EnvironmentForkSchema>(body, {
         id: Utils.toId(environmentId),
         type: Environment.TYPE,
+        attributes: [],
+        relationships: [],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.EnvironmentForkJobSchema>(

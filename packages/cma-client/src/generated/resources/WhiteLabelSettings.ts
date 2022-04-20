@@ -38,10 +38,14 @@ export default class WhiteLabelSettings extends BaseResource {
    */
   update(body: SimpleSchemaTypes.WhiteLabelSettingsUpdateSchema) {
     return this.rawUpdate(
-      Utils.serializeRequestBody<SchemaTypes.WhiteLabelSettingsUpdateSchema>({
+      Utils.serializeRequestBody<SchemaTypes.WhiteLabelSettingsUpdateSchema>(
         body,
-        type: WhiteLabelSettings.TYPE,
-      }),
+        {
+          type: WhiteLabelSettings.TYPE,
+          attributes: ['custom_i18n_messages_template_url'],
+          relationships: [],
+        },
+      ),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.WhiteLabelSettingsUpdateTargetSchema>(
         body,

@@ -13,9 +13,36 @@ export default class Role extends BaseResource {
    */
   create(body: SimpleSchemaTypes.RoleCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.RoleCreateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.RoleCreateSchema>(body, {
         type: Role.TYPE,
+        attributes: [
+          'name',
+          'can_edit_favicon',
+          'can_edit_site',
+          'can_edit_schema',
+          'can_manage_menu',
+          'can_edit_environment',
+          'can_promote_environments',
+          'environments_access',
+          'can_manage_users',
+          'can_manage_shared_filters',
+          'can_manage_build_triggers',
+          'can_manage_webhooks',
+          'can_manage_environments',
+          'can_manage_sso',
+          'can_access_audit_log',
+          'can_manage_workflows',
+          'can_manage_access_tokens',
+          'can_perform_site_search',
+          'can_access_build_events_log',
+          'positive_item_type_permissions',
+          'negative_item_type_permissions',
+          'positive_upload_permissions',
+          'negative_upload_permissions',
+          'positive_build_trigger_permissions',
+          'negative_build_trigger_permissions',
+        ],
+        relationships: ['inherits_permissions_from'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.RoleCreateTargetSchema>(
@@ -50,10 +77,37 @@ export default class Role extends BaseResource {
   ) {
     return this.rawUpdate(
       Utils.toId(roleId),
-      Utils.serializeRequestBody<SchemaTypes.RoleUpdateSchema>({
-        body,
+      Utils.serializeRequestBody<SchemaTypes.RoleUpdateSchema>(body, {
         id: Utils.toId(roleId),
         type: Role.TYPE,
+        attributes: [
+          'name',
+          'can_edit_favicon',
+          'can_edit_site',
+          'can_edit_schema',
+          'can_manage_menu',
+          'can_edit_environment',
+          'can_promote_environments',
+          'environments_access',
+          'can_manage_users',
+          'can_manage_shared_filters',
+          'can_manage_build_triggers',
+          'can_manage_webhooks',
+          'can_manage_environments',
+          'can_manage_sso',
+          'can_access_audit_log',
+          'can_manage_workflows',
+          'can_manage_access_tokens',
+          'can_perform_site_search',
+          'can_access_build_events_log',
+          'positive_item_type_permissions',
+          'negative_item_type_permissions',
+          'positive_upload_permissions',
+          'negative_upload_permissions',
+          'positive_build_trigger_permissions',
+          'negative_build_trigger_permissions',
+        ],
+        relationships: ['inherits_permissions_from'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.RoleUpdateTargetSchema>(
