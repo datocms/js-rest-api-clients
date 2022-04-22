@@ -1,0 +1,1 @@
+# `@datocms/rest-api-events`
