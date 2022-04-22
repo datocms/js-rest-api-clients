@@ -1,11 +1,11 @@
 import {
-  Client as DashboardClient,
+  buildClient as buildDashboardClient,
   LogLevel,
   ClientConfigOptions as DashboardClientConfigOptions,
 } from '@datocms/dashboard-client';
 
 import {
-  Client as CmaClient,
+  buildClient as buildCmaClient,
   ClientConfigOptions as CmaClientConfigOptions,
 } from '../../src';
 
@@ -14,7 +14,7 @@ export async function generateNewDashboardClient(
 ) {
   const randomString = Math.random().toString(36).substring(7);
 
-  const client = new DashboardClient({
+  const client = buildDashboardClient({
     apiToken: null,
     baseUrl: process.env.ACCOUNT_API_BASE_URL,
   });
@@ -26,7 +26,7 @@ export async function generateNewDashboardClient(
     company: 'DatoCMS',
   });
 
-  return new DashboardClient({
+  return buildDashboardClient({
     ...config,
     apiToken: account.id,
     baseUrl: process.env.ACCOUNT_API_BASE_URL,
@@ -42,7 +42,7 @@ export async function generateNewCmaClient(
     name: 'Project',
   });
 
-  return new CmaClient({
+  return buildCmaClient({
     ...config,
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     apiToken: site.readwrite_token!,

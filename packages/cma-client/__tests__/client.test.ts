@@ -1,11 +1,10 @@
-import { ApiError, Client, SimpleSchemaTypes } from '../src';
-import { LogLevel } from '../src';
+import { ApiError, buildClient, SimpleSchemaTypes } from '../src';
 import { generateNewDashboardClient } from './helpers/generateClients';
 
 describe('@datocms/client', () => {
   it('first test', async () => {
     try {
-      const client = new Client({ apiToken: 'XXX' });
+      const client = buildClient({ apiToken: 'XXX' });
       await client.items.list({});
     } catch (e) {
       if (!(e instanceof ApiError)) {
@@ -27,7 +26,7 @@ describe('@datocms/client', () => {
       name: 'Foo bar',
     });
 
-    const cmaClient = new Client({
+    const cmaClient = buildClient({
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       apiToken: site.readwrite_token!,
     });
@@ -56,7 +55,7 @@ describe('@datocms/client', () => {
   });
 
   it('iterators', async () => {
-    const client = new Client({
+    const client = buildClient({
       apiToken: 'faeb9172e232a75339242faafb9e56de8c8f13b735f7090964',
     });
 

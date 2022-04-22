@@ -1,16 +1,5 @@
-import { JobResult } from './internalTypes';
+import { GenericClient, JobResult } from './internalTypes';
 import { EventsSubscription, subscribeToEvents } from './subscribeToEvents';
-declare class JobResultResource {
-  find(jobResultId: string): Promise<JobResult>;
-}
-declare class GenericClient {
-  config: {
-    apiToken: string | null;
-  };
-  get baseUrl(): string;
-  eventsChannelName(): Promise<string>;
-  jobResults: JobResultResource;
-}
 
 export class JobResultsFetcher<T extends GenericClient> {
   private eventsSubscription: EventsSubscription | undefined;
