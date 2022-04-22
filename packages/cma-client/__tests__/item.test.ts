@@ -1,5 +1,5 @@
 import { generateNewCmaClient } from './helpers/generateClients';
-import ApiError from '../../rest-client-utils/src/ApiError';
+import { ApiError } from '@datocms/rest-client-utils';
 
 describe('item', () => {
   test('methods', async () => {
@@ -27,57 +27,19 @@ describe('item', () => {
         validators: {},
       });
 
-      // TODO Argument of type '{ title: string; item_type: any; }' is not assignable to parameter of type 'ItemCreateSchema'.
-      // Object literal may only specify known properties, and 'title' does not exist in type 'ItemCreateSchema'.
       const item = await client.items.create({
         title: 'My first blog post',
-        item_type: itemType.id,
+        item_type: itemType,
       });
 
-      //TODO ItemBatchPublishHrefSchema è espresso così {'filter[ids]': string} invece di { filter: { ids: string } }
-      await client.items.batchDestroy({ 'filter[ids]': item.id });
+      await client.items.bulkDestroy({
+        items: {
+          data: [item],
+        },
+      });
 
       const allItems = await client.items.list();
       expect(allItems).toHaveLength(0);
-    });
-
-    it('batch publish/unpublish works', async () => {
-      const itemType = await client.itemTypes.create({
-        name: 'Article',
-        api_key: 'article',
-        singleton: true,
-        modular_block: false,
-        sortable: false,
-        tree: false,
-        draft_mode_active: true,
-        ordering_direction: null,
-        ordering_field: null,
-        all_locales_required: true,
-        title_field: null,
-      });
-
-      await client.fields.create(itemType.id, {
-        label: 'Title',
-        field_type: 'string',
-        localized: false,
-        api_key: 'title',
-        validators: {},
-      });
-
-      const item = await client.items.create({
-        title: 'My first blog post',
-        item_type: itemType.id,
-      });
-
-      await client.items.batchPublish({ 'filter[ids]': item.id });
-
-      const item1 = await client.items.find(item.id);
-      expect(item1.meta.status).toEqual('published');
-
-      await client.items.batchUnpublish({ filter: { ids: item.id } });
-
-      const item2 = await client.items.find(item.id);
-      expect(item2.meta.status).toEqual('draft');
     });
 
     it('bulk publish/unpublish/destroy works', async () => {
@@ -105,7 +67,7 @@ describe('item', () => {
 
       const item = await client.items.create({
         title: 'My first blog post',
-        item_type: itemType.id,
+        item_type: itemType,
       });
 
       // qui ci dovrebbe essere data?
@@ -187,7 +149,7 @@ describe('item', () => {
 
       const item = await client.items.create({
         title: 'My first blog post',
-        item_type: itemType.id,
+        item_type: itemType,
         attachment: await client.uploadFile(
           'test/fixtures/newTextFileHttps.txt',
         ),
@@ -230,10 +192,10 @@ describe('item', () => {
           offset: 0,
           limit: 10,
         },
-        orderBy: 'title_ASC',
+        order_by: 'title_ASC',
         version: 'current',
         locale: 'en',
-        nested: true,
+        nested: 'true',
       });
 
       expect(allItems).toHaveLength(1);
@@ -278,21 +240,21 @@ describe('item', () => {
 
       const item = await client.items.create({
         title: 'My first blog post',
-        item_type: itemType.id,
+        item_type: itemType,
       });
 
       const updatedItem = await client.items.update(item.id, {
         title: 'Updated title',
       });
 
-      expect(item.meta.currentVersion).not.toEqual(
-        updatedItem.meta.currentVersion,
+      expect(item.meta.current_version).not.toEqual(
+        updatedItem.meta.current_version,
       );
 
       return expect(
         client.items.update(item.id, {
           title: 'Stale update title',
-          meta: { current_version: item.meta.currentVersion },
+          meta: { current_version: item.meta.current_version },
         }),
       ).rejects.toEqual(ApiError);
     });
@@ -333,7 +295,7 @@ describe('item', () => {
 
       const item = await client.items.create({
         title: 'My first blog post',
-        item_type: itemType.id,
+        item_type: itemType,
         main_content: 'Foo bar',
       });
 
@@ -399,14 +361,14 @@ describe('item', () => {
       ];
 
       const item = await client.items.create({
-        item_type: articleItemType.id,
+        item_type: articleItemType,
         content,
       });
 
       expect(item.content.length).toEqual(2);
 
       const itemWithNestedBlocks = await client.items.find(item.id, {
-        nested: true,
+        nested: 'true',
       });
 
       // TODO Argument of type '{ content: any; }' is not assignable to parameter of type 'ItemUpdateSchema'.
@@ -422,7 +384,7 @@ describe('item', () => {
       });
 
       const updatedItemWithNestedBlocks = await client.items.find(item.id, {
-        nested: true,
+        nested: 'true',
       });
 
       expect(updatedItemWithNestedBlocks.content[0].attributes.text).toEqual(
