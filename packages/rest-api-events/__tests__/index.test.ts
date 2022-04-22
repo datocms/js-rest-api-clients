@@ -2,7 +2,7 @@ import { buildClient } from '@datocms/cma-client';
 import { withEventsSubscription } from '../src';
 import { generateNewDashboardClient } from './helpers/generateClients';
 
-describe('@datocms/events-subscription', () => {
+describe('@datocms/rest-api-events', () => {
   it('first test', async () => {
     const dashboardClient = await generateNewDashboardClient();
 
