@@ -220,7 +220,7 @@ export default class Item extends BaseResource {
         id: Utils.toId(itemId),
         type: Item.TYPE,
         attributes: '*',
-        relationships: ['creator'],
+        relationships: ['item_type', 'creator'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemUpdateTargetSchema>(

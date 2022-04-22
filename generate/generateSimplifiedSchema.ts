@@ -5,7 +5,7 @@ function simplifySchema(objectSchema) {
 
   return {
     ...objectSchema,
-    additionalProperties: false,
+    additionalProperties: attributes && !attributes.properties,
     required: [
       ...(objectSchema.required?.includes('attributes')
         ? attributes?.required || []

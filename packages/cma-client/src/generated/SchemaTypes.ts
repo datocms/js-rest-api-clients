@@ -5240,6 +5240,9 @@ export interface ItemValidateExistingSchema {
       [k: string]: unknown;
     };
     relationships: {
+      /**
+       * The record's model
+       */
       item_type: {
         data: ItemTypeData;
       };
@@ -5267,6 +5270,9 @@ export interface ItemValidateNewSchema {
       [k: string]: unknown;
     };
     relationships: {
+      /**
+       * The record's model
+       */
       item_type: {
         data: ItemTypeData;
       };
@@ -5421,6 +5427,12 @@ export interface ItemUpdateSchema {
       stage?: string | null;
     };
     relationships?: {
+      /**
+       * The record's model
+       */
+      item_type?: {
+        data: ItemTypeData;
+      };
       creator?: {
         data: AccountData | AccessTokenData | UserData | SsoUserData;
       };

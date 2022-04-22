@@ -1495,6 +1495,7 @@ export interface AccountSubscriptionSimulateTargetSchema {
 export interface AccountSubscriptionValidateSchema {
   type?: AccountSubscriptionType;
   plan: AccountPlanData;
+  [k: string]: unknown;
 }
 
 /**

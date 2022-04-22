@@ -1223,6 +1223,7 @@ export type EditingSessionUpdateSchema =
        */
       type?: 'editing_session_enter_item';
       item: ItemData;
+      [k: string]: unknown;
     }
   | {
       /**
@@ -1230,6 +1231,7 @@ export type EditingSessionUpdateSchema =
        */
       type?: 'editing_session_take_over_item';
       item: ItemData;
+      [k: string]: unknown;
     }
   | {
       /**
@@ -1237,12 +1239,14 @@ export type EditingSessionUpdateSchema =
        */
       type?: 'editing_session_lock_item';
       item: ItemData;
+      [k: string]: unknown;
     }
   | {
       /**
        * JSON API type
        */
       type?: 'editing_session_unlock_item';
+      [k: string]: unknown;
     };
 /**
  * This interface was referenced by `SsoGroup`'s JSON-Schema
@@ -5661,10 +5665,9 @@ export interface ItemRelationships {
 export interface ItemValidateExistingSchema {
   id?: ItemIdentity;
   type?: ItemType1;
-  item_type: {
-    data: ItemTypeData;
-  };
+  item_type: ItemTypeData;
   creator?: AccountData | AccessTokenData | UserData | SsoUserData;
+  [k: string]: unknown;
 }
 
 /**
@@ -5673,9 +5676,8 @@ export interface ItemValidateExistingSchema {
  */
 export interface ItemValidateNewSchema {
   type?: ItemType1;
-  item_type: {
-    data: ItemTypeData;
-  };
+  item_type: ItemTypeData;
+  [k: string]: unknown;
 }
 
 /**
@@ -5722,6 +5724,7 @@ export interface ItemCreateSchema {
      */
     current_version?: string;
   };
+  [k: string]: unknown;
 }
 
 /**
@@ -5731,6 +5734,7 @@ export interface ItemCreateSchema {
 export interface ItemUpdateSchema {
   id?: ItemIdentity;
   type?: ItemType1;
+  item_type?: ItemTypeData;
   creator?: {
     data: AccountData | AccessTokenData | UserData | SsoUserData;
   };
@@ -5779,6 +5783,7 @@ export interface ItemUpdateSchema {
      */
     stage?: string | null;
   };
+  [k: string]: unknown;
 }
 
 /**
@@ -5797,6 +5802,7 @@ export interface ItemBulkPublishSchema {
     data: ItemData[];
   };
   minItems?: unknown;
+  [k: string]: unknown;
 }
 
 /**
@@ -5815,6 +5821,7 @@ export interface ItemBulkUnpublishSchema {
     data: ItemData[];
   };
   minItems?: unknown;
+  [k: string]: unknown;
 }
 
 /**
@@ -5833,6 +5840,7 @@ export interface ItemBulkDestroySchema {
     data: ItemData[];
   };
   minItems?: unknown;
+  [k: string]: unknown;
 }
 
 /**
@@ -6476,6 +6484,7 @@ export interface UploadBulkDestroySchema {
   uploads: {
     data: UploadData[];
   };
+  [k: string]: unknown;
 }
 
 /**
@@ -6575,6 +6584,7 @@ export interface ScheduledPublicationRelationships {
  */
 export interface ScheduledPublicationCreateSchema {
   type?: ScheduledPublicationType;
+  [k: string]: unknown;
 }
 
 /**
@@ -6633,6 +6643,7 @@ export interface ScheduledUnpublishingRelationships {
  */
 export interface ScheduledUnpublishingCreateSchema {
   type?: ScheduledUnpublishingType;
+  [k: string]: unknown;
 }
 
 /**
@@ -6784,6 +6795,7 @@ export interface EnvironmentForkSchema {
    */
   id?: string;
   type?: EnvironmentType;
+  [k: string]: unknown;
 }
 
 /**
@@ -7653,6 +7665,7 @@ export interface SiteInvitationUpdateSchema {
   id?: SiteInvitationIdentity;
   type?: SiteInvitationType;
   role?: RoleData;
+  [k: string]: unknown;
 }
 
 /**

@@ -1,12 +1,15 @@
 import { JobResult } from './internalTypes';
 import { EventsSubscription, subscribeToEvents } from './subscribeToEvents';
-
+declare class JobResultResource {
+  find(jobResultId: string): Promise<JobResult>;
+}
 declare class GenericClient {
   config: {
     apiToken: string | null;
   };
   get baseUrl(): string;
   eventsChannelName(): Promise<string>;
+  jobResults: JobResultResource;
 }
 
 export class JobResultsFetcher<T extends GenericClient> {
@@ -40,7 +43,15 @@ export class JobResultsFetcher<T extends GenericClient> {
         'You need to call the method .subscribeToEvents() first!',
       );
     }
-    return this.eventsSubscription.waitJobResult(jobId);
+    const jobResult = await this.eventsSubscription.waitJobResult(jobId);
+
+    // payload is too large, we need to fetch the result from
+    // the /job-results endpoint
+    if (jobResult.status === 413) {
+      return this.client.jobResults.find(jobId);
+    }
+
+    return jobResult;
   }
 
   unsubscribeToEvents() {
