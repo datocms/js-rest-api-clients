@@ -1,21 +1,25 @@
-import { OnProgressInfo } from '.';
+import {
+  CancelablePromise,
+  CanceledPromiseError,
+} from '@datocms/rest-client-utils/src';
+import { OnProgressInfo } from '../uploadFileOrBlobAndReturnPath';
 
 type Options = {
   onProgress?: (info: OnProgressInfo) => void;
 };
 
-export function uploadToS3(
-  file: File | Blob,
+export function uploadFileOrBlobToS3(
+  fileOrBlob: File | Blob,
   url: string,
   { onProgress }: Options = {},
-): { promise: Promise<void>; cancel: () => void } {
+): CancelablePromise<void> {
   const xhr = new XMLHttpRequest();
 
-  const promise = new Promise<void>((resolve, reject) => {
+  const promise = new CancelablePromise<void>((resolve, reject) => {
     if (onProgress && xhr.upload) {
       xhr.upload.onprogress = (e) => {
         if (e.lengthComputable) {
-          const percent = (e.loaded / e.total) * 100;
+          const percent = Math.round((e.loaded / e.total) * 100);
           onProgress({ type: 'upload', payload: { percent } });
         }
       };
@@ -24,7 +28,7 @@ export function uploadToS3(
     xhr.onreadystatechange = () => {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
-          resolve(undefined);
+          resolve();
         } else {
           reject(new Error(`Status ${xhr.status}`));
         }
@@ -33,16 +37,16 @@ export function uploadToS3(
 
     xhr.addEventListener('error', reject, false);
     xhr.onabort = () => {
-      reject(new Error('Upload aborted'));
+      reject(new CanceledPromiseError());
     };
     xhr.open('PUT', url, true);
-    xhr.send(file);
+    xhr.send(fileOrBlob);
   });
 
-  const cancel = () => {
+  promise.cancelMethod = () => {
     xhr.onreadystatechange = null;
     xhr.abort();
   };
 
-  return { promise, cancel };
+  return promise;
 }

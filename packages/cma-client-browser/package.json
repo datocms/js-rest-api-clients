@@ -1,13 +1,13 @@
 {
-  "name": "@datocms/cma-client-assets-node",
+  "name": "@datocms/cma-client-browser",
   "version": "0.0.1-alpha.5",
-  "description": "NodeJS client for DatoCMS REST Content Management API",
+  "description": "Browser client for DatoCMS REST Content Management API",
   "keywords": [
     "datocms",
     "client"
   ],
   "author": "Stefano Verna <s.verna@datocms.com>",
-  "homepage": "https://github.com/datocms/js-toolkit/tree/main/packages/cma-client-assets-node#readme",
+  "homepage": "https://github.com/datocms/js-toolkit/tree/main/packages/cma-client-browser#readme",
   "license": "MIT",
   "main": "dist/cjs/src/index.js",
   "module": "dist/esm/src/index.js",
@@ -27,8 +27,9 @@
     "type": "git",
     "url": "git+https://github.com/datocms/js-toolkit.git"
   },
-  "devDependencies": {
-    "@datocms/cma-client": "0.0.1-alpha.5"
+  "dependencies": {
+    "@datocms/cma-client": "0.0.1-alpha.5",
+    "@datocms/rest-client-utils": "0.0.1-alpha.5"
   },
   "scripts": {
     "build": "tsc && tsc --project ./tsconfig.esnext.json",

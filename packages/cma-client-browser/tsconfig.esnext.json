@@ -3,6 +3,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
+    "lib": ["es2015", "es2016", "es2017", "DOM"],
     "outDir": "./dist/esm",
     "declarationDir": "./dist/esm",
     "isolatedModules": true

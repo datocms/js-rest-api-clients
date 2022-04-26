@@ -33,9 +33,9 @@ type RequestOptions = {
 function headersToObject(headers: Headers): Record<string, string> {
   const result = {};
 
-  for (const pair of headers.entries()) {
-    result[pair[0]] = pair[1];
-  }
+  headers.forEach((value, key) => {
+    result[key] = value;
+  });
 
   return result;
 }
