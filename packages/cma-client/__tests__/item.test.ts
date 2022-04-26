@@ -4,6 +4,7 @@ import { ApiError } from '../src';
 describe('item', () => {
   test('methods', async () => {
     const client = await generateNewCmaClient();
+
     it('batchDestroy works', async () => {
       const itemType = await client.itemTypes.create({
         name: 'Article',
@@ -114,7 +115,7 @@ describe('item', () => {
       expect(allItems).toHaveLength(0);
     });
 
-    it('create, find, all, update, destroy', async () => {
+    it('create, find, all, update, destroy, duplicate', async () => {
       const itemType = await client.itemTypes.create({
         name: 'Article',
         api_key: 'item_type',
@@ -147,12 +148,13 @@ describe('item', () => {
 
       const date = '2018-11-24T10:00';
 
+      // TODO client.uploadFile
       const item = await client.items.create({
         title: 'My first blog post',
         item_type: itemType,
-        attachment: await client.uploadFile(
-          'test/fixtures/newTextFileHttps.txt',
-        ),
+        // attachment: await client.uploadFile(
+        //   'test/fixtures/newTextFileHttps.txt',
+        // ),
         meta: {
           created_at: date,
           first_published_at: date,
@@ -201,16 +203,28 @@ describe('item', () => {
       expect(allItems).toHaveLength(1);
       expect(allItems[0].itemType).not.toBeUndefined();
 
-      const updatedItem = await client.items.update(
-        item.id,
-        u({ title: 'Updated' }, item),
-      );
+      // TODO: qui si lamenta perché non trova "data" nel creator. Ha ragione!
+      const updatedItem = await client.items.update(item.id, {
+        ...item,
+        title: 'Updated',
+      });
+
       expect(updatedItem.title).toEqual('Updated');
 
       const updatedItem2 = await client.items.update(item.id, {
         title: 'Updated 2',
       });
       expect(updatedItem2.title).toEqual('Updated 2');
+
+      const duplicated = await client.items.duplicate(item.id);
+      expect(duplicated.title).toEqual('Updated 2');
+
+      const list = client.items.listPagedIterator({
+        nested: 'true',
+        filter: { query: 'updated' },
+      });
+
+      expect(list[0].title).toEqual('Updated 2');
 
       await client.items.destroy(item.id);
     });
@@ -365,6 +379,7 @@ describe('item', () => {
         content,
       });
 
+      // TODO item.content is unknown
       expect(item.content.length).toEqual(2);
 
       const itemWithNestedBlocks = await client.items.find(item.id, {
