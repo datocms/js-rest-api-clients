@@ -140,8 +140,6 @@ describe('item', () => {
 
     const list = await client.items.list();
 
-    console.log(list);
-
     expect(list[0].title).toEqual('Updated 2 (duplicate)');
 
     await client.items.destroy(item.id);
