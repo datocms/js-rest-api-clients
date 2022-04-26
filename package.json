@@ -7,9 +7,9 @@
     "lint": "eslint . --ext .ts,.tsx",
     "test": "npm run lint && jest",
     "generate": "./generate/index.ts",
-    "build": "npm run generate && lerna run build",
-    "publish": "npm run build && npm run test && lerna publish",
-    "publish-next": "npm run build && npm run test && lerna publish --dist-tag next"
+    "build": "lerna run build",
+    "publish": "npm run generate && npm run build && npm run test && lerna publish",
+    "publish-next": "npm run generate && npm run build && npm run test && lerna publish --dist-tag next"
   },
   "author": "Stefano Verna <s.verna@datocms.com>",
   "license": "MIT",
