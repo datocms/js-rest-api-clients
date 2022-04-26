@@ -1,5 +1,4 @@
 import { buildClient } from '@datocms/cma-client';
-import { withEventsSubscription } from '../src';
 import { generateNewDashboardClient } from './helpers/generateClients';
 
 describe('@datocms/rest-api-events', () => {
@@ -10,12 +9,10 @@ describe('@datocms/rest-api-events', () => {
       name: 'Foo bar',
     });
 
-    const [client, unsubscribe] = await withEventsSubscription(
-      buildClient({
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        apiToken: site.readwrite_token!,
-      }),
-    );
+    const client = buildClient({
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      apiToken: site.readwrite_token!,
+    });
 
     const itemType = await client.itemTypes.create({
       api_key: 'foo',
@@ -27,7 +24,5 @@ describe('@datocms/rest-api-events', () => {
       label: 'Foo',
       field_type: 'string',
     });
-
-    unsubscribe();
   });
 });

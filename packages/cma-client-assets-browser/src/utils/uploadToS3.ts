@@ -1,5 +1,11 @@
+import { OnProgressInfo } from '.';
+
+type Options = {
+  onProgress?: (info: OnProgressInfo) => void;
+};
+
 export function uploadToS3(
-  file: Blob,
+  file: File | Blob,
   url: string,
   { onProgress }: Options = {},
 ): { promise: Promise<void>; cancel: () => void } {
@@ -27,7 +33,7 @@ export function uploadToS3(
 
     xhr.addEventListener('error', reject, false);
     xhr.onabort = () => {
-      reject(new Error('upload aborted'));
+      reject(new Error('Upload aborted'));
     };
     xhr.open('PUT', url, true);
     xhr.send(file);

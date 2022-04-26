@@ -1,7 +1,7 @@
 {
   "name": "@datocms/cma-client-assets-node",
   "version": "0.0.1-alpha.5",
-  "description": "Additional utilities to work with DatoCMS assets (specific for Node environments)",
+  "description": "NodeJS client for DatoCMS REST Content Management API",
   "keywords": [
     "datocms",
     "client"
@@ -26,6 +26,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/datocms/js-toolkit.git"
+  },
+  "devDependencies": {
+    "@datocms/cma-client": "0.0.1-alpha.5"
   },
   "scripts": {
     "build": "tsc && tsc --project ./tsconfig.esnext.json",

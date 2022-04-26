@@ -1,13 +1,14 @@
+import { Client } from '@datocms/cma-client';
 import { uploadToS3 } from './uploadToS3';
 
-type OnProgressUploadInfo = {
+export type OnProgressUploadInfo = {
   type: 'upload';
   payload: {
     percent: number;
   };
 };
 
-type OnProgressUploadRequestCompleteInfo = {
+export type OnProgressUploadRequestCompleteInfo = {
   type: 'uploadRequestComplete';
   payload: {
     id: string;
@@ -15,30 +16,44 @@ type OnProgressUploadRequestCompleteInfo = {
   };
 };
 
-type OnProgressInfo =
+export type OnProgressInfo =
   | OnProgressUploadInfo
   | OnProgressUploadRequestCompleteInfo;
 
 export type Options = {
-  filename: string;
+  filename?: string;
   onProgress?: (info: OnProgressInfo) => void;
 };
 
-export default function browser(client, file, { onProgress, filename }) {
+export default function upload(
+  client: Client,
+  file: Blob | File,
+  options: Options = {},
+): { promise: Promise<string>; cancel: () => void } {
   let isCancelled = false;
 
   let cancel = () => {
     isCancelled = true;
   };
 
+  let filename: string | undefined = options.filename;
+
+  if (!filename) {
+    if (!('name' in file)) {
+      throw new Error('Missing filename, please provide it as an option!');
+    }
+
+    filename = file.name;
+  }
+
   const promise = client.uploadRequest
-    .create({ filename: filename || file.name })
+    .create({ filename })
     .then(({ id, url }) => {
       if (isCancelled) {
-        return Promise.reject(new Error('upload aborted'));
+        return Promise.reject(new Error('Upload aborted'));
       }
-      if (onProgress) {
-        onProgress({
+      if (options.onProgress) {
+        options.onProgress({
           type: 'uploadRequestComplete',
           payload: {
             id,
@@ -49,9 +64,7 @@ export default function browser(client, file, { onProgress, filename }) {
       const { promise: uploadPromise, cancel: cancelUpload } = uploadToS3(
         file,
         url,
-        {
-          onProgress,
-        },
+        options,
       );
       cancel = cancelUpload;
       return uploadPromise.then(() => id);
