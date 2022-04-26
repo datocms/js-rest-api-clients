@@ -14,7 +14,7 @@ export default class Workflow extends BaseResource {
   create(body: SimpleSchemaTypes.WorkflowCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.WorkflowCreateSchema>(body, {
-        type: Workflow.TYPE,
+        type: 'workflow',
         attributes: ['name', 'stages'],
         relationships: [],
       }),
@@ -53,7 +53,7 @@ export default class Workflow extends BaseResource {
       Utils.toId(workflowId),
       Utils.serializeRequestBody<SchemaTypes.WorkflowUpdateSchema>(body, {
         id: Utils.toId(workflowId),
-        type: Workflow.TYPE,
+        type: 'workflow',
         attributes: ['name', 'stages'],
         relationships: [],
       }),

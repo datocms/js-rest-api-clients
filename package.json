@@ -7,7 +7,7 @@
     "lint": "eslint . --ext .ts,.tsx",
     "test": "npm run lint && jest",
     "generate": "./generate/index.ts",
-    "build": "lerna run build",
+    "build": "npm run generate && lerna run build",
     "publish": "npm run build && npm run test && lerna publish",
     "publish-next": "npm run build && npm run test && lerna publish --dist-tag next"
   },

@@ -19,7 +19,7 @@ export default class Environment extends BaseResource {
       Utils.toId(environmentId),
       Utils.serializeRequestBody<SchemaTypes.EnvironmentForkSchema>(body, {
         id: Utils.toId(environmentId),
-        type: Environment.TYPE,
+        type: 'environment',
         attributes: [],
         relationships: [],
       }),

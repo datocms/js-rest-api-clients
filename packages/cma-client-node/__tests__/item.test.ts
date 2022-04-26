@@ -1,413 +1,289 @@
 import { generateNewCmaClient } from './helpers/generateClients';
-import { ApiError } from '../src';
+import {
+  ApiError,
+  buildBlockRecord,
+  SimpleSchemaTypes,
+  SchemaTypes,
+  Client,
+  LogLevel,
+} from '../src';
 
 describe('item', () => {
-  test('methods', async () => {
+  it.concurrent('bulk publish/unpublish/destroy works', async () => {
     const client = await generateNewCmaClient();
 
-    it('batchDestroy works', async () => {
-      const itemType = await client.itemTypes.create({
-        name: 'Article',
-        api_key: 'article',
-        singleton: true,
-        modular_block: false,
-        sortable: false,
-        tree: false,
-        draft_mode_active: false,
-        ordering_direction: null,
-        ordering_field: null,
-        all_locales_required: true,
-        title_field: null,
-      });
-
-      await client.fields.create(itemType.id, {
-        label: 'Title',
-        field_type: 'string',
-        localized: false,
-        api_key: 'title',
-        validators: {},
-      });
-
-      const item = await client.items.create({
-        title: 'My first blog post',
-        item_type: itemType,
-      });
-
-      await client.items.bulkDestroy({
-        items: {
-          data: [item],
-        },
-      });
-
-      const allItems = await client.items.list();
-      expect(allItems).toHaveLength(0);
+    const itemType = await client.itemTypes.create({
+      name: 'Article',
+      api_key: 'article',
     });
 
-    it('bulk publish/unpublish/destroy works', async () => {
-      const itemType = await client.itemTypes.create({
-        name: 'Article',
-        api_key: 'article',
-        singleton: true,
-        modular_block: false,
-        sortable: false,
-        tree: false,
-        draft_mode_active: true,
-        ordering_direction: null,
-        ordering_field: null,
-        all_locales_required: true,
-        title_field: null,
-      });
-
-      await client.fields.create(itemType.id, {
-        label: 'Title',
-        field_type: 'string',
-        localized: false,
-        api_key: 'title',
-        validators: {},
-      });
-
-      const item = await client.items.create({
-        title: 'My first blog post',
-        item_type: itemType,
-      });
-
-      // qui ci dovrebbe essere data?
-      await client.items.bulkPublish({
-        items: {
-          data: [
-            {
-              type: 'item',
-              id: item.id,
-            },
-          ],
-        },
-      });
-
-      const item1 = await client.items.find(item.id);
-      expect(item1.meta.status).toEqual('published');
-
-      await client.items.bulkUnpublish({
-        items: {
-          data: [
-            {
-              type: 'item',
-              id: item.id,
-            },
-          ],
-        },
-      });
-
-      const item2 = await client.items.find(item.id);
-      expect(item2.meta.status).toEqual('draft');
-
-      await client.items.bulkDestroy({
-        items: {
-          data: [
-            {
-              type: 'item',
-              id: item.id,
-            },
-          ],
-        },
-      });
-
-      const allItems = await client.items.list();
-      expect(allItems).toHaveLength(0);
+    await client.fields.create(itemType.id, {
+      label: 'Title',
+      field_type: 'string',
+      api_key: 'title',
     });
 
-    it('create, find, all, update, destroy, duplicate', async () => {
-      const itemType = await client.itemTypes.create({
-        name: 'Article',
-        api_key: 'item_type',
-        singleton: true,
-        modular_block: false,
-        sortable: false,
-        tree: false,
-        draft_mode_active: false,
-        ordering_direction: null,
-        ordering_field: null,
-        all_locales_required: true,
-        title_field: null,
-      });
-
-      await client.fields.create(itemType.id, {
-        label: 'Title',
-        field_type: 'string',
-        localized: false,
-        api_key: 'title',
-        validators: { required: {} },
-      });
-
-      await client.fields.create(itemType.id, {
-        label: 'Attachment',
-        field_type: 'file',
-        localized: false,
-        api_key: 'attachment',
-        validators: { required: {} },
-      });
-
-      const date = '2018-11-24T10:00';
-
-      // TODO client.uploadFile
-      const item = await client.items.create({
-        title: 'My first blog post',
-        item_type: itemType,
-        // attachment: await client.uploadFile(
-        //   'test/fixtures/newTextFileHttps.txt',
-        // ),
-        meta: {
-          created_at: date,
-          first_published_at: date,
-          // updated_at and published_at cannot be edited
-          updated_at: date,
-          published_at: date,
-        },
-      });
-
-      expect(item.title).toEqual('My first blog post');
-      expect(item.itemType).not.toBeUndefined();
-      expect(item.meta.created_at).toEqual('2018-11-24T10:00:00.000+00:00');
-      expect(item.meta.first_published_at).toEqual(
-        '2018-11-24T10:00:00.000+00:00',
-      );
-      expect(item.meta.updated_at).not.toEqual('2018-11-24T10:00:00.000+00:00');
-      expect(item.meta.published_at).not.toEqual(
-        '2018-11-24T10:00:00.000+00:00',
-      );
-
-      const foundItem = await client.items.find(item.id);
-      expect(foundItem.id).toEqual(item.id);
-      expect(foundItem.itemType).not.toBeUndefined();
-
-      // TODO
-      // "nested": {
-      //   "description": "For Modular Content fields and Structured Text fields. If set, returns full payload for nested blocks instead of IDs",
-      //   "example": "true",
-      //   "type": ["string"]
-      // },
-
-      const allItems = await client.items.list({
-        filter: {
-          type: itemType.id,
-        },
-        page: {
-          offset: 0,
-          limit: 10,
-        },
-        order_by: 'title_ASC',
-        version: 'current',
-        locale: 'en',
-        nested: 'true',
-      });
-
-      expect(allItems).toHaveLength(1);
-      expect(allItems[0].itemType).not.toBeUndefined();
-
-      // TODO: qui si lamenta perché non trova "data" nel creator. Ha ragione!
-      const updatedItem = await client.items.update(item.id, {
-        ...item,
-        title: 'Updated',
-      });
-
-      expect(updatedItem.title).toEqual('Updated');
-
-      const updatedItem2 = await client.items.update(item.id, {
-        title: 'Updated 2',
-      });
-      expect(updatedItem2.title).toEqual('Updated 2');
-
-      const duplicated = await client.items.duplicate(item.id);
-      expect(duplicated.title).toEqual('Updated 2');
-
-      const list = client.items.listPagedIterator({
-        nested: 'true',
-        filter: { query: 'updated' },
-      });
-
-      expect(list[0].title).toEqual('Updated 2');
-
-      await client.items.destroy(item.id);
+    const item = await client.items.create({
+      title: 'My first blog post',
+      item_type: itemType,
     });
 
-    it('optimistic locking', async () => {
-      const itemType = await client.itemTypes.create({
-        name: 'Article',
-        api_key: 'item_type',
-        singleton: true,
-        modular_block: false,
-        sortable: false,
-        tree: false,
-        draft_mode_active: false,
-        ordering_direction: null,
-        ordering_field: null,
-        all_locales_required: true,
-        title_field: null,
-      });
+    await client.items.bulkPublish({
+      items: [item],
+    });
 
-      await client.fields.create(itemType.id, {
-        label: 'Title',
-        field_type: 'string',
-        localized: false,
-        api_key: 'title',
-        validators: { required: {} },
-      });
+    const item1 = await client.items.find(item.id);
+    expect(item1.meta.status).toEqual('published');
 
-      const item = await client.items.create({
-        title: 'My first blog post',
-        item_type: itemType,
-      });
+    await client.items.bulkUnpublish({
+      items: [item],
+    });
 
-      const updatedItem = await client.items.update(item.id, {
-        title: 'Updated title',
-      });
+    const item2 = await client.items.find(item.id);
+    expect(item2.meta.status).toEqual('draft');
 
-      expect(item.meta.current_version).not.toEqual(
-        updatedItem.meta.current_version,
-      );
+    await client.items.bulkDestroy({
+      items: [item],
+    });
 
-      return expect(
-        client.items.update(item.id, {
-          title: 'Stale update title',
-          meta: { current_version: item.meta.current_version },
+    const allItems = await client.items.list();
+    expect(allItems).toHaveLength(0);
+  });
+
+  it.concurrent('create, find, all, update, destroy, duplicate', async () => {
+    const client = await generateNewCmaClient({ logLevel: LogLevel.BODY });
+
+    const itemType = await client.itemTypes.create({
+      name: 'Article',
+      api_key: 'item_type',
+    });
+
+    await client.fields.create(itemType.id, {
+      label: 'Title',
+      field_type: 'string',
+      api_key: 'title',
+      validators: { required: {} },
+    });
+
+    await client.fields.create(itemType.id, {
+      label: 'Attachment',
+      field_type: 'file',
+      api_key: 'attachment',
+      validators: { required: {} },
+    });
+
+    const date = '2018-11-24T10:00';
+
+    const item = await client.items.create({
+      title: 'My first blog post',
+      item_type: itemType,
+      attachment: {
+        upload_id: (
+          await client.uploads.createFromLocalFile({
+            localPath: `${__dirname}/fixtures/text.txt`,
+          })
+        ).id,
+      },
+      meta: {
+        created_at: date,
+        first_published_at: date,
+        // updated_at and published_at cannot be edited
+        updated_at: date,
+        published_at: date,
+      },
+    });
+
+    expect(item.title).toEqual('My first blog post');
+    expect(item.item_type).not.toBeUndefined();
+    expect(item.meta.created_at).toEqual('2018-11-24T10:00:00.000+00:00');
+    expect(item.meta.first_published_at).toEqual(
+      '2018-11-24T10:00:00.000+00:00',
+    );
+    expect(item.meta.updated_at).not.toEqual('2018-11-24T10:00:00.000+00:00');
+    expect(item.meta.published_at).not.toEqual('2018-11-24T10:00:00.000+00:00');
+
+    const foundItem = await client.items.find(item.id);
+    expect(foundItem.id).toEqual(item.id);
+    expect(foundItem.item_type).not.toBeUndefined();
+
+    const allItems = await client.items.list({
+      filter: {
+        type: itemType.id,
+      },
+      page: {
+        offset: 0,
+        limit: 10,
+      },
+      order_by: 'title_ASC',
+      version: 'current',
+      locale: 'en',
+      nested: 'true',
+    });
+
+    expect(allItems).toHaveLength(1);
+    expect(allItems[0].item_type).not.toBeUndefined();
+
+    const updatedItem = await client.items.update(item.id, {
+      ...item,
+      title: 'Updated',
+    });
+
+    expect(updatedItem.title).toEqual('Updated');
+
+    const updatedItem2 = await client.items.update(item.id, {
+      title: 'Updated 2',
+    });
+    expect(updatedItem2.title).toEqual('Updated 2');
+
+    const duplicated = await client.items.duplicate(item.id);
+    expect(duplicated.title).toEqual('Updated 2 (duplicate)');
+
+    const list = await client.items.list();
+
+    console.log(list);
+
+    expect(list[0].title).toEqual('Updated 2 (duplicate)');
+
+    await client.items.destroy(item.id);
+  });
+
+  it.concurrent('optimistic locking', async () => {
+    const client = await generateNewCmaClient();
+
+    const itemType = await client.itemTypes.create({
+      name: 'Article',
+      api_key: 'item_type',
+    });
+
+    await client.fields.create(itemType.id, {
+      label: 'Title',
+      field_type: 'string',
+      api_key: 'title',
+      validators: { required: {} },
+    });
+
+    const item = await client.items.create({
+      title: 'My first blog post',
+      item_type: itemType,
+    });
+
+    const updatedItem = await client.items.update(item.id, {
+      title: 'Updated title',
+    });
+
+    expect(item.meta.current_version).not.toEqual(
+      updatedItem.meta.current_version,
+    );
+
+    return expect(
+      client.items.update(item.id, {
+        title: 'Stale update title',
+        meta: { current_version: item.meta.current_version },
+      }),
+    ).rejects.toBeInstanceOf(ApiError);
+  });
+
+  it.concurrent('creation accepts uncamelized keys', async () => {
+    const client = await generateNewCmaClient();
+
+    const itemType = await client.itemTypes.create({
+      name: 'Article',
+      api_key: 'item_type',
+    });
+
+    await client.fields.create(itemType.id, {
+      label: 'Title',
+      field_type: 'string',
+      api_key: 'title',
+      validators: { required: {} },
+    });
+
+    await client.fields.create(itemType.id, {
+      label: 'Main content',
+      field_type: 'text',
+      api_key: 'main_content',
+      validators: {
+        required: {},
+      },
+    });
+
+    const item = await client.items.create({
+      title: 'My first blog post',
+      item_type: itemType,
+      main_content: 'Foo bar',
+    });
+
+    expect(item.main_content).toEqual('Foo bar');
+
+    await client.items.destroy(item.id);
+  });
+
+  it.concurrent('modular blocks', async () => {
+    const client = await generateNewCmaClient();
+
+    const articleItemType = await client.itemTypes.create({
+      name: 'Article',
+      api_key: 'article',
+    });
+
+    const contentItemType = await client.itemTypes.create({
+      name: 'Content',
+      api_key: 'content',
+      modular_block: true,
+    });
+
+    await client.fields.create(contentItemType.id, {
+      label: 'Text',
+      field_type: 'text',
+      api_key: 'text',
+    });
+
+    await client.fields.create(articleItemType.id, {
+      label: 'Content',
+      field_type: 'rich_text',
+      api_key: 'content',
+      validators: { rich_text_blocks: { item_types: [contentItemType.id] } },
+    });
+
+    const item = await client.items.create({
+      item_type: articleItemType,
+      content: [
+        buildBlockRecord({
+          text: 'Foo',
+          item_type: contentItemType,
         }),
-      ).rejects.toEqual(ApiError);
-    });
-    // '422 STALE_ITEM_VERSION (details: {})'
-
-    it('creation accepts uncamelized keys', async () => {
-      const itemType = await client.itemTypes.create({
-        name: 'Article',
-        api_key: 'item_type',
-        singleton: true,
-        modular_block: false,
-        sortable: false,
-        tree: false,
-        draft_mode_active: false,
-        ordering_direction: null,
-        ordering_field: null,
-        all_locales_required: true,
-        title_field: null,
-      });
-
-      await client.fields.create(itemType.id, {
-        label: 'Title',
-        field_type: 'string',
-        localized: false,
-        api_key: 'title',
-        validators: { required: {} },
-      });
-
-      await client.fields.create(itemType.id, {
-        label: 'Main content',
-        field_type: 'text',
-        localized: false,
-        api_key: 'main_content',
-        validators: {
-          required: {},
-        },
-      });
-
-      const item = await client.items.create({
-        title: 'My first blog post',
-        item_type: itemType,
-        main_content: 'Foo bar',
-      });
-
-      expect(item.mainContent).toEqual('Foo bar');
-
-      await client.items.destroy(item.id);
+        buildBlockRecord({
+          text: 'Bar',
+          item_type: contentItemType,
+        }),
+      ],
     });
 
-    it('modular blocks', async () => {
-      const articleItemType = await client.itemTypes.create({
-        name: 'Article',
-        api_key: 'article',
-      });
+    expect((item.content as string[]).length).toEqual(2);
 
-      const contentItemType = await client.itemTypes.create({
-        name: 'Content',
-        api_key: 'content',
-        modular_block: true,
-      });
+    const itemWithNestedBlocks = await client.items.find(item.id, {
+      nested: 'true',
+    });
 
-      await client.fields.create(contentItemType.id, {
-        label: 'Text',
-        field_type: 'text',
-        api_key: 'text',
-      });
-
-      await client.fields.create(articleItemType.id, {
-        label: 'Content',
-        field_type: 'rich_text',
-        api_key: 'content',
-        validators: { richTextBlocks: { itemTypes: [contentItemType.id] } },
-      });
-
-      const content = [
-        {
-          type: 'item',
-          attributes: {
-            text: 'Foo',
-          },
-          relationships: {
-            item_type: {
-              data: {
-                id: contentItemType.id,
-                type: 'item_type',
-              },
-            },
-          },
-        },
-        {
-          type: 'item',
-          attributes: {
-            text: 'Bar',
-          },
-          relationships: {
-            item_type: {
-              data: {
-                id: contentItemType.id,
-                type: 'item_type',
-              },
-            },
-          },
-        },
-      ];
-
-      const item = await client.items.create({
-        item_type: articleItemType,
-        content,
-      });
-
-      // TODO item.content is unknown
-      expect(item.content.length).toEqual(2);
-
-      const itemWithNestedBlocks = await client.items.find(item.id, {
-        nested: 'true',
-      });
-
-      // TODO Argument of type '{ content: any; }' is not assignable to parameter of type 'ItemUpdateSchema'.
-      // Object literal may only specify known properties, and 'content' does not exist in type 'ItemUpdateSchema'.
-      await client.items.update(item.id, {
-        content: itemWithNestedBlocks.content.map((block) => ({
-          ...block,
-          attributes: {
-            ...block.attributes,
+    await client.items.update(item.id, {
+      content: (itemWithNestedBlocks.content as SchemaTypes.Item[]).map(
+        (block) =>
+          buildBlockRecord({
+            id: block.id,
             text: `Updated ${block.attributes.text}`,
-          },
-        })),
-      });
-
-      const updatedItemWithNestedBlocks = await client.items.find(item.id, {
-        nested: 'true',
-      });
-
-      expect(updatedItemWithNestedBlocks.content[0].attributes.text).toEqual(
-        'Updated Foo',
-      );
-      expect(updatedItemWithNestedBlocks.content[1].attributes.text).toEqual(
-        'Updated Bar',
-      );
+            item_type: block.relationships.item_type.data,
+          }),
+      ),
     });
+
+    const updatedItemWithNestedBlocks = await client.items.find(item.id, {
+      nested: 'true',
+    });
+
+    const updatedContent =
+      updatedItemWithNestedBlocks.content as SchemaTypes.Item[];
+
+    expect(updatedContent[0].attributes.text).toEqual('Updated Foo');
+    expect(updatedContent[1].attributes.text).toEqual('Updated Bar');
   });
 });

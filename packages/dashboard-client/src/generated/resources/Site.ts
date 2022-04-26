@@ -93,7 +93,7 @@ export default class Site extends BaseResource {
   create(body: SimpleSchemaTypes.SiteCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.SiteCreateSchema>(body, {
-        type: Site.TYPE,
+        type: 'site',
         attributes: ['name', 'internal_subdomain', 'template'],
         relationships: [],
       }),
@@ -128,7 +128,7 @@ export default class Site extends BaseResource {
       Utils.toId(siteId),
       Utils.serializeRequestBody<SchemaTypes.SiteUpdateSchema>(body, {
         id: Utils.toId(siteId),
-        type: Site.TYPE,
+        type: 'site',
         attributes: [
           'name',
           'domain',

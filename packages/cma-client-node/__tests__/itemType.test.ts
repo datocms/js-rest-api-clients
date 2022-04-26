@@ -1,7 +1,7 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('item type', () => {
-  test('create, find, all, duplicate, update, destroy', async () => {
+  it.concurrent('create, find, all, duplicate, update, destroy', async () => {
     const client = await generateNewCmaClient();
 
     const itemType = await client.itemTypes.create({

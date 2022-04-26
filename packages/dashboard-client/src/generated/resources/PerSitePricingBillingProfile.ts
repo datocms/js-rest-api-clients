@@ -75,7 +75,7 @@ export default class PerSitePricingBillingProfile extends BaseResource {
         body,
         {
           id: Utils.toId(perSitePricingBillingProfileId),
-          type: PerSitePricingBillingProfile.TYPE,
+          type: 'card',
           attributes: ['payment_intent_id'],
           relationships: [],
         },
@@ -118,7 +118,7 @@ export default class PerSitePricingBillingProfile extends BaseResource {
         body,
         {
           id: Utils.toId(perSitePricingBillingProfileId),
-          type: PerSitePricingBillingProfile.TYPE,
+          type: 'per_site_pricing_billing_profile',
           attributes: [
             'first_name',
             'last_name',

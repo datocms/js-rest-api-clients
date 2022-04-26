@@ -48,7 +48,7 @@ export default class SiteSubscription extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.SiteSubscriptionValidateSchema>(
         body,
         {
-          type: SiteSubscription.TYPE,
+          type: 'site_subscription',
           attributes: ['extra_packets', 'ignore_content', 'is_duplicate'],
           relationships: ['plan'],
         },

@@ -44,32 +44,6 @@ export default class EditingSession extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  update(
-    editingSessionId: string | SimpleSchemaTypes.EditingSessionData,
-    body: SimpleSchemaTypes.EditingSessionUpdateSchema,
-  ) {
-    return this.rawUpdate(
-      Utils.toId(editingSessionId),
-      Utils.serializeRequestBody<SchemaTypes.EditingSessionUpdateSchema>(body, {
-        id: Utils.toId(editingSessionId),
-        type: EditingSession.TYPE,
-        attributes: [],
-        relationships: ['item', 'item', 'item'],
-      }),
-    ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.EditingSessionUpdateTargetSchema>(
-        body,
-      ),
-    );
-  }
-
-  /**
-   * Allows all actions on editing sessions
-   *
-   * Read more: https://www.datocms.com/docs/content-management-api/resources/editing-session/update
-   *
-   * @deprecated This API call is to be considered private and might change without notice
-   */
   rawUpdate(
     editingSessionId: string,
     body: SchemaTypes.EditingSessionUpdateSchema,

@@ -1,7 +1,7 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('Daily usages events', () => {
-  test('list', async () => {
+  it.concurrent('list', async () => {
     const client = await generateNewCmaClient();
 
     const usages = await client.dailyUsages.list();

@@ -14,7 +14,7 @@ export default class Plugin extends BaseResource {
   create(body: SimpleSchemaTypes.PluginCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.PluginCreateSchema>(body, {
-        type: Plugin.TYPE,
+        type: 'plugin',
         attributes: [
           'package_name',
           'name',
@@ -63,7 +63,7 @@ export default class Plugin extends BaseResource {
       Utils.toId(pluginId),
       Utils.serializeRequestBody<SchemaTypes.PluginUpdateSchema>(body, {
         id: Utils.toId(pluginId),
-        type: Plugin.TYPE,
+        type: 'plugin',
         attributes: [
           'name',
           'description',

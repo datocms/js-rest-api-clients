@@ -1,7 +1,7 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('site invitations', () => {
-  test('create, find, all, destroy', async () => {
+  it.concurrent('create, find, all, destroy', async () => {
     const client = await generateNewCmaClient();
 
     const roles = await client.roles.list();

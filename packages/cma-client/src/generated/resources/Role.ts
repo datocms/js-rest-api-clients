@@ -14,7 +14,7 @@ export default class Role extends BaseResource {
   create(body: SimpleSchemaTypes.RoleCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.RoleCreateSchema>(body, {
-        type: Role.TYPE,
+        type: 'role',
         attributes: [
           'name',
           'can_edit_favicon',
@@ -79,7 +79,7 @@ export default class Role extends BaseResource {
       Utils.toId(roleId),
       Utils.serializeRequestBody<SchemaTypes.RoleUpdateSchema>(body, {
         id: Utils.toId(roleId),
-        type: Role.TYPE,
+        type: 'role',
         attributes: [
           'name',
           'can_edit_favicon',

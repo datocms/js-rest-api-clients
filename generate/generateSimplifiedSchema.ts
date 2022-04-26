@@ -19,7 +19,23 @@ function simplifySchema(objectSchema) {
       ...(id ? { id } : {}),
       ...(type ? { type } : {}),
       ...(attributes?.properties || {}),
-      ...(relationships?.properties || {}),
+      ...(relationships?.properties
+        ? Object.fromEntries(
+            Object.entries<any>(relationships.properties).map(
+              ([relName, relSchema]) => {
+                if ('$ref' in relSchema) {
+                  return [relName, relSchema];
+                }
+
+                if (!relSchema.properties.data) {
+                  return [relName, relSchema];
+                }
+
+                return [relName, relSchema.properties.data];
+              },
+            ),
+          )
+        : {}),
       ...(meta ? { meta } : {}),
     },
   };

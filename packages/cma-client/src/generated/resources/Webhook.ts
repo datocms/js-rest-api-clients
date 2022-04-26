@@ -14,7 +14,7 @@ export default class Webhook extends BaseResource {
   create(body: SimpleSchemaTypes.WebhookCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.WebhookCreateSchema>(body, {
-        type: Webhook.TYPE,
+        type: 'webhook',
         attributes: [
           'name',
           'url',
@@ -63,7 +63,7 @@ export default class Webhook extends BaseResource {
     return this.rawUpdate(
       Utils.toId(userId),
       Utils.serializeRequestBody<SchemaTypes.WebhookUpdateSchema>(body, {
-        type: Webhook.TYPE,
+        type: 'webhook',
         attributes: [
           'name',
           'url',

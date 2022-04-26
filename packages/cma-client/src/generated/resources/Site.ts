@@ -39,7 +39,7 @@ export default class Site extends BaseResource {
   update(body: SimpleSchemaTypes.SiteUpdateSchema) {
     return this.rawUpdate(
       Utils.serializeRequestBody<SchemaTypes.SiteUpdateSchema>(body, {
-        type: Site.TYPE,
+        type: 'site',
         attributes: [
           'no_index',
           'favicon',

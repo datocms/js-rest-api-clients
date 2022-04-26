@@ -37,8 +37,8 @@
   "devDependencies": {
     "@datocms/dashboard-client": "0.0.1-alpha.5",
     "datocms-structured-text-utils": "^2.0.4",
-    "unist-builder": "^3.0.0",
-    "unist-util-map": "^3.0.1"
+    "unist-builder": "^2.0.3",
+    "unist-util-map": "^2.0.1"
   },
   "scripts": {
     "build": "tsc && tsc --project ./tsconfig.esnext.json",

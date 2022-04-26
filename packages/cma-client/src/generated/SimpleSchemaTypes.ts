@@ -4582,12 +4582,7 @@ export interface FieldCreateSchema {
     | {
         [k: string]: unknown;
       };
-  /**
-   * Fieldset linkage
-   */
-  fieldset?: {
-    data: null | FieldsetData;
-  };
+  fieldset?: null | FieldsetData;
 }
 
 /**
@@ -4685,12 +4680,7 @@ export interface FieldUpdateSchema {
    * Field hint
    */
   hint?: string | null;
-  /**
-   * Fieldset linkage
-   */
-  fieldset?: {
-    data: null | FieldsetData;
-  };
+  fieldset?: null | FieldsetData;
 }
 
 /**
@@ -5735,9 +5725,7 @@ export interface ItemUpdateSchema {
   id?: ItemIdentity;
   type?: ItemType1;
   item_type?: ItemTypeData;
-  creator?: {
-    data: AccountData | AccessTokenData | UserData | SsoUserData;
-  };
+  creator?: AccountData | AccessTokenData | UserData | SsoUserData;
   /**
    * Meta information regarding the record
    */
@@ -5795,12 +5783,7 @@ export interface ItemBulkPublishSchema {
    * JSON API type field
    */
   type?: 'item_bulk_publish_operation';
-  /**
-   * Records to publish
-   */
-  items: {
-    data: ItemData[];
-  };
+  items: ItemData[];
   minItems?: unknown;
   [k: string]: unknown;
 }
@@ -5814,12 +5797,7 @@ export interface ItemBulkUnpublishSchema {
    * JSON API type field
    */
   type?: 'item_bulk_unpublish_operation';
-  /**
-   * Records to unpublish
-   */
-  items: {
-    data: ItemData[];
-  };
+  items: ItemData[];
   minItems?: unknown;
   [k: string]: unknown;
 }
@@ -5833,12 +5811,7 @@ export interface ItemBulkDestroySchema {
    * JSON API type field
    */
   type?: 'item_bulk_destroy_operation';
-  /**
-   * Records to delete
-   */
-  items: {
-    data: ItemData[];
-  };
+  items: ItemData[];
   minItems?: unknown;
   [k: string]: unknown;
 }
@@ -5856,12 +5829,7 @@ export interface ItemBulkMoveToStageSchema {
    * Stage to be moved to
    */
   stage: string;
-  /**
-   * Records to move
-   */
-  items: {
-    data: ItemData[];
-  };
+  items: ItemData[];
   minItems?: unknown;
 }
 
@@ -6461,12 +6429,7 @@ export interface UploadBulkTagSchema {
    * The tags to add to the assets
    */
   tags: string[];
-  /**
-   * Assets to tag
-   */
-  uploads: {
-    data: UploadData[];
-  };
+  uploads: UploadData[];
 }
 
 /**
@@ -6478,12 +6441,7 @@ export interface UploadBulkDestroySchema {
    * JSON API type field
    */
   type?: 'upload_bulk_destroy_operation';
-  /**
-   * Assets to delete
-   */
-  uploads: {
-    data: UploadData[];
-  };
+  uploads: UploadData[];
   [k: string]: unknown;
 }
 
@@ -7459,6 +7417,7 @@ export interface ItemTypeFilterCreateSchema {
    * Whether it's a shared filter or not
    */
   shared: boolean;
+  item_type: ItemTypeData;
 }
 
 /**
@@ -7925,12 +7884,7 @@ export interface SsoSettingsUpdateSchema {
    * URL of Identity Provider SAML Metadata endpoint
    */
   idp_saml_metadata_url?: null | string;
-  /**
-   * The default role assigned to SSO users that do not belong to any SSO group
-   */
-  default_role: {
-    data: RoleData;
-  };
+  default_role: RoleData;
 }
 
 /**
@@ -8818,9 +8772,7 @@ export interface SiteUpdateSchema {
    * Specifies whether you want IPs to be tracked in the Project usages section
    */
   ip_tracking_enabled?: boolean;
-  sso_default_role?: {
-    data: RoleData;
-  };
+  sso_default_role?: RoleData;
 }
 
 /**

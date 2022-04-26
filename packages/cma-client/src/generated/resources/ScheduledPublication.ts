@@ -20,7 +20,7 @@ export default class ScheduledPublication extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.ScheduledPublicationCreateSchema>(
         body,
         {
-          type: ScheduledPublication.TYPE,
+          type: 'scheduled_publication',
           attributes: ['publication_scheduled_at'],
           relationships: [],
         },

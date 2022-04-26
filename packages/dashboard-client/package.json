@@ -29,7 +29,7 @@
     "url": "git+https://github.com/datocms/js-toolkit.git"
   },
   "scripts": {
-    "build": "tsc && tsc --project ./tsconfig.esnext.json && ts-node ./esbuild.ts",
+    "build": "tsc && tsc --project ./tsconfig.esnext.json",
     "prebuild": "rimraf dist"
   },
   "bugs": {

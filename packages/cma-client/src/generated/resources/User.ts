@@ -19,7 +19,7 @@ export default class User extends BaseResource {
       Utils.toId(userId),
       Utils.serializeRequestBody<SchemaTypes.UserUpdateSchema>(body, {
         id: Utils.toId(userId),
-        type: User.TYPE,
+        type: 'user',
         attributes: ['is_active'],
         relationships: ['role'],
       }),

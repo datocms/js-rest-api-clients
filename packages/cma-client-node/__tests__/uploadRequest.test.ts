@@ -1,7 +1,7 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('upload request', () => {
-  test('create', async () => {
+  it.concurrent('create', async () => {
     const client = await generateNewCmaClient();
 
     const uploadRequest = await client.uploadRequest.create({

@@ -23,6 +23,7 @@ export type EndpointInfo = {
   simpleMethodAvailable: boolean;
   requestBodyType?: string;
   requestStructure?: {
+    type: string;
     attributes: string[] | '*';
     relationships: string[] | '*';
   };
@@ -123,6 +124,53 @@ function findPropertiesInProperty(
   }
 
   throw new Error("Don't know how to handle!");
+}
+
+function findTypeInDataObject(dataSchema: JsonRefParser.JSONSchema) {
+  if (dataSchema.type !== 'object') {
+    throw new Error('Data not an object?');
+  }
+
+  if (typeof dataSchema.properties !== 'object') {
+    throw new Error('Missing data?');
+  }
+
+  if (
+    !dataSchema.properties.type ||
+    typeof dataSchema.properties.type !== 'object'
+  ) {
+    throw new Error('Missing type?');
+  }
+
+  return (dataSchema.properties.type as any).example as string;
+}
+
+function findTypeInDataProperty(schema: JsonRefParser.JSONSchema) {
+  if (typeof schema.properties?.data !== 'object') {
+    throw new Error('Missing data!');
+  }
+
+  let dataSchema = schema.properties.data;
+
+  if (schema.type === 'array') {
+    if (typeof schema.items !== 'object') {
+      throw new Error('No items?');
+    }
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    dataSchema = schema.items!;
+  }
+
+  if (dataSchema.anyOf) {
+    const types = [
+      ...new Set(dataSchema.anyOf.map((s) => findTypeInDataObject(s))),
+    ];
+    if (types.length !== 1) {
+      return '*';
+    }
+    return types[0];
+  }
+
+  return findTypeInDataObject(dataSchema);
 }
 
 function findPropertiesInDataProperty(
@@ -235,6 +283,7 @@ function generateResourceInfo(
       simpleMethodAvailable: true,
       requestStructure: link.schema
         ? {
+            type: findTypeInDataProperty(link.schema),
             attributes: findPropertiesInDataProperty(link.schema, 'attributes'),
             relationships: findPropertiesInDataProperty(
               link.schema,
@@ -257,8 +306,9 @@ function generateResourceInfo(
 
     if (
       endpointInfo.requestStructure &&
-      ((endpointInfo.requestStructure.attributes === '*' &&
-        endpointInfo.requestStructure.relationships === '*') ||
+      (endpointInfo.requestStructure.type === '*' ||
+        (endpointInfo.requestStructure.attributes === '*' &&
+          endpointInfo.requestStructure.relationships === '*') ||
         (Array.isArray(endpointInfo.requestStructure.attributes) &&
           Array.isArray(endpointInfo.requestStructure.relationships) &&
           endpointInfo.requestStructure.attributes.some((x) =>

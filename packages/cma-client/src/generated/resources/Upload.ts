@@ -14,7 +14,7 @@ export default class Upload extends BaseResource {
   create(body: SimpleSchemaTypes.UploadCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.UploadCreateSchema>(body, {
-        type: Upload.TYPE,
+        type: 'upload',
         attributes: [
           'path',
           'copyright',
@@ -178,7 +178,7 @@ export default class Upload extends BaseResource {
       Utils.toId(uploadId),
       Utils.serializeRequestBody<SchemaTypes.UploadUpdateSchema>(body, {
         id: Utils.toId(uploadId),
-        type: Upload.TYPE,
+        type: 'upload',
         attributes: [
           'path',
           'basename',
@@ -227,7 +227,7 @@ export default class Upload extends BaseResource {
     return this.rawBatchAddTags(
       queryParams,
       Utils.serializeRequestBody<SchemaTypes.UploadBatchAddTagsSchema>(body, {
-        type: Upload.TYPE,
+        type: 'upload',
         attributes: ['tags'],
         relationships: [],
       }),
@@ -329,7 +329,7 @@ export default class Upload extends BaseResource {
   bulkTag(body: SimpleSchemaTypes.UploadBulkTagSchema) {
     return this.rawBulkTag(
       Utils.serializeRequestBody<SchemaTypes.UploadBulkTagSchema>(body, {
-        type: Upload.TYPE,
+        type: 'upload_bulk_tag_operation',
         attributes: ['tags'],
         relationships: ['uploads'],
       }),
@@ -363,7 +363,7 @@ export default class Upload extends BaseResource {
   bulkDestroy(body: SimpleSchemaTypes.UploadBulkDestroySchema) {
     return this.rawBulkDestroy(
       Utils.serializeRequestBody<SchemaTypes.UploadBulkDestroySchema>(body, {
-        type: Upload.TYPE,
+        type: 'upload_bulk_destroy_operation',
         attributes: [],
         relationships: ['uploads'],
       }),

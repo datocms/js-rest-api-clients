@@ -3,7 +3,7 @@ import { withEventsSubscription } from '../src';
 import { generateNewDashboardClient } from './helpers/generateClients';
 
 describe('@datocms/rest-api-events', () => {
-  it('first test', async () => {
+  it.concurrent('first test', async () => {
     const dashboardClient = await generateNewDashboardClient();
 
     const site = await dashboardClient.sites.create({

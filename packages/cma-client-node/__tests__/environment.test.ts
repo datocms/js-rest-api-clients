@@ -1,7 +1,7 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('environments', () => {
-  it('all, find, fork, promote, destroy', async () => {
+  it.concurrent('all, find, fork, promote, destroy', async () => {
     const client = await generateNewCmaClient();
     const primaryEnvironment = await client.environments.find('main');
 

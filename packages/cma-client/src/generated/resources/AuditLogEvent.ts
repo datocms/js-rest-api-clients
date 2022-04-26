@@ -14,7 +14,7 @@ export default class AuditLogEvent extends BaseResource {
   query(body: SimpleSchemaTypes.AuditLogEventQuerySchema) {
     return this.rawQuery(
       Utils.serializeRequestBody<SchemaTypes.AuditLogEventQuerySchema>(body, {
-        type: AuditLogEvent.TYPE,
+        type: 'audit_log_query',
         attributes: ['filter', 'next_token', 'detailed_log'],
         relationships: [],
       }),
@@ -35,7 +35,7 @@ export default class AuditLogEvent extends BaseResource {
   ): Promise<SchemaTypes.AuditLogEventQueryTargetSchema> {
     return this.client.request<SchemaTypes.AuditLogEventQueryTargetSchema>({
       method: 'POST',
-      url: `/audit-log-events`,
+      url: `/audit-log-events/query`,
       body,
     });
   }

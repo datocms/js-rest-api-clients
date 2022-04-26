@@ -1,7 +1,7 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('Access tokens', () => {
-  test('create, find, list, update, destroy', async () => {
+  it.concurrent('create, find, list, update, destroy', async () => {
     const client = await generateNewCmaClient();
 
     const role = await client.roles.create({
@@ -19,19 +19,19 @@ describe('Access tokens', () => {
       },
     });
 
-    // TODO qui mi dice che find vuole un tipo UserData ???
     const foundAccessToken = await client.accessTokens.find(token);
     expect(foundAccessToken.id).toEqual(token.id);
 
     const allAccessToken = await client.accessTokens.list();
-    expect(allAccessToken).toHaveLength(1);
+    expect(allAccessToken).toHaveLength(3);
 
     const updatedToken = await client.accessTokens.update(token, {
+      ...token,
       name: 'Updated',
     });
     expect(updatedToken.name).toEqual('Updated');
 
     await client.accessTokens.destroy(token);
-    expect(await client.accessTokens.list()).toHaveLength(0);
+    expect(await client.accessTokens.list()).toHaveLength(2);
   });
 });

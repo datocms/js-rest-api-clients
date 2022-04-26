@@ -71,7 +71,7 @@ export default class SsoGroup extends BaseResource {
       Utils.toId(ssoGroupId),
       Utils.serializeRequestBody<SchemaTypes.SsoGroupUpdateSchema>(body, {
         id: Utils.toId(ssoGroupId),
-        type: SsoGroup.TYPE,
+        type: 'sso_group',
         attributes: ['priority'],
         relationships: ['role'],
       }),

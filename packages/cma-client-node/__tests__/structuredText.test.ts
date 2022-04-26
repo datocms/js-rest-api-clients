@@ -1,10 +1,21 @@
 import { generateNewCmaClient } from './helpers/generateClients';
-import { u } from 'unist-builder';
-import { map } from 'unist-util-map';
-import { isBlock } from 'datocms-structured-text-utils';
+import u from 'unist-builder';
+import map from 'unist-util-map';
+import { Block, Document, isBlock, Node } from 'datocms-structured-text-utils';
+import { buildBlockRecord, SchemaTypes } from '@datocms/cma-client';
+
+function isDastNode(node: unknown): node is Node {
+  return !!(
+    typeof node === 'object' &&
+    node &&
+    'type' in node &&
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    typeof (node as any).type === 'string'
+  );
+}
 
 describe('structured text', () => {
-  test('create, update', async () => {
+  it.concurrent('create, update', async () => {
     const client = await generateNewCmaClient();
 
     const articleItemType = await client.itemTypes.create({
@@ -29,64 +40,60 @@ describe('structured text', () => {
       field_type: 'structured_text',
       api_key: 'content',
       validators: {
-        structuredTextBlocks: { itemTypes: [contentItemType.id] },
-        structuredTextLinks: { itemTypes: [] },
+        structured_text_blocks: { item_types: [contentItemType.id] },
+        structured_text_links: { item_types: [] },
       },
     });
 
-    const blockContent = {
-      type: 'item',
-      attributes: { text: 'Foo' },
-      relationships: {
-        item_type: {
-          data: {
-            id: contentItemType.id,
-            type: 'item_type',
-          },
-        },
-      },
-    };
-
-    const content = {
-      schema: 'dast',
-      document: u('root', [
-        u('heading', { level: 1 }, [u('span', 'This is the title!')]),
-        u('paragraph', [
-          u('span', 'And '),
-          u('span', { marks: ['strong'] }, 'this'),
-          u('span', ' is a paragraph!'),
-        ]),
-        u('block', blockContent),
-      ]),
-    };
-
-    // TODO vedi items.test
     const item = await client.items.create({
-      item_type: { type: 'item_type', id: articleItemType.id },
-      content,
+      item_type: articleItemType,
+      content: {
+        schema: 'dast',
+        document: u('root', [
+          u('heading', { level: 1 }, [u('span', 'This is the title!')]),
+          u('paragraph', [
+            u('span', 'And '),
+            u('span', { marks: ['strong'] }, 'this'),
+            u('span', ' is a paragraph!'),
+          ]),
+          u('block', {
+            item: buildBlockRecord({
+              text: 'Foo',
+              item_type: contentItemType,
+            }),
+          }),
+        ]),
+      },
     });
 
-    expect(item.content.document.children.length).toEqual(3);
+    const content = item.content as Document;
+
+    expect(content.document.children.length).toEqual(3);
 
     const itemWithNestedBlocks = await client.items.find(item.id, {
-      nested: true,
+      nested: 'true',
     });
 
+    const nestedContent = itemWithNestedBlocks.content as Document;
+
     const newContent = {
-      ...itemWithNestedBlocks.content,
-      document: map(itemWithNestedBlocks.content.document, (node) => {
-        return isBlock(node)
-          ? {
-              ...node,
-              item: {
-                ...node.item,
-                attributes: {
-                  ...node.item.attributes,
-                  text: `Updated ${node.item.attributes.text}`,
-                },
-              },
-            }
-          : node;
+      ...nestedContent,
+      document: map(nestedContent.document, (node) => {
+        if (!isDastNode(node) || !isBlock(node)) {
+          return node;
+        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const item = node.item as any as SchemaTypes.Item;
+        return {
+          ...node,
+          item: {
+            ...item,
+            attributes: {
+              ...item.attributes,
+              text: `Updated ${item.attributes.text}`,
+            },
+          },
+        };
       }),
     };
 
@@ -95,12 +102,17 @@ describe('structured text', () => {
     });
 
     const updatedItemWithNestedBlocks = await client.items.find(item.id, {
-      nested: true,
+      nested: 'true',
     });
 
+    const updatedNestedContent =
+      updatedItemWithNestedBlocks.content as Document;
+
     expect(
-      updatedItemWithNestedBlocks.content.document.children[2].item.attributes
-        .text,
+      (
+        (updatedNestedContent.document.children[2] as Block)
+          .item as any as SchemaTypes.Item
+      ).attributes.text,
     ).toEqual('Updated Foo');
   });
 });

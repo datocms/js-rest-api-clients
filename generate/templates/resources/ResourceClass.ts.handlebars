@@ -44,7 +44,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
                   {{#if urlPlaceholder.isEntityId}}
                     id: Utils.toId({{{urlPlaceholder.variableName}}}),
                   {{/if}}
-                  type: {{{../resourceClassName}}}.TYPE,
+                  type: {{{stringify requestStructure.type}}},
                   attributes: {{{stringify requestStructure.attributes}}},
                   relationships: {{{stringify requestStructure.relationships}}},
                 },

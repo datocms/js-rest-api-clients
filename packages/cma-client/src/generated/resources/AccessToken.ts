@@ -14,7 +14,7 @@ export default class AccessToken extends BaseResource {
   create(body: SimpleSchemaTypes.AccessTokenCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.AccessTokenCreateSchema>(body, {
-        type: AccessToken.TYPE,
+        type: 'access_token',
         attributes: [
           'name',
           'can_access_cda',
@@ -51,13 +51,14 @@ export default class AccessToken extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/update
    */
   update(
-    userId: string | SimpleSchemaTypes.UserData,
+    accessTokenId: string | SimpleSchemaTypes.AccessTokenData,
     body: SimpleSchemaTypes.AccessTokenUpdateSchema,
   ) {
     return this.rawUpdate(
-      Utils.toId(userId),
+      Utils.toId(accessTokenId),
       Utils.serializeRequestBody<SchemaTypes.AccessTokenUpdateSchema>(body, {
-        type: AccessToken.TYPE,
+        id: Utils.toId(accessTokenId),
+        type: 'access_token',
         attributes: [
           'name',
           'can_access_cda',
@@ -79,12 +80,12 @@ export default class AccessToken extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/update
    */
   rawUpdate(
-    userId: string,
+    accessTokenId: string,
     body: SchemaTypes.AccessTokenUpdateSchema,
   ): Promise<SchemaTypes.AccessTokenUpdateTargetSchema> {
     return this.client.request<SchemaTypes.AccessTokenUpdateTargetSchema>({
       method: 'PUT',
-      url: `/access_tokens/${userId}`,
+      url: `/access_tokens/${accessTokenId}`,
       body,
     });
   }
@@ -119,8 +120,8 @@ export default class AccessToken extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/self
    */
-  find(userId: string | SimpleSchemaTypes.UserData) {
-    return this.rawFind(Utils.toId(userId)).then((body) =>
+  find(accessTokenId: string | SimpleSchemaTypes.AccessTokenData) {
+    return this.rawFind(Utils.toId(accessTokenId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenSelfTargetSchema>(
         body,
       ),
@@ -132,10 +133,12 @@ export default class AccessToken extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/self
    */
-  rawFind(userId: string): Promise<SchemaTypes.AccessTokenSelfTargetSchema> {
+  rawFind(
+    accessTokenId: string,
+  ): Promise<SchemaTypes.AccessTokenSelfTargetSchema> {
     return this.client.request<SchemaTypes.AccessTokenSelfTargetSchema>({
       method: 'GET',
-      url: `/access_tokens/${userId}`,
+      url: `/access_tokens/${accessTokenId}`,
     });
   }
 
@@ -144,8 +147,8 @@ export default class AccessToken extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/regenerate_token
    */
-  regenerateToken(userId: string | SimpleSchemaTypes.UserData) {
-    return this.rawRegenerateToken(Utils.toId(userId)).then((body) =>
+  regenerateToken(accessTokenId: string | SimpleSchemaTypes.AccessTokenData) {
+    return this.rawRegenerateToken(Utils.toId(accessTokenId)).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenRegenerateTokenTargetSchema>(
         body,
       ),
@@ -158,12 +161,12 @@ export default class AccessToken extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/regenerate_token
    */
   rawRegenerateToken(
-    userId: string,
+    accessTokenId: string,
   ): Promise<SchemaTypes.AccessTokenRegenerateTokenTargetSchema> {
     return this.client.request<SchemaTypes.AccessTokenRegenerateTokenTargetSchema>(
       {
         method: 'POST',
-        url: `/access_tokens/${userId}/regenerate_token`,
+        url: `/access_tokens/${accessTokenId}/regenerate_token`,
       },
     );
   }
@@ -174,13 +177,14 @@ export default class AccessToken extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/destroy
    */
   destroy(
-    userId: string | SimpleSchemaTypes.UserData,
+    accessTokenId: string | SimpleSchemaTypes.AccessTokenData,
     queryParams?: SimpleSchemaTypes.AccessTokenDestroyHrefSchema,
   ) {
-    return this.rawDestroy(Utils.toId(userId), queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenDestroyTargetSchema>(
-        body,
-      ),
+    return this.rawDestroy(Utils.toId(accessTokenId), queryParams).then(
+      (body) =>
+        Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenDestroyTargetSchema>(
+          body,
+        ),
     );
   }
 
@@ -190,12 +194,12 @@ export default class AccessToken extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/destroy
    */
   rawDestroy(
-    userId: string,
+    accessTokenId: string,
     queryParams?: SchemaTypes.AccessTokenDestroyHrefSchema,
   ): Promise<SchemaTypes.AccessTokenDestroyTargetSchema> {
     return this.client.request<SchemaTypes.AccessTokenDestroyTargetSchema>({
       method: 'DELETE',
-      url: `/access_tokens/${userId}`,
+      url: `/access_tokens/${accessTokenId}`,
       queryParams,
     });
   }

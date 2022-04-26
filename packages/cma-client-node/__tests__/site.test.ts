@@ -1,7 +1,7 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('site', () => {
-  test('find, update', async () => {
+  it.concurrent('find, update', async () => {
     const client = await generateNewCmaClient();
 
     const fetchedSite = await client.site.find();

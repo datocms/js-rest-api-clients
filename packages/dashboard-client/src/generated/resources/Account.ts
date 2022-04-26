@@ -12,7 +12,7 @@ export default class Account extends BaseResource {
   create(body: SimpleSchemaTypes.AccountCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.AccountCreateSchema>(body, {
-        type: Account.TYPE,
+        type: 'account',
         attributes: [
           'email',
           'first_name',
@@ -49,7 +49,7 @@ export default class Account extends BaseResource {
   update(body: SimpleSchemaTypes.AccountUpdateSchema) {
     return this.rawUpdate(
       Utils.serializeRequestBody<SchemaTypes.AccountUpdateSchema>(body, {
-        type: Account.TYPE,
+        type: 'account',
         attributes: [
           'email',
           'first_name',
@@ -87,7 +87,7 @@ export default class Account extends BaseResource {
   destroy(body: SimpleSchemaTypes.AccountDestroySchema) {
     return this.rawDestroy(
       Utils.serializeRequestBody<SchemaTypes.AccountDestroySchema>(body, {
-        type: Account.TYPE,
+        type: 'account_destroy_request',
         attributes: ['otp_code', 'password'],
         relationships: [],
       }),
@@ -138,7 +138,7 @@ export default class Account extends BaseResource {
   resetPassword(body: SimpleSchemaTypes.AccountResetPasswordSchema) {
     return this.rawResetPassword(
       Utils.serializeRequestBody<SchemaTypes.AccountResetPasswordSchema>(body, {
-        type: Account.TYPE,
+        type: 'account',
         attributes: ['email'],
         relationships: [],
       }),
@@ -164,7 +164,7 @@ export default class Account extends BaseResource {
   activate_2Fa(body: SimpleSchemaTypes.AccountActivate_2FaSchema) {
     return this.rawActivate_2Fa(
       Utils.serializeRequestBody<SchemaTypes.AccountActivate_2FaSchema>(body, {
-        type: Account.TYPE,
+        type: '2fa_activation',
         attributes: ['otp_code', 'password'],
         relationships: [],
       }),
@@ -217,7 +217,7 @@ export default class Account extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.AccountDeactivate_2FaSchema>(
         body,
         {
-          type: Account.TYPE,
+          type: '2fa_deactivation',
           attributes: ['otp_code', 'password'],
           relationships: [],
         },

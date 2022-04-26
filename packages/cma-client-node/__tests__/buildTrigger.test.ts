@@ -1,7 +1,7 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('build triggers', () => {
-  test('create, find, list, update, destroy, trigger', async () => {
+  it.concurrent('create, find, list, update, destroy, trigger', async () => {
     const client = await generateNewCmaClient();
 
     const trigger = await client.buildTriggers.create({

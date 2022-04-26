@@ -14,7 +14,7 @@ export default class UploadFilter extends BaseResource {
   create(body: SimpleSchemaTypes.UploadFilterCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.UploadFilterCreateSchema>(body, {
-        type: UploadFilter.TYPE,
+        type: 'upload_filter',
         attributes: ['name', 'filter', 'shared'],
         relationships: [],
       }),
@@ -53,7 +53,7 @@ export default class UploadFilter extends BaseResource {
       Utils.toId(uploadFilterId),
       Utils.serializeRequestBody<SchemaTypes.UploadFilterUpdateSchema>(body, {
         id: Utils.toId(uploadFilterId),
-        type: UploadFilter.TYPE,
+        type: 'upload_filter',
         attributes: ['name', 'shared', 'filter'],
         relationships: [],
       }),

@@ -16,7 +16,7 @@ export default class Session extends BaseResource {
   create(body: SimpleSchemaTypes.SessionCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.SessionCreateSchema>(body, {
-        type: Session.TYPE,
+        type: 'email_credentials',
         attributes: ['email', 'password', 'otp_code'],
         relationships: [],
       }),

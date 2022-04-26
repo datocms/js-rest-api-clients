@@ -2634,12 +2634,7 @@ export interface SiteTransferCreateSchema {
 export interface SiteTransferSimulateAcceptSchema {
   id?: SiteTransferIdentity;
   type?: SiteTransferType;
-  /**
-   * Billing profile
-   */
-  billing_profile: {
-    data: PerSitePricingBillingProfileData | null;
-  };
+  billing_profile: PerSitePricingBillingProfileData | null;
 }
 
 /**
@@ -2668,12 +2663,7 @@ export interface SiteTransferAcceptSchema {
   id?: SiteTransferIdentity;
   type?: SiteTransferType;
   payment_intent_id?: string;
-  /**
-   * Billing profile
-   */
-  billing_profile?: {
-    data: PerSitePricingBillingProfileData | null;
-  };
+  billing_profile?: PerSitePricingBillingProfileData | null;
 }
 
 /**

@@ -14,7 +14,7 @@ export default class ItemType extends BaseResource {
   create(body: SimpleSchemaTypes.ItemTypeCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.ItemTypeCreateSchema>(body, {
-        type: ItemType.TYPE,
+        type: 'item_type',
         attributes: [
           'name',
           'api_key',
@@ -73,7 +73,7 @@ export default class ItemType extends BaseResource {
       Utils.toId(itemTypeId),
       Utils.serializeRequestBody<SchemaTypes.ItemTypeUpdateSchema>(body, {
         id: Utils.toId(itemTypeId),
-        type: ItemType.TYPE,
+        type: 'item_type',
         attributes: [
           'name',
           'api_key',

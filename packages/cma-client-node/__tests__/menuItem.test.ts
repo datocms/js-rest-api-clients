@@ -2,7 +2,7 @@ import { LogLevel } from '../src';
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('menu item', () => {
-  test('create, find, list, update, destroy', async () => {
+  it.concurrent('create, find, list, update, destroy', async () => {
     const client = await generateNewCmaClient();
 
     const menuItem = await client.menuItems.create({

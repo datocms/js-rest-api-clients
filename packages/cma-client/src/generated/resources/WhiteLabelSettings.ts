@@ -41,7 +41,7 @@ export default class WhiteLabelSettings extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.WhiteLabelSettingsUpdateSchema>(
         body,
         {
-          type: WhiteLabelSettings.TYPE,
+          type: 'white_label_settings',
           attributes: ['custom_i18n_messages_template_url'],
           relationships: [],
         },

@@ -14,7 +14,7 @@ export default class AccountSubscription extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.AccountSubscriptionCreateSchema>(
         body,
         {
-          type: AccountSubscription.TYPE,
+          type: 'account_subscription',
           attributes: ['payment_intent_id', 'recurrence', 'billing_profile'],
           relationships: ['plan'],
         },
@@ -49,7 +49,7 @@ export default class AccountSubscription extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.AccountSubscriptionSimulateSchema>(
         body,
         {
-          type: AccountSubscription.TYPE,
+          type: 'account_subscription',
           attributes: ['recurrence', 'billing_profile'],
           relationships: ['plan'],
         },
@@ -84,7 +84,7 @@ export default class AccountSubscription extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.AccountSubscriptionValidateSchema>(
         body,
         {
-          type: AccountSubscription.TYPE,
+          type: 'account_subscription',
           attributes: [],
           relationships: ['plan'],
         },

@@ -1,27 +1,19 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('itemTypeFilters', () => {
-  test('create, find, all, update, destroy', async () => {
+  it.concurrent('create, find, all, update, destroy', async () => {
     const client = await generateNewCmaClient();
 
     const itemType = await client.itemTypes.create({
       name: 'Article',
       api_key: 'item_type',
       singleton: true,
-      modular_block: false,
-      sortable: false,
-      tree: false,
-      draft_mode_active: false,
-      ordering_direction: null,
-      ordering_field: null,
-      all_locales_required: true,
-      title_field: null,
     });
 
-    // TODO: relationships non èrequired dallo ItemTypeFilterCreateSchema
     const filter = await client.itemTypeFilters.create({
       name: 'My filter',
       shared: true,
+      item_type: itemType,
       filter: {
         status: {
           eq: 'draft',

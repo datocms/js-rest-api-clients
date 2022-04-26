@@ -1,21 +1,12 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('Fieldsets', () => {
-  test('create, find, all, update, destroy, duplicate', async () => {
+  it.concurrent('create, find, all, update, destroy, duplicate', async () => {
     const client = await generateNewCmaClient();
 
     const itemType = await client.itemTypes.create({
       name: 'Article',
       api_key: 'item_type',
-      singleton: true,
-      modular_block: false,
-      sortable: false,
-      tree: false,
-      draft_mode_active: false,
-      ordering_direction: null,
-      ordering_field: null,
-      all_locales_required: true,
-      title_field: null,
     });
 
     const fieldset = await client.fieldsets.create(itemType, {

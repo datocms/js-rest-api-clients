@@ -18,7 +18,7 @@ export default class Fieldset extends BaseResource {
     return this.rawCreate(
       Utils.toId(itemTypeId),
       Utils.serializeRequestBody<SchemaTypes.FieldsetCreateSchema>(body, {
-        type: Fieldset.TYPE,
+        type: 'fieldset',
         attributes: [
           'title',
           'hint',
@@ -64,7 +64,7 @@ export default class Fieldset extends BaseResource {
       Utils.toId(fieldsetId),
       Utils.serializeRequestBody<SchemaTypes.FieldsetUpdateSchema>(body, {
         id: Utils.toId(fieldsetId),
-        type: Fieldset.TYPE,
+        type: 'fieldset',
         attributes: [
           'title',
           'hint',

@@ -18,7 +18,7 @@ export default class Field extends BaseResource {
     return this.rawCreate(
       Utils.toId(itemTypeId),
       Utils.serializeRequestBody<SchemaTypes.FieldCreateSchema>(body, {
-        type: Field.TYPE,
+        type: 'field',
         attributes: [
           'label',
           'field_type',
@@ -69,7 +69,7 @@ export default class Field extends BaseResource {
       Utils.toId(fieldId),
       Utils.serializeRequestBody<SchemaTypes.FieldUpdateSchema>(body, {
         id: Utils.toId(fieldId),
-        type: Field.TYPE,
+        type: 'field',
         attributes: [
           'default_value',
           'label',

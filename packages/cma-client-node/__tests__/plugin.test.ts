@@ -1,7 +1,7 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('plugins', () => {
-  test('create, find, all, duplicate, update, destroy', async () => {
+  it.concurrent('create, find, all, duplicate, update, destroy', async () => {
     const client = await generateNewCmaClient();
     const plugin = await client.plugins.create({
       package_name: 'datocms-plugin-tag-editor',

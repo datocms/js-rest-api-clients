@@ -20,7 +20,7 @@ export default class ScheduledUnpublishing extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.ScheduledUnpublishingCreateSchema>(
         body,
         {
-          type: ScheduledUnpublishing.TYPE,
+          type: 'scheduled_unpublishing',
           attributes: ['unpublishing_scheduled_at'],
           relationships: [],
         },

@@ -2,7 +2,7 @@ import { ApiError, buildClient, SimpleSchemaTypes } from '../src';
 import { generateNewDashboardClient } from './helpers/generateClients';
 
 describe('@datocms/client', () => {
-  it('first test', async () => {
+  it.concurrent('first test', async () => {
     try {
       const client = buildClient({ apiToken: 'XXX' });
       await client.items.list({});
@@ -20,7 +20,7 @@ describe('@datocms/client', () => {
     }
   });
 
-  it('creating project', async () => {
+  it.concurrent('creating project', async () => {
     const dashboardClient = await generateNewDashboardClient();
     const site = await dashboardClient.sites.create({
       name: 'Foo bar',
@@ -54,7 +54,7 @@ describe('@datocms/client', () => {
     });
   });
 
-  it('iterators', async () => {
+  it.concurrent('iterators', async () => {
     const client = buildClient({
       apiToken: 'faeb9172e232a75339242faafb9e56de8c8f13b735f7090964',
     });

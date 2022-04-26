@@ -89,7 +89,7 @@ export default class Item extends BaseResource {
       Utils.toId(itemId),
       Utils.serializeRequestBody<SchemaTypes.ItemValidateExistingSchema>(body, {
         id: Utils.toId(itemId),
-        type: Item.TYPE,
+        type: 'item',
         attributes: '*',
         relationships: ['item_type', 'creator'],
       }),
@@ -124,7 +124,7 @@ export default class Item extends BaseResource {
   validateNew(body: SimpleSchemaTypes.ItemValidateNewSchema) {
     return this.rawValidateNew(
       Utils.serializeRequestBody<SchemaTypes.ItemValidateNewSchema>(body, {
-        type: Item.TYPE,
+        type: 'item',
         attributes: '*',
         relationships: ['item_type'],
       }),
@@ -154,7 +154,7 @@ export default class Item extends BaseResource {
   create(body: SimpleSchemaTypes.ItemCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.ItemCreateSchema>(body, {
-        type: Item.TYPE,
+        type: 'item',
         attributes: '*',
         relationships: ['item_type'],
       }),
@@ -218,7 +218,7 @@ export default class Item extends BaseResource {
       Utils.toId(itemId),
       Utils.serializeRequestBody<SchemaTypes.ItemUpdateSchema>(body, {
         id: Utils.toId(itemId),
-        type: Item.TYPE,
+        type: 'item',
         attributes: '*',
         relationships: ['item_type', 'creator'],
       }),
@@ -502,7 +502,7 @@ export default class Item extends BaseResource {
   bulkPublish(body: SimpleSchemaTypes.ItemBulkPublishSchema) {
     return this.rawBulkPublish(
       Utils.serializeRequestBody<SchemaTypes.ItemBulkPublishSchema>(body, {
-        type: Item.TYPE,
+        type: 'item_bulk_publish_operation',
         attributes: [],
         relationships: ['items'],
       }),
@@ -536,7 +536,7 @@ export default class Item extends BaseResource {
   bulkUnpublish(body: SimpleSchemaTypes.ItemBulkUnpublishSchema) {
     return this.rawBulkUnpublish(
       Utils.serializeRequestBody<SchemaTypes.ItemBulkUnpublishSchema>(body, {
-        type: Item.TYPE,
+        type: 'item_bulk_unpublish_operation',
         attributes: [],
         relationships: ['items'],
       }),
@@ -570,7 +570,7 @@ export default class Item extends BaseResource {
   bulkDestroy(body: SimpleSchemaTypes.ItemBulkDestroySchema) {
     return this.rawBulkDestroy(
       Utils.serializeRequestBody<SchemaTypes.ItemBulkDestroySchema>(body, {
-        type: Item.TYPE,
+        type: 'item_bulk_destroy_operation',
         attributes: [],
         relationships: ['items'],
       }),
@@ -604,7 +604,7 @@ export default class Item extends BaseResource {
   bulkMoveToStage(body: SimpleSchemaTypes.ItemBulkMoveToStageSchema) {
     return this.rawBulkMoveToStage(
       Utils.serializeRequestBody<SchemaTypes.ItemBulkMoveToStageSchema>(body, {
-        type: Item.TYPE,
+        type: 'item_bulk_move_to_stage_operation',
         attributes: ['stage'],
         relationships: ['items'],
       }),

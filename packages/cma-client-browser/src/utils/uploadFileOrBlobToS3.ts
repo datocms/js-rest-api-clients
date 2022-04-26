@@ -18,8 +18,10 @@ export function uploadFileOrBlobToS3(
       if (onProgress && xhr.upload) {
         xhr.upload.onprogress = (e) => {
           if (e.lengthComputable) {
-            const percent = Math.round((e.loaded / e.total) * 100);
-            onProgress({ type: 'upload', payload: { percent } });
+            onProgress({
+              type: 'upload',
+              payload: { progress: Math.round((e.loaded / e.total) * 100) },
+            });
           }
         };
       }

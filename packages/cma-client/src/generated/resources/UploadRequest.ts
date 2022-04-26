@@ -14,7 +14,7 @@ export default class UploadRequest extends BaseResource {
   create(body: SimpleSchemaTypes.UploadRequestCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.UploadRequestCreateSchema>(body, {
-        type: UploadRequest.TYPE,
+        type: 'upload_request',
         attributes: ['filename'],
         relationships: [],
       }),

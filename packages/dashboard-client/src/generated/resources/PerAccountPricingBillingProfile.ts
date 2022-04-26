@@ -40,7 +40,7 @@ export default class PerAccountPricingBillingProfile extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.PerAccountPricingBillingProfileUpdateCreditCardSchema>(
         body,
         {
-          type: PerAccountPricingBillingProfile.TYPE,
+          type: 'card',
           attributes: ['payment_intent_id'],
           relationships: [],
         },
@@ -77,7 +77,7 @@ export default class PerAccountPricingBillingProfile extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.PerAccountPricingBillingProfileUpdateInfoSchema>(
         body,
         {
-          type: PerAccountPricingBillingProfile.TYPE,
+          type: 'per_account_pricing_billing_profile',
           attributes: [
             'first_name',
             'last_name',

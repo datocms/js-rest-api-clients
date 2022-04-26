@@ -70,7 +70,7 @@ export default class Invoice extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.InvoicePerAccountPricingBillingProfileCollectUnpaidSchema>(
         body,
         {
-          type: Invoice.TYPE,
+          type: 'invoice_collection',
           attributes: ['payment_intent_id'],
           relationships: [],
         },
@@ -111,7 +111,7 @@ export default class Invoice extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.InvoicePerSitePricingBillingProfileCollectUnpaidSchema>(
         body,
         {
-          type: Invoice.TYPE,
+          type: 'invoice_collection',
           attributes: ['payment_intent_id'],
           relationships: [],
         },

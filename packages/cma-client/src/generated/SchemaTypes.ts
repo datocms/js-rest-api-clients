@@ -5433,6 +5433,9 @@ export interface ItemUpdateSchema {
       item_type?: {
         data: ItemTypeData;
       };
+      /**
+       * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
+       */
       creator?: {
         data: AccountData | AccessTokenData | UserData | SsoUserData;
       };
@@ -7494,7 +7497,14 @@ export interface ItemTypeFilterCreateSchema {
        */
       shared: boolean;
     };
-    relationships: ItemTypeFilterRelationships;
+    relationships: {
+      /**
+       * Model associated with the filter
+       */
+      item_type: {
+        data: ItemTypeData;
+      };
+    };
   };
 }
 
