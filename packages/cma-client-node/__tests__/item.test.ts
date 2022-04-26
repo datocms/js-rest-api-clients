@@ -51,7 +51,7 @@ describe('item', () => {
   });
 
   it.concurrent('create, find, all, update, destroy, duplicate', async () => {
-    const client = await generateNewCmaClient({ logLevel: LogLevel.BODY });
+    const client = await generateNewCmaClient();
 
     const itemType = await client.itemTypes.create({
       name: 'Article',
