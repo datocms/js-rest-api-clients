@@ -29,7 +29,7 @@ export default class ItemVersion extends BaseResource {
   ): Promise<SchemaTypes.ItemVersionRestoreJobSchema> {
     return this.client.request<SchemaTypes.ItemVersionRestoreJobSchema>({
       method: 'POST',
-      url: `/versions/${itemVersionId}`,
+      url: `/versions/${itemVersionId}/restore`,
     });
   }
 

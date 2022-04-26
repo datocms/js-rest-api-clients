@@ -1576,7 +1576,7 @@ export default {
             'https://www.datocms.com/docs/content-management-api/resources/item-version/restore',
           name: 'restore',
           rawName: 'rawRestore',
-          urlTemplate: '/versions/${itemVersionId}',
+          urlTemplate: '/versions/${itemVersionId}/restore',
           method: 'POST',
           comment: 'Restore an old record version',
           urlPlaceholder: {
