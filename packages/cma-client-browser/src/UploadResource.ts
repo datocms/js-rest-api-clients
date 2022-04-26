@@ -6,6 +6,7 @@ import {
 import {
   CancelablePromise,
   CanceledPromiseError,
+  makeCancelablePromise,
 } from '@datocms/rest-client-utils';
 
 export type CreateUploadFromFileOrBlobSchema = Omit<
@@ -26,42 +27,30 @@ export class UploadResource extends Resources.Upload {
     let isCanceledBeforeUpload = false;
     let uploadPromise: CancelablePromise<string> | undefined;
 
-    const promise = new CancelablePromise<SimpleSchemaTypes.Upload>(
-      async (resolve, reject) => {
-        try {
-          if (isCanceledBeforeUpload) {
-            reject(new CanceledPromiseError());
-            return;
-          }
+    return makeCancelablePromise(
+      async () => {
+        if (isCanceledBeforeUpload) {
+          throw new CanceledPromiseError();
+        }
 
-          const { fileOrBlob, filename, onProgress, ...other } = body;
+        const { fileOrBlob, filename, onProgress, ...other } = body;
 
-          uploadPromise = uploadFileOrBlobAndReturnPath(
-            this.client,
-            fileOrBlob,
-            {
-              filename,
-              onProgress,
-            },
-          );
-          const path = await uploadPromise;
+        uploadPromise = uploadFileOrBlobAndReturnPath(this.client, fileOrBlob, {
+          filename,
+          onProgress,
+        });
 
-          const result = await this.create({ ...other, path });
-          resolve(result);
-        } catch (e) {
-          reject(e);
+        const path = await uploadPromise;
+
+        return this.create({ ...other, path });
+      },
+      () => {
+        if (uploadPromise) {
+          uploadPromise.cancel();
+        } else {
+          isCanceledBeforeUpload = true;
         }
       },
     );
-
-    promise.cancel = () => {
-      if (uploadPromise) {
-        uploadPromise.cancel();
-      } else {
-        isCanceledBeforeUpload = true;
-      }
-    };
-
-    return promise;
   }
 }

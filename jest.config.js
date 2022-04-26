@@ -3,6 +3,9 @@ module.exports = {
   testEnvironment: 'node',
   testTimeout: 60000,
   testMatch: ['**/*.test.ts'],
+  transformIgnorePatterns: [
+    '/packages/cma-client-node/node_modules/(?!(got|p-cancelable|@szmarczak|lowercase-keys)/)',
+  ],
   // collectCoverage: true,
   // collectCoverageFrom: [
   //   'packages/**/*.[jt]s?(x)',

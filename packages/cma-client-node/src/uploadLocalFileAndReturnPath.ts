@@ -1,4 +1,5 @@
 import { Client } from '@datocms/cma-client';
+import { makeCancelablePromise } from '@datocms/rest-client-utils';
 import {
   CancelablePromise,
   CanceledPromiseError,
@@ -6,10 +7,17 @@ import {
 import { basename } from 'path';
 import { uploadLocalFileToS3 } from './utils/uploadLocalFileToS3';
 
+export type OnProgressDownloadInfo = {
+  type: 'download';
+  payload: {
+    progress: number;
+  };
+};
+
 export type OnProgressUploadInfo = {
   type: 'upload';
   payload: {
-    percent: number;
+    progress: number;
   };
 };
 
@@ -22,6 +30,7 @@ export type OnProgressUploadRequestCompleteInfo = {
 };
 
 export type OnProgressInfo =
+  | OnProgressDownloadInfo
   | OnProgressUploadInfo
   | OnProgressUploadRequestCompleteInfo;
 
@@ -44,13 +53,12 @@ export function uploadLocalFileAndReturnPath(
   let isCanceledBeforeUpload = false;
   let uploadPromise: CancelablePromise<void> | undefined = undefined;
 
-  const promise = new CancelablePromise<string>(async (resolve, reject) => {
-    try {
+  return makeCancelablePromise<string>(
+    async () => {
       const { id, url } = await client.uploadRequest.create({ filename });
 
       if (isCanceledBeforeUpload) {
-        reject(new CanceledPromiseError());
-        return;
+        throw new CanceledPromiseError();
       }
 
       if (options.onProgress) {
@@ -67,19 +75,14 @@ export function uploadLocalFileAndReturnPath(
 
       await uploadPromise;
 
-      resolve(id);
-    } catch (e) {
-      reject(e);
-    }
-  });
-
-  promise.cancelMethod = () => {
-    if (uploadPromise) {
-      uploadPromise.cancel();
-    } else {
-      isCanceledBeforeUpload = true;
-    }
-  };
-
-  return promise;
+      return id;
+    },
+    () => {
+      if (uploadPromise) {
+        uploadPromise.cancel();
+      } else {
+        isCanceledBeforeUpload = true;
+      }
+    },
+  );
 }

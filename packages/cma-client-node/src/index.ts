@@ -13,5 +13,6 @@ export {
   ApiError,
   LogLevel,
   Client as BaseClient,
-  ClientConfigOptions,
 } from '@datocms/cma-client';
+
+export type { ClientConfigOptions } from '@datocms/cma-client';

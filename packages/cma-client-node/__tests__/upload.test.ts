@@ -1,4 +1,4 @@
-import { Client } from '../src';
+import { Client, LogLevel } from '../src';
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('upload', () => {
@@ -8,16 +8,19 @@ describe('upload', () => {
     client = await generateNewCmaClient();
   });
 
-  test('upload', async () => {
-    const path = 'www.foo.bar/whoa.txt';
-
+  test('upload local file', async () => {
     const upload = await client.uploads.createFromLocalFile({
-      localPath: './__tests__/fixtures/text.txt',
+      localPath: `${__dirname}/fixtures/text.txt`,
     });
-    expect(upload.path.endsWith('whoa.txt')).toBeTruthy();
-    const updatedUpload = await client.uploads.update(upload.id, {
-      author: 'Mark Smith',
+
+    expect(upload.path.endsWith('text.txt')).toBeTruthy();
+  });
+
+  test('upload remote file', async () => {
+    const upload = await client.uploads.createFromUrl({
+      url: 'https://www.datocms-assets.com/205/1525789775-dato.png?w=16',
     });
-    expect(updatedUpload.author).toEqual('Mark Smith');
+
+    expect(upload.path.endsWith('dato.png')).toBeTruthy();
   });
 });

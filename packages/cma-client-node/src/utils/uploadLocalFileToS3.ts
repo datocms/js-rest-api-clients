@@ -6,6 +6,7 @@ import {
   CancelablePromise,
   CanceledPromiseError,
 } from '@datocms/rest-client-utils';
+import { makeCancelablePromise } from '@datocms/rest-client-utils';
 
 type Options = {
   onProgress?: (info: OnProgressInfo) => void;
@@ -19,58 +20,53 @@ export function uploadLocalFileToS3(
   let isCanceled = false;
   let putPromise: CancelableRequest<Response<unknown>> | undefined;
 
-  const promise = new CancelablePromise<void>(async (resolve, reject) => {
-    try {
+  return makeCancelablePromise<void>(
+    async () => {
       if (isCanceled) {
-        reject(new CanceledPromiseError());
-        return;
+        throw new CanceledPromiseError();
       }
 
       const { size: totalLength } = await promises.stat(filePath);
 
       if (isCanceled) {
-        reject(new CanceledPromiseError());
-        return;
+        throw new CanceledPromiseError();
       }
 
-      putPromise = got.put(url, {
-        headers: {
-          'Content-Type': mime.lookup(filePath),
-          'Content-Length': `${totalLength}`,
-        },
-        responseType: 'json',
-        body: createReadStream(filePath),
-      });
+      try {
+        putPromise = got.put(url, {
+          headers: {
+            'Content-Type': mime.lookup(filePath),
+            'Content-Length': `${totalLength}`,
+          },
+          responseType: 'json',
+          body: createReadStream(filePath),
+        });
+      } catch (e) {
+        if (e instanceof CancelError) {
+          throw new CanceledPromiseError();
+        } else {
+          throw e;
+        }
+      }
 
       if (onProgress) {
         putPromise.on('uploadProgress', ({ percent }) => {
           if (!isCanceled) {
             onProgress({
               type: 'upload',
-              payload: { percent: Math.round(percent * 100) },
+              payload: { progress: Math.round(percent * 100) },
             });
           }
         });
       }
 
       await putPromise;
-
-      resolve();
-    } catch (e) {
-      if (e instanceof CancelError) {
-        reject(new CanceledPromiseError());
-      } else {
-        reject(e);
+    },
+    () => {
+      isCanceled = true;
+      if (putPromise) {
+        putPromise.cancel();
       }
-    }
-  });
-
-  promise.cancelMethod = () => {
-    isCanceled = true;
-    if (putPromise) {
-      putPromise.cancel();
-    }
-  };
-
-  return promise;
+    },
+  );
 }
