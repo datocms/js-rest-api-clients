@@ -1,7 +1,7 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('Public info', () => {
-  test('find', async () => {
+  it.concurrent('find', async () => {
     const client = await generateNewCmaClient();
 
     const publicInfo = await client.publicInfo.find();

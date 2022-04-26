@@ -1,7 +1,7 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('scheduledPublication', () => {
-  test('publish, unpublish', async () => {
+  it.concurrent('publish, unpublish', async () => {
     const client = await generateNewCmaClient();
     const itemType = await client.itemTypes.create({
       name: 'Article',

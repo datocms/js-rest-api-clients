@@ -1,7 +1,7 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('Maintenance mode', () => {
-  test('activate, deactivate', async () => {
+  it.concurrent('activate, deactivate', async () => {
     const client = await generateNewCmaClient();
 
     const activatedMode = await client.maintenanceMode.activate({

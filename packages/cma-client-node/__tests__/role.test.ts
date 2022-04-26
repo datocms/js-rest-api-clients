@@ -1,7 +1,7 @@
 import { generateNewCmaClient } from './helpers/generateClients';
 
 describe('role', () => {
-  test('create, find, list, update, destroy', async () => {
+  it.concurrent('create, find, list, update, destroy', async () => {
     const client = await generateNewCmaClient();
 
     const role = await client.roles.create({
