@@ -6,15 +6,6 @@ describe('scheduledPublication', () => {
     const itemType = await client.itemTypes.create({
       name: 'Article',
       api_key: 'blog_post',
-      singleton: true,
-      modular_block: false,
-      sortable: false,
-      tree: false,
-      draft_mode_active: false,
-      ordering_direction: null,
-      ordering_field: null,
-      all_locales_required: true,
-      title_field: null,
     });
 
     await client.fields.create(itemType.id, {
