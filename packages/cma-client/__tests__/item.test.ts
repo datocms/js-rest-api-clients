@@ -1,5 +1,5 @@
 import { generateNewCmaClient } from './helpers/generateClients';
-import { ApiError } from '@datocms/rest-client-utils';
+import { ApiError } from '../src';
 
 describe('item', () => {
   test('methods', async () => {
