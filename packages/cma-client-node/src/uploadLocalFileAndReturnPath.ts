@@ -7,32 +7,32 @@ import {
 import { basename } from 'path';
 import { uploadLocalFileToS3 } from './utils/uploadLocalFileToS3';
 
-export type OnProgressDownloadInfo = {
-  type: 'download';
+export type OnProgressDownloadingFileInfo = {
+  type: 'DOWNLOADING_FILE';
   payload: {
-    progress: number;
-  };
-};
-
-export type OnProgressUploadInfo = {
-  type: 'upload';
-  payload: {
-    progress: number;
-  };
-};
-
-export type OnProgressUploadRequestCompleteInfo = {
-  type: 'uploadRequestComplete';
-  payload: {
-    id: string;
     url: string;
+    progress: number;
+  };
+};
+
+export type OnProgressUploadingFileInfo = {
+  type: 'UPLOADING_FILE';
+  payload: {
+    progress: number;
+  };
+};
+
+export type OnProgressRequestingUploadUrlInfo = {
+  type: 'REQUESTING_UPLOAD_URL';
+  payload: {
+    filename: string;
   };
 };
 
 export type OnProgressInfo =
-  | OnProgressDownloadInfo
-  | OnProgressUploadInfo
-  | OnProgressUploadRequestCompleteInfo;
+  | OnProgressRequestingUploadUrlInfo
+  | OnProgressDownloadingFileInfo
+  | OnProgressUploadingFileInfo;
 
 export type Options = {
   filename?: string;
@@ -44,17 +44,20 @@ export function uploadLocalFileAndReturnPath(
   localPath: string,
   options: Options = {},
 ): CancelablePromise<string> {
-  let filename: string | undefined = options.filename;
-
-  if (!filename) {
-    filename = basename(localPath);
-  }
+  const filename = options.filename || basename(localPath);
 
   let isCanceledBeforeUpload = false;
   let uploadPromise: CancelablePromise<void> | undefined = undefined;
 
   return makeCancelablePromise<string>(
     async () => {
+      if (options.onProgress) {
+        options.onProgress({
+          type: 'REQUESTING_UPLOAD_URL',
+          payload: { filename },
+        });
+      }
+
       const { id, url } = await client.uploadRequest.create({ filename });
 
       if (isCanceledBeforeUpload) {
@@ -63,10 +66,9 @@ export function uploadLocalFileAndReturnPath(
 
       if (options.onProgress) {
         options.onProgress({
-          type: 'uploadRequestComplete',
+          type: 'UPLOADING_FILE',
           payload: {
-            id,
-            url,
+            progress: 0,
           },
         });
       }

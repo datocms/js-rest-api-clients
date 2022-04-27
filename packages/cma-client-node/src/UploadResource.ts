@@ -1,7 +1,7 @@
 import { Resources, SimpleSchemaTypes } from '@datocms/cma-client';
 import {
   uploadLocalFileAndReturnPath,
-  Options,
+  OnProgressInfo,
 } from './uploadLocalFileAndReturnPath';
 import {
   CancelablePromise,
@@ -10,17 +10,31 @@ import {
 import { makeCancelablePromise } from '@datocms/rest-client-utils';
 import downloadLocally, { DownloadResult } from './utils/downloadFile';
 
+export type OnProgressCreatingUploadObjectInfo = {
+  type: 'CREATING_UPLOAD_OBJECT';
+};
+
+export type OnUploadProgressInfo =
+  | OnProgressInfo
+  | OnProgressCreatingUploadObjectInfo;
+
 export type CreateUploadFromLocalFileSchema = Omit<
   SimpleSchemaTypes.UploadCreateSchema,
   'path'
-> &
-  Options & { localPath: string };
+> & {
+  localPath: string;
+  filename?: string;
+  onProgress?: (info: OnUploadProgressInfo) => void;
+};
 
 export type CreateUploadFromUrlSchema = Omit<
   SimpleSchemaTypes.UploadCreateSchema,
   'path'
-> &
-  Options & { url: string };
+> & {
+  url: string;
+  filename?: string;
+  onProgress?: (info: OnUploadProgressInfo) => void;
+};
 
 export class UploadResource extends Resources.Upload {
   /**
@@ -46,7 +60,12 @@ export class UploadResource extends Resources.Upload {
           filename,
           onProgress,
         });
+
         const path = await uploadPromise;
+
+        if (onProgress) {
+          onProgress({ type: 'CREATING_UPLOAD_OBJECT' });
+        }
 
         return await this.create({ ...other, path });
       },
@@ -98,6 +117,10 @@ export class UploadResource extends Resources.Upload {
 
           if (isCanceled) {
             throw new CanceledPromiseError();
+          }
+
+          if (onProgress) {
+            onProgress({ type: 'CREATING_UPLOAD_OBJECT' });
           }
 
           return await this.create({ ...other, path });

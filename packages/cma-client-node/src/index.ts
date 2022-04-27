@@ -16,3 +16,7 @@ export {
 } from '@datocms/cma-client';
 
 export type { ClientConfigOptions } from '@datocms/cma-client';
+
+export { CanceledPromiseError } from '@datocms/rest-client-utils';
+
+export type { CancelablePromise } from '@datocms/rest-client-utils';

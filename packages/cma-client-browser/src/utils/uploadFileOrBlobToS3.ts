@@ -19,7 +19,7 @@ export function uploadFileOrBlobToS3(
         xhr.upload.onprogress = (e) => {
           if (e.lengthComputable) {
             onProgress({
-              type: 'upload',
+              type: 'UPLOADING_FILE',
               payload: { progress: Math.round((e.loaded / e.total) * 100) },
             });
           }

@@ -1,7 +1,7 @@
 import { Resources, SimpleSchemaTypes } from '@datocms/cma-client';
 import {
   uploadFileOrBlobAndReturnPath,
-  Options,
+  OnProgressInfo,
 } from './uploadFileOrBlobAndReturnPath';
 import {
   CancelablePromise,
@@ -9,11 +9,22 @@ import {
   makeCancelablePromise,
 } from '@datocms/rest-client-utils';
 
+export type OnProgressCreatingUploadObjectInfo = {
+  type: 'CREATING_UPLOAD_OBJECT';
+};
+
+export type OnUploadProgressInfo =
+  | OnProgressInfo
+  | OnProgressCreatingUploadObjectInfo;
+
 export type CreateUploadFromFileOrBlobSchema = Omit<
   SimpleSchemaTypes.UploadCreateSchema,
   'path'
-> &
-  Options & { fileOrBlob: File | Blob };
+> & {
+  fileOrBlob: File | Blob;
+  filename?: string;
+  onProgress?: (info: OnUploadProgressInfo) => void;
+};
 
 export class UploadResource extends Resources.Upload {
   /**
@@ -41,6 +52,10 @@ export class UploadResource extends Resources.Upload {
         });
 
         const path = await uploadPromise;
+
+        if (onProgress) {
+          onProgress({ type: 'CREATING_UPLOAD_OBJECT' });
+        }
 
         return this.create({ ...other, path });
       },

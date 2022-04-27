@@ -6,24 +6,23 @@ import {
 } from '@datocms/rest-client-utils';
 import { uploadFileOrBlobToS3 } from './utils/uploadFileOrBlobToS3';
 
-export type OnProgressUploadInfo = {
-  type: 'upload';
+export type OnProgressUploadingFileInfo = {
+  type: 'UPLOADING_FILE';
   payload: {
     progress: number;
   };
 };
 
-export type OnProgressUploadRequestCompleteInfo = {
-  type: 'uploadRequestComplete';
+export type OnProgressRequestingUploadUrlInfo = {
+  type: 'REQUESTING_UPLOAD_URL';
   payload: {
-    id: string;
-    url: string;
+    filename: string;
   };
 };
 
 export type OnProgressInfo =
-  | OnProgressUploadInfo
-  | OnProgressUploadRequestCompleteInfo;
+  | OnProgressRequestingUploadUrlInfo
+  | OnProgressUploadingFileInfo;
 
 export type Options = {
   filename?: string;
@@ -35,21 +34,24 @@ export function uploadFileOrBlobAndReturnPath(
   fileOrBlob: File | Blob,
   options: Options = {},
 ): CancelablePromise<string> {
-  let filename: string | undefined = options.filename;
-
-  if (!filename) {
-    if (!('name' in fileOrBlob)) {
-      throw new Error('Missing filename, please provide it as an option!');
-    }
-
-    filename = fileOrBlob.name;
+  if (!options.filename || !('name' in fileOrBlob)) {
+    throw new Error('Missing filename, please provide it as an option!');
   }
+
+  const filename = options.filename || fileOrBlob.name;
 
   let isCanceledBeforeUpload = false;
   let uploadPromise: CancelablePromise<void> | undefined = undefined;
 
   return makeCancelablePromise(
     async () => {
+      if (options.onProgress) {
+        options?.onProgress({
+          type: 'REQUESTING_UPLOAD_URL',
+          payload: { filename },
+        });
+      }
+
       const { id, url } = await client.uploadRequest.create({ filename });
 
       if (isCanceledBeforeUpload) {
@@ -58,10 +60,9 @@ export function uploadFileOrBlobAndReturnPath(
 
       if (options.onProgress) {
         options.onProgress({
-          type: 'uploadRequestComplete',
+          type: 'UPLOADING_FILE',
           payload: {
-            id,
-            url,
+            progress: 0,
           },
         });
       }

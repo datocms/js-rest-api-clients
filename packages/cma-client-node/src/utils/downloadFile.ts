@@ -51,8 +51,8 @@ export default function downloadLocally(
             }
 
             onProgress({
-              type: 'download',
-              payload: { progress: Math.round(percent * 100) },
+              type: 'DOWNLOADING_FILE',
+              payload: { url, progress: Math.round(percent * 100) },
             });
           });
         }

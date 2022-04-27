@@ -53,7 +53,7 @@ export function uploadLocalFileToS3(
         putPromise.on('uploadProgress', ({ percent }) => {
           if (!isCanceled) {
             onProgress({
-              type: 'upload',
+              type: 'UPLOADING_FILE',
               payload: { progress: Math.round(percent * 100) },
             });
           }
