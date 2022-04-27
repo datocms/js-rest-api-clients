@@ -7,7 +7,7 @@
     "client"
   ],
   "author": "Stefano Verna <s.verna@datocms.com>",
-  "homepage": "https://github.com/datocms/js-toolkit/tree/main/packages/rest-client-utils#readme",
+  "homepage": "https://github.com/datocms/js-rest-api-clients/tree/main/packages/rest-client-utils#readme",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -26,14 +26,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/datocms/js-toolkit.git"
+    "url": "git+https://github.com/datocms/js-rest-api-clients.git"
   },
   "scripts": {
     "build": "tsc && tsc --project ./tsconfig.esnext.json",
     "prebuild": "rimraf dist"
   },
   "bugs": {
-    "url": "https://github.com/datocms/js-toolkit/issues"
+    "url": "https://github.com/datocms/js-rest-api-clients/issues"
   },
   "dependencies": {
     "async-scheduler": "^1.4.4",

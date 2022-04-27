@@ -7,7 +7,7 @@
     "client"
   ],
   "author": "Stefano Verna <s.verna@datocms.com>",
-  "homepage": "https://github.com/datocms/js-toolkit/tree/main/packages/cma-client-node#readme",
+  "homepage": "https://github.com/datocms/js-rest-api-clients/tree/main/packages/cma-client-node#readme",
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/datocms/js-toolkit.git"
+    "url": "git+https://github.com/datocms/js-rest-api-clients.git"
   },
   "dependencies": {
     "@datocms/cma-client": "^0.1.0",
@@ -45,6 +45,6 @@
     "prebuild": "rimraf dist"
   },
   "bugs": {
-    "url": "https://github.com/datocms/js-toolkit/issues"
+    "url": "https://github.com/datocms/js-rest-api-clients/issues"
   }
 }

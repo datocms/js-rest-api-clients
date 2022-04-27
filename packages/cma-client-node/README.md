@@ -1,4 +1,4 @@
-[![Node.js CI](https://github.com/datocms/js-toolkit/actions/workflows/node.js.yml/badge.svg)](https://github.com/datocms/js-toolkit/actions/workflows/node.js.yml)
+[![Node.js CI](https://github.com/datocms/js-rest-api-clients/actions/workflows/node.js.yml/badge.svg)](https://github.com/datocms/js-rest-api-clients/actions/workflows/node.js.yml)
 
 # DatoCMS Content Management API Client (NodeJS)
 
@@ -12,7 +12,7 @@ API client for [DatoCMS](https://www.datocms.com). Take a look at the full [API 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/datocms/js-toolkit. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/datocms/js-rest-api-clients. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
