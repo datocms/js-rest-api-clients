@@ -1,24 +1,23 @@
-# `@datocms/cma-client`
+## DatoCMS Content Management JS API Client (Common)
 
-> TODO: description
+API client for [DatoCMS](https://www.datocms.com). Take a look at the full [API documentation](https://www.datocms.com/docs/content-management-api) for examples.
 
-## Usage (NodeJS)
+<br /><br />
+<a href="https://www.datocms.com/">
+<img src="https://www.datocms.com/images/full_logo.svg" height="60">
+</a>
+<br /><br />
 
-```js
-const { buildClient } = require('@datocms/cma-client');
+## Development
 
-const client = buildClient({ apiToken: 'XXX' });
-const items = await client.items.list();
-```
+After checking out the repo, run `npm install` to install dependencies. Then, run `npm run test` to run the tests.
 
-## Usage (browser module)
+Test suite's HTTP interactions are recorded/replayed from the `./cassettes` directory to get fast, deterministic and accurate tests. Simply delete every file within the directory to record new HTTP requests/responses.
 
-```html
-<script type="module">
-  // also valid: https://cdn.jsdelivr.net/npm/@datocms/cma-client/dist/browser/index.js
-  import { buildClient } from 'https://unpkg.com/@datocms/cma-client/dist/browser/index.js';
+## Contributing
 
-  const client = buildClient({ apiToken: 'XXX' });
-  const items = await client.items.list();
-</script>
-```
+Bug reports and pull requests are welcome on GitHub at https://github.com/datocms/js-toolkit. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+## License
+
+The package is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
