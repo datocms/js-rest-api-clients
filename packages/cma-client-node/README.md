@@ -1,4 +1,6 @@
-## DatoCMS Content Management API Client (NodeJS)
+[![Node.js CI](https://github.com/datocms/js-toolkit/actions/workflows/node.js.yml/badge.svg)](https://github.com/datocms/js-toolkit/actions/workflows/node.js.yml)
+
+# DatoCMS Content Management API Client (NodeJS)
 
 API client for [DatoCMS](https://www.datocms.com). Take a look at the full [API documentation](https://www.datocms.com/docs/content-management-api) for examples.
 

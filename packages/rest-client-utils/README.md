@@ -1,4 +1,6 @@
-## Common utilities for DatoCMS REST clients
+[![Node.js CI](https://github.com/datocms/js-toolkit/actions/workflows/node.js.yml/badge.svg)](https://github.com/datocms/js-toolkit/actions/workflows/node.js.yml)
+
+# Common utilities for DatoCMS REST clients
 
 <br /><br />
 <a href="https://www.datocms.com/">

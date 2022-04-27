@@ -1,4 +1,6 @@
-## DatoCMS Dashboard Management API Client
+[![Node.js CI](https://github.com/datocms/js-toolkit/actions/workflows/node.js.yml/badge.svg)](https://github.com/datocms/js-toolkit/actions/workflows/node.js.yml)
+
+# DatoCMS Dashboard Management API Client
 
 API client for [DatoCMS](https://www.datocms.com).
 
