@@ -15,6 +15,25 @@ This monorepo contains API clients to interact with DatoCMS:
 </a>
 <br /><br />
 
+## Development
+
+After checking out the repo, run the following:
+
+```
+npm install
+lerna bootstrap
+npm run build
+```
+
+Then, to run the test suite: `npm run test`.
+
+To regenerate the code based on the latest DatoCMS JSON API schema:
+
+```
+npm run generate
+npm run build
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/datocms/js-toolkit. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
