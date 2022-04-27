@@ -50,9 +50,11 @@ async function generate(prefix: string, hyperschemaUrl: string) {
   mkdirSync(`./packages/${prefix}-client/src/generated`);
   mkdirSync(`./packages/${prefix}-client/src/generated/resources`);
 
+  const { typings, simpleTypings, ...other } = schemaInfo;
+
   await writeTemplate<{ schemaInfo: string }>(
     'schemaInfo.ts',
-    { schemaInfo: JSON.stringify(schemaInfo, null, 2) },
+    { schemaInfo: JSON.stringify(other, null, 2) },
     `./packages/${prefix}-client/src/generated/schemaInfo.ts`,
   );
 
