@@ -142,6 +142,7 @@ function findTypeInDataObject(dataSchema: JsonRefParser.JSONSchema) {
     throw new Error('Missing type?');
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (dataSchema.properties.type as any).example as string;
 }
 

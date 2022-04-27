@@ -108,11 +108,11 @@ describe('structured text', () => {
     const updatedNestedContent =
       updatedItemWithNestedBlocks.content as Document;
 
+    const secondBlock = updatedNestedContent.document.children[2] as Block;
+
     expect(
-      (
-        (updatedNestedContent.document.children[2] as Block)
-          .item as any as SchemaTypes.Item
-      ).attributes.text,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (secondBlock.item as any as SchemaTypes.Item).attributes.text,
     ).toEqual('Updated Foo');
   });
 });
