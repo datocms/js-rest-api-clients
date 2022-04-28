@@ -1496,7 +1496,7 @@ export type SiteType = 'site';
  */
 export type WorkflowInstancesTargetSchema = Workflow[];
 
-export interface DatoApi {
+export type DatoApi = {
   role?: Role;
   user?: User;
   sso_user?: SsoUser;
@@ -1542,7 +1542,7 @@ export interface DatoApi {
   site?: Site;
   workflow?: Workflow;
   [k: string]: unknown;
-}
+};
 
 /**
  * A Role represents a specific set of actions an editor (or an API token) can perform on your administrative area.
@@ -1550,7 +1550,7 @@ export interface DatoApi {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "role".
  */
-export interface Role {
+export type Role = {
   id: RoleIdentity;
   type: RoleType;
   /**
@@ -1773,7 +1773,7 @@ export interface Role {
   }[];
   inherits_permissions_from: RoleData[];
   meta: RoleMeta;
-}
+};
 export type RoleCreateTargetSchema = Role;
 export type RoleUpdateTargetSchema = Role;
 export type RoleSelfTargetSchema = Role;
@@ -1784,10 +1784,10 @@ export type RoleDestroyTargetSchema = Role;
  * This interface was referenced by `Role`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface RoleData {
+export type RoleData = {
   type: RoleType;
   id: RoleIdentity;
-}
+};
 
 /**
  * Meta information regarding the record
@@ -1795,7 +1795,7 @@ export interface RoleData {
  * This interface was referenced by `Role`'s JSON-Schema
  * via the `definition` "meta".
  */
-export interface RoleMeta {
+export type RoleMeta = {
   /**
    * The final set of permissions considering also inherited roles
    */
@@ -2015,7 +2015,7 @@ export interface RoleMeta {
       build_trigger?: BuildTriggerIdentity | null;
     }[];
   };
-}
+};
 
 /**
  * JSON API attributes
@@ -2023,7 +2023,7 @@ export interface RoleMeta {
  * This interface was referenced by `Role`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface RoleAttributes {
+export type RoleAttributes = {
   /**
    * The name of the role
    */
@@ -2242,7 +2242,7 @@ export interface RoleAttributes {
   negative_build_trigger_permissions: {
     build_trigger?: BuildTriggerIdentity | null;
   }[];
-}
+};
 
 /**
  * JSON API links
@@ -2250,15 +2250,15 @@ export interface RoleAttributes {
  * This interface was referenced by `Role`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface RoleRelationships {
+export type RoleRelationships = {
   inherits_permissions_from: RoleData[];
-}
+};
 
 /**
  * This interface was referenced by `Role`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface RoleCreateSchema {
+export type RoleCreateSchema = {
   type?: RoleType;
   /**
    * The name of the role
@@ -2480,13 +2480,13 @@ export interface RoleCreateSchema {
   }[];
   inherits_permissions_from?: RoleData[];
   meta?: RoleMeta;
-}
+};
 
 /**
  * This interface was referenced by `Role`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface RoleUpdateSchema {
+export type RoleUpdateSchema = {
   id?: RoleIdentity;
   type?: RoleType;
   /**
@@ -2709,7 +2709,7 @@ export interface RoleUpdateSchema {
   }[];
   inherits_permissions_from?: RoleData[];
   meta?: RoleMeta;
-}
+};
 
 /**
  * A DatoCMS administrative area can be accessed by multiple people. Every collaborator is linked to a specific Role, which describes what actions it will be able to perform once logged in.
@@ -2717,7 +2717,7 @@ export interface RoleUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "user".
  */
-export interface User {
+export type User = {
   id: UserIdentity;
   type: UserType;
   /**
@@ -2738,7 +2738,7 @@ export interface User {
   is_active: boolean;
   role: RoleData;
   meta?: UserMeta;
-}
+};
 export type UserUpdateTargetSchema = User;
 export type UserSelfTargetSchema = User;
 export type UserDestroyTargetSchema = User;
@@ -2748,12 +2748,12 @@ export type UserDestroyTargetSchema = User;
  * This interface was referenced by `User`'s JSON-Schema
  * via the `definition` "meta".
  */
-export interface UserMeta {
+export type UserMeta = {
   /**
    * Date of last reading/interaction
    */
   last_access: string | null;
-}
+};
 
 /**
  * JSON API data
@@ -2761,10 +2761,10 @@ export interface UserMeta {
  * This interface was referenced by `User`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface UserData {
+export type UserData = {
   type: UserType;
   id: UserIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -2772,7 +2772,7 @@ export interface UserData {
  * This interface was referenced by `User`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface UserAttributes {
+export type UserAttributes = {
   /**
    * Email
    */
@@ -2789,7 +2789,7 @@ export interface UserAttributes {
    * Whether the user is active or not
    */
   is_active: boolean;
-}
+};
 
 /**
  * JSON API links
@@ -2797,15 +2797,15 @@ export interface UserAttributes {
  * This interface was referenced by `User`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface UserRelationships {
+export type UserRelationships = {
   role: RoleData;
-}
+};
 
 /**
  * This interface was referenced by `User`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface UserUpdateSchema {
+export type UserUpdateSchema = {
   id?: UserIdentity;
   type?: UserType;
   /**
@@ -2813,7 +2813,7 @@ export interface UserUpdateSchema {
    */
   is_active?: boolean;
   role?: RoleData;
-}
+};
 
 /**
  * A Single Sign-On user exists when a DatoCMS project is connected to an external Identity Provider. An SSO user will not use the standard login procedure but has to go through SAML authentication. It can also be linked to one or more IdP groups.
@@ -2821,7 +2821,7 @@ export interface UserUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "sso_user".
  */
-export interface SsoUser {
+export type SsoUser = {
   id: SsoUserIdentity;
   type: SsoUserType;
   /**
@@ -2847,7 +2847,7 @@ export interface SsoUser {
   groups: SsoGroupData[];
   role: RoleData | null;
   meta: SsoUserMeta;
-}
+};
 export type SsoUserSelfTargetSchema = SsoUser;
 export type SsoUserDestroyTargetSchema = SsoUser;
 /**
@@ -2856,10 +2856,10 @@ export type SsoUserDestroyTargetSchema = SsoUser;
  * This interface was referenced by `SsoGroup`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SsoGroupData {
+export type SsoGroupData = {
   type: SsoGroupType;
   id: SsoGroupIdentity;
-}
+};
 
 /**
  * Meta information on the user
@@ -2867,12 +2867,12 @@ export interface SsoGroupData {
  * This interface was referenced by `SsoUser`'s JSON-Schema
  * via the `definition` "meta".
  */
-export interface SsoUserMeta {
+export type SsoUserMeta = {
   /**
    * Date of last reading/interaction
    */
   last_access: string | null;
-}
+};
 
 /**
  * JSON API data
@@ -2880,10 +2880,10 @@ export interface SsoUserMeta {
  * This interface was referenced by `SsoUser`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SsoUserData {
+export type SsoUserData = {
   type: SsoUserType;
   id: SsoUserIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -2891,7 +2891,7 @@ export interface SsoUserData {
  * This interface was referenced by `SsoUser`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SsoUserAttributes {
+export type SsoUserAttributes = {
   /**
    * Email
    */
@@ -2912,7 +2912,7 @@ export interface SsoUserAttributes {
    * Last name
    */
   last_name: string | null;
-}
+};
 
 /**
  * JSON API links
@@ -2920,10 +2920,10 @@ export interface SsoUserAttributes {
  * This interface was referenced by `SsoUser`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface SsoUserRelationships {
+export type SsoUserRelationships = {
   groups: SsoGroupData[];
   role: RoleData | null;
-}
+};
 
 /**
  * If the Audit log functionality is enabled in a project, logged events can be queried using SQL-like language and fetched in full detail so that they can be exported or analyzed.
@@ -2931,7 +2931,7 @@ export interface SsoUserRelationships {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "audit_log_event".
  */
-export interface AuditLogEvent {
+export type AuditLogEvent = {
   id: AuditLogEventIdentity;
   type: AuditLogEventType;
   /**
@@ -3020,7 +3020,7 @@ export interface AuditLogEvent {
     };
   };
   meta: AuditLogEventMeta;
-}
+};
 
 /**
  * JSON API meta
@@ -3028,12 +3028,12 @@ export interface AuditLogEvent {
  * This interface was referenced by `AuditLogEvent`'s JSON-Schema
  * via the `definition` "meta".
  */
-export interface AuditLogEventMeta {
+export type AuditLogEventMeta = {
   /**
    * The date of the event
    */
   occurred_at: string;
-}
+};
 
 /**
  * JSON API data
@@ -3041,10 +3041,10 @@ export interface AuditLogEventMeta {
  * This interface was referenced by `AuditLogEvent`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface AuditLogEventData {
+export type AuditLogEventData = {
   type: AuditLogEventType;
   id: AuditLogEventIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -3052,7 +3052,7 @@ export interface AuditLogEventData {
  * This interface was referenced by `AuditLogEvent`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface AuditLogEventAttributes {
+export type AuditLogEventAttributes = {
   /**
    * The actual action performed
    */
@@ -3138,13 +3138,13 @@ export interface AuditLogEventAttributes {
       [k: string]: unknown;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `AuditLogEvent`'s JSON-Schema
  * via the `query.schema` link.
  */
-export interface AuditLogEventQuerySchema {
+export type AuditLogEventQuerySchema = {
   /**
    * JSON API type field
    */
@@ -3161,7 +3161,7 @@ export interface AuditLogEventQuerySchema {
    * Whether a detailed log complete with full request and response payload must be returned or not
    */
   detailed_log?: boolean;
-}
+};
 
 /**
  * DatoCMS account
@@ -3169,7 +3169,7 @@ export interface AuditLogEventQuerySchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "account".
  */
-export interface Account {
+export type Account = {
   id: AccountIdentity;
   type: AccountType;
   /**
@@ -3192,7 +3192,7 @@ export interface Account {
    * Password
    */
   password?: string;
-}
+};
 
 /**
  * JSON API data
@@ -3200,10 +3200,10 @@ export interface Account {
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface AccountData {
+export type AccountData = {
   type: AccountType;
   id: AccountIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -3211,7 +3211,7 @@ export interface AccountData {
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface AccountAttributes {
+export type AccountAttributes = {
   /**
    * Email
    */
@@ -3232,7 +3232,7 @@ export interface AccountAttributes {
    * Password
    */
   password?: string;
-}
+};
 
 /**
  * Stores the information regarding the current plan for the project.
@@ -3240,7 +3240,7 @@ export interface AccountAttributes {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "site_plan".
  */
-export interface SitePlan {
+export type SitePlan = {
   id: SitePlanIdentity;
   type: SitePlanType;
   /**
@@ -3441,7 +3441,7 @@ export interface SitePlan {
       price: number;
     };
   };
-}
+};
 
 /**
  * JSON API data
@@ -3449,10 +3449,10 @@ export interface SitePlan {
  * This interface was referenced by `SitePlan`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SitePlanData {
+export type SitePlanData = {
   type: SitePlanType;
   id: SitePlanIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -3460,7 +3460,7 @@ export interface SitePlanData {
  * This interface was referenced by `SitePlan`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SitePlanAttributes {
+export type SitePlanAttributes = {
   /**
    * The name of the plan
    */
@@ -3659,7 +3659,7 @@ export interface SitePlanAttributes {
       price: number;
     };
   };
-}
+};
 
 /**
  * In DatoCMS you can organize the different Models present in your administrative area reordering and grouping them, so that their purpose will be more clear to the final editor.
@@ -3667,7 +3667,7 @@ export interface SitePlanAttributes {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "menu_item".
  */
-export interface MenuItem {
+export type MenuItem = {
   id: MenuItemIdentity;
   type: MenuItemType;
   /**
@@ -3689,7 +3689,7 @@ export interface MenuItem {
   item_type: ItemTypeData | null;
   parent: null | MenuItemData;
   children: MenuItemData[];
-}
+};
 export type MenuItemCreateTargetSchema = MenuItem;
 export type MenuItemUpdateTargetSchema = MenuItem;
 export type MenuItemSelfTargetSchema = MenuItem;
@@ -3700,10 +3700,10 @@ export type MenuItemDestroyTargetSchema = MenuItem;
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface ItemTypeData {
+export type ItemTypeData = {
   type: ItemTypeType;
   id: ItemTypeIdentity;
-}
+};
 
 /**
  * JSON API data
@@ -3711,10 +3711,10 @@ export interface ItemTypeData {
  * This interface was referenced by `MenuItem`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface MenuItemData {
+export type MenuItemData = {
   type: MenuItemType;
   id: MenuItemIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -3722,7 +3722,7 @@ export interface MenuItemData {
  * This interface was referenced by `MenuItem`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface MenuItemAttributes {
+export type MenuItemAttributes = {
   /**
    * The label of the menu item
    */
@@ -3739,7 +3739,7 @@ export interface MenuItemAttributes {
    * Opens link in new tab (used together with `external_url`)
    */
   open_in_new_tab: boolean;
-}
+};
 
 /**
  * JSON API links
@@ -3747,17 +3747,17 @@ export interface MenuItemAttributes {
  * This interface was referenced by `MenuItem`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface MenuItemRelationships {
+export type MenuItemRelationships = {
   item_type: ItemTypeData | null;
   parent: null | MenuItemData;
   children: MenuItemData[];
-}
+};
 
 /**
  * This interface was referenced by `MenuItem`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface MenuItemCreateSchema {
+export type MenuItemCreateSchema = {
   type?: MenuItemType;
   /**
    * The label of the menu item
@@ -3777,13 +3777,13 @@ export interface MenuItemCreateSchema {
   open_in_new_tab?: boolean;
   item_type?: ItemTypeData | null;
   parent?: null | MenuItemData;
-}
+};
 
 /**
  * This interface was referenced by `MenuItem`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface MenuItemUpdateSchema {
+export type MenuItemUpdateSchema = {
   id?: MenuItemIdentity;
   type?: MenuItemType;
   /**
@@ -3804,7 +3804,7 @@ export interface MenuItemUpdateSchema {
   open_in_new_tab?: boolean;
   item_type?: ItemTypeData | null;
   parent?: null | MenuItemData;
-}
+};
 
 /**
  * The way you define the kind of content you can edit inside your administrative area passes through the concept of Models, which are much like database tables. For backward-compatibility reasons, the API refers to models as "item types".
@@ -3812,7 +3812,7 @@ export interface MenuItemUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "item_type".
  */
-export interface ItemType {
+export type ItemType = {
   id: ItemTypeIdentity;
   type: ItemTypeType;
   /**
@@ -3883,7 +3883,7 @@ export interface ItemType {
   excerpt_field: FieldData | null;
   ordering_field: FieldData | null;
   workflow: WorkflowData | null;
-}
+};
 export type ItemTypeCreateTargetSchema = ItemType;
 export type ItemTypeUpdateJobSchema = ItemType;
 export type ItemTypeSelfTargetSchema = ItemType;
@@ -3895,10 +3895,10 @@ export type ItemTypeDestroyJobSchema = ItemType;
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface ItemData {
+export type ItemData = {
   type: ItemType1;
   id: ItemIdentity;
-}
+};
 
 /**
  * JSON API data
@@ -3906,10 +3906,10 @@ export interface ItemData {
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface FieldData {
+export type FieldData = {
   type: FieldType;
   id: FieldIdentity;
-}
+};
 
 /**
  * JSON API data
@@ -3917,10 +3917,10 @@ export interface FieldData {
  * This interface was referenced by `Workflow`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface WorkflowData {
+export type WorkflowData = {
   type: WorkflowType;
   id: WorkflowIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -3928,7 +3928,7 @@ export interface WorkflowData {
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface ItemTypeAttributes {
+export type ItemTypeAttributes = {
   /**
    * Name of the model
    */
@@ -3990,7 +3990,7 @@ export interface ItemTypeAttributes {
    * A hint shown to editors to help them understand the purpose of this model/block
    */
   hint: string | null;
-}
+};
 
 /**
  * JSON API links
@@ -3998,7 +3998,7 @@ export interface ItemTypeAttributes {
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface ItemTypeRelationships {
+export type ItemTypeRelationships = {
   singleton_item: ItemData | null;
   fields: FieldData[];
   title_field: FieldData | null;
@@ -4006,13 +4006,13 @@ export interface ItemTypeRelationships {
   excerpt_field: FieldData | null;
   ordering_field: FieldData | null;
   workflow: WorkflowData | null;
-}
+};
 
 /**
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface ItemTypeCreateSchema {
+export type ItemTypeCreateSchema = {
   type?: ItemTypeType;
   /**
    * Name of the model
@@ -4076,13 +4076,13 @@ export interface ItemTypeCreateSchema {
   image_preview_field?: FieldData | null;
   excerpt_field?: FieldData | null;
   workflow?: WorkflowData | null;
-}
+};
 
 /**
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface ItemTypeUpdateSchema {
+export type ItemTypeUpdateSchema = {
   id?: ItemTypeIdentity;
   type?: ItemTypeType;
   /**
@@ -4151,7 +4151,7 @@ export interface ItemTypeUpdateSchema {
   image_preview_field?: FieldData | null;
   excerpt_field?: FieldData | null;
   workflow?: WorkflowData | null;
-}
+};
 
 /**
  * This interface was referenced by `ItemType`'s JSON-Schema
@@ -4226,10 +4226,10 @@ export interface ItemTypeUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "job".
  */
-export interface Job {
+export type Job = {
   id: JobIdentity;
   type: JobType;
-}
+};
 export type ItemTypeUpdateTargetSchema = Job;
 export type ItemTypeDestroyTargetSchema = Job;
 export type FieldCreateTargetSchema = Job;
@@ -4259,10 +4259,10 @@ export type SiteUpdateTargetSchema = Job;
  * This interface was referenced by `Job`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface JobData {
+export type JobData = {
   type: JobType;
   id: JobIdentity;
-}
+};
 
 /**
  * Each Model consists of a set of fields. Using the database metaphore, fields are like table columns, and when creating them you need to specify their type (`string`, `file`, `float`, etc.) and any required validation.
@@ -4270,7 +4270,7 @@ export interface JobData {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "field".
  */
-export interface Field {
+export type Field = {
   id: FieldIdentity;
   type: FieldType;
   /**
@@ -4363,7 +4363,7 @@ export interface Field {
   position: number;
   item_type: ItemTypeData;
   fieldset: null | FieldsetData;
-}
+};
 export type FieldCreateJobSchema = Field;
 export type FieldUpdateJobSchema = Field;
 export type FieldSelfTargetSchema = Field;
@@ -4375,10 +4375,10 @@ export type FieldDuplicateJobSchema = Field;
  * This interface was referenced by `Fieldset`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface FieldsetData {
+export type FieldsetData = {
   type: FieldsetType;
   id: FieldsetIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -4386,7 +4386,7 @@ export interface FieldsetData {
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface FieldAttributes {
+export type FieldAttributes = {
   /**
    * The label of the field
    */
@@ -4475,7 +4475,7 @@ export interface FieldAttributes {
    * Ordering index
    */
   position: number;
-}
+};
 
 /**
  * JSON API links
@@ -4483,16 +4483,16 @@ export interface FieldAttributes {
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface FieldRelationships {
+export type FieldRelationships = {
   item_type: ItemTypeData;
   fieldset: null | FieldsetData;
-}
+};
 
 /**
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface FieldCreateSchema {
+export type FieldCreateSchema = {
   type?: FieldType;
   /**
    * The label of the field
@@ -4583,13 +4583,13 @@ export interface FieldCreateSchema {
         [k: string]: unknown;
       };
   fieldset?: null | FieldsetData;
-}
+};
 
 /**
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface FieldUpdateSchema {
+export type FieldUpdateSchema = {
   id?: FieldIdentity;
   type?: FieldType;
   /**
@@ -4681,7 +4681,7 @@ export interface FieldUpdateSchema {
    */
   hint?: string | null;
   fieldset?: null | FieldsetData;
-}
+};
 
 /**
  * Fields can be organized and grouped into fieldset to better present them to editors.
@@ -4689,7 +4689,7 @@ export interface FieldUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "fieldset".
  */
-export interface Fieldset {
+export type Fieldset = {
   id: FieldsetIdentity;
   type: FieldsetType;
   /**
@@ -4713,7 +4713,7 @@ export interface Fieldset {
    */
   position: number;
   item_type: ItemTypeData;
-}
+};
 export type FieldsetCreateTargetSchema = Fieldset;
 export type FieldsetUpdateTargetSchema = Fieldset;
 export type FieldsetSelfTargetSchema = Fieldset;
@@ -4724,7 +4724,7 @@ export type FieldsetDestroyTargetSchema = Fieldset;
  * This interface was referenced by `Fieldset`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface FieldsetAttributes {
+export type FieldsetAttributes = {
   /**
    * The title of the fieldset
    */
@@ -4745,7 +4745,7 @@ export interface FieldsetAttributes {
    * Ordering index
    */
   position: number;
-}
+};
 
 /**
  * JSON API links
@@ -4753,15 +4753,15 @@ export interface FieldsetAttributes {
  * This interface was referenced by `Fieldset`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface FieldsetRelationships {
+export type FieldsetRelationships = {
   item_type: ItemTypeData;
-}
+};
 
 /**
  * This interface was referenced by `Fieldset`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface FieldsetCreateSchema {
+export type FieldsetCreateSchema = {
   type?: FieldsetType;
   /**
    * The title of the fieldset
@@ -4783,13 +4783,13 @@ export interface FieldsetCreateSchema {
    * When fieldset is collapsible, determines if the default is to start collapsed or not
    */
   start_collapsed?: boolean;
-}
+};
 
 /**
  * This interface was referenced by `Fieldset`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface FieldsetUpdateSchema {
+export type FieldsetUpdateSchema = {
   id?: FieldsetIdentity;
   type?: FieldsetType;
   /**
@@ -4812,7 +4812,7 @@ export interface FieldsetUpdateSchema {
    * When fieldset is collapsible, determines if the default is to start collapsed or not
    */
   start_collapsed?: boolean;
-}
+};
 
 /**
  * A session is required to access to read-and-write API endpoints
@@ -4820,11 +4820,11 @@ export interface FieldsetUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "session".
  */
-export interface Session {
+export type Session = {
   id: SessionIdentity;
   type: SessionType;
   user: UserData;
-}
+};
 export type SessionCreateTargetSchema = Session;
 /**
  * JSON API data
@@ -4832,10 +4832,10 @@ export type SessionCreateTargetSchema = Session;
  * This interface was referenced by `Session`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SessionData {
+export type SessionData = {
   type: SessionType;
   id: SessionIdentity;
-}
+};
 
 /**
  * JSON API links
@@ -4843,15 +4843,15 @@ export interface SessionData {
  * This interface was referenced by `Session`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface SessionRelationships {
+export type SessionRelationships = {
   user: UserData;
-}
+};
 
 /**
  * This interface was referenced by `Session`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface SessionCreateSchema {
+export type SessionCreateSchema = {
   /**
    * JSON API type field
    */
@@ -4868,7 +4868,7 @@ export interface SessionCreateSchema {
    * Two-factor authentication one-time password
    */
   otp_code?: string;
-}
+};
 
 /**
  * An API token allows access to our API. It is linked to a Role, which describes what actions can be performed.
@@ -4876,7 +4876,7 @@ export interface SessionCreateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "access_token".
  */
-export interface AccessToken {
+export type AccessToken = {
   id: AccessTokenIdentity;
   type: AccessTokenType;
   /**
@@ -4901,7 +4901,7 @@ export interface AccessToken {
   can_access_cma: boolean;
   hardcoded_type: null | string;
   role: RoleData | null;
-}
+};
 export type AccessTokenCreateTargetSchema = AccessToken;
 export type AccessTokenUpdateTargetSchema = AccessToken;
 export type AccessTokenSelfTargetSchema = AccessToken;
@@ -4913,10 +4913,10 @@ export type AccessTokenDestroyTargetSchema = AccessToken;
  * This interface was referenced by `AccessToken`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface AccessTokenData {
+export type AccessTokenData = {
   type: AccessTokenType;
   id: AccessTokenIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -4924,7 +4924,7 @@ export interface AccessTokenData {
  * This interface was referenced by `AccessToken`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface AccessTokenAttributes {
+export type AccessTokenAttributes = {
   /**
    * Name of API token
    */
@@ -4946,7 +4946,7 @@ export interface AccessTokenAttributes {
    */
   can_access_cma: boolean;
   hardcoded_type: null | string;
-}
+};
 
 /**
  * JSON API links
@@ -4954,15 +4954,15 @@ export interface AccessTokenAttributes {
  * This interface was referenced by `AccessToken`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface AccessTokenRelationships {
+export type AccessTokenRelationships = {
   role: RoleData | null;
-}
+};
 
 /**
  * This interface was referenced by `AccessToken`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface AccessTokenCreateSchema {
+export type AccessTokenCreateSchema = {
   type?: AccessTokenType;
   /**
    * Name of API token
@@ -4981,13 +4981,13 @@ export interface AccessTokenCreateSchema {
    */
   can_access_cma: boolean;
   role: RoleData | null;
-}
+};
 
 /**
  * This interface was referenced by `AccessToken`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface AccessTokenUpdateSchema {
+export type AccessTokenUpdateSchema = {
   id?: AccessTokenIdentity;
   type?: AccessTokenType;
   /**
@@ -5007,7 +5007,7 @@ export interface AccessTokenUpdateSchema {
    */
   can_access_cma: boolean;
   role: RoleData | null;
-}
+};
 
 /**
  * Plugins enable developers to replace DatoCMS field components with HTML5 applications so the editing experiences of the DatoCMS web app can be customized.
@@ -5015,7 +5015,7 @@ export interface AccessTokenUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "plugin".
  */
-export interface Plugin {
+export type Plugin = {
   id: PluginIdentity;
   type: PluginType;
   /**
@@ -5085,7 +5085,7 @@ export interface Plugin {
     instance: unknown[];
   };
   meta: PluginMeta;
-}
+};
 export type PluginCreateTargetSchema = Plugin;
 export type PluginUpdateTargetSchema = Plugin;
 export type PluginSelfTargetSchema = Plugin;
@@ -5096,12 +5096,12 @@ export type PluginDestroyTargetSchema = Plugin;
  * This interface was referenced by `Plugin`'s JSON-Schema
  * via the `definition` "meta".
  */
-export interface PluginMeta {
+export type PluginMeta = {
   /**
    * Version of the plugin. Legacy plugins are v1, new plugins are v2
    */
   version: string;
-}
+};
 
 /**
  * JSON API data
@@ -5109,10 +5109,10 @@ export interface PluginMeta {
  * This interface was referenced by `Plugin`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface PluginData {
+export type PluginData = {
   type: PluginType;
   id: PluginIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -5120,7 +5120,7 @@ export interface PluginData {
  * This interface was referenced by `Plugin`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface PluginAttributes {
+export type PluginAttributes = {
   /**
    * The name of the plugin
    */
@@ -5187,13 +5187,13 @@ export interface PluginAttributes {
     global: unknown[];
     instance: unknown[];
   };
-}
+};
 
 /**
  * This interface was referenced by `Plugin`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface PluginCreateSchema {
+export type PluginCreateSchema = {
   type?: PluginType;
   /**
    * NPM package name of the public plugin you want to install. For public plugins, that's the only attribute you need to pass.
@@ -5253,13 +5253,13 @@ export interface PluginCreateSchema {
    * NPM version of the plugin
    */
   package_version?: null | string;
-}
+};
 
 /**
  * This interface was referenced by `Plugin`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface PluginUpdateSchema {
+export type PluginUpdateSchema = {
   id?: PluginIdentity;
   type?: PluginType;
   /**
@@ -5291,7 +5291,7 @@ export interface PluginUpdateSchema {
   meta?: {
     [k: string]: unknown;
   };
-}
+};
 
 /**
  * Some API endpoint give results asynchronously, returning the ID of a job.
@@ -5299,7 +5299,7 @@ export interface PluginUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "job_result".
  */
-export interface JobResult {
+export type JobResult = {
   id: JobResultIdentity;
   type: JobResultType;
   /**
@@ -5312,7 +5312,7 @@ export interface JobResult {
   payload: null | {
     [k: string]: unknown;
   };
-}
+};
 export type JobResultSelfTargetSchema = JobResult;
 /**
  * JSON API data
@@ -5320,10 +5320,10 @@ export type JobResultSelfTargetSchema = JobResult;
  * This interface was referenced by `JobResult`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface JobResultData {
+export type JobResultData = {
   type: JobResultType;
   id: JobResultIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -5331,7 +5331,7 @@ export interface JobResultData {
  * This interface was referenced by `JobResult`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface JobResultAttributes {
+export type JobResultAttributes = {
   /**
    * Status of delayed HTTP response
    */
@@ -5342,13 +5342,13 @@ export interface JobResultAttributes {
   payload: null | {
     [k: string]: unknown;
   };
-}
+};
 
 /**
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "subscription_limit".
  */
-export interface SubscriptionLimit {
+export type SubscriptionLimit = {
   id: SubscriptionLimitIdentity;
   type: SubscriptionLimitType;
   /**
@@ -5363,7 +5363,7 @@ export interface SubscriptionLimit {
    * The actual limit
    */
   limit: number | null;
-}
+};
 export type SubscriptionLimitSelfTargetSchema = SubscriptionLimit;
 /**
  * JSON API data
@@ -5371,10 +5371,10 @@ export type SubscriptionLimitSelfTargetSchema = SubscriptionLimit;
  * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SubscriptionLimitData {
+export type SubscriptionLimitData = {
   type: SubscriptionLimitType;
   id: SubscriptionLimitIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -5382,7 +5382,7 @@ export interface SubscriptionLimitData {
  * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SubscriptionLimitAttributes {
+export type SubscriptionLimitAttributes = {
   /**
    * The codename for the limit
    */
@@ -5395,13 +5395,13 @@ export interface SubscriptionLimitAttributes {
    * The actual limit
    */
   limit: number | null;
-}
+};
 
 /**
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "subscription_feature".
  */
-export interface SubscriptionFeature {
+export type SubscriptionFeature = {
   id: SubscriptionFeatureIdentity;
   type: SubscriptionFeatureType;
   /**
@@ -5416,7 +5416,7 @@ export interface SubscriptionFeature {
    * Whether the feature is available on the current project
    */
   enabled: boolean;
-}
+};
 
 /**
  * JSON API data
@@ -5424,10 +5424,10 @@ export interface SubscriptionFeature {
  * This interface was referenced by `SubscriptionFeature`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SubscriptionFeatureData {
+export type SubscriptionFeatureData = {
   type: SubscriptionFeatureType;
   id: SubscriptionFeatureIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -5435,7 +5435,7 @@ export interface SubscriptionFeatureData {
  * This interface was referenced by `SubscriptionFeature`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SubscriptionFeatureAttributes {
+export type SubscriptionFeatureAttributes = {
   /**
    * The codename for the feature
    */
@@ -5448,7 +5448,7 @@ export interface SubscriptionFeatureAttributes {
    * Whether the feature is available on the current project
    */
   enabled: boolean;
-}
+};
 
 /**
  * Represents an event occurred during the deploy process of your administrative area.
@@ -5456,7 +5456,7 @@ export interface SubscriptionFeatureAttributes {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "build_event".
  */
-export interface BuildEvent {
+export type BuildEvent = {
   id: BuildEventIdentity;
   type: BuildEventType;
   /**
@@ -5483,7 +5483,7 @@ export interface BuildEvent {
     [k: string]: unknown;
   };
   build_trigger: BuildTriggerData;
-}
+};
 export type BuildEventSelfTargetSchema = BuildEvent;
 /**
  * JSON API data
@@ -5491,10 +5491,10 @@ export type BuildEventSelfTargetSchema = BuildEvent;
  * This interface was referenced by `BuildTrigger`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface BuildTriggerData {
+export type BuildTriggerData = {
   type: BuildTriggerType;
   id: BuildTriggerIdentity;
-}
+};
 
 /**
  * JSON API data
@@ -5502,10 +5502,10 @@ export interface BuildTriggerData {
  * This interface was referenced by `BuildEvent`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface BuildEventData {
+export type BuildEventData = {
   type: BuildEventType;
   id: BuildEventIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -5513,7 +5513,7 @@ export interface BuildEventData {
  * This interface was referenced by `BuildEvent`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface BuildEventAttributes {
+export type BuildEventAttributes = {
   /**
    * The type of activity
    */
@@ -5537,7 +5537,7 @@ export interface BuildEventAttributes {
   data: {
     [k: string]: unknown;
   };
-}
+};
 
 /**
  * JSON API links
@@ -5545,9 +5545,9 @@ export interface BuildEventAttributes {
  * This interface was referenced by `BuildEvent`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface BuildEventRelationships {
+export type BuildEventRelationships = {
   build_trigger: BuildTriggerData;
-}
+};
 
 /**
  * DatoCMS stores the individual pieces of content you create from a model as records, which are much like table rows in a database. For backward-compatibility reasons, the API refers to records as "items".
@@ -5561,14 +5561,14 @@ export interface BuildEventRelationships {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "item".
  */
-export interface Item {
+export type Item = {
   id: ItemIdentity;
   type: ItemType1;
   item_type: ItemTypeData;
   creator?: AccountData | AccessTokenData | UserData | SsoUserData;
   meta: ItemMeta;
   [k: string]: unknown;
-}
+};
 export type ItemCreateTargetSchema = Item;
 export type ItemDuplicateJobSchema = Item;
 export type ItemUpdateTargetSchema = Item;
@@ -5584,7 +5584,7 @@ export type ScheduledUnpublishingDestroyTargetSchema = Item;
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "meta".
  */
-export interface ItemMeta {
+export type ItemMeta = {
   /**
    * Date of creation
    */
@@ -5625,7 +5625,7 @@ export interface ItemMeta {
    * Workflow stage in which the item is
    */
   stage: null | string;
-}
+};
 
 /**
  * The JSON data associated to the record
@@ -5633,9 +5633,9 @@ export interface ItemMeta {
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface ItemAttributes {
+export type ItemAttributes = {
   [k: string]: unknown;
-}
+};
 
 /**
  * JSON API links
@@ -5643,38 +5643,38 @@ export interface ItemAttributes {
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface ItemRelationships {
+export type ItemRelationships = {
   item_type: ItemTypeData;
   creator?: AccountData | AccessTokenData | UserData | SsoUserData;
-}
+};
 
 /**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `validate_existing.schema` link.
  */
-export interface ItemValidateExistingSchema {
+export type ItemValidateExistingSchema = {
   id?: ItemIdentity;
   type?: ItemType1;
   item_type: ItemTypeData;
   creator?: AccountData | AccessTokenData | UserData | SsoUserData;
   [k: string]: unknown;
-}
+};
 
 /**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `validate_new.schema` link.
  */
-export interface ItemValidateNewSchema {
+export type ItemValidateNewSchema = {
   type?: ItemType1;
   item_type: ItemTypeData;
   [k: string]: unknown;
-}
+};
 
 /**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface ItemCreateSchema {
+export type ItemCreateSchema = {
   type?: ItemType1;
   item_type: ItemTypeData;
   /**
@@ -5715,13 +5715,13 @@ export interface ItemCreateSchema {
     current_version?: string;
   };
   [k: string]: unknown;
-}
+};
 
 /**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface ItemUpdateSchema {
+export type ItemUpdateSchema = {
   id?: ItemIdentity;
   type?: ItemType1;
   item_type?: ItemTypeData;
@@ -5772,13 +5772,13 @@ export interface ItemUpdateSchema {
     stage?: string | null;
   };
   [k: string]: unknown;
-}
+};
 
 /**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_publish.schema` link.
  */
-export interface ItemBulkPublishSchema {
+export type ItemBulkPublishSchema = {
   /**
    * JSON API type field
    */
@@ -5786,13 +5786,13 @@ export interface ItemBulkPublishSchema {
   items: ItemData[];
   minItems?: unknown;
   [k: string]: unknown;
-}
+};
 
 /**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_unpublish.schema` link.
  */
-export interface ItemBulkUnpublishSchema {
+export type ItemBulkUnpublishSchema = {
   /**
    * JSON API type field
    */
@@ -5800,13 +5800,13 @@ export interface ItemBulkUnpublishSchema {
   items: ItemData[];
   minItems?: unknown;
   [k: string]: unknown;
-}
+};
 
 /**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_destroy.schema` link.
  */
-export interface ItemBulkDestroySchema {
+export type ItemBulkDestroySchema = {
   /**
    * JSON API type field
    */
@@ -5814,13 +5814,13 @@ export interface ItemBulkDestroySchema {
   items: ItemData[];
   minItems?: unknown;
   [k: string]: unknown;
-}
+};
 
 /**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_move_to_stage.schema` link.
  */
-export interface ItemBulkMoveToStageSchema {
+export type ItemBulkMoveToStageSchema = {
   /**
    * JSON API type field
    */
@@ -5831,7 +5831,7 @@ export interface ItemBulkMoveToStageSchema {
   stage: string;
   items: ItemData[];
   minItems?: unknown;
-}
+};
 
 /**
  * Every change to a record is stored as a separate record version in DatoCMS.
@@ -5839,7 +5839,7 @@ export interface ItemBulkMoveToStageSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "item_version".
  */
-export interface ItemVersion {
+export type ItemVersion = {
   id: ItemVersionIdentity;
   type: ItemVersionType;
   item_type: ItemTypeData;
@@ -5847,7 +5847,7 @@ export interface ItemVersion {
   editor: AccountData | AccessTokenData | UserData | SsoUserData;
   meta: ItemVersionMeta;
   [k: string]: unknown;
-}
+};
 export type ItemVersionSelfTargetSchema = ItemVersion;
 /**
  * Meta information regarding the record version
@@ -5855,7 +5855,7 @@ export type ItemVersionSelfTargetSchema = ItemVersion;
  * This interface was referenced by `ItemVersion`'s JSON-Schema
  * via the `definition` "meta".
  */
-export interface ItemVersionMeta {
+export type ItemVersionMeta = {
   /**
    * Date of record version creation
    */
@@ -5872,7 +5872,7 @@ export interface ItemVersionMeta {
    * Whether the record version is the most recent version or not
    */
   is_current: boolean;
-}
+};
 
 /**
  * JSON API data
@@ -5880,10 +5880,10 @@ export interface ItemVersionMeta {
  * This interface was referenced by `ItemVersion`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface ItemVersionData {
+export type ItemVersionData = {
   type: ItemVersionType;
   id: ItemVersionIdentity;
-}
+};
 
 /**
  * The JSON data associated to the record version
@@ -5891,9 +5891,9 @@ export interface ItemVersionData {
  * This interface was referenced by `ItemVersion`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface ItemVersionAttributes {
+export type ItemVersionAttributes = {
   [k: string]: unknown;
-}
+};
 
 /**
  * JSON API links
@@ -5901,11 +5901,11 @@ export interface ItemVersionAttributes {
  * This interface was referenced by `ItemVersion`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface ItemVersionRelationships {
+export type ItemVersionRelationships = {
   item_type: ItemTypeData;
   item: ItemData;
   editor: AccountData | AccessTokenData | UserData | SsoUserData;
-}
+};
 
 /**
  * Every file you upload to DatoCMS will be retrievable from this endpoint.
@@ -5913,7 +5913,7 @@ export interface ItemVersionRelationships {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "upload".
  */
-export interface Upload {
+export type Upload = {
   id: UploadIdentity;
   type: UploadType;
   /**
@@ -6074,7 +6074,7 @@ export interface Upload {
     alpha: number;
   }[];
   creator: AccountData | AccessTokenData | UserData | SsoUserData;
-}
+};
 export type UploadCreateJobSchema = Upload;
 export type UploadSelfTargetSchema = Upload;
 export type UploadDestroyTargetSchema = Upload;
@@ -6085,10 +6085,10 @@ export type UploadUpdateJobSchema = Upload;
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface UploadData {
+export type UploadData = {
   type: UploadType;
   id: UploadIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -6096,7 +6096,7 @@ export interface UploadData {
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface UploadAttributes {
+export type UploadAttributes = {
   /**
    * size of the upload
    */
@@ -6254,7 +6254,7 @@ export interface UploadAttributes {
      */
     alpha: number;
   }[];
-}
+};
 
 /**
  * JSON API links
@@ -6262,15 +6262,15 @@ export interface UploadAttributes {
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface UploadRelationships {
+export type UploadRelationships = {
   creator: AccountData | AccessTokenData | UserData | SsoUserData;
-}
+};
 
 /**
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface UploadCreateSchema {
+export type UploadCreateSchema = {
   type?: UploadType;
   /**
    * Upload path
@@ -6330,13 +6330,13 @@ export interface UploadCreateSchema {
    * Tags
    */
   tags?: string[];
-}
+};
 
 /**
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface UploadUpdateSchema {
+export type UploadUpdateSchema = {
   id?: UploadIdentity;
   type?: UploadType;
   /**
@@ -6402,25 +6402,25 @@ export interface UploadUpdateSchema {
     };
   };
   creator?: AccountData | AccessTokenData | UserData | SsoUserData;
-}
+};
 
 /**
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `batch_add_tags.schema` link.
  */
-export interface UploadBatchAddTagsSchema {
+export type UploadBatchAddTagsSchema = {
   type?: UploadType;
   /**
    * Tags
    */
   tags?: string[];
-}
+};
 
 /**
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `bulk_tag.schema` link.
  */
-export interface UploadBulkTagSchema {
+export type UploadBulkTagSchema = {
   /**
    * JSON API type field
    */
@@ -6430,20 +6430,20 @@ export interface UploadBulkTagSchema {
    */
   tags: string[];
   uploads: UploadData[];
-}
+};
 
 /**
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `bulk_destroy.schema` link.
  */
-export interface UploadBulkDestroySchema {
+export type UploadBulkDestroySchema = {
   /**
    * JSON API type field
    */
   type?: 'upload_bulk_destroy_operation';
   uploads: UploadData[];
   [k: string]: unknown;
-}
+};
 
 /**
  * To upload a file in DatoCMS, first you need to obtain an upload permission through this API endpoint. The response will contain the S3 URL where you will be able to upload the file with a direct PUT request.
@@ -6451,14 +6451,14 @@ export interface UploadBulkDestroySchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "upload_request".
  */
-export interface UploadRequest {
+export type UploadRequest = {
   id: UploadRequestIdentity;
   type: UploadRequestType;
   /**
    * The URL to use to upload the file with a direct PUT request
    */
   url: string;
-}
+};
 export type UploadRequestCreateTargetSchema = UploadRequest;
 /**
  * JSON API attributes
@@ -6466,25 +6466,25 @@ export type UploadRequestCreateTargetSchema = UploadRequest;
  * This interface was referenced by `UploadRequest`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface UploadRequestAttributes {
+export type UploadRequestAttributes = {
   /**
    * The URL to use to upload the file with a direct PUT request
    */
   url: string;
   [k: string]: unknown;
-}
+};
 
 /**
  * This interface was referenced by `UploadRequest`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface UploadRequestCreateSchema {
+export type UploadRequestCreateSchema = {
   type?: UploadRequestType;
   /**
    * The original file name
    */
   filename?: string;
-}
+};
 
 /**
  * You can create scheduled publication to publish records in the future
@@ -6492,7 +6492,7 @@ export interface UploadRequestCreateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "scheduled_publication".
  */
-export interface ScheduledPublication {
+export type ScheduledPublication = {
   id: ScheduledPublicationIdentity;
   type: ScheduledPublicationType;
   /**
@@ -6500,7 +6500,7 @@ export interface ScheduledPublication {
    */
   publication_scheduled_at: string;
   item: ItemData;
-}
+};
 export type ScheduledPublicationCreateTargetSchema = ScheduledPublication;
 /**
  * JSON API data
@@ -6508,10 +6508,10 @@ export type ScheduledPublicationCreateTargetSchema = ScheduledPublication;
  * This interface was referenced by `ScheduledPublication`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface ScheduledPublicationData {
+export type ScheduledPublicationData = {
   type: ScheduledPublicationType;
   id: ScheduledPublicationIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -6519,12 +6519,12 @@ export interface ScheduledPublicationData {
  * This interface was referenced by `ScheduledPublication`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface ScheduledPublicationAttributes {
+export type ScheduledPublicationAttributes = {
   /**
    * The future date for the publication
    */
   publication_scheduled_at: string;
-}
+};
 
 /**
  * JSON API links
@@ -6532,18 +6532,18 @@ export interface ScheduledPublicationAttributes {
  * This interface was referenced by `ScheduledPublication`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface ScheduledPublicationRelationships {
+export type ScheduledPublicationRelationships = {
   item: ItemData;
-}
+};
 
 /**
  * This interface was referenced by `ScheduledPublication`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface ScheduledPublicationCreateSchema {
+export type ScheduledPublicationCreateSchema = {
   type?: ScheduledPublicationType;
   [k: string]: unknown;
-}
+};
 
 /**
  * You can create a scheduled unpublishing to unpublish records in the future
@@ -6551,7 +6551,7 @@ export interface ScheduledPublicationCreateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "scheduled_unpublishing".
  */
-export interface ScheduledUnpublishing {
+export type ScheduledUnpublishing = {
   id: ScheduledUnpublishingIdentity;
   type: ScheduledUnpublishingType;
   /**
@@ -6559,7 +6559,7 @@ export interface ScheduledUnpublishing {
    */
   unpublishing_scheduled_at: string;
   item: ItemData;
-}
+};
 export type ScheduledUnpublishingCreateTargetSchema = ScheduledUnpublishing;
 /**
  * JSON API data
@@ -6567,10 +6567,10 @@ export type ScheduledUnpublishingCreateTargetSchema = ScheduledUnpublishing;
  * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface ScheduledUnpublishingData {
+export type ScheduledUnpublishingData = {
   type: ScheduledUnpublishingType;
   id: ScheduledUnpublishingIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -6578,12 +6578,12 @@ export interface ScheduledUnpublishingData {
  * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface ScheduledUnpublishingAttributes {
+export type ScheduledUnpublishingAttributes = {
   /**
    * The future date for the unpublishing
    */
   unpublishing_scheduled_at: string;
-}
+};
 
 /**
  * JSON API links
@@ -6591,18 +6591,18 @@ export interface ScheduledUnpublishingAttributes {
  * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface ScheduledUnpublishingRelationships {
+export type ScheduledUnpublishingRelationships = {
   item: ItemData;
-}
+};
 
 /**
  * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface ScheduledUnpublishingCreateSchema {
+export type ScheduledUnpublishingCreateSchema = {
   type?: ScheduledUnpublishingType;
   [k: string]: unknown;
-}
+};
 
 /**
  * DatoCMS Site Search is a way to deliver tailored search results to your site visitors. This is the endpoint you can use to query for results.
@@ -6610,7 +6610,7 @@ export interface ScheduledUnpublishingCreateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "search_result".
  */
-export interface SearchResult {
+export type SearchResult = {
   id: SearchResultIdentity;
   type: SearchResultType;
   /**
@@ -6633,7 +6633,7 @@ export interface SearchResult {
     title?: string[] | null;
     body?: string[] | null;
   };
-}
+};
 
 /**
  * JSON API data
@@ -6641,10 +6641,10 @@ export interface SearchResult {
  * This interface was referenced by `SearchResult`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SearchResultData {
+export type SearchResultData = {
   type: SearchResultType;
   id: SearchResultIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -6652,7 +6652,7 @@ export interface SearchResultData {
  * This interface was referenced by `SearchResult`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SearchResultAttributes {
+export type SearchResultAttributes = {
   /**
    * Page title
    */
@@ -6673,7 +6673,7 @@ export interface SearchResultAttributes {
     title?: string[] | null;
     body?: string[] | null;
   };
-}
+};
 
 /**
  * [Environments](https://www.datocms.com/docs/general-concepts/primary-and-sandbox-environments) make it easier for your development team to **manage and maintain content structure once your content has been published**. You can think of environments like code branches: great for testing, development and pre-production environments.
@@ -6698,11 +6698,11 @@ export interface SearchResultAttributes {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "environment".
  */
-export interface Environment {
+export type Environment = {
   id: EnvironmentIdentity;
   type: EnvironmentType;
   meta: EnvironmentMeta;
-}
+};
 export type EnvironmentForkJobSchema = Environment;
 export type EnvironmentPromoteTargetSchema = Environment;
 export type EnvironmentSelfTargetSchema = Environment;
@@ -6713,7 +6713,7 @@ export type EnvironmentDestroyJobSchema = Environment;
  * This interface was referenced by `Environment`'s JSON-Schema
  * via the `definition` "meta".
  */
-export interface EnvironmentMeta {
+export type EnvironmentMeta = {
   /**
    * Status of the environment
    */
@@ -6730,7 +6730,7 @@ export interface EnvironmentMeta {
    * Is this environment the primary for the project?
    */
   primary: boolean;
-}
+};
 
 /**
  * JSON API data
@@ -6738,36 +6738,36 @@ export interface EnvironmentMeta {
  * This interface was referenced by `Environment`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface EnvironmentData {
+export type EnvironmentData = {
   type: EnvironmentType;
   id: EnvironmentIdentity;
-}
+};
 
 /**
  * This interface was referenced by `Environment`'s JSON-Schema
  * via the `fork.schema` link.
  */
-export interface EnvironmentForkSchema {
+export type EnvironmentForkSchema = {
   /**
    * The ID of the forked environment
    */
   id?: string;
   type?: EnvironmentType;
   [k: string]: unknown;
-}
+};
 
 /**
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "maintenance_mode".
  */
-export interface MaintenanceMode {
+export type MaintenanceMode = {
   id: MaintenanceModeIdentity;
   type: MaintenanceModeType;
   /**
    * Whether maintenance mode is currently active or not
    */
   active: boolean;
-}
+};
 export type MaintenanceModeSelfTargetSchema = MaintenanceMode;
 export type MaintenanceModeActivateTargetSchema = MaintenanceMode;
 export type MaintenanceModeDeactivateTargetSchema = MaintenanceMode;
@@ -6777,10 +6777,10 @@ export type MaintenanceModeDeactivateTargetSchema = MaintenanceMode;
  * This interface was referenced by `MaintenanceMode`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface MaintenanceModeData {
+export type MaintenanceModeData = {
   type: MaintenanceModeType;
   id: MaintenanceModeIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -6788,12 +6788,12 @@ export interface MaintenanceModeData {
  * This interface was referenced by `MaintenanceMode`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface MaintenanceModeAttributes {
+export type MaintenanceModeAttributes = {
   /**
    * Whether maintenance mode is currently active or not
    */
   active: boolean;
-}
+};
 
 /**
  * A webhook allows to make requests following certain Dato events. It is linked to a Role, which describes what actions can be performed.
@@ -6801,7 +6801,7 @@ export interface MaintenanceModeAttributes {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "webhook".
  */
-export interface Webhook {
+export type Webhook = {
   id: WebhookIdentity;
   type: WebhookType;
   /**
@@ -6846,7 +6846,7 @@ export interface Webhook {
    * Whether the you want records present in the payload to show blocks expanded or not
    */
   nested_items_in_payload: boolean;
-}
+};
 export type WebhookCreateTargetSchema = Webhook;
 export type WebhookUpdateTargetSchema = Webhook;
 export type WebhookSelfTargetSchema = Webhook;
@@ -6857,10 +6857,10 @@ export type WebhookDestroyTargetSchema = Webhook;
  * This interface was referenced by `Webhook`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface WebhookData {
+export type WebhookData = {
   type: WebhookType;
   id: WebhookIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -6868,7 +6868,7 @@ export interface WebhookData {
  * This interface was referenced by `Webhook`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface WebhookAttributes {
+export type WebhookAttributes = {
   /**
    * Unique name for the webhook
    */
@@ -6911,13 +6911,13 @@ export interface WebhookAttributes {
    * Whether the you want records present in the payload to show blocks expanded or not
    */
   nested_items_in_payload: boolean;
-}
+};
 
 /**
  * This interface was referenced by `Webhook`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface WebhookCreateSchema {
+export type WebhookCreateSchema = {
   type?: WebhookType;
   /**
    * Unique name for the webhook
@@ -6961,13 +6961,13 @@ export interface WebhookCreateSchema {
    * Whether the you want records present in the payload to show blocks expanded or not
    */
   nested_items_in_payload?: boolean;
-}
+};
 
 /**
  * This interface was referenced by `Webhook`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface WebhookUpdateSchema {
+export type WebhookUpdateSchema = {
   id?: WebhookIdentity;
   type?: WebhookType;
   /**
@@ -7012,7 +7012,7 @@ export interface WebhookUpdateSchema {
    * Whether the you want records present in the payload to show blocks expanded or not
    */
   nested_items_in_payload?: boolean;
-}
+};
 
 /**
  * Represents a log entry in the webhooks activity list.
@@ -7020,7 +7020,7 @@ export interface WebhookUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "webhook_call".
  */
-export interface WebhookCall {
+export type WebhookCall = {
   id: WebhookCallIdentity;
   type: WebhookCallType;
   /**
@@ -7064,7 +7064,7 @@ export interface WebhookCall {
    */
   response_payload: string | null;
   webhook: WebhookData;
-}
+};
 
 /**
  * JSON API data
@@ -7072,10 +7072,10 @@ export interface WebhookCall {
  * This interface was referenced by `WebhookCall`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface WebhookCallData {
+export type WebhookCallData = {
   type: WebhookCallType;
   id: WebhookCallIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -7083,7 +7083,7 @@ export interface WebhookCallData {
  * This interface was referenced by `WebhookCall`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface WebhookCallAttributes {
+export type WebhookCallAttributes = {
   /**
    * The subject of webhook triggering
    */
@@ -7124,7 +7124,7 @@ export interface WebhookCallAttributes {
    * The body of the response
    */
   response_payload: string | null;
-}
+};
 
 /**
  * JSON API links
@@ -7132,9 +7132,9 @@ export interface WebhookCallAttributes {
  * This interface was referenced by `WebhookCall`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface WebhookCallRelationships {
+export type WebhookCallRelationships = {
   webhook: WebhookData;
-}
+};
 
 /**
  * Configuration for different build triggers. You can have different staging and production environments in order to test your site before final deploy
@@ -7142,7 +7142,7 @@ export interface WebhookCallRelationships {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "build_trigger".
  */
-export interface BuildTrigger {
+export type BuildTrigger = {
   id: BuildTriggerIdentity;
   type: BuildTriggerType;
   /**
@@ -7191,7 +7191,7 @@ export interface BuildTrigger {
    * Enable scraper on the site
    */
   indexing_enabled: boolean;
-}
+};
 export type BuildTriggerSelfTargetSchema = BuildTrigger;
 export type BuildTriggerCreateTargetSchema = BuildTrigger;
 export type BuildTriggerUpdateTargetSchema = BuildTrigger;
@@ -7202,7 +7202,7 @@ export type BuildTriggerDestroyTargetSchema = BuildTrigger;
  * This interface was referenced by `BuildTrigger`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface BuildTriggerAttributes {
+export type BuildTriggerAttributes = {
   /**
    * Name of the environment
    */
@@ -7249,13 +7249,13 @@ export interface BuildTriggerAttributes {
    * Enable scraper on the site
    */
   indexing_enabled: boolean;
-}
+};
 
 /**
  * This interface was referenced by `BuildTrigger`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface BuildTriggerCreateSchema {
+export type BuildTriggerCreateSchema = {
   type?: BuildTriggerType;
   /**
    * Name of the environment
@@ -7287,13 +7287,13 @@ export interface BuildTriggerCreateSchema {
   adapter_settings: {
     [k: string]: unknown;
   };
-}
+};
 
 /**
  * This interface was referenced by `BuildTrigger`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface BuildTriggerUpdateSchema {
+export type BuildTriggerUpdateSchema = {
   id?: BuildTriggerIdentity;
   type?: BuildTriggerType;
   /**
@@ -7322,7 +7322,7 @@ export interface BuildTriggerUpdateSchema {
   adapter_settings?: {
     [k: string]: unknown;
   };
-}
+};
 
 /**
  * In DatoCMS you can create filters to help you (and other editors) quickly search for records
@@ -7330,7 +7330,7 @@ export interface BuildTriggerUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "item_type_filter".
  */
-export interface ItemTypeFilter {
+export type ItemTypeFilter = {
   id: ItemTypeFilterIdentity;
   type: ItemTypeFilterType;
   /**
@@ -7348,7 +7348,7 @@ export interface ItemTypeFilter {
    */
   shared: boolean;
   item_type: ItemTypeData;
-}
+};
 export type ItemTypeFilterCreateTargetSchema = ItemTypeFilter;
 export type ItemTypeFilterUpdateTargetSchema = ItemTypeFilter;
 export type ItemTypeFilterSelfTargetSchema = ItemTypeFilter;
@@ -7359,10 +7359,10 @@ export type ItemTypeFilterDestroyTargetSchema = ItemTypeFilter;
  * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface ItemTypeFilterData {
+export type ItemTypeFilterData = {
   type: ItemTypeFilterType;
   id: ItemTypeFilterIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -7370,7 +7370,7 @@ export interface ItemTypeFilterData {
  * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface ItemTypeFilterAttributes {
+export type ItemTypeFilterAttributes = {
   /**
    * The name of the filter
    */
@@ -7385,7 +7385,7 @@ export interface ItemTypeFilterAttributes {
    * Whether it's a shared filter or not
    */
   shared: boolean;
-}
+};
 
 /**
  * JSON API links
@@ -7393,15 +7393,15 @@ export interface ItemTypeFilterAttributes {
  * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface ItemTypeFilterRelationships {
+export type ItemTypeFilterRelationships = {
   item_type: ItemTypeData;
-}
+};
 
 /**
  * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface ItemTypeFilterCreateSchema {
+export type ItemTypeFilterCreateSchema = {
   type?: ItemTypeFilterType;
   /**
    * The name of the filter
@@ -7418,13 +7418,13 @@ export interface ItemTypeFilterCreateSchema {
    */
   shared: boolean;
   item_type: ItemTypeData;
-}
+};
 
 /**
  * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface ItemTypeFilterUpdateSchema {
+export type ItemTypeFilterUpdateSchema = {
   id?: ItemTypeFilterIdentity;
   type?: ItemTypeFilterType;
   /**
@@ -7441,7 +7441,7 @@ export interface ItemTypeFilterUpdateSchema {
   filter: {
     [k: string]: unknown;
   };
-}
+};
 
 /**
  * In DatoCMS you can create filters to help you (and other editors) quickly search for uploads
@@ -7449,7 +7449,7 @@ export interface ItemTypeFilterUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "upload_filter".
  */
-export interface UploadFilter {
+export type UploadFilter = {
   id: UploadFilterIdentity;
   type: UploadFilterType;
   /**
@@ -7466,7 +7466,7 @@ export interface UploadFilter {
    * Whether it's a shared filter or not
    */
   shared: boolean;
-}
+};
 export type UploadFilterCreateTargetSchema = UploadFilter;
 export type UploadFilterUpdateTargetSchema = UploadFilter;
 export type UploadFilterSelfTargetSchema = UploadFilter;
@@ -7477,10 +7477,10 @@ export type UploadFilterDestroyTargetSchema = UploadFilter;
  * This interface was referenced by `UploadFilter`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface UploadFilterData {
+export type UploadFilterData = {
   type: UploadFilterType;
   id: UploadFilterIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -7488,7 +7488,7 @@ export interface UploadFilterData {
  * This interface was referenced by `UploadFilter`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface UploadFilterAttributes {
+export type UploadFilterAttributes = {
   /**
    * The name of the filter
    */
@@ -7503,13 +7503,13 @@ export interface UploadFilterAttributes {
    * Whether it's a shared filter or not
    */
   shared: boolean;
-}
+};
 
 /**
  * This interface was referenced by `UploadFilter`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface UploadFilterCreateSchema {
+export type UploadFilterCreateSchema = {
   type?: UploadFilterType;
   /**
    * The name of the filter
@@ -7525,13 +7525,13 @@ export interface UploadFilterCreateSchema {
    * Whether it's a shared filter or not
    */
   shared: boolean;
-}
+};
 
 /**
  * This interface was referenced by `UploadFilter`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface UploadFilterUpdateSchema {
+export type UploadFilterUpdateSchema = {
   id?: UploadFilterIdentity;
   type?: UploadFilterType;
   /**
@@ -7548,7 +7548,7 @@ export interface UploadFilterUpdateSchema {
   filter: {
     [k: string]: unknown;
   };
-}
+};
 
 /**
  * A DatoCMS administrative area can be accessed by multiple people. Every invitation is linked to a specific Role, which describes what actions it will be able to perform once the user will register.
@@ -7556,7 +7556,7 @@ export interface UploadFilterUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "site_invitation".
  */
-export interface SiteInvitation {
+export type SiteInvitation = {
   id: SiteInvitationIdentity;
   type: SiteInvitationType;
   /**
@@ -7564,7 +7564,7 @@ export interface SiteInvitation {
    */
   email: string;
   role: RoleData;
-}
+};
 export type SiteInvitationCreateTargetSchema = SiteInvitation;
 export type SiteInvitationUpdateTargetSchema = SiteInvitation;
 export type SiteInvitationSelfTargetSchema = SiteInvitation;
@@ -7575,10 +7575,10 @@ export type SiteInvitationDestroyTargetSchema = SiteInvitation;
  * This interface was referenced by `SiteInvitation`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SiteInvitationData {
+export type SiteInvitationData = {
   type: SiteInvitationType;
   id: SiteInvitationIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -7586,12 +7586,12 @@ export interface SiteInvitationData {
  * This interface was referenced by `SiteInvitation`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SiteInvitationAttributes {
+export type SiteInvitationAttributes = {
   /**
    * Email
    */
   email: string;
-}
+};
 
 /**
  * JSON API links
@@ -7599,33 +7599,33 @@ export interface SiteInvitationAttributes {
  * This interface was referenced by `SiteInvitation`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface SiteInvitationRelationships {
+export type SiteInvitationRelationships = {
   role: RoleData;
-}
+};
 
 /**
  * This interface was referenced by `SiteInvitation`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface SiteInvitationCreateSchema {
+export type SiteInvitationCreateSchema = {
   type?: SiteInvitationType;
   /**
    * Email
    */
   email: string;
   role: RoleData;
-}
+};
 
 /**
  * This interface was referenced by `SiteInvitation`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface SiteInvitationUpdateSchema {
+export type SiteInvitationUpdateSchema = {
   id?: SiteInvitationIdentity;
   type?: SiteInvitationType;
   role?: RoleData;
   [k: string]: unknown;
-}
+};
 
 /**
  * Session track users movements in the administrative area, and allows locking a record when editing it.
@@ -7633,7 +7633,7 @@ export interface SiteInvitationUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "editing_session".
  */
-export interface EditingSession {
+export type EditingSession = {
   id: EditingSessionIdentity;
   type: EditingSessionType;
   /**
@@ -7647,7 +7647,7 @@ export interface EditingSession {
   active_item: ItemData;
   active_item_type: ItemTypeData;
   editor: AccountData | AccessTokenData | UserData;
-}
+};
 export type EditingSessionUpdateTargetSchema = EditingSession;
 export type EditingSessionDestroyTargetSchema = EditingSession;
 /**
@@ -7656,10 +7656,10 @@ export type EditingSessionDestroyTargetSchema = EditingSession;
  * This interface was referenced by `EditingSession`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface EditingSessionData {
+export type EditingSessionData = {
   type: EditingSessionType;
   id: EditingSessionIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -7667,7 +7667,7 @@ export interface EditingSessionData {
  * This interface was referenced by `EditingSession`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface EditingSessionAttributes {
+export type EditingSessionAttributes = {
   /**
    * User entered at
    */
@@ -7676,7 +7676,7 @@ export interface EditingSessionAttributes {
    * User locked record at
    */
   locked_at: string | null;
-}
+};
 
 /**
  * JSON API links
@@ -7684,11 +7684,11 @@ export interface EditingSessionAttributes {
  * This interface was referenced by `EditingSession`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface EditingSessionRelationships {
+export type EditingSessionRelationships = {
   active_item: ItemData;
   active_item_type: ItemTypeData;
   editor: AccountData | AccessTokenData | UserData;
-}
+};
 
 /**
  * A Single Sign-On group exists when a DatoCMS project is connected to an Identity Provider. These groups can be used to link DatoCMS roles to the Identity Provider's groups.
@@ -7696,7 +7696,7 @@ export interface EditingSessionRelationships {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "sso_group".
  */
-export interface SsoGroup {
+export type SsoGroup = {
   id: SsoGroupIdentity;
   type: SsoGroupType;
   /**
@@ -7709,7 +7709,7 @@ export interface SsoGroup {
   priority: number;
   role: RoleData;
   users: SsoUserData[];
-}
+};
 export type SsoGroupCopyRolesTargetSchema = SsoGroup;
 export type SsoGroupUpdateTargetSchema = SsoGroup;
 export type SsoGroupDestroyTargetSchema = SsoGroup;
@@ -7719,7 +7719,7 @@ export type SsoGroupDestroyTargetSchema = SsoGroup;
  * This interface was referenced by `SsoGroup`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SsoGroupAttributes {
+export type SsoGroupAttributes = {
   /**
    * Name of the group
    */
@@ -7728,7 +7728,7 @@ export interface SsoGroupAttributes {
    * When an user belongs to multiple groups, the role associated to the group with the highest priority will be used
    */
   priority: number;
-}
+};
 
 /**
  * JSON API links
@@ -7736,16 +7736,16 @@ export interface SsoGroupAttributes {
  * This interface was referenced by `SsoGroup`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface SsoGroupRelationships {
+export type SsoGroupRelationships = {
   role: RoleData;
   users: SsoUserData[];
-}
+};
 
 /**
  * This interface was referenced by `SsoGroup`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface SsoGroupUpdateSchema {
+export type SsoGroupUpdateSchema = {
   id?: SsoGroupIdentity;
   type?: SsoGroupType;
   /**
@@ -7753,7 +7753,7 @@ export interface SsoGroupUpdateSchema {
    */
   priority: number;
   role: RoleData;
-}
+};
 
 /**
  * Represents the Single Sign-on settings of the current DatoCMS project
@@ -7761,7 +7761,7 @@ export interface SsoGroupUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "sso_settings".
  */
-export interface SsoSettings {
+export type SsoSettings = {
   id: SsoSettingsIdentity;
   type: SsoSettingsType;
   /**
@@ -7793,7 +7793,7 @@ export interface SsoSettings {
    */
   scim_api_token?: string;
   default_role: null | RoleData;
-}
+};
 export type SsoSettingsSelfTargetSchema = SsoSettings;
 export type SsoSettingsUpdateTargetSchema = SsoSettings;
 /**
@@ -7802,10 +7802,10 @@ export type SsoSettingsUpdateTargetSchema = SsoSettings;
  * This interface was referenced by `SsoSettings`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SsoSettingsData {
+export type SsoSettingsData = {
   type: SsoSettingsType;
   id: SsoSettingsIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -7813,7 +7813,7 @@ export interface SsoSettingsData {
  * This interface was referenced by `SsoSettings`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SsoSettingsAttributes {
+export type SsoSettingsAttributes = {
   /**
    * URL of Identity Provider SAML Metadata endpoint
    */
@@ -7842,7 +7842,7 @@ export interface SsoSettingsAttributes {
    * DatoCMS SCIM API Token
    */
   scim_api_token?: string;
-}
+};
 
 /**
  * JSON API links
@@ -7850,15 +7850,15 @@ export interface SsoSettingsAttributes {
  * This interface was referenced by `SsoSettings`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface SsoSettingsRelationships {
+export type SsoSettingsRelationships = {
   default_role: null | RoleData;
-}
+};
 
 /**
  * This interface was referenced by `SsoSettings`'s JSON-Schema
  * via the `generate_token.targetSchema` link.
  */
-export interface SsoSettingsGenerateTokenTargetSchema {
+export type SsoSettingsGenerateTokenTargetSchema = {
   id: SsoSettingsIdentity;
   /**
    * JSON API type field
@@ -7871,13 +7871,13 @@ export interface SsoSettingsGenerateTokenTargetSchema {
     scim_api_token: string;
   };
   [k: string]: unknown;
-}
+};
 
 /**
  * This interface was referenced by `SsoSettings`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface SsoSettingsUpdateSchema {
+export type SsoSettingsUpdateSchema = {
   id?: SsoSettingsIdentity;
   type?: SsoSettingsType;
   /**
@@ -7885,7 +7885,7 @@ export interface SsoSettingsUpdateSchema {
    */
   idp_saml_metadata_url?: null | string;
   default_role: RoleData;
-}
+};
 
 /**
  * Represents the white-label settings of the current DatoCMS project
@@ -7893,14 +7893,14 @@ export interface SsoSettingsUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "white_label_settings".
  */
-export interface WhiteLabelSettings {
+export type WhiteLabelSettings = {
   id: WhiteLabelSettingsIdentity;
   type: WhiteLabelSettingsType;
   /**
    * URL of custom I18n messages. The :locale placeholder represents the current DatoCMS UI locale.
    */
   custom_i18n_messages_template_url: null | string;
-}
+};
 export type WhiteLabelSettingsSelfTargetSchema = WhiteLabelSettings;
 export type WhiteLabelSettingsUpdateTargetSchema = WhiteLabelSettings;
 /**
@@ -7909,10 +7909,10 @@ export type WhiteLabelSettingsUpdateTargetSchema = WhiteLabelSettings;
  * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface WhiteLabelSettingsData {
+export type WhiteLabelSettingsData = {
   type: WhiteLabelSettingsType;
   id: WhiteLabelSettingsIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -7920,25 +7920,25 @@ export interface WhiteLabelSettingsData {
  * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface WhiteLabelSettingsAttributes {
+export type WhiteLabelSettingsAttributes = {
   /**
    * URL of custom I18n messages. The :locale placeholder represents the current DatoCMS UI locale.
    */
   custom_i18n_messages_template_url: null | string;
-}
+};
 
 /**
  * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface WhiteLabelSettingsUpdateSchema {
+export type WhiteLabelSettingsUpdateSchema = {
   id?: WhiteLabelSettingsIdentity;
   type?: WhiteLabelSettingsType;
   /**
    * URL of custom I18n messages. The :locale placeholder represents the current DatoCMS UI locale.
    */
   custom_i18n_messages_template_url?: null | string;
-}
+};
 
 /**
  * Info that can be accessed by unauthorized users
@@ -7946,7 +7946,7 @@ export interface WhiteLabelSettingsUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "public_info".
  */
-export interface PublicInfo {
+export type PublicInfo = {
   id: PublicInfoIdentity;
   type: PublicInfoType;
   /**
@@ -8011,7 +8011,7 @@ export interface PublicInfo {
     blocks_per_item: number;
     [k: string]: unknown;
   };
-}
+};
 export type PublicInfoSelfTargetSchema = PublicInfo;
 /**
  * JSON API data
@@ -8019,10 +8019,10 @@ export type PublicInfoSelfTargetSchema = PublicInfo;
  * This interface was referenced by `PublicInfo`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface PublicInfoData {
+export type PublicInfoData = {
   type: PublicInfoType;
   id: PublicInfoIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -8030,7 +8030,7 @@ export interface PublicInfoData {
  * This interface was referenced by `PublicInfo`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface PublicInfoAttributes {
+export type PublicInfoAttributes = {
   /**
    * Site name
    */
@@ -8093,7 +8093,7 @@ export interface PublicInfoAttributes {
     blocks_per_item: number;
     [k: string]: unknown;
   };
-}
+};
 
 /**
  * DatoCMS resources usage organized by day
@@ -8101,7 +8101,7 @@ export interface PublicInfoAttributes {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "daily_usage".
  */
-export interface DailyUsage {
+export type DailyUsage = {
   id: DailyUsageIdentity;
   type: DailyUsageType;
   /**
@@ -8128,7 +8128,7 @@ export interface DailyUsage {
    * Video streaming seconds
    */
   mux_delivered_seconds: number;
-}
+};
 export type DailyUsageInstancesTargetSchema = DailyUsage;
 /**
  * JSON API data
@@ -8136,10 +8136,10 @@ export type DailyUsageInstancesTargetSchema = DailyUsage;
  * This interface was referenced by `DailyUsage`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface DailyUsageData {
+export type DailyUsageData = {
   type: DailyUsageType;
   id: DailyUsageIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -8147,7 +8147,7 @@ export interface DailyUsageData {
  * This interface was referenced by `DailyUsage`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface DailyUsageAttributes {
+export type DailyUsageAttributes = {
   /**
    * The date the data are referring to
    */
@@ -8172,7 +8172,7 @@ export interface DailyUsageAttributes {
    * Video streaming seconds
    */
   mux_delivered_seconds: number;
-}
+};
 
 /**
  * You can use counters to analyze your project's data consumption over a period of time. Counters are especially useful if your project is exceeding its API calls/traffic quota limits, to better understand where and how requests are originating. Counters are updated every minute, so you can debug in real-time the results of your changes.
@@ -8180,7 +8180,7 @@ export interface DailyUsageAttributes {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "usage_counter".
  */
-export interface UsageCounter {
+export type UsageCounter = {
   id: UsageCounterIdentity;
   type: UsageCounterType;
   result: {
@@ -8193,7 +8193,7 @@ export interface UsageCounter {
      */
     counter: number;
   }[];
-}
+};
 export type UsageCounterSelfTargetSchema = UsageCounter;
 /**
  * JSON API data
@@ -8201,10 +8201,10 @@ export type UsageCounterSelfTargetSchema = UsageCounter;
  * This interface was referenced by `UsageCounter`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface UsageCounterData {
+export type UsageCounterData = {
   type: UsageCounterType;
   id: UsageCounterIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -8212,7 +8212,7 @@ export interface UsageCounterData {
  * This interface was referenced by `UsageCounter`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface UsageCounterAttributes {
+export type UsageCounterAttributes = {
   result: {
     /**
      * Occurrence
@@ -8223,7 +8223,7 @@ export interface UsageCounterAttributes {
      */
     counter: number;
   }[];
-}
+};
 
 /**
  * All the project's upload tags
@@ -8231,14 +8231,14 @@ export interface UsageCounterAttributes {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "upload_tag".
  */
-export interface UploadTag {
+export type UploadTag = {
   id: UploadTagIdentity;
   type: UploadTagType;
   /**
    * The tag name
    */
   name: string;
-}
+};
 export type UploadTagCreateTargetSchema = UploadTag;
 /**
  * JSON API data
@@ -8246,10 +8246,10 @@ export type UploadTagCreateTargetSchema = UploadTag;
  * This interface was referenced by `UploadTag`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface UploadTagData {
+export type UploadTagData = {
   type: UploadTagType;
   id: UploadTagIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -8257,24 +8257,24 @@ export interface UploadTagData {
  * This interface was referenced by `UploadTag`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface UploadTagAttributes {
+export type UploadTagAttributes = {
   /**
    * The tag name
    */
   name: string;
-}
+};
 
 /**
  * This interface was referenced by `UploadTag`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface UploadTagCreateSchema {
+export type UploadTagCreateSchema = {
   type?: UploadTagType;
   /**
    * The tag name
    */
   name: string;
-}
+};
 
 /**
  * All the site's upload automatically generated tags
@@ -8282,14 +8282,14 @@ export interface UploadTagCreateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "upload_smart_tag".
  */
-export interface UploadSmartTag {
+export type UploadSmartTag = {
   id: UploadSmartTagIdentity;
   type: UploadSmartTagType;
   /**
    * The tag name
    */
   name: string;
-}
+};
 
 /**
  * JSON API data
@@ -8297,10 +8297,10 @@ export interface UploadSmartTag {
  * This interface was referenced by `UploadSmartTag`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface UploadSmartTagData {
+export type UploadSmartTagData = {
   type: UploadSmartTagType;
   id: UploadSmartTagIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -8308,12 +8308,12 @@ export interface UploadSmartTagData {
  * This interface was referenced by `UploadSmartTag`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface UploadSmartTagAttributes {
+export type UploadSmartTagAttributes = {
   /**
    * The tag name
    */
   name: string;
-}
+};
 
 /**
  * A site represents a specific DatoCMS administrative area
@@ -8321,7 +8321,7 @@ export interface UploadSmartTagAttributes {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "site".
  */
-export interface Site {
+export type Site = {
   id: SiteIdentity;
   type: SiteType;
   /**
@@ -8478,7 +8478,7 @@ export interface Site {
    * The list of site roles
    */
   roles: RoleData[];
-}
+};
 export type SiteSelfTargetSchema = Site;
 export type SiteUpdateJobSchema = Site;
 /**
@@ -8487,10 +8487,10 @@ export type SiteUpdateJobSchema = Site;
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SiteData {
+export type SiteData = {
   type: SiteType;
   id: SiteIdentity;
-}
+};
 
 /**
  * JSON API attributes
@@ -8498,7 +8498,7 @@ export interface SiteData {
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SiteAttributes {
+export type SiteAttributes = {
   /**
    * Site name
    */
@@ -8624,7 +8624,7 @@ export interface SiteAttributes {
     twitter_account?: null | string;
     [k: string]: unknown;
   } | null;
-}
+};
 
 /**
  * JSON API links
@@ -8632,7 +8632,7 @@ export interface SiteAttributes {
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface SiteRelationships {
+export type SiteRelationships = {
   account: AccountData;
   /**
    * The list of build trigger
@@ -8662,13 +8662,13 @@ export interface SiteRelationships {
    * The list of site roles
    */
   roles: RoleData[];
-}
+};
 
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface SiteUpdateSchema {
+export type SiteUpdateSchema = {
   id?: SiteIdentity;
   type?: SiteType;
   /**
@@ -8773,7 +8773,7 @@ export interface SiteUpdateSchema {
    */
   ip_tracking_enabled?: boolean;
   sso_default_role?: RoleData;
-}
+};
 
 /**
  * Through workflows it is possible to set up a precise state machine able to bring a draft content up to the final publication (and beyond), through a series of intermediate, fully customizable approval steps.
@@ -8781,7 +8781,7 @@ export interface SiteUpdateSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "workflow".
  */
-export interface Workflow {
+export type Workflow = {
   id: WorkflowIdentity;
   type: WorkflowType;
   /**
@@ -8829,7 +8829,7 @@ export interface Workflow {
       initial?: boolean;
     }[],
   ];
-}
+};
 export type WorkflowCreateTargetSchema = Workflow;
 export type WorkflowUpdateTargetSchema = Workflow;
 export type WorkflowSelfTargetSchema = Workflow;
@@ -8839,7 +8839,7 @@ export type WorkflowSelfTargetSchema = Workflow;
  * This interface was referenced by `Workflow`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface WorkflowAttributes {
+export type WorkflowAttributes = {
   /**
    * The name of the workflow
    */
@@ -8885,13 +8885,13 @@ export interface WorkflowAttributes {
       initial?: boolean;
     }[],
   ];
-}
+};
 
 /**
  * This interface was referenced by `Workflow`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface WorkflowCreateSchema {
+export type WorkflowCreateSchema = {
   id?: WorkflowIdentity;
   type?: WorkflowType;
   /**
@@ -8939,13 +8939,13 @@ export interface WorkflowCreateSchema {
       initial?: boolean;
     }[],
   ];
-}
+};
 
 /**
  * This interface was referenced by `Workflow`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface WorkflowUpdateSchema {
+export type WorkflowUpdateSchema = {
   id?: WorkflowIdentity;
   type?: WorkflowType;
   /**
@@ -8993,4 +8993,4 @@ export interface WorkflowUpdateSchema {
       initial?: boolean;
     }[],
   ];
-}
+};

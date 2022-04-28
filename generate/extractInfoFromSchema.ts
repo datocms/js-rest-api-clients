@@ -339,6 +339,12 @@ function generateResourceInfo(
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function schemaToTs(schema: any) {
+  const result = await hyperschemaToTypings(schema, 'SiteApiSchema', {});
+  return result.replace(/export interface ([^ ]+) {/g, 'export type $1 = {');
+}
+
 export default async function extractInfoFromSchema(
   hyperschemaUrl: string,
   isCma: boolean,
@@ -348,7 +354,7 @@ export default async function extractInfoFromSchema(
   const simplifiedRawSchema = await downloadHyperschema(hyperschemaUrl);
   simplifySchema(simplifiedRawSchema);
 
-  const typings = await hyperschemaToTypings(rawSchema, 'SiteApiSchema', {});
+  const typings = await schemaToTs(rawSchema);
   const schema = await JsonRefParser.dereference(rawSchema);
 
   if (!schema.properties) {
@@ -363,11 +369,7 @@ export default async function extractInfoFromSchema(
         generateResourceInfo(isCma, resource, schema),
       )
       .filter((resourceInfo) => resourceInfo.endpoints.length > 0),
-    simpleTypings: await hyperschemaToTypings(
-      simplifiedRawSchema,
-      'SiteApiSchema',
-      {},
-    ),
-    typings,
+    simpleTypings: await schemaToTs(simplifiedRawSchema),
+    typings: typings,
   };
 }

@@ -352,7 +352,7 @@ export type OauthApplicationType = 'oauth_application';
  */
 export type OauthApplicationIdentity = string;
 
-export interface DatoApi {
+export type DatoApi = {
   session?: Session;
   account?: Account;
   site?: Site;
@@ -372,7 +372,7 @@ export interface DatoApi {
   job?: Job;
   oauth_application?: OauthApplication;
   [k: string]: unknown;
-}
+};
 
 /**
  * A session is required to access to read-and-write API endpoints
@@ -380,11 +380,11 @@ export interface DatoApi {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "session".
  */
-export interface Session {
+export type Session = {
   type: SessionType;
   id: SessionIdentity;
   relationships: SessionRelationships;
-}
+};
 
 /**
  * JSON API links
@@ -392,14 +392,14 @@ export interface Session {
  * This interface was referenced by `Session`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface SessionRelationships {
+export type SessionRelationships = {
   /**
    * The account associated with the session
    */
   account: {
     data: AccountData;
   };
-}
+};
 
 /**
  * JSON API data
@@ -407,10 +407,10 @@ export interface SessionRelationships {
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface AccountData {
+export type AccountData = {
   type: AccountType;
   id: AccountIdentity;
-}
+};
 
 /**
  * JSON API data
@@ -418,16 +418,16 @@ export interface AccountData {
  * This interface was referenced by `Session`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SessionData {
+export type SessionData = {
   type: SessionType;
   id: SessionIdentity;
-}
+};
 
 /**
  * This interface was referenced by `Session`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface SessionCreateSchema {
+export type SessionCreateSchema = {
   data:
     | {
         /**
@@ -479,16 +479,16 @@ export interface SessionCreateSchema {
           otp_code?: string;
         };
       };
-}
+};
 
 /**
  * This interface was referenced by `Session`'s JSON-Schema
  * via the `create.targetSchema` link.
  */
-export interface SessionCreateTargetSchema {
+export type SessionCreateTargetSchema = {
   data: Session;
   included: Account[];
-}
+};
 
 /**
  * DatoCMS account
@@ -496,12 +496,12 @@ export interface SessionCreateTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "account".
  */
-export interface Account {
+export type Account = {
   type: AccountType;
   id: AccountIdentity;
   attributes: AccountAttributes;
   relationships?: AccountRelationships;
-}
+};
 
 /**
  * JSON API attributes
@@ -509,7 +509,7 @@ export interface Account {
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface AccountAttributes {
+export type AccountAttributes = {
   /**
    * Email
    */
@@ -534,7 +534,7 @@ export interface AccountAttributes {
    * Whether 2-factor authentication is active for this account or not
    */
   is_2fa_active: boolean;
-}
+};
 
 /**
  * JSON API links
@@ -542,14 +542,14 @@ export interface AccountAttributes {
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface AccountRelationships {
+export type AccountRelationships = {
   active_subscription: {
     data: null | AccountSubscriptionData;
   };
   billing_profile: {
     data: null | PerAccountPricingBillingProfileData;
   };
-}
+};
 
 /**
  * JSON API data
@@ -557,10 +557,10 @@ export interface AccountRelationships {
  * This interface was referenced by `AccountSubscription`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface AccountSubscriptionData {
+export type AccountSubscriptionData = {
   type: AccountSubscriptionType;
   id: AccountSubscriptionIdentity;
-}
+};
 
 /**
  * JSON API data
@@ -568,16 +568,16 @@ export interface AccountSubscriptionData {
  * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface PerAccountPricingBillingProfileData {
+export type PerAccountPricingBillingProfileData = {
   type: PerAccountPricingBillingProfileType;
   id: PerAccountPricingBillingProfileIdentity;
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface AccountCreateSchema {
+export type AccountCreateSchema = {
   data: {
     type: AccountType;
     attributes: {
@@ -608,22 +608,22 @@ export interface AccountCreateSchema {
       };
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `create.targetSchema` link.
  */
-export interface AccountCreateTargetSchema {
+export type AccountCreateTargetSchema = {
   data: Session;
   included?: Account[];
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface AccountUpdateSchema {
+export type AccountUpdateSchema = {
   data: {
     type: AccountType;
     id: AccountIdentity;
@@ -658,22 +658,22 @@ export interface AccountUpdateSchema {
       otp_code?: string;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `update.targetSchema` link.
  */
-export interface AccountUpdateTargetSchema {
+export type AccountUpdateTargetSchema = {
   data: Session;
   included: Account[];
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `destroy.schema` link.
  */
-export interface AccountDestroySchema {
+export type AccountDestroySchema = {
   data: {
     /**
      * JSON API type field
@@ -690,24 +690,24 @@ export interface AccountDestroySchema {
       password: string;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `destroy.targetSchema` link.
  */
-export interface AccountDestroyTargetSchema {
+export type AccountDestroyTargetSchema = {
   data: Job;
-}
+};
 
 /**
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "job".
  */
-export interface Job {
+export type Job = {
   type: JobType;
   id: JobIdentity;
-}
+};
 
 /**
  * JSON API data
@@ -715,27 +715,27 @@ export interface Job {
  * This interface was referenced by `Job`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface JobData {
+export type JobData = {
   type: JobType;
   id: JobIdentity;
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `destroy.jobSchema` link.
  */
-export interface AccountDestroyJobSchema {
+export type AccountDestroyJobSchema = {
   data: Account;
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `self.targetSchema` link.
  */
-export interface AccountSelfTargetSchema {
+export type AccountSelfTargetSchema = {
   data: Account;
   included?: (AccountPlan | AccountSubscription)[];
-}
+};
 
 /**
  * Stores the information regarding the current plan for the account.
@@ -743,11 +743,11 @@ export interface AccountSelfTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "account_plan".
  */
-export interface AccountPlan {
+export type AccountPlan = {
   type: AccountPlanType;
   id: AccountPlanIdentity;
   attributes: AccountPlanAttributes;
-}
+};
 
 /**
  * JSON API attributes
@@ -755,7 +755,7 @@ export interface AccountPlan {
  * This interface was referenced by `AccountPlan`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface AccountPlanAttributes {
+export type AccountPlanAttributes = {
   /**
    * The name of the plan
    */
@@ -854,7 +854,7 @@ export interface AccountPlanAttributes {
         extra_packet_price: null | number;
       }
   )[];
-}
+};
 
 /**
  * JSON API data
@@ -862,18 +862,18 @@ export interface AccountPlanAttributes {
  * This interface was referenced by `AccountPlan`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface AccountPlanData {
+export type AccountPlanData = {
   type: AccountPlanType;
   id: AccountPlanIdentity;
-}
+};
 
 /**
  * This interface was referenced by `AccountPlan`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
-export interface AccountPlanInstancesTargetSchema {
+export type AccountPlanInstancesTargetSchema = {
   data: AccountPlan[];
-}
+};
 
 /**
  * A subscription record
@@ -881,13 +881,13 @@ export interface AccountPlanInstancesTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "account_subscription".
  */
-export interface AccountSubscription {
+export type AccountSubscription = {
   type: AccountSubscriptionType;
   id: AccountSubscriptionIdentity;
   attributes: AccountSubscriptionAttributes;
   meta: AccountSubscriptionMeta;
   relationships: AccountSubscriptionRelationships;
-}
+};
 
 /**
  * JSON API attributes
@@ -895,7 +895,7 @@ export interface AccountSubscription {
  * This interface was referenced by `AccountSubscription`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface AccountSubscriptionAttributes {
+export type AccountSubscriptionAttributes = {
   /**
    * Date of creation of subscription
    */
@@ -918,7 +918,7 @@ export interface AccountSubscriptionAttributes {
     quantity: number;
   }[];
   price: number;
-}
+};
 
 /**
  * JSON API meta
@@ -926,12 +926,12 @@ export interface AccountSubscriptionAttributes {
  * This interface was referenced by `AccountSubscription`'s JSON-Schema
  * via the `definition` "meta".
  */
-export interface AccountSubscriptionMeta {
+export type AccountSubscriptionMeta = {
   /**
    * Whether account can be billed if it has no credit-card information or not
    */
   billable_without_payment_method: boolean;
-}
+};
 
 /**
  * JSON API links
@@ -939,20 +939,20 @@ export interface AccountSubscriptionMeta {
  * This interface was referenced by `AccountSubscription`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface AccountSubscriptionRelationships {
+export type AccountSubscriptionRelationships = {
   /**
    * Subscription plan
    */
   plan: {
     data: AccountPlanData;
   };
-}
+};
 
 /**
  * This interface was referenced by `AccountSubscription`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface AccountSubscriptionCreateSchema {
+export type AccountSubscriptionCreateSchema = {
   data: {
     type: AccountSubscriptionType;
     attributes: {
@@ -985,21 +985,21 @@ export interface AccountSubscriptionCreateSchema {
       };
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `AccountSubscription`'s JSON-Schema
  * via the `create.targetSchema` link.
  */
-export interface AccountSubscriptionCreateTargetSchema {
+export type AccountSubscriptionCreateTargetSchema = {
   data: AccountSubscription;
-}
+};
 
 /**
  * This interface was referenced by `AccountSubscription`'s JSON-Schema
  * via the `simulate.schema` link.
  */
-export interface AccountSubscriptionSimulateSchema {
+export type AccountSubscriptionSimulateSchema = {
   data: {
     type: AccountSubscriptionType;
     attributes: {
@@ -1027,25 +1027,25 @@ export interface AccountSubscriptionSimulateSchema {
       };
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `AccountSubscription`'s JSON-Schema
  * via the `simulate.targetSchema` link.
  */
-export interface AccountSubscriptionSimulateTargetSchema {
+export type AccountSubscriptionSimulateTargetSchema = {
   data: {
     attributes: {
       amount_due: number;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `AccountSubscription`'s JSON-Schema
  * via the `validate.schema` link.
  */
-export interface AccountSubscriptionValidateSchema {
+export type AccountSubscriptionValidateSchema = {
   data: {
     type: AccountSubscriptionType;
     relationships: {
@@ -1057,16 +1057,16 @@ export interface AccountSubscriptionValidateSchema {
       };
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `AccountSubscription`'s JSON-Schema
  * via the `validate.targetSchema` link.
  */
-export interface AccountSubscriptionValidateTargetSchema {
+export type AccountSubscriptionValidateTargetSchema = {
   data: AccountSubscription;
   included: Site[];
-}
+};
 
 /**
  * A project represents a specific DatoCMS administrative area
@@ -1074,12 +1074,12 @@ export interface AccountSubscriptionValidateTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "site".
  */
-export interface Site {
+export type Site = {
   type: SiteType;
   id: SiteIdentity;
   attributes: SiteAttributes;
   relationships: SiteRelationships;
-}
+};
 
 /**
  * JSON API attributes
@@ -1087,7 +1087,7 @@ export interface Site {
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SiteAttributes {
+export type SiteAttributes = {
   /**
    * Site name
    */
@@ -1140,7 +1140,7 @@ export interface SiteAttributes {
    * Status of the project
    */
   status?: 'creating' | 'ready' | 'destroying';
-}
+};
 
 /**
  * JSON API links
@@ -1148,7 +1148,7 @@ export interface SiteAttributes {
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface SiteRelationships {
+export type SiteRelationships = {
   active_subscription: {
     data: null | SiteSubscriptionData;
   };
@@ -1158,7 +1158,7 @@ export interface SiteRelationships {
   transfer: {
     data: SiteTransferData | null;
   };
-}
+};
 
 /**
  * JSON API data
@@ -1166,10 +1166,10 @@ export interface SiteRelationships {
  * This interface was referenced by `SiteSubscription`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SiteSubscriptionData {
+export type SiteSubscriptionData = {
   type: SiteSubscriptionType;
   id: SiteSubscriptionIdentity;
-}
+};
 
 /**
  * JSON API data
@@ -1177,10 +1177,10 @@ export interface SiteSubscriptionData {
  * This interface was referenced by `SitePlan`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SitePlanData {
+export type SitePlanData = {
   type: SitePlanType;
   id: SitePlanIdentity;
-}
+};
 
 /**
  * JSON API data
@@ -1188,10 +1188,10 @@ export interface SitePlanData {
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SiteTransferData {
+export type SiteTransferData = {
   type: SiteTransferType;
   id: SiteTransferIdentity;
-}
+};
 
 /**
  * JSON API data
@@ -1199,35 +1199,35 @@ export interface SiteTransferData {
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SiteData {
+export type SiteData = {
   type: SiteType;
   id: SiteIdentity;
-}
+};
 
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `self.targetSchema` link.
  */
-export interface SiteSelfTargetSchema {
+export type SiteSelfTargetSchema = {
   data: Site;
-}
+};
 
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
-export interface SiteInstancesTargetSchema {
+export type SiteInstancesTargetSchema = {
   data: Site[];
   meta: {
     total_count: number;
   };
-}
+};
 
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface SiteCreateSchema {
+export type SiteCreateSchema = {
   data: {
     type: SiteType;
     attributes: {
@@ -1245,29 +1245,29 @@ export interface SiteCreateSchema {
       template?: string | null;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `create.targetSchema` link.
  */
-export interface SiteCreateTargetSchema {
+export type SiteCreateTargetSchema = {
   data: Site | Job;
-}
+};
 
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `create.jobSchema` link.
  */
-export interface SiteCreateJobSchema {
+export type SiteCreateJobSchema = {
   data: Site;
-}
+};
 
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `update.schema` link.
  */
-export interface SiteUpdateSchema {
+export type SiteUpdateSchema = {
   data: {
     id: SiteIdentity;
     type: SiteType;
@@ -1290,37 +1290,37 @@ export interface SiteUpdateSchema {
       is_public_template?: boolean;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `update.targetSchema` link.
  */
-export interface SiteUpdateTargetSchema {
+export type SiteUpdateTargetSchema = {
   data: Site;
-}
+};
 
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `destroy.targetSchema` link.
  */
-export interface SiteDestroyTargetSchema {
+export type SiteDestroyTargetSchema = {
   data: Site | Job;
-}
+};
 
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `destroy.jobSchema` link.
  */
-export interface SiteDestroyJobSchema {
+export type SiteDestroyJobSchema = {
   data: Site;
-}
+};
 
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `duplicate.schema` link.
  */
-export interface SiteDuplicateSchema {
+export type SiteDuplicateSchema = {
   data: {
     type: SiteType;
     attributes: {
@@ -1381,7 +1381,7 @@ export interface SiteDuplicateSchema {
       };
     };
   };
-}
+};
 
 /**
  * JSON API data
@@ -1389,32 +1389,32 @@ export interface SiteDuplicateSchema {
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface PerSitePricingBillingProfileData {
+export type PerSitePricingBillingProfileData = {
   type: PerSitePricingBillingProfileType;
   id: PerSitePricingBillingProfileIdentity;
-}
+};
 
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `duplicate.targetSchema` link.
  */
-export interface SiteDuplicateTargetSchema {
+export type SiteDuplicateTargetSchema = {
   data: Job;
-}
+};
 
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `duplicate.jobSchema` link.
  */
-export interface SiteDuplicateJobSchema {
+export type SiteDuplicateJobSchema = {
   data: Site;
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `reset_password.schema` link.
  */
-export interface AccountResetPasswordSchema {
+export type AccountResetPasswordSchema = {
   data: {
     type: AccountType;
     attributes: {
@@ -1424,13 +1424,13 @@ export interface AccountResetPasswordSchema {
       email: string;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `activate_2fa.schema` link.
  */
-export interface AccountActivate_2FaSchema {
+export type AccountActivate_2FaSchema = {
   data: {
     /**
      * JSON API type field
@@ -1447,13 +1447,13 @@ export interface AccountActivate_2FaSchema {
       password: string;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `activate_2fa.targetSchema` link.
  */
-export interface AccountActivate_2FaTargetSchema {
+export type AccountActivate_2FaTargetSchema = {
   data: Session;
   included?: (
     | Account
@@ -1461,13 +1461,13 @@ export interface AccountActivate_2FaTargetSchema {
         [k: string]: unknown;
       }
   )[];
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `reset_2fa.targetSchema` link.
  */
-export interface AccountReset_2FaTargetSchema {
+export type AccountReset_2FaTargetSchema = {
   data: {
     /**
      * ID of account
@@ -1484,13 +1484,13 @@ export interface AccountReset_2FaTargetSchema {
       provisioning_2fa_uri: string;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `deactivate_2fa.schema` link.
  */
-export interface AccountDeactivate_2FaSchema {
+export type AccountDeactivate_2FaSchema = {
   data: {
     /**
      * JSON API type field
@@ -1507,15 +1507,15 @@ export interface AccountDeactivate_2FaSchema {
       password: string;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `deactivate_2fa.targetSchema` link.
  */
-export interface AccountDeactivate_2FaTargetSchema {
+export type AccountDeactivate_2FaTargetSchema = {
   data: Account;
-}
+};
 
 /**
  * A per-project subscription record
@@ -1523,12 +1523,12 @@ export interface AccountDeactivate_2FaTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "site_subscription".
  */
-export interface SiteSubscription {
+export type SiteSubscription = {
   type: SiteSubscriptionType;
   id: SiteSubscriptionIdentity;
   attributes?: SiteSubscriptionAttributes;
   relationships: SiteSubscriptionRelationships;
-}
+};
 
 /**
  * JSON API attributes
@@ -1536,7 +1536,7 @@ export interface SiteSubscription {
  * This interface was referenced by `SiteSubscription`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SiteSubscriptionAttributes {
+export type SiteSubscriptionAttributes = {
   /**
    * Date of creation of subscription
    */
@@ -1561,7 +1561,7 @@ export interface SiteSubscriptionAttributes {
     items?: number;
     uploadable_bytes?: number;
   };
-}
+};
 
 /**
  * JSON API links
@@ -1569,7 +1569,7 @@ export interface SiteSubscriptionAttributes {
  * This interface was referenced by `SiteSubscription`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface SiteSubscriptionRelationships {
+export type SiteSubscriptionRelationships = {
   /**
    * Subscription plan
    */
@@ -1588,13 +1588,13 @@ export interface SiteSubscriptionRelationships {
   site?: {
     data: SiteData;
   };
-}
+};
 
 /**
  * This interface was referenced by `SiteSubscription`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface SiteSubscriptionCreateSchema {
+export type SiteSubscriptionCreateSchema = {
   data: {
     type: SiteSubscriptionType;
     attributes: {
@@ -1647,22 +1647,22 @@ export interface SiteSubscriptionCreateSchema {
       };
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `SiteSubscription`'s JSON-Schema
  * via the `create.targetSchema` link.
  */
-export interface SiteSubscriptionCreateTargetSchema {
+export type SiteSubscriptionCreateTargetSchema = {
   data: SiteSubscription;
   included: Site[];
-}
+};
 
 /**
  * This interface was referenced by `SiteSubscription`'s JSON-Schema
  * via the `simulate.schema` link.
  */
-export interface SiteSubscriptionSimulateSchema {
+export type SiteSubscriptionSimulateSchema = {
   data: {
     type: SiteSubscriptionType;
     attributes: {
@@ -1712,25 +1712,25 @@ export interface SiteSubscriptionSimulateSchema {
       };
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `SiteSubscription`'s JSON-Schema
  * via the `simulate.targetSchema` link.
  */
-export interface SiteSubscriptionSimulateTargetSchema {
+export type SiteSubscriptionSimulateTargetSchema = {
   data: {
     attributes: {
       amount_due: number;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `SiteSubscription`'s JSON-Schema
  * via the `validate.schema` link.
  */
-export interface SiteSubscriptionValidateSchema {
+export type SiteSubscriptionValidateSchema = {
   data: {
     type: SiteSubscriptionType;
     attributes: {
@@ -1767,16 +1767,16 @@ export interface SiteSubscriptionValidateSchema {
       };
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `SiteSubscription`'s JSON-Schema
  * via the `validate.targetSchema` link.
  */
-export interface SiteSubscriptionValidateTargetSchema {
+export type SiteSubscriptionValidateTargetSchema = {
   data: SiteSubscription;
   included: Site[];
-}
+};
 
 /**
  * Stores the information regarding the current plan for the project.
@@ -1784,11 +1784,11 @@ export interface SiteSubscriptionValidateTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "site_plan".
  */
-export interface SitePlan {
+export type SitePlan = {
   type: SitePlanType;
   id: SitePlanIdentity;
   attributes: SitePlanAttributes;
-}
+};
 
 /**
  * JSON API attributes
@@ -1796,7 +1796,7 @@ export interface SitePlan {
  * This interface was referenced by `SitePlan`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SitePlanAttributes {
+export type SitePlanAttributes = {
   /**
    * The name of the plan
    */
@@ -1995,15 +1995,15 @@ export interface SitePlanAttributes {
       price: number;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `SitePlan`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
-export interface SitePlanInstancesTargetSchema {
+export type SitePlanInstancesTargetSchema = {
   data: SitePlan[];
-}
+};
 
 /**
  * A billing profile
@@ -2011,12 +2011,12 @@ export interface SitePlanInstancesTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "per_site_pricing_billing_profile".
  */
-export interface PerSitePricingBillingProfile {
+export type PerSitePricingBillingProfile = {
   type: PerSitePricingBillingProfileType;
   id: PerSitePricingBillingProfileIdentity;
   attributes: PerSitePricingBillingProfileAttributes;
   relationships: PerSitePricingBillingProfileRelationships;
-}
+};
 
 /**
  * JSON API attributes
@@ -2024,7 +2024,7 @@ export interface PerSitePricingBillingProfile {
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface PerSitePricingBillingProfileAttributes {
+export type PerSitePricingBillingProfileAttributes = {
   first_name: string;
   last_name: string;
   company: null | string;
@@ -2047,7 +2047,7 @@ export interface PerSitePricingBillingProfileAttributes {
   is_active: boolean;
   next_monthly_billing_at: null | string;
   next_yearly_billing_at: null | string;
-}
+};
 
 /**
  * JSON API links
@@ -2055,36 +2055,36 @@ export interface PerSitePricingBillingProfileAttributes {
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface PerSitePricingBillingProfileRelationships {
+export type PerSitePricingBillingProfileRelationships = {
   /**
    * Role
    */
   active_subscriptions: {
     data: SiteSubscriptionData[];
   };
-}
+};
 
 /**
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
-export interface PerSitePricingBillingProfileInstancesTargetSchema {
+export type PerSitePricingBillingProfileInstancesTargetSchema = {
   data: PerSitePricingBillingProfile[];
-}
+};
 
 /**
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `self.targetSchema` link.
  */
-export interface PerSitePricingBillingProfileSelfTargetSchema {
+export type PerSitePricingBillingProfileSelfTargetSchema = {
   data: PerSitePricingBillingProfile;
-}
+};
 
 /**
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `update_credit_card.schema` link.
  */
-export interface PerSitePricingBillingProfileUpdateCreditCardSchema {
+export type PerSitePricingBillingProfileUpdateCreditCardSchema = {
   data: {
     /**
      * JSON API type field
@@ -2094,21 +2094,21 @@ export interface PerSitePricingBillingProfileUpdateCreditCardSchema {
       payment_intent_id: string;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `update_credit_card.targetSchema` link.
  */
-export interface PerSitePricingBillingProfileUpdateCreditCardTargetSchema {
+export type PerSitePricingBillingProfileUpdateCreditCardTargetSchema = {
   data: PerSitePricingBillingProfile;
-}
+};
 
 /**
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `update_info.schema` link.
  */
-export interface PerSitePricingBillingProfileUpdateInfoSchema {
+export type PerSitePricingBillingProfileUpdateInfoSchema = {
   data: {
     id?: PerSitePricingBillingProfileIdentity;
     type: PerSitePricingBillingProfileType;
@@ -2126,15 +2126,15 @@ export interface PerSitePricingBillingProfileUpdateInfoSchema {
       cf_cod_fiscale?: null | string;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `update_info.targetSchema` link.
  */
-export interface PerSitePricingBillingProfileUpdateInfoTargetSchema {
+export type PerSitePricingBillingProfileUpdateInfoTargetSchema = {
   data: PerSitePricingBillingProfile;
-}
+};
 
 /**
  * A billing profile
@@ -2142,11 +2142,11 @@ export interface PerSitePricingBillingProfileUpdateInfoTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "per_account_pricing_billing_profile".
  */
-export interface PerAccountPricingBillingProfile {
+export type PerAccountPricingBillingProfile = {
   type: PerAccountPricingBillingProfileType;
   id: PerAccountPricingBillingProfileIdentity;
   attributes: PerAccountPricingBillingProfileAttributes;
-}
+};
 
 /**
  * JSON API attributes
@@ -2154,7 +2154,7 @@ export interface PerAccountPricingBillingProfile {
  * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface PerAccountPricingBillingProfileAttributes {
+export type PerAccountPricingBillingProfileAttributes = {
   first_name: string;
   last_name: string;
   company: null | string;
@@ -2177,21 +2177,21 @@ export interface PerAccountPricingBillingProfileAttributes {
   po_number: null | string;
   unbilled_charges: number;
   discount_percentage: number;
-}
+};
 
 /**
  * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
  * via the `self.targetSchema` link.
  */
-export interface PerAccountPricingBillingProfileSelfTargetSchema {
+export type PerAccountPricingBillingProfileSelfTargetSchema = {
   data: PerAccountPricingBillingProfile;
-}
+};
 
 /**
  * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
  * via the `update_credit_card.schema` link.
  */
-export interface PerAccountPricingBillingProfileUpdateCreditCardSchema {
+export type PerAccountPricingBillingProfileUpdateCreditCardSchema = {
   data: {
     /**
      * JSON API type field
@@ -2201,21 +2201,21 @@ export interface PerAccountPricingBillingProfileUpdateCreditCardSchema {
       payment_intent_id: string;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
  * via the `update_credit_card.targetSchema` link.
  */
-export interface PerAccountPricingBillingProfileUpdateCreditCardTargetSchema {
+export type PerAccountPricingBillingProfileUpdateCreditCardTargetSchema = {
   data: PerAccountPricingBillingProfile;
-}
+};
 
 /**
  * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
  * via the `update_info.schema` link.
  */
-export interface PerAccountPricingBillingProfileUpdateInfoSchema {
+export type PerAccountPricingBillingProfileUpdateInfoSchema = {
   data: {
     id?: PerAccountPricingBillingProfileIdentity;
     type: PerAccountPricingBillingProfileType;
@@ -2234,15 +2234,15 @@ export interface PerAccountPricingBillingProfileUpdateInfoSchema {
       po_number?: null | string;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
  * via the `update_info.targetSchema` link.
  */
-export interface PerAccountPricingBillingProfileUpdateInfoTargetSchema {
+export type PerAccountPricingBillingProfileUpdateInfoTargetSchema = {
   data: PerAccountPricingBillingProfile;
-}
+};
 
 /**
  * An invoice
@@ -2250,12 +2250,12 @@ export interface PerAccountPricingBillingProfileUpdateInfoTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "invoice".
  */
-export interface Invoice {
+export type Invoice = {
   type: InvoiceType;
   id: InvoiceIdentity;
   attributes: InvoiceAttributes;
   relationships: InvoiceRelationships;
-}
+};
 
 /**
  * JSON API attributes
@@ -2263,7 +2263,7 @@ export interface Invoice {
  * This interface was referenced by `Invoice`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface InvoiceAttributes {
+export type InvoiceAttributes = {
   date: string;
   total: number;
   status: string;
@@ -2272,7 +2272,7 @@ export interface InvoiceAttributes {
     message?: string;
     [k: string]: unknown;
   };
-}
+};
 
 /**
  * JSON API links
@@ -2280,7 +2280,7 @@ export interface InvoiceAttributes {
  * This interface was referenced by `Invoice`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface InvoiceRelationships {
+export type InvoiceRelationships = {
   /**
    * Role
    */
@@ -2289,7 +2289,7 @@ export interface InvoiceRelationships {
       | PerSitePricingBillingProfileData
       | PerAccountPricingBillingProfileData;
   };
-}
+};
 
 /**
  * JSON API data
@@ -2297,32 +2297,32 @@ export interface InvoiceRelationships {
  * This interface was referenced by `Invoice`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface InvoiceData {
+export type InvoiceData = {
   type: InvoiceType;
   id: InvoiceIdentity;
-}
+};
 
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
  * via the `per_account_pricing_billing_profile_instances.targetSchema` link.
  */
-export interface InvoicePerAccountPricingBillingProfileInstancesTargetSchema {
+export type InvoicePerAccountPricingBillingProfileInstancesTargetSchema = {
   data: Invoice[];
-}
+};
 
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
  * via the `per_site_pricing_billing_profile_instances.targetSchema` link.
  */
-export interface InvoicePerSitePricingBillingProfileInstancesTargetSchema {
+export type InvoicePerSitePricingBillingProfileInstancesTargetSchema = {
   data: Invoice[];
-}
+};
 
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
  * via the `per_account_pricing_billing_profile_collect_unpaid.schema` link.
  */
-export interface InvoicePerAccountPricingBillingProfileCollectUnpaidSchema {
+export type InvoicePerAccountPricingBillingProfileCollectUnpaidSchema = {
   data: {
     /**
      * JSON API type field
@@ -2333,21 +2333,21 @@ export interface InvoicePerAccountPricingBillingProfileCollectUnpaidSchema {
     };
   };
   [k: string]: unknown;
-}
+};
 
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
  * via the `per_account_pricing_billing_profile_collect_unpaid.targetSchema` link.
  */
-export interface InvoicePerAccountPricingBillingProfileCollectUnpaidTargetSchema {
+export type InvoicePerAccountPricingBillingProfileCollectUnpaidTargetSchema = {
   data: Invoice[];
-}
+};
 
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
  * via the `per_site_pricing_billing_profile_collect_unpaid.schema` link.
  */
-export interface InvoicePerSitePricingBillingProfileCollectUnpaidSchema {
+export type InvoicePerSitePricingBillingProfileCollectUnpaidSchema = {
   data: {
     /**
      * JSON API type field
@@ -2358,15 +2358,15 @@ export interface InvoicePerSitePricingBillingProfileCollectUnpaidSchema {
     };
   };
   [k: string]: unknown;
-}
+};
 
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
  * via the `per_site_pricing_billing_profile_collect_unpaid.targetSchema` link.
  */
-export interface InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema {
+export type InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema = {
   data: Invoice[];
-}
+};
 
 /**
  * A resource usage
@@ -2374,11 +2374,11 @@ export interface InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "resource_usage".
  */
-export interface ResourceUsage {
+export type ResourceUsage = {
   type: ResourceUsageType;
   id: ResourceUsageIdentity;
   attributes: ResourceUsageAttributes;
-}
+};
 
 /**
  * JSON API attributes
@@ -2386,7 +2386,7 @@ export interface ResourceUsage {
  * This interface was referenced by `ResourceUsage`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface ResourceUsageAttributes {
+export type ResourceUsageAttributes = {
   quota: string;
   current_usage: null | number;
   free_of_charge_usage: number;
@@ -2398,7 +2398,7 @@ export interface ResourceUsageAttributes {
         site_name: string;
         current_usage: number;
       }[];
-}
+};
 
 /**
  * JSON API data
@@ -2406,18 +2406,18 @@ export interface ResourceUsageAttributes {
  * This interface was referenced by `ResourceUsage`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface ResourceUsageData {
+export type ResourceUsageData = {
   type: ResourceUsageType;
   id: ResourceUsageIdentity;
-}
+};
 
 /**
  * This interface was referenced by `ResourceUsage`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
-export interface ResourceUsageInstancesTargetSchema {
+export type ResourceUsageInstancesTargetSchema = {
   data: ResourceUsage[];
-}
+};
 
 /**
  * Some API endpoint give results asynchronously, returning the ID of a job.
@@ -2425,11 +2425,11 @@ export interface ResourceUsageInstancesTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "job_result".
  */
-export interface JobResult {
+export type JobResult = {
   type: JobResultType;
   id: JobResultIdentity;
   attributes: JobResultAttributes;
-}
+};
 
 /**
  * JSON API attributes
@@ -2437,7 +2437,7 @@ export interface JobResult {
  * This interface was referenced by `JobResult`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface JobResultAttributes {
+export type JobResultAttributes = {
   /**
    * Status of delayed HTTP response
    */
@@ -2448,7 +2448,7 @@ export interface JobResultAttributes {
   payload: null | {
     [k: string]: unknown;
   };
-}
+};
 
 /**
  * JSON API data
@@ -2456,18 +2456,18 @@ export interface JobResultAttributes {
  * This interface was referenced by `JobResult`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface JobResultData {
+export type JobResultData = {
   type: JobResultType;
   id: JobResultIdentity;
-}
+};
 
 /**
  * This interface was referenced by `JobResult`'s JSON-Schema
  * via the `self.targetSchema` link.
  */
-export interface JobResultSelfTargetSchema {
+export type JobResultSelfTargetSchema = {
   data: JobResult;
-}
+};
 
 /**
  * A request to transfer a site to another account
@@ -2475,12 +2475,12 @@ export interface JobResultSelfTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "site_transfer".
  */
-export interface SiteTransfer {
+export type SiteTransfer = {
   type: SiteTransferType;
   id: SiteTransferIdentity;
   attributes: SiteTransferAttributes;
   relationships: SiteTransferRelationships;
-}
+};
 
 /**
  * JSON API attributes
@@ -2488,7 +2488,7 @@ export interface SiteTransfer {
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SiteTransferAttributes {
+export type SiteTransferAttributes = {
   /**
    * Email of the source account
    */
@@ -2514,7 +2514,7 @@ export interface SiteTransferAttributes {
     items?: number;
     uploadable_bytes?: number;
   } | null;
-}
+};
 
 /**
  * JSON API links
@@ -2522,37 +2522,37 @@ export interface SiteTransferAttributes {
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export interface SiteTransferRelationships {
+export type SiteTransferRelationships = {
   /**
    * Current plan
    */
   plan: {
     data: SitePlanData | null;
   };
-}
+};
 
 /**
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
-export interface SiteTransferInstancesTargetSchema {
+export type SiteTransferInstancesTargetSchema = {
   data: SiteTransfer[];
-}
+};
 
 /**
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `self.targetSchema` link.
  */
-export interface SiteTransferSelfTargetSchema {
+export type SiteTransferSelfTargetSchema = {
   data: SiteTransfer;
   included?: SitePlan[];
-}
+};
 
 /**
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `create.schema` link.
  */
-export interface SiteTransferCreateSchema {
+export type SiteTransferCreateSchema = {
   data: {
     type: SiteTransferType;
     attributes: {
@@ -2562,30 +2562,30 @@ export interface SiteTransferCreateSchema {
       account_email?: string;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `create.targetSchema` link.
  */
-export interface SiteTransferCreateTargetSchema {
+export type SiteTransferCreateTargetSchema = {
   data: Site;
   included?: SiteTransfer[];
-}
+};
 
 /**
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `destroy.targetSchema` link.
  */
-export interface SiteTransferDestroyTargetSchema {
+export type SiteTransferDestroyTargetSchema = {
   data: Site;
-}
+};
 
 /**
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `simulate_accept.schema` link.
  */
-export interface SiteTransferSimulateAcceptSchema {
+export type SiteTransferSimulateAcceptSchema = {
   data: {
     id: SiteTransferIdentity;
     type: SiteTransferType;
@@ -2612,13 +2612,13 @@ export interface SiteTransferSimulateAcceptSchema {
       };
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `simulate_accept.targetSchema` link.
  */
-export interface SiteTransferSimulateAcceptTargetSchema {
+export type SiteTransferSimulateAcceptTargetSchema = {
   data: {
     id: string;
     /**
@@ -2632,13 +2632,13 @@ export interface SiteTransferSimulateAcceptTargetSchema {
       tax_label: null | string;
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `accept.schema` link.
  */
-export interface SiteTransferAcceptSchema {
+export type SiteTransferAcceptSchema = {
   data: {
     id: SiteTransferIdentity;
     type: SiteTransferType;
@@ -2670,15 +2670,15 @@ export interface SiteTransferAcceptSchema {
       };
     };
   };
-}
+};
 
 /**
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `accept.targetSchema` link.
  */
-export interface SiteTransferAcceptTargetSchema {
+export type SiteTransferAcceptTargetSchema = {
   data: Site;
-}
+};
 
 /**
  * Site invitation
@@ -2686,28 +2686,28 @@ export interface SiteTransferAcceptTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "site_invitation".
  */
-export interface SiteInvitation {
+export type SiteInvitation = {
   id: SiteInvitationIdentity;
   type?: SiteInvitationType;
-}
+};
 
 /**
  * This interface was referenced by `SiteInvitation`'s JSON-Schema
  * via the `redeem.targetSchema` link.
  */
-export interface SiteInvitationRedeemTargetSchema {
+export type SiteInvitationRedeemTargetSchema = {
   data: Site;
-}
+};
 
 /**
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "subscription_limit".
  */
-export interface SubscriptionLimit {
+export type SubscriptionLimit = {
   type: SubscriptionLimitType;
   id: SubscriptionLimitIdentity;
   attributes: SubscriptionLimitAttributes;
-}
+};
 
 /**
  * JSON API attributes
@@ -2715,7 +2715,7 @@ export interface SubscriptionLimit {
  * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SubscriptionLimitAttributes {
+export type SubscriptionLimitAttributes = {
   /**
    * The codename for the limit
    */
@@ -2728,7 +2728,7 @@ export interface SubscriptionLimitAttributes {
    * The actual limit
    */
   limit: number | null;
-}
+};
 
 /**
  * JSON API data
@@ -2736,28 +2736,28 @@ export interface SubscriptionLimitAttributes {
  * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SubscriptionLimitData {
+export type SubscriptionLimitData = {
   type: SubscriptionLimitType;
   id: SubscriptionLimitIdentity;
-}
+};
 
 /**
  * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
-export interface SubscriptionLimitInstancesTargetSchema {
+export type SubscriptionLimitInstancesTargetSchema = {
   data: SubscriptionLimit[];
-}
+};
 
 /**
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "subscription_feature".
  */
-export interface SubscriptionFeature {
+export type SubscriptionFeature = {
   type: SubscriptionFeatureType;
   id: SubscriptionFeatureIdentity;
   attributes: SubscriptionFeatureAttributes;
-}
+};
 
 /**
  * JSON API attributes
@@ -2765,7 +2765,7 @@ export interface SubscriptionFeature {
  * This interface was referenced by `SubscriptionFeature`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface SubscriptionFeatureAttributes {
+export type SubscriptionFeatureAttributes = {
   /**
    * The codename for the feature
    */
@@ -2778,7 +2778,7 @@ export interface SubscriptionFeatureAttributes {
    * Whether the feature is available on the current project
    */
   enabled: boolean;
-}
+};
 
 /**
  * JSON API data
@@ -2786,18 +2786,18 @@ export interface SubscriptionFeatureAttributes {
  * This interface was referenced by `SubscriptionFeature`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface SubscriptionFeatureData {
+export type SubscriptionFeatureData = {
   type: SubscriptionFeatureType;
   id: SubscriptionFeatureIdentity;
-}
+};
 
 /**
  * This interface was referenced by `SubscriptionFeature`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
-export interface SubscriptionFeatureInstancesTargetSchema {
+export type SubscriptionFeatureInstancesTargetSchema = {
   data: SubscriptionFeature[];
-}
+};
 
 /**
  * An OAuth application that allows access to our API from third party services.
@@ -2805,11 +2805,11 @@ export interface SubscriptionFeatureInstancesTargetSchema {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "oauth_application".
  */
-export interface OauthApplication {
+export type OauthApplication = {
   type: OauthApplicationType;
   id: OauthApplicationIdentity;
   attributes: OauthApplicationAttributes;
-}
+};
 
 /**
  * JSON API attributes
@@ -2817,7 +2817,7 @@ export interface OauthApplication {
  * This interface was referenced by `OauthApplication`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export interface OauthApplicationAttributes {
+export type OauthApplicationAttributes = {
   /**
    * Name of application
    */
@@ -2826,7 +2826,7 @@ export interface OauthApplicationAttributes {
    * Date of token creation
    */
   created_at: string;
-}
+};
 
 /**
  * JSON API data
@@ -2834,7 +2834,7 @@ export interface OauthApplicationAttributes {
  * This interface was referenced by `OauthApplication`'s JSON-Schema
  * via the `definition` "data".
  */
-export interface OauthApplicationData {
+export type OauthApplicationData = {
   type: OauthApplicationType;
   id: OauthApplicationIdentity;
-}
+};
