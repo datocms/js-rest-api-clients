@@ -8,6 +8,8 @@ export type ErrorEntity = {
 };
 type ErrorBody = { data: ErrorEntity[] };
 
+type FilterFn = (details: Record<string, unknown>) => boolean;
+
 function isErrorBody(body: unknown): body is ErrorBody {
   if (typeof body !== 'object' || body === null || !('data' in body)) {
     return false;
@@ -138,13 +140,25 @@ export class ApiError extends Error {
     return this.response.body.data;
   }
 
-  findErrorWithCode(codeOrCodes) {
+  findError(
+    codeOrCodes: string | string[],
+    filterDetails?: Record<string, string> | FilterFn,
+  ) {
     const codes = Array.isArray(codeOrCodes) ? codeOrCodes : [codeOrCodes];
-    return this.errors.find((error) => codes.includes(error.attributes.code));
+    return this.errors.find(
+      (error) =>
+        codes.includes(error.attributes.code) &&
+        (!filterDetails ||
+          (typeof filterDetails === 'function'
+            ? filterDetails(error.attributes.details)
+            : Object.entries(filterDetails).every(
+                ([key, value]) => error.attributes.details[key] === value,
+              ))),
+    );
   }
 
   get humanMessage() {
-    const planUpgradeError = this.findErrorWithCode('PLAN_UPGRADE_REQUIRED');
+    const planUpgradeError = this.findError('PLAN_UPGRADE_REQUIRED');
 
     if (planUpgradeError) {
       const { limit } = planUpgradeError.attributes.details as Record<
@@ -155,7 +169,7 @@ export class ApiError extends Error {
     }
 
     const errors = Object.keys(humanMessageForCode)
-      .filter((code) => this.findErrorWithCode(code))
+      .filter((code) => this.findError(code))
       .map((code) => humanMessageForCode[code]);
 
     if (errors.length === 0) {

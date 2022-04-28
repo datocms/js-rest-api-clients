@@ -12,9 +12,7 @@ describe('@datocms/client', () => {
         return;
       }
 
-      const unauthorizedError = e.findErrorWithCode(
-        'INVALID_AUTHORIZATION_HEADER',
-      );
+      const unauthorizedError = e.findError('INVALID_AUTHORIZATION_HEADER');
 
       expect(unauthorizedError).toBeTruthy();
     }

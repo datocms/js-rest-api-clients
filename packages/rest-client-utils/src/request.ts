@@ -245,10 +245,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       ),
     );
 
-    if (
-      autoRetry &&
-      error.findErrorWithCode('BATCH_DATA_VALIDATION_IN_PROGRESS')
-    ) {
+    if (autoRetry && error.findError('BATCH_DATA_VALIDATION_IN_PROGRESS')) {
       if (logLevel >= LogLevel.BASIC) {
         console.log(
           `[${requestId}] Data validation in progress, waiting ${retryCount} seconds...`,
