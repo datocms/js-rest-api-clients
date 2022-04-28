@@ -3,7 +3,7 @@ export type ErrorEntity = {
   type: 'api_error';
   attributes: {
     code: string;
-    details: unknown;
+    details: Record<string, unknown>;
   };
 };
 type ErrorBody = { data: ErrorEntity[] };
