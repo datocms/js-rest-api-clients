@@ -193,6 +193,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
           'x-environment',
           'x-queue-time',
           'x-ratelimit-remaining',
+          'x-request-id',
         ].forEach((key) => {
           const value = response.headers.get(key);
           if (value) {
