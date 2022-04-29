@@ -27,6 +27,7 @@ type RequestOptions = {
   queryParams?: Record<string, unknown>;
   body?: unknown;
   preCallStack?: string;
+  logFn?: (message: string) => void;
   userAgent?: string;
 };
 
@@ -113,6 +114,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
   const retryCount = options.retryCount || 1;
   const logLevel = options.logLevel || LogLevel.NONE;
   const autoRetry = 'autoRetry' in options ? options.autoRetry : true;
+  const log = options.logFn || (() => true);
 
   const headers = {
     'content-type': 'application/json',
@@ -133,14 +135,14 @@ export async function request<T>(options: RequestOptions): Promise<T> {
   const url = `${baseUrl}${options.url}${queryString}`;
 
   if (logLevel >= LogLevel.BASIC) {
-    console.log(`[${requestId}] ${options.method} ${url}`);
+    log(`[${requestId}] ${options.method} ${url}`);
     if (logLevel >= LogLevel.BODY_AND_HEADERS) {
       for (const [key, value] of Object.entries(headers || {})) {
-        console.log(`[${requestId}] ${key}: ${value}`);
+        log(`[${requestId}] ${key}: ${value}`);
       }
     }
     if (logLevel >= LogLevel.BODY && body) {
-      console.log(`[${requestId}] ${body}`);
+      log(`[${requestId}] ${body}`);
     }
   }
 
@@ -172,7 +174,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
         : retryCount;
 
       if (logLevel >= LogLevel.BASIC) {
-        console.log(
+        log(
           `[${requestId}] Rate limit exceeded, waiting ${waitTimeInSecs} seconds...`,
         );
       }
@@ -183,9 +185,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
     }
 
     if (logLevel >= LogLevel.BASIC) {
-      console.log(
-        `[${requestId}] Status: ${response.status} (${response.statusText})`,
-      );
+      log(`[${requestId}] Status: ${response.status} (${response.statusText})`);
       if (logLevel >= LogLevel.BODY_AND_HEADERS) {
         [
           'content-type',
@@ -197,7 +197,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
         ].forEach((key) => {
           const value = response.headers.get(key);
           if (value) {
-            console.log(`[${requestId}] ${key}: ${value}`);
+            log(`[${requestId}] ${key}: ${value}`);
           }
         });
       }
@@ -207,7 +207,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       response.status === 204 ? undefined : await response.json();
 
     if (logLevel >= LogLevel.BODY && responseBody) {
-      console.log(`[${requestId}] ${JSON.stringify(responseBody, null, 2)}`);
+      log(`[${requestId}] ${JSON.stringify(responseBody, null, 2)}`);
     }
 
     if (response.status === 202) {
@@ -248,7 +248,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
 
     if (autoRetry && error.findError('BATCH_DATA_VALIDATION_IN_PROGRESS')) {
       if (logLevel >= LogLevel.BASIC) {
-        console.log(
+        log(
           `[${requestId}] Data validation in progress, waiting ${retryCount} seconds...`,
         );
       }
@@ -262,7 +262,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
   } catch (error) {
     if (isErrorWithCode(error) && error.code.includes('ETIMEDOUT')) {
       if (logLevel >= LogLevel.BASIC) {
-        console.log(
+        log(
           `[${requestId}] Error ${error.code}, waiting ${retryCount} seconds...`,
         );
       }

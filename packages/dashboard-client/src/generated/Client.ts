@@ -15,6 +15,7 @@ export type ClientConfigOptions = {
   baseUrl?: string;
   extraHeaders?: Record<string, string>;
   logLevel?: LogLevel;
+  logFn?: (message: string) => void;
   autoRetry?: boolean;
 };
 
@@ -73,6 +74,7 @@ export class Client {
     return request<T>({
       ...this.config,
       ...options,
+      logFn: this.config.logFn || console.log,
       userAgent: `@datocms/dashboard-client`,
       baseUrl: this.baseUrl,
       preCallStack: new Error().stack,
