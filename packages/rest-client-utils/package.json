@@ -1,6 +1,6 @@
 {
   "name": "@datocms/rest-client-utils",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Utilities for DatoCMS REST API clients",
   "keywords": [
     "datocms",
