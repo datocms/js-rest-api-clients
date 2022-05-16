@@ -20,6 +20,13 @@ describe('upload', () => {
     });
 
     expect(upload.path.endsWith('dato.png')).toBeTruthy();
+
+    const secondUpload = await client.uploads.createFromUrl({
+      url: 'https://www.datocms-assets.com/205/1525789775-dato.png?w=16',
+      skipCreationIfAlreadyExists: true,
+    });
+
+    expect(secondUpload.id).toEqual(upload.id);
   });
 
   it.concurrent('references', async () => {
