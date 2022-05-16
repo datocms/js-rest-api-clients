@@ -2399,12 +2399,44 @@ export default {
         {
           returnsCollection: false,
           docUrl:
+            'https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort',
+          name: 'abort',
+          rawName: 'rawAbort',
+          urlTemplate: '/build-triggers/${buildTriggerId}/abort',
+          method: 'DELETE',
+          comment: 'Abort a deploy and mark it as failed',
+          urlPlaceholder: {
+            variableName: 'buildTriggerId',
+            isEntityId: true,
+            relType: 'BuildTriggerData',
+          },
+          simpleMethodAvailable: true,
+        },
+        {
+          returnsCollection: false,
+          docUrl:
+            'https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort_indexing',
+          name: 'abortIndexing',
+          rawName: 'rawAbortIndexing',
+          urlTemplate: '/build-triggers/${buildTriggerId}/abort_indexing',
+          method: 'DELETE',
+          comment: 'Abort a site search spidering and mark it as failed',
+          urlPlaceholder: {
+            variableName: 'buildTriggerId',
+            isEntityId: true,
+            relType: 'BuildTriggerData',
+          },
+          simpleMethodAvailable: true,
+        },
+        {
+          returnsCollection: false,
+          docUrl:
             'https://www.datocms.com/docs/content-management-api/resources/build-trigger/reindex',
           name: 'reindex',
           rawName: 'rawReindex',
           urlTemplate: '/build-triggers/${buildTriggerId}/reindex',
           method: 'PUT',
-          comment: 'Trigger a new Site Search spidering of the website',
+          comment: 'Trigger a new site search spidering of the website',
           urlPlaceholder: {
             variableName: 'buildTriggerId',
             isEntityId: true,

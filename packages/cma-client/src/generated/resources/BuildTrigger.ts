@@ -169,7 +169,49 @@ export default class BuildTrigger extends BaseResource {
   }
 
   /**
-   * Trigger a new Site Search spidering of the website
+   * Abort a deploy and mark it as failed
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort
+   */
+  abort(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
+    return this.rawAbort(Utils.toId(buildTriggerId));
+  }
+
+  /**
+   * Abort a deploy and mark it as failed
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort
+   */
+  rawAbort(buildTriggerId: string): Promise<void> {
+    return this.client.request<void>({
+      method: 'DELETE',
+      url: `/build-triggers/${buildTriggerId}/abort`,
+    });
+  }
+
+  /**
+   * Abort a site search spidering and mark it as failed
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort_indexing
+   */
+  abortIndexing(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
+    return this.rawAbortIndexing(Utils.toId(buildTriggerId));
+  }
+
+  /**
+   * Abort a site search spidering and mark it as failed
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort_indexing
+   */
+  rawAbortIndexing(buildTriggerId: string): Promise<void> {
+    return this.client.request<void>({
+      method: 'DELETE',
+      url: `/build-triggers/${buildTriggerId}/abort_indexing`,
+    });
+  }
+
+  /**
+   * Trigger a new site search spidering of the website
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/reindex
    */
@@ -178,7 +220,7 @@ export default class BuildTrigger extends BaseResource {
   }
 
   /**
-   * Trigger a new Site Search spidering of the website
+   * Trigger a new site search spidering of the website
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/reindex
    */
