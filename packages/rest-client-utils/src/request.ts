@@ -153,7 +153,12 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       body,
     });
 
-    if (response.status === 429) {
+    const responseContentType = response.headers.get('Content-Type');
+
+    if (
+      response.status === 429 ||
+      (responseContentType && !responseContentType.includes('application/json'))
+    ) {
       if (!autoRetry) {
         throw new ApiError(
           buildApiErrorInitObject(
@@ -174,9 +179,15 @@ export async function request<T>(options: RequestOptions): Promise<T> {
         : retryCount;
 
       if (logLevel >= LogLevel.BASIC) {
-        log(
-          `[${requestId}] Rate limit exceeded, waiting ${waitTimeInSecs} seconds...`,
-        );
+        if (response.status === 429) {
+          log(
+            `[${requestId}] Rate limit exceeded, waiting ${waitTimeInSecs} seconds...`,
+          );
+        } else {
+          log(
+            `[${requestId}] Invalid response content type, waiting ${waitTimeInSecs} seconds...`,
+          );
+        }
       }
 
       await wait(waitTimeInSecs * 1000);
