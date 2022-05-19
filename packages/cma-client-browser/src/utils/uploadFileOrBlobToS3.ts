@@ -1,6 +1,6 @@
 import { makeCancelablePromise } from '@datocms/rest-client-utils';
 import { CancelablePromise } from '@datocms/rest-client-utils/src';
-import { OnProgressInfo } from '../uploadFileOrBlobAndReturnPath';
+import { OnProgressInfo } from './uploadFileOrBlobAndReturnPath';
 
 type Options = {
   onProgress?: (info: OnProgressInfo) => void;

@@ -3162,6 +3162,18 @@ export default {
           },
           responseType: 'SiteUpdateJobSchema',
         },
+        {
+          returnsCollection: false,
+          docUrl:
+            'https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_timezone_management',
+          name: 'activateImprovedTimezoneManagement',
+          rawName: 'rawActivateImprovedTimezoneManagement',
+          urlTemplate: '/site/activate-improved-timezone-management',
+          method: 'PUT',
+          comment: 'Activate improved timezone management',
+          simpleMethodAvailable: true,
+          responseType: 'SiteActivateImprovedTimezoneManagementJobSchema',
+        },
       ],
       namespace: 'site',
       resourceClassName: 'Site',

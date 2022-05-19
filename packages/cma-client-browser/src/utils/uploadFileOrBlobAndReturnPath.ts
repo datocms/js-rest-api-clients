@@ -4,7 +4,7 @@ import {
   CanceledPromiseError,
   makeCancelablePromise,
 } from '@datocms/rest-client-utils';
-import { uploadFileOrBlobToS3 } from './utils/uploadFileOrBlobToS3';
+import { uploadFileOrBlobToS3 } from './uploadFileOrBlobToS3';
 
 export type OnProgressUploadingFileInfo = {
   type: 'UPLOADING_FILE';

@@ -1,7 +1,7 @@
 import got, { CancelError, CancelableRequest, Response } from 'got';
 import { createReadStream, promises } from 'fs';
 import mime from 'mime-types';
-import { OnProgressInfo } from '../uploadLocalFileAndReturnPath';
+import { OnProgressInfo } from './uploadLocalFileAndReturnPath';
 import {
   CancelablePromise,
   CanceledPromiseError,

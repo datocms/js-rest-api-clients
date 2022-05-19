@@ -6761,6 +6761,10 @@ export type EnvironmentMeta = {
    * Is this environment the primary for the project?
    */
   primary: boolean;
+  /**
+   * ID of the environment that's been forked to generate this one
+   */
+  forked_from?: string | null;
 };
 
 /**
@@ -8675,6 +8679,7 @@ export type Site = {
   id: SiteIdentity;
   attributes: SiteAttributes;
   relationships: SiteRelationships;
+  meta: SiteMeta;
 };
 
 /**
@@ -8866,6 +8871,19 @@ export type SiteRelationships = {
 };
 
 /**
+ * Meta attributes
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type SiteMeta = {
+  /**
+   * Whether the Improved API Timezone Management option is active or not
+   */
+  improved_timezone_management: boolean;
+};
+
+/**
  * JSON API data
  *
  * This interface was referenced by `Site`'s JSON-Schema
@@ -8996,6 +9014,12 @@ export type SiteUpdateSchema = {
        */
       ip_tracking_enabled?: boolean;
     };
+    meta?: {
+      /**
+       * Whether the Improved API Timezone Management option is active or not
+       */
+      improved_timezone_management?: boolean;
+    };
     relationships?: {
       sso_default_role?: {
         data: RoleData;
@@ -9017,6 +9041,22 @@ export type SiteUpdateTargetSchema = {
  * via the `update.jobSchema` link.
  */
 export type SiteUpdateJobSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_timezone_management.targetSchema` link.
+ */
+export type SiteActivateImprovedTimezoneManagementTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_timezone_management.jobSchema` link.
+ */
+export type SiteActivateImprovedTimezoneManagementJobSchema = {
   data: Site;
 };
 

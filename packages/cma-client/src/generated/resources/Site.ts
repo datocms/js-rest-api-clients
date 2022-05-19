@@ -74,4 +74,31 @@ export default class Site extends BaseResource {
       body,
     });
   }
+
+  /**
+   * Activate improved timezone management
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_timezone_management
+   */
+  activateImprovedTimezoneManagement() {
+    return this.rawActivateImprovedTimezoneManagement().then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedTimezoneManagementJobSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Activate improved timezone management
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_timezone_management
+   */
+  rawActivateImprovedTimezoneManagement(): Promise<SchemaTypes.SiteActivateImprovedTimezoneManagementJobSchema> {
+    return this.client.request<SchemaTypes.SiteActivateImprovedTimezoneManagementJobSchema>(
+      {
+        method: 'PUT',
+        url: `/site/activate-improved-timezone-management`,
+      },
+    );
+  }
 }

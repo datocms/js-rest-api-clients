@@ -2,7 +2,7 @@ import { Resources, SimpleSchemaTypes } from '@datocms/cma-client';
 import {
   uploadFileOrBlobAndReturnPath,
   OnProgressInfo,
-} from './uploadFileOrBlobAndReturnPath';
+} from './utils/uploadFileOrBlobAndReturnPath';
 import {
   CancelablePromise,
   CanceledPromiseError,

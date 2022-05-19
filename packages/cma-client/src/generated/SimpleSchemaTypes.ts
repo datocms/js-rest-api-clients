@@ -4223,6 +4223,9 @@ export type ItemTypeUpdateSchema = {
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `update.targetSchema` link.
  *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_timezone_management.targetSchema` link.
+ *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "job".
  */
@@ -4253,6 +4256,7 @@ export type UploadBatchDestroyTargetSchema = Job;
 export type UploadBulkTagTargetSchema = Job;
 export type UploadBulkDestroyTargetSchema = Job;
 export type SiteUpdateTargetSchema = Job;
+export type SiteActivateImprovedTimezoneManagementTargetSchema = Job;
 /**
  * JSON API data
  *
@@ -6730,6 +6734,10 @@ export type EnvironmentMeta = {
    * Is this environment the primary for the project?
    */
   primary: boolean;
+  /**
+   * ID of the environment that's been forked to generate this one
+   */
+  forked_from?: string | null;
 };
 
 /**
@@ -8478,9 +8486,24 @@ export type Site = {
    * The list of site roles
    */
   roles: RoleData[];
+  meta: SiteMeta;
 };
 export type SiteSelfTargetSchema = Site;
 export type SiteUpdateJobSchema = Site;
+export type SiteActivateImprovedTimezoneManagementJobSchema = Site;
+/**
+ * Meta attributes
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type SiteMeta = {
+  /**
+   * Whether the Improved API Timezone Management option is active or not
+   */
+  improved_timezone_management: boolean;
+};
+
 /**
  * JSON API data
  *
@@ -8773,6 +8796,12 @@ export type SiteUpdateSchema = {
    */
   ip_tracking_enabled?: boolean;
   sso_default_role?: RoleData;
+  meta?: {
+    /**
+     * Whether the Improved API Timezone Management option is active or not
+     */
+    improved_timezone_management?: boolean;
+  };
 };
 
 /**
