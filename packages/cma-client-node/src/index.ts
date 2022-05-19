@@ -1,8 +1,11 @@
 export * from './Client';
 export * from './buildClient';
-export * from './uploadLocalFileAndReturnPath';
+export * from './utils/uploadLocalFileAndReturnPath';
 export * from './UploadResource';
 export * from './utils/uploadLocalFileToS3';
+
+export { uploadLocalFileAndReturnPath } from './utils/uploadLocalFileAndReturnPath';
+export { downloadFile } from './utils/downloadFile';
 
 export {
   SchemaTypes,

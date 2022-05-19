@@ -1,8 +1,10 @@
 export * from './Client';
 export * from './buildClient';
-export * from './uploadFileOrBlobAndReturnPath';
+export * from './utils/uploadFileOrBlobAndReturnPath';
 export * from './UploadResource';
 export * from './utils/uploadFileOrBlobToS3';
+
+export { uploadFileOrBlobAndReturnPath } from './utils/uploadFileOrBlobAndReturnPath';
 
 export {
   SchemaTypes,

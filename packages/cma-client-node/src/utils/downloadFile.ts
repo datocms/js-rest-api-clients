@@ -8,7 +8,7 @@ import {
   CanceledPromiseError,
   makeCancelablePromise,
 } from '@datocms/rest-client-utils';
-import { OnProgressInfo } from '../uploadLocalFileAndReturnPath';
+import { OnProgressInfo } from './uploadLocalFileAndReturnPath';
 
 type Options = {
   onProgress?: (info: OnProgressInfo) => void;
@@ -19,7 +19,7 @@ export type DownloadResult = {
   deleteFile: () => Promise<void>;
 };
 
-export default function downloadLocally(
+export function downloadFile(
   url: string,
   { onProgress }: Options = {},
 ): CancelablePromise<DownloadResult> {

@@ -2,13 +2,13 @@ import { Resources, SimpleSchemaTypes } from '@datocms/cma-client';
 import {
   uploadLocalFileAndReturnPath,
   OnProgressInfo,
-} from './uploadLocalFileAndReturnPath';
+} from './utils/uploadLocalFileAndReturnPath';
 import {
   CancelablePromise,
   CanceledPromiseError,
 } from '@datocms/rest-client-utils';
 import { makeCancelablePromise } from '@datocms/rest-client-utils';
-import downloadLocally, { DownloadResult } from './utils/downloadFile';
+import { downloadFile, DownloadResult } from './utils/downloadFile';
 import md5 from './utils/md5';
 
 export type OnProgressCreatingUploadObjectInfo = {
@@ -128,7 +128,7 @@ export class UploadResource extends Resources.Upload {
 
         const { url, onProgress, ...other } = body;
 
-        downloadPromise = downloadLocally(url, { onProgress });
+        downloadPromise = downloadFile(url, { onProgress });
 
         const { filePath, deleteFile } = await downloadPromise;
 
