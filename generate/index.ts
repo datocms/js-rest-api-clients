@@ -52,10 +52,31 @@ async function generate(prefix: string, hyperschemaUrl: string) {
 
   const { typings, simpleTypings, ...other } = schemaInfo;
 
-  await writeTemplate<{ schemaInfo: string }>(
-    'schemaInfo.ts',
-    { schemaInfo: JSON.stringify(other, null, 2) },
-    `./packages/${prefix}-client/src/generated/schemaInfo.ts`,
+  writeFileSync(
+    `./packages/${prefix}-client/resources.json`,
+    JSON.stringify(
+      other.resources.map((r) => ({
+        ...r,
+        endpoints: r.endpoints.map(
+          ({
+            rel,
+            returnsCollection,
+            name,
+            rawName,
+            simpleMethodAvailable,
+            paginatedResponse,
+          }) => ({
+            rel,
+            returnsCollection,
+            paginatedResponse,
+            ...(simpleMethodAvailable ? { name, rawName } : { rawName }),
+          }),
+        ),
+      })),
+      null,
+      2,
+    ) + '\n',
+    { encoding: 'utf-8' },
   );
 
   await writeTemplate<

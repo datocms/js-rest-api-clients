@@ -7,7 +7,8 @@ import {
 export async function generateNewDashboardClient(
   config?: Partial<DashboardClientConfigOptions>,
 ) {
-  const randomString = Math.random().toString(36).substring(7);
+  const randomString =
+    Math.random().toString(36).substring(7) + new Date().getTime();
 
   const client = buildDashboardClient({
     ...config,

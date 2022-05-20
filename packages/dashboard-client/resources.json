@@ -1,0 +1,388 @@
+[
+  {
+    "jsonApiType": "session",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "rawName": "rawCreate"
+      }
+    ],
+    "namespace": "session",
+    "resourceClassName": "Session"
+  },
+  {
+    "jsonApiType": "account",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "reset_password",
+        "returnsCollection": false,
+        "name": "resetPassword",
+        "rawName": "rawResetPassword"
+      },
+      {
+        "rel": "activate_2fa",
+        "returnsCollection": false,
+        "name": "activate_2Fa",
+        "rawName": "rawActivate_2Fa"
+      },
+      {
+        "rel": "reset_2fa",
+        "returnsCollection": false,
+        "name": "reset_2Fa",
+        "rawName": "rawReset_2Fa"
+      },
+      {
+        "rel": "deactivate_2fa",
+        "returnsCollection": false,
+        "name": "deactivate_2Fa",
+        "rawName": "rawDeactivate_2Fa"
+      }
+    ],
+    "namespace": "account",
+    "resourceClassName": "Account"
+  },
+  {
+    "jsonApiType": "site",
+    "endpoints": [
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "paginatedResponse": {
+          "defaultLimit": 20,
+          "maxLimit": 50
+        },
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      },
+      {
+        "rel": "duplicate",
+        "returnsCollection": false,
+        "rawName": "rawDuplicate"
+      }
+    ],
+    "namespace": "sites",
+    "resourceClassName": "Site"
+  },
+  {
+    "jsonApiType": "site_subscription",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "simulate",
+        "returnsCollection": false,
+        "rawName": "rawSimulate"
+      },
+      {
+        "rel": "validate",
+        "returnsCollection": false,
+        "name": "validate",
+        "rawName": "rawValidate"
+      }
+    ],
+    "namespace": "siteSubscription",
+    "resourceClassName": "SiteSubscription"
+  },
+  {
+    "jsonApiType": "account_subscription",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "simulate",
+        "returnsCollection": false,
+        "name": "simulate",
+        "rawName": "rawSimulate"
+      },
+      {
+        "rel": "validate",
+        "returnsCollection": false,
+        "name": "validate",
+        "rawName": "rawValidate"
+      }
+    ],
+    "namespace": "accountSubscription",
+    "resourceClassName": "AccountSubscription"
+  },
+  {
+    "jsonApiType": "site_plan",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      }
+    ],
+    "namespace": "sitePlans",
+    "resourceClassName": "SitePlan"
+  },
+  {
+    "jsonApiType": "account_plan",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      }
+    ],
+    "namespace": "accountPlans",
+    "resourceClassName": "AccountPlan"
+  },
+  {
+    "jsonApiType": "per_site_pricing_billing_profile",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "update_credit_card",
+        "returnsCollection": false,
+        "name": "updateCreditCard",
+        "rawName": "rawUpdateCreditCard"
+      },
+      {
+        "rel": "update_info",
+        "returnsCollection": false,
+        "name": "updateInfo",
+        "rawName": "rawUpdateInfo"
+      }
+    ],
+    "namespace": "perSitePricingBillingProfiles",
+    "resourceClassName": "PerSitePricingBillingProfile"
+  },
+  {
+    "jsonApiType": "per_account_pricing_billing_profile",
+    "endpoints": [
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "update_credit_card",
+        "returnsCollection": false,
+        "name": "updateCreditCard",
+        "rawName": "rawUpdateCreditCard"
+      },
+      {
+        "rel": "update_info",
+        "returnsCollection": false,
+        "name": "updateInfo",
+        "rawName": "rawUpdateInfo"
+      }
+    ],
+    "namespace": "perAccountPricingBillingProfile",
+    "resourceClassName": "PerAccountPricingBillingProfile"
+  },
+  {
+    "jsonApiType": "invoice",
+    "endpoints": [
+      {
+        "rel": "per_account_pricing_billing_profile_instances",
+        "returnsCollection": true,
+        "name": "perAccountPricingBillingProfileList",
+        "rawName": "rawPerAccountPricingBillingProfileList"
+      },
+      {
+        "rel": "per_site_pricing_billing_profile_instances",
+        "returnsCollection": true,
+        "name": "perSitePricingBillingProfileList",
+        "rawName": "rawPerSitePricingBillingProfileList"
+      },
+      {
+        "rel": "per_account_pricing_billing_profile_collect_unpaid",
+        "returnsCollection": false,
+        "name": "perAccountPricingBillingProfileCollectUnpaid",
+        "rawName": "rawPerAccountPricingBillingProfileCollectUnpaid"
+      },
+      {
+        "rel": "per_site_pricing_billing_profile_collect_unpaid",
+        "returnsCollection": false,
+        "name": "perSitePricingBillingProfileCollectUnpaid",
+        "rawName": "rawPerSitePricingBillingProfileCollectUnpaid"
+      }
+    ],
+    "namespace": "invoices",
+    "resourceClassName": "Invoice"
+  },
+  {
+    "jsonApiType": "resource_usage",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      }
+    ],
+    "namespace": "resourceUsages",
+    "resourceClassName": "ResourceUsage"
+  },
+  {
+    "jsonApiType": "job_result",
+    "endpoints": [
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      }
+    ],
+    "namespace": "jobResults",
+    "resourceClassName": "JobResult"
+  },
+  {
+    "jsonApiType": "site_transfer",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      },
+      {
+        "rel": "simulate_accept",
+        "returnsCollection": false,
+        "rawName": "rawSimulateAccept"
+      },
+      {
+        "rel": "accept",
+        "returnsCollection": false,
+        "rawName": "rawAccept"
+      },
+      {
+        "rel": "decline",
+        "returnsCollection": false,
+        "name": "decline",
+        "rawName": "rawDecline"
+      }
+    ],
+    "namespace": "siteTransfers",
+    "resourceClassName": "SiteTransfer"
+  },
+  {
+    "jsonApiType": "site_invitation",
+    "endpoints": [
+      {
+        "rel": "redeem",
+        "returnsCollection": false,
+        "name": "redeem",
+        "rawName": "rawRedeem"
+      }
+    ],
+    "namespace": "siteInvitation",
+    "resourceClassName": "SiteInvitation"
+  },
+  {
+    "jsonApiType": "subscription_limit",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      }
+    ],
+    "namespace": "subscriptionLimits",
+    "resourceClassName": "SubscriptionLimit"
+  },
+  {
+    "jsonApiType": "subscription_feature",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      }
+    ],
+    "namespace": "subscriptionFeatures",
+    "resourceClassName": "SubscriptionFeature"
+  }
+]

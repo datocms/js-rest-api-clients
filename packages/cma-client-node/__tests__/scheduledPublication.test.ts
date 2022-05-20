@@ -52,7 +52,7 @@ describe('scheduledPublication', () => {
       },
     );
     expect(itemToBeUnpublished.unpublishing_scheduled_at).toEqual(
-      '2056-02-10T11:03:42.000Z',
+      '2056-02-10T11:03:42.208Z',
     );
 
     const itemNotToBeUnpublished = await client.scheduledUnpublishing.destroy(

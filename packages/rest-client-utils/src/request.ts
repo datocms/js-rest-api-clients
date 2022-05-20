@@ -154,12 +154,11 @@ export async function request<T>(options: RequestOptions): Promise<T> {
     });
 
     const responseContentType = response.headers.get('Content-Type');
+    const invalidContentType =
+      responseContentType && !responseContentType.includes('application/json');
 
-    if (
-      response.status === 429 ||
-      (responseContentType && !responseContentType.includes('application/json'))
-    ) {
-      if (!autoRetry) {
+    if (response.status === 429 || invalidContentType) {
+      if (!autoRetry || (invalidContentType && options.method !== 'GET')) {
         throw new ApiError(
           buildApiErrorInitObject(
             options.method,
@@ -181,11 +180,11 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       if (logLevel >= LogLevel.BASIC) {
         if (response.status === 429) {
           log(
-            `[${requestId}] Rate limit exceeded, waiting ${waitTimeInSecs} seconds...`,
+            `[${requestId}] Rate limit exceeded, wait ${waitTimeInSecs} seconds then retry...`,
           );
         } else {
           log(
-            `[${requestId}] Invalid response content type, waiting ${waitTimeInSecs} seconds...`,
+            `[${requestId}] Invalid response content type "${responseContentType}" (status ${response.status}). Wait ${waitTimeInSecs} seconds then retry...`,
           );
         }
       }
@@ -199,7 +198,6 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       log(`[${requestId}] Status: ${response.status} (${response.statusText})`);
       if (logLevel >= LogLevel.BODY_AND_HEADERS) {
         [
-          'content-type',
           'x-api-version',
           'x-environment',
           'x-queue-time',
@@ -260,7 +258,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
     if (autoRetry && error.findError('BATCH_DATA_VALIDATION_IN_PROGRESS')) {
       if (logLevel >= LogLevel.BASIC) {
         log(
-          `[${requestId}] Data validation in progress, waiting ${retryCount} seconds...`,
+          `[${requestId}] Data validation in progress, wait ${retryCount} seconds then retry...`,
         );
       }
 
@@ -274,7 +272,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
     if (isErrorWithCode(error) && error.code.includes('ETIMEDOUT')) {
       if (logLevel >= LogLevel.BASIC) {
         log(
-          `[${requestId}] Error ${error.code}, waiting ${retryCount} seconds...`,
+          `[${requestId}] Error ${error.code}, wait ${retryCount} seconds then retry...`,
         );
       }
 

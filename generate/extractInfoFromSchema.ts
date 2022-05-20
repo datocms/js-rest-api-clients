@@ -8,6 +8,7 @@ const identityRegexp =
   /\{\(.*?definitions%2F(.*?)%2Fdefinitions%2Fidentity\)}/g;
 
 export type EndpointInfo = {
+  rel: string;
   name: string;
   rawName: string;
   returnsCollection: boolean;
@@ -272,6 +273,7 @@ function generateResourceInfo(
             '-',
           )}/${link.rel}`
         : undefined,
+      rel: link.rel,
       name: toSafeName(normalizedRel, false),
       rawName: toSafeName(`raw_${normalizedRel}`, false),
       urlTemplate,

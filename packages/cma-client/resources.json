@@ -1,0 +1,1272 @@
+[
+  {
+    "jsonApiType": "role",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "roles",
+    "resourceClassName": "Role"
+  },
+  {
+    "jsonApiType": "user",
+    "endpoints": [
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "users",
+    "resourceClassName": "User"
+  },
+  {
+    "jsonApiType": "sso_user",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "copy_users",
+        "returnsCollection": false,
+        "name": "copyUsers",
+        "rawName": "rawCopyUsers"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "ssoUsers",
+    "resourceClassName": "SsoUser"
+  },
+  {
+    "jsonApiType": "audit_log_event",
+    "endpoints": [
+      {
+        "rel": "query",
+        "returnsCollection": true,
+        "name": "query",
+        "rawName": "rawQuery"
+      }
+    ],
+    "namespace": "auditLogEvents",
+    "resourceClassName": "AuditLogEvent"
+  },
+  {
+    "jsonApiType": "menu_item",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "menuItems",
+    "resourceClassName": "MenuItem"
+  },
+  {
+    "jsonApiType": "item_type",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "duplicate",
+        "returnsCollection": false,
+        "name": "duplicate",
+        "rawName": "rawDuplicate"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "itemTypes",
+    "resourceClassName": "ItemType"
+  },
+  {
+    "jsonApiType": "field",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "referencing",
+        "returnsCollection": false,
+        "name": "referencing",
+        "rawName": "rawReferencing"
+      },
+      {
+        "rel": "related",
+        "returnsCollection": false,
+        "name": "related",
+        "rawName": "rawRelated"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      },
+      {
+        "rel": "duplicate",
+        "returnsCollection": false,
+        "name": "duplicate",
+        "rawName": "rawDuplicate"
+      }
+    ],
+    "namespace": "fields",
+    "resourceClassName": "Field"
+  },
+  {
+    "jsonApiType": "fieldset",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "fieldsets",
+    "resourceClassName": "Fieldset"
+  },
+  {
+    "jsonApiType": "session",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      }
+    ],
+    "namespace": "session",
+    "resourceClassName": "Session"
+  },
+  {
+    "jsonApiType": "access_token",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "regenerate_token",
+        "returnsCollection": false,
+        "name": "regenerateToken",
+        "rawName": "rawRegenerateToken"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "accessTokens",
+    "resourceClassName": "AccessToken"
+  },
+  {
+    "jsonApiType": "plugin",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      },
+      {
+        "rel": "fields",
+        "returnsCollection": false,
+        "name": "fields",
+        "rawName": "rawFields"
+      }
+    ],
+    "namespace": "plugins",
+    "resourceClassName": "Plugin"
+  },
+  {
+    "jsonApiType": "job_result",
+    "endpoints": [
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      }
+    ],
+    "namespace": "jobResults",
+    "resourceClassName": "JobResult"
+  },
+  {
+    "jsonApiType": "subscription_limit",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      }
+    ],
+    "namespace": "subscriptionLimits",
+    "resourceClassName": "SubscriptionLimit"
+  },
+  {
+    "jsonApiType": "subscription_feature",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      }
+    ],
+    "namespace": "subscriptionFeatures",
+    "resourceClassName": "SubscriptionFeature"
+  },
+  {
+    "jsonApiType": "build_event",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      }
+    ],
+    "namespace": "buildEvents",
+    "resourceClassName": "BuildEvent"
+  },
+  {
+    "jsonApiType": "item",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "paginatedResponse": {
+          "defaultLimit": 30,
+          "maxLimit": 500
+        },
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "validate_existing",
+        "returnsCollection": false,
+        "name": "validateExisting",
+        "rawName": "rawValidateExisting"
+      },
+      {
+        "rel": "validate_new",
+        "returnsCollection": false,
+        "name": "validateNew",
+        "rawName": "rawValidateNew"
+      },
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "duplicate",
+        "returnsCollection": false,
+        "name": "duplicate",
+        "rawName": "rawDuplicate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "references",
+        "returnsCollection": false,
+        "name": "references",
+        "rawName": "rawReferences"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      },
+      {
+        "rel": "batch_destroy",
+        "returnsCollection": false,
+        "name": "batchDestroy",
+        "rawName": "rawBatchDestroy"
+      },
+      {
+        "rel": "batch_publish",
+        "returnsCollection": false,
+        "name": "batchPublish",
+        "rawName": "rawBatchPublish"
+      },
+      {
+        "rel": "batch_unpublish",
+        "returnsCollection": false,
+        "name": "batchUnpublish",
+        "rawName": "rawBatchUnpublish"
+      },
+      {
+        "rel": "publish",
+        "returnsCollection": false,
+        "name": "publish",
+        "rawName": "rawPublish"
+      },
+      {
+        "rel": "unpublish",
+        "returnsCollection": false,
+        "name": "unpublish",
+        "rawName": "rawUnpublish"
+      },
+      {
+        "rel": "bulk_publish",
+        "returnsCollection": false,
+        "name": "bulkPublish",
+        "rawName": "rawBulkPublish"
+      },
+      {
+        "rel": "bulk_unpublish",
+        "returnsCollection": false,
+        "name": "bulkUnpublish",
+        "rawName": "rawBulkUnpublish"
+      },
+      {
+        "rel": "bulk_destroy",
+        "returnsCollection": false,
+        "name": "bulkDestroy",
+        "rawName": "rawBulkDestroy"
+      },
+      {
+        "rel": "bulk_move_to_stage",
+        "returnsCollection": false,
+        "name": "bulkMoveToStage",
+        "rawName": "rawBulkMoveToStage"
+      }
+    ],
+    "namespace": "items",
+    "resourceClassName": "Item"
+  },
+  {
+    "jsonApiType": "item_version",
+    "endpoints": [
+      {
+        "rel": "restore",
+        "returnsCollection": false,
+        "name": "restore",
+        "rawName": "rawRestore"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "paginatedResponse": {
+          "defaultLimit": 15,
+          "maxLimit": 50
+        },
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      }
+    ],
+    "namespace": "itemVersions",
+    "resourceClassName": "ItemVersion"
+  },
+  {
+    "jsonApiType": "upload",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "paginatedResponse": {
+          "defaultLimit": 30,
+          "maxLimit": 500
+        },
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "batch_add_tags",
+        "returnsCollection": false,
+        "name": "batchAddTags",
+        "rawName": "rawBatchAddTags"
+      },
+      {
+        "rel": "batch_destroy",
+        "returnsCollection": false,
+        "name": "batchDestroy",
+        "rawName": "rawBatchDestroy"
+      },
+      {
+        "rel": "references",
+        "returnsCollection": false,
+        "name": "references",
+        "rawName": "rawReferences"
+      },
+      {
+        "rel": "bulk_tag",
+        "returnsCollection": false,
+        "name": "bulkTag",
+        "rawName": "rawBulkTag"
+      },
+      {
+        "rel": "bulk_destroy",
+        "returnsCollection": false,
+        "name": "bulkDestroy",
+        "rawName": "rawBulkDestroy"
+      }
+    ],
+    "namespace": "uploads",
+    "resourceClassName": "Upload"
+  },
+  {
+    "jsonApiType": "upload_request",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      }
+    ],
+    "namespace": "uploadRequest",
+    "resourceClassName": "UploadRequest"
+  },
+  {
+    "jsonApiType": "scheduled_publication",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "scheduledPublication",
+    "resourceClassName": "ScheduledPublication"
+  },
+  {
+    "jsonApiType": "scheduled_unpublishing",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "scheduledUnpublishing",
+    "resourceClassName": "ScheduledUnpublishing"
+  },
+  {
+    "jsonApiType": "search_result",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      }
+    ],
+    "namespace": "searchResults",
+    "resourceClassName": "SearchResult"
+  },
+  {
+    "jsonApiType": "environment",
+    "endpoints": [
+      {
+        "rel": "fork",
+        "returnsCollection": false,
+        "name": "fork",
+        "rawName": "rawFork"
+      },
+      {
+        "rel": "promote",
+        "returnsCollection": false,
+        "name": "promote",
+        "rawName": "rawPromote"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "environments",
+    "resourceClassName": "Environment"
+  },
+  {
+    "jsonApiType": "maintenance_mode",
+    "endpoints": [
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "activate",
+        "returnsCollection": false,
+        "name": "activate",
+        "rawName": "rawActivate"
+      },
+      {
+        "rel": "deactivate",
+        "returnsCollection": false,
+        "name": "deactivate",
+        "rawName": "rawDeactivate"
+      }
+    ],
+    "namespace": "maintenanceMode",
+    "resourceClassName": "MaintenanceMode"
+  },
+  {
+    "jsonApiType": "webhook",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "webhooks",
+    "resourceClassName": "Webhook"
+  },
+  {
+    "jsonApiType": "webhook_call",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "paginatedResponse": {
+          "defaultLimit": 30,
+          "maxLimit": 500
+        },
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "resend_webhook",
+        "returnsCollection": false,
+        "name": "resendWebhook",
+        "rawName": "rawResendWebhook"
+      }
+    ],
+    "namespace": "webhookCalls",
+    "resourceClassName": "WebhookCall"
+  },
+  {
+    "jsonApiType": "build_trigger",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "trigger",
+        "returnsCollection": false,
+        "name": "trigger",
+        "rawName": "rawTrigger"
+      },
+      {
+        "rel": "abort",
+        "returnsCollection": false,
+        "name": "abort",
+        "rawName": "rawAbort"
+      },
+      {
+        "rel": "abort_indexing",
+        "returnsCollection": false,
+        "name": "abortIndexing",
+        "rawName": "rawAbortIndexing"
+      },
+      {
+        "rel": "reindex",
+        "returnsCollection": false,
+        "name": "reindex",
+        "rawName": "rawReindex"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "buildTriggers",
+    "resourceClassName": "BuildTrigger"
+  },
+  {
+    "jsonApiType": "item_type_filter",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "itemTypeFilters",
+    "resourceClassName": "ItemTypeFilter"
+  },
+  {
+    "jsonApiType": "upload_filter",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "uploadFilters",
+    "resourceClassName": "UploadFilter"
+  },
+  {
+    "jsonApiType": "site_invitation",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      },
+      {
+        "rel": "resend",
+        "returnsCollection": false,
+        "name": "resend",
+        "rawName": "rawResend"
+      }
+    ],
+    "namespace": "siteInvitations",
+    "resourceClassName": "SiteInvitation"
+  },
+  {
+    "jsonApiType": "editing_session",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "editingSessions",
+    "resourceClassName": "EditingSession"
+  },
+  {
+    "jsonApiType": "sso_group",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "copy_roles",
+        "returnsCollection": false,
+        "name": "copyRoles",
+        "rawName": "rawCopyRoles"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "ssoGroups",
+    "resourceClassName": "SsoGroup"
+  },
+  {
+    "jsonApiType": "sso_settings",
+    "endpoints": [
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "generate_token",
+        "returnsCollection": false,
+        "name": "generateToken",
+        "rawName": "rawGenerateToken"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      }
+    ],
+    "namespace": "ssoSettings",
+    "resourceClassName": "SsoSettings"
+  },
+  {
+    "jsonApiType": "white_label_settings",
+    "endpoints": [
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      }
+    ],
+    "namespace": "whiteLabelSettings",
+    "resourceClassName": "WhiteLabelSettings"
+  },
+  {
+    "jsonApiType": "public_info",
+    "endpoints": [
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      }
+    ],
+    "namespace": "publicInfo",
+    "resourceClassName": "PublicInfo"
+  },
+  {
+    "jsonApiType": "daily_usage",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      }
+    ],
+    "namespace": "dailyUsages",
+    "resourceClassName": "DailyUsage"
+  },
+  {
+    "jsonApiType": "usage_counter",
+    "endpoints": [
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      }
+    ],
+    "namespace": "usageCounters",
+    "resourceClassName": "UsageCounter"
+  },
+  {
+    "jsonApiType": "upload_tag",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "paginatedResponse": {
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      }
+    ],
+    "namespace": "uploadTags",
+    "resourceClassName": "UploadTag"
+  },
+  {
+    "jsonApiType": "upload_smart_tag",
+    "endpoints": [
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "paginatedResponse": {
+          "defaultLimit": 50,
+          "maxLimit": 500
+        },
+        "name": "list",
+        "rawName": "rawList"
+      }
+    ],
+    "namespace": "uploadSmartTags",
+    "resourceClassName": "UploadSmartTag"
+  },
+  {
+    "jsonApiType": "site",
+    "endpoints": [
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "activate_improved_timezone_management",
+        "returnsCollection": false,
+        "name": "activateImprovedTimezoneManagement",
+        "rawName": "rawActivateImprovedTimezoneManagement"
+      }
+    ],
+    "namespace": "site",
+    "resourceClassName": "Site"
+  },
+  {
+    "jsonApiType": "workflow",
+    "endpoints": [
+      {
+        "rel": "create",
+        "returnsCollection": false,
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "rel": "update",
+        "returnsCollection": false,
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "rel": "instances",
+        "returnsCollection": true,
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "rel": "self",
+        "returnsCollection": false,
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "rel": "destroy",
+        "returnsCollection": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "workflows",
+    "resourceClassName": "Workflow"
+  }
+]
