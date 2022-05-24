@@ -31,6 +31,7 @@ export function subscribeToEvents(
         headers: {
           authorization: `Bearer ${apiToken}`,
           accept: 'application/json',
+          'x-api-version': '3',
           'content-type': 'application/json',
         },
       },
