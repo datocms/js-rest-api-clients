@@ -91,19 +91,20 @@ export type UserType = 'user';
 export type UserInstancesTargetSchema = User[];
 /**
  * This interface was referenced by `User`'s JSON-Schema
- * via the `destroy.hrefSchema` link.
+ * via the `self.hrefSchema` link.
  */
-export type UserDestroyHrefSchema = {
+export type UserSelfHrefSchema = {
   /**
-   * New owner for resources previously owned by the deleted user. This argument specifies the new owner type.
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `role`.
    */
-  destination_user_type?: 'account' | 'user' | 'access_token' | 'sso_user';
-  /**
-   * New owner for resources previously owned by the deleted user. This argument specifies the new owner ID.
-   */
-  destination_user_id?: string;
+  include?: string;
   [k: string]: unknown;
 };
+/**
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `me.targetSchema` link.
+ */
+export type UserMeTargetSchema = User | SsoUser | AccessToken | Account;
 /**
  * ID of user
  *
@@ -164,6 +165,86 @@ export type SsoUserDestroyHrefSchema = {
   [k: string]: unknown;
 };
 /**
+ * ID of access_token
+ *
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type AccessTokenIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type AccessTokenType = 'access_token';
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type AccessTokenInstancesTargetSchema = AccessToken[];
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `destroy.hrefSchema` link.
+ */
+export type AccessTokenDestroyHrefSchema = {
+  /**
+   * New owner for resources previously owned by the deleted access token. This argument specifies the new owner type.
+   */
+  destination_user_type?: 'account' | 'user' | 'access_token' | 'sso_user';
+  /**
+   * New owner for resources previously owned by the deleted access token. This argument specifies the new owner ID.
+   */
+  destination_user_id?: string;
+  [k: string]: unknown;
+};
+/**
+ * ID of account
+ *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type AccountIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type AccountType = 'account';
+/**
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `me.hrefSchema` link.
+ */
+export type UserMeHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `role`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `destroy.hrefSchema` link.
+ */
+export type UserDestroyHrefSchema = {
+  /**
+   * New owner for resources previously owned by the deleted user. This argument specifies the new owner type.
+   */
+  destination_user_type?: 'account' | 'user' | 'access_token' | 'sso_user';
+  /**
+   * New owner for resources previously owned by the deleted user. This argument specifies the new owner ID.
+   */
+  destination_user_id?: string;
+  [k: string]: unknown;
+};
+/**
  * ULID of event (https://github.com/ulid/spec)
  *
  * This interface was referenced by `AuditLogEvent`'s JSON-Schema
@@ -185,23 +266,6 @@ export type AuditLogEventType = 'audit_log_event';
  * via the `query.targetSchema` link.
  */
 export type AuditLogEventQueryTargetSchema = AuditLogEvent[];
-/**
- * ID of account
- *
- * This interface was referenced by `Account`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `Account`'s JSON-Schema
- * via the `definition` "id".
- */
-export type AccountIdentity = string;
-/**
- * JSON API type field
- *
- * This interface was referenced by `Account`'s JSON-Schema
- * via the `definition` "type".
- */
-export type AccountType = 'account';
 /**
  * ID of plan
  *
@@ -295,6 +359,23 @@ export type FieldType = 'field';
  */
 export type FieldIdentity = string;
 /**
+ * JSON API type fieldset
+ *
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type FieldsetType = 'fieldset';
+/**
+ * ID of fieldset
+ *
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type FieldsetIdentity = string;
+/**
  * JSON API type field
  *
  * This interface was referenced by `Workflow`'s JSON-Schema
@@ -323,23 +404,6 @@ export type JobType = 'job';
  * via the `instances.targetSchema` link.
  */
 export type ItemTypeInstancesTargetSchema = ItemType[];
-/**
- * JSON API type fieldset
- *
- * This interface was referenced by `Fieldset`'s JSON-Schema
- * via the `definition` "type".
- */
-export type FieldsetType = 'fieldset';
-/**
- * ID of fieldset
- *
- * This interface was referenced by `Fieldset`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `Fieldset`'s JSON-Schema
- * via the `definition` "id".
- */
-export type FieldsetIdentity = string;
 /**
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `instances.targetSchema` link.
@@ -377,43 +441,6 @@ export type SessionIdentity = string;
  * via the `definition` "type".
  */
 export type SessionType = 'session';
-/**
- * ID of access_token
- *
- * This interface was referenced by `AccessToken`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `AccessToken`'s JSON-Schema
- * via the `definition` "id".
- */
-export type AccessTokenIdentity = string;
-/**
- * JSON API type field
- *
- * This interface was referenced by `AccessToken`'s JSON-Schema
- * via the `definition` "type".
- */
-export type AccessTokenType = 'access_token';
-/**
- * This interface was referenced by `AccessToken`'s JSON-Schema
- * via the `instances.targetSchema` link.
- */
-export type AccessTokenInstancesTargetSchema = AccessToken[];
-/**
- * This interface was referenced by `AccessToken`'s JSON-Schema
- * via the `destroy.hrefSchema` link.
- */
-export type AccessTokenDestroyHrefSchema = {
-  /**
-   * New owner for resources previously owned by the deleted access token. This argument specifies the new owner type.
-   */
-  destination_user_type?: 'account' | 'user' | 'access_token' | 'sso_user';
-  /**
-   * New owner for resources previously owned by the deleted access token. This argument specifies the new owner ID.
-   */
-  destination_user_id?: string;
-  [k: string]: unknown;
-};
 /**
  * ID of plugin
  *
@@ -1490,6 +1517,17 @@ export type SiteIdentity = string;
  * via the `definition` "type".
  */
 export type SiteType = 'site';
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type SiteSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
 /**
  * This interface was referenced by `Workflow`'s JSON-Schema
  * via the `instances.targetSchema` link.
@@ -2926,6 +2964,216 @@ export type SsoUserRelationships = {
 };
 
 /**
+ * An API token allows access to our API. It is linked to a Role, which describes what actions can be performed.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "access_token".
+ */
+export type AccessToken = {
+  id: AccessTokenIdentity;
+  type: AccessTokenType;
+  /**
+   * Name of API token
+   */
+  name: string;
+  /**
+   * The actual API token (or null if the current user has no permission to read the token)
+   */
+  token?: null | string;
+  /**
+   * Whether this API token can access the Content Delivery API published content endpoint
+   */
+  can_access_cda: boolean;
+  /**
+   * Whether this API token can access the Content Delivery API draft content endpoint
+   */
+  can_access_cda_preview: boolean;
+  /**
+   * Whether this API token can access the Content Management API
+   */
+  can_access_cma: boolean;
+  hardcoded_type: null | string;
+  role: RoleData | null;
+};
+export type AccessTokenCreateTargetSchema = AccessToken;
+export type AccessTokenUpdateTargetSchema = AccessToken;
+export type AccessTokenSelfTargetSchema = AccessToken;
+export type AccessTokenRegenerateTokenTargetSchema = AccessToken;
+export type AccessTokenDestroyTargetSchema = AccessToken;
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type AccessTokenData = {
+  type: AccessTokenType;
+  id: AccessTokenIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type AccessTokenAttributes = {
+  /**
+   * Name of API token
+   */
+  name: string;
+  /**
+   * The actual API token (or null if the current user has no permission to read the token)
+   */
+  token?: null | string;
+  /**
+   * Whether this API token can access the Content Delivery API published content endpoint
+   */
+  can_access_cda: boolean;
+  /**
+   * Whether this API token can access the Content Delivery API draft content endpoint
+   */
+  can_access_cda_preview: boolean;
+  /**
+   * Whether this API token can access the Content Management API
+   */
+  can_access_cma: boolean;
+  hardcoded_type: null | string;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type AccessTokenRelationships = {
+  role: RoleData | null;
+};
+
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type AccessTokenCreateSchema = {
+  type?: AccessTokenType;
+  /**
+   * Name of API token
+   */
+  name: string;
+  /**
+   * Whether this API token can access the Content Delivery API published content endpoint
+   */
+  can_access_cda: boolean;
+  /**
+   * Whether this API token can access the Content Delivery API draft content endpoint
+   */
+  can_access_cda_preview: boolean;
+  /**
+   * Whether this API token can access the Content Management API
+   */
+  can_access_cma: boolean;
+  role: RoleData | null;
+};
+
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type AccessTokenUpdateSchema = {
+  id?: AccessTokenIdentity;
+  type?: AccessTokenType;
+  /**
+   * Name of API token
+   */
+  name: string;
+  /**
+   * Whether this API token can access the Content Delivery API published content endpoint
+   */
+  can_access_cda: boolean;
+  /**
+   * Whether this API token can access the Content Delivery API draft content endpoint
+   */
+  can_access_cda_preview: boolean;
+  /**
+   * Whether this API token can access the Content Management API
+   */
+  can_access_cma: boolean;
+  role: RoleData | null;
+};
+
+/**
+ * DatoCMS account
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "account".
+ */
+export type Account = {
+  id: AccountIdentity;
+  type: AccountType;
+  /**
+   * Email
+   */
+  email: string;
+  /**
+   * First name
+   */
+  first_name: string | null;
+  /**
+   * Last name
+   */
+  last_name: string | null;
+  /**
+   * Company name
+   */
+  company: string | null;
+  /**
+   * Password
+   */
+  password?: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type AccountData = {
+  type: AccountType;
+  id: AccountIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type AccountAttributes = {
+  /**
+   * Email
+   */
+  email: string;
+  /**
+   * First name
+   */
+  first_name: string | null;
+  /**
+   * Last name
+   */
+  last_name: string | null;
+  /**
+   * Company name
+   */
+  company: string | null;
+  /**
+   * Password
+   */
+  password?: string;
+};
+
+/**
  * If the Audit log functionality is enabled in a project, logged events can be queried using SQL-like language and fetched in full detail so that they can be exported or analyzed.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -3161,77 +3409,6 @@ export type AuditLogEventQuerySchema = {
    * Whether a detailed log complete with full request and response payload must be returned or not
    */
   detailed_log?: boolean;
-};
-
-/**
- * DatoCMS account
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "account".
- */
-export type Account = {
-  id: AccountIdentity;
-  type: AccountType;
-  /**
-   * Email
-   */
-  email: string;
-  /**
-   * First name
-   */
-  first_name: string | null;
-  /**
-   * Last name
-   */
-  last_name: string | null;
-  /**
-   * Company name
-   */
-  company: string | null;
-  /**
-   * Password
-   */
-  password?: string;
-};
-
-/**
- * JSON API data
- *
- * This interface was referenced by `Account`'s JSON-Schema
- * via the `definition` "data".
- */
-export type AccountData = {
-  type: AccountType;
-  id: AccountIdentity;
-};
-
-/**
- * JSON API attributes
- *
- * This interface was referenced by `Account`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type AccountAttributes = {
-  /**
-   * Email
-   */
-  email: string;
-  /**
-   * First name
-   */
-  first_name: string | null;
-  /**
-   * Last name
-   */
-  last_name: string | null;
-  /**
-   * Company name
-   */
-  company: string | null;
-  /**
-   * Password
-   */
-  password?: string;
 };
 
 /**
@@ -3878,6 +4055,7 @@ export type ItemType = {
   hint: string | null;
   singleton_item: ItemData | null;
   fields: FieldData[];
+  fieldsets: FieldsetData[];
   title_field: FieldData | null;
   image_preview_field: FieldData | null;
   excerpt_field: FieldData | null;
@@ -3909,6 +4087,17 @@ export type ItemData = {
 export type FieldData = {
   type: FieldType;
   id: FieldIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type FieldsetData = {
+  type: FieldsetType;
+  id: FieldsetIdentity;
 };
 
 /**
@@ -4001,6 +4190,7 @@ export type ItemTypeAttributes = {
 export type ItemTypeRelationships = {
   singleton_item: ItemData | null;
   fields: FieldData[];
+  fieldsets: FieldsetData[];
   title_field: FieldData | null;
   image_preview_field: FieldData | null;
   excerpt_field: FieldData | null;
@@ -4269,7 +4459,839 @@ export type JobData = {
 };
 
 /**
- * Each Model consists of a set of fields. Using the database metaphore, fields are like table columns, and when creating them you need to specify their type (`string`, `file`, `float`, etc.) and any required validation.
+ * DatoCMS offers a number of different fields that you can combine togheter to create a [Model](/docs/content-management-api/resources/item-type). Using the database metaphore, fields are like table columns, and when creating them you need to specify their type (`string`, `float`, etc.) and any required validation.
+ *
+ * ### Different field types require different settings
+ *
+ * When looking at a field resource, you have to pay attention to two particular properties, `validators` and `appearance`.
+ *
+ * The `validators` property expresses the set of validations to be performed server-side on a specific field value for it to be considered valid, while the `appearance` property lets you specify _how_ the field itself will be presented inside the form to the final editor.
+ *
+ * For both properties, the value to specify depends on the type of field itself. For example, you can add a "Limit character count" validation to a _Single-line string_ field, or set its appearence to "Show it as heading", but they won't be accepted for a ie. _Color_ field, as it supports different validations and appearance settings.
+ *
+ * ### Specifying validations
+ *
+ * The `validators` property requires an object whose keys are the validations that you want to be enforced, and the values are objects representing any settings that the validation itself requires. If the validation doesn't have additional settings, you just pass down an empty object.
+ *
+ * This is a valid example for a _Single-line string_ field:
+ *
+ * ```js
+ * {
+ *   "validators": {
+ *     // "required" validator has no settings
+ *     "required": {},
+ *     // "length" validator requires "min" and/or "max" properties
+ *     "length": { "min": 80 }
+ *   }
+ * }
+ * ```
+ *
+ * Below you'll find a summary of all the validators available for each field type with their settings.
+ *
+ * Some validators are required for a specific type of field. For example, the _Slug_ field needs to have a `slug_title_field` validator to specify the ID of the _Single-line string_ field that will be used to generate the slug itself.
+ *
+ * ### Specifying the appearance
+ *
+ * The `appearance` property requires an object with three specific properties: `editor`, `parameters` and `addons`.
+ *
+ * The `editor` represents the type of editor that the users will see inside the form to change the value of this specific field. Depending on the type of field, DatoCMS offers a number of different editors for you to choose from. The `parameters` property is an object representing any additional settings that the editor itself might require.
+ *
+ * This is a valid example for a _Single-line string_ field:
+ *
+ * ```js
+ * {
+ *   "appearance": {
+ *     // single_line is a DatoCMS built-in editor that you can use with single-line string fields
+ *     "editor": "single_line",
+ *     // each built-in editor has specific settings
+ *     "parameters": { "heading": true },
+ *     "addons": []
+ *   },
+ * }
+ * ```
+ *
+ * Following you'll find a summary of all the editors available for each field type with their settings.
+ *
+ * #### Setting the appearance to a field editor provided by a plugin
+ *
+ * If the project contains a plugin that exposes [manual field editors](/docs/plugin-sdk/manual-field-extensions), you can also configure the field to be presented with it instead of using one of the build-in editors.
+ *
+ * In this case:
+ *
+ * - the `editor` property must be the ID of the plugin;
+ * - the `field_extension` property must be the ID of the specific manual field editor that the plugin exposes;
+ * - the `parameters` property must provide a configuration object compatible with the [config screen of the manual field extension](/docs/plugin-sdk/manual-field-extensions#add-per-field-config-screens-to-manual-field-extensions), or an empty object if it doesn't require any configuration.
+ *
+ * ```js
+ * {
+ *   "appearance": {
+ *     // "2132" is a the ID of a plugin exposing a manual field editor
+ *     "editor": "2134",
+ *     // "starRating" is a manual field editor exposed by the plugin
+ *     "field_extension": "starRating",
+ *     // this is a valid configuration for the "starRating" field editor
+ *     "parameters": { "maxRating": 5, "starsColor": "#ff0000" },
+ *     "addons": []
+ *   },
+ * }
+ * ```
+ *
+ * #### Configuring manual field addons
+ *
+ * If the project contains plugins that expose [manual field addons](/docs/plugin-sdk/manual-field-extensions), you can also add them to the field via the `addons` property.
+ *
+ * ```js
+ * {
+ *   "appearance": {
+ *     "editor": "single_line",
+ *     "parameters": { "heading": true },
+ *     "addons": [
+ *       {
+ *         // "2138" is a the ID of a plugin exposing a manual addon editor
+ *         "id": "2138",
+ *         // "loremIpsumGenerator" is a manual field addon exposed by the plugin
+ *         "field_extension": "loremIpsumGenerator",
+ *         // this is a valid configuration for the "loremIpsumGenerator" field addon
+ *         "parameters": { "sentences": 2 },
+ *       }
+ *     ]
+ *   },
+ * }
+ * ```
+ *
+ * ### Available field types
+ *
+ * <details>
+ * <summary>Single-line string (<code>string</code>)</summary>
+ *
+ * | Property                       | Value                                                |
+ * | ------------------------------ | ---------------------------------------------------- |
+ * | Code                           | `string`                                             |
+ * | Built-in editors for the field | `single_line`, `string_radio_group`, `string_select` |
+ * | Available validators           | `required`, `unique`, `length`, `format`, `enum`     |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Multi-line text (<code>text</code>)</summary>
+ *
+ * | Property                       | Value                             |
+ * | ------------------------------ | --------------------------------- |
+ * | Code                           | `text`                            |
+ * | Built-in editors for the field | `markdown`, `wysiwyg`, `textarea` |
+ * | Available validators           | `required`, `length`, `format`    |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Boolean (<code>boolean</code>)</summary>
+ *
+ * | Property                       | Value                            |
+ * | ------------------------------ | -------------------------------- |
+ * | Code                           | `boolean`                        |
+ * | Built-in editors for the field | `boolean`, `boolean_radio_group` |
+ * | Available validators           | no validators available          |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Integer (<code>integer</code>)</summary>
+ *
+ * | Property                       | Value                      |
+ * | ------------------------------ | -------------------------- |
+ * | Code                           | `integer`                  |
+ * | Built-in editors for the field | `integer`                  |
+ * | Available validators           | `required`, `number_range` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Float (<code>float</code>)</summary>
+ *
+ * | Property                       | Value                      |
+ * | ------------------------------ | -------------------------- |
+ * | Code                           | `float`                    |
+ * | Built-in editors for the field | `float`                    |
+ * | Available validators           | `required`, `number_range` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Date (<code>date</code>)</summary>
+ *
+ * | Property                       | Value                    |
+ * | ------------------------------ | ------------------------ |
+ * | Code                           | `date`                   |
+ * | Built-in editors for the field | `date_picker`            |
+ * | Available validators           | `required`, `date_range` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Date time (<code>date_time</code>)</summary>
+ *
+ * | Property                       | Value                         |
+ * | ------------------------------ | ----------------------------- |
+ * | Code                           | `date_time`                   |
+ * | Built-in editors for the field | `date_time_picker`            |
+ * | Available validators           | `required`, `date_time_range` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Color (<code>color</code>)</summary>
+ *
+ * | Property                       | Value          |
+ * | ------------------------------ | -------------- |
+ * | Code                           | `color`        |
+ * | Built-in editors for the field | `color_picker` |
+ * | Available validators           | `required`     |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>JSON (<code>json</code>)</summary>
+ *
+ * | Property                       | Value                                                  |
+ * | ------------------------------ | ------------------------------------------------------ |
+ * | Code                           | `json`                                                 |
+ * | Built-in editors for the field | `json`, `string_multi_select`, `string_checkbox_group` |
+ * | Available validators           | `required`                                             |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Location (<code>lat_lon</code>)</summary>
+ *
+ * | Property                       | Value      |
+ * | ------------------------------ | ---------- |
+ * | Code                           | `lat_lon`  |
+ * | Built-in editors for the field | `map`      |
+ * | Available validators           | `required` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>SEO (<code>seo</code>)</summary>
+ *
+ * | Property                       | Value                                                                                        |
+ * | ------------------------------ | -------------------------------------------------------------------------------------------- |
+ * | Code                           | `seo`                                                                                        |
+ * | Built-in editors for the field | `seo`                                                                                        |
+ * | Available validators           | `required_seo_fields`, `file_size`, `image_dimensions`, `title_length`, `description_length` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Slug (<code>slug</code>)</summary>
+ *
+ * | Property                       | Value                               |
+ * | ------------------------------ | ----------------------------------- |
+ * | Code                           | `slug`                              |
+ * | Built-in editors for the field | `slug`                              |
+ * | Required validators            | `slug_title_field`                  |
+ * | Other validators available     | `required`, `length`, `slug_format` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>External video (<code>video</code>)</summary>
+ *
+ * | Property                       | Value      |
+ * | ------------------------------ | ---------- |
+ * | Code                           | `video`    |
+ * | Built-in editors for the field | `video`    |
+ * | Available validators           | `required` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Single-asset (<code>file</code>)</summary>
+ *
+ * | Property                       | Value                                                                          |
+ * | ------------------------------ | ------------------------------------------------------------------------------ |
+ * | Code                           | `file`                                                                         |
+ * | Built-in editors for the field | `file`                                                                         |
+ * | Available validators           | `required`, `file_size`, `image_dimensions`, `extension`, `required_alt_title` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Asset gallery (<code>gallery</code>)</summary>
+ *
+ * | Property                       | Value                                                                      |
+ * | ------------------------------ | -------------------------------------------------------------------------- |
+ * | Code                           | `gallery`                                                                  |
+ * | Built-in editors for the field | `gallery`                                                                  |
+ * | Available validators           | `size`, `file_size`, `image_dimensions`, `extension`, `required_alt_title` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Single link (<code>link</code>)</summary>
+ *
+ * | Property                       | Value                       |
+ * | ------------------------------ | --------------------------- |
+ * | Code                           | `link`                      |
+ * | Built-in editors for the field | `link_select`, `link_embed` |
+ * | Default `editor`               | `link_select`               |
+ * | Required validators            | `item_item_type`            |
+ * | Other validators available     | `required`, `unique`        |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Multiple links (<code>links</code>)</summary>
+ *
+ * | Property                       | Value                         |
+ * | ------------------------------ | ----------------------------- |
+ * | Code                           | `links`                       |
+ * | Built-in editors for the field | `links_select`, `links_embed` |
+ * | Default `editor`               | `links_select`                |
+ * | Required validators            | `items_item_type`             |
+ * | Other validators available     | `size`                        |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Modular content (<code>rich_text</code>)</summary>
+ *
+ * | Property                       | Value              |
+ * | ------------------------------ | ------------------ |
+ * | Code                           | `rich_text`        |
+ * | Built-in editors for the field | `rich_text`        |
+ * | Required validators            | `rich_text_blocks` |
+ * | Other validators available     | `size`             |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Structured text (<code>structured_text</code>)</summary>
+ *
+ * | Property                       | Value                                             |
+ * | ------------------------------ | ------------------------------------------------- |
+ * | Code                           | `structured_text`                                 |
+ * | Built-in editors for the field | `structured_text`                                 |
+ * | Required validators            | `structured_text_blocks`, `structured_text_links` |
+ * | Other validators available     | `length`                                          |
+ *
+ * </details>
+ *
+ * ### Validators
+ *
+ * <details>
+ * <summary><code>date_range</code></summary>
+ *
+ * Accept dates only inside a specified date range.
+ *
+ * | Parameter | Type          | Required | Description  |
+ * | --------- | ------------- | -------- | ------------ |
+ * | `min`     | ISO 8601 date |          | Minimum date |
+ * | `max`     | ISO 8601 date |          | Maximum date |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>date_time_range</code></summary>
+ *
+ * Accept date times only inside a specified date range.
+ *
+ * | Parameter | Type              | Required | Description      |
+ * | --------- | ----------------- | -------- | ---------------- |
+ * | `min`     | ISO 8601 datetime |          | Minimum datetime |
+ * | `max`     | ISO 8601 datetime |          | Maximum datetime |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>enum</code></summary>
+ *
+ * Only accept a specific set of values
+ *
+ * | Parameter | Type            | Required | Description           |
+ * | --------- | --------------- | -------- | --------------------- |
+ * | `values`  | `Array<String>` | ✅       | Set of allowed values |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>extension</code></summary>
+ *
+ * Only accept assets with specific file extensions.
+ *
+ * | Parameter         | Type                                      | Required | Description                    |
+ * | ----------------- | ----------------------------------------- | -------- | ------------------------------ |
+ * | `extensions`      | `Array<String>`                           |          | Set of allowed file extensions |
+ * | `predefined_list` | one of `"image"`, `"video"`, `"document"` |          | Allowed file type              |
+ *
+ * Only one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>file_size</code></summary>
+ *
+ * Accept assets only inside a specified date range.
+ *
+ * | Parameter   | Type                         | Required | Description                        |
+ * | ----------- | ---------------------------- | -------- | ---------------------------------- |
+ * | `min_value` | `Integer`                    |          | Numeric value for minimum filesize |
+ * | `min_unit`  | one of `"B"`, `"KB"`, `"MB"` |          | Unit for minimum filesize          |
+ * | `max_value` | `Integer`                    |          | Numeric value for maximum filesize |
+ * | `max_unit`  | one of `"B"`, `"KB"`, `"MB"` |          | Unit for maximum filesize          |
+ *
+ * At least one couple of value/unit must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>format</code></summary>
+ *
+ * Only accept strings having a specific format.
+ *
+ * | Parameter            | Type                      | Required | Description                        |
+ * | -------------------- | ------------------------- | -------- | ---------------------------------- |
+ * | `custom_pattern`     | `Regexp`                  |          | Regular expression to be validated |
+ * | `predefined_pattern` | one of `"email"`, `"url"` |          | Allowed format                     |
+ *
+ * Only one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>slug_format</code></summary>
+ *
+ * Only accept slugs having a specific format.
+ *
+ * | Parameter            | Type             | Required | Description                        |
+ * | -------------------- | ---------------- | -------- | ---------------------------------- |
+ * | `custom_pattern`     | `Regexp`         |          | Regular expression to be validated |
+ * | `predefined_pattern` | `"webpage_slug"` |          | Allowed format                     |
+ *
+ * Only one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>image_dimensions</code></summary>
+ *
+ * Accept assets only within a specified height/width range.
+ *
+ * | Parameter          | Type      | Required | Description                      |
+ * | ------------------ | --------- | -------- | -------------------------------- |
+ * | `width_min_value`  | `Integer` |          | Numeric value for minimum width  |
+ * | `width_max_value`  | `Integer` |          | Numeric value for maximum height |
+ * | `height_min_value` | `Integer` |          | Numeric value for minimum width  |
+ * | `height_max_value` | `Integer` |          | Numeric value for maximum height |
+ *
+ * At least one parameter must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>item_item_type</code></summary>
+ *
+ * Only accept references to records of the specified models.
+ *
+ * | Parameter                                         | Type                                                                     | Required | Description                                                                                         |
+ * | ------------------------------------------------- | ------------------------------------------------------------------------ | -------- | --------------------------------------------------------------------------------------------------- |
+ * | `item_types`                                      | `Array<Model ID>`                                                        | ✅       | Set of allowed model IDs                                                                            |
+ * | `on_publish_with_unpublished_references_strategy` | `"fail"`, `"publish_references"` (default value: `"fail"`)               |          | Strategy to apply when a publishing is requested and this field references some unpublished records |
+ * | `on_reference_unpublish_strategy`                 | `"fail"`, `"unpublish"`, `"delete_references"` (default value: `"fail"`) |          | Strategy to apply when unpublishing is requested for a record referenced by this field              |
+ * | `on_reference_delete_strategy`                    | `"fail"`, `"delete_references"` (default value: `"delete_references"`)   |          | Strategy to apply when deletion is requested for a record referenced by this field                  |
+ *
+ * Possible values for `on_publish_with_unpublished_references_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"publish_references"`: Publish also the referenced records
+ *
+ * Possible values for `on_reference_unpublish_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"unpublish"`: Unpublish also this record
+ * - `"delete_references"`: Try to remove the reference to the unpublished record (if the field has a `required` validation it will fail)
+ *
+ * Possible values for `on_reference_delete_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"delete_references"`: Try to remove the reference to the deleted record (if the field has a `required` validation it will fail)
+ * </details>
+ *
+ * <details>
+ * <summary><code>items_item_type</code></summary>
+ *
+ * Only accept references to records of the specified models.
+ *
+ * | Parameter                                         | Type                                                                     | Required | Description                                                                                         |
+ * | ------------------------------------------------- | ------------------------------------------------------------------------ | -------- | --------------------------------------------------------------------------------------------------- |
+ * | `item_types`                                      | `Array<Model ID>`                                                        | ✅       | Set of allowed model IDs                                                                            |
+ * | `on_publish_with_unpublished_references_strategy` | `"fail"`, `"publish_references"` (default value: `"fail"`)               |          | Strategy to apply when a publishing is requested and this field references some unpublished records |
+ * | `on_reference_unpublish_strategy`                 | `"fail"`, `"unpublish"`, `"delete_references"` (default value: `"fail"`) |          | Strategy to apply when unpublishing is requested for a record referenced by this field              |
+ * | `on_reference_delete_strategy`                    | `"fail"`, `"delete_references"` (default value: `"delete_references"`)   |          | Strategy to apply when deletion is requested for a record referenced by this field                  |
+ *
+ * Possible values for `on_publish_with_unpublished_references_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"publish_references"`: Publish also the referenced records
+ *
+ * Possible values for `on_reference_unpublish_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"unpublish"`: Unpublish also this record
+ * - `"delete_references"`: Try to remove the reference to the unpublished record (if the field has a `required` validation it will fail)
+ *
+ * Possible values for `on_reference_delete_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"delete_references"`: Try to remove the reference to the deleted record (if the field has a `required` validation it will fail)
+ * </details>
+ *
+ * <details>
+ * <summary><code>length</code></summary>
+ *
+ * Accept strings only with a specified number of characters.
+ *
+ * | Parameter | Type      | Required | Description     |
+ * | --------- | --------- | -------- | --------------- |
+ * | `min`     | `Integer` |          | Minimum length  |
+ * | `eq`      | `Integer` |          | Expected length |
+ * | `max`     | `Integer` |          | Maximum length  |
+ *
+ * At least one parameter must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>number_range</code></summary>
+ *
+ * Accept numbers only inside a specified range.
+ *
+ * | Parameter | Type    | Required | Description   |
+ * | --------- | ------- | -------- | ------------- |
+ * | `min`     | `Float` |          | Minimum value |
+ * | `max`     | `Float` |          | Maximum value |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>required</code></summary>
+ *
+ * Value must be specified or it won't be valid.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>required_alt_title</code></summary>
+ *
+ * Assets contained in the field are required to specify custom title or alternate text, or they won't be valid.
+ *
+ * | Parameter | Type      | Required | Description                                                |
+ * | --------- | --------- | -------- | ---------------------------------------------------------- |
+ * | `title`   | `Boolean` |          | Whether the title for the asset must be specified          |
+ * | `alt`     | `Boolean` |          | Whether the alternate text for the asset must be specified |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>required_seo_fields</code></summary>
+ *
+ * SEO field is to specify one or more properties, or it won't be valid.
+ *
+ * | Parameter      | Type      | Required | Description                                        |
+ * | -------------- | --------- | -------- | -------------------------------------------------- |
+ * | `title`        | `Boolean` |          | Whether the meta title must be specified           |
+ * | `description`  | `Boolean` |          | Whether the meta description must be specified     |
+ * | `image`        | `Boolean` |          | Whether the social sharing image must be specified |
+ * | `twitter_card` | `Boolean` |          | Whether the type of Twitter card must be specified |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>title_length</code></summary>
+ *
+ * Limits the length of the title for a SEO field. Search engines usually truncate title tags to 60 character so it is a good practice to keep the title around this length.
+ *
+ * | Parameter | Type      | Required | Description   |
+ * | --------- | --------- | -------- | ------------- |
+ * | `min`     | `Integer` |          | Minimum value |
+ * | `max`     | `Integer` |          | Maximum value |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>description_length</code></summary>
+ *
+ * Limits the length of the description for a SEO field. Search engines usually truncate description tags to 160 character so it is a good practice to keep the description around this length.
+ *
+ * | Parameter | Type      | Required | Description   |
+ * | --------- | --------- | -------- | ------------- |
+ * | `min`     | `Integer` |          | Minimum value |
+ * | `max`     | `Integer` |          | Maximum value |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>rich_text_blocks</code></summary>
+ *
+ * Only accept references to block records of the specified block models.
+ *
+ * | Parameter    | Type                    | Required | Description                    |
+ * | ------------ | ----------------------- | -------- | ------------------------------ |
+ * | `item_types` | `Array<Block Model ID>` | ✅       | Set of allowed Block Model IDs |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>structured_text_blocks</code></summary>
+ *
+ * Only accept references to block records of the specified block models.
+ *
+ * | Parameter    | Type                    | Required | Description                    |
+ * | ------------ | ----------------------- | -------- | ------------------------------ |
+ * | `item_types` | `Array<Block Model ID>` | ✅       | Set of allowed Block Model IDs |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>structured_text_links</code></summary>
+ *
+ * Only accept `itemLink` to `inlineItem` nodes for records of the specified models.
+ *
+ * | Parameter                                         | Type                                                                                  | Required | Description                                                                                         |
+ * | ------------------------------------------------- | ------------------------------------------------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------- |
+ * | `item_types`                                      | `Array<Model ID>`                                                                     | ✅       | Set of allowed model IDs                                                                            |
+ * | `on_publish_with_unpublished_references_strategy` | `"fail"`, `"publish_references"` (default value: `"fail"`)                            |          | Strategy to apply when a publishing is requested and this field references some unpublished records |
+ * | `on_reference_unpublish_strategy`                 | `"fail"`, `"unpublish"`, `"delete_references"` (default value: `"delete_references"`) |          | Strategy to apply when unpublishing is requested for a record referenced by this field              |
+ * | `on_reference_delete_strategy`                    | `"fail"`, `"delete_references"` (default value: `"delete_references"`)                |          | Strategy to apply when deletion is requested for a record referenced by this field                  |
+ *
+ * Possible values for `on_publish_with_unpublished_references_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"publish_references"`: Publish also the referenced records
+ *
+ * Possible values for `on_reference_unpublish_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"unpublish"`: Unpublish also this record
+ * - `"delete_references"`: Try to remove the reference to the unpublished record (if the field has a `required` validation it will fail)
+ *
+ * Possible values for `on_reference_delete_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"delete_references"`: Try to remove the reference to the deleted record (if the field has a `required` validation it will fail)
+ * </details>
+ *
+ * <details>
+ * <summary><code>size</code></summary>
+ *
+ * Only accept a number of items within the specified range.
+ *
+ * | Parameter     | Type      | Required | Description                                        |
+ * | ------------- | --------- | -------- | -------------------------------------------------- |
+ * | `min`         | `Integer` |          | Minimum length                                     |
+ * | `eq`          | `Integer` |          | Expected length                                    |
+ * | `max`         | `Integer` |          | Maximum length                                     |
+ * | `multiple_of` | `Integer` |          | The number of items must be multiple of this value |
+ *
+ * At least one parameter must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>slug_title_field</code></summary>
+ *
+ * Specifies the ID of the _Single-line string_ field that will be used to generate the slug
+ *
+ * | Parameter        | Type       | Required | Description                                      |
+ * | ---------------- | ---------- | -------- | ------------------------------------------------ |
+ * | `title_field_id` | `Field ID` | ✅       | The field that will be used to generate the slug |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>unique</code></summary>
+ *
+ * The value must be unique across the whole collection of records.
+ *
+ * </details>
+ *
+ * ### Configuration parameters for DatoCMS built-in field editors
+ *
+ * If a field editor is not specified in this table, just pass an empty object `{}` as its configuration parameters.
+ *
+ * <details>
+ * <summary><code>boolean_radio_group</code></summary>
+ *
+ * Radio group input for _boolean_ fields.
+ *
+ * | Parameter        | Type                               | Required | Description                               |
+ * | ---------------- | ---------------------------------- | -------- | ----------------------------------------- |
+ * | `positive_radio` | `{ label: string, hint?: string }` | ✅       | Radio input for positive choice (`true`)  |
+ * | `negative_radio` | `{ label: string, hint?: string }` | ✅       | Radio input for negative choice (`false`) |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>string_radio_group</code></summary>
+ *
+ * Radio group input for _string_ fields.
+ *
+ * | Parameter | Type                                                     | Required | Description                 |
+ * | --------- | -------------------------------------------------------- | -------- | --------------------------- |
+ * | `radios`  | `Array<{ label: string, value: string, hint?: string }>` | ✅       | The different radio options |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>string_select</code></summary>
+ *
+ * Select input for _string_ fields.
+ *
+ * | Parameter | Type                                                     | Required | Description                  |
+ * | --------- | -------------------------------------------------------- | -------- | ---------------------------- |
+ * | `options` | `Array<{ label: string, value: string, hint?: string }>` | ✅       | The different select options |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>string_multi_select</code></summary>
+ *
+ * Select input for _JSON_ fields, to edit an array of strings.
+ *
+ * | Parameter | Type                                                     | Required | Description                  |
+ * | --------- | -------------------------------------------------------- | -------- | ---------------------------- |
+ * | `options` | `Array<{ label: string, value: string, hint?: string }>` | ✅       | The different select options |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>string_checkbox_group</code></summary>
+ *
+ * Multiple chechboxes input for _JSON_ fields, to edit an array of strings.
+ *
+ * | Parameter | Type                                                     | Required | Description                  |
+ * | --------- | -------------------------------------------------------- | -------- | ---------------------------- |
+ * | `options` | `Array<{ label: string, value: string, hint?: string }>` | ✅       | The different select options |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>single_line</code></summary>
+ *
+ * Simple textual input for _Single-line string_ fields.
+ *
+ * | Parameter | Type      | Required | Description                                                                      |
+ * | --------- | --------- | -------- | -------------------------------------------------------------------------------- |
+ * | `heading` | `Boolean` | ✅       | Indicates if the field should be shown bigger, as a field representing a heading |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>markdown</code></summary>
+ *
+ * Markdown editor for _Multiple-paragraph text_ fields.
+ *
+ * | Parameter | Type            | Required | Description                                                                                                                                                                                                       |
+ * | --------- | --------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+ * | `toolbar` | `Array<String>` | ✅       | Specify which buttons the toolbar should have. Valid values: `"heading"`, `"bold"`, `"italic"`, `"strikethrough"`, `"code"`, `"unordered_list"`, `"ordered_list"`, `"quote"`, `"link"`, `"image"`, `"fullscreen"` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>wysiwyg</code></summary>
+ *
+ * HTML editor for _Multiple-paragraph text_ fields.
+ *
+ * | Parameter | Type            | Required | Description                                                                                                                                                                                                                                                                                                                                                     |
+ * | --------- | --------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+ * | `toolbar` | `Array<String>` | ✅       | Specify which buttons the toolbar should have. Valid values: `"format"`, `"bold"`, `"italic"`, `"strikethrough"`, `"code"`, `"ordered_list"`, `"unordered_list"`, `"quote"`, `"table"`, `"link"`, `"image"`, `"show_source"`, `"undo"`, `"redo"`, `"align_left"`, `"align_center"`, `"align_right"`, `"align_justify"`, `"outdent"`, `"indent"`, `"fullscreen"` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>textarea</code></summary>
+ *
+ * Basic textarea editor for _Multiple-paragraph text_ fields.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>color_picker</code></summary>
+ *
+ * Built-in editor for _Color_ fields.
+ *
+ * | Parameter       | Type                      | Required | Description                                               |
+ * | --------------- | ------------------------- | -------- | --------------------------------------------------------- |
+ * | `enable_alpha`  | `Boolean`                 | ✅       | Should the color picker allow to specify the alpha value? |
+ * | `preset_colors` | `Array<Hex color string>` | ✅       | List of preset colors to offer to the user                |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>slug</code></summary>
+ *
+ * Built-in editor for _Slug_ fields.
+ *
+ * | Parameter    | Type     | Required | Description                                                                            |
+ * | ------------ | -------- | -------- | -------------------------------------------------------------------------------------- |
+ * | `url_prefix` | `String` |          | A prefix that will be shown in the editor's form to give some context to your editors. |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>rich_text</code></summary>
+ *
+ * Built-in editor for _Modular content_ fields.
+ *
+ * | Parameter         | Type      | Required | Description                                                |
+ * | ----------------- | --------- | -------- | ---------------------------------------------------------- |
+ * | `start_collapsed` | `Boolean` |          | Whether you want block records collapsed by default or not |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>structured_text</code></summary>
+ *
+ * Built-in editor for _Structured text_ fields.
+ *
+ * | Parameter                 | Type            | Required | Description                                                                                                                                   |
+ * | ------------------------- | --------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+ * | `nodes`                   | `Array<String>` | ✅       | Specify which nodes the field should allow. Valid values: `"blockquote"`, `"code"`, `"heading"`, `"link"`, `"list"`, `"thematicBreak"`        |
+ * | `marks`                   | `Array<String>` | ✅       | Specify which marks the field should allow. Valid values: `"strong"`, `"emphasis"`, `"underline"`, `"strikethrough"`, `"code"`, `"highlight"` |
+ * | `blocks_start_collapsed`  | `Boolean`       |          | Whether you want block nodes collapsed by default or not                                                                                      |
+ * | `show_links_target_blank` | `Boolean`       |          | Whether you want to show the "Open this link in a new tab?" checkbox, that fills in the `target: "_blank"` meta attribute for links           |
+ * | `show_links_meta_editor`  | `Boolean`       |          | Whether you want to show the complete meta editor for links                                                                                   |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>link_select</code> and <code>links_select</code></summary>
+ *
+ * Use a select input with auto-completion to pick the records to reference inside the field.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>link_embed</code> and <code>links_embed</code></summary>
+ *
+ * Use an expanded view with records' image preview to pick the records to reference inside the field.
+ *
+ * </details>
+ *
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "field".
@@ -4373,17 +5395,6 @@ export type FieldUpdateJobSchema = Field;
 export type FieldSelfTargetSchema = Field;
 export type FieldDestroyJobSchema = Field;
 export type FieldDuplicateJobSchema = Field;
-/**
- * JSON API data
- *
- * This interface was referenced by `Fieldset`'s JSON-Schema
- * via the `definition` "data".
- */
-export type FieldsetData = {
-  type: FieldsetType;
-  id: FieldsetIdentity;
-};
-
 /**
  * JSON API attributes
  *
@@ -4872,145 +5883,6 @@ export type SessionCreateSchema = {
    * Two-factor authentication one-time password
    */
   otp_code?: string;
-};
-
-/**
- * An API token allows access to our API. It is linked to a Role, which describes what actions can be performed.
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "access_token".
- */
-export type AccessToken = {
-  id: AccessTokenIdentity;
-  type: AccessTokenType;
-  /**
-   * Name of API token
-   */
-  name: string;
-  /**
-   * The actual API token
-   */
-  token?: string;
-  /**
-   * Whether this API token can access the Content Delivery API published content endpoint
-   */
-  can_access_cda: boolean;
-  /**
-   * Whether this API token can access the Content Delivery API draft content endpoint
-   */
-  can_access_cda_preview: boolean;
-  /**
-   * Whether this API token can access the Content Management API
-   */
-  can_access_cma: boolean;
-  hardcoded_type: null | string;
-  role: RoleData | null;
-};
-export type AccessTokenCreateTargetSchema = AccessToken;
-export type AccessTokenUpdateTargetSchema = AccessToken;
-export type AccessTokenSelfTargetSchema = AccessToken;
-export type AccessTokenRegenerateTokenTargetSchema = AccessToken;
-export type AccessTokenDestroyTargetSchema = AccessToken;
-/**
- * JSON API data
- *
- * This interface was referenced by `AccessToken`'s JSON-Schema
- * via the `definition` "data".
- */
-export type AccessTokenData = {
-  type: AccessTokenType;
-  id: AccessTokenIdentity;
-};
-
-/**
- * JSON API attributes
- *
- * This interface was referenced by `AccessToken`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type AccessTokenAttributes = {
-  /**
-   * Name of API token
-   */
-  name: string;
-  /**
-   * The actual API token
-   */
-  token?: string;
-  /**
-   * Whether this API token can access the Content Delivery API published content endpoint
-   */
-  can_access_cda: boolean;
-  /**
-   * Whether this API token can access the Content Delivery API draft content endpoint
-   */
-  can_access_cda_preview: boolean;
-  /**
-   * Whether this API token can access the Content Management API
-   */
-  can_access_cma: boolean;
-  hardcoded_type: null | string;
-};
-
-/**
- * JSON API links
- *
- * This interface was referenced by `AccessToken`'s JSON-Schema
- * via the `definition` "relationships".
- */
-export type AccessTokenRelationships = {
-  role: RoleData | null;
-};
-
-/**
- * This interface was referenced by `AccessToken`'s JSON-Schema
- * via the `create.schema` link.
- */
-export type AccessTokenCreateSchema = {
-  type?: AccessTokenType;
-  /**
-   * Name of API token
-   */
-  name: string;
-  /**
-   * Whether this API token can access the Content Delivery API published content endpoint
-   */
-  can_access_cda: boolean;
-  /**
-   * Whether this API token can access the Content Delivery API draft content endpoint
-   */
-  can_access_cda_preview: boolean;
-  /**
-   * Whether this API token can access the Content Management API
-   */
-  can_access_cma: boolean;
-  role: RoleData | null;
-};
-
-/**
- * This interface was referenced by `AccessToken`'s JSON-Schema
- * via the `update.schema` link.
- */
-export type AccessTokenUpdateSchema = {
-  id?: AccessTokenIdentity;
-  type?: AccessTokenType;
-  /**
-   * Name of API token
-   */
-  name: string;
-  /**
-   * Whether this API token can access the Content Delivery API published content endpoint
-   */
-  can_access_cda: boolean;
-  /**
-   * Whether this API token can access the Content Delivery API draft content endpoint
-   */
-  can_access_cda_preview: boolean;
-  /**
-   * Whether this API token can access the Content Management API
-   */
-  can_access_cma: boolean;
-  role: RoleData | null;
 };
 
 /**

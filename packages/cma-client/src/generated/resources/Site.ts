@@ -11,8 +11,8 @@ export default class Site extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site/self
    */
-  find() {
-    return this.rawFind().then((body) =>
+  find(queryParams?: SimpleSchemaTypes.SiteSelfHrefSchema) {
+    return this.rawFind(queryParams).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SiteSelfTargetSchema>(
         body,
       ),
@@ -24,10 +24,13 @@ export default class Site extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site/self
    */
-  rawFind(): Promise<SchemaTypes.SiteSelfTargetSchema> {
+  rawFind(
+    queryParams?: SchemaTypes.SiteSelfHrefSchema,
+  ): Promise<SchemaTypes.SiteSelfTargetSchema> {
     return this.client.request<SchemaTypes.SiteSelfTargetSchema>({
       method: 'GET',
       url: `/site`,
+      queryParams,
     });
   }
 

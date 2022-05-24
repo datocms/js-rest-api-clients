@@ -76,8 +76,11 @@ export default class User extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/user/self
    */
-  find(userId: string | SimpleSchemaTypes.UserData) {
-    return this.rawFind(Utils.toId(userId)).then((body) =>
+  find(
+    userId: string | SimpleSchemaTypes.UserData,
+    queryParams?: SimpleSchemaTypes.UserSelfHrefSchema,
+  ) {
+    return this.rawFind(Utils.toId(userId), queryParams).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.UserSelfTargetSchema>(
         body,
       ),
@@ -89,10 +92,40 @@ export default class User extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/user/self
    */
-  rawFind(userId: string): Promise<SchemaTypes.UserSelfTargetSchema> {
+  rawFind(
+    userId: string,
+    queryParams?: SchemaTypes.UserSelfHrefSchema,
+  ): Promise<SchemaTypes.UserSelfTargetSchema> {
     return this.client.request<SchemaTypes.UserSelfTargetSchema>({
       method: 'GET',
       url: `/users/${userId}`,
+      queryParams,
+    });
+  }
+
+  /**
+   * Retrieve current signed-in user
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/user/me
+   */
+  findMe(queryParams?: SimpleSchemaTypes.UserMeHrefSchema) {
+    return this.rawFindMe(queryParams).then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.UserMeTargetSchema>(body),
+    );
+  }
+
+  /**
+   * Retrieve current signed-in user
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/user/me
+   */
+  rawFindMe(
+    queryParams?: SchemaTypes.UserMeHrefSchema,
+  ): Promise<SchemaTypes.UserMeTargetSchema> {
+    return this.client.request<SchemaTypes.UserMeTargetSchema>({
+      method: 'GET',
+      url: `/users/me`,
+      queryParams,
     });
   }
 

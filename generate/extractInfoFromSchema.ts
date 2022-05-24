@@ -68,6 +68,7 @@ type JSONSchemaWithLinks = JSONSchema & { links: JSONHyperschemaLink[] };
 const relToMethodName = {
   instances: 'list',
   self: 'find',
+  me: 'findMe',
 };
 
 function hasLinks(schema: JSONSchema): schema is JSONSchemaWithLinks {

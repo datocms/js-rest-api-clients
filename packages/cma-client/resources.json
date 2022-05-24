@@ -58,6 +58,12 @@
         "rawName": "rawFind"
       },
       {
+        "rel": "me",
+        "returnsCollection": false,
+        "name": "findMe",
+        "rawName": "rawFindMe"
+      },
+      {
         "rel": "destroy",
         "returnsCollection": false,
         "name": "destroy",
