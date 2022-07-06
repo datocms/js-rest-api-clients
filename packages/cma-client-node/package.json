@@ -30,7 +30,7 @@
   "dependencies": {
     "@datocms/cma-client": "^1.0.0",
     "@datocms/rest-client-utils": "^1.0.0",
-    "got": "^10.7.0",
+    "got": "^11.8.5",
     "mime-types": "^2.1.35",
     "tmp-promise": "^3.0.3"
   },
