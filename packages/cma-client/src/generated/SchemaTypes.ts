@@ -3176,6 +3176,10 @@ export type SitePlanAttributes = {
    */
   translator_roles: boolean;
   /**
+   * Whether or not use a static IP when sending webhooks
+   */
+  static_webhooks_ip: boolean;
+  /**
    * Available extra packets
    */
   extra_packets: {
@@ -4310,7 +4314,7 @@ export type ItemTypeDestroyJobSchema = {
  * | Parameter         | Type                                      | Required | Description                    |
  * | ----------------- | ----------------------------------------- | -------- | ------------------------------ |
  * | `extensions`      | `Array<String>`                           |          | Set of allowed file extensions |
- * | `predefined_list` | one of `"image"`, `"video"`, `"document"` |          | Allowed file type              |
+ * | `predefined_list` | one of `"image"`, `"transformable_image"`, `"video"`, `"document"` |          | Allowed file type              |
  *
  * Only one of the parameters must be specified.
  *
@@ -9611,10 +9615,6 @@ export type SiteAttributes = {
    */
   last_data_change_at: null | string;
   /**
-   * Frontend website url
-   */
-  frontend_url: string | null;
-  /**
    * Specifies whether all users of this site need to authenticate using two-factor authentication
    */
   require_2fa: boolean;
@@ -9707,47 +9707,11 @@ export type SiteRelationships = {
   account: {
     data: AccountData;
   };
-  build_triggers?: {
-    /**
-     * The list of build trigger
-     */
-    data: BuildTriggerData[];
-  };
-  menu_items: {
-    /**
-     * The list of site menu items
-     */
-    data: MenuItemData[];
-  };
-  sso_users: {
-    /**
-     * The list of site SSO users
-     */
-    data: SsoUserData[];
-  };
-  users: {
-    /**
-     * The list of site users
-     */
-    data: UserData[];
-  };
   item_types: {
     /**
-     * The list of site item types
+     * The list item types for the site
      */
     data: ItemTypeData[];
-  };
-  sso_default_role?: {
-    /**
-     * Specifies the default role for newly created identity providers users
-     */
-    data: RoleData[];
-  };
-  roles: {
-    /**
-     * The list of site roles
-     */
-    data: RoleData[];
   };
 };
 
@@ -9781,18 +9745,7 @@ export type SiteData = {
  */
 export type SiteSelfTargetSchema = {
   data: Site;
-  included?: (
-    | MenuItem
-    | User
-    | ItemType
-    | Role
-    | Field
-    | Upload
-    | SsoUser
-    | Fieldset
-    | Item
-    | Account
-  )[];
+  included?: (ItemType | Field | Upload | Fieldset | Item | Account)[];
 };
 
 /**

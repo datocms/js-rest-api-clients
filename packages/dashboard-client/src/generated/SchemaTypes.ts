@@ -1942,6 +1942,10 @@ export type SitePlanAttributes = {
    */
   translator_roles: boolean;
   /**
+   * Whether or not use a static IP when sending webhooks
+   */
+  static_webhooks_ip: boolean;
+  /**
    * Available extra packets
    */
   extra_packets: {

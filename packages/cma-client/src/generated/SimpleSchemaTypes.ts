@@ -3565,6 +3565,10 @@ export type SitePlan = {
    */
   translator_roles: boolean;
   /**
+   * Whether or not use a static IP when sending webhooks
+   */
+  static_webhooks_ip: boolean;
+  /**
    * Available extra packets
    */
   extra_packets: {
@@ -3782,6 +3786,10 @@ export type SitePlanAttributes = {
    * Whether translator roles are enabled or not
    */
   translator_roles: boolean;
+  /**
+   * Whether or not use a static IP when sending webhooks
+   */
+  static_webhooks_ip: boolean;
   /**
    * Available extra packets
    */
@@ -4826,7 +4834,7 @@ export type JobData = {
  * | Parameter         | Type                                      | Required | Description                    |
  * | ----------------- | ----------------------------------------- | -------- | ------------------------------ |
  * | `extensions`      | `Array<String>`                           |          | Set of allowed file extensions |
- * | `predefined_list` | one of `"image"`, `"video"`, `"document"` |          | Allowed file type              |
+ * | `predefined_list` | one of `"image"`, `"transformable_image"`, `"video"`, `"document"` |          | Allowed file type              |
  *
  * Only one of the parameters must be specified.
  *
@@ -9245,10 +9253,6 @@ export type Site = {
    */
   last_data_change_at: null | string;
   /**
-   * Frontend website url
-   */
-  frontend_url: string | null;
-  /**
    * Specifies whether all users of this site need to authenticate using two-factor authentication
    */
   require_2fa: boolean;
@@ -9331,33 +9335,9 @@ export type Site = {
   } | null;
   account: AccountData;
   /**
-   * The list of build trigger
-   */
-  build_triggers?: BuildTriggerData[];
-  /**
-   * The list of site menu items
-   */
-  menu_items: MenuItemData[];
-  /**
-   * The list of site SSO users
-   */
-  sso_users: SsoUserData[];
-  /**
-   * The list of site users
-   */
-  users: UserData[];
-  /**
-   * The list of site item types
+   * The list item types for the site
    */
   item_types: ItemTypeData[];
-  /**
-   * Specifies the default role for newly created identity providers users
-   */
-  sso_default_role?: RoleData[];
-  /**
-   * The list of site roles
-   */
-  roles: RoleData[];
   meta: SiteMeta;
 };
 export type SiteSelfTargetSchema = Site;
@@ -9434,10 +9414,6 @@ export type SiteAttributes = {
    * Specifies the last time when a change of data occurred
    */
   last_data_change_at: null | string;
-  /**
-   * Frontend website url
-   */
-  frontend_url: string | null;
   /**
    * Specifies whether all users of this site need to authenticate using two-factor authentication
    */
@@ -9530,33 +9506,9 @@ export type SiteAttributes = {
 export type SiteRelationships = {
   account: AccountData;
   /**
-   * The list of build trigger
-   */
-  build_triggers?: BuildTriggerData[];
-  /**
-   * The list of site menu items
-   */
-  menu_items: MenuItemData[];
-  /**
-   * The list of site SSO users
-   */
-  sso_users: SsoUserData[];
-  /**
-   * The list of site users
-   */
-  users: UserData[];
-  /**
-   * The list of site item types
+   * The list item types for the site
    */
   item_types: ItemTypeData[];
-  /**
-   * Specifies the default role for newly created identity providers users
-   */
-  sso_default_role?: RoleData[];
-  /**
-   * The list of site roles
-   */
-  roles: RoleData[];
 };
 
 /**
