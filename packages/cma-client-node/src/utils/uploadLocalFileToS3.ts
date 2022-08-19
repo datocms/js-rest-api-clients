@@ -35,7 +35,7 @@ export function uploadLocalFileToS3(
       try {
         putPromise = got.put(url, {
           headers: {
-            'Content-Type': mime.lookup(filePath),
+            'Content-Type': mime.lookup(filePath) || 'application/octet-stream',
             'Content-Length': `${totalLength}`,
           },
           responseType: 'json',

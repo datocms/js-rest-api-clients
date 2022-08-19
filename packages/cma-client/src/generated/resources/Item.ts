@@ -69,7 +69,8 @@ export default class Item extends BaseResource {
         defaultLimit: 30,
         maxLimit: 500,
       },
-      (page) => this.rawList({ ...queryParams, page }),
+      (page: SchemaTypes.ItemInstancesHrefSchema['page']) =>
+        this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );
   }

@@ -71,7 +71,8 @@ export default class UploadSmartTag extends BaseResource {
         defaultLimit: 50,
         maxLimit: 500,
       },
-      (page) => this.rawList({ ...queryParams, page }),
+      (page: SchemaTypes.UploadSmartTagInstancesHrefSchema['page']) =>
+        this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );
   }

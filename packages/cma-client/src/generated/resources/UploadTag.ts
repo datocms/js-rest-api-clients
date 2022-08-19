@@ -69,7 +69,8 @@ export default class UploadTag extends BaseResource {
         defaultLimit: 50,
         maxLimit: 500,
       },
-      (page) => this.rawList({ ...queryParams, page }),
+      (page: SchemaTypes.UploadTagInstancesHrefSchema['page']) =>
+        this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );
   }

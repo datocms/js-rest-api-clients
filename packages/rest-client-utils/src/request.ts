@@ -2,6 +2,7 @@ import qs from 'qs';
 import fetch from 'cross-fetch';
 import { ApiError, ApiErrorInitObject } from './ApiError';
 import { JobResult } from './internalTypes';
+import { wait } from './wait';
 
 export enum LogLevel {
   /** No logging */
@@ -32,7 +33,7 @@ type RequestOptions = {
 };
 
 function headersToObject(headers: Headers): Record<string, string> {
-  const result = {};
+  const result: Record<string, string> = {};
 
   headers.forEach((value, key) => {
     result[key] = value;
@@ -91,12 +92,6 @@ function buildApiErrorInitObjectFromJobResult(
     },
     preCallStack,
   };
-}
-
-function wait(time) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, time);
-  });
 }
 
 function isErrorWithCode(error: unknown): error is { code: string } {

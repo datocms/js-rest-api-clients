@@ -110,7 +110,8 @@ export default class Upload extends BaseResource {
         defaultLimit: 30,
         maxLimit: 500,
       },
-      (page) => this.rawList({ ...queryParams, page }),
+      (page: SchemaTypes.UploadInstancesHrefSchema['page']) =>
+        this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );
   }

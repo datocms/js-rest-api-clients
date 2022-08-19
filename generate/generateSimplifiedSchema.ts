@@ -1,7 +1,10 @@
+import JsonRefParser from '@apidevtools/json-schema-ref-parser';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-function simplifySchema(objectSchema) {
-  const { attributes, relationships, meta, id, type } = objectSchema.properties;
+function simplifySchema(objectSchema: any) {
+  const { attributes, relationships, meta, id, type } =
+    objectSchema.properties as any;
 
   return {
     ...objectSchema,
@@ -41,7 +44,7 @@ function simplifySchema(objectSchema) {
   };
 }
 
-function simplifyEntity(objectSchema) {
+function simplifyEntity(objectSchema: any) {
   const { attributes, relationships } = objectSchema.definitions;
   const { id, type, meta } = objectSchema.properties;
 
@@ -123,13 +126,15 @@ function applyToInnerObject(
   }
 
   if (schema.anyOf) {
-    schema.anyOf = schema.anyOf.map((i) => applyToInnerObject(name, i, apply));
+    schema.anyOf = schema.anyOf.map((i: any) =>
+      applyToInnerObject(name, i, apply),
+    );
     return schema;
   }
 
   if (schema.type === 'array') {
     if (schema.items && Array.isArray(schema.items)) {
-      schema.items = schema.items.map((i) =>
+      schema.items = schema.items.map((i: any) =>
         applyToInnerObject(name, i, apply),
       );
     } else if (schema.items) {
@@ -150,7 +155,7 @@ export default function simplifyLinks(schema: any) {
   Object.entries<any>(schema.definitions).forEach(([jsonApiType, schema]) => {
     simplifyEntityRelationships(schema);
     if (schema.links) {
-      schema.links.forEach((link) => {
+      schema.links.forEach((link: any) => {
         link.schema = applyToInnerObject(
           `${jsonApiType} ${link.rel} schema`,
           link.schema?.properties?.data,

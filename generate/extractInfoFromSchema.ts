@@ -66,7 +66,7 @@ type JSONHyperschemaLink = {
 
 type JSONSchemaWithLinks = JSONSchema & { links: JSONHyperschemaLink[] };
 
-const relToMethodName = {
+const relToMethodName: Record<string, string> = {
   instances: 'list',
   self: 'find',
   me: 'findMe',
@@ -90,7 +90,9 @@ function recursivelyFindSchemaKeys(schema: JsonRefParser.JSONSchema): string[] {
   }
 
   if (schema.anyOf) {
-    return schema.anyOf.map((x) => recursivelyFindSchemaKeys(x)).flat();
+    return schema.anyOf
+      .map((x) => recursivelyFindSchemaKeys(x as JsonRefParser.JSONSchema))
+      .flat();
   }
 
   throw new Error('Ouch! 2');
@@ -122,7 +124,9 @@ function findPropertiesInProperty(
 
   if (schema.anyOf) {
     return schema.anyOf
-      .map((x) => findPropertiesInProperty(x, property))
+      .map((x) =>
+        findPropertiesInProperty(x as JsonRefParser.JSONSchema, property),
+      )
       .flat();
   }
 
@@ -166,7 +170,11 @@ function findTypeInDataProperty(schema: JsonRefParser.JSONSchema) {
 
   if (dataSchema.anyOf) {
     const types = [
-      ...new Set(dataSchema.anyOf.map((s) => findTypeInDataObject(s))),
+      ...new Set(
+        dataSchema.anyOf.map((s) =>
+          findTypeInDataObject(s as JsonRefParser.JSONSchema),
+        ),
+      ),
     ];
     if (types.length !== 1) {
       return '*';

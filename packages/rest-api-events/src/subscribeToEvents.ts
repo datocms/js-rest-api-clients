@@ -7,6 +7,12 @@ export type EventsSubscription = {
   unsubscribe: () => void;
 };
 
+type JobResultMessage = {
+  jobId: string;
+  status: number;
+  payload: JobResult['payload'];
+};
+
 const pusherAppKey = '75e6ef0fe5d39f481626';
 
 const channelPromisesCache: Record<string, Promise<EventsSubscription>> = {};
@@ -47,20 +53,23 @@ export function subscribeToEvents(
       const listeners: Record<string, (event: JobResult) => void> = {};
       const pastEmissions: Record<string, JobResult> = {};
 
-      channel.bind('job-result', ({ jobId, status, payload }) => {
-        const jobResult: JobResult = {
-          id: jobId,
-          type: 'job_result',
-          status,
-          payload,
-        };
-        if (listeners[jobId]) {
-          listeners[jobId](jobResult);
-          delete listeners[jobId];
-        } else {
-          pastEmissions[jobId] = jobResult;
-        }
-      });
+      channel.bind(
+        'job-result',
+        ({ jobId, status, payload }: JobResultMessage) => {
+          const jobResult: JobResult = {
+            id: jobId,
+            type: 'job_result',
+            status,
+            payload,
+          };
+          if (listeners[jobId]) {
+            listeners[jobId](jobResult);
+            delete listeners[jobId];
+          } else {
+            pastEmissions[jobId] = jobResult;
+          }
+        },
+      );
 
       resolve({
         channel,

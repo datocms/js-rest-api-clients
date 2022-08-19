@@ -41,8 +41,8 @@ export function serializeRequestBody<T>(body: unknown, options: Options): T {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { id, type, meta, ...otherProperties } = body as any;
 
-  const attributes = {};
-  const relationships = {};
+  const attributes: Record<string, unknown> = {};
+  const relationships: Record<string, unknown> = {};
 
   if (options.attributes === '*') {
     Object.entries(otherProperties).forEach(([key, value]) => {

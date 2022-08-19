@@ -156,7 +156,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
           defaultLimit: {{{paginatedResponse.defaultLimit}}},
           maxLimit: {{{paginatedResponse.maxLimit}}},
         },
-        (page) => this.{{{rawName}}}(
+        (page: SchemaTypes.{{{queryParamsType}}}['page']) => this.{{{rawName}}}(
           {{#if urlPlaceholder}}
             {{{urlPlaceholder.variableName}}},
           {{/if}}

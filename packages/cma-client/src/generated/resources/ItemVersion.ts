@@ -103,7 +103,8 @@ export default class ItemVersion extends BaseResource {
         defaultLimit: 15,
         maxLimit: 50,
       },
-      (page) => this.rawList(itemId, { ...queryParams, page }),
+      (page: SchemaTypes.ItemVersionInstancesHrefSchema['page']) =>
+        this.rawList(itemId, { ...queryParams, page }),
       iteratorOptions,
     );
   }

@@ -1361,6 +1361,11 @@ export type DailyUsageIdentity = string;
  */
 export type DailyUsageType = 'daily_usage';
 /**
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type DailyUsageInstancesTargetSchema = DailyUsage[];
+/**
  * Name of the counter
  *
  * This interface was referenced by `UsageCounter`'s JSON-Schema
@@ -9039,7 +9044,7 @@ export type DailyUsage = {
    */
   mux_delivered_seconds: number;
 };
-export type DailyUsageInstancesTargetSchema = DailyUsage;
+
 /**
  * JSON API data
  *

@@ -69,7 +69,8 @@ export default class SearchResult extends BaseResource {
         defaultLimit: 20,
         maxLimit: 100,
       },
-      (page) => this.rawList({ ...queryParams, page }),
+      (page: SchemaTypes.SearchResultInstancesHrefSchema['page']) =>
+        this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );
   }

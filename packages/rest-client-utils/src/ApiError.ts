@@ -43,7 +43,7 @@ function isErrorBody(body: unknown): body is ErrorBody {
   return true;
 }
 
-const humanMessageForCode = {
+const humanMessageForCode: Record<string, string | undefined> = {
   BATCH_DATA_VALIDATION_IN_PROGRESS: `The schema of this model changed, we're re-running validations over every record in background. Please retry with this operation in a few seconds!`,
   INSUFFICIENT_PERMISSIONS: `Your role does not permit this action`,
   MAINTENANCE_MODE: `The project is currently in maintenance mode!`,
@@ -65,7 +65,7 @@ const humanMessageForCode = {
   UPLOAD_NOT_PASSING_FIELD_VALIDATIONS: `Couldn't update this asset since some records are failing to pass the validations!`,
 };
 
-const humanMessageForPlanUpgradeLimit = {
+const humanMessageForPlanUpgradeLimit: Record<string, string | undefined> = {
   build_triggers: `You've reached the maximum number of build triggers your plan allows`,
   sandbox_environments: `You've reached the maximum number of environments your plan allows`,
   item_types: `You've reached the maximum number of models your plan allows to create`,

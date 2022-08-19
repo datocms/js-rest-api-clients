@@ -82,7 +82,8 @@ export default class Site extends BaseResource {
         defaultLimit: 20,
         maxLimit: 50,
       },
-      (page) => this.rawList({ ...queryParams, page }),
+      (page: SchemaTypes.SiteInstancesHrefSchema['page']) =>
+        this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );
   }

@@ -9399,7 +9399,7 @@ export type DailyUsageData = {
  * via the `instances.targetSchema` link.
  */
 export type DailyUsageInstancesTargetSchema = {
-  data: DailyUsage;
+  data: DailyUsage[];
 };
 
 /**
