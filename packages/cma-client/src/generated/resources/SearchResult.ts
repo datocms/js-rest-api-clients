@@ -11,7 +11,7 @@ export default class SearchResult extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-result/instances
    */
-  list(queryParams?: SimpleSchemaTypes.SearchResultInstancesHrefSchema) {
+  list(queryParams: SimpleSchemaTypes.SearchResultInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SearchResultInstancesTargetSchema>(
         body,
@@ -25,7 +25,7 @@ export default class SearchResult extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-result/instances
    */
   rawList(
-    queryParams?: SchemaTypes.SearchResultInstancesHrefSchema,
+    queryParams: SchemaTypes.SearchResultInstancesHrefSchema,
   ): Promise<SchemaTypes.SearchResultInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SearchResultInstancesTargetSchema>({
       method: 'GET',
@@ -40,7 +40,7 @@ export default class SearchResult extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-result/instances
    */
   async *listPagedIterator(
-    queryParams?: SimpleSchemaTypes.SearchResultInstancesHrefSchema,
+    queryParams: SimpleSchemaTypes.SearchResultInstancesHrefSchema,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
     for await (const element of this.rawListPagedIterator(
@@ -59,7 +59,7 @@ export default class SearchResult extends BaseResource {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-result/instances
    */
   rawListPagedIterator(
-    queryParams?: SchemaTypes.SearchResultInstancesHrefSchema,
+    queryParams: SchemaTypes.SearchResultInstancesHrefSchema,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
     return Utils.rawPageIterator<

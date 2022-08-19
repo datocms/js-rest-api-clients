@@ -24,7 +24,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
           {{{urlPlaceholder.variableName}}}: string | SimpleSchemaTypes.{{{urlPlaceholder.relType}}},
         {{/if}}
         {{#if queryParamsType}}
-          queryParams{{#unless requestBodyType}}?{{/unless}}: SimpleSchemaTypes.{{{queryParamsType}}},
+          queryParams{{#unless requestBodyType}}{{#unless queryParamsRequired}}?{{/unless}}{{/unless}}: SimpleSchemaTypes.{{{queryParamsType}}},
         {{/if}}
         {{#if requestBodyType}}
           body: SimpleSchemaTypes.{{{requestBodyType}}},
@@ -74,7 +74,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
       {{{urlPlaceholder.variableName}}}: string,
     {{/if}}
     {{#if queryParamsType}}
-      queryParams{{#unless requestBodyType}}?{{/unless}}: SchemaTypes.{{{queryParamsType}}},
+      queryParams{{#unless requestBodyType}}{{#unless queryParamsRequired}}?{{/unless}}{{/unless}}: SchemaTypes.{{{queryParamsType}}},
     {{/if}}
     {{#if requestBodyType}}
       body: SchemaTypes.{{{requestBodyType}}},
@@ -118,7 +118,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
         {{#if urlPlaceholder}}
           {{{urlPlaceholder.variableName}}}: string | SimpleSchemaTypes.{{{urlPlaceholder.relType}}},
         {{/if}}
-        queryParams?: SimpleSchemaTypes.{{{queryParamsType}}},
+        queryParams{{#unless queryParamsRequired}}?{{/unless}}: SimpleSchemaTypes.{{{queryParamsType}}},
         iteratorOptions?: Utils.IteratorOptions,
       ) {
         for await (const element of this.{{{rawName}}}PagedIterator(
@@ -146,7 +146,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
       {{#if urlPlaceholder}}
         {{{urlPlaceholder.variableName}}}: string,
       {{/if}}
-      queryParams?: SchemaTypes.{{{queryParamsType}}},
+      queryParams{{#unless queryParamsRequired}}?{{/unless}}: SchemaTypes.{{{queryParamsType}}},
       iteratorOptions?: Utils.IteratorOptions,
     ) {
       return Utils.rawPageIterator<

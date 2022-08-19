@@ -29,6 +29,7 @@ export type EndpointInfo = {
     relationships: string[] | '*';
   };
   queryParamsType?: string;
+  queryParamsRequired?: boolean;
   responseType?: string;
   deprecated?: string;
   paginatedResponse?: {
@@ -257,6 +258,12 @@ function generateResourceInfo(
       typeof link.hrefSchema.properties.page.properties.limit === 'object' &&
       link.hrefSchema.properties.page.properties.limit;
 
+    const queryParamsRequired =
+      link.hrefSchema &&
+      link.hrefSchema.required &&
+      Array.isArray(link.hrefSchema.required) &&
+      link.hrefSchema.required.length > 0;
+
     const pagination = paginationLimitProperty
       ? {
           defaultLimit: paginationLimitProperty.default as number,
@@ -301,6 +308,7 @@ function generateResourceInfo(
             true,
           )}HrefSchema`
         : undefined,
+      queryParamsRequired,
       responseType,
       paginatedResponse: pagination,
       deprecated: link.private

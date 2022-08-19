@@ -341,7 +341,7 @@ export default class Item extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  batchDestroy(queryParams?: SimpleSchemaTypes.ItemBatchDestroyHrefSchema) {
+  batchDestroy(queryParams: SimpleSchemaTypes.ItemBatchDestroyHrefSchema) {
     return this.rawBatchDestroy(queryParams).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemBatchDestroyJobSchema>(
         body,
@@ -357,7 +357,7 @@ export default class Item extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawBatchDestroy(
-    queryParams?: SchemaTypes.ItemBatchDestroyHrefSchema,
+    queryParams: SchemaTypes.ItemBatchDestroyHrefSchema,
   ): Promise<SchemaTypes.ItemBatchDestroyJobSchema> {
     return this.client.request<SchemaTypes.ItemBatchDestroyJobSchema>({
       method: 'DELETE',
@@ -373,7 +373,7 @@ export default class Item extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  batchPublish(queryParams?: SimpleSchemaTypes.ItemBatchPublishHrefSchema) {
+  batchPublish(queryParams: SimpleSchemaTypes.ItemBatchPublishHrefSchema) {
     return this.rawBatchPublish(queryParams).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemBatchPublishJobSchema>(
         body,
@@ -389,7 +389,7 @@ export default class Item extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawBatchPublish(
-    queryParams?: SchemaTypes.ItemBatchPublishHrefSchema,
+    queryParams: SchemaTypes.ItemBatchPublishHrefSchema,
   ): Promise<SchemaTypes.ItemBatchPublishJobSchema> {
     return this.client.request<SchemaTypes.ItemBatchPublishJobSchema>({
       method: 'PUT',
@@ -405,7 +405,7 @@ export default class Item extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  batchUnpublish(queryParams?: SimpleSchemaTypes.ItemBatchUnpublishHrefSchema) {
+  batchUnpublish(queryParams: SimpleSchemaTypes.ItemBatchUnpublishHrefSchema) {
     return this.rawBatchUnpublish(queryParams).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemBatchUnpublishJobSchema>(
         body,
@@ -421,7 +421,7 @@ export default class Item extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawBatchUnpublish(
-    queryParams?: SchemaTypes.ItemBatchUnpublishHrefSchema,
+    queryParams: SchemaTypes.ItemBatchUnpublishHrefSchema,
   ): Promise<SchemaTypes.ItemBatchUnpublishJobSchema> {
     return this.client.request<SchemaTypes.ItemBatchUnpublishJobSchema>({
       method: 'PUT',
