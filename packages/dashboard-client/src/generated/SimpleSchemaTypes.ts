@@ -1656,6 +1656,10 @@ export type SitePlan = {
    */
   static_webhooks_ip: boolean;
   /**
+   * Maximum size in bytes for a single file upload
+   */
+  maximum_single_upload_bytes: number;
+  /**
    * Available extra packets
    */
   extra_packets: {
@@ -1866,6 +1870,10 @@ export type SitePlanAttributes = {
    * Whether or not use a static IP when sending webhooks
    */
   static_webhooks_ip: boolean;
+  /**
+   * Maximum size in bytes for a single file upload
+   */
+  maximum_single_upload_bytes: number;
   /**
    * Available extra packets
    */

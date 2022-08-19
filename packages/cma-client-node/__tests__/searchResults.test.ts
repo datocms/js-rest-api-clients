@@ -12,14 +12,16 @@ describe('Search Results', () => {
         headers: {},
         payload: {},
       },
-      frontend_url: null,
+      frontend_url: 'http://www.google.com/',
       name: 'Foo',
-      indexing_enabled: false,
+      indexing_enabled: true,
     });
 
     const results = await client.searchResults.list({
-      q: 'Project',
-      build_trigger_id: trigger.id,
+      filter: {
+        query: 'project',
+        build_trigger_id: trigger.id,
+      },
     });
 
     expect(results).toHaveLength(0);

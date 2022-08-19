@@ -1946,6 +1946,10 @@ export type SitePlanAttributes = {
    */
   static_webhooks_ip: boolean;
   /**
+   * Maximum size in bytes for a single file upload
+   */
+  maximum_single_upload_bytes: number;
+  /**
    * Available extra packets
    */
   extra_packets: {

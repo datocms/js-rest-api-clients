@@ -1010,25 +1010,37 @@ export type SearchResultInstancesTargetSchema = SearchResult[];
  */
 export type SearchResultInstancesHrefSchema = {
   /**
-   * The query string to search
+   * Attributes to manage results pagination
    */
-  q: string;
+  page?: {
+    /**
+     * Index of first element to fetch (defaults to 0)
+     */
+    offset?: number;
+    /**
+     * Number of elements to fetch (defaults to 20, maximum is 100)
+     */
+    limit?: number;
+    [k: string]: unknown;
+  };
   /**
-   * The build trigger ID on which the search will be performed
+   * Attributes to filter search results
    */
-  build_trigger_id?: string;
-  /**
-   * Restrict the search on one locale
-   */
-  locale?: string;
-  /**
-   * Maximum number of results to return (defaults to 20, maximum is 100)
-   */
-  limit?: number;
-  /**
-   * Number of records to offset for the search
-   */
-  offset?: string;
+  filter: {
+    /**
+     * Text to search
+     */
+    query: string;
+    /**
+     * The build trigger ID on which the search will be performed. Required if more than one build trigger is present in a project
+     */
+    build_trigger_id?: string;
+    /**
+     * Restrict the search on pages in a specific locale
+     */
+    locale?: string;
+    [k: string]: unknown;
+  };
   [k: string]: unknown;
 };
 /**
@@ -3569,6 +3581,10 @@ export type SitePlan = {
    */
   static_webhooks_ip: boolean;
   /**
+   * Maximum size in bytes for a single file upload
+   */
+  maximum_single_upload_bytes: number;
+  /**
    * Available extra packets
    */
   extra_packets: {
@@ -3790,6 +3806,10 @@ export type SitePlanAttributes = {
    * Whether or not use a static IP when sending webhooks
    */
   static_webhooks_ip: boolean;
+  /**
+   * Maximum size in bytes for a single file upload
+   */
+  maximum_single_upload_bytes: number;
   /**
    * Available extra packets
    */
@@ -7498,11 +7518,11 @@ export type SearchResult = {
   id: SearchResultIdentity;
   type: SearchResultType;
   /**
-   * Page title
+   * Title of the page
    */
   title: string;
   /**
-   * First lines of body
+   * First 200 characters of page body, unformatted
    */
   body_excerpt: string;
   /**
@@ -7510,7 +7530,7 @@ export type SearchResult = {
    */
   url: string;
   /**
-   * Score
+   * Search score
    */
   score: number;
   highlight: {
@@ -7538,11 +7558,11 @@ export type SearchResultData = {
  */
 export type SearchResultAttributes = {
   /**
-   * Page title
+   * Title of the page
    */
   title: string;
   /**
-   * First lines of body
+   * First 200 characters of page body, unformatted
    */
   body_excerpt: string;
   /**
@@ -7550,7 +7570,7 @@ export type SearchResultAttributes = {
    */
   url: string;
   /**
-   * Score
+   * Search score
    */
   score: number;
   highlight: {
@@ -8897,6 +8917,7 @@ export type PublicInfo = {
   extras: null | {
     blocks_depth: number;
     blocks_per_item: number;
+    maximum_single_upload_bytes: number;
     [k: string]: unknown;
   };
 };
@@ -8979,6 +9000,7 @@ export type PublicInfoAttributes = {
   extras: null | {
     blocks_depth: number;
     blocks_per_item: number;
+    maximum_single_upload_bytes: number;
     [k: string]: unknown;
   };
 };

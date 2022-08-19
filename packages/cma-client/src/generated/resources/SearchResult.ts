@@ -33,4 +33,44 @@ export default class SearchResult extends BaseResource {
       queryParams,
     });
   }
+
+  /**
+   * Async iterator to auto-paginate over elements returned by list()
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/search-result/instances
+   */
+  async *listPagedIterator(
+    queryParams?: SimpleSchemaTypes.SearchResultInstancesHrefSchema,
+    iteratorOptions?: Utils.IteratorOptions,
+  ) {
+    for await (const element of this.rawListPagedIterator(
+      queryParams,
+      iteratorOptions,
+    )) {
+      yield Utils.deserializeJsonEntity<
+        SimpleSchemaTypes.SearchResultInstancesTargetSchema[0]
+      >(element);
+    }
+  }
+
+  /**
+   * Async iterator to auto-paginate over elements returned by rawList()
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/search-result/instances
+   */
+  rawListPagedIterator(
+    queryParams?: SchemaTypes.SearchResultInstancesHrefSchema,
+    iteratorOptions?: Utils.IteratorOptions,
+  ) {
+    return Utils.rawPageIterator<
+      SchemaTypes.SearchResultInstancesTargetSchema['data'][0]
+    >(
+      {
+        defaultLimit: 20,
+        maxLimit: 100,
+      },
+      (page) => this.rawList({ ...queryParams, page }),
+      iteratorOptions,
+    );
+  }
 }

@@ -728,6 +728,10 @@
       {
         "rel": "instances",
         "returnsCollection": true,
+        "paginatedResponse": {
+          "defaultLimit": 20,
+          "maxLimit": 100
+        },
         "name": "list",
         "rawName": "rawList"
       }
