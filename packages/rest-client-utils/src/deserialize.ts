@@ -1,5 +1,3 @@
-import { Rel } from './serialize';
-
 type JsonApiEntity = {
   id?: string;
   type?: string;
