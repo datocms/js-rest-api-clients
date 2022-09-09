@@ -520,7 +520,7 @@ export type ItemInstancesHrefSchema = {
     [k: string]: unknown;
   };
   /**
-   * Fields used to order results. You _must_ specify also `filter[type]` with one element only to be able use this option. Format: `<field_name>_<DIRECTION(ASC|DESC)>`. You can pass multiple comma separated rules
+   * Fields used to order results. You **must** specify also `filter[type]` with one element only to be able use this option. Format: `<field_name>_(ASC|DESC)`, where `<field_name>` can be either the API key of a model's field, or one of the following meta columns: `id`, `_updated_at`, `_created_at`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `_is_valid`, `position` (only for sortable models). You can pass multiple comma separated rules.
    */
   order_by?: string;
   /**
@@ -847,6 +847,10 @@ export type SearchResultInstancesHrefSchema = {
    * Attributes to filter search results
    */
   filter: {
+    /**
+     * When any value is passed, it enables the fuzzy search: the Levenshtein Edit Distance is used to match more results.
+     */
+    fuzzy?: string;
     /**
      * Text to search
      */
@@ -6106,6 +6110,14 @@ export type ItemMeta = {
    */
   is_valid: boolean;
   /**
+   * Whether the current version of the record is valid or not
+   */
+  is_current_version_valid: null | boolean;
+  /**
+   * Whether the published version of record is valid or not
+   */
+  is_published_version_valid: null | boolean;
+  /**
    * The ID of the current record version
    */
   current_version: string;
@@ -6226,6 +6238,14 @@ export type ItemCreateSchema = {
        * Whether the current record is valid or not
        */
       is_valid?: boolean;
+      /**
+       * Whether the current version of the record is valid or not
+       */
+      is_current_version_valid?: null | boolean;
+      /**
+       * Whether the published version of the record is valid or not
+       */
+      is_published_version_valid?: null | boolean;
       /**
        * The ID of the current record version
        */
@@ -8342,7 +8362,7 @@ export type ItemTypeFilterAttributes = {
    */
   name: string;
   /**
-   * The actual filter
+   * The actual filter. It follows the form of the `filter` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
    */
   filter: {
     [k: string]: unknown;
@@ -8392,7 +8412,7 @@ export type ItemTypeFilterCreateSchema = {
        */
       name: string;
       /**
-       * The actual filter
+       * The actual filter. It follows the form of the `filter` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
        */
       filter: {
         [k: string]: unknown;
@@ -8442,7 +8462,7 @@ export type ItemTypeFilterUpdateSchema = {
        */
       shared?: boolean;
       /**
-       * The actual filter
+       * The actual filter. It follows the form of the `filter` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
        */
       filter: {
         [k: string]: unknown;
