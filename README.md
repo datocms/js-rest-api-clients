@@ -9,6 +9,8 @@ This monorepo contains API clients to interact with DatoCMS:
 - `@datocms/dashboard-client`: Client for the Dashboard Management API (can be used in any JS environment).
 - `@datocms/rest-api-events`: Can be used with any of the above clients to use real-time updates instead of polling to retrieve the result of asyncronous jobs.
 
+You can read more on how to use these clients on the [official documentation page](https://www.datocms.com/docs/content-management-api/using-the-nodejs-clients).
+
 <br /><br />
 <a href="https://www.datocms.com/">
 <img src="https://www.datocms.com/images/full_logo.svg" height="60">
