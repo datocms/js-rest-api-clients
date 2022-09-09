@@ -6343,6 +6343,14 @@ export type ItemUpdateSchema = {
        */
       current_version?: string;
       /**
+       * Whether the current version of the record is valid or not
+       */
+      is_current_version_valid?: null | boolean;
+      /**
+       * Whether the published version of record is valid or not
+       */
+      is_published_version_valid?: null | boolean;
+      /**
        * The new stage to move the record to
        */
       stage?: string | null;
