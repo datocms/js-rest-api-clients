@@ -8,6 +8,9 @@ export default class Account extends BaseResource {
 
   /**
    * Create a new account
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.AccountCreateSchema) {
     return this.rawCreate(
@@ -32,6 +35,9 @@ export default class Account extends BaseResource {
 
   /**
    * Create a new account
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.AccountCreateSchema,
@@ -45,6 +51,9 @@ export default class Account extends BaseResource {
 
   /**
    * Update a account
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(body: SimpleSchemaTypes.AccountUpdateSchema) {
     return this.rawUpdate(
@@ -70,6 +79,9 @@ export default class Account extends BaseResource {
 
   /**
    * Update a account
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     body: SchemaTypes.AccountUpdateSchema,
@@ -83,6 +95,9 @@ export default class Account extends BaseResource {
 
   /**
    * Delete a account
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(body: SimpleSchemaTypes.AccountDestroySchema) {
     return this.rawDestroy(
@@ -100,6 +115,9 @@ export default class Account extends BaseResource {
 
   /**
    * Delete a account
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     body: SchemaTypes.AccountDestroySchema,
@@ -113,6 +131,9 @@ export default class Account extends BaseResource {
 
   /**
    * Retrieve a account
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find() {
     return this.rawFind().then((body) =>
@@ -124,6 +145,9 @@ export default class Account extends BaseResource {
 
   /**
    * Retrieve a account
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(): Promise<SchemaTypes.AccountSelfTargetSchema> {
     return this.client.request<SchemaTypes.AccountSelfTargetSchema>({
@@ -134,6 +158,9 @@ export default class Account extends BaseResource {
 
   /**
    * Request a password reset
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   resetPassword(body: SimpleSchemaTypes.AccountResetPasswordSchema) {
     return this.rawResetPassword(
@@ -147,6 +174,9 @@ export default class Account extends BaseResource {
 
   /**
    * Request a password reset
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawResetPassword(
     body: SchemaTypes.AccountResetPasswordSchema,
@@ -160,6 +190,9 @@ export default class Account extends BaseResource {
 
   /**
    * Activates 2-factor authorization
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   activate_2Fa(body: SimpleSchemaTypes.AccountActivate_2FaSchema) {
     return this.rawActivate_2Fa(
@@ -177,6 +210,9 @@ export default class Account extends BaseResource {
 
   /**
    * Activates 2-factor authorization
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawActivate_2Fa(
     body: SchemaTypes.AccountActivate_2FaSchema,
@@ -190,6 +226,9 @@ export default class Account extends BaseResource {
 
   /**
    * Generates 2-factor authorization secrets
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   reset_2Fa() {
     return this.rawReset_2Fa().then((body) =>
@@ -201,6 +240,9 @@ export default class Account extends BaseResource {
 
   /**
    * Generates 2-factor authorization secrets
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawReset_2Fa(): Promise<SchemaTypes.AccountReset_2FaTargetSchema> {
     return this.client.request<SchemaTypes.AccountReset_2FaTargetSchema>({
@@ -211,6 +253,9 @@ export default class Account extends BaseResource {
 
   /**
    * De-activates 2-factor authorization
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   deactivate_2Fa(body: SimpleSchemaTypes.AccountDeactivate_2FaSchema) {
     return this.rawDeactivate_2Fa(
@@ -231,6 +276,9 @@ export default class Account extends BaseResource {
 
   /**
    * De-activates 2-factor authorization
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDeactivate_2Fa(
     body: SchemaTypes.AccountDeactivate_2FaSchema,

@@ -10,6 +10,9 @@ export default class UsageCounter extends BaseResource {
    * Retrieve a project's usage counter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/usage-counter/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(
     usageCounterId: string | SimpleSchemaTypes.UsageCounterData,
@@ -26,6 +29,9 @@ export default class UsageCounter extends BaseResource {
    * Retrieve a project's usage counter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/usage-counter/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(
     usageCounterId: string,

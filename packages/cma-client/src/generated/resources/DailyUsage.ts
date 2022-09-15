@@ -10,6 +10,9 @@ export default class DailyUsage extends BaseResource {
    * Retrieve project's daily usage info
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/daily-usage/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -23,6 +26,9 @@ export default class DailyUsage extends BaseResource {
    * Retrieve project's daily usage info
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/daily-usage/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.DailyUsageInstancesTargetSchema> {
     return this.client.request<SchemaTypes.DailyUsageInstancesTargetSchema>({

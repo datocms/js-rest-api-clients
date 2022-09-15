@@ -10,6 +10,9 @@ export default class ItemType extends BaseResource {
    * Create a new model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.ItemTypeCreateSchema) {
     return this.rawCreate(
@@ -49,6 +52,9 @@ export default class ItemType extends BaseResource {
    * Create a new model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.ItemTypeCreateSchema,
@@ -64,6 +70,9 @@ export default class ItemType extends BaseResource {
    * Update a model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     itemTypeId: string | SimpleSchemaTypes.ItemTypeData,
@@ -109,6 +118,9 @@ export default class ItemType extends BaseResource {
    * Update a model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     itemTypeId: string,
@@ -125,6 +137,9 @@ export default class ItemType extends BaseResource {
    * List all models
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -138,6 +153,9 @@ export default class ItemType extends BaseResource {
    * List all models
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.ItemTypeInstancesTargetSchema> {
     return this.client.request<SchemaTypes.ItemTypeInstancesTargetSchema>({
@@ -150,6 +168,9 @@ export default class ItemType extends BaseResource {
    * Retrieve a model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
     return this.rawFind(Utils.toId(itemTypeId)).then((body) =>
@@ -163,6 +184,9 @@ export default class ItemType extends BaseResource {
    * Retrieve a model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(itemTypeId: string): Promise<SchemaTypes.ItemTypeSelfTargetSchema> {
     return this.client.request<SchemaTypes.ItemTypeSelfTargetSchema>({
@@ -175,6 +199,9 @@ export default class ItemType extends BaseResource {
    * Duplicate model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/duplicate
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   duplicate(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
     return this.rawDuplicate(Utils.toId(itemTypeId)).then((body) =>
@@ -188,6 +215,9 @@ export default class ItemType extends BaseResource {
    * Duplicate model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/duplicate
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDuplicate(
     itemTypeId: string,
@@ -202,6 +232,9 @@ export default class ItemType extends BaseResource {
    * Delete a model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
     return this.rawDestroy(Utils.toId(itemTypeId)).then((body) =>
@@ -215,6 +248,9 @@ export default class ItemType extends BaseResource {
    * Delete a model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     itemTypeId: string,

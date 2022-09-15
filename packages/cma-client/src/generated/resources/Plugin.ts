@@ -10,6 +10,9 @@ export default class Plugin extends BaseResource {
    * Create a new plugin
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.PluginCreateSchema) {
     return this.rawCreate(
@@ -39,6 +42,9 @@ export default class Plugin extends BaseResource {
    * Create a new plugin
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.PluginCreateSchema,
@@ -54,6 +60,9 @@ export default class Plugin extends BaseResource {
    * Update a plugin
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     pluginId: string | SimpleSchemaTypes.PluginData,
@@ -85,6 +94,9 @@ export default class Plugin extends BaseResource {
    * Update a plugin
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     pluginId: string,
@@ -101,6 +113,9 @@ export default class Plugin extends BaseResource {
    * List all plugins
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -114,6 +129,9 @@ export default class Plugin extends BaseResource {
    * List all plugins
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.PluginInstancesTargetSchema> {
     return this.client.request<SchemaTypes.PluginInstancesTargetSchema>({
@@ -126,6 +144,9 @@ export default class Plugin extends BaseResource {
    * Retrieve a plugins
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(pluginId: string | SimpleSchemaTypes.PluginData) {
     return this.rawFind(Utils.toId(pluginId)).then((body) =>
@@ -139,6 +160,9 @@ export default class Plugin extends BaseResource {
    * Retrieve a plugins
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(pluginId: string): Promise<SchemaTypes.PluginSelfTargetSchema> {
     return this.client.request<SchemaTypes.PluginSelfTargetSchema>({
@@ -151,6 +175,9 @@ export default class Plugin extends BaseResource {
    * Delete a plugin
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(pluginId: string | SimpleSchemaTypes.PluginData) {
     return this.rawDestroy(Utils.toId(pluginId)).then((body) =>
@@ -164,6 +191,9 @@ export default class Plugin extends BaseResource {
    * Delete a plugin
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(pluginId: string): Promise<SchemaTypes.PluginDestroyTargetSchema> {
     return this.client.request<SchemaTypes.PluginDestroyTargetSchema>({
@@ -176,6 +206,9 @@ export default class Plugin extends BaseResource {
    * Retrieve all fields using the plugin
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/fields
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   fields(pluginId: string | SimpleSchemaTypes.PluginData) {
     return this.rawFields(Utils.toId(pluginId)).then((body) =>
@@ -189,6 +222,9 @@ export default class Plugin extends BaseResource {
    * Retrieve all fields using the plugin
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/fields
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFields(pluginId: string): Promise<SchemaTypes.PluginFieldsTargetSchema> {
     return this.client.request<SchemaTypes.PluginFieldsTargetSchema>({

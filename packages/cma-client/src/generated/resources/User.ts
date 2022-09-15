@@ -10,6 +10,9 @@ export default class User extends BaseResource {
    * Update a collaborator
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/user/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     userId: string | SimpleSchemaTypes.UserData,
@@ -34,6 +37,9 @@ export default class User extends BaseResource {
    * Update a collaborator
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/user/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     userId: string,
@@ -50,6 +56,9 @@ export default class User extends BaseResource {
    * List all collaborators
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/user/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -63,6 +72,9 @@ export default class User extends BaseResource {
    * List all collaborators
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/user/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.UserInstancesTargetSchema> {
     return this.client.request<SchemaTypes.UserInstancesTargetSchema>({
@@ -75,6 +87,9 @@ export default class User extends BaseResource {
    * Retrieve a collaborator
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/user/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(
     userId: string | SimpleSchemaTypes.UserData,
@@ -91,6 +106,9 @@ export default class User extends BaseResource {
    * Retrieve a collaborator
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/user/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(
     userId: string,
@@ -107,6 +125,9 @@ export default class User extends BaseResource {
    * Retrieve current signed-in user
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/user/me
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   findMe(queryParams?: SimpleSchemaTypes.UserMeHrefSchema) {
     return this.rawFindMe(queryParams).then((body) =>
@@ -118,6 +139,9 @@ export default class User extends BaseResource {
    * Retrieve current signed-in user
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/user/me
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFindMe(
     queryParams?: SchemaTypes.UserMeHrefSchema,
@@ -133,6 +157,9 @@ export default class User extends BaseResource {
    * Delete a collaborator
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/user/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(
     userId: string | SimpleSchemaTypes.UserData,
@@ -149,6 +176,9 @@ export default class User extends BaseResource {
    * Delete a collaborator
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/user/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     userId: string,

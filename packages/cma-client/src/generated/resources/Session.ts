@@ -11,6 +11,9 @@ export default class Session extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/session/create
    *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
    * @deprecated This API call is to be considered private and might change without notice
    */
   create(body: SimpleSchemaTypes.SessionCreateSchema) {
@@ -31,6 +34,9 @@ export default class Session extends BaseResource {
    * Create a new session
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/session/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */

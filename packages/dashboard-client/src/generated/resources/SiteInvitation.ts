@@ -8,6 +8,9 @@ export default class SiteInvitation extends BaseResource {
 
   /**
    * Redeem token
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   redeem() {
     return this.rawRedeem().then((body) =>
@@ -19,6 +22,9 @@ export default class SiteInvitation extends BaseResource {
 
   /**
    * Redeem token
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawRedeem(): Promise<SchemaTypes.SiteInvitationRedeemTargetSchema> {
     return this.client.request<SchemaTypes.SiteInvitationRedeemTargetSchema>({

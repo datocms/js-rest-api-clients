@@ -10,6 +10,9 @@ export default class WebhookCall extends BaseResource {
    * List all webhooks calls
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list(queryParams?: SimpleSchemaTypes.WebhookCallInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
@@ -23,6 +26,9 @@ export default class WebhookCall extends BaseResource {
    * List all webhooks calls
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(
     queryParams?: SchemaTypes.WebhookCallInstancesHrefSchema,
@@ -38,6 +44,9 @@ export default class WebhookCall extends BaseResource {
    * Async iterator to auto-paginate over elements returned by list()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   async *listPagedIterator(
     queryParams?: SimpleSchemaTypes.WebhookCallInstancesHrefSchema,
@@ -57,6 +66,9 @@ export default class WebhookCall extends BaseResource {
    * Async iterator to auto-paginate over elements returned by rawList()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawListPagedIterator(
     queryParams?: SchemaTypes.WebhookCallInstancesHrefSchema,
@@ -79,6 +91,9 @@ export default class WebhookCall extends BaseResource {
    * Re-send the webhook call
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/resend_webhook
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   resendWebhook(userId: string | SimpleSchemaTypes.UserData) {
     return this.rawResendWebhook(Utils.toId(userId));
@@ -88,6 +103,9 @@ export default class WebhookCall extends BaseResource {
    * Re-send the webhook call
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/resend_webhook
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawResendWebhook(userId: string): Promise<void> {
     return this.client.request<void>({

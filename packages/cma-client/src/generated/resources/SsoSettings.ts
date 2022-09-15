@@ -10,6 +10,9 @@ export default class SsoSettings extends BaseResource {
    * Retrieve SSO Settings
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-settings/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find() {
     return this.rawFind().then((body) =>
@@ -23,6 +26,9 @@ export default class SsoSettings extends BaseResource {
    * Retrieve SSO Settings
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-settings/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(): Promise<SchemaTypes.SsoSettingsSelfTargetSchema> {
     return this.client.request<SchemaTypes.SsoSettingsSelfTargetSchema>({
@@ -35,6 +41,9 @@ export default class SsoSettings extends BaseResource {
    * Generate SSO token
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-settings/generate_token
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   generateToken() {
     return this.rawGenerateToken().then((body) =>
@@ -48,6 +57,9 @@ export default class SsoSettings extends BaseResource {
    * Generate SSO token
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-settings/generate_token
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawGenerateToken(): Promise<SchemaTypes.SsoSettingsGenerateTokenTargetSchema> {
     return this.client.request<SchemaTypes.SsoSettingsGenerateTokenTargetSchema>(
@@ -62,6 +74,9 @@ export default class SsoSettings extends BaseResource {
    * Update SSO Settings
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-settings/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(body: SimpleSchemaTypes.SsoSettingsUpdateSchema) {
     return this.rawUpdate(
@@ -81,6 +96,9 @@ export default class SsoSettings extends BaseResource {
    * Update SSO Settings
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-settings/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     body: SchemaTypes.SsoSettingsUpdateSchema,

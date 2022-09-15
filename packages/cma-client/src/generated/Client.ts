@@ -11,12 +11,21 @@ export type RequestOptions = {
 };
 
 export type ClientConfigOptions = {
+  /** The API token to use to perform requests */
   apiToken: string | null;
+  /** The base URL of the server. Defaults to https://site-api.datocms.com */
   baseUrl?: string;
+  /** The environment in which to perform every API request */
   environment?: string;
+  /** Configure request timeout (in ms). When timeout is reached and `autoRetry` is active, a new request will be performed. Otherwise, a `TimeoutError` will be raised. Defaults to `30000` */
+  requestTimeout?: number;
+  /** Any extra header to add to every API request */
   extraHeaders?: Record<string, string>;
+  /** Level of logging */
   logLevel?: LogLevel;
+  /** Function to use to log. Defaults to `console.log` */
   logFn?: (message: string) => void;
+  /** Whether to automatically retry failed requests (ie. timeout, rate-limiting, etc.), with a linear incremental backoff. Defaults to `true` */
   autoRetry?: boolean;
 };
 

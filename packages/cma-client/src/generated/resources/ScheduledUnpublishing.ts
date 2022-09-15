@@ -10,6 +10,9 @@ export default class ScheduledUnpublishing extends BaseResource {
    * Create a new scheduled unpublishing
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/scheduled-unpublishing/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(
     itemId: string | SimpleSchemaTypes.ItemData,
@@ -36,6 +39,9 @@ export default class ScheduledUnpublishing extends BaseResource {
    * Create a new scheduled unpublishing
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/scheduled-unpublishing/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     itemId: string,
@@ -54,6 +60,9 @@ export default class ScheduledUnpublishing extends BaseResource {
    * Delete a scheduled unpublishing
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/scheduled-unpublishing/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(itemId: string | SimpleSchemaTypes.ItemData) {
     return this.rawDestroy(Utils.toId(itemId)).then((body) =>
@@ -67,6 +76,9 @@ export default class ScheduledUnpublishing extends BaseResource {
    * Delete a scheduled unpublishing
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/scheduled-unpublishing/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     itemId: string,

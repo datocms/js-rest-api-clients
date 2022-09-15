@@ -10,6 +10,9 @@ export default class SubscriptionFeature extends BaseResource {
    * Get all the subscription features
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/subscription-feature/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -23,6 +26,9 @@ export default class SubscriptionFeature extends BaseResource {
    * Get all the subscription features
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/subscription-feature/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.SubscriptionFeatureInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SubscriptionFeatureInstancesTargetSchema>(

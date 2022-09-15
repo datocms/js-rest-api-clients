@@ -10,6 +10,9 @@ export default class BuildEvent extends BaseResource {
    * List all deploy events
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-event/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -23,6 +26,9 @@ export default class BuildEvent extends BaseResource {
    * List all deploy events
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-event/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.BuildEventInstancesTargetSchema> {
     return this.client.request<SchemaTypes.BuildEventInstancesTargetSchema>({
@@ -35,6 +41,9 @@ export default class BuildEvent extends BaseResource {
    * Retrieve a deploy event
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-event/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(buildEventId: string | SimpleSchemaTypes.BuildEventData) {
     return this.rawFind(Utils.toId(buildEventId)).then((body) =>
@@ -48,6 +57,9 @@ export default class BuildEvent extends BaseResource {
    * Retrieve a deploy event
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-event/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(
     buildEventId: string,

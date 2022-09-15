@@ -14,6 +14,9 @@ export default class {{{resourceClassName}}} extends BaseResource {
       *
       * Read more: {{{docUrl}}}
       {{/if}}
+      *
+      * @throws {ApiError}
+      * @throws {TimeoutError}
       {{#if deprecated}}
       *
       * @deprecated {{{deprecated}}}
@@ -64,6 +67,9 @@ export default class {{{resourceClassName}}} extends BaseResource {
    *
    * Read more: {{{docUrl}}}
    {{/if}}
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    {{#if deprecated}}
    *
    * @deprecated {{{deprecated}}}
@@ -113,6 +119,9 @@ export default class {{{resourceClassName}}} extends BaseResource {
     *
     * Read more: {{{docUrl}}}
     {{/if}}
+    *
+    * @throws {ApiError}
+    * @throws {TimeoutError}
     */
       async *{{{name}}}PagedIterator(
         {{#if urlPlaceholder}}
@@ -141,6 +150,9 @@ export default class {{{resourceClassName}}} extends BaseResource {
    *
    * Read more: {{{docUrl}}}
    {{/if}}
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
     {{{rawName}}}PagedIterator(
       {{#if urlPlaceholder}}

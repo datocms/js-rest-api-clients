@@ -8,6 +8,9 @@ export default class Site extends BaseResource {
 
   /**
    * Retrieve a project
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(siteId: string | SimpleSchemaTypes.SiteData) {
     return this.rawFind(Utils.toId(siteId)).then((body) =>
@@ -19,6 +22,9 @@ export default class Site extends BaseResource {
 
   /**
    * Retrieve a project
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(siteId: string): Promise<SchemaTypes.SiteSelfTargetSchema> {
     return this.client.request<SchemaTypes.SiteSelfTargetSchema>({
@@ -29,6 +35,9 @@ export default class Site extends BaseResource {
 
   /**
    * List all projects
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list(queryParams?: SimpleSchemaTypes.SiteInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
@@ -40,6 +49,9 @@ export default class Site extends BaseResource {
 
   /**
    * List all projects
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(
     queryParams?: SchemaTypes.SiteInstancesHrefSchema,
@@ -53,6 +65,9 @@ export default class Site extends BaseResource {
 
   /**
    * Async iterator to auto-paginate over elements returned by list()
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   async *listPagedIterator(
     queryParams?: SimpleSchemaTypes.SiteInstancesHrefSchema,
@@ -70,6 +85,9 @@ export default class Site extends BaseResource {
 
   /**
    * Async iterator to auto-paginate over elements returned by rawList()
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawListPagedIterator(
     queryParams?: SchemaTypes.SiteInstancesHrefSchema,
@@ -90,6 +108,9 @@ export default class Site extends BaseResource {
 
   /**
    * Create a new project
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.SiteCreateSchema) {
     return this.rawCreate(
@@ -107,6 +128,9 @@ export default class Site extends BaseResource {
 
   /**
    * Create a new project
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.SiteCreateSchema,
@@ -120,6 +144,9 @@ export default class Site extends BaseResource {
 
   /**
    * Update project
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     siteId: string | SimpleSchemaTypes.SiteData,
@@ -147,6 +174,9 @@ export default class Site extends BaseResource {
 
   /**
    * Update project
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     siteId: string,
@@ -161,6 +191,9 @@ export default class Site extends BaseResource {
 
   /**
    * Delete a project
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(siteId: string | SimpleSchemaTypes.SiteData) {
     return this.rawDestroy(Utils.toId(siteId)).then((body) =>
@@ -172,6 +205,9 @@ export default class Site extends BaseResource {
 
   /**
    * Delete a project
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(siteId: string): Promise<SchemaTypes.SiteDestroyJobSchema> {
     return this.client.request<SchemaTypes.SiteDestroyJobSchema>({
@@ -182,6 +218,9 @@ export default class Site extends BaseResource {
 
   /**
    * Duplicate an existing project
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDuplicate(
     siteId: string,

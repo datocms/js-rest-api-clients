@@ -8,6 +8,9 @@ export default class SiteTransfer extends BaseResource {
 
   /**
    * List all pending transfer requests
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -19,6 +22,9 @@ export default class SiteTransfer extends BaseResource {
 
   /**
    * List all pending transfer requests
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.SiteTransferInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SiteTransferInstancesTargetSchema>({
@@ -29,6 +35,9 @@ export default class SiteTransfer extends BaseResource {
 
   /**
    * Retrieve a transfer
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(siteTransferId: string | SimpleSchemaTypes.SiteTransferData) {
     return this.rawFind(Utils.toId(siteTransferId)).then((body) =>
@@ -40,6 +49,9 @@ export default class SiteTransfer extends BaseResource {
 
   /**
    * Retrieve a transfer
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(
     siteTransferId: string,
@@ -52,6 +64,9 @@ export default class SiteTransfer extends BaseResource {
 
   /**
    * Create a new site transfer request
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(
     siteId: string | SimpleSchemaTypes.SiteData,
@@ -73,6 +88,9 @@ export default class SiteTransfer extends BaseResource {
 
   /**
    * Create a new site transfer request
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     siteId: string,
@@ -87,6 +105,9 @@ export default class SiteTransfer extends BaseResource {
 
   /**
    * Destroy a site transfer request
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(siteId: string | SimpleSchemaTypes.SiteData) {
     return this.rawDestroy(Utils.toId(siteId)).then((body) =>
@@ -98,6 +119,9 @@ export default class SiteTransfer extends BaseResource {
 
   /**
    * Destroy a site transfer request
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     siteId: string,
@@ -110,6 +134,9 @@ export default class SiteTransfer extends BaseResource {
 
   /**
    * Simulate accept
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawSimulateAccept(
     siteTransferId: string,
@@ -126,6 +153,9 @@ export default class SiteTransfer extends BaseResource {
 
   /**
    * Accept a site transfer request
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawAccept(
     siteTransferId: string,
@@ -140,6 +170,9 @@ export default class SiteTransfer extends BaseResource {
 
   /**
    * Decline a site transfer request
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   decline(siteTransferId: string | SimpleSchemaTypes.SiteTransferData) {
     return this.rawDecline(Utils.toId(siteTransferId));
@@ -147,6 +180,9 @@ export default class SiteTransfer extends BaseResource {
 
   /**
    * Decline a site transfer request
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDecline(siteTransferId: string): Promise<void> {
     return this.client.request<void>({

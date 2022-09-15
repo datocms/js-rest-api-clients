@@ -10,6 +10,9 @@ export default class Site extends BaseResource {
    * Retrieve the site
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(queryParams?: SimpleSchemaTypes.SiteSelfHrefSchema) {
     return this.rawFind(queryParams).then((body) =>
@@ -23,6 +26,9 @@ export default class Site extends BaseResource {
    * Retrieve the site
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(
     queryParams?: SchemaTypes.SiteSelfHrefSchema,
@@ -38,6 +44,9 @@ export default class Site extends BaseResource {
    * Update the site's settings
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(body: SimpleSchemaTypes.SiteUpdateSchema) {
     return this.rawUpdate(
@@ -67,6 +76,9 @@ export default class Site extends BaseResource {
    * Update the site's settings
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     body: SchemaTypes.SiteUpdateSchema,
@@ -82,6 +94,9 @@ export default class Site extends BaseResource {
    * Activate improved timezone management
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_timezone_management
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   activateImprovedTimezoneManagement() {
     return this.rawActivateImprovedTimezoneManagement().then((body) =>
@@ -95,6 +110,9 @@ export default class Site extends BaseResource {
    * Activate improved timezone management
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_timezone_management
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawActivateImprovedTimezoneManagement(): Promise<SchemaTypes.SiteActivateImprovedTimezoneManagementJobSchema> {
     return this.client.request<SchemaTypes.SiteActivateImprovedTimezoneManagementJobSchema>(

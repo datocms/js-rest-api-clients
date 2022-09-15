@@ -8,6 +8,9 @@ export default class SubscriptionLimit extends BaseResource {
 
   /**
    * Get all the subscription limits
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list(siteId: string | SimpleSchemaTypes.SiteData) {
     return this.rawList(Utils.toId(siteId)).then((body) =>
@@ -19,6 +22,9 @@ export default class SubscriptionLimit extends BaseResource {
 
   /**
    * Get all the subscription limits
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(
     siteId: string,

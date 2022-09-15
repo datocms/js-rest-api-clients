@@ -8,6 +8,9 @@ export default class Session extends BaseResource {
 
   /**
    * Create a new session
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.SessionCreateSchema,

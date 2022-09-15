@@ -1,4 +1,4 @@
-export { ApiError, LogLevel } from '@datocms/rest-client-utils';
+export { ApiError, TimeoutError, LogLevel } from '@datocms/rest-client-utils';
 export { Client } from './generated/Client';
 export * as Resources from './generated/resources';
 export type { ClientConfigOptions } from './generated/Client';

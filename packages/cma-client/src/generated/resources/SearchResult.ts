@@ -10,6 +10,9 @@ export default class SearchResult extends BaseResource {
    * Search for results
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-result/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list(queryParams: SimpleSchemaTypes.SearchResultInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
@@ -23,6 +26,9 @@ export default class SearchResult extends BaseResource {
    * Search for results
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-result/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(
     queryParams: SchemaTypes.SearchResultInstancesHrefSchema,
@@ -38,6 +44,9 @@ export default class SearchResult extends BaseResource {
    * Async iterator to auto-paginate over elements returned by list()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-result/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   async *listPagedIterator(
     queryParams: SimpleSchemaTypes.SearchResultInstancesHrefSchema,
@@ -57,6 +66,9 @@ export default class SearchResult extends BaseResource {
    * Async iterator to auto-paginate over elements returned by rawList()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-result/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawListPagedIterator(
     queryParams: SchemaTypes.SearchResultInstancesHrefSchema,

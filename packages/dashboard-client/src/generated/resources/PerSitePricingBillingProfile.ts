@@ -9,6 +9,9 @@ export default class PerSitePricingBillingProfile extends BaseResource {
 
   /**
    * Retrieve all account's billing profiles
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -20,6 +23,9 @@ export default class PerSitePricingBillingProfile extends BaseResource {
 
   /**
    * Retrieve all account's billing profiles
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.PerSitePricingBillingProfileInstancesTargetSchema> {
     return this.client.request<SchemaTypes.PerSitePricingBillingProfileInstancesTargetSchema>(
@@ -32,6 +38,9 @@ export default class PerSitePricingBillingProfile extends BaseResource {
 
   /**
    * Retrieve a billing profile
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(
     perSitePricingBillingProfileId:
@@ -48,6 +57,9 @@ export default class PerSitePricingBillingProfile extends BaseResource {
 
   /**
    * Retrieve a billing profile
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(
     perSitePricingBillingProfileId: string,
@@ -62,6 +74,9 @@ export default class PerSitePricingBillingProfile extends BaseResource {
 
   /**
    * Update a billing profile's credit card
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   updateCreditCard(
     perSitePricingBillingProfileId:
@@ -89,6 +104,9 @@ export default class PerSitePricingBillingProfile extends BaseResource {
 
   /**
    * Update a billing profile's credit card
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdateCreditCard(
     perSitePricingBillingProfileId: string,
@@ -105,6 +123,9 @@ export default class PerSitePricingBillingProfile extends BaseResource {
 
   /**
    * Update a billing profile's billing information
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   updateInfo(
     perSitePricingBillingProfileId:
@@ -144,6 +165,9 @@ export default class PerSitePricingBillingProfile extends BaseResource {
 
   /**
    * Update a billing profile's billing information
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdateInfo(
     perSitePricingBillingProfileId: string,

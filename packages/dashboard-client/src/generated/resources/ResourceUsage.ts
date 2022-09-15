@@ -8,6 +8,9 @@ export default class ResourceUsage extends BaseResource {
 
   /**
    * Retrieve all resource usages
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -19,6 +22,9 @@ export default class ResourceUsage extends BaseResource {
 
   /**
    * Retrieve all resource usages
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.ResourceUsageInstancesTargetSchema> {
     return this.client.request<SchemaTypes.ResourceUsageInstancesTargetSchema>({

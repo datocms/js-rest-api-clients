@@ -10,6 +10,9 @@ export default class UploadFilter extends BaseResource {
    * Create a new filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-filter/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.UploadFilterCreateSchema) {
     return this.rawCreate(
@@ -29,6 +32,9 @@ export default class UploadFilter extends BaseResource {
    * Create a new filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-filter/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.UploadFilterCreateSchema,
@@ -44,6 +50,9 @@ export default class UploadFilter extends BaseResource {
    * Update a filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-filter/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     uploadFilterId: string | SimpleSchemaTypes.UploadFilterData,
@@ -68,6 +77,9 @@ export default class UploadFilter extends BaseResource {
    * Update a filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-filter/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     uploadFilterId: string,
@@ -84,6 +96,9 @@ export default class UploadFilter extends BaseResource {
    * List all filters
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-filter/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -97,6 +112,9 @@ export default class UploadFilter extends BaseResource {
    * List all filters
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-filter/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.UploadFilterInstancesTargetSchema> {
     return this.client.request<SchemaTypes.UploadFilterInstancesTargetSchema>({
@@ -109,6 +127,9 @@ export default class UploadFilter extends BaseResource {
    * Retrieve a filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-filter/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(uploadFilterId: string | SimpleSchemaTypes.UploadFilterData) {
     return this.rawFind(Utils.toId(uploadFilterId)).then((body) =>
@@ -122,6 +143,9 @@ export default class UploadFilter extends BaseResource {
    * Retrieve a filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-filter/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(
     uploadFilterId: string,
@@ -136,6 +160,9 @@ export default class UploadFilter extends BaseResource {
    * Delete a filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-filter/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(uploadFilterId: string | SimpleSchemaTypes.UploadFilterData) {
     return this.rawDestroy(Utils.toId(uploadFilterId)).then((body) =>
@@ -149,6 +176,9 @@ export default class UploadFilter extends BaseResource {
    * Delete a filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-filter/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     uploadFilterId: string,

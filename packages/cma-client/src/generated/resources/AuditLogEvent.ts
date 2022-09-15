@@ -10,6 +10,9 @@ export default class AuditLogEvent extends BaseResource {
    * List Audit Log events
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/audit-log_event/query
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   query(body: SimpleSchemaTypes.AuditLogEventQuerySchema) {
     return this.rawQuery(
@@ -29,6 +32,9 @@ export default class AuditLogEvent extends BaseResource {
    * List Audit Log events
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/audit-log_event/query
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawQuery(
     body: SchemaTypes.AuditLogEventQuerySchema,

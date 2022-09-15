@@ -10,6 +10,9 @@ export default class UploadRequest extends BaseResource {
    * Request a new upload
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-request/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.UploadRequestCreateSchema) {
     return this.rawCreate(
@@ -29,6 +32,9 @@ export default class UploadRequest extends BaseResource {
    * Request a new upload
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-request/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.UploadRequestCreateSchema,

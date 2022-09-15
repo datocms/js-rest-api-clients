@@ -10,6 +10,9 @@ export default class Fieldset extends BaseResource {
    * Create a new fieldset
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(
     itemTypeId: string | SimpleSchemaTypes.ItemTypeData,
@@ -39,6 +42,9 @@ export default class Fieldset extends BaseResource {
    * Create a new fieldset
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     itemTypeId: string,
@@ -55,6 +61,9 @@ export default class Fieldset extends BaseResource {
    * Update a fieldset
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     fieldsetId: string | SimpleSchemaTypes.FieldsetData,
@@ -85,6 +94,9 @@ export default class Fieldset extends BaseResource {
    * Update a fieldset
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     fieldsetId: string,
@@ -101,6 +113,9 @@ export default class Fieldset extends BaseResource {
    * List all fieldsets
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
     return this.rawList(Utils.toId(itemTypeId)).then((body) =>
@@ -114,6 +129,9 @@ export default class Fieldset extends BaseResource {
    * List all fieldsets
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(
     itemTypeId: string,
@@ -128,6 +146,9 @@ export default class Fieldset extends BaseResource {
    * Retrieve a fieldset
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(fieldsetId: string | SimpleSchemaTypes.FieldsetData) {
     return this.rawFind(Utils.toId(fieldsetId)).then((body) =>
@@ -141,6 +162,9 @@ export default class Fieldset extends BaseResource {
    * Retrieve a fieldset
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(fieldsetId: string): Promise<SchemaTypes.FieldsetSelfTargetSchema> {
     return this.client.request<SchemaTypes.FieldsetSelfTargetSchema>({
@@ -153,6 +177,9 @@ export default class Fieldset extends BaseResource {
    * Delete a fieldset
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(fieldsetId: string | SimpleSchemaTypes.FieldsetData) {
     return this.rawDestroy(Utils.toId(fieldsetId)).then((body) =>
@@ -166,6 +193,9 @@ export default class Fieldset extends BaseResource {
    * Delete a fieldset
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     fieldsetId: string,

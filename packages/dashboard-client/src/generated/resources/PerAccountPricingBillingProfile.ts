@@ -9,6 +9,9 @@ export default class PerAccountPricingBillingProfile extends BaseResource {
 
   /**
    * Retrieve a billing profile
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find() {
     return this.rawFind().then((body) =>
@@ -20,6 +23,9 @@ export default class PerAccountPricingBillingProfile extends BaseResource {
 
   /**
    * Retrieve a billing profile
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(): Promise<SchemaTypes.PerAccountPricingBillingProfileSelfTargetSchema> {
     return this.client.request<SchemaTypes.PerAccountPricingBillingProfileSelfTargetSchema>(
@@ -32,6 +38,9 @@ export default class PerAccountPricingBillingProfile extends BaseResource {
 
   /**
    * Update a billing profile's credit card
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   updateCreditCard(
     body: SimpleSchemaTypes.PerAccountPricingBillingProfileUpdateCreditCardSchema,
@@ -54,6 +63,9 @@ export default class PerAccountPricingBillingProfile extends BaseResource {
 
   /**
    * Update a billing profile's credit card
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdateCreditCard(
     body: SchemaTypes.PerAccountPricingBillingProfileUpdateCreditCardSchema,
@@ -69,6 +81,9 @@ export default class PerAccountPricingBillingProfile extends BaseResource {
 
   /**
    * Update a billing profile's billing information
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   updateInfo(
     body: SimpleSchemaTypes.PerAccountPricingBillingProfileUpdateInfoSchema,
@@ -104,6 +119,9 @@ export default class PerAccountPricingBillingProfile extends BaseResource {
 
   /**
    * Update a billing profile's billing information
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdateInfo(
     body: SchemaTypes.PerAccountPricingBillingProfileUpdateInfoSchema,

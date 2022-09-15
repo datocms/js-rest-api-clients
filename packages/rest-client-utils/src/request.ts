@@ -1,8 +1,17 @@
 import qs from 'qs';
 import fetch from 'cross-fetch';
-import { ApiError, ApiErrorInitObject } from './ApiError';
+import {
+  ApiError,
+  ApiErrorInitObject,
+  TimeoutError,
+  TimeoutErrorInitObject,
+} from './errors';
 import { JobResult } from './internalTypes';
 import { wait } from './wait';
+import {
+  makeCancelablePromise,
+  CanceledPromiseError,
+} from './makeCancelablePromise';
 
 export enum LogLevel {
   /** No logging */
@@ -23,6 +32,7 @@ type RequestOptions = {
   logLevel?: LogLevel;
   autoRetry?: boolean;
   retryCount?: number;
+  requestTimeout?: number;
   method: 'GET' | 'PUT' | 'POST' | 'DELETE';
   url: string;
   queryParams?: Record<string, unknown>;
@@ -63,6 +73,24 @@ function buildApiErrorInitObject(
       statusText: response.statusText,
       headers: headersToObject(response.headers),
       body: responseBody,
+    },
+    preCallStack,
+  };
+}
+
+function buildTimeoutErrorInitObject(
+  method: string,
+  url: string,
+  requestHeaders: Record<string, string>,
+  requestBody: unknown,
+  preCallStack?: string,
+): TimeoutErrorInitObject {
+  return {
+    request: {
+      url,
+      method,
+      headers: requestHeaders,
+      body: requestBody,
     },
     preCallStack,
   };
@@ -142,11 +170,19 @@ export async function request<T>(options: RequestOptions): Promise<T> {
   }
 
   try {
-    const response = await fetch(url, {
-      method: options.method,
-      headers,
-      body,
-    });
+    const requestPromise = makeCancelablePromise(
+      fetch(url, {
+        method: options.method,
+        headers,
+        body,
+      }),
+    );
+
+    setTimeout(() => {
+      requestPromise.cancel();
+    }, options.requestTimeout || 30000);
+
+    const response = await requestPromise;
 
     const responseContentType = response.headers.get('Content-Type');
     const invalidContentType =
@@ -265,16 +301,31 @@ export async function request<T>(options: RequestOptions): Promise<T> {
 
     throw error;
   } catch (error) {
-    if (isErrorWithCode(error) && error.code.includes('ETIMEDOUT')) {
-      if (logLevel >= LogLevel.BASIC) {
-        log(
-          `[${requestId}] Error ${error.code}, wait ${retryCount} seconds then retry...`,
-        );
+    if (
+      error instanceof CanceledPromiseError ||
+      (isErrorWithCode(error) && error.code.includes('ETIMEDOUT'))
+    ) {
+      if (autoRetry) {
+        if (logLevel >= LogLevel.BASIC) {
+          log(
+            `[${requestId}] Timeout error, wait ${retryCount} seconds then retry...`,
+          );
+        }
+
+        await wait(retryCount * 1000);
+
+        return request({ ...options, retryCount: retryCount + 1 });
       }
 
-      await wait(retryCount * 1000);
-
-      return request({ ...options, retryCount: retryCount + 1 });
+      throw new TimeoutError(
+        buildTimeoutErrorInitObject(
+          options.method,
+          url,
+          headers,
+          options.body,
+          preCallStack,
+        ),
+      );
     }
 
     throw error;

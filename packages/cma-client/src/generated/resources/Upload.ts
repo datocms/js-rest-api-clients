@@ -10,6 +10,9 @@ export default class Upload extends BaseResource {
    * Create a new upload
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.UploadCreateSchema) {
     return this.rawCreate(
@@ -36,6 +39,9 @@ export default class Upload extends BaseResource {
    * Create a new upload
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.UploadCreateSchema,
@@ -51,6 +57,9 @@ export default class Upload extends BaseResource {
    * List all uploads
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list(queryParams?: SimpleSchemaTypes.UploadInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
@@ -64,6 +73,9 @@ export default class Upload extends BaseResource {
    * List all uploads
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(
     queryParams?: SchemaTypes.UploadInstancesHrefSchema,
@@ -79,6 +91,9 @@ export default class Upload extends BaseResource {
    * Async iterator to auto-paginate over elements returned by list()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   async *listPagedIterator(
     queryParams?: SimpleSchemaTypes.UploadInstancesHrefSchema,
@@ -98,6 +113,9 @@ export default class Upload extends BaseResource {
    * Async iterator to auto-paginate over elements returned by rawList()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawListPagedIterator(
     queryParams?: SchemaTypes.UploadInstancesHrefSchema,
@@ -120,6 +138,9 @@ export default class Upload extends BaseResource {
    * Retrieve an upload
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(uploadId: string | SimpleSchemaTypes.UploadData) {
     return this.rawFind(Utils.toId(uploadId)).then((body) =>
@@ -133,6 +154,9 @@ export default class Upload extends BaseResource {
    * Retrieve an upload
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(uploadId: string): Promise<SchemaTypes.UploadSelfTargetSchema> {
     return this.client.request<SchemaTypes.UploadSelfTargetSchema>({
@@ -145,6 +169,9 @@ export default class Upload extends BaseResource {
    * Delete an upload
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(uploadId: string | SimpleSchemaTypes.UploadData) {
     return this.rawDestroy(Utils.toId(uploadId)).then((body) =>
@@ -158,6 +185,9 @@ export default class Upload extends BaseResource {
    * Delete an upload
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(uploadId: string): Promise<SchemaTypes.UploadDestroyTargetSchema> {
     return this.client.request<SchemaTypes.UploadDestroyTargetSchema>({
@@ -170,6 +200,9 @@ export default class Upload extends BaseResource {
    * Update an upload
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     uploadId: string | SimpleSchemaTypes.UploadData,
@@ -202,6 +235,9 @@ export default class Upload extends BaseResource {
    * Update an upload
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     uploadId: string,
@@ -218,6 +254,9 @@ export default class Upload extends BaseResource {
    * Batch add tags to uploads
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/batch_add_tags
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
@@ -244,6 +283,9 @@ export default class Upload extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/batch_add_tags
    *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawBatchAddTags(
@@ -263,6 +305,9 @@ export default class Upload extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/batch_destroy
    *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
    * @deprecated This API call is to be considered private and might change without notice
    */
   batchDestroy(queryParams?: SimpleSchemaTypes.UploadBatchDestroyHrefSchema) {
@@ -277,6 +322,9 @@ export default class Upload extends BaseResource {
    * Delete multiple uploads
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/batch_destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
@@ -294,6 +342,9 @@ export default class Upload extends BaseResource {
    * Referenced records
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/references
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   references(
     uploadId: string | SimpleSchemaTypes.UploadData,
@@ -310,6 +361,9 @@ export default class Upload extends BaseResource {
    * Referenced records
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/references
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawReferences(
     uploadId: string,
@@ -326,6 +380,9 @@ export default class Upload extends BaseResource {
    * Add tags to assets in bulk
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/bulk_tag
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   bulkTag(body: SimpleSchemaTypes.UploadBulkTagSchema) {
     return this.rawBulkTag(
@@ -345,6 +402,9 @@ export default class Upload extends BaseResource {
    * Add tags to assets in bulk
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/bulk_tag
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawBulkTag(
     body: SchemaTypes.UploadBulkTagSchema,
@@ -360,6 +420,9 @@ export default class Upload extends BaseResource {
    * Destroy uploads
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/bulk_destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   bulkDestroy(body: SimpleSchemaTypes.UploadBulkDestroySchema) {
     return this.rawBulkDestroy(
@@ -379,6 +442,9 @@ export default class Upload extends BaseResource {
    * Destroy uploads
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/bulk_destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawBulkDestroy(
     body: SchemaTypes.UploadBulkDestroySchema,

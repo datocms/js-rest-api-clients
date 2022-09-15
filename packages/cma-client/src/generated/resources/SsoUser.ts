@@ -10,6 +10,9 @@ export default class SsoUser extends BaseResource {
    * List all users
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-user/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -23,6 +26,9 @@ export default class SsoUser extends BaseResource {
    * List all users
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-user/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.SsoUserInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SsoUserInstancesTargetSchema>({
@@ -35,6 +41,9 @@ export default class SsoUser extends BaseResource {
    * Returns a SSO user
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-user/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(userId: string | SimpleSchemaTypes.UserData) {
     return this.rawFind(Utils.toId(userId)).then((body) =>
@@ -48,6 +57,9 @@ export default class SsoUser extends BaseResource {
    * Returns a SSO user
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-user/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(userId: string): Promise<SchemaTypes.SsoUserSelfTargetSchema> {
     return this.client.request<SchemaTypes.SsoUserSelfTargetSchema>({
@@ -60,6 +72,9 @@ export default class SsoUser extends BaseResource {
    * Copy editors as SSO users
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-user/copy_users
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   copyUsers() {
     return this.rawCopyUsers().then((body) =>
@@ -73,6 +88,9 @@ export default class SsoUser extends BaseResource {
    * Copy editors as SSO users
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-user/copy_users
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCopyUsers(): Promise<SchemaTypes.SsoUserCopyUsersTargetSchema> {
     return this.client.request<SchemaTypes.SsoUserCopyUsersTargetSchema>({
@@ -85,6 +103,9 @@ export default class SsoUser extends BaseResource {
    * Delete a SSO user
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-user/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(
     userId: string | SimpleSchemaTypes.UserData,
@@ -101,6 +122,9 @@ export default class SsoUser extends BaseResource {
    * Delete a SSO user
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-user/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     userId: string,

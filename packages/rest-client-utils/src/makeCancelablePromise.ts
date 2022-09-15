@@ -11,14 +11,16 @@ export interface CancelablePromise<T> extends Promise<T> {
 
 export function makeCancelablePromise<T>(
   promiseOrAsyncFn: Promise<T> | (() => Promise<T>),
-  onCancel: () => void,
+  onCancel?: () => void,
 ): CancelablePromise<T> {
   let cancel: (() => void) | null = null;
 
   const cancelable = <CancelablePromise<T>>new Promise((resolve, reject) => {
     cancel = () => {
       try {
-        onCancel();
+        if (onCancel) {
+          onCancel();
+        }
         reject(new CanceledPromiseError());
       } catch (e) {
         reject(e);

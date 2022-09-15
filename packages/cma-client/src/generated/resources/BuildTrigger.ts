@@ -10,6 +10,9 @@ export default class BuildTrigger extends BaseResource {
    * List all build triggers for a site
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -23,6 +26,9 @@ export default class BuildTrigger extends BaseResource {
    * List all build triggers for a site
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.BuildTriggerInstancesTargetSchema> {
     return this.client.request<SchemaTypes.BuildTriggerInstancesTargetSchema>({
@@ -35,6 +41,9 @@ export default class BuildTrigger extends BaseResource {
    * Retrieve a build trigger
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
     return this.rawFind(Utils.toId(buildTriggerId)).then((body) =>
@@ -48,6 +57,9 @@ export default class BuildTrigger extends BaseResource {
    * Retrieve a build trigger
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(
     buildTriggerId: string,
@@ -62,6 +74,9 @@ export default class BuildTrigger extends BaseResource {
    * Create build trigger
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.BuildTriggerCreateSchema) {
     return this.rawCreate(
@@ -89,6 +104,9 @@ export default class BuildTrigger extends BaseResource {
    * Create build trigger
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.BuildTriggerCreateSchema,
@@ -104,6 +122,9 @@ export default class BuildTrigger extends BaseResource {
    * Update build trigger
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData,
@@ -135,6 +156,9 @@ export default class BuildTrigger extends BaseResource {
    * Update build trigger
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     buildTriggerId: string,
@@ -151,6 +175,9 @@ export default class BuildTrigger extends BaseResource {
    * Trigger a deploy
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/trigger
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   trigger(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
     return this.rawTrigger(Utils.toId(buildTriggerId));
@@ -160,6 +187,9 @@ export default class BuildTrigger extends BaseResource {
    * Trigger a deploy
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/trigger
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawTrigger(buildTriggerId: string): Promise<void> {
     return this.client.request<void>({
@@ -172,6 +202,9 @@ export default class BuildTrigger extends BaseResource {
    * Abort a deploy and mark it as failed
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   abort(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
     return this.rawAbort(Utils.toId(buildTriggerId));
@@ -181,6 +214,9 @@ export default class BuildTrigger extends BaseResource {
    * Abort a deploy and mark it as failed
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawAbort(buildTriggerId: string): Promise<void> {
     return this.client.request<void>({
@@ -193,6 +229,9 @@ export default class BuildTrigger extends BaseResource {
    * Abort a site search spidering and mark it as failed
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort_indexing
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   abortIndexing(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
     return this.rawAbortIndexing(Utils.toId(buildTriggerId));
@@ -202,6 +241,9 @@ export default class BuildTrigger extends BaseResource {
    * Abort a site search spidering and mark it as failed
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort_indexing
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawAbortIndexing(buildTriggerId: string): Promise<void> {
     return this.client.request<void>({
@@ -214,6 +256,9 @@ export default class BuildTrigger extends BaseResource {
    * Trigger a new site search spidering of the website
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/reindex
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   reindex(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
     return this.rawReindex(Utils.toId(buildTriggerId));
@@ -223,6 +268,9 @@ export default class BuildTrigger extends BaseResource {
    * Trigger a new site search spidering of the website
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/reindex
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawReindex(buildTriggerId: string): Promise<void> {
     return this.client.request<void>({
@@ -235,6 +283,9 @@ export default class BuildTrigger extends BaseResource {
    * Delete a build trigger
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
     return this.rawDestroy(Utils.toId(buildTriggerId)).then((body) =>
@@ -248,6 +299,9 @@ export default class BuildTrigger extends BaseResource {
    * Delete a build trigger
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/build-trigger/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     buildTriggerId: string,

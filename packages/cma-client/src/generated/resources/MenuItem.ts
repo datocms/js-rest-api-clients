@@ -10,13 +10,16 @@ export default class MenuItem extends BaseResource {
    * Create a new menu item
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/menu-item/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.MenuItemCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.MenuItemCreateSchema>(body, {
         type: 'menu_item',
         attributes: ['label', 'external_url', 'position', 'open_in_new_tab'],
-        relationships: ['item_type', 'parent'],
+        relationships: ['item_type', 'item_type_filter', 'parent'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.MenuItemCreateTargetSchema>(
@@ -29,6 +32,9 @@ export default class MenuItem extends BaseResource {
    * Create a new menu item
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/menu-item/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.MenuItemCreateSchema,
@@ -44,6 +50,9 @@ export default class MenuItem extends BaseResource {
    * Update a menu item
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/menu-item/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     menuItemId: string | SimpleSchemaTypes.MenuItemData,
@@ -55,7 +64,7 @@ export default class MenuItem extends BaseResource {
         id: Utils.toId(menuItemId),
         type: 'menu_item',
         attributes: ['label', 'external_url', 'position', 'open_in_new_tab'],
-        relationships: ['item_type', 'parent'],
+        relationships: ['item_type', 'item_type_filter', 'parent'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.MenuItemUpdateTargetSchema>(
@@ -68,6 +77,9 @@ export default class MenuItem extends BaseResource {
    * Update a menu item
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/menu-item/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     menuItemId: string,
@@ -84,6 +96,9 @@ export default class MenuItem extends BaseResource {
    * List all menu items
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/menu-item/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list(queryParams?: SimpleSchemaTypes.MenuItemInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
@@ -97,6 +112,9 @@ export default class MenuItem extends BaseResource {
    * List all menu items
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/menu-item/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(
     queryParams?: SchemaTypes.MenuItemInstancesHrefSchema,
@@ -112,6 +130,9 @@ export default class MenuItem extends BaseResource {
    * Retrieve a menu item
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/menu-item/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(menuItemId: string | SimpleSchemaTypes.MenuItemData) {
     return this.rawFind(Utils.toId(menuItemId)).then((body) =>
@@ -125,6 +146,9 @@ export default class MenuItem extends BaseResource {
    * Retrieve a menu item
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/menu-item/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(menuItemId: string): Promise<SchemaTypes.MenuItemSelfTargetSchema> {
     return this.client.request<SchemaTypes.MenuItemSelfTargetSchema>({
@@ -137,6 +161,9 @@ export default class MenuItem extends BaseResource {
    * Delete a menu item
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/menu-item/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(menuItemId: string | SimpleSchemaTypes.MenuItemData) {
     return this.rawDestroy(Utils.toId(menuItemId)).then((body) =>
@@ -150,6 +177,9 @@ export default class MenuItem extends BaseResource {
    * Delete a menu item
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/menu-item/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     menuItemId: string,

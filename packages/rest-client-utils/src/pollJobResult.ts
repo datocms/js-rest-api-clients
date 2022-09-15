@@ -1,4 +1,4 @@
-import { ApiError } from './ApiError';
+import { ApiError } from './errors';
 import { JobResult } from './internalTypes';
 import { wait } from './wait';
 

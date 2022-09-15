@@ -10,6 +10,9 @@ export default class UploadTag extends BaseResource {
    * List all manually created upload tags
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-tag/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list(queryParams?: SimpleSchemaTypes.UploadTagInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
@@ -23,6 +26,9 @@ export default class UploadTag extends BaseResource {
    * List all manually created upload tags
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-tag/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(
     queryParams?: SchemaTypes.UploadTagInstancesHrefSchema,
@@ -38,6 +44,9 @@ export default class UploadTag extends BaseResource {
    * Async iterator to auto-paginate over elements returned by list()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-tag/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   async *listPagedIterator(
     queryParams?: SimpleSchemaTypes.UploadTagInstancesHrefSchema,
@@ -57,6 +66,9 @@ export default class UploadTag extends BaseResource {
    * Async iterator to auto-paginate over elements returned by rawList()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-tag/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawListPagedIterator(
     queryParams?: SchemaTypes.UploadTagInstancesHrefSchema,
@@ -79,6 +91,9 @@ export default class UploadTag extends BaseResource {
    * Create a new upload tag
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-tag/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.UploadTagCreateSchema) {
     return this.rawCreate(
@@ -98,6 +113,9 @@ export default class UploadTag extends BaseResource {
    * Create a new upload tag
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-tag/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.UploadTagCreateSchema,

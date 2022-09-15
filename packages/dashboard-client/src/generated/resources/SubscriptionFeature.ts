@@ -8,6 +8,9 @@ export default class SubscriptionFeature extends BaseResource {
 
   /**
    * Get all the subscription features
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list(siteId: string | SimpleSchemaTypes.SiteData) {
     return this.rawList(Utils.toId(siteId)).then((body) =>
@@ -19,6 +22,9 @@ export default class SubscriptionFeature extends BaseResource {
 
   /**
    * Get all the subscription features
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(
     siteId: string,

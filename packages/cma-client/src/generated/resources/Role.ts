@@ -10,6 +10,9 @@ export default class Role extends BaseResource {
    * Create a new role
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/role/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.RoleCreateSchema) {
     return this.rawCreate(
@@ -55,6 +58,9 @@ export default class Role extends BaseResource {
    * Create a new role
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/role/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.RoleCreateSchema,
@@ -70,6 +76,9 @@ export default class Role extends BaseResource {
    * Update a role
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/role/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     roleId: string | SimpleSchemaTypes.RoleData,
@@ -120,6 +129,9 @@ export default class Role extends BaseResource {
    * Update a role
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/role/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     roleId: string,
@@ -136,6 +148,9 @@ export default class Role extends BaseResource {
    * List all roles
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/role/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -149,6 +164,9 @@ export default class Role extends BaseResource {
    * List all roles
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/role/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.RoleInstancesTargetSchema> {
     return this.client.request<SchemaTypes.RoleInstancesTargetSchema>({
@@ -161,6 +179,9 @@ export default class Role extends BaseResource {
    * Retrieve a role
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/role/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(roleId: string | SimpleSchemaTypes.RoleData) {
     return this.rawFind(Utils.toId(roleId)).then((body) =>
@@ -174,6 +195,9 @@ export default class Role extends BaseResource {
    * Retrieve a role
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/role/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(roleId: string): Promise<SchemaTypes.RoleSelfTargetSchema> {
     return this.client.request<SchemaTypes.RoleSelfTargetSchema>({
@@ -186,6 +210,9 @@ export default class Role extends BaseResource {
    * Delete a role
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/role/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(roleId: string | SimpleSchemaTypes.RoleData) {
     return this.rawDestroy(Utils.toId(roleId)).then((body) =>
@@ -199,6 +226,9 @@ export default class Role extends BaseResource {
    * Delete a role
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/role/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(roleId: string): Promise<SchemaTypes.RoleDestroyTargetSchema> {
     return this.client.request<SchemaTypes.RoleDestroyTargetSchema>({

@@ -308,6 +308,23 @@ export type MenuItemType = 'menu_item';
  */
 export type ItemTypeType = 'item_type';
 /**
+ * JSON API type field
+ *
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type ItemTypeFilterType = 'item_type_filter';
+/**
+ * ID of filter
+ *
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type ItemTypeFilterIdentity = string;
+/**
  * This interface was referenced by `MenuItem`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
@@ -1167,23 +1184,6 @@ export type WebhookCallInstancesHrefSchema = {
  * via the `instances.targetSchema` link.
  */
 export type BuildTriggerInstancesTargetSchema = BuildTrigger[];
-/**
- * ID of filter
- *
- * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
- * via the `definition` "id".
- */
-export type ItemTypeFilterIdentity = string;
-/**
- * JSON API type field
- *
- * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
- * via the `definition` "type".
- */
-export type ItemTypeFilterType = 'item_type_filter';
 /**
  * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
  * via the `instances.targetSchema` link.
@@ -3897,10 +3897,11 @@ export type MenuItem = {
    */
   position: number;
   /**
-   * Opens link in new tab (used together with `external_url`)
+   * Opens link in new tab (to be used together with `external_url`)
    */
   open_in_new_tab: boolean;
   item_type: ItemTypeData | null;
+  item_type_filter: ItemTypeFilterData | null;
   parent: null | MenuItemData;
   children: MenuItemData[];
 };
@@ -3917,6 +3918,17 @@ export type MenuItemDestroyTargetSchema = MenuItem;
 export type ItemTypeData = {
   type: ItemTypeType;
   id: ItemTypeIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ItemTypeFilterData = {
+  type: ItemTypeFilterType;
+  id: ItemTypeFilterIdentity;
 };
 
 /**
@@ -3950,7 +3962,7 @@ export type MenuItemAttributes = {
    */
   position: number;
   /**
-   * Opens link in new tab (used together with `external_url`)
+   * Opens link in new tab (to be used together with `external_url`)
    */
   open_in_new_tab: boolean;
 };
@@ -3963,6 +3975,7 @@ export type MenuItemAttributes = {
  */
 export type MenuItemRelationships = {
   item_type: ItemTypeData | null;
+  item_type_filter: ItemTypeFilterData | null;
   parent: null | MenuItemData;
   children: MenuItemData[];
 };
@@ -3984,12 +3997,13 @@ export type MenuItemCreateSchema = {
   /**
    * Ordering index
    */
-  position: number;
+  position?: number;
   /**
-   * Opens link in new tab (used together with `external_url`)
+   * Opens link in new tab (to be used together with `external_url`)
    */
   open_in_new_tab?: boolean;
   item_type?: ItemTypeData | null;
+  item_type_filter?: ItemTypeFilterData | null;
   parent?: null | MenuItemData;
 };
 
@@ -4013,10 +4027,11 @@ export type MenuItemUpdateSchema = {
    */
   position?: number;
   /**
-   * Opens link in new tab (used together with `external_url`)
+   * Opens link in new tab (to be used together with `external_url`)
    */
   open_in_new_tab?: boolean;
   item_type?: ItemTypeData | null;
+  item_type_filter?: ItemTypeFilterData | null;
   parent?: null | MenuItemData;
 };
 
@@ -8285,6 +8300,37 @@ export type ItemTypeFilter = {
     [k: string]: unknown;
   };
   /**
+   * The columns to show with this filter
+   */
+  columns:
+    | [
+        {
+          /**
+           * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+           */
+          name: string;
+          /**
+           * The percentage width for the column (float, from 0 to 1.0)
+           */
+          width: number;
+        },
+        ...{
+          /**
+           * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+           */
+          name: string;
+          /**
+           * The percentage width for the column (float, from 0 to 1.0)
+           */
+          width: number;
+        }[],
+      ]
+    | null;
+  /**
+   * The ordering to apply with this filter, or `null` for the default model ordering. It follows the form of the `order_by` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
+   */
+  order_by: string | null;
+  /**
    * Whether it's a shared filter or not
    */
   shared: boolean;
@@ -8294,17 +8340,6 @@ export type ItemTypeFilterCreateTargetSchema = ItemTypeFilter;
 export type ItemTypeFilterUpdateTargetSchema = ItemTypeFilter;
 export type ItemTypeFilterSelfTargetSchema = ItemTypeFilter;
 export type ItemTypeFilterDestroyTargetSchema = ItemTypeFilter;
-/**
- * JSON API data
- *
- * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
- * via the `definition` "data".
- */
-export type ItemTypeFilterData = {
-  type: ItemTypeFilterType;
-  id: ItemTypeFilterIdentity;
-};
-
 /**
  * JSON API attributes
  *
@@ -8322,6 +8357,37 @@ export type ItemTypeFilterAttributes = {
   filter: {
     [k: string]: unknown;
   };
+  /**
+   * The columns to show with this filter
+   */
+  columns:
+    | [
+        {
+          /**
+           * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+           */
+          name: string;
+          /**
+           * The percentage width for the column (float, from 0 to 1.0)
+           */
+          width: number;
+        },
+        ...{
+          /**
+           * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+           */
+          name: string;
+          /**
+           * The percentage width for the column (float, from 0 to 1.0)
+           */
+          width: number;
+        }[],
+      ]
+    | null;
+  /**
+   * The ordering to apply with this filter, or `null` for the default model ordering. It follows the form of the `order_by` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
+   */
+  order_by: string | null;
   /**
    * Whether it's a shared filter or not
    */
@@ -8351,13 +8417,44 @@ export type ItemTypeFilterCreateSchema = {
   /**
    * The actual filter. It follows the form of the `filter` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
    */
-  filter: {
+  filter?: {
     [k: string]: unknown;
   };
   /**
+   * The columns to show with this filter
+   */
+  columns?:
+    | [
+        {
+          /**
+           * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+           */
+          name: string;
+          /**
+           * The percentage width for the column (float, from 0 to 1.0)
+           */
+          width: number;
+        },
+        ...{
+          /**
+           * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+           */
+          name: string;
+          /**
+           * The percentage width for the column (float, from 0 to 1.0)
+           */
+          width: number;
+        }[],
+      ]
+    | null;
+  /**
+   * The ordering to apply with this filter, or `null` for the default model ordering. It follows the form of the `order_by` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
+   */
+  order_by?: string | null;
+  /**
    * Whether it's a shared filter or not
    */
-  shared: boolean;
+  shared?: boolean;
   item_type: ItemTypeData;
 };
 
@@ -8371,7 +8468,38 @@ export type ItemTypeFilterUpdateSchema = {
   /**
    * The name of the filter
    */
-  name: string;
+  name?: string;
+  /**
+   * The columns to show with this filter
+   */
+  columns?:
+    | [
+        {
+          /**
+           * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+           */
+          name: string;
+          /**
+           * The percentage width for the column (float, from 0 to 1.0)
+           */
+          width: number;
+        },
+        ...{
+          /**
+           * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+           */
+          name: string;
+          /**
+           * The percentage width for the column (float, from 0 to 1.0)
+           */
+          width: number;
+        }[],
+      ]
+    | null;
+  /**
+   * The ordering to apply with this filter, or `null` for the default model ordering. It follows the form of the `order_by` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
+   */
+  order_by?: string | null;
   /**
    * Whether it's a shared filter or not
    */
@@ -8379,9 +8507,10 @@ export type ItemTypeFilterUpdateSchema = {
   /**
    * The actual filter. It follows the form of the `filter` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
    */
-  filter: {
+  filter?: {
     [k: string]: unknown;
   };
+  item_type?: ItemTypeData;
 };
 
 /**

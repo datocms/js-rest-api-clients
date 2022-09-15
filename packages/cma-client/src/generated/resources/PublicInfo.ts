@@ -10,6 +10,9 @@ export default class PublicInfo extends BaseResource {
    * Retrieve public site info
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/public-info/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find() {
     return this.rawFind().then((body) =>
@@ -23,6 +26,9 @@ export default class PublicInfo extends BaseResource {
    * Retrieve public site info
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/public-info/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(): Promise<SchemaTypes.PublicInfoSelfTargetSchema> {
     return this.client.request<SchemaTypes.PublicInfoSelfTargetSchema>({

@@ -10,6 +10,9 @@ export default class Workflow extends BaseResource {
    * Create a new workflow
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/workflow/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.WorkflowCreateSchema) {
     return this.rawCreate(
@@ -29,6 +32,9 @@ export default class Workflow extends BaseResource {
    * Create a new workflow
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/workflow/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.WorkflowCreateSchema,
@@ -44,6 +50,9 @@ export default class Workflow extends BaseResource {
    * Update a workflow
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/workflow/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     workflowId: string | SimpleSchemaTypes.WorkflowData,
@@ -68,6 +77,9 @@ export default class Workflow extends BaseResource {
    * Update a workflow
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/workflow/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     workflowId: string,
@@ -84,6 +96,9 @@ export default class Workflow extends BaseResource {
    * List all workflows
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/workflow/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -97,6 +112,9 @@ export default class Workflow extends BaseResource {
    * List all workflows
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/workflow/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.WorkflowInstancesTargetSchema> {
     return this.client.request<SchemaTypes.WorkflowInstancesTargetSchema>({
@@ -109,6 +127,9 @@ export default class Workflow extends BaseResource {
    * Retrieve a workflow
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/workflow/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(workflowId: string | SimpleSchemaTypes.WorkflowData) {
     return this.rawFind(Utils.toId(workflowId)).then((body) =>
@@ -122,6 +143,9 @@ export default class Workflow extends BaseResource {
    * Retrieve a workflow
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/workflow/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(workflowId: string): Promise<SchemaTypes.WorkflowSelfTargetSchema> {
     return this.client.request<SchemaTypes.WorkflowSelfTargetSchema>({
@@ -134,6 +158,9 @@ export default class Workflow extends BaseResource {
    * Delete a workflow
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/workflow/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(workflowId: string | SimpleSchemaTypes.WorkflowData) {
     return this.rawDestroy(Utils.toId(workflowId));
@@ -143,6 +170,9 @@ export default class Workflow extends BaseResource {
    * Delete a workflow
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/workflow/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(workflowId: string): Promise<void> {
     return this.client.request<void>({

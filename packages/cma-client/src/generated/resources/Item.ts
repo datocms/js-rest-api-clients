@@ -10,6 +10,9 @@ export default class Item extends BaseResource {
    * List all records
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list(queryParams?: SimpleSchemaTypes.ItemInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
@@ -23,6 +26,9 @@ export default class Item extends BaseResource {
    * List all records
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(
     queryParams?: SchemaTypes.ItemInstancesHrefSchema,
@@ -38,6 +44,9 @@ export default class Item extends BaseResource {
    * Async iterator to auto-paginate over elements returned by list()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   async *listPagedIterator(
     queryParams?: SimpleSchemaTypes.ItemInstancesHrefSchema,
@@ -57,6 +66,9 @@ export default class Item extends BaseResource {
    * Async iterator to auto-paginate over elements returned by rawList()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawListPagedIterator(
     queryParams?: SchemaTypes.ItemInstancesHrefSchema,
@@ -80,6 +92,9 @@ export default class Item extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/validate_existing
    *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
    * @deprecated This API call is to be considered private and might change without notice
    */
   validateExisting(
@@ -102,6 +117,9 @@ export default class Item extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/validate_existing
    *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawValidateExisting(
@@ -120,6 +138,9 @@ export default class Item extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/validate_new
    *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
    * @deprecated This API call is to be considered private and might change without notice
    */
   validateNew(body: SimpleSchemaTypes.ItemValidateNewSchema) {
@@ -137,6 +158,9 @@ export default class Item extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/validate_new
    *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawValidateNew(body: SchemaTypes.ItemValidateNewSchema): Promise<void> {
@@ -151,6 +175,9 @@ export default class Item extends BaseResource {
    * Create a new record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.ItemCreateSchema) {
     return this.rawCreate(
@@ -170,6 +197,9 @@ export default class Item extends BaseResource {
    * Create a new record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.ItemCreateSchema,
@@ -185,6 +215,9 @@ export default class Item extends BaseResource {
    * Duplicate a record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/duplicate
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   duplicate(itemId: string | SimpleSchemaTypes.ItemData) {
     return this.rawDuplicate(Utils.toId(itemId)).then((body) =>
@@ -198,6 +231,9 @@ export default class Item extends BaseResource {
    * Duplicate a record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/duplicate
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDuplicate(itemId: string): Promise<SchemaTypes.ItemDuplicateJobSchema> {
     return this.client.request<SchemaTypes.ItemDuplicateJobSchema>({
@@ -210,6 +246,9 @@ export default class Item extends BaseResource {
    * Update a record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     itemId: string | SimpleSchemaTypes.ItemData,
@@ -234,6 +273,9 @@ export default class Item extends BaseResource {
    * Update a record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     itemId: string,
@@ -250,6 +292,9 @@ export default class Item extends BaseResource {
    * Referenced records
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/references
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   references(
     itemId: string | SimpleSchemaTypes.ItemData,
@@ -266,6 +311,9 @@ export default class Item extends BaseResource {
    * Referenced records
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/references
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawReferences(
     itemId: string,
@@ -282,6 +330,9 @@ export default class Item extends BaseResource {
    * Retrieve a record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(
     itemId: string | SimpleSchemaTypes.ItemData,
@@ -298,6 +349,9 @@ export default class Item extends BaseResource {
    * Retrieve a record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(
     itemId: string,
@@ -314,6 +368,9 @@ export default class Item extends BaseResource {
    * Delete a record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(itemId: string | SimpleSchemaTypes.ItemData) {
     return this.rawDestroy(Utils.toId(itemId)).then((body) =>
@@ -327,6 +384,9 @@ export default class Item extends BaseResource {
    * Delete a record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(itemId: string): Promise<SchemaTypes.ItemDestroyJobSchema> {
     return this.client.request<SchemaTypes.ItemDestroyJobSchema>({
@@ -339,6 +399,9 @@ export default class Item extends BaseResource {
    * Delete multiple records
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/batch_destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
@@ -354,6 +417,9 @@ export default class Item extends BaseResource {
    * Delete multiple records
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/batch_destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
@@ -372,6 +438,9 @@ export default class Item extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/batch_publish
    *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
    * @deprecated This API call is to be considered private and might change without notice
    */
   batchPublish(queryParams: SimpleSchemaTypes.ItemBatchPublishHrefSchema) {
@@ -386,6 +455,9 @@ export default class Item extends BaseResource {
    * Publish multiple records
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/batch_publish
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
@@ -404,6 +476,9 @@ export default class Item extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/batch_unpublish
    *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
    * @deprecated This API call is to be considered private and might change without notice
    */
   batchUnpublish(queryParams: SimpleSchemaTypes.ItemBatchUnpublishHrefSchema) {
@@ -418,6 +493,9 @@ export default class Item extends BaseResource {
    * Unpublish multiple records
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/batch_unpublish
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
@@ -435,6 +513,9 @@ export default class Item extends BaseResource {
    * Publish a record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/publish
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   publish(
     itemId: string | SimpleSchemaTypes.ItemData,
@@ -451,6 +532,9 @@ export default class Item extends BaseResource {
    * Publish a record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/publish
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawPublish(
     itemId: string,
@@ -467,6 +551,9 @@ export default class Item extends BaseResource {
    * Unpublish a record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/unpublish
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   unpublish(
     itemId: string | SimpleSchemaTypes.ItemData,
@@ -483,6 +570,9 @@ export default class Item extends BaseResource {
    * Unpublish a record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/unpublish
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUnpublish(
     itemId: string,
@@ -499,6 +589,9 @@ export default class Item extends BaseResource {
    * Publish items in bulk
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/bulk_publish
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   bulkPublish(body: SimpleSchemaTypes.ItemBulkPublishSchema) {
     return this.rawBulkPublish(
@@ -518,6 +611,9 @@ export default class Item extends BaseResource {
    * Publish items in bulk
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/bulk_publish
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawBulkPublish(
     body: SchemaTypes.ItemBulkPublishSchema,
@@ -533,6 +629,9 @@ export default class Item extends BaseResource {
    * Unpublish items in bulk
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/bulk_unpublish
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   bulkUnpublish(body: SimpleSchemaTypes.ItemBulkUnpublishSchema) {
     return this.rawBulkUnpublish(
@@ -552,6 +651,9 @@ export default class Item extends BaseResource {
    * Unpublish items in bulk
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/bulk_unpublish
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawBulkUnpublish(
     body: SchemaTypes.ItemBulkUnpublishSchema,
@@ -567,6 +669,9 @@ export default class Item extends BaseResource {
    * Destroy items in bulk
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/bulk_destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   bulkDestroy(body: SimpleSchemaTypes.ItemBulkDestroySchema) {
     return this.rawBulkDestroy(
@@ -586,6 +691,9 @@ export default class Item extends BaseResource {
    * Destroy items in bulk
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/bulk_destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawBulkDestroy(
     body: SchemaTypes.ItemBulkDestroySchema,
@@ -601,6 +709,9 @@ export default class Item extends BaseResource {
    * Move items to stage in bulk
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/bulk_move_to_stage
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   bulkMoveToStage(body: SimpleSchemaTypes.ItemBulkMoveToStageSchema) {
     return this.rawBulkMoveToStage(
@@ -620,6 +731,9 @@ export default class Item extends BaseResource {
    * Move items to stage in bulk
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/bulk_move_to_stage
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawBulkMoveToStage(
     body: SchemaTypes.ItemBulkMoveToStageSchema,

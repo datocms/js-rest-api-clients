@@ -10,6 +10,9 @@ export default class Field extends BaseResource {
    * Create a new field
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(
     itemTypeId: string | SimpleSchemaTypes.ItemTypeData,
@@ -44,6 +47,9 @@ export default class Field extends BaseResource {
    * Create a new field
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     itemTypeId: string,
@@ -60,6 +66,9 @@ export default class Field extends BaseResource {
    * Update a field
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     fieldId: string | SimpleSchemaTypes.FieldData,
@@ -95,6 +104,9 @@ export default class Field extends BaseResource {
    * Update a field
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     fieldId: string,
@@ -111,6 +123,9 @@ export default class Field extends BaseResource {
    * List all fields
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
     return this.rawList(Utils.toId(itemTypeId)).then((body) =>
@@ -124,6 +139,9 @@ export default class Field extends BaseResource {
    * List all fields
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(itemTypeId: string): Promise<SchemaTypes.FieldInstancesTargetSchema> {
     return this.client.request<SchemaTypes.FieldInstancesTargetSchema>({
@@ -136,6 +154,9 @@ export default class Field extends BaseResource {
    * List referenced fields
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/referencing
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
@@ -151,6 +172,9 @@ export default class Field extends BaseResource {
    * List referenced fields
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/referencing
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
@@ -168,6 +192,9 @@ export default class Field extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/related
    *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
    * @deprecated This API call is to be considered private and might change without notice
    */
   related(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
@@ -182,6 +209,9 @@ export default class Field extends BaseResource {
    * List related fields
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/related
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
@@ -198,6 +228,9 @@ export default class Field extends BaseResource {
    * Retrieve a field
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(fieldId: string | SimpleSchemaTypes.FieldData) {
     return this.rawFind(Utils.toId(fieldId)).then((body) =>
@@ -211,6 +244,9 @@ export default class Field extends BaseResource {
    * Retrieve a field
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(fieldId: string): Promise<SchemaTypes.FieldSelfTargetSchema> {
     return this.client.request<SchemaTypes.FieldSelfTargetSchema>({
@@ -223,6 +259,9 @@ export default class Field extends BaseResource {
    * Delete a field
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(fieldId: string | SimpleSchemaTypes.FieldData) {
     return this.rawDestroy(Utils.toId(fieldId)).then((body) =>
@@ -236,6 +275,9 @@ export default class Field extends BaseResource {
    * Delete a field
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(fieldId: string): Promise<SchemaTypes.FieldDestroyJobSchema> {
     return this.client.request<SchemaTypes.FieldDestroyJobSchema>({
@@ -248,6 +290,9 @@ export default class Field extends BaseResource {
    * Duplicate a field
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/duplicate
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   duplicate(fieldId: string | SimpleSchemaTypes.FieldData) {
     return this.rawDuplicate(Utils.toId(fieldId)).then((body) =>
@@ -261,6 +306,9 @@ export default class Field extends BaseResource {
    * Duplicate a field
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/duplicate
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDuplicate(fieldId: string): Promise<SchemaTypes.FieldDuplicateJobSchema> {
     return this.client.request<SchemaTypes.FieldDuplicateJobSchema>({

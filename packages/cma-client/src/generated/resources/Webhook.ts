@@ -10,6 +10,9 @@ export default class Webhook extends BaseResource {
    * Create a new webhook
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.WebhookCreateSchema) {
     return this.rawCreate(
@@ -40,6 +43,9 @@ export default class Webhook extends BaseResource {
    * Create a new webhook
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.WebhookCreateSchema,
@@ -55,6 +61,9 @@ export default class Webhook extends BaseResource {
    * Update a webhook
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     userId: string | SimpleSchemaTypes.UserData,
@@ -89,6 +98,9 @@ export default class Webhook extends BaseResource {
    * Update a webhook
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     userId: string,
@@ -105,6 +117,9 @@ export default class Webhook extends BaseResource {
    * List all webhooks
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -118,6 +133,9 @@ export default class Webhook extends BaseResource {
    * List all webhooks
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.WebhookInstancesTargetSchema> {
     return this.client.request<SchemaTypes.WebhookInstancesTargetSchema>({
@@ -130,6 +148,9 @@ export default class Webhook extends BaseResource {
    * Retrieve a webhook
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(userId: string | SimpleSchemaTypes.UserData) {
     return this.rawFind(Utils.toId(userId)).then((body) =>
@@ -143,6 +164,9 @@ export default class Webhook extends BaseResource {
    * Retrieve a webhook
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(userId: string): Promise<SchemaTypes.WebhookSelfTargetSchema> {
     return this.client.request<SchemaTypes.WebhookSelfTargetSchema>({
@@ -155,6 +179,9 @@ export default class Webhook extends BaseResource {
    * Delete a webhook
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(userId: string | SimpleSchemaTypes.UserData) {
     return this.rawDestroy(Utils.toId(userId)).then((body) =>
@@ -168,6 +195,9 @@ export default class Webhook extends BaseResource {
    * Delete a webhook
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(userId: string): Promise<SchemaTypes.WebhookDestroyTargetSchema> {
     return this.client.request<SchemaTypes.WebhookDestroyTargetSchema>({

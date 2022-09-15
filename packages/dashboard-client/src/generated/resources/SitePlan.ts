@@ -8,6 +8,9 @@ export default class SitePlan extends BaseResource {
 
   /**
    * Retrieve enabled plans for account
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -19,6 +22,9 @@ export default class SitePlan extends BaseResource {
 
   /**
    * Retrieve enabled plans for account
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.SitePlanInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SitePlanInstancesTargetSchema>({

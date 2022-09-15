@@ -11,6 +11,9 @@ export default class EditingSession extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/editing-session/instances
    *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
    * @deprecated This API call is to be considered private and might change without notice
    */
   list() {
@@ -25,6 +28,9 @@ export default class EditingSession extends BaseResource {
    * List all editing sessions
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/editing-session/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
@@ -41,6 +47,9 @@ export default class EditingSession extends BaseResource {
    * Allows all actions on editing sessions
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/editing-session/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
@@ -60,6 +69,9 @@ export default class EditingSession extends BaseResource {
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/editing-session/destroy
    *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
    * @deprecated This API call is to be considered private and might change without notice
    */
   destroy(editingSessionId: string | SimpleSchemaTypes.EditingSessionData) {
@@ -74,6 +86,9 @@ export default class EditingSession extends BaseResource {
    * Delete an editing session
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/editing-session/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */

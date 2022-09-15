@@ -10,6 +10,9 @@ export default class ItemVersion extends BaseResource {
    * Restore an old record version
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-version/restore
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   restore(itemVersionId: string | SimpleSchemaTypes.ItemVersionData) {
     return this.rawRestore(Utils.toId(itemVersionId)).then((body) =>
@@ -23,6 +26,9 @@ export default class ItemVersion extends BaseResource {
    * Restore an old record version
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-version/restore
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawRestore(
     itemVersionId: string,
@@ -37,6 +43,9 @@ export default class ItemVersion extends BaseResource {
    * List all record versions
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-version/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list(
     itemId: string | SimpleSchemaTypes.ItemData,
@@ -53,6 +62,9 @@ export default class ItemVersion extends BaseResource {
    * List all record versions
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-version/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(
     itemId: string,
@@ -69,6 +81,9 @@ export default class ItemVersion extends BaseResource {
    * Async iterator to auto-paginate over elements returned by list()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-version/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   async *listPagedIterator(
     itemId: string | SimpleSchemaTypes.ItemData,
@@ -90,6 +105,9 @@ export default class ItemVersion extends BaseResource {
    * Async iterator to auto-paginate over elements returned by rawList()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-version/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawListPagedIterator(
     itemId: string,
@@ -113,6 +131,9 @@ export default class ItemVersion extends BaseResource {
    * Retrieve a record version
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-version/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(itemVersionId: string | SimpleSchemaTypes.ItemVersionData) {
     return this.rawFind(Utils.toId(itemVersionId)).then((body) =>
@@ -126,6 +147,9 @@ export default class ItemVersion extends BaseResource {
    * Retrieve a record version
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-version/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(
     itemVersionId: string,

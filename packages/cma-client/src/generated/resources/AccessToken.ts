@@ -10,6 +10,9 @@ export default class AccessToken extends BaseResource {
    * Create a new API token
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.AccessTokenCreateSchema) {
     return this.rawCreate(
@@ -34,6 +37,9 @@ export default class AccessToken extends BaseResource {
    * Create a new API token
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.AccessTokenCreateSchema,
@@ -49,6 +55,9 @@ export default class AccessToken extends BaseResource {
    * Update an API token
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     accessTokenId: string | SimpleSchemaTypes.AccessTokenData,
@@ -78,6 +87,9 @@ export default class AccessToken extends BaseResource {
    * Update an API token
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     accessTokenId: string,
@@ -94,6 +106,9 @@ export default class AccessToken extends BaseResource {
    * List all API tokens
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -107,6 +122,9 @@ export default class AccessToken extends BaseResource {
    * List all API tokens
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.AccessTokenInstancesTargetSchema> {
     return this.client.request<SchemaTypes.AccessTokenInstancesTargetSchema>({
@@ -119,6 +137,9 @@ export default class AccessToken extends BaseResource {
    * Retrieve an API token
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(accessTokenId: string | SimpleSchemaTypes.AccessTokenData) {
     return this.rawFind(Utils.toId(accessTokenId)).then((body) =>
@@ -132,6 +153,9 @@ export default class AccessToken extends BaseResource {
    * Retrieve an API token
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(
     accessTokenId: string,
@@ -146,6 +170,9 @@ export default class AccessToken extends BaseResource {
    * Rotate API token
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/regenerate_token
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   regenerateToken(accessTokenId: string | SimpleSchemaTypes.AccessTokenData) {
     return this.rawRegenerateToken(Utils.toId(accessTokenId)).then((body) =>
@@ -159,6 +186,9 @@ export default class AccessToken extends BaseResource {
    * Rotate API token
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/regenerate_token
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawRegenerateToken(
     accessTokenId: string,
@@ -175,6 +205,9 @@ export default class AccessToken extends BaseResource {
    * Delete an API token
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(
     accessTokenId: string | SimpleSchemaTypes.AccessTokenData,
@@ -192,6 +225,9 @@ export default class AccessToken extends BaseResource {
    * Delete an API token
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/access-token/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     accessTokenId: string,

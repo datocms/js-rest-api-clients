@@ -10,6 +10,9 @@ export default class WhiteLabelSettings extends BaseResource {
    * Retrieve white-label settings
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/white-label_settings/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find() {
     return this.rawFind().then((body) =>
@@ -23,6 +26,9 @@ export default class WhiteLabelSettings extends BaseResource {
    * Retrieve white-label settings
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/white-label_settings/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(): Promise<SchemaTypes.WhiteLabelSettingsSelfTargetSchema> {
     return this.client.request<SchemaTypes.WhiteLabelSettingsSelfTargetSchema>({
@@ -35,6 +41,9 @@ export default class WhiteLabelSettings extends BaseResource {
    * Update white-label settings
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/white-label_settings/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(body: SimpleSchemaTypes.WhiteLabelSettingsUpdateSchema) {
     return this.rawUpdate(
@@ -57,6 +66,9 @@ export default class WhiteLabelSettings extends BaseResource {
    * Update white-label settings
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/white-label_settings/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     body: SchemaTypes.WhiteLabelSettingsUpdateSchema,

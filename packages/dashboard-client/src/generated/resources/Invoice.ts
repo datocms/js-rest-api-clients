@@ -8,6 +8,9 @@ export default class Invoice extends BaseResource {
 
   /**
    * Retrieve all invoices
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   perAccountPricingBillingProfileList() {
     return this.rawPerAccountPricingBillingProfileList().then((body) =>
@@ -19,6 +22,9 @@ export default class Invoice extends BaseResource {
 
   /**
    * Retrieve all invoices
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawPerAccountPricingBillingProfileList(): Promise<SchemaTypes.InvoicePerAccountPricingBillingProfileInstancesTargetSchema> {
     return this.client.request<SchemaTypes.InvoicePerAccountPricingBillingProfileInstancesTargetSchema>(
@@ -31,6 +37,9 @@ export default class Invoice extends BaseResource {
 
   /**
    * Retrieve all invoices
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   perSitePricingBillingProfileList(
     perSitePricingBillingProfileId:
@@ -48,6 +57,9 @@ export default class Invoice extends BaseResource {
 
   /**
    * Retrieve all invoices
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawPerSitePricingBillingProfileList(
     perSitePricingBillingProfileId: string,
@@ -62,6 +74,9 @@ export default class Invoice extends BaseResource {
 
   /**
    * Collect all unpaid invoices
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   perAccountPricingBillingProfileCollectUnpaid(
     body: SimpleSchemaTypes.InvoicePerAccountPricingBillingProfileCollectUnpaidSchema,
@@ -84,6 +99,9 @@ export default class Invoice extends BaseResource {
 
   /**
    * Collect all unpaid invoices
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawPerAccountPricingBillingProfileCollectUnpaid(
     body: SchemaTypes.InvoicePerAccountPricingBillingProfileCollectUnpaidSchema,
@@ -99,6 +117,9 @@ export default class Invoice extends BaseResource {
 
   /**
    * Collect all unpaid invoices
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   perSitePricingBillingProfileCollectUnpaid(
     perSitePricingBillingProfileId:
@@ -125,6 +146,9 @@ export default class Invoice extends BaseResource {
 
   /**
    * Collect all unpaid invoices
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawPerSitePricingBillingProfileCollectUnpaid(
     perSitePricingBillingProfileId: string,

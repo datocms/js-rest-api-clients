@@ -1,11 +1,11 @@
 'use strict';
 
-export * from './ApiError';
+export * from './errors';
 export * from './deserialize';
 export * from './pollJobResult';
 export * from './rawPageIterator';
 export * from './request';
 export * from './serialize';
-export * from './CancelablePromise';
+export * from './makeCancelablePromise';
 export * from './toId';
 export * from './wait';

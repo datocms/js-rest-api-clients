@@ -10,6 +10,9 @@ export default class SsoGroup extends BaseResource {
    * List all SSO groups
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-group/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -23,6 +26,9 @@ export default class SsoGroup extends BaseResource {
    * List all SSO groups
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-group/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.SsoGroupInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SsoGroupInstancesTargetSchema>({
@@ -35,6 +41,9 @@ export default class SsoGroup extends BaseResource {
    * Sync SSO provider groups to DatoCMS roles
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-group/copy_roles
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   copyRoles(ssoGroupId: string | SimpleSchemaTypes.SsoGroupData) {
     return this.rawCopyRoles(Utils.toId(ssoGroupId)).then((body) =>
@@ -48,6 +57,9 @@ export default class SsoGroup extends BaseResource {
    * Sync SSO provider groups to DatoCMS roles
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-group/copy_roles
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCopyRoles(
     ssoGroupId: string,
@@ -62,6 +74,9 @@ export default class SsoGroup extends BaseResource {
    * Update a SSO group
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-group/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     ssoGroupId: string | SimpleSchemaTypes.SsoGroupData,
@@ -86,6 +101,9 @@ export default class SsoGroup extends BaseResource {
    * Update a SSO group
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-group/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     ssoGroupId: string,
@@ -102,6 +120,9 @@ export default class SsoGroup extends BaseResource {
    * Delete a group
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-group/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(ssoGroupId: string | SimpleSchemaTypes.SsoGroupData) {
     return this.rawDestroy(Utils.toId(ssoGroupId)).then((body) =>
@@ -115,6 +136,9 @@ export default class SsoGroup extends BaseResource {
    * Delete a group
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/sso-group/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     ssoGroupId: string,

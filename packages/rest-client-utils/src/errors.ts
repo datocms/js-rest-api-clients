@@ -94,6 +94,36 @@ export type ApiErrorResponse = {
   body?: unknown;
 };
 
+export type TimeoutErrorInitObject = {
+  request: ApiErrorRequest;
+  preCallStack?: string;
+};
+
+export class TimeoutError extends Error {
+  request: ApiErrorRequest;
+  preCallStack?: string;
+
+  constructor(initObject: TimeoutErrorInitObject) {
+    super('API Error!');
+    Object.setPrototypeOf(this, new.target.prototype);
+
+    if ('captureStackTrace' in Error) {
+      Error.captureStackTrace(this, ApiError);
+    } else {
+      this.stack = new Error().stack;
+    }
+
+    this.request = initObject.request;
+    this.preCallStack = initObject.preCallStack;
+
+    this.message = `${initObject.request.method} ${initObject.request.url}: Timeout error`;
+
+    if (this.preCallStack) {
+      this.stack += `\nCaused By:\n${this.preCallStack}`;
+    }
+  }
+}
+
 export type ApiErrorInitObject = {
   request: ApiErrorRequest;
   response: ApiErrorResponse;

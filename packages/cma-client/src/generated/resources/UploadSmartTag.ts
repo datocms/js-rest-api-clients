@@ -10,6 +10,9 @@ export default class UploadSmartTag extends BaseResource {
    * List all automatically created upload tags
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-smart_tag/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list(queryParams?: SimpleSchemaTypes.UploadSmartTagInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
@@ -23,6 +26,9 @@ export default class UploadSmartTag extends BaseResource {
    * List all automatically created upload tags
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-smart_tag/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(
     queryParams?: SchemaTypes.UploadSmartTagInstancesHrefSchema,
@@ -40,6 +46,9 @@ export default class UploadSmartTag extends BaseResource {
    * Async iterator to auto-paginate over elements returned by list()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-smart_tag/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   async *listPagedIterator(
     queryParams?: SimpleSchemaTypes.UploadSmartTagInstancesHrefSchema,
@@ -59,6 +68,9 @@ export default class UploadSmartTag extends BaseResource {
    * Async iterator to auto-paginate over elements returned by rawList()
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-smart_tag/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawListPagedIterator(
     queryParams?: SchemaTypes.UploadSmartTagInstancesHrefSchema,

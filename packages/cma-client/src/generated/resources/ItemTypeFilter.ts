@@ -10,12 +10,15 @@ export default class ItemTypeFilter extends BaseResource {
    * Create a new filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.ItemTypeFilterCreateSchema) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.ItemTypeFilterCreateSchema>(body, {
         type: 'item_type_filter',
-        attributes: ['name', 'filter', 'shared'],
+        attributes: ['name', 'filter', 'columns', 'order_by', 'shared'],
         relationships: ['item_type'],
       }),
     ).then((body) =>
@@ -29,6 +32,9 @@ export default class ItemTypeFilter extends BaseResource {
    * Create a new filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.ItemTypeFilterCreateSchema,
@@ -44,6 +50,9 @@ export default class ItemTypeFilter extends BaseResource {
    * Update a filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     itemTypeFilterId: string | SimpleSchemaTypes.ItemTypeFilterData,
@@ -54,8 +63,8 @@ export default class ItemTypeFilter extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.ItemTypeFilterUpdateSchema>(body, {
         id: Utils.toId(itemTypeFilterId),
         type: 'item_type_filter',
-        attributes: ['name', 'shared', 'filter'],
-        relationships: [],
+        attributes: ['name', 'columns', 'order_by', 'shared', 'filter'],
+        relationships: ['item_type'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeFilterUpdateTargetSchema>(
@@ -68,6 +77,9 @@ export default class ItemTypeFilter extends BaseResource {
    * Update a filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     itemTypeFilterId: string,
@@ -84,6 +96,9 @@ export default class ItemTypeFilter extends BaseResource {
    * List all filters
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -97,6 +112,9 @@ export default class ItemTypeFilter extends BaseResource {
    * List all filters
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.ItemTypeFilterInstancesTargetSchema> {
     return this.client.request<SchemaTypes.ItemTypeFilterInstancesTargetSchema>(
@@ -111,6 +129,9 @@ export default class ItemTypeFilter extends BaseResource {
    * Retrieve a filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(itemTypeFilterId: string | SimpleSchemaTypes.ItemTypeFilterData) {
     return this.rawFind(Utils.toId(itemTypeFilterId)).then((body) =>
@@ -124,6 +145,9 @@ export default class ItemTypeFilter extends BaseResource {
    * Retrieve a filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(
     itemTypeFilterId: string,
@@ -138,6 +162,9 @@ export default class ItemTypeFilter extends BaseResource {
    * Delete a filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(itemTypeFilterId: string | SimpleSchemaTypes.ItemTypeFilterData) {
     return this.rawDestroy(Utils.toId(itemTypeFilterId)).then((body) =>
@@ -151,6 +178,9 @@ export default class ItemTypeFilter extends BaseResource {
    * Delete a filter
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type_filter/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     itemTypeFilterId: string,

@@ -8,6 +8,9 @@ export default class AccountSubscription extends BaseResource {
 
   /**
    * Create a new subscription
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.AccountSubscriptionCreateSchema) {
     return this.rawCreate(
@@ -28,6 +31,9 @@ export default class AccountSubscription extends BaseResource {
 
   /**
    * Create a new subscription
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.AccountSubscriptionCreateSchema,
@@ -43,6 +49,9 @@ export default class AccountSubscription extends BaseResource {
 
   /**
    * Simulate
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   simulate(body: SimpleSchemaTypes.AccountSubscriptionSimulateSchema) {
     return this.rawSimulate(
@@ -63,6 +72,9 @@ export default class AccountSubscription extends BaseResource {
 
   /**
    * Simulate
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawSimulate(
     body: SchemaTypes.AccountSubscriptionSimulateSchema,
@@ -78,6 +90,9 @@ export default class AccountSubscription extends BaseResource {
 
   /**
    * Validate a new subscription
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   validate(body: SimpleSchemaTypes.AccountSubscriptionValidateSchema) {
     return this.rawValidate(
@@ -98,6 +113,9 @@ export default class AccountSubscription extends BaseResource {
 
   /**
    * Validate a new subscription
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawValidate(
     body: SchemaTypes.AccountSubscriptionValidateSchema,

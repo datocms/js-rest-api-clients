@@ -8,6 +8,9 @@ export default class JobResult extends BaseResource {
 
   /**
    * Retrieve a job result
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(jobResultId: string | SimpleSchemaTypes.JobResultData) {
     return this.rawFind(Utils.toId(jobResultId)).then((body) =>
@@ -19,6 +22,9 @@ export default class JobResult extends BaseResource {
 
   /**
    * Retrieve a job result
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(jobResultId: string): Promise<SchemaTypes.JobResultSelfTargetSchema> {
     return this.client.request<SchemaTypes.JobResultSelfTargetSchema>({

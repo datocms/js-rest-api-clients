@@ -10,6 +10,9 @@ export default class SiteInvitation extends BaseResource {
    * Invite a new user
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site-invitation/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   create(body: SimpleSchemaTypes.SiteInvitationCreateSchema) {
     return this.rawCreate(
@@ -29,6 +32,9 @@ export default class SiteInvitation extends BaseResource {
    * Invite a new user
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site-invitation/create
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     body: SchemaTypes.SiteInvitationCreateSchema,
@@ -44,6 +50,9 @@ export default class SiteInvitation extends BaseResource {
    * Update an invitation
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site-invitation/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   update(
     siteInvitationId: string | SimpleSchemaTypes.SiteInvitationData,
@@ -68,6 +77,9 @@ export default class SiteInvitation extends BaseResource {
    * Update an invitation
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site-invitation/update
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawUpdate(
     siteInvitationId: string,
@@ -84,6 +96,9 @@ export default class SiteInvitation extends BaseResource {
    * List all invitations
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site-invitation/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   list() {
     return this.rawList().then((body) =>
@@ -97,6 +112,9 @@ export default class SiteInvitation extends BaseResource {
    * List all invitations
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site-invitation/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawList(): Promise<SchemaTypes.SiteInvitationInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SiteInvitationInstancesTargetSchema>(
@@ -111,6 +129,9 @@ export default class SiteInvitation extends BaseResource {
    * Retrieve an invitation
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site-invitation/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   find(siteInvitationId: string | SimpleSchemaTypes.SiteInvitationData) {
     return this.rawFind(Utils.toId(siteInvitationId)).then((body) =>
@@ -124,6 +145,9 @@ export default class SiteInvitation extends BaseResource {
    * Retrieve an invitation
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site-invitation/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawFind(
     siteInvitationId: string,
@@ -138,6 +162,9 @@ export default class SiteInvitation extends BaseResource {
    * Delete an invitation
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site-invitation/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   destroy(siteInvitationId: string | SimpleSchemaTypes.SiteInvitationData) {
     return this.rawDestroy(Utils.toId(siteInvitationId)).then((body) =>
@@ -151,6 +178,9 @@ export default class SiteInvitation extends BaseResource {
    * Delete an invitation
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site-invitation/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawDestroy(
     siteInvitationId: string,
@@ -165,6 +195,9 @@ export default class SiteInvitation extends BaseResource {
    * Resend an invitation
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site-invitation/resend
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   resend(siteInvitationId: string | SimpleSchemaTypes.SiteInvitationData) {
     return this.rawResend(Utils.toId(siteInvitationId));
@@ -174,6 +207,9 @@ export default class SiteInvitation extends BaseResource {
    * Resend an invitation
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site-invitation/resend
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawResend(siteInvitationId: string): Promise<void> {
     return this.client.request<void>({

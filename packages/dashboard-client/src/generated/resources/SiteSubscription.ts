@@ -8,6 +8,9 @@ export default class SiteSubscription extends BaseResource {
 
   /**
    * Create a new subscription
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawCreate(
     siteId: string,
@@ -22,6 +25,9 @@ export default class SiteSubscription extends BaseResource {
 
   /**
    * Simulate
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawSimulate(
     siteId: string,
@@ -38,6 +44,9 @@ export default class SiteSubscription extends BaseResource {
 
   /**
    * Validate a new subscription
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   validate(
     siteId: string | SimpleSchemaTypes.SiteData,
@@ -62,6 +71,9 @@ export default class SiteSubscription extends BaseResource {
 
   /**
    * Validate a new subscription
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
    */
   rawValidate(
     siteId: string,
