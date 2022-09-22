@@ -178,11 +178,13 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       }),
     );
 
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       requestPromise.cancel();
     }, options.requestTimeout || 30000);
 
     const response = await requestPromise;
+
+    clearTimeout(timeoutId);
 
     const responseContentType = response.headers.get('Content-Type');
     const invalidContentType =
