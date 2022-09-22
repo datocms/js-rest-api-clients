@@ -4360,9 +4360,9 @@ export type ItemTypeDestroyJobSchema = {
  *
  * Only accept assets with specific file extensions.
  *
- * | Parameter         | Type                                      | Required | Description                    |
- * | ----------------- | ----------------------------------------- | -------- | ------------------------------ |
- * | `extensions`      | `Array<String>`                           |          | Set of allowed file extensions |
+ * | Parameter         | Type                                                               | Required | Description                    |
+ * | ----------------- | ------------------------------------------------------------------ | -------- | ------------------------------ |
+ * | `extensions`      | `Array<String>`                                                    |          | Set of allowed file extensions |
  * | `predefined_list` | one of `"image"`, `"transformable_image"`, `"video"`, `"document"` |          | Allowed file type              |
  *
  * Only one of the parameters must be specified.
@@ -4805,13 +4805,14 @@ export type ItemTypeDestroyJobSchema = {
  *
  * Built-in editor for _Structured text_ fields.
  *
- * | Parameter                 | Type            | Required | Description                                                                                                                                   |
- * | ------------------------- | --------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
- * | `nodes`                   | `Array<String>` | ✅       | Specify which nodes the field should allow. Valid values: `"blockquote"`, `"code"`, `"heading"`, `"link"`, `"list"`, `"thematicBreak"`        |
- * | `marks`                   | `Array<String>` | ✅       | Specify which marks the field should allow. Valid values: `"strong"`, `"emphasis"`, `"underline"`, `"strikethrough"`, `"code"`, `"highlight"` |
- * | `blocks_start_collapsed`  | `Boolean`       |          | Whether you want block nodes collapsed by default or not                                                                                      |
- * | `show_links_target_blank` | `Boolean`       |          | Whether you want to show the "Open this link in a new tab?" checkbox, that fills in the `target: "_blank"` meta attribute for links           |
- * | `show_links_meta_editor`  | `Boolean`       |          | Whether you want to show the complete meta editor for links                                                                                   |
+ * | Parameter                 | Type             | Required | Description                                                                                                                                   |
+ * | ------------------------- | ---------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+ * | `nodes`                   | `Array<String>`  | ✅       | Specify which nodes the field should allow. Valid values: `"blockquote"`, `"code"`, `"heading"`, `"link"`, `"list"`, `"thematicBreak"`        |
+ * | `marks`                   | `Array<String>`  | ✅       | Specify which marks the field should allow. Valid values: `"strong"`, `"emphasis"`, `"underline"`, `"strikethrough"`, `"code"`, `"highlight"` |
+ * | `heading_levels`          | `Array<Integer>` | ✅       | If `nodes` includes `"heading"`, specify which heading levels the field should allow. Valid values: numbers between 1 and 6                   |
+ * | `blocks_start_collapsed`  | `Boolean`        |          | Whether you want block nodes collapsed by default or not                                                                                      |
+ * | `show_links_target_blank` | `Boolean`        |          | Whether you want to show the "Open this link in a new tab?" checkbox, that fills in the `target: "_blank"` meta attribute for links           |
+ * | `show_links_meta_editor`  | `Boolean`        |          | Whether you want to show the complete meta editor for links                                                                                   |
  *
  * </details>
  *
