@@ -360,6 +360,17 @@ export type FieldsetIdentity = string;
  */
 export type WorkflowType = 'workflow';
 /**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `create.hrefSchema` link.
+ */
+export type ItemTypeCreateHrefSchema = {
+  /**
+   * Skip the creation of a menu item linked to the model
+   */
+  skip_menu_item_creation?: string;
+  [k: string]: unknown;
+};
+/**
  * JSON API type field
  *
  * This interface was referenced by `Job`'s JSON-Schema

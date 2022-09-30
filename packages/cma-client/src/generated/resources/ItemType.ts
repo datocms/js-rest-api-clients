@@ -14,7 +14,10 @@ export default class ItemType extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.ItemTypeCreateSchema) {
+  create(
+    body: SimpleSchemaTypes.ItemTypeCreateSchema,
+    queryParams?: SimpleSchemaTypes.ItemTypeCreateHrefSchema,
+  ) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.ItemTypeCreateSchema>(body, {
         type: 'item_type',
@@ -41,6 +44,7 @@ export default class ItemType extends BaseResource {
           'workflow',
         ],
       }),
+      queryParams,
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeCreateTargetSchema>(
         body,
@@ -58,11 +62,13 @@ export default class ItemType extends BaseResource {
    */
   rawCreate(
     body: SchemaTypes.ItemTypeCreateSchema,
+    queryParams?: SchemaTypes.ItemTypeCreateHrefSchema,
   ): Promise<SchemaTypes.ItemTypeCreateTargetSchema> {
     return this.client.request<SchemaTypes.ItemTypeCreateTargetSchema>({
       method: 'POST',
       url: `/item-types`,
       body,
+      queryParams,
     });
   }
 

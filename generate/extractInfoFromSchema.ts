@@ -266,11 +266,12 @@ function generateResourceInfo(
       typeof link.hrefSchema.properties.page.properties.limit === 'object' &&
       link.hrefSchema.properties.page.properties.limit;
 
-    const queryParamsRequired =
+    const queryParamsRequired = Boolean(
       link.hrefSchema &&
-      link.hrefSchema.required &&
-      Array.isArray(link.hrefSchema.required) &&
-      link.hrefSchema.required.length > 0;
+        link.hrefSchema.required &&
+        Array.isArray(link.hrefSchema.required) &&
+        link.hrefSchema.required.length > 0,
+    );
 
     const pagination = paginationLimitProperty
       ? {

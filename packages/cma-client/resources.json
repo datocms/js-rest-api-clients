@@ -3,32 +3,141 @@
     "jsonApiType": "role",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/role/create",
+        "rel": "create",
+        "urlTemplate": "/roles",
+        "method": "POST",
+        "comment": "Create a new role",
+        "requestBodyType": "RoleCreateSchema",
+        "requestStructure": {
+          "type": "role",
+          "attributes": [
+            "name",
+            "can_edit_favicon",
+            "can_edit_site",
+            "can_edit_schema",
+            "can_manage_menu",
+            "can_edit_environment",
+            "can_promote_environments",
+            "environments_access",
+            "can_manage_users",
+            "can_manage_shared_filters",
+            "can_manage_build_triggers",
+            "can_manage_webhooks",
+            "can_manage_environments",
+            "can_manage_sso",
+            "can_access_audit_log",
+            "can_manage_workflows",
+            "can_manage_access_tokens",
+            "can_perform_site_search",
+            "can_access_build_events_log",
+            "positive_item_type_permissions",
+            "negative_item_type_permissions",
+            "positive_upload_permissions",
+            "negative_upload_permissions",
+            "positive_build_trigger_permissions",
+            "negative_build_trigger_permissions"
+          ],
+          "relationships": ["inherits_permissions_from"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "RoleCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/role/update",
+        "rel": "update",
+        "urlTemplate": "/roles/${roleId}",
+        "method": "PUT",
+        "comment": "Update a role",
+        "urlPlaceholder": {
+          "variableName": "roleId",
+          "isEntityId": true,
+          "relType": "RoleData"
+        },
+        "requestBodyType": "RoleUpdateSchema",
+        "requestStructure": {
+          "type": "role",
+          "attributes": [
+            "name",
+            "can_edit_favicon",
+            "can_edit_site",
+            "can_edit_schema",
+            "can_manage_menu",
+            "can_edit_environment",
+            "can_promote_environments",
+            "environments_access",
+            "can_manage_users",
+            "can_manage_shared_filters",
+            "can_manage_build_triggers",
+            "can_manage_webhooks",
+            "can_manage_environments",
+            "can_manage_sso",
+            "can_access_audit_log",
+            "can_manage_workflows",
+            "can_manage_access_tokens",
+            "can_perform_site_search",
+            "can_access_build_events_log",
+            "positive_item_type_permissions",
+            "negative_item_type_permissions",
+            "positive_upload_permissions",
+            "negative_upload_permissions",
+            "positive_build_trigger_permissions",
+            "negative_build_trigger_permissions"
+          ],
+          "relationships": ["inherits_permissions_from"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "RoleUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/role/instances",
+        "rel": "instances",
+        "urlTemplate": "/roles",
+        "method": "GET",
+        "comment": "List all roles",
+        "queryParamsRequired": false,
+        "responseType": "RoleInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/role/self",
+        "rel": "self",
+        "urlTemplate": "/roles/${roleId}",
+        "method": "GET",
+        "comment": "Retrieve a role",
+        "urlPlaceholder": {
+          "variableName": "roleId",
+          "isEntityId": true,
+          "relType": "RoleData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "RoleSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/role/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/roles/${roleId}",
+        "method": "DELETE",
+        "comment": "Delete a role",
+        "urlPlaceholder": {
+          "variableName": "roleId",
+          "isEntityId": true,
+          "relType": "RoleData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "RoleDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -40,32 +149,86 @@
     "jsonApiType": "user",
     "endpoints": [
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/user/update",
+        "rel": "update",
+        "urlTemplate": "/users/${userId}",
+        "method": "PUT",
+        "comment": "Update a collaborator",
+        "urlPlaceholder": {
+          "variableName": "userId",
+          "isEntityId": true,
+          "relType": "UserData"
+        },
+        "requestBodyType": "UserUpdateSchema",
+        "requestStructure": {
+          "type": "user",
+          "attributes": ["is_active"],
+          "relationships": ["role"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "UserUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/user/instances",
+        "rel": "instances",
+        "urlTemplate": "/users",
+        "method": "GET",
+        "comment": "List all collaborators",
+        "queryParamsRequired": false,
+        "responseType": "UserInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/user/self",
+        "rel": "self",
+        "urlTemplate": "/users/${userId}",
+        "method": "GET",
+        "comment": "Retrieve a collaborator",
+        "urlPlaceholder": {
+          "variableName": "userId",
+          "isEntityId": true,
+          "relType": "UserData"
+        },
+        "queryParamsType": "UserSelfHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "UserSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "me",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/user/me",
+        "rel": "me",
+        "urlTemplate": "/users/me",
+        "method": "GET",
+        "comment": "Retrieve current signed-in user",
+        "queryParamsType": "UserMeHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "UserMeTargetSchema",
         "name": "findMe",
         "rawName": "rawFindMe"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/user/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/users/${userId}",
+        "method": "DELETE",
+        "comment": "Delete a collaborator",
+        "urlPlaceholder": {
+          "variableName": "userId",
+          "isEntityId": true,
+          "relType": "UserData"
+        },
+        "queryParamsType": "UserDestroyHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "UserDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -77,26 +240,61 @@
     "jsonApiType": "sso_user",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-user/instances",
+        "rel": "instances",
+        "urlTemplate": "/sso-users",
+        "method": "GET",
+        "comment": "List all users",
+        "queryParamsRequired": false,
+        "responseType": "SsoUserInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-user/self",
+        "rel": "self",
+        "urlTemplate": "/sso-users/${userId}",
+        "method": "GET",
+        "comment": "Returns a SSO user",
+        "urlPlaceholder": {
+          "variableName": "userId",
+          "isEntityId": false,
+          "relType": "UserData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "SsoUserSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "copy_users",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-user/copy_users",
+        "rel": "copy_users",
+        "urlTemplate": "/sso-users/copy-users",
+        "method": "POST",
+        "comment": "Copy editors as SSO users",
+        "queryParamsRequired": false,
+        "responseType": "SsoUserCopyUsersTargetSchema",
         "name": "copyUsers",
         "rawName": "rawCopyUsers"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-user/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/sso-users/${userId}",
+        "method": "DELETE",
+        "comment": "Delete a SSO user",
+        "urlPlaceholder": {
+          "variableName": "userId",
+          "isEntityId": false,
+          "relType": "UserData"
+        },
+        "queryParamsType": "SsoUserDestroyHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "SsoUserDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -108,8 +306,20 @@
     "jsonApiType": "audit_log_event",
     "endpoints": [
       {
-        "rel": "query",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/audit-log_event/query",
+        "rel": "query",
+        "urlTemplate": "/audit-log-events/query",
+        "method": "POST",
+        "comment": "List Audit Log events",
+        "requestBodyType": "AuditLogEventQuerySchema",
+        "requestStructure": {
+          "type": "audit_log_query",
+          "attributes": ["filter", "next_token", "detailed_log"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "AuditLogEventQueryTargetSchema",
         "name": "query",
         "rawName": "rawQuery"
       }
@@ -121,32 +331,100 @@
     "jsonApiType": "menu_item",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/menu-item/create",
+        "rel": "create",
+        "urlTemplate": "/menu-items",
+        "method": "POST",
+        "comment": "Create a new menu item",
+        "requestBodyType": "MenuItemCreateSchema",
+        "requestStructure": {
+          "type": "menu_item",
+          "attributes": [
+            "label",
+            "external_url",
+            "position",
+            "open_in_new_tab"
+          ],
+          "relationships": ["item_type", "item_type_filter", "parent"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "MenuItemCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/menu-item/update",
+        "rel": "update",
+        "urlTemplate": "/menu-items/${menuItemId}",
+        "method": "PUT",
+        "comment": "Update a menu item",
+        "urlPlaceholder": {
+          "variableName": "menuItemId",
+          "isEntityId": true,
+          "relType": "MenuItemData"
+        },
+        "requestBodyType": "MenuItemUpdateSchema",
+        "requestStructure": {
+          "type": "menu_item",
+          "attributes": [
+            "label",
+            "external_url",
+            "position",
+            "open_in_new_tab"
+          ],
+          "relationships": ["item_type", "item_type_filter", "parent"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "MenuItemUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/menu-item/instances",
+        "rel": "instances",
+        "urlTemplate": "/menu-items",
+        "method": "GET",
+        "comment": "List all menu items",
+        "queryParamsType": "MenuItemInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "MenuItemInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/menu-item/self",
+        "rel": "self",
+        "urlTemplate": "/menu-items/${menuItemId}",
+        "method": "GET",
+        "comment": "Retrieve a menu item",
+        "urlPlaceholder": {
+          "variableName": "menuItemId",
+          "isEntityId": true,
+          "relType": "MenuItemData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "MenuItemSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/menu-item/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/menu-items/${menuItemId}",
+        "method": "DELETE",
+        "comment": "Delete a menu item",
+        "urlPlaceholder": {
+          "variableName": "menuItemId",
+          "isEntityId": true,
+          "relType": "MenuItemData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "MenuItemDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -158,38 +436,148 @@
     "jsonApiType": "item_type",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/create",
+        "rel": "create",
+        "urlTemplate": "/item-types",
+        "method": "POST",
+        "comment": "Create a new model",
+        "requestBodyType": "ItemTypeCreateSchema",
+        "requestStructure": {
+          "type": "item_type",
+          "attributes": [
+            "name",
+            "api_key",
+            "singleton",
+            "all_locales_required",
+            "sortable",
+            "modular_block",
+            "draft_mode_active",
+            "tree",
+            "ordering_direction",
+            "ordering_meta",
+            "collection_appeareance",
+            "collection_appearance",
+            "hint"
+          ],
+          "relationships": [
+            "ordering_field",
+            "title_field",
+            "image_preview_field",
+            "excerpt_field",
+            "workflow"
+          ]
+        },
+        "queryParamsType": "ItemTypeCreateHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "ItemTypeCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/update",
+        "rel": "update",
+        "urlTemplate": "/item-types/${itemTypeId}",
+        "method": "PUT",
+        "comment": "Update a model",
+        "urlPlaceholder": {
+          "variableName": "itemTypeId",
+          "isEntityId": true,
+          "relType": "ItemTypeData"
+        },
+        "requestBodyType": "ItemTypeUpdateSchema",
+        "requestStructure": {
+          "type": "item_type",
+          "attributes": [
+            "name",
+            "api_key",
+            "collection_appeareance",
+            "collection_appearance",
+            "singleton",
+            "all_locales_required",
+            "sortable",
+            "modular_block",
+            "draft_mode_active",
+            "tree",
+            "ordering_direction",
+            "ordering_meta",
+            "has_singleton_item",
+            "hint"
+          ],
+          "relationships": [
+            "ordering_field",
+            "title_field",
+            "image_preview_field",
+            "excerpt_field",
+            "workflow"
+          ]
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemTypeUpdateJobSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/instances",
+        "rel": "instances",
+        "urlTemplate": "/item-types",
+        "method": "GET",
+        "comment": "List all models",
+        "queryParamsRequired": false,
+        "responseType": "ItemTypeInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/self",
+        "rel": "self",
+        "urlTemplate": "/item-types/${itemTypeId}",
+        "method": "GET",
+        "comment": "Retrieve a model",
+        "urlPlaceholder": {
+          "variableName": "itemTypeId",
+          "isEntityId": true,
+          "relType": "ItemTypeData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemTypeSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "duplicate",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/duplicate",
+        "rel": "duplicate",
+        "urlTemplate": "/item-types/${itemTypeId}/duplicate",
+        "method": "POST",
+        "comment": "Duplicate model",
+        "urlPlaceholder": {
+          "variableName": "itemTypeId",
+          "isEntityId": true,
+          "relType": "ItemTypeData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemTypeDuplicateTargetSchema",
         "name": "duplicate",
         "rawName": "rawDuplicate"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/item-types/${itemTypeId}",
+        "method": "DELETE",
+        "comment": "Delete a model",
+        "urlPlaceholder": {
+          "variableName": "itemTypeId",
+          "isEntityId": true,
+          "relType": "ItemTypeData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemTypeDestroyJobSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -201,50 +589,174 @@
     "jsonApiType": "field",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/create",
+        "rel": "create",
+        "urlTemplate": "/item-types/${itemTypeId}/fields",
+        "method": "POST",
+        "comment": "Create a new field",
+        "urlPlaceholder": {
+          "variableName": "itemTypeId",
+          "isEntityId": false,
+          "relType": "ItemTypeData"
+        },
+        "requestBodyType": "FieldCreateSchema",
+        "requestStructure": {
+          "type": "field",
+          "attributes": [
+            "label",
+            "field_type",
+            "api_key",
+            "localized",
+            "validators",
+            "appeareance",
+            "appearance",
+            "position",
+            "hint",
+            "default_value"
+          ],
+          "relationships": ["fieldset"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "FieldCreateJobSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/update",
+        "rel": "update",
+        "urlTemplate": "/fields/${fieldId}",
+        "method": "PUT",
+        "comment": "Update a field",
+        "urlPlaceholder": {
+          "variableName": "fieldId",
+          "isEntityId": true,
+          "relType": "FieldData"
+        },
+        "requestBodyType": "FieldUpdateSchema",
+        "requestStructure": {
+          "type": "field",
+          "attributes": [
+            "default_value",
+            "label",
+            "api_key",
+            "localized",
+            "validators",
+            "appeareance",
+            "appearance",
+            "position",
+            "field_type",
+            "hint"
+          ],
+          "relationships": ["fieldset"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "FieldUpdateJobSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/instances",
+        "rel": "instances",
+        "urlTemplate": "/item-types/${itemTypeId}/fields",
+        "method": "GET",
+        "comment": "List all fields",
+        "urlPlaceholder": {
+          "variableName": "itemTypeId",
+          "isEntityId": false,
+          "relType": "ItemTypeData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "FieldInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "referencing",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/referencing",
+        "rel": "referencing",
+        "urlTemplate": "/item-types/${itemTypeId}/fields/referencing",
+        "method": "GET",
+        "comment": "List referenced fields",
+        "urlPlaceholder": {
+          "variableName": "itemTypeId",
+          "isEntityId": false,
+          "relType": "ItemTypeData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "FieldReferencingTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "referencing",
         "rawName": "rawReferencing"
       },
       {
-        "rel": "related",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/related",
+        "rel": "related",
+        "urlTemplate": "/item-types/${itemTypeId}/fields/related",
+        "method": "GET",
+        "comment": "List related fields",
+        "urlPlaceholder": {
+          "variableName": "itemTypeId",
+          "isEntityId": false,
+          "relType": "ItemTypeData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "FieldRelatedTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "related",
         "rawName": "rawRelated"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/self",
+        "rel": "self",
+        "urlTemplate": "/fields/${fieldId}",
+        "method": "GET",
+        "comment": "Retrieve a field",
+        "urlPlaceholder": {
+          "variableName": "fieldId",
+          "isEntityId": true,
+          "relType": "FieldData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "FieldSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/fields/${fieldId}",
+        "method": "DELETE",
+        "comment": "Delete a field",
+        "urlPlaceholder": {
+          "variableName": "fieldId",
+          "isEntityId": true,
+          "relType": "FieldData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "FieldDestroyJobSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       },
       {
-        "rel": "duplicate",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/duplicate",
+        "rel": "duplicate",
+        "urlTemplate": "/fields/${fieldId}/duplicate",
+        "method": "POST",
+        "comment": "Duplicate a field",
+        "urlPlaceholder": {
+          "variableName": "fieldId",
+          "isEntityId": true,
+          "relType": "FieldData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "FieldDuplicateJobSchema",
         "name": "duplicate",
         "rawName": "rawDuplicate"
       }
@@ -256,32 +768,111 @@
     "jsonApiType": "fieldset",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/fieldset/create",
+        "rel": "create",
+        "urlTemplate": "/item-types/${itemTypeId}/fieldsets",
+        "method": "POST",
+        "comment": "Create a new fieldset",
+        "urlPlaceholder": {
+          "variableName": "itemTypeId",
+          "isEntityId": false,
+          "relType": "ItemTypeData"
+        },
+        "requestBodyType": "FieldsetCreateSchema",
+        "requestStructure": {
+          "type": "fieldset",
+          "attributes": [
+            "title",
+            "hint",
+            "position",
+            "collapsible",
+            "start_collapsed"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "FieldsetCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/fieldset/update",
+        "rel": "update",
+        "urlTemplate": "/fieldsets/${fieldsetId}",
+        "method": "PUT",
+        "comment": "Update a fieldset",
+        "urlPlaceholder": {
+          "variableName": "fieldsetId",
+          "isEntityId": true,
+          "relType": "FieldsetData"
+        },
+        "requestBodyType": "FieldsetUpdateSchema",
+        "requestStructure": {
+          "type": "fieldset",
+          "attributes": [
+            "title",
+            "hint",
+            "position",
+            "collapsible",
+            "start_collapsed"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "FieldsetUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/fieldset/instances",
+        "rel": "instances",
+        "urlTemplate": "/item-types/${itemTypeId}/fieldsets",
+        "method": "GET",
+        "comment": "List all fieldsets",
+        "urlPlaceholder": {
+          "variableName": "itemTypeId",
+          "isEntityId": false,
+          "relType": "ItemTypeData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "FieldsetInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/fieldset/self",
+        "rel": "self",
+        "urlTemplate": "/fieldsets/${fieldsetId}",
+        "method": "GET",
+        "comment": "Retrieve a fieldset",
+        "urlPlaceholder": {
+          "variableName": "fieldsetId",
+          "isEntityId": true,
+          "relType": "FieldsetData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "FieldsetSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/fieldset/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/fieldsets/${fieldsetId}",
+        "method": "DELETE",
+        "comment": "Delete a fieldset",
+        "urlPlaceholder": {
+          "variableName": "fieldsetId",
+          "isEntityId": true,
+          "relType": "FieldsetData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "FieldsetDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -293,8 +884,21 @@
     "jsonApiType": "session",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/session/create",
+        "rel": "create",
+        "urlTemplate": "/sessions",
+        "method": "POST",
+        "comment": "Create a new session",
+        "requestBodyType": "SessionCreateSchema",
+        "requestStructure": {
+          "type": "email_credentials",
+          "attributes": ["email", "password", "otp_code"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "SessionCreateTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "create",
         "rawName": "rawCreate"
       }
@@ -306,38 +910,117 @@
     "jsonApiType": "access_token",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/access-token/create",
+        "rel": "create",
+        "urlTemplate": "/access_tokens",
+        "method": "POST",
+        "comment": "Create a new API token",
+        "requestBodyType": "AccessTokenCreateSchema",
+        "requestStructure": {
+          "type": "access_token",
+          "attributes": [
+            "name",
+            "can_access_cda",
+            "can_access_cda_preview",
+            "can_access_cma"
+          ],
+          "relationships": ["role"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccessTokenCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/access-token/update",
+        "rel": "update",
+        "urlTemplate": "/access_tokens/${accessTokenId}",
+        "method": "PUT",
+        "comment": "Update an API token",
+        "urlPlaceholder": {
+          "variableName": "accessTokenId",
+          "isEntityId": true,
+          "relType": "AccessTokenData"
+        },
+        "requestBodyType": "AccessTokenUpdateSchema",
+        "requestStructure": {
+          "type": "access_token",
+          "attributes": [
+            "name",
+            "can_access_cda",
+            "can_access_cda_preview",
+            "can_access_cma"
+          ],
+          "relationships": ["role"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccessTokenUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/access-token/instances",
+        "rel": "instances",
+        "urlTemplate": "/access_tokens",
+        "method": "GET",
+        "comment": "List all API tokens",
+        "queryParamsRequired": false,
+        "responseType": "AccessTokenInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/access-token/self",
+        "rel": "self",
+        "urlTemplate": "/access_tokens/${accessTokenId}",
+        "method": "GET",
+        "comment": "Retrieve an API token",
+        "urlPlaceholder": {
+          "variableName": "accessTokenId",
+          "isEntityId": true,
+          "relType": "AccessTokenData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccessTokenSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "regenerate_token",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/access-token/regenerate_token",
+        "rel": "regenerate_token",
+        "urlTemplate": "/access_tokens/${accessTokenId}/regenerate_token",
+        "method": "POST",
+        "comment": "Rotate API token",
+        "urlPlaceholder": {
+          "variableName": "accessTokenId",
+          "isEntityId": true,
+          "relType": "AccessTokenData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccessTokenRegenerateTokenTargetSchema",
         "name": "regenerateToken",
         "rawName": "rawRegenerateToken"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/access-token/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/access_tokens/${accessTokenId}",
+        "method": "DELETE",
+        "comment": "Delete an API token",
+        "urlPlaceholder": {
+          "variableName": "accessTokenId",
+          "isEntityId": true,
+          "relType": "AccessTokenData"
+        },
+        "queryParamsType": "AccessTokenDestroyHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "AccessTokenDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -349,38 +1032,123 @@
     "jsonApiType": "plugin",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/plugin/create",
+        "rel": "create",
+        "urlTemplate": "/plugins",
+        "method": "POST",
+        "comment": "Create a new plugin",
+        "requestBodyType": "PluginCreateSchema",
+        "requestStructure": {
+          "type": "plugin",
+          "attributes": [
+            "package_name",
+            "name",
+            "description",
+            "url",
+            "permissions",
+            "plugin_type",
+            "field_types",
+            "parameter_definitions",
+            "package_version"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "PluginCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/plugin/update",
+        "rel": "update",
+        "urlTemplate": "/plugins/${pluginId}",
+        "method": "PUT",
+        "comment": "Update a plugin",
+        "urlPlaceholder": {
+          "variableName": "pluginId",
+          "isEntityId": true,
+          "relType": "PluginData"
+        },
+        "requestBodyType": "PluginUpdateSchema",
+        "requestStructure": {
+          "type": "plugin",
+          "attributes": [
+            "name",
+            "description",
+            "url",
+            "parameters",
+            "package_version",
+            "permissions"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "PluginUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/plugin/instances",
+        "rel": "instances",
+        "urlTemplate": "/plugins",
+        "method": "GET",
+        "comment": "List all plugins",
+        "queryParamsRequired": false,
+        "responseType": "PluginInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/plugin/self",
+        "rel": "self",
+        "urlTemplate": "/plugins/${pluginId}",
+        "method": "GET",
+        "comment": "Retrieve a plugins",
+        "urlPlaceholder": {
+          "variableName": "pluginId",
+          "isEntityId": true,
+          "relType": "PluginData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "PluginSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/plugin/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/plugins/${pluginId}",
+        "method": "DELETE",
+        "comment": "Delete a plugin",
+        "urlPlaceholder": {
+          "variableName": "pluginId",
+          "isEntityId": true,
+          "relType": "PluginData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "PluginDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       },
       {
-        "rel": "fields",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/plugin/fields",
+        "rel": "fields",
+        "urlTemplate": "/plugins/${pluginId}/fields",
+        "method": "GET",
+        "comment": "Retrieve all fields using the plugin",
+        "urlPlaceholder": {
+          "variableName": "pluginId",
+          "isEntityId": true,
+          "relType": "PluginData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "PluginFieldsTargetSchema",
         "name": "fields",
         "rawName": "rawFields"
       }
@@ -392,8 +1160,19 @@
     "jsonApiType": "job_result",
     "endpoints": [
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/job-result/self",
+        "rel": "self",
+        "urlTemplate": "/job-results/${jobResultId}",
+        "method": "GET",
+        "comment": "Retrieve a job result",
+        "urlPlaceholder": {
+          "variableName": "jobResultId",
+          "isEntityId": true,
+          "relType": "JobResultData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "JobResultSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       }
@@ -405,14 +1184,31 @@
     "jsonApiType": "subscription_limit",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/subscription-limit/instances",
+        "rel": "instances",
+        "urlTemplate": "/subscription-limits",
+        "method": "GET",
+        "comment": "Get all the subscription limits",
+        "queryParamsRequired": false,
+        "responseType": "SubscriptionLimitInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/subscription-limit/self",
+        "rel": "self",
+        "urlTemplate": "/subscription-limits/${subscriptionLimitId}",
+        "method": "GET",
+        "comment": "Get a single subscription limit",
+        "urlPlaceholder": {
+          "variableName": "subscriptionLimitId",
+          "isEntityId": true,
+          "relType": "SubscriptionLimitData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "SubscriptionLimitSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       }
@@ -424,8 +1220,14 @@
     "jsonApiType": "subscription_feature",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/subscription-feature/instances",
+        "rel": "instances",
+        "urlTemplate": "/subscription-features",
+        "method": "GET",
+        "comment": "Get all the subscription features",
+        "queryParamsRequired": false,
+        "responseType": "SubscriptionFeatureInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       }
@@ -437,14 +1239,31 @@
     "jsonApiType": "build_event",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-event/instances",
+        "rel": "instances",
+        "urlTemplate": "/build-events",
+        "method": "GET",
+        "comment": "List all deploy events",
+        "queryParamsRequired": false,
+        "responseType": "BuildEventInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-event/self",
+        "rel": "self",
+        "urlTemplate": "/build-events/${buildEventId}",
+        "method": "GET",
+        "comment": "Retrieve a deploy event",
+        "urlPlaceholder": {
+          "variableName": "buildEventId",
+          "isEntityId": true,
+          "relType": "BuildEventData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "BuildEventSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       }
@@ -456,8 +1275,15 @@
     "jsonApiType": "item",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/instances",
+        "rel": "instances",
+        "urlTemplate": "/items",
+        "method": "GET",
+        "comment": "List all records",
+        "queryParamsType": "ItemInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "ItemInstancesTargetSchema",
         "paginatedResponse": {
           "defaultLimit": 30,
           "maxLimit": 500
@@ -466,104 +1292,304 @@
         "rawName": "rawList"
       },
       {
-        "rel": "validate_existing",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/validate_existing",
+        "rel": "validate_existing",
+        "urlTemplate": "/items/${itemId}/validate",
+        "method": "POST",
+        "comment": "Validates an existing record field",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": true,
+          "relType": "ItemData"
+        },
+        "requestBodyType": "ItemValidateExistingSchema",
+        "requestStructure": {
+          "type": "item",
+          "attributes": "*",
+          "relationships": ["item_type", "creator"]
+        },
+        "queryParamsRequired": false,
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "validateExisting",
         "rawName": "rawValidateExisting"
       },
       {
-        "rel": "validate_new",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/validate_new",
+        "rel": "validate_new",
+        "urlTemplate": "/items/validate",
+        "method": "POST",
+        "comment": "Validates a record field",
+        "requestBodyType": "ItemValidateNewSchema",
+        "requestStructure": {
+          "type": "item",
+          "attributes": "*",
+          "relationships": ["item_type"]
+        },
+        "queryParamsRequired": false,
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "validateNew",
         "rawName": "rawValidateNew"
       },
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/create",
+        "rel": "create",
+        "urlTemplate": "/items",
+        "method": "POST",
+        "comment": "Create a new record",
+        "requestBodyType": "ItemCreateSchema",
+        "requestStructure": {
+          "type": "item",
+          "attributes": "*",
+          "relationships": ["item_type"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "duplicate",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/duplicate",
+        "rel": "duplicate",
+        "urlTemplate": "/items/${itemId}/duplicate",
+        "method": "POST",
+        "comment": "Duplicate a record",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": true,
+          "relType": "ItemData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemDuplicateJobSchema",
         "name": "duplicate",
         "rawName": "rawDuplicate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/update",
+        "rel": "update",
+        "urlTemplate": "/items/${itemId}",
+        "method": "PUT",
+        "comment": "Update a record",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": true,
+          "relType": "ItemData"
+        },
+        "requestBodyType": "ItemUpdateSchema",
+        "requestStructure": {
+          "type": "item",
+          "attributes": "*",
+          "relationships": ["item_type", "creator"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "references",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/references",
+        "rel": "references",
+        "urlTemplate": "/items/${itemId}/references",
+        "method": "GET",
+        "comment": "Referenced records",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": true,
+          "relType": "ItemData"
+        },
+        "queryParamsType": "ItemReferencesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "ItemReferencesTargetSchema",
         "name": "references",
         "rawName": "rawReferences"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/self",
+        "rel": "self",
+        "urlTemplate": "/items/${itemId}",
+        "method": "GET",
+        "comment": "Retrieve a record",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": true,
+          "relType": "ItemData"
+        },
+        "queryParamsType": "ItemSelfHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "ItemSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/items/${itemId}",
+        "method": "DELETE",
+        "comment": "Delete a record",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": true,
+          "relType": "ItemData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemDestroyJobSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       },
       {
-        "rel": "batch_destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/batch_destroy",
+        "rel": "batch_destroy",
+        "urlTemplate": "/items",
+        "method": "DELETE",
+        "comment": "Delete multiple records",
+        "queryParamsType": "ItemBatchDestroyHrefSchema",
+        "queryParamsRequired": true,
+        "responseType": "ItemBatchDestroyJobSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "batchDestroy",
         "rawName": "rawBatchDestroy"
       },
       {
-        "rel": "batch_publish",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/batch_publish",
+        "rel": "batch_publish",
+        "urlTemplate": "/items/publish",
+        "method": "PUT",
+        "comment": "Publish multiple records",
+        "queryParamsType": "ItemBatchPublishHrefSchema",
+        "queryParamsRequired": true,
+        "responseType": "ItemBatchPublishJobSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "batchPublish",
         "rawName": "rawBatchPublish"
       },
       {
-        "rel": "batch_unpublish",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/batch_unpublish",
+        "rel": "batch_unpublish",
+        "urlTemplate": "/items/unpublish",
+        "method": "PUT",
+        "comment": "Unpublish multiple records",
+        "queryParamsType": "ItemBatchUnpublishHrefSchema",
+        "queryParamsRequired": true,
+        "responseType": "ItemBatchUnpublishJobSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "batchUnpublish",
         "rawName": "rawBatchUnpublish"
       },
       {
-        "rel": "publish",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/publish",
+        "rel": "publish",
+        "urlTemplate": "/items/${itemId}/publish",
+        "method": "PUT",
+        "comment": "Publish a record",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": true,
+          "relType": "ItemData"
+        },
+        "queryParamsType": "ItemPublishHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "ItemPublishTargetSchema",
         "name": "publish",
         "rawName": "rawPublish"
       },
       {
-        "rel": "unpublish",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/unpublish",
+        "rel": "unpublish",
+        "urlTemplate": "/items/${itemId}/unpublish",
+        "method": "PUT",
+        "comment": "Unpublish a record",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": true,
+          "relType": "ItemData"
+        },
+        "queryParamsType": "ItemUnpublishHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "ItemUnpublishTargetSchema",
         "name": "unpublish",
         "rawName": "rawUnpublish"
       },
       {
-        "rel": "bulk_publish",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/bulk_publish",
+        "rel": "bulk_publish",
+        "urlTemplate": "/items/bulk/publish",
+        "method": "POST",
+        "comment": "Publish items in bulk",
+        "requestBodyType": "ItemBulkPublishSchema",
+        "requestStructure": {
+          "type": "item_bulk_publish_operation",
+          "attributes": [],
+          "relationships": ["items"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemBulkPublishJobSchema",
         "name": "bulkPublish",
         "rawName": "rawBulkPublish"
       },
       {
-        "rel": "bulk_unpublish",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/bulk_unpublish",
+        "rel": "bulk_unpublish",
+        "urlTemplate": "/items/bulk/unpublish",
+        "method": "POST",
+        "comment": "Unpublish items in bulk",
+        "requestBodyType": "ItemBulkUnpublishSchema",
+        "requestStructure": {
+          "type": "item_bulk_unpublish_operation",
+          "attributes": [],
+          "relationships": ["items"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemBulkUnpublishJobSchema",
         "name": "bulkUnpublish",
         "rawName": "rawBulkUnpublish"
       },
       {
-        "rel": "bulk_destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/bulk_destroy",
+        "rel": "bulk_destroy",
+        "urlTemplate": "/items/bulk/destroy",
+        "method": "POST",
+        "comment": "Destroy items in bulk",
+        "requestBodyType": "ItemBulkDestroySchema",
+        "requestStructure": {
+          "type": "item_bulk_destroy_operation",
+          "attributes": [],
+          "relationships": ["items"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemBulkDestroyJobSchema",
         "name": "bulkDestroy",
         "rawName": "rawBulkDestroy"
       },
       {
-        "rel": "bulk_move_to_stage",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/bulk_move_to_stage",
+        "rel": "bulk_move_to_stage",
+        "urlTemplate": "/items/bulk/move-to-stage",
+        "method": "POST",
+        "comment": "Move items to stage in bulk",
+        "requestBodyType": "ItemBulkMoveToStageSchema",
+        "requestStructure": {
+          "type": "item_bulk_move_to_stage_operation",
+          "attributes": ["stage"],
+          "relationships": ["items"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemBulkMoveToStageJobSchema",
         "name": "bulkMoveToStage",
         "rawName": "rawBulkMoveToStage"
       }
@@ -575,14 +1601,37 @@
     "jsonApiType": "item_version",
     "endpoints": [
       {
-        "rel": "restore",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-version/restore",
+        "rel": "restore",
+        "urlTemplate": "/versions/${itemVersionId}/restore",
+        "method": "POST",
+        "comment": "Restore an old record version",
+        "urlPlaceholder": {
+          "variableName": "itemVersionId",
+          "isEntityId": true,
+          "relType": "ItemVersionData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemVersionRestoreJobSchema",
         "name": "restore",
         "rawName": "rawRestore"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-version/instances",
+        "rel": "instances",
+        "urlTemplate": "/items/${itemId}/versions",
+        "method": "GET",
+        "comment": "List all record versions",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": false,
+          "relType": "ItemData"
+        },
+        "queryParamsType": "ItemVersionInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "ItemVersionInstancesTargetSchema",
         "paginatedResponse": {
           "defaultLimit": 15,
           "maxLimit": 50
@@ -591,8 +1640,19 @@
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-version/self",
+        "rel": "self",
+        "urlTemplate": "/versions/${itemVersionId}",
+        "method": "GET",
+        "comment": "Retrieve a record version",
+        "urlPlaceholder": {
+          "variableName": "itemVersionId",
+          "isEntityId": true,
+          "relType": "ItemVersionData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemVersionSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       }
@@ -604,14 +1664,40 @@
     "jsonApiType": "upload",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/create",
+        "rel": "create",
+        "urlTemplate": "/uploads",
+        "method": "POST",
+        "comment": "Create a new upload",
+        "requestBodyType": "UploadCreateSchema",
+        "requestStructure": {
+          "type": "upload",
+          "attributes": [
+            "path",
+            "copyright",
+            "author",
+            "notes",
+            "default_field_metadata",
+            "tags"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadCreateJobSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/instances",
+        "rel": "instances",
+        "urlTemplate": "/uploads",
+        "method": "GET",
+        "comment": "List all uploads",
+        "queryParamsType": "UploadInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "UploadInstancesTargetSchema",
         "paginatedResponse": {
           "defaultLimit": 30,
           "maxLimit": 500
@@ -620,50 +1706,155 @@
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/self",
+        "rel": "self",
+        "urlTemplate": "/uploads/${uploadId}",
+        "method": "GET",
+        "comment": "Retrieve an upload",
+        "urlPlaceholder": {
+          "variableName": "uploadId",
+          "isEntityId": true,
+          "relType": "UploadData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/uploads/${uploadId}",
+        "method": "DELETE",
+        "comment": "Delete an upload",
+        "urlPlaceholder": {
+          "variableName": "uploadId",
+          "isEntityId": true,
+          "relType": "UploadData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/update",
+        "rel": "update",
+        "urlTemplate": "/uploads/${uploadId}",
+        "method": "PUT",
+        "comment": "Update an upload",
+        "urlPlaceholder": {
+          "variableName": "uploadId",
+          "isEntityId": true,
+          "relType": "UploadData"
+        },
+        "requestBodyType": "UploadUpdateSchema",
+        "requestStructure": {
+          "type": "upload",
+          "attributes": [
+            "path",
+            "basename",
+            "copyright",
+            "author",
+            "notes",
+            "tags",
+            "default_field_metadata"
+          ],
+          "relationships": ["creator"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadUpdateJobSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "batch_add_tags",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/batch_add_tags",
+        "rel": "batch_add_tags",
+        "urlTemplate": "/uploads/batch-add-tags",
+        "method": "PUT",
+        "comment": "Batch add tags to uploads",
+        "requestBodyType": "UploadBatchAddTagsSchema",
+        "requestStructure": {
+          "type": "upload",
+          "attributes": ["tags"],
+          "relationships": []
+        },
+        "queryParamsType": "UploadBatchAddTagsHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "UploadBatchAddTagsJobSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "batchAddTags",
         "rawName": "rawBatchAddTags"
       },
       {
-        "rel": "batch_destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/batch_destroy",
+        "rel": "batch_destroy",
+        "urlTemplate": "/uploads/batch-destroy",
+        "method": "DELETE",
+        "comment": "Delete multiple uploads",
+        "queryParamsType": "UploadBatchDestroyHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "UploadBatchDestroyJobSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "batchDestroy",
         "rawName": "rawBatchDestroy"
       },
       {
-        "rel": "references",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/references",
+        "rel": "references",
+        "urlTemplate": "/uploads/${uploadId}/references",
+        "method": "GET",
+        "comment": "Referenced records",
+        "urlPlaceholder": {
+          "variableName": "uploadId",
+          "isEntityId": true,
+          "relType": "UploadData"
+        },
+        "queryParamsType": "UploadReferencesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "UploadReferencesTargetSchema",
         "name": "references",
         "rawName": "rawReferences"
       },
       {
-        "rel": "bulk_tag",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/bulk_tag",
+        "rel": "bulk_tag",
+        "urlTemplate": "/uploads/bulk/tag",
+        "method": "POST",
+        "comment": "Add tags to assets in bulk",
+        "requestBodyType": "UploadBulkTagSchema",
+        "requestStructure": {
+          "type": "upload_bulk_tag_operation",
+          "attributes": ["tags"],
+          "relationships": ["uploads"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadBulkTagJobSchema",
         "name": "bulkTag",
         "rawName": "rawBulkTag"
       },
       {
-        "rel": "bulk_destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/bulk_destroy",
+        "rel": "bulk_destroy",
+        "urlTemplate": "/uploads/bulk/destroy",
+        "method": "POST",
+        "comment": "Destroy uploads",
+        "requestBodyType": "UploadBulkDestroySchema",
+        "requestStructure": {
+          "type": "upload_bulk_destroy_operation",
+          "attributes": [],
+          "relationships": ["uploads"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadBulkDestroyJobSchema",
         "name": "bulkDestroy",
         "rawName": "rawBulkDestroy"
       }
@@ -675,8 +1866,20 @@
     "jsonApiType": "upload_request",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-request/create",
+        "rel": "create",
+        "urlTemplate": "/upload-requests",
+        "method": "POST",
+        "comment": "Request a new upload",
+        "requestBodyType": "UploadRequestCreateSchema",
+        "requestStructure": {
+          "type": "upload_request",
+          "attributes": ["filename"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadRequestCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       }
@@ -688,14 +1891,42 @@
     "jsonApiType": "scheduled_publication",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/scheduled-publication/create",
+        "rel": "create",
+        "urlTemplate": "/items/${itemId}/scheduled-publication",
+        "method": "POST",
+        "comment": "Create a new scheduled publication",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": false,
+          "relType": "ItemData"
+        },
+        "requestBodyType": "ScheduledPublicationCreateSchema",
+        "requestStructure": {
+          "type": "scheduled_publication",
+          "attributes": ["publication_scheduled_at"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "ScheduledPublicationCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/scheduled-publication/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/items/${itemId}/scheduled-publication",
+        "method": "DELETE",
+        "comment": "Delete a scheduled publication",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": false,
+          "relType": "ItemData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "ScheduledPublicationDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -707,14 +1938,42 @@
     "jsonApiType": "scheduled_unpublishing",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/scheduled-unpublishing/create",
+        "rel": "create",
+        "urlTemplate": "/items/${itemId}/scheduled-unpublishing",
+        "method": "POST",
+        "comment": "Create a new scheduled unpublishing",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": false,
+          "relType": "ItemData"
+        },
+        "requestBodyType": "ScheduledUnpublishingCreateSchema",
+        "requestStructure": {
+          "type": "scheduled_unpublishing",
+          "attributes": ["unpublishing_scheduled_at"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "ScheduledUnpublishingCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/scheduled-unpublishing/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/items/${itemId}/scheduled-unpublishing",
+        "method": "DELETE",
+        "comment": "Delete a scheduled unpublishing",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": false,
+          "relType": "ItemData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "ScheduledUnpublishingDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -726,8 +1985,15 @@
     "jsonApiType": "search_result",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/search-result/instances",
+        "rel": "instances",
+        "urlTemplate": "/search-results",
+        "method": "GET",
+        "comment": "Search for results",
+        "queryParamsType": "SearchResultInstancesHrefSchema",
+        "queryParamsRequired": true,
+        "responseType": "SearchResultInstancesTargetSchema",
         "paginatedResponse": {
           "defaultLimit": 20,
           "maxLimit": 100
@@ -743,32 +2009,88 @@
     "jsonApiType": "environment",
     "endpoints": [
       {
-        "rel": "fork",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/environment/fork",
+        "rel": "fork",
+        "urlTemplate": "/environments/${environmentId}/fork",
+        "method": "POST",
+        "comment": "Fork an existing environment",
+        "urlPlaceholder": {
+          "variableName": "environmentId",
+          "isEntityId": true,
+          "relType": "EnvironmentData"
+        },
+        "requestBodyType": "EnvironmentForkSchema",
+        "requestStructure": {
+          "type": "environment",
+          "attributes": [],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "EnvironmentForkJobSchema",
         "name": "fork",
         "rawName": "rawFork"
       },
       {
-        "rel": "promote",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/environment/promote",
+        "rel": "promote",
+        "urlTemplate": "/environments/${environmentId}/promote",
+        "method": "PUT",
+        "comment": "Promote an environment to primary",
+        "urlPlaceholder": {
+          "variableName": "environmentId",
+          "isEntityId": true,
+          "relType": "EnvironmentData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "EnvironmentPromoteTargetSchema",
         "name": "promote",
         "rawName": "rawPromote"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/environment/instances",
+        "rel": "instances",
+        "urlTemplate": "/environments",
+        "method": "GET",
+        "comment": "List all environments",
+        "queryParamsRequired": false,
+        "responseType": "EnvironmentInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/environment/self",
+        "rel": "self",
+        "urlTemplate": "/environments/${environmentId}",
+        "method": "GET",
+        "comment": "Retrieve a environment",
+        "urlPlaceholder": {
+          "variableName": "environmentId",
+          "isEntityId": true,
+          "relType": "EnvironmentData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "EnvironmentSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/environment/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/environments/${environmentId}",
+        "method": "DELETE",
+        "comment": "Delete a environment",
+        "urlPlaceholder": {
+          "variableName": "environmentId",
+          "isEntityId": true,
+          "relType": "EnvironmentData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "EnvironmentDestroyJobSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -780,20 +2102,39 @@
     "jsonApiType": "maintenance_mode",
     "endpoints": [
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/maintenance-mode/self",
+        "rel": "self",
+        "urlTemplate": "/maintenance-mode",
+        "method": "GET",
+        "comment": "Retrieve maintenence mode",
+        "queryParamsRequired": false,
+        "responseType": "MaintenanceModeSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "activate",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/maintenance-mode/activate",
+        "rel": "activate",
+        "urlTemplate": "/maintenance-mode/activate",
+        "method": "PUT",
+        "comment": "Activate maintenance mode: this means that the primary environment will be read-only",
+        "queryParamsType": "MaintenanceModeActivateHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "MaintenanceModeActivateTargetSchema",
         "name": "activate",
         "rawName": "rawActivate"
       },
       {
-        "rel": "deactivate",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/maintenance-mode/deactivate",
+        "rel": "deactivate",
+        "urlTemplate": "/maintenance-mode/deactivate",
+        "method": "PUT",
+        "comment": "De-activate maintenance mode",
+        "queryParamsRequired": false,
+        "responseType": "MaintenanceModeDeactivateTargetSchema",
         "name": "deactivate",
         "rawName": "rawDeactivate"
       }
@@ -805,32 +2146,111 @@
     "jsonApiType": "webhook",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook/create",
+        "rel": "create",
+        "urlTemplate": "/webhooks",
+        "method": "POST",
+        "comment": "Create a new webhook",
+        "requestBodyType": "WebhookCreateSchema",
+        "requestStructure": {
+          "type": "webhook",
+          "attributes": [
+            "name",
+            "url",
+            "custom_payload",
+            "headers",
+            "events",
+            "http_basic_user",
+            "http_basic_password",
+            "enabled",
+            "payload_api_version",
+            "nested_items_in_payload"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "WebhookCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook/update",
+        "rel": "update",
+        "urlTemplate": "/webhooks/${userId}",
+        "method": "PUT",
+        "comment": "Update a webhook",
+        "urlPlaceholder": {
+          "variableName": "userId",
+          "isEntityId": false,
+          "relType": "UserData"
+        },
+        "requestBodyType": "WebhookUpdateSchema",
+        "requestStructure": {
+          "type": "webhook",
+          "attributes": [
+            "name",
+            "url",
+            "custom_payload",
+            "headers",
+            "events",
+            "http_basic_user",
+            "http_basic_password",
+            "enabled",
+            "payload_api_version",
+            "nested_items_in_payload"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "WebhookUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook/instances",
+        "rel": "instances",
+        "urlTemplate": "/webhooks",
+        "method": "GET",
+        "comment": "List all webhooks",
+        "queryParamsRequired": false,
+        "responseType": "WebhookInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook/self",
+        "rel": "self",
+        "urlTemplate": "/webhooks/${userId}",
+        "method": "GET",
+        "comment": "Retrieve a webhook",
+        "urlPlaceholder": {
+          "variableName": "userId",
+          "isEntityId": false,
+          "relType": "UserData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "WebhookSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/webhooks/${userId}",
+        "method": "DELETE",
+        "comment": "Delete a webhook",
+        "urlPlaceholder": {
+          "variableName": "userId",
+          "isEntityId": false,
+          "relType": "UserData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "WebhookDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -842,8 +2262,15 @@
     "jsonApiType": "webhook_call",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook-call/instances",
+        "rel": "instances",
+        "urlTemplate": "/webhook_calls",
+        "method": "GET",
+        "comment": "List all webhooks calls",
+        "queryParamsType": "WebhookCallInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "WebhookCallInstancesTargetSchema",
         "paginatedResponse": {
           "defaultLimit": 30,
           "maxLimit": 500
@@ -852,8 +2279,18 @@
         "rawName": "rawList"
       },
       {
-        "rel": "resend_webhook",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook-call/resend_webhook",
+        "rel": "resend_webhook",
+        "urlTemplate": "/webhook_calls/${userId}/resend_webhook",
+        "method": "POST",
+        "comment": "Re-send the webhook call",
+        "urlPlaceholder": {
+          "variableName": "userId",
+          "isEntityId": false,
+          "relType": "UserData"
+        },
+        "queryParamsRequired": false,
         "name": "resendWebhook",
         "rawName": "rawResendWebhook"
       }
@@ -865,56 +2302,168 @@
     "jsonApiType": "build_trigger",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/instances",
+        "rel": "instances",
+        "urlTemplate": "/build-triggers",
+        "method": "GET",
+        "comment": "List all build triggers for a site",
+        "queryParamsRequired": false,
+        "responseType": "BuildTriggerInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/self",
+        "rel": "self",
+        "urlTemplate": "/build-triggers/${buildTriggerId}",
+        "method": "GET",
+        "comment": "Retrieve a build trigger",
+        "urlPlaceholder": {
+          "variableName": "buildTriggerId",
+          "isEntityId": true,
+          "relType": "BuildTriggerData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "BuildTriggerSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/create",
+        "rel": "create",
+        "urlTemplate": "/build-triggers",
+        "method": "POST",
+        "comment": "Create build trigger",
+        "requestBodyType": "BuildTriggerCreateSchema",
+        "requestStructure": {
+          "type": "build_trigger",
+          "attributes": [
+            "name",
+            "webhook_token",
+            "adapter",
+            "indexing_enabled",
+            "frontend_url",
+            "autotrigger_on_scheduled_publications",
+            "adapter_settings"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "BuildTriggerCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/update",
+        "rel": "update",
+        "urlTemplate": "/build-triggers/${buildTriggerId}",
+        "method": "PUT",
+        "comment": "Update build trigger",
+        "urlPlaceholder": {
+          "variableName": "buildTriggerId",
+          "isEntityId": true,
+          "relType": "BuildTriggerData"
+        },
+        "requestBodyType": "BuildTriggerUpdateSchema",
+        "requestStructure": {
+          "type": "build_trigger",
+          "attributes": [
+            "name",
+            "adapter",
+            "indexing_enabled",
+            "frontend_url",
+            "autotrigger_on_scheduled_publications",
+            "adapter_settings"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "BuildTriggerUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "trigger",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/trigger",
+        "rel": "trigger",
+        "urlTemplate": "/build-triggers/${buildTriggerId}/trigger",
+        "method": "POST",
+        "comment": "Trigger a deploy",
+        "urlPlaceholder": {
+          "variableName": "buildTriggerId",
+          "isEntityId": true,
+          "relType": "BuildTriggerData"
+        },
+        "queryParamsRequired": false,
         "name": "trigger",
         "rawName": "rawTrigger"
       },
       {
-        "rel": "abort",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort",
+        "rel": "abort",
+        "urlTemplate": "/build-triggers/${buildTriggerId}/abort",
+        "method": "DELETE",
+        "comment": "Abort a deploy and mark it as failed",
+        "urlPlaceholder": {
+          "variableName": "buildTriggerId",
+          "isEntityId": true,
+          "relType": "BuildTriggerData"
+        },
+        "queryParamsRequired": false,
         "name": "abort",
         "rawName": "rawAbort"
       },
       {
-        "rel": "abort_indexing",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort_indexing",
+        "rel": "abort_indexing",
+        "urlTemplate": "/build-triggers/${buildTriggerId}/abort_indexing",
+        "method": "DELETE",
+        "comment": "Abort a site search spidering and mark it as failed",
+        "urlPlaceholder": {
+          "variableName": "buildTriggerId",
+          "isEntityId": true,
+          "relType": "BuildTriggerData"
+        },
+        "queryParamsRequired": false,
         "name": "abortIndexing",
         "rawName": "rawAbortIndexing"
       },
       {
-        "rel": "reindex",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/reindex",
+        "rel": "reindex",
+        "urlTemplate": "/build-triggers/${buildTriggerId}/reindex",
+        "method": "PUT",
+        "comment": "Trigger a new site search spidering of the website",
+        "urlPlaceholder": {
+          "variableName": "buildTriggerId",
+          "isEntityId": true,
+          "relType": "BuildTriggerData"
+        },
+        "queryParamsRequired": false,
         "name": "reindex",
         "rawName": "rawReindex"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/build-triggers/${buildTriggerId}",
+        "method": "DELETE",
+        "comment": "Delete a build trigger",
+        "urlPlaceholder": {
+          "variableName": "buildTriggerId",
+          "isEntityId": true,
+          "relType": "BuildTriggerData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "BuildTriggerDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -926,32 +2475,89 @@
     "jsonApiType": "item_type_filter",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type_filter/create",
+        "rel": "create",
+        "urlTemplate": "/item-type-filters",
+        "method": "POST",
+        "comment": "Create a new filter",
+        "requestBodyType": "ItemTypeFilterCreateSchema",
+        "requestStructure": {
+          "type": "item_type_filter",
+          "attributes": ["name", "filter", "columns", "order_by", "shared"],
+          "relationships": ["item_type"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemTypeFilterCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type_filter/update",
+        "rel": "update",
+        "urlTemplate": "/item-type-filters/${itemTypeFilterId}",
+        "method": "PUT",
+        "comment": "Update a filter",
+        "urlPlaceholder": {
+          "variableName": "itemTypeFilterId",
+          "isEntityId": true,
+          "relType": "ItemTypeFilterData"
+        },
+        "requestBodyType": "ItemTypeFilterUpdateSchema",
+        "requestStructure": {
+          "type": "item_type_filter",
+          "attributes": ["name", "columns", "order_by", "shared", "filter"],
+          "relationships": ["item_type"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemTypeFilterUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type_filter/instances",
+        "rel": "instances",
+        "urlTemplate": "/item-type-filters",
+        "method": "GET",
+        "comment": "List all filters",
+        "queryParamsRequired": false,
+        "responseType": "ItemTypeFilterInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type_filter/self",
+        "rel": "self",
+        "urlTemplate": "/item-type-filters/${itemTypeFilterId}",
+        "method": "GET",
+        "comment": "Retrieve a filter",
+        "urlPlaceholder": {
+          "variableName": "itemTypeFilterId",
+          "isEntityId": true,
+          "relType": "ItemTypeFilterData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemTypeFilterSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type_filter/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/item-type-filters/${itemTypeFilterId}",
+        "method": "DELETE",
+        "comment": "Delete a filter",
+        "urlPlaceholder": {
+          "variableName": "itemTypeFilterId",
+          "isEntityId": true,
+          "relType": "ItemTypeFilterData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemTypeFilterDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -963,32 +2569,89 @@
     "jsonApiType": "upload_filter",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-filter/create",
+        "rel": "create",
+        "urlTemplate": "/upload-filters",
+        "method": "POST",
+        "comment": "Create a new filter",
+        "requestBodyType": "UploadFilterCreateSchema",
+        "requestStructure": {
+          "type": "upload_filter",
+          "attributes": ["name", "filter", "shared"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadFilterCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-filter/update",
+        "rel": "update",
+        "urlTemplate": "/upload-filters/${uploadFilterId}",
+        "method": "PUT",
+        "comment": "Update a filter",
+        "urlPlaceholder": {
+          "variableName": "uploadFilterId",
+          "isEntityId": true,
+          "relType": "UploadFilterData"
+        },
+        "requestBodyType": "UploadFilterUpdateSchema",
+        "requestStructure": {
+          "type": "upload_filter",
+          "attributes": ["name", "shared", "filter"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadFilterUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-filter/instances",
+        "rel": "instances",
+        "urlTemplate": "/upload-filters",
+        "method": "GET",
+        "comment": "List all filters",
+        "queryParamsRequired": false,
+        "responseType": "UploadFilterInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-filter/self",
+        "rel": "self",
+        "urlTemplate": "/upload-filters/${uploadFilterId}",
+        "method": "GET",
+        "comment": "Retrieve a filter",
+        "urlPlaceholder": {
+          "variableName": "uploadFilterId",
+          "isEntityId": true,
+          "relType": "UploadFilterData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadFilterSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-filter/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/upload-filters/${uploadFilterId}",
+        "method": "DELETE",
+        "comment": "Delete a filter",
+        "urlPlaceholder": {
+          "variableName": "uploadFilterId",
+          "isEntityId": true,
+          "relType": "UploadFilterData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadFilterDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -1000,38 +2663,105 @@
     "jsonApiType": "site_invitation",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-invitation/create",
+        "rel": "create",
+        "urlTemplate": "/site-invitations",
+        "method": "POST",
+        "comment": "Invite a new user",
+        "requestBodyType": "SiteInvitationCreateSchema",
+        "requestStructure": {
+          "type": "site_invitation",
+          "attributes": ["email"],
+          "relationships": ["role"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteInvitationCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-invitation/update",
+        "rel": "update",
+        "urlTemplate": "/site-invitations/${siteInvitationId}",
+        "method": "PUT",
+        "comment": "Update an invitation",
+        "urlPlaceholder": {
+          "variableName": "siteInvitationId",
+          "isEntityId": true,
+          "relType": "SiteInvitationData"
+        },
+        "requestBodyType": "SiteInvitationUpdateSchema",
+        "requestStructure": {
+          "type": "site_invitation",
+          "attributes": [],
+          "relationships": ["role"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteInvitationUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-invitation/instances",
+        "rel": "instances",
+        "urlTemplate": "/site-invitations",
+        "method": "GET",
+        "comment": "List all invitations",
+        "queryParamsRequired": false,
+        "responseType": "SiteInvitationInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-invitation/self",
+        "rel": "self",
+        "urlTemplate": "/site-invitations/${siteInvitationId}",
+        "method": "GET",
+        "comment": "Retrieve an invitation",
+        "urlPlaceholder": {
+          "variableName": "siteInvitationId",
+          "isEntityId": true,
+          "relType": "SiteInvitationData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteInvitationSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-invitation/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/site-invitations/${siteInvitationId}",
+        "method": "DELETE",
+        "comment": "Delete an invitation",
+        "urlPlaceholder": {
+          "variableName": "siteInvitationId",
+          "isEntityId": true,
+          "relType": "SiteInvitationData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteInvitationDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       },
       {
-        "rel": "resend",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-invitation/resend",
+        "rel": "resend",
+        "urlTemplate": "/site-invitations/${siteInvitationId}/resend",
+        "method": "POST",
+        "comment": "Resend an invitation",
+        "urlPlaceholder": {
+          "variableName": "siteInvitationId",
+          "isEntityId": true,
+          "relType": "SiteInvitationData"
+        },
+        "queryParamsRequired": false,
         "name": "resend",
         "rawName": "rawResend"
       }
@@ -1043,19 +2773,56 @@
     "jsonApiType": "editing_session",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/editing-session/instances",
+        "rel": "instances",
+        "urlTemplate": "/editing-sessions",
+        "method": "GET",
+        "comment": "List all editing sessions",
+        "queryParamsRequired": false,
+        "responseType": "EditingSessionInstancesTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/editing-session/update",
+        "rel": "update",
+        "urlTemplate": "/editing-sessions/${editingSessionId}",
+        "method": "PUT",
+        "comment": "Allows all actions on editing sessions",
+        "urlPlaceholder": {
+          "variableName": "editingSessionId",
+          "isEntityId": true,
+          "relType": "EditingSessionData"
+        },
+        "requestBodyType": "EditingSessionUpdateSchema",
+        "requestStructure": {
+          "type": "*",
+          "attributes": [],
+          "relationships": ["item", "item", "item"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "EditingSessionUpdateTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/editing-session/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/editing-sessions/${editingSessionId}",
+        "method": "DELETE",
+        "comment": "Delete an editing session",
+        "urlPlaceholder": {
+          "variableName": "editingSessionId",
+          "isEntityId": true,
+          "relType": "EditingSessionData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "EditingSessionDestroyTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -1067,26 +2834,71 @@
     "jsonApiType": "sso_group",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-group/instances",
+        "rel": "instances",
+        "urlTemplate": "/sso-groups",
+        "method": "GET",
+        "comment": "List all SSO groups",
+        "queryParamsRequired": false,
+        "responseType": "SsoGroupInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "copy_roles",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-group/copy_roles",
+        "rel": "copy_roles",
+        "urlTemplate": "/sso-groups/${ssoGroupId}/copy-roles",
+        "method": "POST",
+        "comment": "Sync SSO provider groups to DatoCMS roles",
+        "urlPlaceholder": {
+          "variableName": "ssoGroupId",
+          "isEntityId": true,
+          "relType": "SsoGroupData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "SsoGroupCopyRolesTargetSchema",
         "name": "copyRoles",
         "rawName": "rawCopyRoles"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-group/update",
+        "rel": "update",
+        "urlTemplate": "/sso-groups/${ssoGroupId}",
+        "method": "PUT",
+        "comment": "Update a SSO group",
+        "urlPlaceholder": {
+          "variableName": "ssoGroupId",
+          "isEntityId": true,
+          "relType": "SsoGroupData"
+        },
+        "requestBodyType": "SsoGroupUpdateSchema",
+        "requestStructure": {
+          "type": "sso_group",
+          "attributes": ["priority"],
+          "relationships": ["role"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SsoGroupUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-group/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/sso-groups/${ssoGroupId}",
+        "method": "DELETE",
+        "comment": "Delete a group",
+        "urlPlaceholder": {
+          "variableName": "ssoGroupId",
+          "isEntityId": true,
+          "relType": "SsoGroupData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "SsoGroupDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       }
@@ -1098,20 +2910,44 @@
     "jsonApiType": "sso_settings",
     "endpoints": [
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-settings/self",
+        "rel": "self",
+        "urlTemplate": "/sso-settings",
+        "method": "GET",
+        "comment": "Retrieve SSO Settings",
+        "queryParamsRequired": false,
+        "responseType": "SsoSettingsSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "generate_token",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-settings/generate_token",
+        "rel": "generate_token",
+        "urlTemplate": "/sso-settings/generate-token",
+        "method": "PUT",
+        "comment": "Generate SSO token",
+        "queryParamsRequired": false,
+        "responseType": "SsoSettingsGenerateTokenTargetSchema",
         "name": "generateToken",
         "rawName": "rawGenerateToken"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-settings/update",
+        "rel": "update",
+        "urlTemplate": "/sso-settings",
+        "method": "PUT",
+        "comment": "Update SSO Settings",
+        "requestBodyType": "SsoSettingsUpdateSchema",
+        "requestStructure": {
+          "type": "sso_settings",
+          "attributes": ["idp_saml_metadata_url"],
+          "relationships": ["default_role"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SsoSettingsUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       }
@@ -1123,14 +2959,32 @@
     "jsonApiType": "white_label_settings",
     "endpoints": [
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/white-label_settings/self",
+        "rel": "self",
+        "urlTemplate": "/white-label-settings",
+        "method": "GET",
+        "comment": "Retrieve white-label settings",
+        "queryParamsRequired": false,
+        "responseType": "WhiteLabelSettingsSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/white-label_settings/update",
+        "rel": "update",
+        "urlTemplate": "/white-label-settings",
+        "method": "PUT",
+        "comment": "Update white-label settings",
+        "requestBodyType": "WhiteLabelSettingsUpdateSchema",
+        "requestStructure": {
+          "type": "white_label_settings",
+          "attributes": ["custom_i18n_messages_template_url"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "WhiteLabelSettingsUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       }
@@ -1142,8 +2996,14 @@
     "jsonApiType": "public_info",
     "endpoints": [
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/public-info/self",
+        "rel": "self",
+        "urlTemplate": "/public-info",
+        "method": "GET",
+        "comment": "Retrieve public site info",
+        "queryParamsRequired": false,
+        "responseType": "PublicInfoSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       }
@@ -1155,8 +3015,14 @@
     "jsonApiType": "daily_usage",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/daily-usage/instances",
+        "rel": "instances",
+        "urlTemplate": "/daily-site-usages",
+        "method": "GET",
+        "comment": "Retrieve project's daily usage info",
+        "queryParamsRequired": false,
+        "responseType": "DailyUsageInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       }
@@ -1168,8 +3034,20 @@
     "jsonApiType": "usage_counter",
     "endpoints": [
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/usage-counter/self",
+        "rel": "self",
+        "urlTemplate": "/usage-log-counters/${usageCounterId}",
+        "method": "GET",
+        "comment": "Retrieve a project's usage counter",
+        "urlPlaceholder": {
+          "variableName": "usageCounterId",
+          "isEntityId": true,
+          "relType": "UsageCounterData"
+        },
+        "queryParamsType": "UsageCounterSelfHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "UsageCounterSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       }
@@ -1181,8 +3059,15 @@
     "jsonApiType": "upload_tag",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-tag/instances",
+        "rel": "instances",
+        "urlTemplate": "/upload-tags",
+        "method": "GET",
+        "comment": "List all manually created upload tags",
+        "queryParamsType": "UploadTagInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "UploadTagInstancesTargetSchema",
         "paginatedResponse": {
           "defaultLimit": 50,
           "maxLimit": 500
@@ -1191,8 +3076,20 @@
         "rawName": "rawList"
       },
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-tag/create",
+        "rel": "create",
+        "urlTemplate": "/upload-tags",
+        "method": "POST",
+        "comment": "Create a new upload tag",
+        "requestBodyType": "UploadTagCreateSchema",
+        "requestStructure": {
+          "type": "upload_tag",
+          "attributes": ["name"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadTagCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       }
@@ -1204,8 +3101,15 @@
     "jsonApiType": "upload_smart_tag",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-smart_tag/instances",
+        "rel": "instances",
+        "urlTemplate": "/upload-smart-tags",
+        "method": "GET",
+        "comment": "List all automatically created upload tags",
+        "queryParamsType": "UploadSmartTagInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "UploadSmartTagInstancesTargetSchema",
         "paginatedResponse": {
           "defaultLimit": 50,
           "maxLimit": 500
@@ -1221,20 +3125,55 @@
     "jsonApiType": "site",
     "endpoints": [
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/self",
+        "rel": "self",
+        "urlTemplate": "/site",
+        "method": "GET",
+        "comment": "Retrieve the site",
+        "queryParamsType": "SiteSelfHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "SiteSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/update",
+        "rel": "update",
+        "urlTemplate": "/site",
+        "method": "PUT",
+        "comment": "Update the site's settings",
+        "requestBodyType": "SiteUpdateSchema",
+        "requestStructure": {
+          "type": "site",
+          "attributes": [
+            "no_index",
+            "favicon",
+            "global_seo",
+            "name",
+            "theme",
+            "locales",
+            "timezone",
+            "require_2fa",
+            "ip_tracking_enabled"
+          ],
+          "relationships": ["sso_default_role"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteUpdateJobSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "activate_improved_timezone_management",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_timezone_management",
+        "rel": "activate_improved_timezone_management",
+        "urlTemplate": "/site/activate-improved-timezone-management",
+        "method": "PUT",
+        "comment": "Activate improved timezone management",
+        "queryParamsRequired": false,
+        "responseType": "SiteActivateImprovedTimezoneManagementJobSchema",
         "name": "activateImprovedTimezoneManagement",
         "rawName": "rawActivateImprovedTimezoneManagement"
       }
@@ -1246,32 +3185,88 @@
     "jsonApiType": "workflow",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/workflow/create",
+        "rel": "create",
+        "urlTemplate": "/workflows",
+        "method": "POST",
+        "comment": "Create a new workflow",
+        "requestBodyType": "WorkflowCreateSchema",
+        "requestStructure": {
+          "type": "workflow",
+          "attributes": ["name", "stages"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "WorkflowCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/workflow/update",
+        "rel": "update",
+        "urlTemplate": "/workflows/${workflowId}",
+        "method": "PUT",
+        "comment": "Update a workflow",
+        "urlPlaceholder": {
+          "variableName": "workflowId",
+          "isEntityId": true,
+          "relType": "WorkflowData"
+        },
+        "requestBodyType": "WorkflowUpdateSchema",
+        "requestStructure": {
+          "type": "workflow",
+          "attributes": ["name", "stages"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "WorkflowUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/workflow/instances",
+        "rel": "instances",
+        "urlTemplate": "/workflows",
+        "method": "GET",
+        "comment": "List all workflows",
+        "queryParamsRequired": false,
+        "responseType": "WorkflowInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/workflow/self",
+        "rel": "self",
+        "urlTemplate": "/workflows/${workflowId}",
+        "method": "GET",
+        "comment": "Retrieve a workflow",
+        "urlPlaceholder": {
+          "variableName": "workflowId",
+          "isEntityId": true,
+          "relType": "WorkflowData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "WorkflowSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/workflow/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/workflows/${workflowId}",
+        "method": "DELETE",
+        "comment": "Delete a workflow",
+        "urlPlaceholder": {
+          "variableName": "workflowId",
+          "isEntityId": true,
+          "relType": "WorkflowData"
+        },
+        "queryParamsRequired": false,
         "name": "destroy",
         "rawName": "rawDestroy"
       }

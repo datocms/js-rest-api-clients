@@ -261,16 +261,16 @@ export default class Upload extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   batchAddTags(
-    queryParams: SimpleSchemaTypes.UploadBatchAddTagsHrefSchema,
     body: SimpleSchemaTypes.UploadBatchAddTagsSchema,
+    queryParams?: SimpleSchemaTypes.UploadBatchAddTagsHrefSchema,
   ) {
     return this.rawBatchAddTags(
-      queryParams,
       Utils.serializeRequestBody<SchemaTypes.UploadBatchAddTagsSchema>(body, {
         type: 'upload',
         attributes: ['tags'],
         relationships: [],
       }),
+      queryParams,
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.UploadBatchAddTagsJobSchema>(
         body,
@@ -289,8 +289,8 @@ export default class Upload extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawBatchAddTags(
-    queryParams: SchemaTypes.UploadBatchAddTagsHrefSchema,
     body: SchemaTypes.UploadBatchAddTagsSchema,
+    queryParams?: SchemaTypes.UploadBatchAddTagsHrefSchema,
   ): Promise<SchemaTypes.UploadBatchAddTagsJobSchema> {
     return this.client.request<SchemaTypes.UploadBatchAddTagsJobSchema>({
       method: 'PUT',

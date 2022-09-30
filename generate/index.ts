@@ -58,17 +58,8 @@ async function generate(prefix: string, hyperschemaUrl: string) {
       other.resources.map((r) => ({
         ...r,
         endpoints: r.endpoints.map(
-          ({
-            rel,
-            returnsCollection,
-            name,
-            rawName,
-            simpleMethodAvailable,
-            paginatedResponse,
-          }) => ({
-            rel,
-            returnsCollection,
-            paginatedResponse,
+          ({ name, rawName, simpleMethodAvailable, ...other }) => ({
+            ...other,
             ...(simpleMethodAvailable ? { name, rawName } : { rawName }),
           }),
         ),

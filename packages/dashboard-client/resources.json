@@ -3,8 +3,27 @@
     "jsonApiType": "session",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "rel": "create",
+        "urlTemplate": "/sessions",
+        "method": "POST",
+        "comment": "Create a new session",
+        "requestBodyType": "SessionCreateSchema",
+        "requestStructure": {
+          "type": "*",
+          "attributes": [
+            "email",
+            "password",
+            "otp_code",
+            "token",
+            "account_id",
+            "password",
+            "otp_code"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "SessionCreateTargetSchema",
         "rawName": "rawCreate"
       }
     ],
@@ -15,50 +34,140 @@
     "jsonApiType": "account",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "rel": "create",
+        "urlTemplate": "/account",
+        "method": "POST",
+        "comment": "Create a new account",
+        "requestBodyType": "AccountCreateSchema",
+        "requestStructure": {
+          "type": "account",
+          "attributes": [
+            "email",
+            "first_name",
+            "last_name",
+            "company",
+            "password",
+            "acquisition_method"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccountCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "rel": "update",
+        "urlTemplate": "/account",
+        "method": "PUT",
+        "comment": "Update a account",
+        "requestBodyType": "AccountUpdateSchema",
+        "requestStructure": {
+          "type": "account",
+          "attributes": [
+            "email",
+            "first_name",
+            "last_name",
+            "company",
+            "password",
+            "current_password",
+            "otp_code"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccountUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/account/destroy",
+        "method": "POST",
+        "comment": "Delete a account",
+        "requestBodyType": "AccountDestroySchema",
+        "requestStructure": {
+          "type": "account_destroy_request",
+          "attributes": ["otp_code", "password"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccountDestroyJobSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/account",
+        "method": "GET",
+        "comment": "Retrieve a account",
+        "queryParamsRequired": false,
+        "responseType": "AccountSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "reset_password",
         "returnsCollection": false,
+        "rel": "reset_password",
+        "urlTemplate": "/account/reset_password",
+        "method": "POST",
+        "comment": "Request a password reset",
+        "requestBodyType": "AccountResetPasswordSchema",
+        "requestStructure": {
+          "type": "account",
+          "attributes": ["email"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
         "name": "resetPassword",
         "rawName": "rawResetPassword"
       },
       {
-        "rel": "activate_2fa",
         "returnsCollection": false,
+        "rel": "activate_2fa",
+        "urlTemplate": "/account/activate-2fa",
+        "method": "PUT",
+        "comment": "Activates 2-factor authorization",
+        "requestBodyType": "AccountActivate_2FaSchema",
+        "requestStructure": {
+          "type": "2fa_activation",
+          "attributes": ["otp_code", "password"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccountActivate_2FaTargetSchema",
         "name": "activate_2Fa",
         "rawName": "rawActivate_2Fa"
       },
       {
-        "rel": "reset_2fa",
         "returnsCollection": false,
+        "rel": "reset_2fa",
+        "urlTemplate": "/account/reset-2fa",
+        "method": "PUT",
+        "comment": "Generates 2-factor authorization secrets",
+        "queryParamsRequired": false,
+        "responseType": "AccountReset_2FaTargetSchema",
         "name": "reset_2Fa",
         "rawName": "rawReset_2Fa"
       },
       {
-        "rel": "deactivate_2fa",
         "returnsCollection": false,
+        "rel": "deactivate_2fa",
+        "urlTemplate": "/account/deactivate-2fa",
+        "method": "PUT",
+        "comment": "De-activates 2-factor authorization",
+        "requestBodyType": "AccountDeactivate_2FaSchema",
+        "requestStructure": {
+          "type": "2fa_deactivation",
+          "attributes": ["otp_code", "password"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccountDeactivate_2FaTargetSchema",
         "name": "deactivate_2Fa",
         "rawName": "rawDeactivate_2Fa"
       }
@@ -70,14 +179,30 @@
     "jsonApiType": "site",
     "endpoints": [
       {
-        "rel": "self",
         "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/sites/${siteId}",
+        "method": "GET",
+        "comment": "Retrieve a project",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": true,
+          "relType": "SiteData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/sites",
+        "method": "GET",
+        "comment": "List all projects",
+        "queryParamsType": "SiteInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "SiteInstancesTargetSchema",
         "paginatedResponse": {
           "defaultLimit": 20,
           "maxLimit": 50
@@ -86,26 +211,91 @@
         "rawName": "rawList"
       },
       {
-        "rel": "create",
         "returnsCollection": false,
+        "rel": "create",
+        "urlTemplate": "/sites",
+        "method": "POST",
+        "comment": "Create a new project",
+        "requestBodyType": "SiteCreateSchema",
+        "requestStructure": {
+          "type": "site",
+          "attributes": ["name", "internal_subdomain", "template"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteCreateJobSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "update",
         "returnsCollection": false,
+        "rel": "update",
+        "urlTemplate": "/sites/${siteId}",
+        "method": "PUT",
+        "comment": "Update project",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": true,
+          "relType": "SiteData"
+        },
+        "requestBodyType": "SiteUpdateSchema",
+        "requestStructure": {
+          "type": "site",
+          "attributes": [
+            "name",
+            "domain",
+            "internal_subdomain",
+            "is_public_template"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteUpdateTargetSchema",
         "name": "update",
         "rawName": "rawUpdate"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/sites/${siteId}",
+        "method": "DELETE",
+        "comment": "Delete a project",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": true,
+          "relType": "SiteData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteDestroyJobSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       },
       {
-        "rel": "duplicate",
         "returnsCollection": false,
+        "rel": "duplicate",
+        "urlTemplate": "/sites/${siteId}/duplicate",
+        "method": "POST",
+        "comment": "Duplicate an existing project",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": true,
+          "relType": "SiteData"
+        },
+        "requestBodyType": "SiteDuplicateSchema",
+        "requestStructure": {
+          "type": "site",
+          "attributes": [
+            "name",
+            "ignore_content",
+            "payment_intent_id",
+            "recurrence",
+            "extra_packets",
+            "billing_profile"
+          ],
+          "relationships": ["plan", "billing_profile"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteDuplicateJobSchema",
         "rawName": "rawDuplicate"
       }
     ],
@@ -116,18 +306,77 @@
     "jsonApiType": "site_subscription",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "rel": "create",
+        "urlTemplate": "/sites/${siteId}/subscriptions",
+        "method": "POST",
+        "comment": "Create a new subscription",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": false,
+          "relType": "SiteData"
+        },
+        "requestBodyType": "SiteSubscriptionCreateSchema",
+        "requestStructure": {
+          "type": "site_subscription",
+          "attributes": [
+            "payment_intent_id",
+            "recurrence",
+            "extra_packets",
+            "billing_profile"
+          ],
+          "relationships": ["plan", "billing_profile"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteSubscriptionCreateTargetSchema",
         "rawName": "rawCreate"
       },
       {
-        "rel": "simulate",
         "returnsCollection": false,
+        "rel": "simulate",
+        "urlTemplate": "/sites/${siteId}/subscriptions/simulate",
+        "method": "POST",
+        "comment": "Simulate",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": false,
+          "relType": "SiteData"
+        },
+        "requestBodyType": "SiteSubscriptionSimulateSchema",
+        "requestStructure": {
+          "type": "site_subscription",
+          "attributes": [
+            "recurrence",
+            "extra_packets",
+            "is_duplicate",
+            "ignore_content",
+            "billing_profile"
+          ],
+          "relationships": ["plan", "billing_profile"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteSubscriptionSimulateTargetSchema",
         "rawName": "rawSimulate"
       },
       {
-        "rel": "validate",
         "returnsCollection": false,
+        "rel": "validate",
+        "urlTemplate": "/sites/${siteId}/subscriptions/validate",
+        "method": "POST",
+        "comment": "Validate a new subscription",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": false,
+          "relType": "SiteData"
+        },
+        "requestBodyType": "SiteSubscriptionValidateSchema",
+        "requestStructure": {
+          "type": "site_subscription",
+          "attributes": ["extra_packets", "ignore_content", "is_duplicate"],
+          "relationships": ["plan"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteSubscriptionValidateTargetSchema",
         "name": "validate",
         "rawName": "rawValidate"
       }
@@ -139,20 +388,53 @@
     "jsonApiType": "account_subscription",
     "endpoints": [
       {
-        "rel": "create",
         "returnsCollection": false,
+        "rel": "create",
+        "urlTemplate": "/account-subscriptions",
+        "method": "POST",
+        "comment": "Create a new subscription",
+        "requestBodyType": "AccountSubscriptionCreateSchema",
+        "requestStructure": {
+          "type": "account_subscription",
+          "attributes": ["payment_intent_id", "recurrence", "billing_profile"],
+          "relationships": ["plan"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccountSubscriptionCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "simulate",
         "returnsCollection": false,
+        "rel": "simulate",
+        "urlTemplate": "/account-subscriptions/simulate",
+        "method": "POST",
+        "comment": "Simulate",
+        "requestBodyType": "AccountSubscriptionSimulateSchema",
+        "requestStructure": {
+          "type": "account_subscription",
+          "attributes": ["recurrence", "billing_profile"],
+          "relationships": ["plan"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccountSubscriptionSimulateTargetSchema",
         "name": "simulate",
         "rawName": "rawSimulate"
       },
       {
-        "rel": "validate",
         "returnsCollection": false,
+        "rel": "validate",
+        "urlTemplate": "/account-subscriptions/validate",
+        "method": "POST",
+        "comment": "Validate a new subscription",
+        "requestBodyType": "AccountSubscriptionValidateSchema",
+        "requestStructure": {
+          "type": "account_subscription",
+          "attributes": [],
+          "relationships": ["plan"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccountSubscriptionValidateTargetSchema",
         "name": "validate",
         "rawName": "rawValidate"
       }
@@ -164,8 +446,13 @@
     "jsonApiType": "site_plan",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/site-plans",
+        "method": "GET",
+        "comment": "Retrieve enabled plans for account",
+        "queryParamsRequired": false,
+        "responseType": "SitePlanInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       }
@@ -177,8 +464,13 @@
     "jsonApiType": "account_plan",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/account-plans",
+        "method": "GET",
+        "comment": "Retrieve enabled plans for account",
+        "queryParamsRequired": false,
+        "responseType": "AccountPlanInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       }
@@ -190,26 +482,85 @@
     "jsonApiType": "per_site_pricing_billing_profile",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/per-site-pricing-billing-profiles",
+        "method": "GET",
+        "comment": "Retrieve all account's billing profiles",
+        "queryParamsRequired": false,
+        "responseType": "PerSitePricingBillingProfileInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}",
+        "method": "GET",
+        "comment": "Retrieve a billing profile",
+        "urlPlaceholder": {
+          "variableName": "perSitePricingBillingProfileId",
+          "isEntityId": true,
+          "relType": "PerSitePricingBillingProfileData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "PerSitePricingBillingProfileSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "update_credit_card",
         "returnsCollection": false,
+        "rel": "update_credit_card",
+        "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/credit-card",
+        "method": "PUT",
+        "comment": "Update a billing profile's credit card",
+        "urlPlaceholder": {
+          "variableName": "perSitePricingBillingProfileId",
+          "isEntityId": true,
+          "relType": "PerSitePricingBillingProfileData"
+        },
+        "requestBodyType": "PerSitePricingBillingProfileUpdateCreditCardSchema",
+        "requestStructure": {
+          "type": "card",
+          "attributes": ["payment_intent_id"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "PerSitePricingBillingProfileUpdateCreditCardTargetSchema",
         "name": "updateCreditCard",
         "rawName": "rawUpdateCreditCard"
       },
       {
-        "rel": "update_info",
         "returnsCollection": false,
+        "rel": "update_info",
+        "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/info",
+        "method": "PUT",
+        "comment": "Update a billing profile's billing information",
+        "urlPlaceholder": {
+          "variableName": "perSitePricingBillingProfileId",
+          "isEntityId": true,
+          "relType": "PerSitePricingBillingProfileData"
+        },
+        "requestBodyType": "PerSitePricingBillingProfileUpdateInfoSchema",
+        "requestStructure": {
+          "type": "per_site_pricing_billing_profile",
+          "attributes": [
+            "first_name",
+            "last_name",
+            "company",
+            "address_line",
+            "city",
+            "email",
+            "country",
+            "state",
+            "zip",
+            "vat_number",
+            "cf_cod_fiscale"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "PerSitePricingBillingProfileUpdateInfoTargetSchema",
         "name": "updateInfo",
         "rawName": "rawUpdateInfo"
       }
@@ -221,20 +572,60 @@
     "jsonApiType": "per_account_pricing_billing_profile",
     "endpoints": [
       {
-        "rel": "self",
         "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/per-account-pricing-billing-profile",
+        "method": "GET",
+        "comment": "Retrieve a billing profile",
+        "queryParamsRequired": false,
+        "responseType": "PerAccountPricingBillingProfileSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "update_credit_card",
         "returnsCollection": false,
+        "rel": "update_credit_card",
+        "urlTemplate": "/per-account-pricing-billing-profile/credit-card",
+        "method": "PUT",
+        "comment": "Update a billing profile's credit card",
+        "requestBodyType": "PerAccountPricingBillingProfileUpdateCreditCardSchema",
+        "requestStructure": {
+          "type": "card",
+          "attributes": ["payment_intent_id"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "PerAccountPricingBillingProfileUpdateCreditCardTargetSchema",
         "name": "updateCreditCard",
         "rawName": "rawUpdateCreditCard"
       },
       {
-        "rel": "update_info",
         "returnsCollection": false,
+        "rel": "update_info",
+        "urlTemplate": "/per-account-pricing-billing-profile/info",
+        "method": "PUT",
+        "comment": "Update a billing profile's billing information",
+        "requestBodyType": "PerAccountPricingBillingProfileUpdateInfoSchema",
+        "requestStructure": {
+          "type": "per_account_pricing_billing_profile",
+          "attributes": [
+            "first_name",
+            "last_name",
+            "company",
+            "address_line",
+            "city",
+            "email",
+            "country",
+            "state",
+            "zip",
+            "vat_number",
+            "cf_cod_fiscale",
+            "po_number"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "PerAccountPricingBillingProfileUpdateInfoTargetSchema",
         "name": "updateInfo",
         "rawName": "rawUpdateInfo"
       }
@@ -246,26 +637,68 @@
     "jsonApiType": "invoice",
     "endpoints": [
       {
-        "rel": "per_account_pricing_billing_profile_instances",
         "returnsCollection": true,
+        "rel": "per_account_pricing_billing_profile_instances",
+        "urlTemplate": "/per-account-pricing-billing-profile/invoices",
+        "method": "GET",
+        "comment": "Retrieve all invoices",
+        "queryParamsRequired": false,
+        "responseType": "InvoicePerAccountPricingBillingProfileInstancesTargetSchema",
         "name": "perAccountPricingBillingProfileList",
         "rawName": "rawPerAccountPricingBillingProfileList"
       },
       {
-        "rel": "per_site_pricing_billing_profile_instances",
         "returnsCollection": true,
+        "rel": "per_site_pricing_billing_profile_instances",
+        "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/invoices",
+        "method": "GET",
+        "comment": "Retrieve all invoices",
+        "urlPlaceholder": {
+          "variableName": "perSitePricingBillingProfileId",
+          "isEntityId": false,
+          "relType": "PerSitePricingBillingProfileData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "InvoicePerSitePricingBillingProfileInstancesTargetSchema",
         "name": "perSitePricingBillingProfileList",
         "rawName": "rawPerSitePricingBillingProfileList"
       },
       {
-        "rel": "per_account_pricing_billing_profile_collect_unpaid",
         "returnsCollection": false,
+        "rel": "per_account_pricing_billing_profile_collect_unpaid",
+        "urlTemplate": "/per-account-pricing-billing-profile/invoices/collect-unpaid",
+        "method": "GET",
+        "comment": "Collect all unpaid invoices",
+        "requestBodyType": "InvoicePerAccountPricingBillingProfileCollectUnpaidSchema",
+        "requestStructure": {
+          "type": "invoice_collection",
+          "attributes": ["payment_intent_id"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "InvoicePerAccountPricingBillingProfileCollectUnpaidTargetSchema",
         "name": "perAccountPricingBillingProfileCollectUnpaid",
         "rawName": "rawPerAccountPricingBillingProfileCollectUnpaid"
       },
       {
-        "rel": "per_site_pricing_billing_profile_collect_unpaid",
         "returnsCollection": false,
+        "rel": "per_site_pricing_billing_profile_collect_unpaid",
+        "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/invoices/collect-unpaid",
+        "method": "GET",
+        "comment": "Collect all unpaid invoices",
+        "urlPlaceholder": {
+          "variableName": "perSitePricingBillingProfileId",
+          "isEntityId": false,
+          "relType": "PerSitePricingBillingProfileData"
+        },
+        "requestBodyType": "InvoicePerSitePricingBillingProfileCollectUnpaidSchema",
+        "requestStructure": {
+          "type": "invoice_collection",
+          "attributes": ["payment_intent_id"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema",
         "name": "perSitePricingBillingProfileCollectUnpaid",
         "rawName": "rawPerSitePricingBillingProfileCollectUnpaid"
       }
@@ -277,8 +710,13 @@
     "jsonApiType": "resource_usage",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/resource-usages",
+        "method": "GET",
+        "comment": "Retrieve all resource usages",
+        "queryParamsRequired": false,
+        "responseType": "ResourceUsageInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       }
@@ -290,8 +728,18 @@
     "jsonApiType": "job_result",
     "endpoints": [
       {
-        "rel": "self",
         "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/job-results/${jobResultId}",
+        "method": "GET",
+        "comment": "Retrieve a job result",
+        "urlPlaceholder": {
+          "variableName": "jobResultId",
+          "isEntityId": true,
+          "relType": "JobResultData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "JobResultSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       }
@@ -303,42 +751,124 @@
     "jsonApiType": "site_transfer",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/site-transfers",
+        "method": "GET",
+        "comment": "List all pending transfer requests",
+        "queryParamsRequired": false,
+        "responseType": "SiteTransferInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       },
       {
-        "rel": "self",
         "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/site-transfers/${siteTransferId}",
+        "method": "GET",
+        "comment": "Retrieve a transfer",
+        "urlPlaceholder": {
+          "variableName": "siteTransferId",
+          "isEntityId": true,
+          "relType": "SiteTransferData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteTransferSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
-        "rel": "create",
         "returnsCollection": false,
+        "rel": "create",
+        "urlTemplate": "/sites/${siteId}/transfer",
+        "method": "POST",
+        "comment": "Create a new site transfer request",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": false,
+          "relType": "SiteData"
+        },
+        "requestBodyType": "SiteTransferCreateSchema",
+        "requestStructure": {
+          "type": "site_transfer",
+          "attributes": ["account_email"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteTransferCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
-        "rel": "destroy",
         "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/sites/${siteId}/transfer",
+        "method": "DELETE",
+        "comment": "Destroy a site transfer request",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": false,
+          "relType": "SiteData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteTransferDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
       },
       {
-        "rel": "simulate_accept",
         "returnsCollection": false,
+        "rel": "simulate_accept",
+        "urlTemplate": "/site-transfers/${siteTransferId}/simulate-accept",
+        "method": "PUT",
+        "comment": "Simulate accept",
+        "urlPlaceholder": {
+          "variableName": "siteTransferId",
+          "isEntityId": true,
+          "relType": "SiteTransferData"
+        },
+        "requestBodyType": "SiteTransferSimulateAcceptSchema",
+        "requestStructure": {
+          "type": "site_transfer",
+          "attributes": ["billing_profile"],
+          "relationships": ["billing_profile"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteTransferSimulateAcceptTargetSchema",
         "rawName": "rawSimulateAccept"
       },
       {
-        "rel": "accept",
         "returnsCollection": false,
+        "rel": "accept",
+        "urlTemplate": "/site-transfers/${siteTransferId}/accept",
+        "method": "PUT",
+        "comment": "Accept a site transfer request",
+        "urlPlaceholder": {
+          "variableName": "siteTransferId",
+          "isEntityId": true,
+          "relType": "SiteTransferData"
+        },
+        "requestBodyType": "SiteTransferAcceptSchema",
+        "requestStructure": {
+          "type": "site_transfer",
+          "attributes": ["payment_intent_id", "billing_profile"],
+          "relationships": ["billing_profile"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteTransferAcceptTargetSchema",
         "rawName": "rawAccept"
       },
       {
-        "rel": "decline",
         "returnsCollection": false,
+        "rel": "decline",
+        "urlTemplate": "/site-transfers/${siteTransferId}/decline",
+        "method": "PUT",
+        "comment": "Decline a site transfer request",
+        "urlPlaceholder": {
+          "variableName": "siteTransferId",
+          "isEntityId": true,
+          "relType": "SiteTransferData"
+        },
+        "queryParamsRequired": false,
         "name": "decline",
         "rawName": "rawDecline"
       }
@@ -350,8 +880,13 @@
     "jsonApiType": "site_invitation",
     "endpoints": [
       {
-        "rel": "redeem",
         "returnsCollection": false,
+        "rel": "redeem",
+        "urlTemplate": "/site_invitations/{(%2Fschemata%2Ffield%23%2Fdefinitions%2Fsite_invitation%2Ftoken)}/redeem",
+        "method": "PUT",
+        "comment": "Redeem token",
+        "queryParamsRequired": false,
+        "responseType": "SiteInvitationRedeemTargetSchema",
         "name": "redeem",
         "rawName": "rawRedeem"
       }
@@ -363,8 +898,18 @@
     "jsonApiType": "subscription_limit",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/sites/${siteId}/subscription-limits",
+        "method": "GET",
+        "comment": "Get all the subscription limits",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": false,
+          "relType": "SiteData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "SubscriptionLimitInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       }
@@ -376,8 +921,18 @@
     "jsonApiType": "subscription_feature",
     "endpoints": [
       {
-        "rel": "instances",
         "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/sites/${siteId}/subscription-features",
+        "method": "GET",
+        "comment": "Get all the subscription features",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": false,
+          "relType": "SiteData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "SubscriptionFeatureInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       }

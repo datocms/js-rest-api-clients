@@ -26,19 +26,16 @@ export default class {{{resourceClassName}}} extends BaseResource {
         {{#if urlPlaceholder}}
           {{{urlPlaceholder.variableName}}}: string | SimpleSchemaTypes.{{{urlPlaceholder.relType}}},
         {{/if}}
-        {{#if queryParamsType}}
-          queryParams{{#unless requestBodyType}}{{#unless queryParamsRequired}}?{{/unless}}{{/unless}}: SimpleSchemaTypes.{{{queryParamsType}}},
-        {{/if}}
         {{#if requestBodyType}}
           body: SimpleSchemaTypes.{{{requestBodyType}}},
+        {{/if}}
+        {{#if queryParamsType}}
+          queryParams{{#unless queryParamsRequired}}?{{/unless}}: SimpleSchemaTypes.{{{queryParamsType}}},
         {{/if}}
       ) {
         return this.{{{rawName}}}(
             {{#if urlPlaceholder}}
               Utils.toId({{{urlPlaceholder.variableName}}}),
-            {{/if}}
-            {{#if queryParamsType}}
-              queryParams,
             {{/if}}
             {{#if requestBodyType}}
               Utils.serializeRequestBody<SchemaTypes.{{{requestBodyType}}}>(
@@ -52,6 +49,9 @@ export default class {{{resourceClassName}}} extends BaseResource {
                   relationships: {{{stringify requestStructure.relationships}}},
                 },
               ),
+            {{/if}}
+            {{#if queryParamsType}}
+              queryParams,
             {{/if}}
           )
           {{#if responseType}}
@@ -79,11 +79,11 @@ export default class {{{resourceClassName}}} extends BaseResource {
     {{#if urlPlaceholder}}
       {{{urlPlaceholder.variableName}}}: string,
     {{/if}}
-    {{#if queryParamsType}}
-      queryParams{{#unless requestBodyType}}{{#unless queryParamsRequired}}?{{/unless}}{{/unless}}: SchemaTypes.{{{queryParamsType}}},
-    {{/if}}
     {{#if requestBodyType}}
       body: SchemaTypes.{{{requestBodyType}}},
+    {{/if}}
+    {{#if queryParamsType}}
+      queryParams{{#unless queryParamsRequired}}?{{/unless}}: SchemaTypes.{{{queryParamsType}}},
     {{/if}}
   ): Promise<
     {{#if responseType}}
