@@ -91,7 +91,10 @@
         "requestBodyType": "AccountDestroySchema",
         "requestStructure": {
           "type": "account_destroy_request",
-          "attributes": ["otp_code", "password"],
+          "attributes": [
+            "otp_code",
+            "password"
+          ],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -119,7 +122,9 @@
         "requestBodyType": "AccountResetPasswordSchema",
         "requestStructure": {
           "type": "account",
-          "attributes": ["email"],
+          "attributes": [
+            "email"
+          ],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -135,7 +140,10 @@
         "requestBodyType": "AccountActivate_2FaSchema",
         "requestStructure": {
           "type": "2fa_activation",
-          "attributes": ["otp_code", "password"],
+          "attributes": [
+            "otp_code",
+            "password"
+          ],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -163,7 +171,10 @@
         "requestBodyType": "AccountDeactivate_2FaSchema",
         "requestStructure": {
           "type": "2fa_deactivation",
-          "attributes": ["otp_code", "password"],
+          "attributes": [
+            "otp_code",
+            "password"
+          ],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -219,7 +230,11 @@
         "requestBodyType": "SiteCreateSchema",
         "requestStructure": {
           "type": "site",
-          "attributes": ["name", "internal_subdomain", "template"],
+          "attributes": [
+            "name",
+            "internal_subdomain",
+            "template"
+          ],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -292,7 +307,10 @@
             "extra_packets",
             "billing_profile"
           ],
-          "relationships": ["plan", "billing_profile"]
+          "relationships": [
+            "plan",
+            "billing_profile"
+          ]
         },
         "queryParamsRequired": false,
         "responseType": "SiteDuplicateJobSchema",
@@ -325,7 +343,10 @@
             "extra_packets",
             "billing_profile"
           ],
-          "relationships": ["plan", "billing_profile"]
+          "relationships": [
+            "plan",
+            "billing_profile"
+          ]
         },
         "queryParamsRequired": false,
         "responseType": "SiteSubscriptionCreateTargetSchema",
@@ -352,7 +373,10 @@
             "ignore_content",
             "billing_profile"
           ],
-          "relationships": ["plan", "billing_profile"]
+          "relationships": [
+            "plan",
+            "billing_profile"
+          ]
         },
         "queryParamsRequired": false,
         "responseType": "SiteSubscriptionSimulateTargetSchema",
@@ -372,8 +396,14 @@
         "requestBodyType": "SiteSubscriptionValidateSchema",
         "requestStructure": {
           "type": "site_subscription",
-          "attributes": ["extra_packets", "ignore_content", "is_duplicate"],
-          "relationships": ["plan"]
+          "attributes": [
+            "extra_packets",
+            "ignore_content",
+            "is_duplicate"
+          ],
+          "relationships": [
+            "plan"
+          ]
         },
         "queryParamsRequired": false,
         "responseType": "SiteSubscriptionValidateTargetSchema",
@@ -396,8 +426,14 @@
         "requestBodyType": "AccountSubscriptionCreateSchema",
         "requestStructure": {
           "type": "account_subscription",
-          "attributes": ["payment_intent_id", "recurrence", "billing_profile"],
-          "relationships": ["plan"]
+          "attributes": [
+            "payment_intent_id",
+            "recurrence",
+            "billing_profile"
+          ],
+          "relationships": [
+            "plan"
+          ]
         },
         "queryParamsRequired": false,
         "responseType": "AccountSubscriptionCreateTargetSchema",
@@ -413,8 +449,13 @@
         "requestBodyType": "AccountSubscriptionSimulateSchema",
         "requestStructure": {
           "type": "account_subscription",
-          "attributes": ["recurrence", "billing_profile"],
-          "relationships": ["plan"]
+          "attributes": [
+            "recurrence",
+            "billing_profile"
+          ],
+          "relationships": [
+            "plan"
+          ]
         },
         "queryParamsRequired": false,
         "responseType": "AccountSubscriptionSimulateTargetSchema",
@@ -431,7 +472,9 @@
         "requestStructure": {
           "type": "account_subscription",
           "attributes": [],
-          "relationships": ["plan"]
+          "relationships": [
+            "plan"
+          ]
         },
         "queryParamsRequired": false,
         "responseType": "AccountSubscriptionValidateTargetSchema",
@@ -522,7 +565,9 @@
         "requestBodyType": "PerSitePricingBillingProfileUpdateCreditCardSchema",
         "requestStructure": {
           "type": "card",
-          "attributes": ["payment_intent_id"],
+          "attributes": [
+            "payment_intent_id"
+          ],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -591,7 +636,9 @@
         "requestBodyType": "PerAccountPricingBillingProfileUpdateCreditCardSchema",
         "requestStructure": {
           "type": "card",
-          "attributes": ["payment_intent_id"],
+          "attributes": [
+            "payment_intent_id"
+          ],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -672,7 +719,9 @@
         "requestBodyType": "InvoicePerAccountPricingBillingProfileCollectUnpaidSchema",
         "requestStructure": {
           "type": "invoice_collection",
-          "attributes": ["payment_intent_id"],
+          "attributes": [
+            "payment_intent_id"
+          ],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -694,7 +743,9 @@
         "requestBodyType": "InvoicePerSitePricingBillingProfileCollectUnpaidSchema",
         "requestStructure": {
           "type": "invoice_collection",
-          "attributes": ["payment_intent_id"],
+          "attributes": [
+            "payment_intent_id"
+          ],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -791,7 +842,9 @@
         "requestBodyType": "SiteTransferCreateSchema",
         "requestStructure": {
           "type": "site_transfer",
-          "attributes": ["account_email"],
+          "attributes": [
+            "account_email"
+          ],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -829,8 +882,12 @@
         "requestBodyType": "SiteTransferSimulateAcceptSchema",
         "requestStructure": {
           "type": "site_transfer",
-          "attributes": ["billing_profile"],
-          "relationships": ["billing_profile"]
+          "attributes": [
+            "billing_profile"
+          ],
+          "relationships": [
+            "billing_profile"
+          ]
         },
         "queryParamsRequired": false,
         "responseType": "SiteTransferSimulateAcceptTargetSchema",
@@ -850,8 +907,13 @@
         "requestBodyType": "SiteTransferAcceptSchema",
         "requestStructure": {
           "type": "site_transfer",
-          "attributes": ["payment_intent_id", "billing_profile"],
-          "relationships": ["billing_profile"]
+          "attributes": [
+            "payment_intent_id",
+            "billing_profile"
+          ],
+          "relationships": [
+            "billing_profile"
+          ]
         },
         "queryParamsRequired": false,
         "responseType": "SiteTransferAcceptTargetSchema",
