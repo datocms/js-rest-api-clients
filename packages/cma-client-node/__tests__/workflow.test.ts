@@ -15,10 +15,10 @@ describe('Workflow settings', () => {
         },
       ],
     });
-    expect(workflow.id).toEqual('approval_by_editors');
+    expect(workflow.api_key).toEqual('approval_by_editors');
 
     const found = await client.workflows.find(workflow);
-    expect(found.id).toEqual('approval_by_editors');
+    expect(found.api_key).toEqual('approval_by_editors');
 
     const updated = await client.workflows.update(workflow, {
       name: 'updated',
