@@ -9838,6 +9838,10 @@ export type Workflow = {
    */
   name: string;
   /**
+   * Workflow API key
+   */
+  api_key: string;
+  /**
    * The stages of the workflow
    */
   stages: [
@@ -9894,6 +9898,10 @@ export type WorkflowAttributes = {
    */
   name: string;
   /**
+   * Workflow API key
+   */
+  api_key: string;
+  /**
    * The stages of the workflow
    */
   stages: [
@@ -9941,12 +9949,15 @@ export type WorkflowAttributes = {
  * via the `create.schema` link.
  */
 export type WorkflowCreateSchema = {
-  id?: WorkflowIdentity;
   type?: WorkflowType;
   /**
    * The name of the workflow
    */
   name: string;
+  /**
+   * Workflow API key
+   */
+  api_key: string;
   /**
    * The stages of the workflow
    */
@@ -10001,6 +10012,10 @@ export type WorkflowUpdateSchema = {
    * The name of the workflow
    */
   name?: string;
+  /**
+   * Workflow API key
+   */
+  api_key?: string;
   /**
    * The stages of the workflow
    */
