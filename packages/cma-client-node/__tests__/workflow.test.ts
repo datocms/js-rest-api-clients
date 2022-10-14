@@ -5,7 +5,7 @@ describe('Workflow settings', () => {
     const client = await generateNewCmaClient();
 
     const workflow = await client.workflows.create({
-      id: 'approval_by_editors',
+      api_key: 'approval_by_editors',
       name: 'Approval by editors required',
       stages: [
         {
