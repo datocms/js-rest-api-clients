@@ -2,14 +2,14 @@ import { Resources, SimpleSchemaTypes } from '@datocms/cma-client';
 import {
   uploadLocalFileAndReturnPath,
   OnProgressInfo,
-} from './utils/uploadLocalFileAndReturnPath';
+} from '../utils/uploadLocalFileAndReturnPath';
 import {
   CancelablePromise,
   CanceledPromiseError,
 } from '@datocms/rest-client-utils';
 import { makeCancelablePromise } from '@datocms/rest-client-utils';
-import { downloadFile, DownloadResult } from './utils/downloadFile';
-import md5 from './utils/md5';
+import { downloadFile, DownloadResult } from '../utils/downloadFile';
+import md5 from '../utils/md5';
 
 export type OnProgressCreatingUploadObjectInfo = {
   type: 'CREATING_UPLOAD_OBJECT';
@@ -39,7 +39,7 @@ export type CreateUploadFromUrlSchema = Omit<
   onProgress?: (info: OnUploadProgressInfo) => void;
 };
 
-export class UploadResource extends Resources.Upload {
+export default class Upload extends Resources.Upload {
   /**
    * Create a new upload from a local file path
    *

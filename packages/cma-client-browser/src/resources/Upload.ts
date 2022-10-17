@@ -2,7 +2,7 @@ import { Resources, SimpleSchemaTypes } from '@datocms/cma-client';
 import {
   uploadFileOrBlobAndReturnPath,
   OnProgressInfo,
-} from './utils/uploadFileOrBlobAndReturnPath';
+} from '../utils/uploadFileOrBlobAndReturnPath';
 import {
   CancelablePromise,
   CanceledPromiseError,
@@ -26,7 +26,7 @@ export type CreateUploadFromFileOrBlobSchema = Omit<
   onProgress?: (info: OnUploadProgressInfo) => void;
 };
 
-export class UploadResource extends Resources.Upload {
+export default class Upload extends Resources.Upload {
   /**
    * Create a new upload using a browser File/Blob object
    *

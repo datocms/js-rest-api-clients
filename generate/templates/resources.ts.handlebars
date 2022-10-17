@@ -1,0 +1,9 @@
+import { Resources } from '@datocms/cma-client';
+
+{{#each resources}}
+{{#if override}}
+export { default as {{{resourceClassName}}} } from '../resources/{{{resourceClassName}}}';
+{{else}}
+export const {{{resourceClassName}}} = Resources.{{{resourceClassName}}};
+{{/if}}
+{{/each}}

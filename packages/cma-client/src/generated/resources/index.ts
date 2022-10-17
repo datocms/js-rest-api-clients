@@ -1,4 +1,4 @@
-export { default as Role } from './Role';
+export { default as Role } from '../../resources/Role';
 export { default as User } from './User';
 export { default as SsoUser } from './SsoUser';
 export { default as AuditLogEvent } from './AuditLogEvent';

@@ -1,6 +1,6 @@
 #!/usr/bin/env node --stack_size=800 -r ts-node/register
 
-import { readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import Handlebars from 'handlebars';
 import rimraf from 'rimraf';
 import extractInfoFromSchema, {
@@ -90,9 +90,20 @@ async function generate(prefix: string, hyperschemaUrl: string) {
     `./packages/${prefix}-client/src/generated/SimpleSchemaTypes.ts`,
   );
 
-  await writeTemplate<SchemaInfo>(
+  const resources = schemaInfo.resources.map((resource) => ({
+    resourceClassName: resource.resourceClassName,
+    path: existsSync(
+      `./packages/${prefix}-client/src/resources/${resource.resourceClassName}.ts`,
+    )
+      ? `../../resources/${resource.resourceClassName}`
+      : `./${resource.resourceClassName}`,
+  }));
+
+  await writeTemplate<{
+    resources: Array<{ resourceClassName: string; path: string }>;
+  }>(
     'resources/index.ts',
-    schemaInfo,
+    { resources },
     `./packages/${prefix}-client/src/generated/resources/index.ts`,
   );
 
@@ -105,6 +116,28 @@ async function generate(prefix: string, hyperschemaUrl: string) {
         true,
       )}.ts`,
     );
+  }
+
+  if (prefix === 'cma') {
+    for (const suffix of ['browser', 'node']) {
+      rimraf.sync(`./packages/${prefix}-client-${suffix}/src/generated`);
+      mkdirSync(`./packages/${prefix}-client-${suffix}/src/generated`);
+
+      const resources = schemaInfo.resources.map((resource) => ({
+        resourceClassName: resource.resourceClassName,
+        override: existsSync(
+          `./packages/${prefix}-client-${suffix}/src/resources/${resource.resourceClassName}.ts`,
+        ),
+      }));
+
+      await writeTemplate<{
+        resources: Array<{ resourceClassName: string; override: boolean }>;
+      }>(
+        'resources.ts',
+        { resources },
+        `./packages/${prefix}-client-${suffix}/src/generated/resources.ts`,
+      );
+    }
   }
 }
 
