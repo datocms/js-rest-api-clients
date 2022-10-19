@@ -433,6 +433,17 @@ export type JobType = 'job';
  */
 export type ItemTypeInstancesTargetSchema = ItemType[];
 /**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `destroy.hrefSchema` link.
+ */
+export type ItemTypeDestroyHrefSchema = {
+  /**
+   * Skip the deletion of the menu items linked to the model
+   */
+  skip_menu_items_deletion?: string;
+  [k: string]: unknown;
+};
+/**
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */

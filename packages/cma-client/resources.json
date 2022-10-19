@@ -596,6 +596,7 @@
           "isEntityId": true,
           "relType": "ItemTypeData"
         },
+        "queryParamsType": "ItemTypeDestroyHrefSchema",
         "queryParamsRequired": false,
         "responseType": "ItemTypeDestroyJobSchema",
         "name": "destroy",

@@ -242,8 +242,11 @@ export default class ItemType extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
-    return this.rawDestroy(Utils.toId(itemTypeId)).then((body) =>
+  destroy(
+    itemTypeId: string | SimpleSchemaTypes.ItemTypeData,
+    queryParams?: SimpleSchemaTypes.ItemTypeDestroyHrefSchema,
+  ) {
+    return this.rawDestroy(Utils.toId(itemTypeId), queryParams).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeDestroyJobSchema>(
         body,
       ),
@@ -260,10 +263,12 @@ export default class ItemType extends BaseResource {
    */
   rawDestroy(
     itemTypeId: string,
+    queryParams?: SchemaTypes.ItemTypeDestroyHrefSchema,
   ): Promise<SchemaTypes.ItemTypeDestroyJobSchema> {
     return this.client.request<SchemaTypes.ItemTypeDestroyJobSchema>({
       method: 'DELETE',
       url: `/item-types/${itemTypeId}`,
+      queryParams,
     });
   }
 }
