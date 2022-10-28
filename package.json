@@ -8,9 +8,9 @@
     "test": "npm run lint && jest --maxConcurrency=5",
     "generate": "./generate/index.ts",
     "build": "lerna run build",
-    "prepublishOnly": "./generate/setClientVersion.ts",
-    "publish": "npm run generate && npm run build && npm run test && lerna publish",
-    "publish-next": "npm run generate && npm run build && npm run test && lerna publish --dist-tag next"
+    "prepublishOnly": "npm run generate && ./generate/setClientVersion.ts && npm run build && npm run test",
+    "publish": "lerna publish",
+    "publish-next": "lerna publish --dist-tag next"
   },
   "author": "Stefano Verna <s.verna@datocms.com>",
   "license": "MIT",
