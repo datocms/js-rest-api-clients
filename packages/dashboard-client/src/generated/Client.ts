@@ -83,7 +83,7 @@ export class Client {
       ...this.config,
       ...options,
       logFn: this.config.logFn || console.log,
-      userAgent: `@datocms/dashboard-client v1.1.9`,
+      userAgent: `@datocms/dashboard-client v1.1.10`,
       baseUrl: this.baseUrl,
       preCallStack: new Error().stack,
       fetchJobResult: (jobId: string) => {
