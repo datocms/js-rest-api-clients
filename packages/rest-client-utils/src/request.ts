@@ -12,6 +12,7 @@ import {
   makeCancelablePromise,
   CanceledPromiseError,
 } from './makeCancelablePromise';
+import { isBrowser } from 'browser-or-node';
 
 export enum LogLevel {
   /** No logging */
@@ -126,6 +127,12 @@ function isErrorWithCode(error: unknown): error is { code: string } {
   return typeof error === 'object' && !!error && 'code' in error;
 }
 
+function lowercaseKeys(obj: Record<string, string>): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(obj).map(([k, v]) => [k.toLowerCase(), v]),
+  );
+}
+
 let requestCount = 1;
 
 export async function request<T>(options: RequestOptions): Promise<T> {
@@ -139,13 +146,18 @@ export async function request<T>(options: RequestOptions): Promise<T> {
   const autoRetry = 'autoRetry' in options ? options.autoRetry : true;
   const log = options.logFn || (() => true);
 
-  const headers = {
+  const headers: Record<string, string> = {
     'content-type': 'application/json',
     accept: 'application/json',
     authorization: `Bearer ${options.apiToken}`,
     'user-agent': userAgent,
-    ...(options.extraHeaders || {}),
+    ...(options.extraHeaders ? lowercaseKeys(options.extraHeaders) : {}),
   };
+
+  if (isBrowser) {
+    // user agent cannot be set on browser
+    delete headers['user-agent'];
+  }
 
   const baseUrl = options.baseUrl.replace(/\/$/, '');
   const body = options.body ? JSON.stringify(options.body, null, 2) : undefined;
