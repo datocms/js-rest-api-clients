@@ -8,6 +8,7 @@
     "test": "npm run lint && jest --maxConcurrency=5",
     "generate": "./generate/index.ts",
     "build": "lerna run build",
+    "prepublishOnly": "./generate/setClientVersion.ts",
     "publish": "npm run generate && npm run build && npm run test && lerna publish",
     "publish-next": "npm run generate && npm run build && npm run test && lerna publish --dist-tag next"
   },
