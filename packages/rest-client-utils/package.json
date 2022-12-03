@@ -1,6 +1,6 @@
 {
   "name": "@datocms/rest-client-utils",
-  "version": "1.1.9",
+  "version": "1.1.11",
   "description": "Utilities for DatoCMS REST API clients",
   "keywords": [
     "datocms",
@@ -36,9 +36,9 @@
     "url": "https://github.com/datocms/js-rest-api-clients/issues"
   },
   "dependencies": {
+    "@whatwg-node/fetch": "^0.5.3",
     "async-scheduler": "^1.4.4",
     "browser-or-node": "^2.0.0",
-    "@whatwg-node/fetch": "^0.5.3",
     "qs": "^6.10.3"
   },
   "gitHead": "e802f075911ad9d1c6b861b084edb8f44499a40f",
