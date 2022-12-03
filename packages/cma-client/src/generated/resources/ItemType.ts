@@ -35,6 +35,7 @@ export default class ItemType extends BaseResource {
           'collection_appeareance',
           'collection_appearance',
           'hint',
+          'inverse_relationships_enabled',
         ],
         relationships: [
           'ordering_field',
@@ -104,6 +105,7 @@ export default class ItemType extends BaseResource {
           'ordering_meta',
           'has_singleton_item',
           'hint',
+          'inverse_relationships_enabled',
         ],
         relationships: [
           'ordering_field',

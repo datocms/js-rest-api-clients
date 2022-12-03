@@ -478,7 +478,8 @@
             "ordering_meta",
             "collection_appeareance",
             "collection_appearance",
-            "hint"
+            "hint",
+            "inverse_relationships_enabled"
           ],
           "relationships": [
             "ordering_field",
@@ -523,7 +524,8 @@
             "ordering_direction",
             "ordering_meta",
             "has_singleton_item",
-            "hint"
+            "hint",
+            "inverse_relationships_enabled"
           ],
           "relationships": [
             "ordering_field",
@@ -3051,7 +3053,8 @@
         "requestStructure": {
           "type": "sso_settings",
           "attributes": [
-            "idp_saml_metadata_url"
+            "idp_saml_metadata_url",
+            "idp_saml_metadata_xml"
           ],
           "relationships": [
             "default_role"

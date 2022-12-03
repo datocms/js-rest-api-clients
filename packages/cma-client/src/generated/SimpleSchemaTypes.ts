@@ -4127,6 +4127,10 @@ export type ItemType = {
    * A hint shown to editors to help them understand the purpose of this model/block
    */
   hint: string | null;
+  /**
+   * Whether inverse relationships fields are expressed in GraphQL or not
+   */
+  inverse_relationships_enabled: boolean;
   singleton_item: ItemData | null;
   fields: FieldData[];
   fieldsets: FieldsetData[];
@@ -4253,6 +4257,10 @@ export type ItemTypeAttributes = {
    * A hint shown to editors to help them understand the purpose of this model/block
    */
   hint: string | null;
+  /**
+   * Whether inverse relationships fields are expressed in GraphQL or not
+   */
+  inverse_relationships_enabled: boolean;
 };
 
 /**
@@ -4335,6 +4343,10 @@ export type ItemTypeCreateSchema = {
    * A hint shown to editors to help them understand the purpose of this model/block
    */
   hint?: string | null;
+  /**
+   * Whether inverse relationships fields are expressed in GraphQL or not
+   */
+  inverse_relationships_enabled?: boolean;
   ordering_field?: FieldData | null;
   title_field?: FieldData | null;
   image_preview_field?: FieldData | null;
@@ -4410,6 +4422,10 @@ export type ItemTypeUpdateSchema = {
    * A hint shown to editors to help them understand the purpose of this model/block
    */
   hint?: string | null;
+  /**
+   * Whether inverse relationships fields are expressed in GraphQL or not
+   */
+  inverse_relationships_enabled?: boolean;
   ordering_field?: FieldData | null;
   title_field?: FieldData | null;
   image_preview_field?: FieldData | null;
@@ -8656,6 +8672,10 @@ export type SiteInvitation = {
    * Email
    */
   email: string;
+  /**
+   * Whether this invitation has expired
+   */
+  expired: boolean;
   role: RoleData;
 };
 export type SiteInvitationCreateTargetSchema = SiteInvitation;
@@ -8684,6 +8704,10 @@ export type SiteInvitationAttributes = {
    * Email
    */
   email: string;
+  /**
+   * Whether this invitation has expired
+   */
+  expired: boolean;
 };
 
 /**
@@ -8862,6 +8886,10 @@ export type SsoSettings = {
    */
   idp_saml_metadata_url: null | string;
   /**
+   * Identity Provider SAML Metadata
+   */
+  idp_saml_metadata_xml?: null | string;
+  /**
    * DatoCMS SCIM base URL
    */
   scim_base_url: string;
@@ -8911,6 +8939,10 @@ export type SsoSettingsAttributes = {
    * URL of Identity Provider SAML Metadata endpoint
    */
   idp_saml_metadata_url: null | string;
+  /**
+   * Identity Provider SAML Metadata
+   */
+  idp_saml_metadata_xml?: null | string;
   /**
    * DatoCMS SCIM base URL
    */
@@ -8977,7 +9009,11 @@ export type SsoSettingsUpdateSchema = {
    * URL of Identity Provider SAML Metadata endpoint
    */
   idp_saml_metadata_url?: null | string;
-  default_role: RoleData;
+  /**
+   * Identity Provider SAML Metadata
+   */
+  idp_saml_metadata_xml?: null | string;
+  default_role?: RoleData;
 };
 
 /**

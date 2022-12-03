@@ -944,9 +944,15 @@
       {
         "returnsCollection": false,
         "rel": "redeem",
-        "urlTemplate": "/site_invitations/{(%2Fschemata%2Ffield%23%2Fdefinitions%2Fsite_invitation%2Ftoken)}/redeem",
+        "urlTemplate": "/site-invitations/${siteInvitationId}/redeem",
         "method": "PUT",
         "comment": "Redeem token",
+        "urlPlaceholder": {
+          "variableName": "siteInvitationId",
+          "isEntityId": true,
+          "relType": "SiteInvitationData"
+        },
+        "queryParamsType": "SiteInvitationRedeemHrefSchema",
         "queryParamsRequired": false,
         "responseType": "SiteInvitationRedeemTargetSchema",
         "name": "redeem",

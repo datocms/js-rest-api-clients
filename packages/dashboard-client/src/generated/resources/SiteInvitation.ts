@@ -12,11 +12,15 @@ export default class SiteInvitation extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  redeem() {
-    return this.rawRedeem().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteInvitationRedeemTargetSchema>(
-        body,
-      ),
+  redeem(
+    siteInvitationId: string | SimpleSchemaTypes.SiteInvitationData,
+    queryParams?: SimpleSchemaTypes.SiteInvitationRedeemHrefSchema,
+  ) {
+    return this.rawRedeem(Utils.toId(siteInvitationId), queryParams).then(
+      (body) =>
+        Utils.deserializeResponseBody<SimpleSchemaTypes.SiteInvitationRedeemTargetSchema>(
+          body,
+        ),
     );
   }
 
@@ -26,10 +30,14 @@ export default class SiteInvitation extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawRedeem(): Promise<SchemaTypes.SiteInvitationRedeemTargetSchema> {
+  rawRedeem(
+    siteInvitationId: string,
+    queryParams?: SchemaTypes.SiteInvitationRedeemHrefSchema,
+  ): Promise<SchemaTypes.SiteInvitationRedeemTargetSchema> {
     return this.client.request<SchemaTypes.SiteInvitationRedeemTargetSchema>({
       method: 'PUT',
-      url: `/site_invitations/{(%2Fschemata%2Ffield%23%2Fdefinitions%2Fsite_invitation%2Ftoken)}/redeem`,
+      url: `/site-invitations/${siteInvitationId}/redeem`,
+      queryParams,
     });
   }
 }

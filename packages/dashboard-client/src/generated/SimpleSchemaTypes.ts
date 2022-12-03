@@ -411,6 +411,17 @@ export type SiteInvitationIdentity = string;
  */
 export type SiteInvitationType = 'site_invitation';
 /**
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `redeem.hrefSchema` link.
+ */
+export type SiteInvitationRedeemHrefSchema = {
+  /**
+   * The site invitation authorization token
+   */
+  token?: string;
+  [k: string]: unknown;
+};
+/**
  * ID of limit
  *
  * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
@@ -2691,6 +2702,17 @@ export type SiteTransferAcceptSchema = {
 export type SiteInvitation = {
   id: SiteInvitationIdentity;
   type: SiteInvitationType;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SiteInvitationData = {
+  type: SiteInvitationType;
+  id: SiteInvitationIdentity;
 };
 
 /**
