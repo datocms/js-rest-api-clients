@@ -38,7 +38,7 @@
   "dependencies": {
     "async-scheduler": "^1.4.4",
     "browser-or-node": "^2.0.0",
-    "cross-fetch": "^3.1.5",
+    "@whatwg-node/fetch": "^0.5.3",
     "qs": "^6.10.3"
   },
   "gitHead": "e802f075911ad9d1c6b861b084edb8f44499a40f",

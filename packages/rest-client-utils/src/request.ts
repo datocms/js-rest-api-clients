@@ -1,5 +1,5 @@
 import qs from 'qs';
-import fetch from 'cross-fetch';
+import { fetch as universalFetch } from '@whatwg-node/fetch';
 import {
   ApiError,
   ApiErrorInitObject,
@@ -140,7 +140,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
   requestCount += 1;
 
   const preCallStack = options.preCallStack;
-  const userAgent = options.userAgent || `@datocms/rest-client-utils`;
+  const userAgent = options.userAgent || '@datocms/rest-client-utils';
   const retryCount = options.retryCount || 1;
   const logLevel = options.logLevel || LogLevel.NONE;
   const autoRetry = 'autoRetry' in options ? options.autoRetry : true;
@@ -183,7 +183,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
 
   try {
     const requestPromise = makeCancelablePromise(
-      fetch(url, {
+      universalFetch(url, {
         method: options.method,
         headers,
         body,
