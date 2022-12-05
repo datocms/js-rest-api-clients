@@ -1,12 +1,5 @@
 import { generateNewCmaClient } from './helpers/generateClients';
-import {
-  ApiError,
-  buildBlockRecord,
-  SimpleSchemaTypes,
-  SchemaTypes,
-  Client,
-  LogLevel,
-} from '../src';
+import { ApiError, buildBlockRecord, SchemaTypes } from '../src';
 
 describe('item', () => {
   it.concurrent('bulk publish/unpublish/destroy works', async () => {

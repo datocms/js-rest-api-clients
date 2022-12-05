@@ -1,4 +1,4 @@
-import qs from 'qs';
+import { buildNormalizedParams } from './buildNormalizedParams';
 import { fetch as universalFetch } from '@whatwg-node/fetch';
 import {
   ApiError,
@@ -164,7 +164,9 @@ export async function request<T>(options: RequestOptions): Promise<T> {
 
   const queryString =
     options.queryParams && Object.keys(options.queryParams).length > 0
-      ? `?${qs.stringify(options.queryParams, { arrayFormat: 'brackets' })}`
+      ? `?${new URLSearchParams(
+          buildNormalizedParams(options.queryParams),
+        ).toString()}`
       : '';
 
   const url = `${baseUrl}${options.url}${queryString}`;
