@@ -46,6 +46,8 @@ export class Client {
   siteInvitation: Resources.SiteInvitation;
   subscriptionLimits: Resources.SubscriptionLimit;
   subscriptionFeatures: Resources.SubscriptionFeature;
+  oauthApplications: Resources.OauthApplication;
+  paymentIntent: Resources.PaymentIntent;
 
   config: ClientConfigOptions;
   jobResultsFetcher?: (jobId: string) => Promise<JobResult>;
@@ -72,6 +74,8 @@ export class Client {
     this.siteInvitation = new Resources.SiteInvitation(this);
     this.subscriptionLimits = new Resources.SubscriptionLimit(this);
     this.subscriptionFeatures = new Resources.SubscriptionFeature(this);
+    this.oauthApplications = new Resources.OauthApplication(this);
+    this.paymentIntent = new Resources.PaymentIntent(this);
   }
 
   get baseUrl() {

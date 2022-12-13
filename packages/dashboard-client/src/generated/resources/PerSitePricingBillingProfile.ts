@@ -181,4 +181,40 @@ export default class PerSitePricingBillingProfile extends BaseResource {
       },
     );
   }
+
+  /**
+   * Delete a billing profile
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  destroy(
+    perSitePricingBillingProfileId:
+      | string
+      | SimpleSchemaTypes.PerSitePricingBillingProfileData,
+  ) {
+    return this.rawDestroy(Utils.toId(perSitePricingBillingProfileId)).then(
+      (body) =>
+        Utils.deserializeResponseBody<SimpleSchemaTypes.PerSitePricingBillingProfileDestroyTargetSchema>(
+          body,
+        ),
+    );
+  }
+
+  /**
+   * Delete a billing profile
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawDestroy(
+    perSitePricingBillingProfileId: string,
+  ): Promise<SchemaTypes.PerSitePricingBillingProfileDestroyTargetSchema> {
+    return this.client.request<SchemaTypes.PerSitePricingBillingProfileDestroyTargetSchema>(
+      {
+        method: 'DELETE',
+        url: `/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}`,
+      },
+    );
+  }
 }

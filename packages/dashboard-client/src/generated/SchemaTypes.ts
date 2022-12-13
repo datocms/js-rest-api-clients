@@ -362,6 +362,40 @@ export type OauthApplicationType = 'oauth_application';
  * via the `definition` "id".
  */
 export type OauthApplicationIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `PaymentIntent`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type PaymentIntentType = 'payment_intent';
+/**
+ * ID of access_token
+ *
+ * This interface was referenced by `PaymentIntent`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `PaymentIntent`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type PaymentIntentIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `PaymentMethod`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type PaymentMethodType = 'payment_method';
+/**
+ * ID of payment_method
+ *
+ * This interface was referenced by `PaymentMethod`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `PaymentMethod`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type PaymentMethodIdentity = string;
 
 export type DatoApi = {
   session?: Session;
@@ -382,6 +416,8 @@ export type DatoApi = {
   subscription_feature?: SubscriptionFeature;
   job?: Job;
   oauth_application?: OauthApplication;
+  payment_intent?: PaymentIntent;
+  payment_method?: PaymentMethod;
   [k: string]: unknown;
 };
 
@@ -1090,6 +1126,7 @@ export type Site = {
   id: SiteIdentity;
   attributes: SiteAttributes;
   relationships: SiteRelationships;
+  meta?: SiteMeta;
 };
 
 /**
@@ -1202,6 +1239,31 @@ export type SitePlanData = {
 export type SiteTransferData = {
   type: SiteTransferType;
   id: SiteTransferIdentity;
+};
+
+/**
+ * Meta attributes
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type SiteMeta = {
+  /**
+   * Specifies the last time when a change of data occurred
+   */
+  last_data_change_at: null | string;
+  /**
+   * The creation date of the site
+   */
+  created_at: null | string;
+  /**
+   * True when the site has been deactivated
+   */
+  deactivated: null | boolean;
+  /**
+   * Site status
+   */
+  status: string;
 };
 
 /**
@@ -2156,6 +2218,14 @@ export type PerSitePricingBillingProfileUpdateInfoTargetSchema = {
 };
 
 /**
+ * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type PerSitePricingBillingProfileDestroyTargetSchema = {
+  data: PerSitePricingBillingProfile;
+};
+
+/**
  * A billing profile
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -2499,6 +2569,7 @@ export type SiteTransfer = {
   id: SiteTransferIdentity;
   attributes: SiteTransferAttributes;
   relationships: SiteTransferRelationships;
+  meta: SiteTransferMeta;
 };
 
 /**
@@ -2548,6 +2619,19 @@ export type SiteTransferRelationships = {
   plan: {
     data: SitePlanData | null;
   };
+};
+
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type SiteTransferMeta = {
+  /**
+   * Date of site transfer creation
+   */
+  created_at: string;
 };
 
 /**
@@ -2867,4 +2951,174 @@ export type OauthApplicationAttributes = {
 export type OauthApplicationData = {
   type: OauthApplicationType;
   id: OauthApplicationIdentity;
+};
+
+/**
+ * This interface was referenced by `OauthApplication`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type OauthApplicationInstancesTargetSchema = {
+  data: OauthApplication[];
+  meta: {
+    [k: string]: unknown;
+  };
+};
+
+/**
+ * Private entity to handle payments with Stripe
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "payment_intent".
+ */
+export type PaymentIntent = {
+  type: PaymentIntentType;
+  id: PaymentIntentIdentity;
+  attributes: PaymentIntentAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `PaymentIntent`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type PaymentIntentAttributes = {
+  /**
+   * Stripe PaymentIntent client_secret
+   */
+  client_secret: string;
+  /**
+   * Stripe PaymentIntent status
+   */
+  status: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `PaymentIntent`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type PaymentIntentData = {
+  type: PaymentIntentType;
+  id: PaymentIntentIdentity;
+};
+
+/**
+ * This interface was referenced by `PaymentIntent`'s JSON-Schema
+ * via the `create_from_payment_method.schema` link.
+ */
+export type PaymentIntentCreateFromPaymentMethodSchema = {
+  data: {
+    /**
+     * JSON API type field
+     */
+    type: 'payment_intent';
+    attributes: {
+      /**
+       * Amount to charge
+       */
+      amount: number;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `PaymentIntent`'s JSON-Schema
+ * via the `create_from_payment_method.targetSchema` link.
+ */
+export type PaymentIntentCreateFromPaymentMethodTargetSchema = {
+  data: PaymentIntent;
+};
+
+/**
+ * This interface was referenced by `PaymentIntent`'s JSON-Schema
+ * via the `create_for_per_site_pricing_billing_profile.schema` link.
+ */
+export type PaymentIntentCreateForPerSitePricingBillingProfileSchema = {
+  data: {
+    /**
+     * JSON API type field
+     */
+    type: 'payment_intent';
+    attributes: {
+      /**
+       * Amount to charge
+       */
+      amount: number;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `PaymentIntent`'s JSON-Schema
+ * via the `create_for_per_site_pricing_billing_profile.targetSchema` link.
+ */
+export type PaymentIntentCreateForPerSitePricingBillingProfileTargetSchema = {
+  data: PaymentIntent;
+};
+
+/**
+ * This interface was referenced by `PaymentIntent`'s JSON-Schema
+ * via the `create_for_per_account_pricing_billing_profile.schema` link.
+ */
+export type PaymentIntentCreateForPerAccountPricingBillingProfileSchema = {
+  data: {
+    /**
+     * JSON API type field
+     */
+    type: 'payment_intent';
+    attributes: {
+      /**
+       * Amount to charge
+       */
+      amount: number;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `PaymentIntent`'s JSON-Schema
+ * via the `create_for_per_account_pricing_billing_profile.targetSchema` link.
+ */
+export type PaymentIntentCreateForPerAccountPricingBillingProfileTargetSchema =
+  {
+    data: PaymentIntent;
+  };
+
+/**
+ * This interface was referenced by `PaymentIntent`'s JSON-Schema
+ * via the `confirm.targetSchema` link.
+ */
+export type PaymentIntentConfirmTargetSchema = {
+  data: PaymentIntent;
+};
+
+/**
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "payment_method".
+ */
+export type PaymentMethod = {
+  type: PaymentMethodType;
+  id: PaymentMethodIdentity;
+  attributes: PaymentMethodAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `PaymentMethod`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type PaymentMethodAttributes = {};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `PaymentMethod`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type PaymentMethodData = {
+  type: PaymentMethodType;
+  id: PaymentMethodIdentity;
 };

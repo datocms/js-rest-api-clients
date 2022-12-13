@@ -608,6 +608,22 @@
         "responseType": "PerSitePricingBillingProfileUpdateInfoTargetSchema",
         "name": "updateInfo",
         "rawName": "rawUpdateInfo"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}",
+        "method": "DELETE",
+        "comment": "Delete a billing profile",
+        "urlPlaceholder": {
+          "variableName": "perSitePricingBillingProfileId",
+          "isEntityId": true,
+          "relType": "PerSitePricingBillingProfileData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "PerSitePricingBillingProfileDestroyTargetSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
       }
     ],
     "namespace": "perSitePricingBillingProfiles",
@@ -1007,5 +1023,132 @@
     ],
     "namespace": "subscriptionFeatures",
     "resourceClassName": "SubscriptionFeature"
+  },
+  {
+    "jsonApiType": "oauth_application",
+    "endpoints": [
+      {
+        "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/oauth_applications",
+        "method": "GET",
+        "comment": "List all authorized applications",
+        "queryParamsRequired": false,
+        "responseType": "OauthApplicationInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/oauth_application/${siteId}",
+        "method": "DELETE",
+        "comment": "Delete an authorized application",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": false,
+          "relType": "SiteData"
+        },
+        "queryParamsRequired": false,
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "oauthApplications",
+    "resourceClassName": "OauthApplication"
+  },
+  {
+    "jsonApiType": "payment_intent",
+    "endpoints": [
+      {
+        "returnsCollection": false,
+        "rel": "create_from_payment_method",
+        "urlTemplate": "/payment-methods/${paymentMethodId}/payment-intents",
+        "method": "POST",
+        "comment": "Create a payment intent starting from a payment method",
+        "urlPlaceholder": {
+          "variableName": "paymentMethodId",
+          "isEntityId": false,
+          "relType": "PaymentMethodData"
+        },
+        "requestBodyType": "PaymentIntentCreateFromPaymentMethodSchema",
+        "requestStructure": {
+          "type": "payment_intent",
+          "attributes": [
+            "amount"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "PaymentIntentCreateFromPaymentMethodTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "createFromPaymentMethod",
+        "rawName": "rawCreateFromPaymentMethod"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "create_for_per_site_pricing_billing_profile",
+        "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/payment-intents",
+        "method": "POST",
+        "comment": "Create a payment intent starting from an existing per-site billing profile",
+        "urlPlaceholder": {
+          "variableName": "perSitePricingBillingProfileId",
+          "isEntityId": false,
+          "relType": "PerSitePricingBillingProfileData"
+        },
+        "requestBodyType": "PaymentIntentCreateForPerSitePricingBillingProfileSchema",
+        "requestStructure": {
+          "type": "payment_intent",
+          "attributes": [
+            "amount"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "PaymentIntentCreateForPerSitePricingBillingProfileTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "createForPerSitePricingBillingProfile",
+        "rawName": "rawCreateForPerSitePricingBillingProfile"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "create_for_per_account_pricing_billing_profile",
+        "urlTemplate": "/per-account-pricing-billing-profile/payment-intents",
+        "method": "POST",
+        "comment": "Create a payment intent starting from an existing per-account billing profile",
+        "requestBodyType": "PaymentIntentCreateForPerAccountPricingBillingProfileSchema",
+        "requestStructure": {
+          "type": "payment_intent",
+          "attributes": [
+            "amount"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "PaymentIntentCreateForPerAccountPricingBillingProfileTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "createForPerAccountPricingBillingProfile",
+        "rawName": "rawCreateForPerAccountPricingBillingProfile"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "confirm",
+        "urlTemplate": "/payment-intents/${paymentIntentId}/confirm",
+        "method": "POST",
+        "comment": "Confirm a payment intent",
+        "urlPlaceholder": {
+          "variableName": "paymentIntentId",
+          "isEntityId": true,
+          "relType": "PaymentIntentData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "PaymentIntentConfirmTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "confirm",
+        "rawName": "rawConfirm"
+      }
+    ],
+    "namespace": "paymentIntent",
+    "resourceClassName": "PaymentIntent"
   }
 ]

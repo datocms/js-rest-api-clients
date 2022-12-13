@@ -3546,6 +3546,7 @@ export type ItemType = {
   id: ItemTypeIdentity;
   attributes: ItemTypeAttributes;
   relationships: ItemTypeRelationships;
+  meta: ItemTypeMeta;
 };
 
 /**
@@ -3566,7 +3567,7 @@ export type ItemTypeAttributes = {
   /**
    * The way the model collection should be presented to the editors
    */
-  collection_appeareance: 'compact' | 'table';
+  collection_appeareance?: 'compact' | 'table';
   /**
    * The way the model collection should be presented to the editors
    */
@@ -3721,6 +3722,19 @@ export type FieldsetData = {
 export type WorkflowData = {
   type: WorkflowType;
   id: WorkflowIdentity;
+};
+
+/**
+ * Meta information regarding the item type
+ *
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type ItemTypeMeta = {
+  /**
+   * If this model is single-instance, this tells the single-instance record has already been created or not
+   */
+  has_singleton_item: boolean;
 };
 
 /**
@@ -3949,6 +3963,12 @@ export type ItemTypeUpdateSchema = {
       workflow?: {
         data: WorkflowData | null;
       };
+    };
+    meta?: {
+      /**
+       * If this model is single-instance, this tells the single-instance record has already been created or not
+       */
+      has_singleton_item?: boolean;
     };
   };
 };
@@ -4922,7 +4942,7 @@ export type FieldAttributes = {
   /**
    * Field appearance
    */
-  appeareance: {
+  appeareance?: {
     editor: string;
     parameters: {
       [k: string]: unknown;

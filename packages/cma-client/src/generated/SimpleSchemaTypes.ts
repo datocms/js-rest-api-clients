@@ -4077,7 +4077,7 @@ export type ItemType = {
   /**
    * The way the model collection should be presented to the editors
    */
-  collection_appeareance: 'compact' | 'table';
+  collection_appeareance?: 'compact' | 'table';
   /**
    * The way the model collection should be presented to the editors
    */
@@ -4139,6 +4139,7 @@ export type ItemType = {
   excerpt_field: FieldData | null;
   ordering_field: FieldData | null;
   workflow: WorkflowData | null;
+  meta: ItemTypeMeta;
 };
 export type ItemTypeCreateTargetSchema = ItemType;
 export type ItemTypeUpdateJobSchema = ItemType;
@@ -4190,6 +4191,19 @@ export type WorkflowData = {
 };
 
 /**
+ * Meta information regarding the item type
+ *
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type ItemTypeMeta = {
+  /**
+   * If this model is single-instance, this tells the single-instance record has already been created or not
+   */
+  has_singleton_item: boolean;
+};
+
+/**
  * JSON API attributes
  *
  * This interface was referenced by `ItemType`'s JSON-Schema
@@ -4207,7 +4221,7 @@ export type ItemTypeAttributes = {
   /**
    * The way the model collection should be presented to the editors
    */
-  collection_appeareance: 'compact' | 'table';
+  collection_appeareance?: 'compact' | 'table';
   /**
    * The way the model collection should be presented to the editors
    */
@@ -4431,6 +4445,12 @@ export type ItemTypeUpdateSchema = {
   image_preview_field?: FieldData | null;
   excerpt_field?: FieldData | null;
   workflow?: WorkflowData | null;
+  meta?: {
+    /**
+     * If this model is single-instance, this tells the single-instance record has already been created or not
+     */
+    has_singleton_item?: boolean;
+  };
 };
 
 /**
@@ -5430,7 +5450,7 @@ export type Field = {
   /**
    * Field appearance
    */
-  appeareance: {
+  appeareance?: {
     editor: string;
     parameters: {
       [k: string]: unknown;
@@ -5533,7 +5553,7 @@ export type FieldAttributes = {
   /**
    * Field appearance
    */
-  appeareance: {
+  appeareance?: {
     editor: string;
     parameters: {
       [k: string]: unknown;

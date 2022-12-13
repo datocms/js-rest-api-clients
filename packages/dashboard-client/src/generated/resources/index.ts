@@ -14,3 +14,5 @@ export { default as SiteTransfer } from './SiteTransfer';
 export { default as SiteInvitation } from './SiteInvitation';
 export { default as SubscriptionLimit } from './SubscriptionLimit';
 export { default as SubscriptionFeature } from './SubscriptionFeature';
+export { default as OauthApplication } from './OauthApplication';
+export { default as PaymentIntent } from './PaymentIntent';
