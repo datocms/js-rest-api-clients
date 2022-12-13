@@ -9,6 +9,6 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/no-unused-vars': 'off',
-    '@typescript-eslint/ban-types': 'off',
+    '@typescript-eslint/ban-types': 'warn',
   },
 };
