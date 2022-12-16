@@ -137,6 +137,17 @@ export type JobIdentity = string;
  */
 export type JobType = 'job';
 /**
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type AccountSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
  * ID of site
  *
  * This interface was referenced by `Site`'s JSON-Schema
@@ -206,6 +217,17 @@ export type SiteTransferType = 'site_transfer';
 export type SiteTransferIdentity = string;
 /**
  * This interface was referenced by `Site`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type SiteSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
 export type SiteInstancesTargetSchema = Site[];
@@ -245,6 +267,10 @@ export type SiteInstancesHrefSchema = {
     limit?: number;
     [k: string]: unknown;
   };
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
   [k: string]: unknown;
 };
 /**
@@ -635,8 +661,8 @@ export type Account = {
    * Whether 2-factor authentication is active for this account or not
    */
   is_2fa_active: boolean;
-  active_subscription?: null | AccountSubscriptionData;
-  billing_profile?: null | PerAccountPricingBillingProfileData;
+  active_subscription: null | AccountSubscriptionData;
+  billing_profile: null | PerAccountPricingBillingProfileData;
 };
 export type AccountDestroyJobSchema = Account;
 export type AccountSelfTargetSchema = Account;

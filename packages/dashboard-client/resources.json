@@ -108,6 +108,7 @@
         "urlTemplate": "/account",
         "method": "GET",
         "comment": "Retrieve a account",
+        "queryParamsType": "AccountSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "AccountSelfTargetSchema",
         "name": "find",
@@ -200,6 +201,7 @@
           "isEntityId": true,
           "relType": "SiteData"
         },
+        "queryParamsType": "SiteSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "SiteSelfTargetSchema",
         "name": "find",

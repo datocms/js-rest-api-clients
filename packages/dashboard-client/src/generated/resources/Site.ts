@@ -12,8 +12,11 @@ export default class Site extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(siteId: string | SimpleSchemaTypes.SiteData) {
-    return this.rawFind(Utils.toId(siteId)).then((body) =>
+  find(
+    siteId: string | SimpleSchemaTypes.SiteData,
+    queryParams?: SimpleSchemaTypes.SiteSelfHrefSchema,
+  ) {
+    return this.rawFind(Utils.toId(siteId), queryParams).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SiteSelfTargetSchema>(
         body,
       ),
@@ -26,10 +29,14 @@ export default class Site extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(siteId: string): Promise<SchemaTypes.SiteSelfTargetSchema> {
+  rawFind(
+    siteId: string,
+    queryParams?: SchemaTypes.SiteSelfHrefSchema,
+  ): Promise<SchemaTypes.SiteSelfTargetSchema> {
     return this.client.request<SchemaTypes.SiteSelfTargetSchema>({
       method: 'GET',
       url: `/sites/${siteId}`,
+      queryParams,
     });
   }
 

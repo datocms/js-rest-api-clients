@@ -135,8 +135,8 @@ export default class Account extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find() {
-    return this.rawFind().then((body) =>
+  find(queryParams?: SimpleSchemaTypes.AccountSelfHrefSchema) {
+    return this.rawFind(queryParams).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccountSelfTargetSchema>(
         body,
       ),
@@ -149,10 +149,13 @@ export default class Account extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(): Promise<SchemaTypes.AccountSelfTargetSchema> {
+  rawFind(
+    queryParams?: SchemaTypes.AccountSelfHrefSchema,
+  ): Promise<SchemaTypes.AccountSelfTargetSchema> {
     return this.client.request<SchemaTypes.AccountSelfTargetSchema>({
       method: 'GET',
       url: `/account`,
+      queryParams,
     });
   }
 

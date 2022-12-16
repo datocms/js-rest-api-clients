@@ -178,6 +178,17 @@ export type SiteTransferType = 'site_transfer';
 export type SiteTransferIdentity = string;
 /**
  * This interface was referenced by `Site`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type SiteSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
  * via the `instances.hrefSchema` link.
  */
 export type SiteInstancesHrefSchema = {
@@ -212,6 +223,10 @@ export type SiteInstancesHrefSchema = {
     limit?: number;
     [k: string]: unknown;
   };
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
   [k: string]: unknown;
 };
 /**
@@ -232,6 +247,17 @@ export type PerSitePricingBillingProfileType =
  * via the `definition` "id".
  */
 export type PerSitePricingBillingProfileIdentity = string;
+/**
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type AccountSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
 /**
  * JSON API type field
  *
@@ -547,7 +573,7 @@ export type Account = {
   type: AccountType;
   id: AccountIdentity;
   attributes: AccountAttributes;
-  relationships?: AccountRelationships;
+  relationships: AccountRelationships;
 };
 
 /**
