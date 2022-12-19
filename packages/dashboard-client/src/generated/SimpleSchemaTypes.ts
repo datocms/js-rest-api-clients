@@ -319,6 +319,31 @@ export type AccountPlanType = 'account_plan';
  */
 export type AccountPlanIdentity = string;
 /**
+ * ID of next_invoice_estimate
+ *
+ * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type NextInvoiceEstimateIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type NextInvoiceEstimateType = 'next_invoice_estimate';
+/**
+ * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * via the `simulate.targetSchema` link.
+ */
+export type AccountSubscriptionSimulateTargetSchema = (
+  | NextInvoiceEstimate
+  | AccountSubscription
+)[];
+/**
  * This interface was referenced by `SitePlan`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
@@ -547,6 +572,23 @@ export type PaymentMethodIdentity = string;
  * via the `definition` "type".
  */
 export type PaymentMethodType = 'payment_method';
+/**
+ * ID of otp_backup_codes
+ *
+ * This interface was referenced by `OtpBackupCodes`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `OtpBackupCodes`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OtpBackupCodesIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `OtpBackupCodes`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OtpBackupCodesType = 'otp_backup_codes';
 
 export type DatoApi = {
   session?: Session;
@@ -569,6 +611,8 @@ export type DatoApi = {
   oauth_application?: OauthApplication;
   payment_intent?: PaymentIntent;
   payment_method?: PaymentMethod;
+  next_invoice_estimate?: NextInvoiceEstimate;
+  otp_backup_codes?: OtpBackupCodes;
   [k: string]: unknown;
 };
 
@@ -1583,13 +1627,43 @@ export type AccountSubscriptionSimulateSchema = {
 };
 
 /**
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
- * via the `simulate.targetSchema` link.
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `simulate_accept.targetSchema` link.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "next_invoice_estimate".
  */
-export type AccountSubscriptionSimulateTargetSchema = {
-  attributes: {
-    amount_due: number;
-  };
+export type NextInvoiceEstimate = {
+  id: NextInvoiceEstimateIdentity;
+  type: NextInvoiceEstimateType;
+  amount: number;
+  next_billing_at: string;
+  discount_percentage?: number;
+  tax_label: null | string;
+};
+export type SiteTransferSimulateAcceptTargetSchema = NextInvoiceEstimate;
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type NextInvoiceEstimateData = {
+  type: NextInvoiceEstimateType;
+  id: NextInvoiceEstimateIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type NextInvoiceEstimateAttributes = {
+  amount: number;
+  next_billing_at: string;
+  discount_percentage?: number;
+  tax_label: null | string;
 };
 
 /**
@@ -2775,24 +2849,6 @@ export type SiteTransferSimulateAcceptSchema = {
 
 /**
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `simulate_accept.targetSchema` link.
- */
-export type SiteTransferSimulateAcceptTargetSchema = {
-  id: string;
-  /**
-   * JSON API type field
-   */
-  type: 'next_invoice_estimate';
-  attributes: {
-    amount: number;
-    next_billing_at: string;
-    discount_percentage?: number;
-    tax_label: null | string;
-  };
-};
-
-/**
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `accept.schema` link.
  */
 export type SiteTransferAcceptSchema = {
@@ -3101,3 +3157,34 @@ export type PaymentMethodData = {
  * via the `definition` "attributes".
  */
 export type PaymentMethodAttributes = {};
+
+/**
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "otp_backup_codes".
+ */
+export type OtpBackupCodes = {
+  id: OtpBackupCodesIdentity;
+  type: OtpBackupCodesType;
+  codes?: string[];
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `OtpBackupCodes`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OtpBackupCodesData = {
+  type: OtpBackupCodesType;
+  id: OtpBackupCodesIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `OtpBackupCodes`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OtpBackupCodesAttributes = {
+  codes?: string[];
+};

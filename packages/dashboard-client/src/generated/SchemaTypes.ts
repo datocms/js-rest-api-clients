@@ -111,6 +111,23 @@ export type AccountPlanIdentity = string;
 /**
  * JSON API type field
  *
+ * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type NextInvoiceEstimateType = 'next_invoice_estimate';
+/**
+ * ID of next_invoice_estimate
+ *
+ * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type NextInvoiceEstimateIdentity = string;
+/**
+ * JSON API type field
+ *
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -258,6 +275,23 @@ export type AccountSelfHrefSchema = {
   include?: string;
   [k: string]: unknown;
 };
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `OtpBackupCodes`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OtpBackupCodesType = 'otp_backup_codes';
+/**
+ * ID of otp_backup_codes
+ *
+ * This interface was referenced by `OtpBackupCodes`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `OtpBackupCodes`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OtpBackupCodesIdentity = string;
 /**
  * JSON API type field
  *
@@ -444,6 +478,8 @@ export type DatoApi = {
   oauth_application?: OauthApplication;
   payment_intent?: PaymentIntent;
   payment_method?: PaymentMethod;
+  next_invoice_estimate?: NextInvoiceEstimate;
+  otp_backup_codes?: OtpBackupCodes;
   [k: string]: unknown;
 };
 
@@ -1107,11 +1143,41 @@ export type AccountSubscriptionSimulateSchema = {
  * via the `simulate.targetSchema` link.
  */
 export type AccountSubscriptionSimulateTargetSchema = {
-  data: {
-    attributes: {
-      amount_due: number;
-    };
-  };
+  data: (NextInvoiceEstimate | AccountSubscription)[];
+};
+
+/**
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "next_invoice_estimate".
+ */
+export type NextInvoiceEstimate = {
+  type: NextInvoiceEstimateType;
+  id: NextInvoiceEstimateIdentity;
+  attributes: NextInvoiceEstimateAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type NextInvoiceEstimateAttributes = {
+  amount: number;
+  next_billing_at: string;
+  discount_percentage?: number;
+  tax_label: null | string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type NextInvoiceEstimateData = {
+  type: NextInvoiceEstimateType;
+  id: NextInvoiceEstimateIdentity;
 };
 
 /**
@@ -1554,12 +1620,38 @@ export type AccountActivate_2FaSchema = {
  */
 export type AccountActivate_2FaTargetSchema = {
   data: Session;
-  included?: (
-    | Account
-    | {
-        [k: string]: unknown;
-      }
-  )[];
+  included?: (Account | OtpBackupCodes)[];
+};
+
+/**
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "otp_backup_codes".
+ */
+export type OtpBackupCodes = {
+  type: OtpBackupCodesType;
+  id: OtpBackupCodesIdentity;
+  attributes: OtpBackupCodesAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `OtpBackupCodes`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OtpBackupCodesAttributes = {
+  codes?: string[];
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `OtpBackupCodes`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OtpBackupCodesData = {
+  type: OtpBackupCodesType;
+  id: OtpBackupCodesIdentity;
 };
 
 /**
@@ -2748,19 +2840,7 @@ export type SiteTransferSimulateAcceptSchema = {
  * via the `simulate_accept.targetSchema` link.
  */
 export type SiteTransferSimulateAcceptTargetSchema = {
-  data: {
-    id: string;
-    /**
-     * JSON API type field
-     */
-    type: 'next_invoice_estimate';
-    attributes: {
-      amount: number;
-      next_billing_at: string;
-      discount_percentage?: number;
-      tax_label: null | string;
-    };
-  };
+  data: NextInvoiceEstimate;
 };
 
 /**

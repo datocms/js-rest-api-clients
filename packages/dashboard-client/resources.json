@@ -1043,13 +1043,13 @@
       {
         "returnsCollection": false,
         "rel": "destroy",
-        "urlTemplate": "/oauth_application/${siteId}",
+        "urlTemplate": "/oauth_application/${oauthApplicationId}",
         "method": "DELETE",
         "comment": "Delete an authorized application",
         "urlPlaceholder": {
-          "variableName": "siteId",
-          "isEntityId": false,
-          "relType": "SiteData"
+          "variableName": "oauthApplicationId",
+          "isEntityId": true,
+          "relType": "OauthApplicationData"
         },
         "queryParamsRequired": false,
         "name": "destroy",

@@ -41,8 +41,8 @@ export default class OauthApplication extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(siteId: string | SimpleSchemaTypes.SiteData) {
-    return this.rawDestroy(Utils.toId(siteId));
+  destroy(oauthApplicationId: string | SimpleSchemaTypes.OauthApplicationData) {
+    return this.rawDestroy(Utils.toId(oauthApplicationId));
   }
 
   /**
@@ -51,10 +51,10 @@ export default class OauthApplication extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawDestroy(siteId: string): Promise<void> {
+  rawDestroy(oauthApplicationId: string): Promise<void> {
     return this.client.request<void>({
       method: 'DELETE',
-      url: `/oauth_application/${siteId}`,
+      url: `/oauth_application/${oauthApplicationId}`,
     });
   }
 }
