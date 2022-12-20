@@ -33,7 +33,7 @@ export default class WhiteLabelSettings extends BaseResource {
   rawFind(): Promise<SchemaTypes.WhiteLabelSettingsSelfTargetSchema> {
     return this.client.request<SchemaTypes.WhiteLabelSettingsSelfTargetSchema>({
       method: 'GET',
-      url: `/white-label-settings`,
+      url: '/white-label-settings',
     });
   }
 
@@ -76,7 +76,7 @@ export default class WhiteLabelSettings extends BaseResource {
     return this.client.request<SchemaTypes.WhiteLabelSettingsUpdateTargetSchema>(
       {
         method: 'PUT',
-        url: `/white-label-settings`,
+        url: '/white-label-settings',
         body,
       },
     );

@@ -79,7 +79,7 @@ export default class User extends BaseResource {
   rawList(): Promise<SchemaTypes.UserInstancesTargetSchema> {
     return this.client.request<SchemaTypes.UserInstancesTargetSchema>({
       method: 'GET',
-      url: `/users`,
+      url: '/users',
     });
   }
 
@@ -148,7 +148,7 @@ export default class User extends BaseResource {
   ): Promise<SchemaTypes.UserMeTargetSchema> {
     return this.client.request<SchemaTypes.UserMeTargetSchema>({
       method: 'GET',
-      url: `/users/me`,
+      url: '/users/me',
       queryParams,
     });
   }

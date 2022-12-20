@@ -31,7 +31,7 @@ export default class PerSitePricingBillingProfile extends BaseResource {
     return this.client.request<SchemaTypes.PerSitePricingBillingProfileInstancesTargetSchema>(
       {
         method: 'GET',
-        url: `/per-site-pricing-billing-profiles`,
+        url: '/per-site-pricing-billing-profiles',
       },
     );
   }

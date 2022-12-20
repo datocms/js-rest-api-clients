@@ -7,7 +7,6 @@ import extractInfoFromSchema, {
   ResourceInfo,
   SchemaInfo,
 } from './extractInfoFromSchema';
-import prettier from 'prettier';
 import toSafeName from './toSafeName';
 
 const handlebarOptions: Handlebars.RuntimeOptions = {
@@ -30,16 +29,12 @@ async function writeTemplate<T>(
   destination: string,
 ) {
   console.log(`Writing ${destination}`);
-  const options = await prettier.resolveConfig(destination);
 
   const compileTemplate = readTemplate<T>(template);
 
-  const result = prettier.format(compileTemplate(data, handlebarOptions), {
-    ...options,
-    filepath: destination,
+  writeFileSync(destination, compileTemplate(data, handlebarOptions), {
+    encoding: 'utf-8',
   });
-
-  writeFileSync(destination, result, { encoding: 'utf-8' });
 }
 
 async function generate(prefix: string, hyperschemaUrl: string) {

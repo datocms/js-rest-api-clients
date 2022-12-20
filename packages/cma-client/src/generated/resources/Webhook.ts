@@ -52,7 +52,7 @@ export default class Webhook extends BaseResource {
   ): Promise<SchemaTypes.WebhookCreateTargetSchema> {
     return this.client.request<SchemaTypes.WebhookCreateTargetSchema>({
       method: 'POST',
-      url: `/webhooks`,
+      url: '/webhooks',
       body,
     });
   }
@@ -140,7 +140,7 @@ export default class Webhook extends BaseResource {
   rawList(): Promise<SchemaTypes.WebhookInstancesTargetSchema> {
     return this.client.request<SchemaTypes.WebhookInstancesTargetSchema>({
       method: 'GET',
-      url: `/webhooks`,
+      url: '/webhooks',
     });
   }
 

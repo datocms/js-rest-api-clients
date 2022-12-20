@@ -156,7 +156,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
 
   if (isBrowser) {
     // user agent cannot be set on browser
-    headers['user-agent'] = undefined;
+    delete headers['user-agent'];
   }
 
   const baseUrl = options.baseUrl.replace(/\/$/, '');

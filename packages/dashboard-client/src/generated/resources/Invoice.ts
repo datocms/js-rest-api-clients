@@ -30,7 +30,7 @@ export default class Invoice extends BaseResource {
     return this.client.request<SchemaTypes.InvoicePerAccountPricingBillingProfileInstancesTargetSchema>(
       {
         method: 'GET',
-        url: `/per-account-pricing-billing-profile/invoices`,
+        url: '/per-account-pricing-billing-profile/invoices',
       },
     );
   }
@@ -109,7 +109,7 @@ export default class Invoice extends BaseResource {
     return this.client.request<SchemaTypes.InvoicePerAccountPricingBillingProfileCollectUnpaidTargetSchema>(
       {
         method: 'GET',
-        url: `/per-account-pricing-billing-profile/invoices/collect-unpaid`,
+        url: '/per-account-pricing-billing-profile/invoices/collect-unpaid',
         body,
       },
     );

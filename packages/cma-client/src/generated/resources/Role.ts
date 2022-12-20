@@ -67,7 +67,7 @@ export default class Role extends BaseResource {
   ): Promise<SchemaTypes.RoleCreateTargetSchema> {
     return this.client.request<SchemaTypes.RoleCreateTargetSchema>({
       method: 'POST',
-      url: `/roles`,
+      url: '/roles',
       body,
     });
   }
@@ -171,7 +171,7 @@ export default class Role extends BaseResource {
   rawList(): Promise<SchemaTypes.RoleInstancesTargetSchema> {
     return this.client.request<SchemaTypes.RoleInstancesTargetSchema>({
       method: 'GET',
-      url: `/roles`,
+      url: '/roles',
     });
   }
 

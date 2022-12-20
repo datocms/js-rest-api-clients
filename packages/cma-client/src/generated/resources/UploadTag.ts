@@ -35,7 +35,7 @@ export default class UploadTag extends BaseResource {
   ): Promise<SchemaTypes.UploadTagInstancesTargetSchema> {
     return this.client.request<SchemaTypes.UploadTagInstancesTargetSchema>({
       method: 'GET',
-      url: `/upload-tags`,
+      url: '/upload-tags',
       queryParams,
     });
   }
@@ -122,7 +122,7 @@ export default class UploadTag extends BaseResource {
   ): Promise<SchemaTypes.UploadTagCreateTargetSchema> {
     return this.client.request<SchemaTypes.UploadTagCreateTargetSchema>({
       method: 'POST',
-      url: `/upload-tags`,
+      url: '/upload-tags',
       body,
     });
   }

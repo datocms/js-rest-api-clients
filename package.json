@@ -3,10 +3,10 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "lint": "rome ci",
+    "lint": "rome ci packages",
     "format": "rome format --write packages && rome check packages --apply-suggested",
     "test": "npm run lint && jest --maxConcurrency=5",
-    "generate": "./generate/index.ts",
+    "generate": "./generate/index.ts && npm run format",
     "build": "lerna run build",
     "prepublishOnly": "npm run generate && ./generate/setClientVersion.ts && npm run build && npm run test",
     "publish": "lerna publish",

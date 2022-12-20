@@ -29,7 +29,7 @@ export default class ResourceUsage extends BaseResource {
   rawList(): Promise<SchemaTypes.ResourceUsageInstancesTargetSchema> {
     return this.client.request<SchemaTypes.ResourceUsageInstancesTargetSchema>({
       method: 'GET',
-      url: `/resource-usages`,
+      url: '/resource-usages',
     });
   }
 }

@@ -41,7 +41,7 @@ export default class AuditLogEvent extends BaseResource {
   ): Promise<SchemaTypes.AuditLogEventQueryTargetSchema> {
     return this.client.request<SchemaTypes.AuditLogEventQueryTargetSchema>({
       method: 'POST',
-      url: `/audit-log-events/query`,
+      url: '/audit-log-events/query',
       body,
     });
   }

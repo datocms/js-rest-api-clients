@@ -33,7 +33,7 @@ export default class DailyUsage extends BaseResource {
   rawList(): Promise<SchemaTypes.DailyUsageInstancesTargetSchema> {
     return this.client.request<SchemaTypes.DailyUsageInstancesTargetSchema>({
       method: 'GET',
-      url: `/daily-site-usages`,
+      url: '/daily-site-usages',
     });
   }
 }

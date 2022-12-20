@@ -65,7 +65,7 @@ export default class Site extends BaseResource {
   ): Promise<SchemaTypes.SiteInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SiteInstancesTargetSchema>({
       method: 'GET',
-      url: `/sites`,
+      url: '/sites',
       queryParams,
     });
   }
@@ -144,7 +144,7 @@ export default class Site extends BaseResource {
   ): Promise<SchemaTypes.SiteCreateJobSchema> {
     return this.client.request<SchemaTypes.SiteCreateJobSchema>({
       method: 'POST',
-      url: `/sites`,
+      url: '/sites',
       body,
     });
   }

@@ -34,7 +34,7 @@ export default class SubscriptionLimit extends BaseResource {
     return this.client.request<SchemaTypes.SubscriptionLimitInstancesTargetSchema>(
       {
         method: 'GET',
-        url: `/subscription-limits`,
+        url: '/subscription-limits',
       },
     );
   }

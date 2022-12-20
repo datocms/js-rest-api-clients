@@ -67,7 +67,7 @@ export default class ItemType extends BaseResource {
   ): Promise<SchemaTypes.ItemTypeCreateTargetSchema> {
     return this.client.request<SchemaTypes.ItemTypeCreateTargetSchema>({
       method: 'POST',
-      url: `/item-types`,
+      url: '/item-types',
       body,
       queryParams,
     });
@@ -168,7 +168,7 @@ export default class ItemType extends BaseResource {
   rawList(): Promise<SchemaTypes.ItemTypeInstancesTargetSchema> {
     return this.client.request<SchemaTypes.ItemTypeInstancesTargetSchema>({
       method: 'GET',
-      url: `/item-types`,
+      url: '/item-types',
     });
   }
 

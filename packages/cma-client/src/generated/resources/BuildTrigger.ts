@@ -33,7 +33,7 @@ export default class BuildTrigger extends BaseResource {
   rawList(): Promise<SchemaTypes.BuildTriggerInstancesTargetSchema> {
     return this.client.request<SchemaTypes.BuildTriggerInstancesTargetSchema>({
       method: 'GET',
-      url: `/build-triggers`,
+      url: '/build-triggers',
     });
   }
 
@@ -113,7 +113,7 @@ export default class BuildTrigger extends BaseResource {
   ): Promise<SchemaTypes.BuildTriggerCreateTargetSchema> {
     return this.client.request<SchemaTypes.BuildTriggerCreateTargetSchema>({
       method: 'POST',
-      url: `/build-triggers`,
+      url: '/build-triggers',
       body,
     });
   }

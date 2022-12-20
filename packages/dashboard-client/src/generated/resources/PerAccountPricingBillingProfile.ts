@@ -31,7 +31,7 @@ export default class PerAccountPricingBillingProfile extends BaseResource {
     return this.client.request<SchemaTypes.PerAccountPricingBillingProfileSelfTargetSchema>(
       {
         method: 'GET',
-        url: `/per-account-pricing-billing-profile`,
+        url: '/per-account-pricing-billing-profile',
       },
     );
   }
@@ -73,7 +73,7 @@ export default class PerAccountPricingBillingProfile extends BaseResource {
     return this.client.request<SchemaTypes.PerAccountPricingBillingProfileUpdateCreditCardTargetSchema>(
       {
         method: 'PUT',
-        url: `/per-account-pricing-billing-profile/credit-card`,
+        url: '/per-account-pricing-billing-profile/credit-card',
         body,
       },
     );
@@ -129,7 +129,7 @@ export default class PerAccountPricingBillingProfile extends BaseResource {
     return this.client.request<SchemaTypes.PerAccountPricingBillingProfileUpdateInfoTargetSchema>(
       {
         method: 'PUT',
-        url: `/per-account-pricing-billing-profile/info`,
+        url: '/per-account-pricing-billing-profile/info',
         body,
       },
     );

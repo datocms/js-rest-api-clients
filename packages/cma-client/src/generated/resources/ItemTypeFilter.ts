@@ -41,7 +41,7 @@ export default class ItemTypeFilter extends BaseResource {
   ): Promise<SchemaTypes.ItemTypeFilterCreateTargetSchema> {
     return this.client.request<SchemaTypes.ItemTypeFilterCreateTargetSchema>({
       method: 'POST',
-      url: `/item-type-filters`,
+      url: '/item-type-filters',
       body,
     });
   }
@@ -120,7 +120,7 @@ export default class ItemTypeFilter extends BaseResource {
     return this.client.request<SchemaTypes.ItemTypeFilterInstancesTargetSchema>(
       {
         method: 'GET',
-        url: `/item-type-filters`,
+        url: '/item-type-filters',
       },
     );
   }

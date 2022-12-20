@@ -51,7 +51,7 @@ export default class Plugin extends BaseResource {
   ): Promise<SchemaTypes.PluginCreateTargetSchema> {
     return this.client.request<SchemaTypes.PluginCreateTargetSchema>({
       method: 'POST',
-      url: `/plugins`,
+      url: '/plugins',
       body,
     });
   }
@@ -136,7 +136,7 @@ export default class Plugin extends BaseResource {
   rawList(): Promise<SchemaTypes.PluginInstancesTargetSchema> {
     return this.client.request<SchemaTypes.PluginInstancesTargetSchema>({
       method: 'GET',
-      url: `/plugins`,
+      url: '/plugins',
     });
   }
 

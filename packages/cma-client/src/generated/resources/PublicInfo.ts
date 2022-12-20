@@ -33,7 +33,7 @@ export default class PublicInfo extends BaseResource {
   rawFind(): Promise<SchemaTypes.PublicInfoSelfTargetSchema> {
     return this.client.request<SchemaTypes.PublicInfoSelfTargetSchema>({
       method: 'GET',
-      url: `/public-info`,
+      url: '/public-info',
     });
   }
 }

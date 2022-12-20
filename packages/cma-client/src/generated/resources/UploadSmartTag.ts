@@ -36,7 +36,7 @@ export default class UploadSmartTag extends BaseResource {
     return this.client.request<SchemaTypes.UploadSmartTagInstancesTargetSchema>(
       {
         method: 'GET',
-        url: `/upload-smart-tags`,
+        url: '/upload-smart-tags',
         queryParams,
       },
     );

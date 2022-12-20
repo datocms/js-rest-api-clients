@@ -34,7 +34,7 @@ export default class SubscriptionFeature extends BaseResource {
     return this.client.request<SchemaTypes.SubscriptionFeatureInstancesTargetSchema>(
       {
         method: 'GET',
-        url: `/subscription-features`,
+        url: '/subscription-features',
       },
     );
   }

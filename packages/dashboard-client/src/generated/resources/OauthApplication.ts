@@ -30,7 +30,7 @@ export default class OauthApplication extends BaseResource {
     return this.client.request<SchemaTypes.OauthApplicationInstancesTargetSchema>(
       {
         method: 'GET',
-        url: `/oauth_applications`,
+        url: '/oauth_applications',
       },
     );
   }

@@ -33,7 +33,7 @@ export default class BuildEvent extends BaseResource {
   rawList(): Promise<SchemaTypes.BuildEventInstancesTargetSchema> {
     return this.client.request<SchemaTypes.BuildEventInstancesTargetSchema>({
       method: 'GET',
-      url: `/build-events`,
+      url: '/build-events',
     });
   }
 

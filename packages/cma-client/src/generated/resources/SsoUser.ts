@@ -33,7 +33,7 @@ export default class SsoUser extends BaseResource {
   rawList(): Promise<SchemaTypes.SsoUserInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SsoUserInstancesTargetSchema>({
       method: 'GET',
-      url: `/sso-users`,
+      url: '/sso-users',
     });
   }
 
@@ -95,7 +95,7 @@ export default class SsoUser extends BaseResource {
   rawCopyUsers(): Promise<SchemaTypes.SsoUserCopyUsersTargetSchema> {
     return this.client.request<SchemaTypes.SsoUserCopyUsersTargetSchema>({
       method: 'POST',
-      url: `/sso-users/copy-users`,
+      url: '/sso-users/copy-users',
     });
   }
 

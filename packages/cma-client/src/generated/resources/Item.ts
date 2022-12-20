@@ -35,7 +35,7 @@ export default class Item extends BaseResource {
   ): Promise<SchemaTypes.ItemInstancesTargetSchema> {
     return this.client.request<SchemaTypes.ItemInstancesTargetSchema>({
       method: 'GET',
-      url: `/items`,
+      url: '/items',
       queryParams,
     });
   }
@@ -166,7 +166,7 @@ export default class Item extends BaseResource {
   rawValidateNew(body: SchemaTypes.ItemValidateNewSchema): Promise<void> {
     return this.client.request<void>({
       method: 'POST',
-      url: `/items/validate`,
+      url: '/items/validate',
       body,
     });
   }
@@ -206,7 +206,7 @@ export default class Item extends BaseResource {
   ): Promise<SchemaTypes.ItemCreateTargetSchema> {
     return this.client.request<SchemaTypes.ItemCreateTargetSchema>({
       method: 'POST',
-      url: `/items`,
+      url: '/items',
       body,
     });
   }
@@ -428,7 +428,7 @@ export default class Item extends BaseResource {
   ): Promise<SchemaTypes.ItemBatchDestroyJobSchema> {
     return this.client.request<SchemaTypes.ItemBatchDestroyJobSchema>({
       method: 'DELETE',
-      url: `/items`,
+      url: '/items',
       queryParams,
     });
   }
@@ -466,7 +466,7 @@ export default class Item extends BaseResource {
   ): Promise<SchemaTypes.ItemBatchPublishJobSchema> {
     return this.client.request<SchemaTypes.ItemBatchPublishJobSchema>({
       method: 'PUT',
-      url: `/items/publish`,
+      url: '/items/publish',
       queryParams,
     });
   }
@@ -504,7 +504,7 @@ export default class Item extends BaseResource {
   ): Promise<SchemaTypes.ItemBatchUnpublishJobSchema> {
     return this.client.request<SchemaTypes.ItemBatchUnpublishJobSchema>({
       method: 'PUT',
-      url: `/items/unpublish`,
+      url: '/items/unpublish',
       queryParams,
     });
   }
@@ -620,7 +620,7 @@ export default class Item extends BaseResource {
   ): Promise<SchemaTypes.ItemBulkPublishJobSchema> {
     return this.client.request<SchemaTypes.ItemBulkPublishJobSchema>({
       method: 'POST',
-      url: `/items/bulk/publish`,
+      url: '/items/bulk/publish',
       body,
     });
   }
@@ -660,7 +660,7 @@ export default class Item extends BaseResource {
   ): Promise<SchemaTypes.ItemBulkUnpublishJobSchema> {
     return this.client.request<SchemaTypes.ItemBulkUnpublishJobSchema>({
       method: 'POST',
-      url: `/items/bulk/unpublish`,
+      url: '/items/bulk/unpublish',
       body,
     });
   }
@@ -700,7 +700,7 @@ export default class Item extends BaseResource {
   ): Promise<SchemaTypes.ItemBulkDestroyJobSchema> {
     return this.client.request<SchemaTypes.ItemBulkDestroyJobSchema>({
       method: 'POST',
-      url: `/items/bulk/destroy`,
+      url: '/items/bulk/destroy',
       body,
     });
   }
@@ -740,7 +740,7 @@ export default class Item extends BaseResource {
   ): Promise<SchemaTypes.ItemBulkMoveToStageJobSchema> {
     return this.client.request<SchemaTypes.ItemBulkMoveToStageJobSchema>({
       method: 'POST',
-      url: `/items/bulk/move-to-stage`,
+      url: '/items/bulk/move-to-stage',
       body,
     });
   }

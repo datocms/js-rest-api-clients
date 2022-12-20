@@ -45,7 +45,7 @@ export default class Session extends BaseResource {
   ): Promise<SchemaTypes.SessionCreateTargetSchema> {
     return this.client.request<SchemaTypes.SessionCreateTargetSchema>({
       method: 'POST',
-      url: `/sessions`,
+      url: '/sessions',
       body,
     });
   }

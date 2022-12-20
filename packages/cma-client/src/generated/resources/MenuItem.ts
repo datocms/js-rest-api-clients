@@ -41,7 +41,7 @@ export default class MenuItem extends BaseResource {
   ): Promise<SchemaTypes.MenuItemCreateTargetSchema> {
     return this.client.request<SchemaTypes.MenuItemCreateTargetSchema>({
       method: 'POST',
-      url: `/menu-items`,
+      url: '/menu-items',
       body,
     });
   }
@@ -121,7 +121,7 @@ export default class MenuItem extends BaseResource {
   ): Promise<SchemaTypes.MenuItemInstancesTargetSchema> {
     return this.client.request<SchemaTypes.MenuItemInstancesTargetSchema>({
       method: 'GET',
-      url: `/menu-items`,
+      url: '/menu-items',
       queryParams,
     });
   }

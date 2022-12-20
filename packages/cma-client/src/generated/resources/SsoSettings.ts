@@ -33,7 +33,7 @@ export default class SsoSettings extends BaseResource {
   rawFind(): Promise<SchemaTypes.SsoSettingsSelfTargetSchema> {
     return this.client.request<SchemaTypes.SsoSettingsSelfTargetSchema>({
       method: 'GET',
-      url: `/sso-settings`,
+      url: '/sso-settings',
     });
   }
 
@@ -65,7 +65,7 @@ export default class SsoSettings extends BaseResource {
     return this.client.request<SchemaTypes.SsoSettingsGenerateTokenTargetSchema>(
       {
         method: 'PUT',
-        url: `/sso-settings/generate-token`,
+        url: '/sso-settings/generate-token',
       },
     );
   }
@@ -105,7 +105,7 @@ export default class SsoSettings extends BaseResource {
   ): Promise<SchemaTypes.SsoSettingsUpdateTargetSchema> {
     return this.client.request<SchemaTypes.SsoSettingsUpdateTargetSchema>({
       method: 'PUT',
-      url: `/sso-settings`,
+      url: '/sso-settings',
       body,
     });
   }

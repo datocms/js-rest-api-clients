@@ -149,7 +149,7 @@ export default class PaymentIntent extends BaseResource {
     return this.client.request<SchemaTypes.PaymentIntentCreateForPerAccountPricingBillingProfileTargetSchema>(
       {
         method: 'POST',
-        url: `/per-account-pricing-billing-profile/payment-intents`,
+        url: '/per-account-pricing-billing-profile/payment-intents',
         body,
       },
     );

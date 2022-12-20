@@ -38,7 +38,7 @@ export default class EditingSession extends BaseResource {
     return this.client.request<SchemaTypes.EditingSessionInstancesTargetSchema>(
       {
         method: 'GET',
-        url: `/editing-sessions`,
+        url: '/editing-sessions',
       },
     );
   }

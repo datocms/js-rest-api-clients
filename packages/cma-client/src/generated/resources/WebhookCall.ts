@@ -35,7 +35,7 @@ export default class WebhookCall extends BaseResource {
   ): Promise<SchemaTypes.WebhookCallInstancesTargetSchema> {
     return this.client.request<SchemaTypes.WebhookCallInstancesTargetSchema>({
       method: 'GET',
-      url: `/webhook_calls`,
+      url: '/webhook_calls',
       queryParams,
     });
   }

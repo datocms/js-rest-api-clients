@@ -46,7 +46,7 @@ export default class AccessToken extends BaseResource {
   ): Promise<SchemaTypes.AccessTokenCreateTargetSchema> {
     return this.client.request<SchemaTypes.AccessTokenCreateTargetSchema>({
       method: 'POST',
-      url: `/access_tokens`,
+      url: '/access_tokens',
       body,
     });
   }
@@ -129,7 +129,7 @@ export default class AccessToken extends BaseResource {
   rawList(): Promise<SchemaTypes.AccessTokenInstancesTargetSchema> {
     return this.client.request<SchemaTypes.AccessTokenInstancesTargetSchema>({
       method: 'GET',
-      url: `/access_tokens`,
+      url: '/access_tokens',
     });
   }
 

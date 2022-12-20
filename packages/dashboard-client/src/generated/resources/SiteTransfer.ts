@@ -29,7 +29,7 @@ export default class SiteTransfer extends BaseResource {
   rawList(): Promise<SchemaTypes.SiteTransferInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SiteTransferInstancesTargetSchema>({
       method: 'GET',
-      url: `/site-transfers`,
+      url: '/site-transfers',
     });
   }
 

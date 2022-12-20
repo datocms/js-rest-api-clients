@@ -34,7 +34,7 @@ export async function* rawPageIterator<T>(
   const concurrency = iteratorOptions?.concurrency || 1;
 
   if (concurrency > 10) {
-    throw new Error("concurrency option cannot exceed maximum value of 10");
+    throw new Error('concurrency option cannot exceed maximum value of 10');
   }
 
   const firstResponse = await callPerformer({ limit: perPage, offset: 0 });

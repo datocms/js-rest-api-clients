@@ -41,7 +41,7 @@ export default class UploadFilter extends BaseResource {
   ): Promise<SchemaTypes.UploadFilterCreateTargetSchema> {
     return this.client.request<SchemaTypes.UploadFilterCreateTargetSchema>({
       method: 'POST',
-      url: `/upload-filters`,
+      url: '/upload-filters',
       body,
     });
   }
@@ -119,7 +119,7 @@ export default class UploadFilter extends BaseResource {
   rawList(): Promise<SchemaTypes.UploadFilterInstancesTargetSchema> {
     return this.client.request<SchemaTypes.UploadFilterInstancesTargetSchema>({
       method: 'GET',
-      url: `/upload-filters`,
+      url: '/upload-filters',
     });
   }
 

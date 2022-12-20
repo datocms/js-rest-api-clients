@@ -29,7 +29,7 @@ export default class SitePlan extends BaseResource {
   rawList(): Promise<SchemaTypes.SitePlanInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SitePlanInstancesTargetSchema>({
       method: 'GET',
-      url: `/site-plans`,
+      url: '/site-plans',
     });
   }
 }

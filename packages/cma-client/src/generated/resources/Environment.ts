@@ -112,7 +112,7 @@ export default class Environment extends BaseResource {
   rawList(): Promise<SchemaTypes.EnvironmentInstancesTargetSchema> {
     return this.client.request<SchemaTypes.EnvironmentInstancesTargetSchema>({
       method: 'GET',
-      url: `/environments`,
+      url: '/environments',
     });
   }
 

@@ -33,7 +33,7 @@ export default class SsoGroup extends BaseResource {
   rawList(): Promise<SchemaTypes.SsoGroupInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SsoGroupInstancesTargetSchema>({
       method: 'GET',
-      url: `/sso-groups`,
+      url: '/sso-groups',
     });
   }
 

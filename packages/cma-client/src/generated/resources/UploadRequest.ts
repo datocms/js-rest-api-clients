@@ -41,7 +41,7 @@ export default class UploadRequest extends BaseResource {
   ): Promise<SchemaTypes.UploadRequestCreateTargetSchema> {
     return this.client.request<SchemaTypes.UploadRequestCreateTargetSchema>({
       method: 'POST',
-      url: `/upload-requests`,
+      url: '/upload-requests',
       body,
     });
   }

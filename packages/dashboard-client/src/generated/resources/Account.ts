@@ -44,7 +44,7 @@ export default class Account extends BaseResource {
   ): Promise<SchemaTypes.AccountCreateTargetSchema> {
     return this.client.request<SchemaTypes.AccountCreateTargetSchema>({
       method: 'POST',
-      url: `/account`,
+      url: '/account',
       body,
     });
   }
@@ -88,7 +88,7 @@ export default class Account extends BaseResource {
   ): Promise<SchemaTypes.AccountUpdateTargetSchema> {
     return this.client.request<SchemaTypes.AccountUpdateTargetSchema>({
       method: 'PUT',
-      url: `/account`,
+      url: '/account',
       body,
     });
   }
@@ -124,7 +124,7 @@ export default class Account extends BaseResource {
   ): Promise<SchemaTypes.AccountDestroyJobSchema> {
     return this.client.request<SchemaTypes.AccountDestroyJobSchema>({
       method: 'POST',
-      url: `/account/destroy`,
+      url: '/account/destroy',
       body,
     });
   }
@@ -154,7 +154,7 @@ export default class Account extends BaseResource {
   ): Promise<SchemaTypes.AccountSelfTargetSchema> {
     return this.client.request<SchemaTypes.AccountSelfTargetSchema>({
       method: 'GET',
-      url: `/account`,
+      url: '/account',
       queryParams,
     });
   }
@@ -186,7 +186,7 @@ export default class Account extends BaseResource {
   ): Promise<void> {
     return this.client.request<void>({
       method: 'POST',
-      url: `/account/reset_password`,
+      url: '/account/reset_password',
       body,
     });
   }
@@ -222,7 +222,7 @@ export default class Account extends BaseResource {
   ): Promise<SchemaTypes.AccountActivate_2FaTargetSchema> {
     return this.client.request<SchemaTypes.AccountActivate_2FaTargetSchema>({
       method: 'PUT',
-      url: `/account/activate-2fa`,
+      url: '/account/activate-2fa',
       body,
     });
   }
@@ -250,7 +250,7 @@ export default class Account extends BaseResource {
   rawReset_2Fa(): Promise<SchemaTypes.AccountReset_2FaTargetSchema> {
     return this.client.request<SchemaTypes.AccountReset_2FaTargetSchema>({
       method: 'PUT',
-      url: `/account/reset-2fa`,
+      url: '/account/reset-2fa',
     });
   }
 
@@ -288,7 +288,7 @@ export default class Account extends BaseResource {
   ): Promise<SchemaTypes.AccountDeactivate_2FaTargetSchema> {
     return this.client.request<SchemaTypes.AccountDeactivate_2FaTargetSchema>({
       method: 'PUT',
-      url: `/account/deactivate-2fa`,
+      url: '/account/deactivate-2fa',
       body,
     });
   }

@@ -35,7 +35,7 @@ export default class Site extends BaseResource {
   ): Promise<SchemaTypes.SiteSelfTargetSchema> {
     return this.client.request<SchemaTypes.SiteSelfTargetSchema>({
       method: 'GET',
-      url: `/site`,
+      url: '/site',
       queryParams,
     });
   }
@@ -85,7 +85,7 @@ export default class Site extends BaseResource {
   ): Promise<SchemaTypes.SiteUpdateJobSchema> {
     return this.client.request<SchemaTypes.SiteUpdateJobSchema>({
       method: 'PUT',
-      url: `/site`,
+      url: '/site',
       body,
     });
   }
@@ -118,7 +118,7 @@ export default class Site extends BaseResource {
     return this.client.request<SchemaTypes.SiteActivateImprovedTimezoneManagementJobSchema>(
       {
         method: 'PUT',
-        url: `/site/activate-improved-timezone-management`,
+        url: '/site/activate-improved-timezone-management',
       },
     );
   }

@@ -48,7 +48,7 @@ export default class Upload extends BaseResource {
   ): Promise<SchemaTypes.UploadCreateJobSchema> {
     return this.client.request<SchemaTypes.UploadCreateJobSchema>({
       method: 'POST',
-      url: `/uploads`,
+      url: '/uploads',
       body,
     });
   }
@@ -82,7 +82,7 @@ export default class Upload extends BaseResource {
   ): Promise<SchemaTypes.UploadInstancesTargetSchema> {
     return this.client.request<SchemaTypes.UploadInstancesTargetSchema>({
       method: 'GET',
-      url: `/uploads`,
+      url: '/uploads',
       queryParams,
     });
   }
@@ -294,7 +294,7 @@ export default class Upload extends BaseResource {
   ): Promise<SchemaTypes.UploadBatchAddTagsJobSchema> {
     return this.client.request<SchemaTypes.UploadBatchAddTagsJobSchema>({
       method: 'PUT',
-      url: `/uploads/batch-add-tags`,
+      url: '/uploads/batch-add-tags',
       body,
       queryParams,
     });
@@ -333,7 +333,7 @@ export default class Upload extends BaseResource {
   ): Promise<SchemaTypes.UploadBatchDestroyJobSchema> {
     return this.client.request<SchemaTypes.UploadBatchDestroyJobSchema>({
       method: 'DELETE',
-      url: `/uploads/batch-destroy`,
+      url: '/uploads/batch-destroy',
       queryParams,
     });
   }
@@ -411,7 +411,7 @@ export default class Upload extends BaseResource {
   ): Promise<SchemaTypes.UploadBulkTagJobSchema> {
     return this.client.request<SchemaTypes.UploadBulkTagJobSchema>({
       method: 'POST',
-      url: `/uploads/bulk/tag`,
+      url: '/uploads/bulk/tag',
       body,
     });
   }
@@ -451,7 +451,7 @@ export default class Upload extends BaseResource {
   ): Promise<SchemaTypes.UploadBulkDestroyJobSchema> {
     return this.client.request<SchemaTypes.UploadBulkDestroyJobSchema>({
       method: 'POST',
-      url: `/uploads/bulk/destroy`,
+      url: '/uploads/bulk/destroy',
       body,
     });
   }

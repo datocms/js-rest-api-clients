@@ -29,7 +29,7 @@ export default class AccountPlan extends BaseResource {
   rawList(): Promise<SchemaTypes.AccountPlanInstancesTargetSchema> {
     return this.client.request<SchemaTypes.AccountPlanInstancesTargetSchema>({
       method: 'GET',
-      url: `/account-plans`,
+      url: '/account-plans',
     });
   }
 }

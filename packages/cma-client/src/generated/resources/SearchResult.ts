@@ -35,7 +35,7 @@ export default class SearchResult extends BaseResource {
   ): Promise<SchemaTypes.SearchResultInstancesTargetSchema> {
     return this.client.request<SchemaTypes.SearchResultInstancesTargetSchema>({
       method: 'GET',
-      url: `/search-results`,
+      url: '/search-results',
       queryParams,
     });
   }

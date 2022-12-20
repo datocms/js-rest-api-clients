@@ -35,10 +35,10 @@ describe('URLQueryParams', () => {
       ]
     `);
     expect(buildNormalizedParams({ foo: null })).toMatchInlineSnapshot(
-      "Array []",
+      'Array []',
     );
     expect(buildNormalizedParams({ foo: undefined })).toMatchInlineSnapshot(
-      "Array []",
+      'Array []',
     );
 
     expect(buildNormalizedParams({ foo: 'bàr' })).toMatchInlineSnapshot(`

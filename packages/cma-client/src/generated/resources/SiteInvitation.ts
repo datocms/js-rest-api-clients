@@ -41,7 +41,7 @@ export default class SiteInvitation extends BaseResource {
   ): Promise<SchemaTypes.SiteInvitationCreateTargetSchema> {
     return this.client.request<SchemaTypes.SiteInvitationCreateTargetSchema>({
       method: 'POST',
-      url: `/site-invitations`,
+      url: '/site-invitations',
       body,
     });
   }
@@ -120,7 +120,7 @@ export default class SiteInvitation extends BaseResource {
     return this.client.request<SchemaTypes.SiteInvitationInstancesTargetSchema>(
       {
         method: 'GET',
-        url: `/site-invitations`,
+        url: '/site-invitations',
       },
     );
   }

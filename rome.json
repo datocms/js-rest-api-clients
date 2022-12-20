@@ -1,6 +1,6 @@
 {
   "files": {
-    "ignore": ["generate", "dist", "node_modules"]
+    "ignore": ["dist", "node_modules"]
   },
   "linter": {
     "enabled": true,
@@ -8,6 +8,9 @@
       "recommended": true,
       "suspicious": {
         "noExplicitAny": "off"
+      },
+      "performance": {
+        "noDelete": "off"
       }
     }
   },

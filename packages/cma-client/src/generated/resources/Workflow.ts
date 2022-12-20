@@ -41,7 +41,7 @@ export default class Workflow extends BaseResource {
   ): Promise<SchemaTypes.WorkflowCreateTargetSchema> {
     return this.client.request<SchemaTypes.WorkflowCreateTargetSchema>({
       method: 'POST',
-      url: `/workflows`,
+      url: '/workflows',
       body,
     });
   }
@@ -119,7 +119,7 @@ export default class Workflow extends BaseResource {
   rawList(): Promise<SchemaTypes.WorkflowInstancesTargetSchema> {
     return this.client.request<SchemaTypes.WorkflowInstancesTargetSchema>({
       method: 'GET',
-      url: `/workflows`,
+      url: '/workflows',
     });
   }
 

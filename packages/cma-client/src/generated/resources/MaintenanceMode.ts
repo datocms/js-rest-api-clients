@@ -33,7 +33,7 @@ export default class MaintenanceMode extends BaseResource {
   rawFind(): Promise<SchemaTypes.MaintenanceModeSelfTargetSchema> {
     return this.client.request<SchemaTypes.MaintenanceModeSelfTargetSchema>({
       method: 'GET',
-      url: `/maintenance-mode`,
+      url: '/maintenance-mode',
     });
   }
 
@@ -67,7 +67,7 @@ export default class MaintenanceMode extends BaseResource {
     return this.client.request<SchemaTypes.MaintenanceModeActivateTargetSchema>(
       {
         method: 'PUT',
-        url: `/maintenance-mode/activate`,
+        url: '/maintenance-mode/activate',
         queryParams,
       },
     );
@@ -101,7 +101,7 @@ export default class MaintenanceMode extends BaseResource {
     return this.client.request<SchemaTypes.MaintenanceModeDeactivateTargetSchema>(
       {
         method: 'PUT',
-        url: `/maintenance-mode/deactivate`,
+        url: '/maintenance-mode/deactivate',
       },
     );
   }

@@ -41,7 +41,7 @@ export default class AccountSubscription extends BaseResource {
     return this.client.request<SchemaTypes.AccountSubscriptionCreateTargetSchema>(
       {
         method: 'POST',
-        url: `/account-subscriptions`,
+        url: '/account-subscriptions',
         body,
       },
     );
@@ -82,7 +82,7 @@ export default class AccountSubscription extends BaseResource {
     return this.client.request<SchemaTypes.AccountSubscriptionSimulateTargetSchema>(
       {
         method: 'POST',
-        url: `/account-subscriptions/simulate`,
+        url: '/account-subscriptions/simulate',
         body,
       },
     );
@@ -123,7 +123,7 @@ export default class AccountSubscription extends BaseResource {
     return this.client.request<SchemaTypes.AccountSubscriptionValidateTargetSchema>(
       {
         method: 'POST',
-        url: `/account-subscriptions/validate`,
+        url: '/account-subscriptions/validate',
         body,
       },
     );
