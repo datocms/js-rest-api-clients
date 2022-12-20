@@ -4,7 +4,7 @@
   "scripts": {
     "prepare": "husky install",
     "lint": "rome ci packages",
-    "format": "rome format --write packages && rome check packages --apply-suggested",
+    "format": "rome check packages --apply-suggested && rome format --write packages",
     "test": "npm run lint && jest --maxConcurrency=5",
     "generate": "./generate/index.ts && npm run format",
     "build": "lerna run build",
