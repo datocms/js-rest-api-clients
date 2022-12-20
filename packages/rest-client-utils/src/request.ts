@@ -156,7 +156,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
 
   if (isBrowser) {
     // user agent cannot be set on browser
-    delete headers['user-agent'];
+    headers['user-agent'] = undefined;
   }
 
   const baseUrl = options.baseUrl.replace(/\/$/, '');
@@ -220,8 +220,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       }
 
       const waitTimeInSecs = response.headers.has('X-RateLimit-Reset')
-        ? // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          parseInt(response.headers.get('X-RateLimit-Reset')!, 10)
+        ? parseInt(response.headers.get('X-RateLimit-Reset')!, 10)
         : retryCount;
 
       if (logLevel >= LogLevel.BASIC) {

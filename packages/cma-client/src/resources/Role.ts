@@ -82,7 +82,7 @@ function applyChanges<T extends Record<PropertyKey, unknown>>(
             ({
               environment: currentEnvironmentId,
               ...change,
-            } as unknown as T),
+            }) as unknown as T,
         )
       : []),
   ];
@@ -98,7 +98,6 @@ export default class RoleResource extends BaseRole {
   ): Promise<SimpleSchemaTypes.Role> {
     const currentEnvironmentId =
       this.client.config.environment ||
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       (await this.client.environments.list()).find(
         (environment) => environment.meta.primary,
       )!.id;

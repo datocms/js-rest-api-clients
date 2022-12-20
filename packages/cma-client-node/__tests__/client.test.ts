@@ -25,7 +25,6 @@ describe('@datocms/client', () => {
     });
 
     const cmaClient = buildClient({
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       apiToken: site.readwrite_token!,
     });
 

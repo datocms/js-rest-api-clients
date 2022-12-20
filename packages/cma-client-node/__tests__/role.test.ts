@@ -6,7 +6,6 @@ describe('role', () => {
 
     const currentEnvironmentId =
       client.config.environment ||
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       (await client.environments.list()).find(
         (environment) => environment.meta.primary,
       )!.id;

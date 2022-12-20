@@ -34,7 +34,7 @@ export function uploadFileOrBlobAndReturnPath(
   fileOrBlob: File | Blob,
   options: Options = {},
 ): CancelablePromise<string> {
-  if (!options.filename || !('name' in fileOrBlob)) {
+  if (!(options.filename && ('name' in fileOrBlob))) {
     throw new Error('Missing filename, please provide it as an option!');
   }
 

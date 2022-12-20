@@ -34,7 +34,7 @@ export async function* rawPageIterator<T>(
   const concurrency = iteratorOptions?.concurrency || 1;
 
   if (concurrency > 10) {
-    throw new Error(`concurrency option cannot exceed maximum value of 10`);
+    throw new Error("concurrency option cannot exceed maximum value of 10");
   }
 
   const firstResponse = await callPerformer({ limit: perPage, offset: 0 });
@@ -57,7 +57,6 @@ export async function* rawPageIterator<T>(
   }
 
   while (promises.length > 0) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const response = await promises.shift()!;
     for (const item of response.data) {
       yield item;

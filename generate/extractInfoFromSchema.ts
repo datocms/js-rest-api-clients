@@ -149,7 +149,6 @@ function findTypeInDataObject(dataSchema: JsonRefParser.JSONSchema) {
     throw new Error('Missing type?');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (dataSchema.properties.type as any).example as string;
 }
 
@@ -164,7 +163,6 @@ function findTypeInDataProperty(schema: JsonRefParser.JSONSchema) {
     if (typeof schema.items !== 'object') {
       throw new Error('No items?');
     }
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     dataSchema = schema.items!;
   }
 
@@ -333,7 +331,6 @@ function generateResourceInfo(
         (Array.isArray(endpointInfo.requestStructure.attributes) &&
           Array.isArray(endpointInfo.requestStructure.relationships) &&
           endpointInfo.requestStructure.attributes.some((x) =>
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             endpointInfo.requestStructure!.relationships.includes(x),
           )))
     ) {
@@ -359,7 +356,6 @@ function generateResourceInfo(
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function schemaToTs(schema: any) {
   const result = await hyperschemaToTypings(schema, 'SiteApiSchema', {});
   return result.replace(/export interface ([^ ]+) {/g, 'export type $1 = {');
@@ -382,7 +378,6 @@ export default async function extractInfoFromSchema(
   }
 
   return {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     baseUrl: (schema as any).links[0].href as string,
     resources: Object.entries(schema.properties)
       .map<ResourceInfo>(([resource, schema]) =>

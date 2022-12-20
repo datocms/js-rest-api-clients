@@ -38,7 +38,6 @@ export function serializeRequestBody<T>(body: unknown, options: Options): T {
     throw new Error('Invalid body!');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { id, type, meta, ...otherProperties } = body as any;
 
   const attributes: Record<string, unknown> = {};

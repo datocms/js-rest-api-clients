@@ -1,7 +1,5 @@
 import JsonRefParser from '@apidevtools/json-schema-ref-parser';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 function simplifySchema(objectSchema: any) {
   const { attributes, relationships, meta, id, type } =
     objectSchema.properties as any;

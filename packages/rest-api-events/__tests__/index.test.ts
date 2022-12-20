@@ -12,7 +12,6 @@ describe('@datocms/rest-api-events', () => {
 
     const [client, unsubscribe] = await withEventsSubscription(
       buildClient({
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         apiToken: site.readwrite_token!,
       }),
     );

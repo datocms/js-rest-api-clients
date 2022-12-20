@@ -64,7 +64,7 @@ export function subscribeToEvents(
           };
           if (listeners[jobId]) {
             listeners[jobId](jobResult);
-            delete listeners[jobId];
+            listeners[jobId] = undefined;
           } else {
             pastEmissions[jobId] = jobResult;
           }
@@ -77,14 +77,14 @@ export function subscribeToEvents(
           return new Promise<JobResult>((resolve) => {
             if (pastEmissions[jobId]) {
               resolve(pastEmissions[jobId]);
-              delete pastEmissions[jobId];
+              pastEmissions[jobId] = undefined;
             } else {
               listeners[jobId] = resolve;
             }
           });
         },
         unsubscribe: () => {
-          delete channelPromisesCache[cacheKey];
+          channelPromisesCache[cacheKey] = undefined;
           pusher.disconnect();
         },
       });

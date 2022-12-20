@@ -258,8 +258,7 @@ describe('item', () => {
 
     await client.items.update(item.id, {
       content: (itemWithNestedBlocks.content as SchemaTypes.Item[]).map(
-        (block) =>
-          buildBlockRecord({
+        (block) => buildBlockRecord({
             id: block.id,
             text: `Updated ${block.attributes.text}`,
             item_type: block.relationships.item_type.data,

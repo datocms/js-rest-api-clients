@@ -9,7 +9,6 @@ function isDastNode(node: unknown): node is Node {
     typeof node === 'object' &&
     node &&
     'type' in node &&
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     typeof (node as any).type === 'string'
   );
 }
@@ -79,10 +78,9 @@ describe('structured text', () => {
     const newContent = {
       ...nestedContent,
       document: map(nestedContent.document, (node) => {
-        if (!isDastNode(node) || !isBlock(node)) {
+        if (!(isDastNode(node) && isBlock(node))) {
           return node;
         }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const item = node.item as any as SchemaTypes.Item;
         return {
           ...node,
@@ -111,7 +109,6 @@ describe('structured text', () => {
     const secondBlock = updatedNestedContent.document.children[2] as Block;
 
     expect(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (secondBlock.item as any as SchemaTypes.Item).attributes.text,
     ).toEqual('Updated Foo');
   });
