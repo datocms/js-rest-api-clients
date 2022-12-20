@@ -7302,7 +7302,7 @@ export type UploadBatchAddTagsSchema = {
       /**
        * Tags
        */
-      tags?: string[];
+      tags: string[];
     };
   };
 };

@@ -110,7 +110,8 @@ export class TimeoutError extends Error {
     if ('captureStackTrace' in Error) {
       Error.captureStackTrace(this, ApiError);
     } else {
-      this.stack = new Error().stack;
+      // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+      this.stack = new (Error as any)().stack;
     }
 
     this.request = initObject.request;
@@ -142,7 +143,8 @@ export class ApiError extends Error {
     if ('captureStackTrace' in Error) {
       Error.captureStackTrace(this, ApiError);
     } else {
-      this.stack = new Error().stack;
+      // rome-ignore lint/suspicious/noExplicitAny: <explanation>
+      this.stack = new (Error as any)().stack;
     }
 
     this.request = initObject.request;

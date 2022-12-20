@@ -302,23 +302,6 @@ export type PerSitePricingBillingProfileType =
  */
 export type PerSitePricingBillingProfileIdentity = string;
 /**
- * JSON API type field
- *
- * This interface was referenced by `AccountPlan`'s JSON-Schema
- * via the `definition` "type".
- */
-export type AccountPlanType = 'account_plan';
-/**
- * ID of plan
- *
- * This interface was referenced by `AccountPlan`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `AccountPlan`'s JSON-Schema
- * via the `definition` "id".
- */
-export type AccountPlanIdentity = string;
-/**
  * ID of next_invoice_estimate
  *
  * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
@@ -335,6 +318,23 @@ export type NextInvoiceEstimateIdentity = string;
  * via the `definition` "type".
  */
 export type NextInvoiceEstimateType = 'next_invoice_estimate';
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type AccountPlanType = 'account_plan';
+/**
+ * ID of plan
+ *
+ * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type AccountPlanIdentity = string;
 /**
  * This interface was referenced by `AccountSubscription`'s JSON-Schema
  * via the `simulate.targetSchema` link.
@@ -1435,11 +1435,45 @@ export type SiteSubscriptionSimulateSchema = {
 /**
  * This interface was referenced by `SiteSubscription`'s JSON-Schema
  * via the `simulate.targetSchema` link.
+ *
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `simulate_accept.targetSchema` link.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "next_invoice_estimate".
  */
-export type SiteSubscriptionSimulateTargetSchema = {
-  attributes: {
-    amount_due: number;
-  };
+export type NextInvoiceEstimate = {
+  id: NextInvoiceEstimateIdentity;
+  type: NextInvoiceEstimateType;
+  amount: number;
+  next_billing_at: string;
+  discount_percentage?: number;
+  tax_label: null | string;
+};
+export type SiteSubscriptionSimulateTargetSchema = NextInvoiceEstimate;
+export type SiteTransferSimulateAcceptTargetSchema = NextInvoiceEstimate;
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type NextInvoiceEstimateData = {
+  type: NextInvoiceEstimateType;
+  id: NextInvoiceEstimateIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type NextInvoiceEstimateAttributes = {
+  amount: number;
+  next_billing_at: string;
+  discount_percentage?: number;
+  tax_label: null | string;
 };
 
 /**
@@ -1624,46 +1658,6 @@ export type AccountSubscriptionSimulateSchema = {
     [k: string]: unknown;
   };
   plan: AccountPlanData;
-};
-
-/**
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `simulate_accept.targetSchema` link.
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "next_invoice_estimate".
- */
-export type NextInvoiceEstimate = {
-  id: NextInvoiceEstimateIdentity;
-  type: NextInvoiceEstimateType;
-  amount: number;
-  next_billing_at: string;
-  discount_percentage?: number;
-  tax_label: null | string;
-};
-export type SiteTransferSimulateAcceptTargetSchema = NextInvoiceEstimate;
-/**
- * JSON API data
- *
- * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
- * via the `definition` "data".
- */
-export type NextInvoiceEstimateData = {
-  type: NextInvoiceEstimateType;
-  id: NextInvoiceEstimateIdentity;
-};
-
-/**
- * JSON API attributes
- *
- * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type NextInvoiceEstimateAttributes = {
-  amount: number;
-  next_billing_at: string;
-  discount_percentage?: number;
-  tax_label: null | string;
 };
 
 /**
@@ -3165,7 +3159,7 @@ export type PaymentMethodAttributes = {};
 export type OtpBackupCodes = {
   id: OtpBackupCodesIdentity;
   type: OtpBackupCodesType;
-  codes?: string[];
+  codes: string[];
 };
 
 /**
@@ -3186,5 +3180,5 @@ export type OtpBackupCodesData = {
  * via the `definition` "attributes".
  */
 export type OtpBackupCodesAttributes = {
-  codes?: string[];
+  codes: string[];
 };

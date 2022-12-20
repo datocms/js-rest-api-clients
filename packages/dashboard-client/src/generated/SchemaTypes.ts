@@ -1620,7 +1620,7 @@ export type AccountActivate_2FaSchema = {
  */
 export type AccountActivate_2FaTargetSchema = {
   data: Session;
-  included?: (Account | OtpBackupCodes)[];
+  included: (Account | OtpBackupCodes)[];
 };
 
 /**
@@ -1640,7 +1640,7 @@ export type OtpBackupCodes = {
  * via the `definition` "attributes".
  */
 export type OtpBackupCodesAttributes = {
-  codes?: string[];
+  codes: string[];
 };
 
 /**
@@ -1910,11 +1910,7 @@ export type SiteSubscriptionSimulateSchema = {
  * via the `simulate.targetSchema` link.
  */
 export type SiteSubscriptionSimulateTargetSchema = {
-  data: {
-    attributes: {
-      amount_due: number;
-    };
-  };
+  data: NextInvoiceEstimate;
 };
 
 /**
