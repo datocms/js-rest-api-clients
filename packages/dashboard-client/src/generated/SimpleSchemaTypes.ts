@@ -358,6 +358,17 @@ export type AccountPlanInstancesTargetSchema = AccountPlan[];
 export type PerSitePricingBillingProfileInstancesTargetSchema =
   PerSitePricingBillingProfile[];
 /**
+ * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type PerSitePricingBillingProfileSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
  * ID of billing_profile
  *
  * This interface was referenced by `Invoice`'s JSON-Schema
@@ -1297,11 +1308,11 @@ export type SiteSubscription = {
   /**
    * Date of creation of subscription
    */
-  created_at?: string;
+  created_at: string;
   /**
    * Type of recurrence (yearly/monthly)
    */
-  recurrence?: 'yearly' | 'monthly';
+  recurrence: 'yearly' | 'monthly';
   price?: number;
   /**
    * Extra packets

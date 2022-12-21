@@ -291,6 +291,17 @@ export type OtpBackupCodesType = 'otp_backup_codes';
  */
 export type OtpBackupCodesIdentity = string;
 /**
+ * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type PerSitePricingBillingProfileSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
  * JSON API type field
  *
  * This interface was referenced by `Invoice`'s JSON-Schema
@@ -1715,7 +1726,7 @@ export type AccountDeactivate_2FaTargetSchema = {
 export type SiteSubscription = {
   type: SiteSubscriptionType;
   id: SiteSubscriptionIdentity;
-  attributes?: SiteSubscriptionAttributes;
+  attributes: SiteSubscriptionAttributes;
   relationships: SiteSubscriptionRelationships;
 };
 

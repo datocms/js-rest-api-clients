@@ -548,6 +548,7 @@
           "isEntityId": true,
           "relType": "PerSitePricingBillingProfileData"
         },
+        "queryParamsType": "PerSitePricingBillingProfileSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "PerSitePricingBillingProfileSelfTargetSchema",
         "name": "find",

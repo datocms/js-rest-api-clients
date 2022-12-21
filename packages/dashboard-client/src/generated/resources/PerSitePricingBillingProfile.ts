@@ -46,12 +46,15 @@ export default class PerSitePricingBillingProfile extends BaseResource {
     perSitePricingBillingProfileId:
       | string
       | SimpleSchemaTypes.PerSitePricingBillingProfileData,
+    queryParams?: SimpleSchemaTypes.PerSitePricingBillingProfileSelfHrefSchema,
   ) {
-    return this.rawFind(Utils.toId(perSitePricingBillingProfileId)).then(
-      (body) =>
-        Utils.deserializeResponseBody<SimpleSchemaTypes.PerSitePricingBillingProfileSelfTargetSchema>(
-          body,
-        ),
+    return this.rawFind(
+      Utils.toId(perSitePricingBillingProfileId),
+      queryParams,
+    ).then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.PerSitePricingBillingProfileSelfTargetSchema>(
+        body,
+      ),
     );
   }
 
@@ -63,11 +66,13 @@ export default class PerSitePricingBillingProfile extends BaseResource {
    */
   rawFind(
     perSitePricingBillingProfileId: string,
+    queryParams?: SchemaTypes.PerSitePricingBillingProfileSelfHrefSchema,
   ): Promise<SchemaTypes.PerSitePricingBillingProfileSelfTargetSchema> {
     return this.client.request<SchemaTypes.PerSitePricingBillingProfileSelfTargetSchema>(
       {
         method: 'GET',
         url: `/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}`,
+        queryParams,
       },
     );
   }
