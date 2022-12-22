@@ -1227,7 +1227,7 @@ export type Site = {
   id: SiteIdentity;
   attributes: SiteAttributes;
   relationships: SiteRelationships;
-  meta?: SiteMeta;
+  meta: SiteMeta;
 };
 
 /**
@@ -1745,11 +1745,11 @@ export type SiteSubscriptionAttributes = {
    * Type of recurrence (yearly/monthly)
    */
   recurrence: 'yearly' | 'monthly';
-  price?: number;
+  price: number;
   /**
    * Extra packets
    */
-  extra_packets?: {
+  extra_packets: {
     users?: number;
     locales?: number;
     item_types?: number;

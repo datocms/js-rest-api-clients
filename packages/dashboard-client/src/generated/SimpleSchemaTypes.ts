@@ -1049,7 +1049,7 @@ export type Site = {
   active_subscription: null | SiteSubscriptionData;
   active_plan: null | SitePlanData;
   transfer: SiteTransferData | null;
-  meta?: SiteMeta;
+  meta: SiteMeta;
 };
 export type SiteSelfTargetSchema = Site;
 export type SiteCreateJobSchema = Site;
@@ -1313,11 +1313,11 @@ export type SiteSubscription = {
    * Type of recurrence (yearly/monthly)
    */
   recurrence: 'yearly' | 'monthly';
-  price?: number;
+  price: number;
   /**
    * Extra packets
    */
-  extra_packets?: {
+  extra_packets: {
     users?: number;
     locales?: number;
     item_types?: number;
@@ -1350,11 +1350,11 @@ export type SiteSubscriptionAttributes = {
    * Type of recurrence (yearly/monthly)
    */
   recurrence: 'yearly' | 'monthly';
-  price?: number;
+  price: number;
   /**
    * Extra packets
    */
-  extra_packets?: {
+  extra_packets: {
     users?: number;
     locales?: number;
     item_types?: number;
