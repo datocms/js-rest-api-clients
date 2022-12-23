@@ -1,5 +1,14 @@
 import { GenericClient, JobResult } from './internalTypes';
-import { EventsSubscription, subscribeToEvents } from './subscribeToEvents';
+import {
+  EventsSubscription,
+  subscribeToEvents,
+  SubscriptionConfig as SubscribeToEventsSubscriptionConfig,
+} from './subscribeToEvents';
+
+type SubscriptionConfig = Pick<
+  SubscribeToEventsSubscriptionConfig,
+  'cluster' | 'appKey'
+>;
 
 export class JobResultsFetcher<T extends GenericClient> {
   private eventsSubscription: EventsSubscription | undefined;
@@ -10,7 +19,7 @@ export class JobResultsFetcher<T extends GenericClient> {
     this.fetch = this.fetch.bind(this);
   }
 
-  async subscribeToEvents() {
+  async subscribeToEvents(config?: SubscriptionConfig) {
     if (!this.client.config.apiToken) {
       throw new Error('Missing API token!');
     }
@@ -18,11 +27,12 @@ export class JobResultsFetcher<T extends GenericClient> {
     const channelName = await this.client.eventsChannelName();
 
     if (!this.eventsSubscription) {
-      this.eventsSubscription = await subscribeToEvents(
-        `${this.client.baseUrl}/pusher/authenticate`,
-        this.client.config.apiToken,
+      this.eventsSubscription = await subscribeToEvents({
+        ...config,
+        authEndpoint: `${this.client.baseUrl}/pusher/authenticate`,
+        apiToken: this.client.config.apiToken,
         channelName,
-      );
+      });
     }
   }
 

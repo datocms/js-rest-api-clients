@@ -1,4 +1,4 @@
-import Pusher, { Channel } from 'pusher-js';
+import Pusher, { Channel, Options } from 'pusher-js';
 import { JobResult } from './internalTypes';
 
 export type EventsSubscription = {
@@ -7,21 +7,31 @@ export type EventsSubscription = {
   unsubscribe: () => void;
 };
 
+export type SubscriptionConfig = {
+  authEndpoint: string;
+  apiToken: string;
+  channelName: string;
+  cluster?: Options['cluster'];
+  appKey?: string;
+};
+
 type JobResultMessage = {
   jobId: string;
   status: number;
   payload: JobResult['payload'];
 };
 
-const pusherAppKey = '75e6ef0fe5d39f481626';
+const DEFAULT_APP_KEY = '75e6ef0fe5d39f481626';
 
 const channelPromisesCache: Record<string, Promise<EventsSubscription>> = {};
 
-export function subscribeToEvents(
-  authEndpoint: string,
-  apiToken: string,
-  channelName: string,
-) {
+export function subscribeToEvents({
+  authEndpoint,
+  apiToken,
+  channelName,
+  cluster,
+  appKey,
+}: SubscriptionConfig) {
   const cacheKey = [authEndpoint, channelName, apiToken].join('---');
 
   const cachedPromise = channelPromisesCache[cacheKey];
@@ -31,8 +41,9 @@ export function subscribeToEvents(
   }
 
   const promise = new Promise<EventsSubscription>((resolve, reject) => {
-    const pusher = new Pusher(pusherAppKey, {
+    const pusher = new Pusher(appKey || DEFAULT_APP_KEY, {
       authEndpoint,
+      cluster,
       auth: {
         headers: {
           authorization: `Bearer ${apiToken}`,
