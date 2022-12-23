@@ -1394,6 +1394,7 @@ export type SiteInstancesTargetSchema = {
   data: Site[];
   meta: {
     total_count: number;
+    total_owned_count?: number;
   };
 };
 

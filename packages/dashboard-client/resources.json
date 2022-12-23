@@ -1044,7 +1044,7 @@
       {
         "returnsCollection": false,
         "rel": "destroy",
-        "urlTemplate": "/oauth_application/${oauthApplicationId}",
+        "urlTemplate": "/oauth_applications/${oauthApplicationId}",
         "method": "DELETE",
         "comment": "Delete an authorized application",
         "urlPlaceholder": {

@@ -54,7 +54,7 @@ export default class OauthApplication extends BaseResource {
   rawDestroy(oauthApplicationId: string): Promise<void> {
     return this.client.request<void>({
       method: 'DELETE',
-      url: `/oauth_application/${oauthApplicationId}`,
+      url: `/oauth_applications/${oauthApplicationId}`,
     });
   }
 }
