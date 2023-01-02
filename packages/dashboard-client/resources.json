@@ -1137,7 +1137,7 @@
         "returnsCollection": false,
         "rel": "confirm",
         "urlTemplate": "/payment-intents/${paymentIntentId}/confirm",
-        "method": "POST",
+        "method": "PUT",
         "comment": "Confirm a payment intent",
         "urlPlaceholder": {
           "variableName": "paymentIntentId",

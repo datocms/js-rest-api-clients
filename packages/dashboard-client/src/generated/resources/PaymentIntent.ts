@@ -183,7 +183,7 @@ export default class PaymentIntent extends BaseResource {
     paymentIntentId: string,
   ): Promise<SchemaTypes.PaymentIntentConfirmTargetSchema> {
     return this.client.request<SchemaTypes.PaymentIntentConfirmTargetSchema>({
-      method: 'POST',
+      method: 'PUT',
       url: `/payment-intents/${paymentIntentId}/confirm`,
     });
   }
