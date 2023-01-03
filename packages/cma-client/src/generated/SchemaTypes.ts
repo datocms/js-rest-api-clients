@@ -4907,7 +4907,26 @@ export type FieldAttributes = {
   /**
    * Type of input
    */
-  field_type: string;
+  field_type:
+    | 'string'
+    | 'text'
+    | 'boolean'
+    | 'integer'
+    | 'float'
+    | 'date'
+    | 'date_time'
+    | 'color'
+    | 'json'
+    | 'lat_lon'
+    | 'seo'
+    | 'slug'
+    | 'video'
+    | 'file'
+    | 'gallery'
+    | 'link'
+    | 'links'
+    | 'rich_text'
+    | 'structured_text';
   /**
    * Whether the field needs to be multilanguage or not
    */
@@ -5029,7 +5048,26 @@ export type FieldCreateSchema = {
       /**
        * Type of input
        */
-      field_type: string;
+      field_type:
+        | 'string'
+        | 'text'
+        | 'boolean'
+        | 'integer'
+        | 'float'
+        | 'date'
+        | 'date_time'
+        | 'color'
+        | 'json'
+        | 'lat_lon'
+        | 'seo'
+        | 'slug'
+        | 'video'
+        | 'file'
+        | 'gallery'
+        | 'link'
+        | 'links'
+        | 'rich_text'
+        | 'structured_text';
       /**
        * Field API key
        */
@@ -5234,7 +5272,26 @@ export type FieldUpdateSchema = {
       /**
        * Type of input
        */
-      field_type?: string;
+      field_type?:
+        | 'string'
+        | 'text'
+        | 'boolean'
+        | 'integer'
+        | 'float'
+        | 'date'
+        | 'date_time'
+        | 'color'
+        | 'json'
+        | 'lat_lon'
+        | 'seo'
+        | 'slug'
+        | 'video'
+        | 'file'
+        | 'gallery'
+        | 'link'
+        | 'links'
+        | 'rich_text'
+        | 'structured_text';
       /**
        * Field hint
        */
