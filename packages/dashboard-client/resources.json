@@ -733,7 +733,7 @@
         "returnsCollection": false,
         "rel": "per_owner_pricing_billing_profile_collect_unpaid",
         "urlTemplate": "/per-owner-pricing-billing-profile/invoices/collect-unpaid",
-        "method": "GET",
+        "method": "POST",
         "comment": "Collect all unpaid invoices",
         "requestBodyType": "InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema",
         "requestStructure": {
@@ -752,7 +752,7 @@
         "returnsCollection": false,
         "rel": "per_site_pricing_billing_profile_collect_unpaid",
         "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/invoices/collect-unpaid",
-        "method": "GET",
+        "method": "POST",
         "comment": "Collect all unpaid invoices",
         "urlPlaceholder": {
           "variableName": "perSitePricingBillingProfileId",

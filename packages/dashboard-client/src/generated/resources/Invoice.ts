@@ -108,7 +108,7 @@ export default class Invoice extends BaseResource {
   ): Promise<SchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema> {
     return this.client.request<SchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema>(
       {
-        method: 'GET',
+        method: 'POST',
         url: '/per-owner-pricing-billing-profile/invoices/collect-unpaid',
         body,
       },
@@ -156,7 +156,7 @@ export default class Invoice extends BaseResource {
   ): Promise<SchemaTypes.InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema> {
     return this.client.request<SchemaTypes.InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema>(
       {
-        method: 'GET',
+        method: 'POST',
         url: `/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/invoices/collect-unpaid`,
         body,
       },
