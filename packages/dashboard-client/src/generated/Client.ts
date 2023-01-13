@@ -34,11 +34,11 @@ export class Client {
   account: Resources.Account;
   sites: Resources.Site;
   siteSubscription: Resources.SiteSubscription;
-  accountSubscription: Resources.AccountSubscription;
+  perOwnerPricingSubscription: Resources.PerOwnerPricingSubscription;
   sitePlans: Resources.SitePlan;
-  accountPlans: Resources.AccountPlan;
+  perOwnerPricingPlans: Resources.PerOwnerPricingPlan;
   perSitePricingBillingProfiles: Resources.PerSitePricingBillingProfile;
-  perAccountPricingBillingProfile: Resources.PerAccountPricingBillingProfile;
+  perOwnerPricingBillingProfile: Resources.PerOwnerPricingBillingProfile;
   invoices: Resources.Invoice;
   resourceUsages: Resources.ResourceUsage;
   jobResults: Resources.JobResult;
@@ -60,13 +60,14 @@ export class Client {
     this.account = new Resources.Account(this);
     this.sites = new Resources.Site(this);
     this.siteSubscription = new Resources.SiteSubscription(this);
-    this.accountSubscription = new Resources.AccountSubscription(this);
+    this.perOwnerPricingSubscription =
+      new Resources.PerOwnerPricingSubscription(this);
     this.sitePlans = new Resources.SitePlan(this);
-    this.accountPlans = new Resources.AccountPlan(this);
+    this.perOwnerPricingPlans = new Resources.PerOwnerPricingPlan(this);
     this.perSitePricingBillingProfiles =
       new Resources.PerSitePricingBillingProfile(this);
-    this.perAccountPricingBillingProfile =
-      new Resources.PerAccountPricingBillingProfile(this);
+    this.perOwnerPricingBillingProfile =
+      new Resources.PerOwnerPricingBillingProfile(this);
     this.invoices = new Resources.Invoice(this);
     this.resourceUsages = new Resources.ResourceUsage(this);
     this.jobResults = new Resources.JobResult(this);

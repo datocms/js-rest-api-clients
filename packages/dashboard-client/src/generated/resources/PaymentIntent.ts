@@ -109,18 +109,18 @@ export default class PaymentIntent extends BaseResource {
   }
 
   /**
-   * Create a payment intent starting from an existing per-account billing profile
+   * Create a payment intent starting from an existing per-owner billing profile
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  createForPerAccountPricingBillingProfile(
-    body: SimpleSchemaTypes.PaymentIntentCreateForPerAccountPricingBillingProfileSchema,
+  createForPerOwnerPricingBillingProfile(
+    body: SimpleSchemaTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileSchema,
   ) {
-    return this.rawCreateForPerAccountPricingBillingProfile(
-      Utils.serializeRequestBody<SchemaTypes.PaymentIntentCreateForPerAccountPricingBillingProfileSchema>(
+    return this.rawCreateForPerOwnerPricingBillingProfile(
+      Utils.serializeRequestBody<SchemaTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileSchema>(
         body,
         {
           type: 'payment_intent',
@@ -129,27 +129,27 @@ export default class PaymentIntent extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PaymentIntentCreateForPerAccountPricingBillingProfileTargetSchema>(
+      Utils.deserializeResponseBody<SimpleSchemaTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileTargetSchema>(
         body,
       ),
     );
   }
 
   /**
-   * Create a payment intent starting from an existing per-account billing profile
+   * Create a payment intent starting from an existing per-owner billing profile
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  rawCreateForPerAccountPricingBillingProfile(
-    body: SchemaTypes.PaymentIntentCreateForPerAccountPricingBillingProfileSchema,
-  ): Promise<SchemaTypes.PaymentIntentCreateForPerAccountPricingBillingProfileTargetSchema> {
-    return this.client.request<SchemaTypes.PaymentIntentCreateForPerAccountPricingBillingProfileTargetSchema>(
+  rawCreateForPerOwnerPricingBillingProfile(
+    body: SchemaTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileSchema,
+  ): Promise<SchemaTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileTargetSchema> {
+    return this.client.request<SchemaTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileTargetSchema>(
       {
         method: 'POST',
-        url: '/per-account-pricing-billing-profile/payment-intents',
+        url: '/per-owner-pricing-billing-profile/payment-intents',
         body,
       },
     );

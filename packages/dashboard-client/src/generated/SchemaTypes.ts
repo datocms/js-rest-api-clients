@@ -40,38 +40,38 @@ export type AccountIdentity = string;
 /**
  * JSON API type field
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "type".
  */
-export type AccountSubscriptionType = 'account_subscription';
+export type PerOwnerPricingSubscriptionType = 'per_owner_pricing_subscription';
 /**
  * ID of subscription
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "identity".
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "id".
  */
-export type AccountSubscriptionIdentity = string;
+export type PerOwnerPricingSubscriptionIdentity = string;
 /**
  * JSON API type field
  *
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `definition` "type".
  */
-export type PerAccountPricingBillingProfileType =
-  'per_account_pricing_billing_profile';
+export type PerOwnerPricingBillingProfileType =
+  'per_owner_pricing_billing_profile';
 /**
  * ID of billing_profile
  *
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `definition` "identity".
  *
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `definition` "id".
  */
-export type PerAccountPricingBillingProfileIdentity = string;
+export type PerOwnerPricingBillingProfileIdentity = string;
 /**
  * JSON API type field
  *
@@ -92,20 +92,20 @@ export type JobIdentity = string;
 /**
  * JSON API type field
  *
- * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
  * via the `definition` "type".
  */
-export type AccountPlanType = 'account_plan';
+export type PerOwnerPricingPlanType = 'per_owner_pricing_plan';
 /**
  * ID of plan
  *
- * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
  * via the `definition` "identity".
  *
- * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
  * via the `definition` "id".
  */
-export type AccountPlanIdentity = string;
+export type PerOwnerPricingPlanIdentity = string;
 /**
  * JSON API type field
  *
@@ -471,11 +471,11 @@ export type DatoApi = {
   account?: Account;
   site?: Site;
   site_subscription?: SiteSubscription;
-  account_subscription?: AccountSubscription;
+  per_owner_pricing_subscription?: PerOwnerPricingSubscription;
   site_plan?: SitePlan;
-  account_plan?: AccountPlan;
+  per_owner_pricing_plan?: PerOwnerPricingPlan;
   per_site_pricing_billing_profile?: PerSitePricingBillingProfile;
-  per_account_pricing_billing_profile?: PerAccountPricingBillingProfile;
+  per_owner_pricing_billing_profile?: PerOwnerPricingBillingProfile;
   invoice?: Invoice;
   resource_usage?: ResourceUsage;
   job_result?: JobResult;
@@ -662,33 +662,33 @@ export type AccountAttributes = {
  */
 export type AccountRelationships = {
   active_subscription: {
-    data: null | AccountSubscriptionData;
+    data: null | PerOwnerPricingSubscriptionData;
   };
   billing_profile: {
-    data: null | PerAccountPricingBillingProfileData;
+    data: null | PerOwnerPricingBillingProfileData;
   };
 };
 
 /**
  * JSON API data
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "data".
  */
-export type AccountSubscriptionData = {
-  type: AccountSubscriptionType;
-  id: AccountSubscriptionIdentity;
+export type PerOwnerPricingSubscriptionData = {
+  type: PerOwnerPricingSubscriptionType;
+  id: PerOwnerPricingSubscriptionIdentity;
 };
 
 /**
  * JSON API data
  *
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `definition` "data".
  */
-export type PerAccountPricingBillingProfileData = {
-  type: PerAccountPricingBillingProfileType;
-  id: PerAccountPricingBillingProfileIdentity;
+export type PerOwnerPricingBillingProfileData = {
+  type: PerOwnerPricingBillingProfileType;
+  id: PerOwnerPricingBillingProfileIdentity;
 };
 
 /**
@@ -852,28 +852,28 @@ export type AccountDestroyJobSchema = {
  */
 export type AccountSelfTargetSchema = {
   data: Account;
-  included?: (AccountPlan | AccountSubscription)[];
+  included?: (PerOwnerPricingPlan | PerOwnerPricingSubscription)[];
 };
 
 /**
  * Stores the information regarding the current plan for the account.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "account_plan".
+ * via the `definition` "per_owner_pricing_plan".
  */
-export type AccountPlan = {
-  type: AccountPlanType;
-  id: AccountPlanIdentity;
-  attributes: AccountPlanAttributes;
+export type PerOwnerPricingPlan = {
+  type: PerOwnerPricingPlanType;
+  id: PerOwnerPricingPlanIdentity;
+  attributes: PerOwnerPricingPlanAttributes;
 };
 
 /**
  * JSON API attributes
  *
- * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export type AccountPlanAttributes = {
+export type PerOwnerPricingPlanAttributes = {
   /**
    * The name of the plan
    */
@@ -977,43 +977,43 @@ export type AccountPlanAttributes = {
 /**
  * JSON API data
  *
- * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
  * via the `definition` "data".
  */
-export type AccountPlanData = {
-  type: AccountPlanType;
-  id: AccountPlanIdentity;
+export type PerOwnerPricingPlanData = {
+  type: PerOwnerPricingPlanType;
+  id: PerOwnerPricingPlanIdentity;
 };
 
 /**
- * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
-export type AccountPlanInstancesTargetSchema = {
-  data: AccountPlan[];
+export type PerOwnerPricingPlanInstancesTargetSchema = {
+  data: PerOwnerPricingPlan[];
 };
 
 /**
  * A subscription record
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "account_subscription".
+ * via the `definition` "per_owner_pricing_subscription".
  */
-export type AccountSubscription = {
-  type: AccountSubscriptionType;
-  id: AccountSubscriptionIdentity;
-  attributes: AccountSubscriptionAttributes;
-  meta: AccountSubscriptionMeta;
-  relationships: AccountSubscriptionRelationships;
+export type PerOwnerPricingSubscription = {
+  type: PerOwnerPricingSubscriptionType;
+  id: PerOwnerPricingSubscriptionIdentity;
+  attributes: PerOwnerPricingSubscriptionAttributes;
+  meta: PerOwnerPricingSubscriptionMeta;
+  relationships: PerOwnerPricingSubscriptionRelationships;
 };
 
 /**
  * JSON API attributes
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export type AccountSubscriptionAttributes = {
+export type PerOwnerPricingSubscriptionAttributes = {
   /**
    * Date of creation of subscription
    */
@@ -1041,10 +1041,10 @@ export type AccountSubscriptionAttributes = {
 /**
  * JSON API meta
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "meta".
  */
-export type AccountSubscriptionMeta = {
+export type PerOwnerPricingSubscriptionMeta = {
   /**
    * Whether account can be billed if it has no credit-card information or not
    */
@@ -1054,25 +1054,25 @@ export type AccountSubscriptionMeta = {
 /**
  * JSON API links
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export type AccountSubscriptionRelationships = {
+export type PerOwnerPricingSubscriptionRelationships = {
   /**
    * Subscription plan
    */
   plan: {
-    data: AccountPlanData;
+    data: PerOwnerPricingPlanData;
   };
 };
 
 /**
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `create.schema` link.
  */
-export type AccountSubscriptionCreateSchema = {
+export type PerOwnerPricingSubscriptionCreateSchema = {
   data: {
-    type: AccountSubscriptionType;
+    type: PerOwnerPricingSubscriptionType;
     attributes: {
       payment_intent_id?: string;
       /**
@@ -1099,27 +1099,27 @@ export type AccountSubscriptionCreateSchema = {
        * Subscription plan
        */
       plan: {
-        data: AccountPlanData;
+        data: PerOwnerPricingPlanData;
       };
     };
   };
 };
 
 /**
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `create.targetSchema` link.
  */
-export type AccountSubscriptionCreateTargetSchema = {
-  data: AccountSubscription;
+export type PerOwnerPricingSubscriptionCreateTargetSchema = {
+  data: PerOwnerPricingSubscription;
 };
 
 /**
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `simulate.schema` link.
  */
-export type AccountSubscriptionSimulateSchema = {
+export type PerOwnerPricingSubscriptionSimulateSchema = {
   data: {
-    type: AccountSubscriptionType;
+    type: PerOwnerPricingSubscriptionType;
     attributes: {
       /**
        * Type of recurrence (yearly/monthly)
@@ -1141,18 +1141,18 @@ export type AccountSubscriptionSimulateSchema = {
        * Subscription plan
        */
       plan: {
-        data: AccountPlanData;
+        data: PerOwnerPricingPlanData;
       };
     };
   };
 };
 
 /**
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `simulate.targetSchema` link.
  */
-export type AccountSubscriptionSimulateTargetSchema = {
-  data: (NextInvoiceEstimate | AccountSubscription)[];
+export type PerOwnerPricingSubscriptionSimulateTargetSchema = {
+  data: (NextInvoiceEstimate | PerOwnerPricingSubscription)[];
 };
 
 /**
@@ -1190,29 +1190,29 @@ export type NextInvoiceEstimateData = {
 };
 
 /**
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `validate.schema` link.
  */
-export type AccountSubscriptionValidateSchema = {
+export type PerOwnerPricingSubscriptionValidateSchema = {
   data: {
-    type: AccountSubscriptionType;
+    type: PerOwnerPricingSubscriptionType;
     relationships: {
       /**
        * Subscription plan
        */
       plan: {
-        data: AccountPlanData;
+        data: PerOwnerPricingPlanData;
       };
     };
   };
 };
 
 /**
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `validate.targetSchema` link.
  */
-export type AccountSubscriptionValidateTargetSchema = {
-  data: AccountSubscription;
+export type PerOwnerPricingSubscriptionValidateTargetSchema = {
+  data: PerOwnerPricingSubscription;
   included: Site[];
 };
 
@@ -2353,21 +2353,21 @@ export type PerSitePricingBillingProfileDestroyTargetSchema = {
  * A billing profile
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "per_account_pricing_billing_profile".
+ * via the `definition` "per_owner_pricing_billing_profile".
  */
-export type PerAccountPricingBillingProfile = {
-  type: PerAccountPricingBillingProfileType;
-  id: PerAccountPricingBillingProfileIdentity;
-  attributes: PerAccountPricingBillingProfileAttributes;
+export type PerOwnerPricingBillingProfile = {
+  type: PerOwnerPricingBillingProfileType;
+  id: PerOwnerPricingBillingProfileIdentity;
+  attributes: PerOwnerPricingBillingProfileAttributes;
 };
 
 /**
  * JSON API attributes
  *
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export type PerAccountPricingBillingProfileAttributes = {
+export type PerOwnerPricingBillingProfileAttributes = {
   first_name: string;
   last_name: string;
   company: null | string;
@@ -2393,18 +2393,18 @@ export type PerAccountPricingBillingProfileAttributes = {
 };
 
 /**
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `self.targetSchema` link.
  */
-export type PerAccountPricingBillingProfileSelfTargetSchema = {
-  data: PerAccountPricingBillingProfile;
+export type PerOwnerPricingBillingProfileSelfTargetSchema = {
+  data: PerOwnerPricingBillingProfile;
 };
 
 /**
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `update_credit_card.schema` link.
  */
-export type PerAccountPricingBillingProfileUpdateCreditCardSchema = {
+export type PerOwnerPricingBillingProfileUpdateCreditCardSchema = {
   data: {
     /**
      * JSON API type field
@@ -2417,21 +2417,21 @@ export type PerAccountPricingBillingProfileUpdateCreditCardSchema = {
 };
 
 /**
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `update_credit_card.targetSchema` link.
  */
-export type PerAccountPricingBillingProfileUpdateCreditCardTargetSchema = {
-  data: PerAccountPricingBillingProfile;
+export type PerOwnerPricingBillingProfileUpdateCreditCardTargetSchema = {
+  data: PerOwnerPricingBillingProfile;
 };
 
 /**
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `update_info.schema` link.
  */
-export type PerAccountPricingBillingProfileUpdateInfoSchema = {
+export type PerOwnerPricingBillingProfileUpdateInfoSchema = {
   data: {
-    id?: PerAccountPricingBillingProfileIdentity;
-    type: PerAccountPricingBillingProfileType;
+    id?: PerOwnerPricingBillingProfileIdentity;
+    type: PerOwnerPricingBillingProfileType;
     attributes: {
       first_name: string;
       last_name: string;
@@ -2450,11 +2450,11 @@ export type PerAccountPricingBillingProfileUpdateInfoSchema = {
 };
 
 /**
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `update_info.targetSchema` link.
  */
-export type PerAccountPricingBillingProfileUpdateInfoTargetSchema = {
-  data: PerAccountPricingBillingProfile;
+export type PerOwnerPricingBillingProfileUpdateInfoTargetSchema = {
+  data: PerOwnerPricingBillingProfile;
 };
 
 /**
@@ -2498,9 +2498,7 @@ export type InvoiceRelationships = {
    * Role
    */
   billing_profile: {
-    data:
-      | PerSitePricingBillingProfileData
-      | PerAccountPricingBillingProfileData;
+    data: PerSitePricingBillingProfileData | PerOwnerPricingBillingProfileData;
   };
 };
 
@@ -2517,9 +2515,9 @@ export type InvoiceData = {
 
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
- * via the `per_account_pricing_billing_profile_instances.targetSchema` link.
+ * via the `per_owner_pricing_billing_profile_instances.targetSchema` link.
  */
-export type InvoicePerAccountPricingBillingProfileInstancesTargetSchema = {
+export type InvoicePerOwnerPricingBillingProfileInstancesTargetSchema = {
   data: Invoice[];
 };
 
@@ -2533,9 +2531,9 @@ export type InvoicePerSitePricingBillingProfileInstancesTargetSchema = {
 
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
- * via the `per_account_pricing_billing_profile_collect_unpaid.schema` link.
+ * via the `per_owner_pricing_billing_profile_collect_unpaid.schema` link.
  */
-export type InvoicePerAccountPricingBillingProfileCollectUnpaidSchema = {
+export type InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema = {
   data: {
     /**
      * JSON API type field
@@ -2550,9 +2548,9 @@ export type InvoicePerAccountPricingBillingProfileCollectUnpaidSchema = {
 
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
- * via the `per_account_pricing_billing_profile_collect_unpaid.targetSchema` link.
+ * via the `per_owner_pricing_billing_profile_collect_unpaid.targetSchema` link.
  */
-export type InvoicePerAccountPricingBillingProfileCollectUnpaidTargetSchema = {
+export type InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema = {
   data: Invoice[];
 };
 
@@ -3172,9 +3170,9 @@ export type PaymentIntentCreateForPerSitePricingBillingProfileTargetSchema = {
 
 /**
  * This interface was referenced by `PaymentIntent`'s JSON-Schema
- * via the `create_for_per_account_pricing_billing_profile.schema` link.
+ * via the `create_for_per_owner_pricing_billing_profile.schema` link.
  */
-export type PaymentIntentCreateForPerAccountPricingBillingProfileSchema = {
+export type PaymentIntentCreateForPerOwnerPricingBillingProfileSchema = {
   data: {
     /**
      * JSON API type field
@@ -3191,12 +3189,11 @@ export type PaymentIntentCreateForPerAccountPricingBillingProfileSchema = {
 
 /**
  * This interface was referenced by `PaymentIntent`'s JSON-Schema
- * via the `create_for_per_account_pricing_billing_profile.targetSchema` link.
+ * via the `create_for_per_owner_pricing_billing_profile.targetSchema` link.
  */
-export type PaymentIntentCreateForPerAccountPricingBillingProfileTargetSchema =
-  {
-    data: PaymentIntent;
-  };
+export type PaymentIntentCreateForPerOwnerPricingBillingProfileTargetSchema = {
+  data: PaymentIntent;
+};
 
 /**
  * This interface was referenced by `PaymentIntent`'s JSON-Schema
