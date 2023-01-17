@@ -482,6 +482,28 @@ export type OrganizationType = 'organization';
  * via the `definition` "id".
  */
 export type OrganizationIdentity = string;
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type OrganizationInstancesHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type OrganizationSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
 
 export type DatoApi = {
   session?: Session;
@@ -3273,6 +3295,7 @@ export type Organization = {
   type: OrganizationType;
   id: OrganizationIdentity;
   attributes: OrganizationAttributes;
+  relationships: OrganizationRelationships;
 };
 
 /**
@@ -3286,6 +3309,21 @@ export type OrganizationAttributes = {
    * Name of the organization
    */
   name: string;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type OrganizationRelationships = {
+  active_subscription: {
+    data: null | PerOwnerPricingSubscriptionData;
+  };
+  billing_profile: {
+    data: null | PerOwnerPricingBillingProfileData;
+  };
 };
 
 /**

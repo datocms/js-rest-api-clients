@@ -1163,6 +1163,7 @@
         "urlTemplate": "/organizations",
         "method": "GET",
         "comment": "List current user organizations",
+        "queryParamsType": "OrganizationInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "OrganizationInstancesTargetSchema",
         "name": "list",
@@ -1179,6 +1180,7 @@
           "isEntityId": true,
           "relType": "OrganizationData"
         },
+        "queryParamsType": "OrganizationSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "OrganizationSelfTargetSchema",
         "name": "find",

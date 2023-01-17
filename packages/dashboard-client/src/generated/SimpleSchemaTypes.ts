@@ -620,6 +620,28 @@ export type OrganizationType = 'organization';
  * via the `instances.targetSchema` link.
  */
 export type OrganizationInstancesTargetSchema = Organization[];
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type OrganizationInstancesHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type OrganizationSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
 
 export type DatoApi = {
   session?: Session;
@@ -3243,6 +3265,8 @@ export type Organization = {
    * Name of the organization
    */
   name: string;
+  active_subscription: null | PerOwnerPricingSubscriptionData;
+  billing_profile: null | PerOwnerPricingBillingProfileData;
 };
 export type OrganizationSelfTargetSchema = Organization;
 export type OrganizationCreateTargetSchema = Organization;
@@ -3270,6 +3294,17 @@ export type OrganizationAttributes = {
    * Name of the organization
    */
   name: string;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type OrganizationRelationships = {
+  active_subscription: null | PerOwnerPricingSubscriptionData;
+  billing_profile: null | PerOwnerPricingBillingProfileData;
 };
 
 /**

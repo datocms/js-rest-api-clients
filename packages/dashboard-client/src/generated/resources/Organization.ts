@@ -12,8 +12,8 @@ export default class Organization extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list() {
-    return this.rawList().then((body) =>
+  list(queryParams?: SimpleSchemaTypes.OrganizationInstancesHrefSchema) {
+    return this.rawList(queryParams).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationInstancesTargetSchema>(
         body,
       ),
@@ -26,10 +26,13 @@ export default class Organization extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.OrganizationInstancesTargetSchema> {
+  rawList(
+    queryParams?: SchemaTypes.OrganizationInstancesHrefSchema,
+  ): Promise<SchemaTypes.OrganizationInstancesTargetSchema> {
     return this.client.request<SchemaTypes.OrganizationInstancesTargetSchema>({
       method: 'GET',
       url: '/organizations',
+      queryParams,
     });
   }
 
@@ -39,8 +42,11 @@ export default class Organization extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(organizationId: string | SimpleSchemaTypes.OrganizationData) {
-    return this.rawFind(Utils.toId(organizationId)).then((body) =>
+  find(
+    organizationId: string | SimpleSchemaTypes.OrganizationData,
+    queryParams?: SimpleSchemaTypes.OrganizationSelfHrefSchema,
+  ) {
+    return this.rawFind(Utils.toId(organizationId), queryParams).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationSelfTargetSchema>(
         body,
       ),
@@ -55,10 +61,12 @@ export default class Organization extends BaseResource {
    */
   rawFind(
     organizationId: string,
+    queryParams?: SchemaTypes.OrganizationSelfHrefSchema,
   ): Promise<SchemaTypes.OrganizationSelfTargetSchema> {
     return this.client.request<SchemaTypes.OrganizationSelfTargetSchema>({
       method: 'GET',
       url: `/organizations/${organizationId}`,
+      queryParams,
     });
   }
 
