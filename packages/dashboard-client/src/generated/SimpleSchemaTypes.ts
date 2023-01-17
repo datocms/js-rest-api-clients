@@ -598,6 +598,28 @@ export type OtpBackupCodesIdentity = string;
  * via the `definition` "type".
  */
 export type OtpBackupCodesType = 'otp_backup_codes';
+/**
+ * ID of organization
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationType = 'organization';
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type OrganizationInstancesTargetSchema = Organization[];
 
 export type DatoApi = {
   session?: Session;
@@ -622,6 +644,7 @@ export type DatoApi = {
   payment_method?: PaymentMethod;
   next_invoice_estimate?: NextInvoiceEstimate;
   otp_backup_codes?: OtpBackupCodes;
+  organization?: Organization;
   [k: string]: unknown;
 };
 
@@ -882,6 +905,9 @@ export type AccountDestroySchema = {
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `duplicate.targetSchema` link.
  *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "job".
  */
@@ -891,6 +917,7 @@ export type Job = {
 };
 export type AccountDestroyTargetSchema = Job;
 export type SiteDuplicateTargetSchema = Job;
+export type OrganizationDestroyTargetSchema = Job;
 /**
  * JSON API data
  *
@@ -1031,10 +1058,6 @@ export type Site = {
    */
   readonly_token?: null | string;
   /**
-   * Project owner email
-   */
-  owner_email?: string;
-  /**
    * Status of project according to billing situation
    */
   deactivated: boolean;
@@ -1116,6 +1139,23 @@ export type SiteMeta = {
    * Site status
    */
   status: string;
+  /**
+   * Information about the project owner
+   */
+  owner: {
+    /**
+     * Type of owner
+     */
+    type: 'account' | 'organization';
+    /**
+     * Email of owner account
+     */
+    email?: string;
+    /**
+     * Name of the organization that owns the project
+     */
+    name?: string;
+  };
 };
 
 /**
@@ -1172,10 +1212,6 @@ export type SiteAttributes = {
    * Read-only API token
    */
   readonly_token?: null | string;
-  /**
-   * Project owner email
-   */
-  owner_email?: string;
   /**
    * Status of project according to billing situation
    */
@@ -3192,4 +3228,71 @@ export type OtpBackupCodesData = {
  */
 export type OtpBackupCodesAttributes = {
   codes: string[];
+};
+
+/**
+ * Organizations allow you to collaborate with members on projects
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization".
+ */
+export type Organization = {
+  id: OrganizationIdentity;
+  type: OrganizationType;
+  /**
+   * Name of the organization
+   */
+  name: string;
+};
+export type OrganizationSelfTargetSchema = Organization;
+export type OrganizationCreateTargetSchema = Organization;
+export type OrganizationUpdateTargetSchema = Organization;
+export type OrganizationDestroyJobSchema = Organization;
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationData = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationAttributes = {
+  /**
+   * Name of the organization
+   */
+  name: string;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type OrganizationCreateSchema = {
+  type?: OrganizationType;
+  /**
+   * Name of the organization
+   */
+  name?: string;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type OrganizationUpdateSchema = {
+  id?: OrganizationIdentity;
+  type?: OrganizationType;
+  /**
+   * Name of the organization
+   */
+  name?: string;
 };

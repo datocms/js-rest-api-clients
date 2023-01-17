@@ -465,6 +465,23 @@ export type PaymentMethodType = 'payment_method';
  * via the `definition` "id".
  */
 export type PaymentMethodIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationType = 'organization';
+/**
+ * ID of organization
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationIdentity = string;
 
 export type DatoApi = {
   session?: Session;
@@ -489,6 +506,7 @@ export type DatoApi = {
   payment_method?: PaymentMethod;
   next_invoice_estimate?: NextInvoiceEstimate;
   otp_backup_codes?: OtpBackupCodes;
+  organization?: Organization;
   [k: string]: unknown;
 };
 
@@ -1274,10 +1292,6 @@ export type SiteAttributes = {
    */
   readonly_token?: null | string;
   /**
-   * Project owner email
-   */
-  owner_email?: string;
-  /**
    * Status of project according to billing situation
    */
   deactivated: boolean;
@@ -1365,6 +1379,23 @@ export type SiteMeta = {
    * Site status
    */
   status: string;
+  /**
+   * Information about the project owner
+   */
+  owner: {
+    /**
+     * Type of owner
+     */
+    type: 'account' | 'organization';
+    /**
+     * Email of owner account
+     */
+    email?: string;
+    /**
+     * Name of the organization that owns the project
+     */
+    name?: string;
+  };
 };
 
 /**
@@ -3230,4 +3261,121 @@ export type PaymentMethodAttributes = {};
 export type PaymentMethodData = {
   type: PaymentMethodType;
   id: PaymentMethodIdentity;
+};
+
+/**
+ * Organizations allow you to collaborate with members on projects
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization".
+ */
+export type Organization = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+  attributes: OrganizationAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationAttributes = {
+  /**
+   * Name of the organization
+   */
+  name: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationData = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type OrganizationInstancesTargetSchema = {
+  data: Organization[];
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type OrganizationSelfTargetSchema = {
+  data: Organization;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type OrganizationCreateSchema = {
+  data: {
+    type: OrganizationType;
+    attributes: {
+      /**
+       * Name of the organization
+       */
+      name?: string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type OrganizationCreateTargetSchema = {
+  data: Organization;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type OrganizationUpdateSchema = {
+  data: {
+    id: OrganizationIdentity;
+    type: OrganizationType;
+    attributes: {
+      /**
+       * Name of the organization
+       */
+      name?: string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type OrganizationUpdateTargetSchema = {
+  data: Organization;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type OrganizationDestroyTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `destroy.jobSchema` link.
+ */
+export type OrganizationDestroyJobSchema = {
+  data: Organization;
 };

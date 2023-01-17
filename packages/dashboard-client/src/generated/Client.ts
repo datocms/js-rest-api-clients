@@ -15,6 +15,8 @@ export type ClientConfigOptions = {
   apiToken: string | null;
   /** The base URL of the server. Defaults to https://account-api.datocms.com */
   baseUrl?: string;
+  /** The organization ID in which to perform every API request */
+  organization?: string;
   /** Configure request timeout (in ms). When timeout is reached and `autoRetry` is active, a new request will be performed. Otherwise, a `TimeoutError` will be raised. Defaults to `30000` */
   requestTimeout?: number;
   /** Any extra header to add to every API request */
@@ -48,6 +50,7 @@ export class Client {
   subscriptionFeatures: Resources.SubscriptionFeature;
   oauthApplications: Resources.OauthApplication;
   paymentIntent: Resources.PaymentIntent;
+  organizations: Resources.Organization;
 
   config: ClientConfigOptions;
   jobResultsFetcher?: (jobId: string) => Promise<JobResult>;
@@ -77,6 +80,7 @@ export class Client {
     this.subscriptionFeatures = new Resources.SubscriptionFeature(this);
     this.oauthApplications = new Resources.OauthApplication(this);
     this.paymentIntent = new Resources.PaymentIntent(this);
+    this.organizations = new Resources.Organization(this);
   }
 
   get baseUrl() {
@@ -91,6 +95,12 @@ export class Client {
       userAgent: '@datocms/dashboard-client',
       baseUrl: this.baseUrl,
       preCallStack: new Error().stack,
+      extraHeaders: {
+        ...(this.config.extraHeaders || {}),
+        ...(this.config.organization
+          ? { 'X-Organization': this.config.organization }
+          : {}),
+      },
       fetchJobResult: (jobId: string) => {
         return this.jobResultsFetcher
           ? this.jobResultsFetcher(jobId)

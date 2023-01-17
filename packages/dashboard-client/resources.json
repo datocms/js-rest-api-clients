@@ -1153,5 +1153,98 @@
     ],
     "namespace": "paymentIntent",
     "resourceClassName": "PaymentIntent"
+  },
+  {
+    "jsonApiType": "organization",
+    "endpoints": [
+      {
+        "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/organizations",
+        "method": "GET",
+        "comment": "List current user organizations",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/organizations/${organizationId}",
+        "method": "GET",
+        "comment": "Retrieve an organization",
+        "urlPlaceholder": {
+          "variableName": "organizationId",
+          "isEntityId": true,
+          "relType": "OrganizationData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationSelfTargetSchema",
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "create",
+        "urlTemplate": "/organizations",
+        "method": "POST",
+        "comment": "Create a new organization",
+        "requestBodyType": "OrganizationCreateSchema",
+        "requestStructure": {
+          "type": "organization",
+          "attributes": [
+            "name"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationCreateTargetSchema",
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "update",
+        "urlTemplate": "/organizations/${organizationId}",
+        "method": "PUT",
+        "comment": "Update an organization",
+        "urlPlaceholder": {
+          "variableName": "organizationId",
+          "isEntityId": true,
+          "relType": "OrganizationData"
+        },
+        "requestBodyType": "OrganizationUpdateSchema",
+        "requestStructure": {
+          "type": "organization",
+          "attributes": [
+            "name"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationUpdateTargetSchema",
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/organizations/${siteId}/transfer",
+        "method": "DELETE",
+        "comment": "Destroy an organization",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": false,
+          "relType": "SiteData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationDestroyJobSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "organizations",
+    "resourceClassName": "Organization"
   }
 ]
