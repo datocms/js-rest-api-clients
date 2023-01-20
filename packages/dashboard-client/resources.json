@@ -1248,5 +1248,165 @@
     ],
     "namespace": "organizations",
     "resourceClassName": "Organization"
+  },
+  {
+    "jsonApiType": "organization_role",
+    "endpoints": [
+      {
+        "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/organizations-roles",
+        "method": "GET",
+        "comment": "List organization roles",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationRoleInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/organizations/${organizationRoleId}",
+        "method": "GET",
+        "comment": "Retrieve an organization role",
+        "urlPlaceholder": {
+          "variableName": "organizationRoleId",
+          "isEntityId": true,
+          "relType": "OrganizationRoleData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationRoleSelfTargetSchema",
+        "name": "find",
+        "rawName": "rawFind"
+      }
+    ],
+    "namespace": "organizationRoles",
+    "resourceClassName": "OrganizationRole"
+  },
+  {
+    "jsonApiType": "organization_invitation",
+    "endpoints": [
+      {
+        "returnsCollection": false,
+        "rel": "create",
+        "urlTemplate": "/organization-invitations",
+        "method": "POST",
+        "comment": "Invite a new member",
+        "requestBodyType": "OrganizationInvitationCreateSchema",
+        "requestStructure": {
+          "type": "organization_invitation",
+          "attributes": [
+            "email"
+          ],
+          "relationships": [
+            "role"
+          ]
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationInvitationCreateTargetSchema",
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "update",
+        "urlTemplate": "/organization-invitations/${organizationInvitationId}",
+        "method": "PUT",
+        "comment": "Update an invitation",
+        "urlPlaceholder": {
+          "variableName": "organizationInvitationId",
+          "isEntityId": true,
+          "relType": "OrganizationInvitationData"
+        },
+        "requestBodyType": "OrganizationInvitationUpdateSchema",
+        "requestStructure": {
+          "type": "organization_invitation",
+          "attributes": [],
+          "relationships": [
+            "role"
+          ]
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationInvitationUpdateTargetSchema",
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/organization-invitations",
+        "method": "GET",
+        "comment": "List all invitations",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationInvitationInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/organization-invitations/${organizationInvitationId}",
+        "method": "GET",
+        "comment": "Retrieve an invitation",
+        "urlPlaceholder": {
+          "variableName": "organizationInvitationId",
+          "isEntityId": true,
+          "relType": "OrganizationInvitationData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationInvitationSelfTargetSchema",
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/organization-invitations/${organizationInvitationId}",
+        "method": "DELETE",
+        "comment": "Delete an invitation",
+        "urlPlaceholder": {
+          "variableName": "organizationInvitationId",
+          "isEntityId": true,
+          "relType": "OrganizationInvitationData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationInvitationDestroyTargetSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "resend",
+        "urlTemplate": "/organization-invitations/${organizationInvitationId}/resend",
+        "method": "POST",
+        "comment": "Resend an invitation",
+        "urlPlaceholder": {
+          "variableName": "organizationInvitationId",
+          "isEntityId": true,
+          "relType": "OrganizationInvitationData"
+        },
+        "queryParamsRequired": false,
+        "name": "resend",
+        "rawName": "rawResend"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "redeem",
+        "urlTemplate": "/organization-invitations/${organizationInvitationId}/redeem",
+        "method": "PUT",
+        "comment": "Redeem token",
+        "urlPlaceholder": {
+          "variableName": "organizationInvitationId",
+          "isEntityId": true,
+          "relType": "OrganizationInvitationData"
+        },
+        "queryParamsType": "OrganizationInvitationRedeemHrefSchema",
+        "queryParamsRequired": false,
+        "name": "redeem",
+        "rawName": "rawRedeem"
+      }
+    ],
+    "namespace": "organizationInvitations",
+    "resourceClassName": "OrganizationInvitation"
   }
 ]

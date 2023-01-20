@@ -51,6 +51,8 @@ export class Client {
   oauthApplications: Resources.OauthApplication;
   paymentIntent: Resources.PaymentIntent;
   organizations: Resources.Organization;
+  organizationRoles: Resources.OrganizationRole;
+  organizationInvitations: Resources.OrganizationInvitation;
 
   config: ClientConfigOptions;
   jobResultsFetcher?: (jobId: string) => Promise<JobResult>;
@@ -81,6 +83,8 @@ export class Client {
     this.oauthApplications = new Resources.OauthApplication(this);
     this.paymentIntent = new Resources.PaymentIntent(this);
     this.organizations = new Resources.Organization(this);
+    this.organizationRoles = new Resources.OrganizationRole(this);
+    this.organizationInvitations = new Resources.OrganizationInvitation(this);
   }
 
   get baseUrl() {

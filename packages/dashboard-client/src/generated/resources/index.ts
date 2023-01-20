@@ -17,3 +17,5 @@ export { default as SubscriptionFeature } from './SubscriptionFeature';
 export { default as OauthApplication } from './OauthApplication';
 export { default as PaymentIntent } from './PaymentIntent';
 export { default as Organization } from './Organization';
+export { default as OrganizationRole } from './OrganizationRole';
+export { default as OrganizationInvitation } from './OrganizationInvitation';

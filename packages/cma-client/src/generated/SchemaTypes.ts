@@ -232,6 +232,23 @@ export type AuditLogEventIdentity = string;
 /**
  * JSON API type field
  *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationType = 'organization';
+/**
+ * ID of organization
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationIdentity = string;
+/**
+ * JSON API type field
+ *
  * This interface was referenced by `SitePlan`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1290,6 +1307,7 @@ export type DatoApi = {
   sso_user?: SsoUser;
   audit_log_event?: AuditLogEvent;
   account?: Account;
+  organization?: Organization;
   site_plan?: SitePlan;
   menu_item?: MenuItem;
   item_type?: ItemType;
@@ -2851,10 +2869,6 @@ export type AccountAttributes = {
    * Company name
    */
   company: string | null;
-  /**
-   * Password
-   */
-  password?: string;
 };
 
 /**
@@ -3046,6 +3060,42 @@ export type AuditLogEventQueryTargetSchema = {
      */
     next_token: null | string;
   };
+};
+
+/**
+ * DatoCMS organization
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization".
+ */
+export type Organization = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+  attributes: OrganizationAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationAttributes = {
+  /**
+   * Name of the organization
+   */
+  name: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationData = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
 };
 
 /**
@@ -9993,6 +10043,9 @@ export type SiteAttributes = {
 export type SiteRelationships = {
   account: {
     data: AccountData;
+  };
+  owner: {
+    data: AccountData | OrganizationData;
   };
   item_types: {
     /**

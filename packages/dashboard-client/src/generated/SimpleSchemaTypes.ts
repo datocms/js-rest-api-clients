@@ -642,6 +642,62 @@ export type OrganizationSelfHrefSchema = {
   include?: string;
   [k: string]: unknown;
 };
+/**
+ * ID of role
+ *
+ * This interface was referenced by `OrganizationRole`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `OrganizationRole`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationRoleIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `OrganizationRole`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationRoleType = 'organization_role';
+/**
+ * This interface was referenced by `OrganizationRole`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type OrganizationRoleInstancesTargetSchema = OrganizationRole[];
+/**
+ * ID of invitation
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationInvitationIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationInvitationType = 'organization_invitation';
+/**
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type OrganizationInvitationInstancesTargetSchema =
+  OrganizationInvitation[];
+/**
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `redeem.hrefSchema` link.
+ */
+export type OrganizationInvitationRedeemHrefSchema = {
+  /**
+   * The organization invitation authorization token
+   */
+  token?: string;
+  [k: string]: unknown;
+};
 
 export type DatoApi = {
   session?: Session;
@@ -667,6 +723,8 @@ export type DatoApi = {
   next_invoice_estimate?: NextInvoiceEstimate;
   otp_backup_codes?: OtpBackupCodes;
   organization?: Organization;
+  organization_role?: OrganizationRole;
+  organization_invitation?: OrganizationInvitation;
   [k: string]: unknown;
 };
 
@@ -1161,23 +1219,31 @@ export type SiteMeta = {
    * Site status
    */
   status: string;
-  /**
-   * Information about the project owner
-   */
-  owner: {
-    /**
-     * Type of owner
-     */
-    type: 'account' | 'organization';
-    /**
-     * Email of owner account
-     */
-    email?: string;
-    /**
-     * Name of the organization that owns the project
-     */
-    name?: string;
-  };
+  owner:
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'account';
+        /**
+         * Email of the account that owns the project
+         */
+        email: string;
+      }
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'organization';
+        /**
+         * Name of the organization that owns the project
+         */
+        name: string;
+        /**
+         * ID of the organization that owns the project
+         */
+        id: string;
+      };
 };
 
 /**
@@ -3330,4 +3396,214 @@ export type OrganizationUpdateSchema = {
    * Name of the organization
    */
   name?: string;
+};
+
+/**
+ * Organization role
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization_role".
+ */
+export type OrganizationRole = {
+  id: OrganizationRoleIdentity;
+  type: OrganizationRoleType;
+  /**
+   * Name of role
+   */
+  name: string;
+  /**
+   * Whether the role can read everything or not
+   */
+  can_read_everything: boolean;
+  /**
+   * Whether the role can access projects as owner or not
+   */
+  can_access_sites_as_owner: boolean;
+  /**
+   * Whether the role can create new sites or not
+   */
+  can_create_new_sites: boolean;
+  /**
+   * Whether the role can edit projects or not
+   */
+  can_edit_sites: boolean;
+  /**
+   * Whether the role can manage project transfers or not
+   */
+  can_manage_site_transfers: boolean;
+  /**
+   * Whether the role can delete projects or not
+   */
+  can_delete_sites: boolean;
+  /**
+   * Whether the role can manage members or not
+   */
+  can_manage_members: boolean;
+  /**
+   * Whether the role can manage billing or not
+   */
+  can_manage_billing: boolean;
+  /**
+   * Whether the role can manage organization or not
+   */
+  can_manage_organization: boolean;
+};
+export type OrganizationRoleSelfTargetSchema = OrganizationRole;
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `OrganizationRole`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationRoleData = {
+  type: OrganizationRoleType;
+  id: OrganizationRoleIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `OrganizationRole`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationRoleAttributes = {
+  /**
+   * Name of role
+   */
+  name: string;
+  /**
+   * Whether the role can read everything or not
+   */
+  can_read_everything: boolean;
+  /**
+   * Whether the role can access projects as owner or not
+   */
+  can_access_sites_as_owner: boolean;
+  /**
+   * Whether the role can create new sites or not
+   */
+  can_create_new_sites: boolean;
+  /**
+   * Whether the role can edit projects or not
+   */
+  can_edit_sites: boolean;
+  /**
+   * Whether the role can manage project transfers or not
+   */
+  can_manage_site_transfers: boolean;
+  /**
+   * Whether the role can delete projects or not
+   */
+  can_delete_sites: boolean;
+  /**
+   * Whether the role can manage members or not
+   */
+  can_manage_members: boolean;
+  /**
+   * Whether the role can manage billing or not
+   */
+  can_manage_billing: boolean;
+  /**
+   * Whether the role can manage organization or not
+   */
+  can_manage_organization: boolean;
+};
+
+/**
+ * A DatoCMS organization can be accessed by multiple people. Every invitation is linked to a specific role, which describes what actions it will be able to perform once the user will register.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization_invitation".
+ */
+export type OrganizationInvitation = {
+  id: OrganizationInvitationIdentity;
+  type: OrganizationInvitationType;
+  /**
+   * Email
+   */
+  email: string;
+  /**
+   * Whether this invitation has expired
+   */
+  expired?: boolean;
+  role: OrganizationRoleData;
+  meta: OrganizationInvitationMeta;
+};
+export type OrganizationInvitationCreateTargetSchema = OrganizationInvitation;
+export type OrganizationInvitationUpdateTargetSchema = OrganizationInvitation;
+export type OrganizationInvitationSelfTargetSchema = OrganizationInvitation;
+export type OrganizationInvitationDestroyTargetSchema = OrganizationInvitation;
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type OrganizationInvitationMeta = {
+  /**
+   * Whether the invitation has expired or not
+   */
+  expired: boolean;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationInvitationData = {
+  type: OrganizationInvitationType;
+  id: OrganizationInvitationIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationInvitationAttributes = {
+  /**
+   * Email
+   */
+  email: string;
+  /**
+   * Whether this invitation has expired
+   */
+  expired?: boolean;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type OrganizationInvitationRelationships = {
+  role: OrganizationRoleData;
+};
+
+/**
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type OrganizationInvitationCreateSchema = {
+  type?: OrganizationInvitationType;
+  /**
+   * Email
+   */
+  email: string;
+  role: OrganizationRoleData;
+};
+
+/**
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type OrganizationInvitationUpdateSchema = {
+  id?: OrganizationInvitationIdentity;
+  type?: OrganizationInvitationType;
+  role?: OrganizationRoleData;
+  [k: string]: unknown;
 };
