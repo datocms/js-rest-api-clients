@@ -182,6 +182,25 @@
         "responseType": "AccountDeactivate_2FaTargetSchema",
         "name": "deactivate_2Fa",
         "rawName": "rawDeactivate_2Fa"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "convert_to_organization",
+        "urlTemplate": "/account/convert-to-organization",
+        "method": "POST",
+        "comment": "Convert to organization",
+        "requestBodyType": "AccountConvertToOrganizationSchema",
+        "requestStructure": {
+          "type": "organization",
+          "attributes": [
+            "name"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccountConvertToOrganizationJobSchema",
+        "name": "convertToOrganization",
+        "rawName": "rawConvertToOrganization"
       }
     ],
     "namespace": "account",

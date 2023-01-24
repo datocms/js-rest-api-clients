@@ -291,6 +291,45 @@ export type OtpBackupCodesType = 'otp_backup_codes';
  */
 export type OtpBackupCodesIdentity = string;
 /**
+ * JSON API type field
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationType = 'organization';
+/**
+ * ID of organization
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationIdentity = string;
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type OrganizationInstancesHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type OrganizationSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `self.hrefSchema` link.
  */
@@ -465,45 +504,6 @@ export type PaymentMethodType = 'payment_method';
  * via the `definition` "id".
  */
 export type PaymentMethodIdentity = string;
-/**
- * JSON API type field
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "type".
- */
-export type OrganizationType = 'organization';
-/**
- * ID of organization
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "id".
- */
-export type OrganizationIdentity = string;
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `instances.hrefSchema` link.
- */
-export type OrganizationInstancesHrefSchema = {
-  /**
-   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
-   */
-  include?: string;
-  [k: string]: unknown;
-};
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `self.hrefSchema` link.
- */
-export type OrganizationSelfHrefSchema = {
-  /**
-   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
-   */
-  include?: string;
-  [k: string]: unknown;
-};
 /**
  * JSON API type field
  *
@@ -1878,6 +1878,171 @@ export type AccountDeactivate_2FaTargetSchema = {
 };
 
 /**
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `convert_to_organization.schema` link.
+ */
+export type AccountConvertToOrganizationSchema = {
+  data: {
+    type: OrganizationType;
+    attributes: {
+      /**
+       * Name of the organization
+       */
+      name: string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `convert_to_organization.targetSchema` link.
+ */
+export type AccountConvertToOrganizationTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `convert_to_organization.jobSchema` link.
+ */
+export type AccountConvertToOrganizationJobSchema = {
+  data: Organization;
+};
+
+/**
+ * Organizations allow you to collaborate with members on projects
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization".
+ */
+export type Organization = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+  attributes: OrganizationAttributes;
+  relationships: OrganizationRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationAttributes = {
+  /**
+   * Name of the organization
+   */
+  name: string;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type OrganizationRelationships = {
+  active_subscription: {
+    data: PerOwnerPricingSubscriptionData;
+  };
+  billing_profile: {
+    data: null | PerOwnerPricingBillingProfileData;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationData = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type OrganizationInstancesTargetSchema = {
+  data: Organization[];
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type OrganizationSelfTargetSchema = {
+  data: Organization;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type OrganizationCreateSchema = {
+  data: {
+    type: OrganizationType;
+    attributes: {
+      /**
+       * Name of the organization
+       */
+      name?: string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type OrganizationCreateTargetSchema = {
+  data: Organization;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type OrganizationUpdateSchema = {
+  data: {
+    id: OrganizationIdentity;
+    type: OrganizationType;
+    attributes: {
+      /**
+       * Name of the organization
+       */
+      name?: string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type OrganizationUpdateTargetSchema = {
+  data: Organization;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type OrganizationDestroyTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `destroy.jobSchema` link.
+ */
+export type OrganizationDestroyJobSchema = {
+  data: Organization;
+};
+
+/**
  * A per-project subscription record
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -2982,27 +3147,7 @@ export type SiteTransferCreateSchema = {
   data: {
     type: SiteTransferType;
     attributes: {
-      destination?:
-        | {
-            /**
-             * Type of owner
-             */
-            type: 'account';
-            /**
-             * Email of the account
-             */
-            email: string;
-          }
-        | {
-            /**
-             * Type of owner
-             */
-            type: 'organization';
-            /**
-             * ID of the organization
-             */
-            id: string;
-          };
+      destination?: AccountData | OrganizationData;
     };
   };
 };
@@ -3448,139 +3593,6 @@ export type PaymentMethodAttributes = {};
 export type PaymentMethodData = {
   type: PaymentMethodType;
   id: PaymentMethodIdentity;
-};
-
-/**
- * Organizations allow you to collaborate with members on projects
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "organization".
- */
-export type Organization = {
-  type: OrganizationType;
-  id: OrganizationIdentity;
-  attributes: OrganizationAttributes;
-  relationships: OrganizationRelationships;
-};
-
-/**
- * JSON API attributes
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type OrganizationAttributes = {
-  /**
-   * Name of the organization
-   */
-  name: string;
-};
-
-/**
- * JSON API links
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "relationships".
- */
-export type OrganizationRelationships = {
-  active_subscription: {
-    data: PerOwnerPricingSubscriptionData;
-  };
-  billing_profile: {
-    data: PerOwnerPricingBillingProfileData;
-  };
-};
-
-/**
- * JSON API data
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "data".
- */
-export type OrganizationData = {
-  type: OrganizationType;
-  id: OrganizationIdentity;
-};
-
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `instances.targetSchema` link.
- */
-export type OrganizationInstancesTargetSchema = {
-  data: Organization[];
-};
-
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `self.targetSchema` link.
- */
-export type OrganizationSelfTargetSchema = {
-  data: Organization;
-};
-
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `create.schema` link.
- */
-export type OrganizationCreateSchema = {
-  data: {
-    type: OrganizationType;
-    attributes: {
-      /**
-       * Name of the organization
-       */
-      name?: string;
-    };
-  };
-};
-
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `create.targetSchema` link.
- */
-export type OrganizationCreateTargetSchema = {
-  data: Organization;
-};
-
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `update.schema` link.
- */
-export type OrganizationUpdateSchema = {
-  data: {
-    id: OrganizationIdentity;
-    type: OrganizationType;
-    attributes: {
-      /**
-       * Name of the organization
-       */
-      name?: string;
-    };
-  };
-};
-
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `update.targetSchema` link.
- */
-export type OrganizationUpdateTargetSchema = {
-  data: Organization;
-};
-
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `destroy.targetSchema` link.
- */
-export type OrganizationDestroyTargetSchema = {
-  data: Job;
-};
-
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `destroy.jobSchema` link.
- */
-export type OrganizationDestroyJobSchema = {
-  data: Organization;
 };
 
 /**

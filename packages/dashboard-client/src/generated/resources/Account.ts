@@ -292,4 +292,47 @@ export default class Account extends BaseResource {
       body,
     });
   }
+
+  /**
+   * Convert to organization
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  convertToOrganization(
+    body: SimpleSchemaTypes.AccountConvertToOrganizationSchema,
+  ) {
+    return this.rawConvertToOrganization(
+      Utils.serializeRequestBody<SchemaTypes.AccountConvertToOrganizationSchema>(
+        body,
+        {
+          type: 'organization',
+          attributes: ['name'],
+          relationships: [],
+        },
+      ),
+    ).then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.AccountConvertToOrganizationJobSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Convert to organization
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawConvertToOrganization(
+    body: SchemaTypes.AccountConvertToOrganizationSchema,
+  ): Promise<SchemaTypes.AccountConvertToOrganizationJobSchema> {
+    return this.client.request<SchemaTypes.AccountConvertToOrganizationJobSchema>(
+      {
+        method: 'POST',
+        url: '/account/convert-to-organization',
+        body,
+      },
+    );
+  }
 }
