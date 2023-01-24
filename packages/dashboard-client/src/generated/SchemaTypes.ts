@@ -990,7 +990,11 @@ export type AccountDestroyJobSchema = {
  */
 export type AccountSelfTargetSchema = {
   data: Account;
-  included?: (PerOwnerPricingPlan | PerOwnerPricingSubscription)[];
+  included?: (
+    | PerOwnerPricingPlan
+    | PerOwnerPricingSubscription
+    | PerOwnerPricingBillingProfile
+  )[];
 };
 
 /**
@@ -1745,6 +1749,114 @@ export type SiteDuplicateJobSchema = {
 };
 
 /**
+ * A billing profile
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "per_owner_pricing_billing_profile".
+ */
+export type PerOwnerPricingBillingProfile = {
+  type: PerOwnerPricingBillingProfileType;
+  id: PerOwnerPricingBillingProfileIdentity;
+  attributes: PerOwnerPricingBillingProfileAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type PerOwnerPricingBillingProfileAttributes = {
+  first_name: string;
+  last_name: string;
+  company: null | string;
+  card_last_4: string;
+  next_billing_at: string;
+  card_type: string;
+  card_expiry_month: number;
+  card_expiry_year: number;
+  address_line: string;
+  city: string;
+  email: string;
+  country: string;
+  state: string;
+  zip: string;
+  vat_number: null | string;
+  defaulting: boolean;
+  credits: number;
+  total_dues: number;
+  cf_cod_fiscale: null | string;
+  po_number: null | string;
+  unbilled_charges: number;
+  discount_percentage: number;
+};
+
+/**
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type PerOwnerPricingBillingProfileSelfTargetSchema = {
+  data: PerOwnerPricingBillingProfile;
+};
+
+/**
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
+ * via the `update_credit_card.schema` link.
+ */
+export type PerOwnerPricingBillingProfileUpdateCreditCardSchema = {
+  data: {
+    /**
+     * JSON API type field
+     */
+    type: 'card';
+    attributes: {
+      payment_intent_id: string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
+ * via the `update_credit_card.targetSchema` link.
+ */
+export type PerOwnerPricingBillingProfileUpdateCreditCardTargetSchema = {
+  data: PerOwnerPricingBillingProfile;
+};
+
+/**
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
+ * via the `update_info.schema` link.
+ */
+export type PerOwnerPricingBillingProfileUpdateInfoSchema = {
+  data: {
+    id?: PerOwnerPricingBillingProfileIdentity;
+    type: PerOwnerPricingBillingProfileType;
+    attributes: {
+      first_name: string;
+      last_name: string;
+      company: null | string;
+      address_line: string;
+      city: string;
+      email: string;
+      country: string;
+      state: string;
+      zip: string;
+      vat_number?: null | string;
+      cf_cod_fiscale?: null | string;
+      po_number?: null | string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
+ * via the `update_info.targetSchema` link.
+ */
+export type PerOwnerPricingBillingProfileUpdateInfoTargetSchema = {
+  data: PerOwnerPricingBillingProfile;
+};
+
+/**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `reset_password.schema` link.
  */
@@ -1967,6 +2079,11 @@ export type OrganizationData = {
  */
 export type OrganizationInstancesTargetSchema = {
   data: Organization[];
+  included?: (
+    | PerOwnerPricingPlan
+    | PerOwnerPricingSubscription
+    | PerOwnerPricingBillingProfile
+  )[];
 };
 
 /**
@@ -1975,6 +2092,11 @@ export type OrganizationInstancesTargetSchema = {
  */
 export type OrganizationSelfTargetSchema = {
   data: Organization;
+  included?: (
+    | PerOwnerPricingPlan
+    | PerOwnerPricingSubscription
+    | PerOwnerPricingBillingProfile
+  )[];
 };
 
 /**
@@ -2671,114 +2793,6 @@ export type PerSitePricingBillingProfileUpdateInfoTargetSchema = {
  */
 export type PerSitePricingBillingProfileDestroyTargetSchema = {
   data: PerSitePricingBillingProfile;
-};
-
-/**
- * A billing profile
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "per_owner_pricing_billing_profile".
- */
-export type PerOwnerPricingBillingProfile = {
-  type: PerOwnerPricingBillingProfileType;
-  id: PerOwnerPricingBillingProfileIdentity;
-  attributes: PerOwnerPricingBillingProfileAttributes;
-};
-
-/**
- * JSON API attributes
- *
- * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type PerOwnerPricingBillingProfileAttributes = {
-  first_name: string;
-  last_name: string;
-  company: null | string;
-  card_last_4: string;
-  next_billing_at: string;
-  card_type: string;
-  card_expiry_month: number;
-  card_expiry_year: number;
-  address_line: string;
-  city: string;
-  email: string;
-  country: string;
-  state: string;
-  zip: string;
-  vat_number: null | string;
-  defaulting: boolean;
-  credits: number;
-  total_dues: number;
-  cf_cod_fiscale: null | string;
-  po_number: null | string;
-  unbilled_charges: number;
-  discount_percentage: number;
-};
-
-/**
- * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
- * via the `self.targetSchema` link.
- */
-export type PerOwnerPricingBillingProfileSelfTargetSchema = {
-  data: PerOwnerPricingBillingProfile;
-};
-
-/**
- * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
- * via the `update_credit_card.schema` link.
- */
-export type PerOwnerPricingBillingProfileUpdateCreditCardSchema = {
-  data: {
-    /**
-     * JSON API type field
-     */
-    type: 'card';
-    attributes: {
-      payment_intent_id: string;
-    };
-  };
-};
-
-/**
- * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
- * via the `update_credit_card.targetSchema` link.
- */
-export type PerOwnerPricingBillingProfileUpdateCreditCardTargetSchema = {
-  data: PerOwnerPricingBillingProfile;
-};
-
-/**
- * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
- * via the `update_info.schema` link.
- */
-export type PerOwnerPricingBillingProfileUpdateInfoSchema = {
-  data: {
-    id?: PerOwnerPricingBillingProfileIdentity;
-    type: PerOwnerPricingBillingProfileType;
-    attributes: {
-      first_name: string;
-      last_name: string;
-      company: null | string;
-      address_line: string;
-      city: string;
-      email: string;
-      country: string;
-      state: string;
-      zip: string;
-      vat_number?: null | string;
-      cf_cod_fiscale?: null | string;
-      po_number?: null | string;
-    };
-  };
-};
-
-/**
- * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
- * via the `update_info.targetSchema` link.
- */
-export type PerOwnerPricingBillingProfileUpdateInfoTargetSchema = {
-  data: PerOwnerPricingBillingProfile;
 };
 
 /**
