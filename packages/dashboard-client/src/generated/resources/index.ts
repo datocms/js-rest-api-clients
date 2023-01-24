@@ -19,3 +19,4 @@ export { default as PaymentIntent } from './PaymentIntent';
 export { default as Organization } from './Organization';
 export { default as OrganizationRole } from './OrganizationRole';
 export { default as OrganizationInvitation } from './OrganizationInvitation';
+export { default as OrganizationMembership } from './OrganizationMembership';

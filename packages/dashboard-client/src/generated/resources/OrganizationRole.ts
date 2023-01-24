@@ -30,7 +30,7 @@ export default class OrganizationRole extends BaseResource {
     return this.client.request<SchemaTypes.OrganizationRoleInstancesTargetSchema>(
       {
         method: 'GET',
-        url: '/organizations-roles',
+        url: '/organization-roles',
       },
     );
   }
@@ -60,7 +60,7 @@ export default class OrganizationRole extends BaseResource {
   ): Promise<SchemaTypes.OrganizationRoleSelfTargetSchema> {
     return this.client.request<SchemaTypes.OrganizationRoleSelfTargetSchema>({
       method: 'GET',
-      url: `/organizations/${organizationRoleId}`,
+      url: `/organization-roles/${organizationRoleId}`,
     });
   }
 }

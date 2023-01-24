@@ -698,6 +698,62 @@ export type OrganizationInvitationRedeemHrefSchema = {
   token?: string;
   [k: string]: unknown;
 };
+/**
+ * ID of membership
+ *
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationMembershipIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationMembershipType = 'organization_membership';
+/**
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type OrganizationMembershipInstancesTargetSchema =
+  OrganizationMembership[];
+/**
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type OrganizationMembershipInstancesHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `role`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type OrganizationMembershipSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `role`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `me.hrefSchema` link.
+ */
+export type OrganizationMembershipMeHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `role`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
 
 export type DatoApi = {
   session?: Session;
@@ -725,6 +781,7 @@ export type DatoApi = {
   organization?: Organization;
   organization_role?: OrganizationRole;
   organization_invitation?: OrganizationInvitation;
+  organization_membership?: OrganizationMembership;
   [k: string]: unknown;
 };
 
@@ -1128,7 +1185,7 @@ export type Site = {
   /**
    * Access token
    */
-  access_token: string;
+  access_token: null | string;
   /**
    * Read-write API token
    */
@@ -1291,7 +1348,7 @@ export type SiteAttributes = {
   /**
    * Access token
    */
-  access_token: string;
+  access_token: null | string;
   /**
    * Read-write API token
    */
@@ -2868,14 +2925,56 @@ export type JobResultAttributes = {
 export type SiteTransfer = {
   id: SiteTransferIdentity;
   type: SiteTransferType;
-  /**
-   * Email of the source account
-   */
-  source_account_email: string;
-  /**
-   * Email of the destination account
-   */
-  account_email: string;
+  source:
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'account';
+        /**
+         * Email of the account that owns the project
+         */
+        email: string;
+      }
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'organization';
+        /**
+         * Name of the organization that owns the project
+         */
+        name: string;
+        /**
+         * ID of the organization that owns the project
+         */
+        id: string;
+      };
+  destination:
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'account';
+        /**
+         * Email of the account that owns the project
+         */
+        email: string;
+      }
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'organization';
+        /**
+         * Name of the organization that owns the project
+         */
+        name: string;
+        /**
+         * ID of the organization that owns the project
+         */
+        id: string;
+      };
   /**
    * Name of the site to transfer
    */
@@ -2917,14 +3016,56 @@ export type SiteTransferMeta = {
  * via the `definition` "attributes".
  */
 export type SiteTransferAttributes = {
-  /**
-   * Email of the source account
-   */
-  source_account_email: string;
-  /**
-   * Email of the destination account
-   */
-  account_email: string;
+  source:
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'account';
+        /**
+         * Email of the account that owns the project
+         */
+        email: string;
+      }
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'organization';
+        /**
+         * Name of the organization that owns the project
+         */
+        name: string;
+        /**
+         * ID of the organization that owns the project
+         */
+        id: string;
+      };
+  destination:
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'account';
+        /**
+         * Email of the account that owns the project
+         */
+        email: string;
+      }
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'organization';
+        /**
+         * Name of the organization that owns the project
+         */
+        name: string;
+        /**
+         * ID of the organization that owns the project
+         */
+        id: string;
+      };
   /**
    * Name of the site to transfer
    */
@@ -2960,10 +3101,27 @@ export type SiteTransferRelationships = {
  */
 export type SiteTransferCreateSchema = {
   type?: SiteTransferType;
-  /**
-   * Email of the destination account
-   */
-  account_email?: string;
+  destination?:
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'account';
+        /**
+         * Email of the account
+         */
+        email: string;
+      }
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'organization';
+        /**
+         * ID of the organization
+         */
+        id: string;
+      };
 };
 
 /**
@@ -3331,8 +3489,8 @@ export type Organization = {
    * Name of the organization
    */
   name: string;
-  active_subscription: null | PerOwnerPricingSubscriptionData;
-  billing_profile: null | PerOwnerPricingBillingProfileData;
+  active_subscription: PerOwnerPricingSubscriptionData;
+  billing_profile: PerOwnerPricingBillingProfileData;
 };
 export type OrganizationSelfTargetSchema = Organization;
 export type OrganizationCreateTargetSchema = Organization;
@@ -3369,8 +3527,8 @@ export type OrganizationAttributes = {
  * via the `definition` "relationships".
  */
 export type OrganizationRelationships = {
-  active_subscription: null | PerOwnerPricingSubscriptionData;
-  billing_profile: null | PerOwnerPricingBillingProfileData;
+  active_subscription: PerOwnerPricingSubscriptionData;
+  billing_profile: PerOwnerPricingBillingProfileData;
 };
 
 /**
@@ -3522,10 +3680,6 @@ export type OrganizationInvitation = {
    * Email
    */
   email: string;
-  /**
-   * Whether this invitation has expired
-   */
-  expired?: boolean;
   role: OrganizationRoleData;
   meta: OrganizationInvitationMeta;
 };
@@ -3568,10 +3722,6 @@ export type OrganizationInvitationAttributes = {
    * Email
    */
   email: string;
-  /**
-   * Whether this invitation has expired
-   */
-  expired?: boolean;
 };
 
 /**
@@ -3604,6 +3754,75 @@ export type OrganizationInvitationCreateSchema = {
 export type OrganizationInvitationUpdateSchema = {
   id?: OrganizationInvitationIdentity;
   type?: OrganizationInvitationType;
+  role?: OrganizationRoleData;
+  [k: string]: unknown;
+};
+
+/**
+ * A DatoCMS organization can be accessed by multiple people. Every membership is linked to a specific role, which describes what actions it will be able to perform once the user will register.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization_membership".
+ */
+export type OrganizationMembership = {
+  id: OrganizationMembershipIdentity;
+  type: OrganizationMembershipType;
+  role: OrganizationRoleData;
+  meta: OrganizationMembershipMeta;
+};
+export type OrganizationMembershipUpdateTargetSchema = OrganizationMembership;
+export type OrganizationMembershipSelfTargetSchema = OrganizationMembership;
+export type OrganizationMembershipMeTargetSchema = OrganizationMembership;
+export type OrganizationMembershipDestroyTargetSchema = OrganizationMembership;
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type OrganizationMembershipMeta = {
+  /**
+   * Email
+   */
+  email: string;
+  /**
+   * First name
+   */
+  first_name?: string | null;
+  /**
+   * Last name
+   */
+  last_name?: string | null;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationMembershipData = {
+  type: OrganizationMembershipType;
+  id: OrganizationMembershipIdentity;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type OrganizationMembershipRelationships = {
+  role: OrganizationRoleData;
+};
+
+/**
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type OrganizationMembershipUpdateSchema = {
+  id?: OrganizationMembershipIdentity;
+  type?: OrganizationMembershipType;
   role?: OrganizationRoleData;
   [k: string]: unknown;
 };

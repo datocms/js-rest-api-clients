@@ -862,7 +862,7 @@
         "requestStructure": {
           "type": "site_transfer",
           "attributes": [
-            "account_email"
+            "destination"
           ],
           "relationships": []
         },
@@ -1162,7 +1162,7 @@
         "rel": "instances",
         "urlTemplate": "/organizations",
         "method": "GET",
-        "comment": "List current user organizations",
+        "comment": "List organizations",
         "queryParamsType": "OrganizationInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "OrganizationInstancesTargetSchema",
@@ -1232,7 +1232,7 @@
       {
         "returnsCollection": false,
         "rel": "destroy",
-        "urlTemplate": "/organizations/${siteId}/transfer",
+        "urlTemplate": "/organizations/${siteId}",
         "method": "DELETE",
         "comment": "Destroy an organization",
         "urlPlaceholder": {
@@ -1255,7 +1255,7 @@
       {
         "returnsCollection": true,
         "rel": "instances",
-        "urlTemplate": "/organizations-roles",
+        "urlTemplate": "/organization-roles",
         "method": "GET",
         "comment": "List organization roles",
         "queryParamsRequired": false,
@@ -1266,7 +1266,7 @@
       {
         "returnsCollection": false,
         "rel": "self",
-        "urlTemplate": "/organizations/${organizationRoleId}",
+        "urlTemplate": "/organization-roles/${organizationRoleId}",
         "method": "GET",
         "comment": "Retrieve an organization role",
         "urlPlaceholder": {
@@ -1408,5 +1408,93 @@
     ],
     "namespace": "organizationInvitations",
     "resourceClassName": "OrganizationInvitation"
+  },
+  {
+    "jsonApiType": "organization_membership",
+    "endpoints": [
+      {
+        "returnsCollection": false,
+        "rel": "update",
+        "urlTemplate": "/organization-memberships/${organizationMembershipId}",
+        "method": "PUT",
+        "comment": "Update an organization membership",
+        "urlPlaceholder": {
+          "variableName": "organizationMembershipId",
+          "isEntityId": true,
+          "relType": "OrganizationMembershipData"
+        },
+        "requestBodyType": "OrganizationMembershipUpdateSchema",
+        "requestStructure": {
+          "type": "organization_membership",
+          "attributes": [],
+          "relationships": [
+            "role"
+          ]
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMembershipUpdateTargetSchema",
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/organization-memberships",
+        "method": "GET",
+        "comment": "List all organization memberships",
+        "queryParamsType": "OrganizationMembershipInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMembershipInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/organization-memberships/${organizationMembershipId}",
+        "method": "GET",
+        "comment": "Retrieve an organization membership",
+        "urlPlaceholder": {
+          "variableName": "organizationMembershipId",
+          "isEntityId": true,
+          "relType": "OrganizationMembershipData"
+        },
+        "queryParamsType": "OrganizationMembershipSelfHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMembershipSelfTargetSchema",
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "me",
+        "urlTemplate": "/organization-memberships/me",
+        "method": "GET",
+        "comment": "Retrieve currently signed-in account organization membership",
+        "queryParamsType": "OrganizationMembershipMeHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMembershipMeTargetSchema",
+        "name": "findMe",
+        "rawName": "rawFindMe"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/organization-memberships/${organizationMembershipId}",
+        "method": "DELETE",
+        "comment": "Delete an organization membership",
+        "urlPlaceholder": {
+          "variableName": "organizationMembershipId",
+          "isEntityId": true,
+          "relType": "OrganizationMembershipData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMembershipDestroyTargetSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "organizationMemberships",
+    "resourceClassName": "OrganizationMembership"
   }
 ]

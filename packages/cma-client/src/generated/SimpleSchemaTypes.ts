@@ -6675,7 +6675,12 @@ export type Item = {
   id: ItemIdentity;
   type: ItemType1;
   item_type: ItemTypeData;
-  creator?: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator?:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
   meta: ItemMeta;
   [k: string]: unknown;
 };
@@ -6763,7 +6768,12 @@ export type ItemAttributes = {
  */
 export type ItemRelationships = {
   item_type: ItemTypeData;
-  creator?: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator?:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 
 /**
@@ -6774,7 +6784,12 @@ export type ItemValidateExistingSchema = {
   id?: ItemIdentity;
   type?: ItemType1;
   item_type: ItemTypeData;
-  creator?: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator?:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
   [k: string]: unknown;
 };
 
@@ -6851,7 +6866,12 @@ export type ItemUpdateSchema = {
   id?: ItemIdentity;
   type?: ItemType1;
   item_type?: ItemTypeData;
-  creator?: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator?:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
   /**
    * Meta information regarding the record
    */
@@ -6978,7 +6998,12 @@ export type ItemVersion = {
   type: ItemVersionType;
   item_type: ItemTypeData;
   item: ItemData;
-  editor: AccountData | AccessTokenData | UserData | SsoUserData;
+  editor:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
   meta: ItemVersionMeta;
   [k: string]: unknown;
 };
@@ -7038,7 +7063,12 @@ export type ItemVersionAttributes = {
 export type ItemVersionRelationships = {
   item_type: ItemTypeData;
   item: ItemData;
-  editor: AccountData | AccessTokenData | UserData | SsoUserData;
+  editor:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 
 /**
@@ -7207,7 +7237,12 @@ export type Upload = {
      */
     alpha: number;
   }[];
-  creator: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 export type UploadCreateJobSchema = Upload;
 export type UploadSelfTargetSchema = Upload;
@@ -7397,7 +7432,12 @@ export type UploadAttributes = {
  * via the `definition` "relationships".
  */
 export type UploadRelationships = {
-  creator: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 
 /**
@@ -7535,7 +7575,12 @@ export type UploadUpdateSchema = {
       } | null;
     };
   };
-  creator?: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator?:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 
 /**

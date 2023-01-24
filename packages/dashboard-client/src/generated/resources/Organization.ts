@@ -7,7 +7,7 @@ export default class Organization extends BaseResource {
   static readonly TYPE: 'organization' = 'organization';
 
   /**
-   * List current user organizations
+   * List organizations
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
@@ -21,7 +21,7 @@ export default class Organization extends BaseResource {
   }
 
   /**
-   * List current user organizations
+   * List organizations
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
@@ -173,7 +173,7 @@ export default class Organization extends BaseResource {
   ): Promise<SchemaTypes.OrganizationDestroyJobSchema> {
     return this.client.request<SchemaTypes.OrganizationDestroyJobSchema>({
       method: 'DELETE',
-      url: `/organizations/${siteId}/transfer`,
+      url: `/organizations/${siteId}`,
     });
   }
 }

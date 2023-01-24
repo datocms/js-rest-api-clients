@@ -6256,7 +6256,12 @@ export type ItemRelationships = {
    * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
    */
   creator?: {
-    data: AccountData | AccessTokenData | UserData | SsoUserData;
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
   };
 };
 
@@ -6353,7 +6358,12 @@ export type ItemValidateExistingSchema = {
        * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
        */
       creator?: {
-        data: AccountData | AccessTokenData | UserData | SsoUserData;
+        data:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
       };
     };
   };
@@ -6556,7 +6566,12 @@ export type ItemUpdateSchema = {
        * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
        */
       creator?: {
-        data: AccountData | AccessTokenData | UserData | SsoUserData;
+        data:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
       };
     };
   };
@@ -6902,7 +6917,12 @@ export type ItemVersionRelationships = {
    * The entity (account/collaborator/access token/sso user) who made this change to the record. It must be an object with `type` (e.g. 'account') and `id` properties.
    */
   editor: {
-    data: AccountData | AccessTokenData | UserData | SsoUserData;
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
   };
 };
 
@@ -7167,7 +7187,12 @@ export type UploadRelationships = {
    * The entity (account/collaborator/access token) who created the asset. It must be an object with `type` (e.g. 'account') and `id` properties.
    */
   creator: {
-    data: AccountData | AccessTokenData | UserData | SsoUserData;
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
   };
 };
 
@@ -7374,7 +7399,12 @@ export type UploadUpdateSchema = {
        * The entity (account/collaborator/access token) who created the asset. It must be an object with `type` (e.g. 'account') and `id` properties.
        */
       creator: {
-        data: AccountData | AccessTokenData | UserData | SsoUserData;
+        data:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
       };
     };
   };
@@ -10041,7 +10071,7 @@ export type SiteAttributes = {
  * via the `definition` "relationships".
  */
 export type SiteRelationships = {
-  account: {
+  account: null | {
     data: AccountData;
   };
   owner: {
