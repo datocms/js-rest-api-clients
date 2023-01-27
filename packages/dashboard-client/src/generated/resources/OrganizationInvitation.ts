@@ -234,7 +234,14 @@ export default class OrganizationInvitation extends BaseResource {
       | SimpleSchemaTypes.OrganizationInvitationData,
     queryParams?: SimpleSchemaTypes.OrganizationInvitationRedeemHrefSchema,
   ) {
-    return this.rawRedeem(Utils.toId(organizationInvitationId), queryParams);
+    return this.rawRedeem(
+      Utils.toId(organizationInvitationId),
+      queryParams,
+    ).then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationInvitationRedeemTargetSchema>(
+        body,
+      ),
+    );
   }
 
   /**
@@ -246,11 +253,13 @@ export default class OrganizationInvitation extends BaseResource {
   rawRedeem(
     organizationInvitationId: string,
     queryParams?: SchemaTypes.OrganizationInvitationRedeemHrefSchema,
-  ): Promise<void> {
-    return this.client.request<void>({
-      method: 'PUT',
-      url: `/organization-invitations/${organizationInvitationId}/redeem`,
-      queryParams,
-    });
+  ): Promise<SchemaTypes.OrganizationInvitationRedeemTargetSchema> {
+    return this.client.request<SchemaTypes.OrganizationInvitationRedeemTargetSchema>(
+      {
+        method: 'PUT',
+        url: `/organization-invitations/${organizationInvitationId}/redeem`,
+        queryParams,
+      },
+    );
   }
 }

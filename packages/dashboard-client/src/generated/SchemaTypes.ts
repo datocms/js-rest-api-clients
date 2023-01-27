@@ -3847,6 +3847,14 @@ export type OrganizationInvitationDestroyTargetSchema = {
 };
 
 /**
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `redeem.targetSchema` link.
+ */
+export type OrganizationInvitationRedeemTargetSchema = {
+  data: Organization;
+};
+
+/**
  * A DatoCMS organization can be accessed by multiple people. Every membership is linked to a specific role, which describes what actions it will be able to perform once the user will register.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -3939,6 +3947,7 @@ export type OrganizationMembershipUpdateTargetSchema = {
  */
 export type OrganizationMembershipInstancesTargetSchema = {
   data: OrganizationMembership[];
+  included?: OrganizationRole[];
 };
 
 /**
@@ -3947,6 +3956,7 @@ export type OrganizationMembershipInstancesTargetSchema = {
  */
 export type OrganizationMembershipSelfTargetSchema = {
   data: OrganizationMembership;
+  included?: OrganizationRole[];
 };
 
 /**
@@ -3955,6 +3965,7 @@ export type OrganizationMembershipSelfTargetSchema = {
  */
 export type OrganizationMembershipMeTargetSchema = {
   data: OrganizationMembership;
+  included?: OrganizationRole[];
 };
 
 /**

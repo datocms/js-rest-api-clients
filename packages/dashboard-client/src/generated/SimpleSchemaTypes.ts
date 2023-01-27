@@ -1159,6 +1159,9 @@ export type AccountConvertToOrganizationSchema = {
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `convert_to_organization.jobSchema` link.
  *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `redeem.targetSchema` link.
+ *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "organization".
  */
@@ -1177,6 +1180,7 @@ export type OrganizationCreateTargetSchema = Organization;
 export type OrganizationUpdateTargetSchema = Organization;
 export type OrganizationDestroyJobSchema = Organization;
 export type AccountConvertToOrganizationJobSchema = Organization;
+export type OrganizationInvitationRedeemTargetSchema = Organization;
 /**
  * JSON API data
  *
