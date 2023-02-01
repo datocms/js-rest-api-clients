@@ -3473,7 +3473,7 @@ export type PaymentIntentAttributes = {
   /**
    * Stripe PaymentIntent client_secret
    */
-  client_secret: string;
+  client_secret: string | null;
   /**
    * Stripe PaymentIntent status
    */
