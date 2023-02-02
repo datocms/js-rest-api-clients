@@ -9764,7 +9764,7 @@ export type Site = {
     twitter_account?: null | string;
     [k: string]: unknown;
   } | null;
-  account: AccountData;
+  account: null | AccountData;
   owner: AccountData | OrganizationData;
   /**
    * The list item types for the site
@@ -9936,7 +9936,7 @@ export type SiteAttributes = {
  * via the `definition` "relationships".
  */
 export type SiteRelationships = {
-  account: AccountData;
+  account: null | AccountData;
   owner: AccountData | OrganizationData;
   /**
    * The list item types for the site

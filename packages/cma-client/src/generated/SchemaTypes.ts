@@ -10071,8 +10071,8 @@ export type SiteAttributes = {
  * via the `definition` "relationships".
  */
 export type SiteRelationships = {
-  account: null | {
-    data: AccountData;
+  account: {
+    data: null | AccountData;
   };
   owner: {
     data: AccountData | OrganizationData;
