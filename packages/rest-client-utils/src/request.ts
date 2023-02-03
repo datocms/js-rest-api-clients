@@ -12,7 +12,9 @@ import {
   makeCancelablePromise,
   CanceledPromiseError,
 } from './makeCancelablePromise';
-import { isBrowser } from 'browser-or-node';
+
+const isBrowser =
+  typeof window !== 'undefined' && typeof window.document !== 'undefined';
 
 export enum LogLevel {
   /** No logging */
