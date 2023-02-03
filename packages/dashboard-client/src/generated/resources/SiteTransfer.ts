@@ -76,7 +76,7 @@ export default class SiteTransfer extends BaseResource {
       Utils.toId(siteId),
       Utils.serializeRequestBody<SchemaTypes.SiteTransferCreateSchema>(body, {
         type: 'site_transfer',
-        attributes: ['account_email'],
+        attributes: ['destination'],
         relationships: [],
       }),
     ).then((body) =>

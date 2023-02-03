@@ -232,6 +232,23 @@ export type AuditLogEventIdentity = string;
 /**
  * JSON API type field
  *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationType = 'organization';
+/**
+ * ID of organization
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationIdentity = string;
+/**
+ * JSON API type field
+ *
  * This interface was referenced by `SitePlan`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1290,6 +1307,7 @@ export type DatoApi = {
   sso_user?: SsoUser;
   audit_log_event?: AuditLogEvent;
   account?: Account;
+  organization?: Organization;
   site_plan?: SitePlan;
   menu_item?: MenuItem;
   item_type?: ItemType;
@@ -2851,10 +2869,6 @@ export type AccountAttributes = {
    * Company name
    */
   company: string | null;
-  /**
-   * Password
-   */
-  password?: string;
 };
 
 /**
@@ -3046,6 +3060,42 @@ export type AuditLogEventQueryTargetSchema = {
      */
     next_token: null | string;
   };
+};
+
+/**
+ * DatoCMS organization
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization".
+ */
+export type Organization = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+  attributes: OrganizationAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationAttributes = {
+  /**
+   * Name of the organization
+   */
+  name: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationData = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
 };
 
 /**
@@ -6206,7 +6256,12 @@ export type ItemRelationships = {
    * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
    */
   creator?: {
-    data: AccountData | AccessTokenData | UserData | SsoUserData;
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
   };
 };
 
@@ -6303,7 +6358,12 @@ export type ItemValidateExistingSchema = {
        * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
        */
       creator?: {
-        data: AccountData | AccessTokenData | UserData | SsoUserData;
+        data:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
       };
     };
   };
@@ -6506,7 +6566,12 @@ export type ItemUpdateSchema = {
        * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
        */
       creator?: {
-        data: AccountData | AccessTokenData | UserData | SsoUserData;
+        data:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
       };
     };
   };
@@ -6852,7 +6917,12 @@ export type ItemVersionRelationships = {
    * The entity (account/collaborator/access token/sso user) who made this change to the record. It must be an object with `type` (e.g. 'account') and `id` properties.
    */
   editor: {
-    data: AccountData | AccessTokenData | UserData | SsoUserData;
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
   };
 };
 
@@ -7117,7 +7187,12 @@ export type UploadRelationships = {
    * The entity (account/collaborator/access token) who created the asset. It must be an object with `type` (e.g. 'account') and `id` properties.
    */
   creator: {
-    data: AccountData | AccessTokenData | UserData | SsoUserData;
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
   };
 };
 
@@ -7324,7 +7399,12 @@ export type UploadUpdateSchema = {
        * The entity (account/collaborator/access token) who created the asset. It must be an object with `type` (e.g. 'account') and `id` properties.
        */
       creator: {
-        data: AccountData | AccessTokenData | UserData | SsoUserData;
+        data:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
       };
     };
   };
@@ -9992,7 +10072,10 @@ export type SiteAttributes = {
  */
 export type SiteRelationships = {
   account: {
-    data: AccountData;
+    data: null | AccountData;
+  };
+  owner: {
+    data: AccountData | OrganizationData;
   };
   item_types: {
     /**

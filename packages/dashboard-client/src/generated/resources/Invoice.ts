@@ -12,9 +12,9 @@ export default class Invoice extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  perAccountPricingBillingProfileList() {
-    return this.rawPerAccountPricingBillingProfileList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.InvoicePerAccountPricingBillingProfileInstancesTargetSchema>(
+  perOwnerPricingBillingProfileList() {
+    return this.rawPerOwnerPricingBillingProfileList().then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.InvoicePerOwnerPricingBillingProfileInstancesTargetSchema>(
         body,
       ),
     );
@@ -26,11 +26,11 @@ export default class Invoice extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawPerAccountPricingBillingProfileList(): Promise<SchemaTypes.InvoicePerAccountPricingBillingProfileInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.InvoicePerAccountPricingBillingProfileInstancesTargetSchema>(
+  rawPerOwnerPricingBillingProfileList(): Promise<SchemaTypes.InvoicePerOwnerPricingBillingProfileInstancesTargetSchema> {
+    return this.client.request<SchemaTypes.InvoicePerOwnerPricingBillingProfileInstancesTargetSchema>(
       {
         method: 'GET',
-        url: '/per-account-pricing-billing-profile/invoices',
+        url: '/per-owner-pricing-billing-profile/invoices',
       },
     );
   }
@@ -78,11 +78,11 @@ export default class Invoice extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  perAccountPricingBillingProfileCollectUnpaid(
-    body: SimpleSchemaTypes.InvoicePerAccountPricingBillingProfileCollectUnpaidSchema,
+  perOwnerPricingBillingProfileCollectUnpaid(
+    body: SimpleSchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema,
   ) {
-    return this.rawPerAccountPricingBillingProfileCollectUnpaid(
-      Utils.serializeRequestBody<SchemaTypes.InvoicePerAccountPricingBillingProfileCollectUnpaidSchema>(
+    return this.rawPerOwnerPricingBillingProfileCollectUnpaid(
+      Utils.serializeRequestBody<SchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema>(
         body,
         {
           type: 'invoice_collection',
@@ -91,7 +91,7 @@ export default class Invoice extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.InvoicePerAccountPricingBillingProfileCollectUnpaidTargetSchema>(
+      Utils.deserializeResponseBody<SimpleSchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema>(
         body,
       ),
     );
@@ -103,13 +103,13 @@ export default class Invoice extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawPerAccountPricingBillingProfileCollectUnpaid(
-    body: SchemaTypes.InvoicePerAccountPricingBillingProfileCollectUnpaidSchema,
-  ): Promise<SchemaTypes.InvoicePerAccountPricingBillingProfileCollectUnpaidTargetSchema> {
-    return this.client.request<SchemaTypes.InvoicePerAccountPricingBillingProfileCollectUnpaidTargetSchema>(
+  rawPerOwnerPricingBillingProfileCollectUnpaid(
+    body: SchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema,
+  ): Promise<SchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema> {
+    return this.client.request<SchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema>(
       {
-        method: 'GET',
-        url: '/per-account-pricing-billing-profile/invoices/collect-unpaid',
+        method: 'POST',
+        url: '/per-owner-pricing-billing-profile/invoices/collect-unpaid',
         body,
       },
     );
@@ -156,7 +156,7 @@ export default class Invoice extends BaseResource {
   ): Promise<SchemaTypes.InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema> {
     return this.client.request<SchemaTypes.InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema>(
       {
-        method: 'GET',
+        method: 'POST',
         url: `/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/invoices/collect-unpaid`,
         body,
       },

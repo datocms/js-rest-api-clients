@@ -85,38 +85,38 @@ export type SessionCreateSchema =
 /**
  * JSON API type field
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "type".
  */
-export type AccountSubscriptionType = 'account_subscription';
+export type PerOwnerPricingSubscriptionType = 'per_owner_pricing_subscription';
 /**
  * ID of subscription
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "identity".
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "id".
  */
-export type AccountSubscriptionIdentity = string;
+export type PerOwnerPricingSubscriptionIdentity = string;
 /**
  * JSON API type field
  *
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `definition` "type".
  */
-export type PerAccountPricingBillingProfileType =
-  'per_account_pricing_billing_profile';
+export type PerOwnerPricingBillingProfileType =
+  'per_owner_pricing_billing_profile';
 /**
  * ID of billing_profile
  *
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `definition` "identity".
  *
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `definition` "id".
  */
-export type PerAccountPricingBillingProfileIdentity = string;
+export type PerOwnerPricingBillingProfileIdentity = string;
 /**
  * ID of job
  *
@@ -139,6 +139,50 @@ export type JobType = 'job';
  * via the `self.hrefSchema` link.
  */
 export type AccountSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationType = 'organization';
+/**
+ * ID of organization
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationIdentity = string;
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type OrganizationInstancesTargetSchema = Organization[];
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type OrganizationInstancesHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type OrganizationSelfHrefSchema = {
   /**
    * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
    */
@@ -319,27 +363,27 @@ export type NextInvoiceEstimateType = 'next_invoice_estimate';
 /**
  * JSON API type field
  *
- * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
  * via the `definition` "type".
  */
-export type AccountPlanType = 'account_plan';
+export type PerOwnerPricingPlanType = 'per_owner_pricing_plan';
 /**
  * ID of plan
  *
- * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
  * via the `definition` "identity".
  *
- * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
  * via the `definition` "id".
  */
-export type AccountPlanIdentity = string;
+export type PerOwnerPricingPlanIdentity = string;
 /**
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `simulate.targetSchema` link.
  */
-export type AccountSubscriptionSimulateTargetSchema = (
+export type PerOwnerPricingSubscriptionSimulateTargetSchema = (
   | NextInvoiceEstimate
-  | AccountSubscription
+  | PerOwnerPricingSubscription
 )[];
 /**
  * This interface was referenced by `SitePlan`'s JSON-Schema
@@ -347,10 +391,10 @@ export type AccountSubscriptionSimulateTargetSchema = (
  */
 export type SitePlanInstancesTargetSchema = SitePlan[];
 /**
- * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
-export type AccountPlanInstancesTargetSchema = AccountPlan[];
+export type PerOwnerPricingPlanInstancesTargetSchema = PerOwnerPricingPlan[];
 /**
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `instances.targetSchema` link.
@@ -387,9 +431,9 @@ export type InvoiceIdentity = string;
 export type InvoiceType = 'invoice';
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
- * via the `per_account_pricing_billing_profile_instances.targetSchema` link.
+ * via the `per_owner_pricing_billing_profile_instances.targetSchema` link.
  */
-export type InvoicePerAccountPricingBillingProfileInstancesTargetSchema =
+export type InvoicePerOwnerPricingBillingProfileInstancesTargetSchema =
   Invoice[];
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
@@ -399,9 +443,9 @@ export type InvoicePerSitePricingBillingProfileInstancesTargetSchema =
   Invoice[];
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
- * via the `per_account_pricing_billing_profile_collect_unpaid.targetSchema` link.
+ * via the `per_owner_pricing_billing_profile_collect_unpaid.targetSchema` link.
  */
-export type InvoicePerAccountPricingBillingProfileCollectUnpaidTargetSchema =
+export type InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema =
   Invoice[];
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
@@ -598,17 +642,129 @@ export type OtpBackupCodesIdentity = string;
  * via the `definition` "type".
  */
 export type OtpBackupCodesType = 'otp_backup_codes';
+/**
+ * ID of role
+ *
+ * This interface was referenced by `OrganizationRole`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `OrganizationRole`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationRoleIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `OrganizationRole`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationRoleType = 'organization_role';
+/**
+ * This interface was referenced by `OrganizationRole`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type OrganizationRoleInstancesTargetSchema = OrganizationRole[];
+/**
+ * ID of invitation
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationInvitationIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationInvitationType = 'organization_invitation';
+/**
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type OrganizationInvitationInstancesTargetSchema =
+  OrganizationInvitation[];
+/**
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `redeem.hrefSchema` link.
+ */
+export type OrganizationInvitationRedeemHrefSchema = {
+  /**
+   * The organization invitation authorization token
+   */
+  token?: string;
+  [k: string]: unknown;
+};
+/**
+ * ID of membership
+ *
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationMembershipIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationMembershipType = 'organization_membership';
+/**
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type OrganizationMembershipInstancesTargetSchema =
+  OrganizationMembership[];
+/**
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type OrganizationMembershipInstancesHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `role`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type OrganizationMembershipSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `role`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `me.hrefSchema` link.
+ */
+export type OrganizationMembershipMeHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `role`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
 
 export type DatoApi = {
   session?: Session;
   account?: Account;
   site?: Site;
   site_subscription?: SiteSubscription;
-  account_subscription?: AccountSubscription;
+  per_owner_pricing_subscription?: PerOwnerPricingSubscription;
   site_plan?: SitePlan;
-  account_plan?: AccountPlan;
+  per_owner_pricing_plan?: PerOwnerPricingPlan;
   per_site_pricing_billing_profile?: PerSitePricingBillingProfile;
-  per_account_pricing_billing_profile?: PerAccountPricingBillingProfile;
+  per_owner_pricing_billing_profile?: PerOwnerPricingBillingProfile;
   invoice?: Invoice;
   resource_usage?: ResourceUsage;
   job_result?: JobResult;
@@ -622,6 +778,10 @@ export type DatoApi = {
   payment_method?: PaymentMethod;
   next_invoice_estimate?: NextInvoiceEstimate;
   otp_backup_codes?: OtpBackupCodes;
+  organization?: Organization;
+  organization_role?: OrganizationRole;
+  organization_invitation?: OrganizationInvitation;
+  organization_membership?: OrganizationMembership;
   [k: string]: unknown;
 };
 
@@ -714,8 +874,8 @@ export type Account = {
    * Whether 2-factor authentication is active for this account or not
    */
   is_2fa_active: boolean;
-  active_subscription: null | AccountSubscriptionData;
-  billing_profile: null | PerAccountPricingBillingProfileData;
+  active_subscription: null | PerOwnerPricingSubscriptionData;
+  billing_profile: null | PerOwnerPricingBillingProfileData;
 };
 export type AccountDestroyJobSchema = Account;
 export type AccountSelfTargetSchema = Account;
@@ -723,23 +883,23 @@ export type AccountDeactivate_2FaTargetSchema = Account;
 /**
  * JSON API data
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "data".
  */
-export type AccountSubscriptionData = {
-  type: AccountSubscriptionType;
-  id: AccountSubscriptionIdentity;
+export type PerOwnerPricingSubscriptionData = {
+  type: PerOwnerPricingSubscriptionType;
+  id: PerOwnerPricingSubscriptionIdentity;
 };
 
 /**
  * JSON API data
  *
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `definition` "data".
  */
-export type PerAccountPricingBillingProfileData = {
-  type: PerAccountPricingBillingProfileType;
-  id: PerAccountPricingBillingProfileIdentity;
+export type PerOwnerPricingBillingProfileData = {
+  type: PerOwnerPricingBillingProfileType;
+  id: PerOwnerPricingBillingProfileIdentity;
 };
 
 /**
@@ -782,8 +942,8 @@ export type AccountAttributes = {
  * via the `definition` "relationships".
  */
 export type AccountRelationships = {
-  active_subscription: null | AccountSubscriptionData;
-  billing_profile: null | PerAccountPricingBillingProfileData;
+  active_subscription: null | PerOwnerPricingSubscriptionData;
+  billing_profile: null | PerOwnerPricingBillingProfileData;
 };
 
 /**
@@ -879,6 +1039,12 @@ export type AccountDestroySchema = {
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `destroy.targetSchema` link.
  *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `convert_to_organization.targetSchema` link.
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ *
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `duplicate.targetSchema` link.
  *
@@ -890,6 +1056,8 @@ export type Job = {
   type: JobType;
 };
 export type AccountDestroyTargetSchema = Job;
+export type AccountConvertToOrganizationTargetSchema = Job;
+export type OrganizationDestroyTargetSchema = Job;
 export type SiteDuplicateTargetSchema = Job;
 /**
  * JSON API data
@@ -974,6 +1142,106 @@ export type AccountDeactivate_2FaSchema = {
 };
 
 /**
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `convert_to_organization.schema` link.
+ */
+export type AccountConvertToOrganizationSchema = {
+  type?: OrganizationType;
+  /**
+   * Name of the organization
+   */
+  name: string;
+};
+
+/**
+ * Organizations allow you to collaborate with members on projects
+ *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `convert_to_organization.jobSchema` link.
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `redeem.targetSchema` link.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization".
+ */
+export type Organization = {
+  id: OrganizationIdentity;
+  type: OrganizationType;
+  /**
+   * Name of the organization
+   */
+  name: string;
+  active_subscription: PerOwnerPricingSubscriptionData;
+  billing_profile: null | PerOwnerPricingBillingProfileData;
+};
+export type OrganizationSelfTargetSchema = Organization;
+export type OrganizationCreateTargetSchema = Organization;
+export type OrganizationUpdateTargetSchema = Organization;
+export type OrganizationDestroyJobSchema = Organization;
+export type AccountConvertToOrganizationJobSchema = Organization;
+export type OrganizationInvitationRedeemTargetSchema = Organization;
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationData = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationAttributes = {
+  /**
+   * Name of the organization
+   */
+  name: string;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type OrganizationRelationships = {
+  active_subscription: PerOwnerPricingSubscriptionData;
+  billing_profile: null | PerOwnerPricingBillingProfileData;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type OrganizationCreateSchema = {
+  type?: OrganizationType;
+  /**
+   * Name of the organization
+   */
+  name?: string;
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type OrganizationUpdateSchema = {
+  id?: OrganizationIdentity;
+  type?: OrganizationType;
+  /**
+   * Name of the organization
+   */
+  name?: string;
+};
+
+/**
  * A project represents a specific DatoCMS administrative area
  *
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
@@ -1021,7 +1289,7 @@ export type Site = {
   /**
    * Access token
    */
-  access_token: string;
+  access_token: null | string;
   /**
    * Read-write API token
    */
@@ -1030,10 +1298,6 @@ export type Site = {
    * Read-only API token
    */
   readonly_token?: null | string;
-  /**
-   * Project owner email
-   */
-  owner_email?: string;
   /**
    * Status of project according to billing situation
    */
@@ -1116,6 +1380,31 @@ export type SiteMeta = {
    * Site status
    */
   status: string;
+  owner:
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'account';
+        /**
+         * Email of the account that owns the project
+         */
+        email: string;
+      }
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'organization';
+        /**
+         * Name of the organization that owns the project
+         */
+        name: string;
+        /**
+         * ID of the organization that owns the project
+         */
+        id: string;
+      };
 };
 
 /**
@@ -1163,7 +1452,7 @@ export type SiteAttributes = {
   /**
    * Access token
    */
-  access_token: string;
+  access_token: null | string;
   /**
    * Read-write API token
    */
@@ -1172,10 +1461,6 @@ export type SiteAttributes = {
    * Read-only API token
    */
   readonly_token?: null | string;
-  /**
-   * Project owner email
-   */
-  owner_email?: string;
   /**
    * Status of project according to billing situation
    */
@@ -1521,11 +1806,11 @@ export type SiteSubscriptionValidateSchema = {
  * A subscription record
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "account_subscription".
+ * via the `definition` "per_owner_pricing_subscription".
  */
-export type AccountSubscription = {
-  id: AccountSubscriptionIdentity;
-  type: AccountSubscriptionType;
+export type PerOwnerPricingSubscription = {
+  id: PerOwnerPricingSubscriptionIdentity;
+  type: PerOwnerPricingSubscriptionType;
   /**
    * Date of creation of subscription
    */
@@ -1548,29 +1833,31 @@ export type AccountSubscription = {
     quantity: number;
   }[];
   price: number;
-  plan: AccountPlanData;
-  meta: AccountSubscriptionMeta;
+  plan: PerOwnerPricingPlanData;
+  meta: PerOwnerPricingSubscriptionMeta;
 };
-export type AccountSubscriptionCreateTargetSchema = AccountSubscription;
-export type AccountSubscriptionValidateTargetSchema = AccountSubscription;
+export type PerOwnerPricingSubscriptionCreateTargetSchema =
+  PerOwnerPricingSubscription;
+export type PerOwnerPricingSubscriptionValidateTargetSchema =
+  PerOwnerPricingSubscription;
 /**
  * JSON API data
  *
- * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
  * via the `definition` "data".
  */
-export type AccountPlanData = {
-  type: AccountPlanType;
-  id: AccountPlanIdentity;
+export type PerOwnerPricingPlanData = {
+  type: PerOwnerPricingPlanType;
+  id: PerOwnerPricingPlanIdentity;
 };
 
 /**
  * JSON API meta
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "meta".
  */
-export type AccountSubscriptionMeta = {
+export type PerOwnerPricingSubscriptionMeta = {
   /**
    * Whether account can be billed if it has no credit-card information or not
    */
@@ -1580,10 +1867,10 @@ export type AccountSubscriptionMeta = {
 /**
  * JSON API attributes
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export type AccountSubscriptionAttributes = {
+export type PerOwnerPricingSubscriptionAttributes = {
   /**
    * Date of creation of subscription
    */
@@ -1611,19 +1898,19 @@ export type AccountSubscriptionAttributes = {
 /**
  * JSON API links
  *
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export type AccountSubscriptionRelationships = {
-  plan: AccountPlanData;
+export type PerOwnerPricingSubscriptionRelationships = {
+  plan: PerOwnerPricingPlanData;
 };
 
 /**
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `create.schema` link.
  */
-export type AccountSubscriptionCreateSchema = {
-  type?: AccountSubscriptionType;
+export type PerOwnerPricingSubscriptionCreateSchema = {
+  type?: PerOwnerPricingSubscriptionType;
   payment_intent_id?: string;
   /**
    * Type of recurrence (yearly/monthly)
@@ -1643,15 +1930,15 @@ export type AccountSubscriptionCreateSchema = {
     po_number?: null | string;
     zip: string;
   };
-  plan: AccountPlanData;
+  plan: PerOwnerPricingPlanData;
 };
 
 /**
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `simulate.schema` link.
  */
-export type AccountSubscriptionSimulateSchema = {
-  type?: AccountSubscriptionType;
+export type PerOwnerPricingSubscriptionSimulateSchema = {
+  type?: PerOwnerPricingSubscriptionType;
   /**
    * Type of recurrence (yearly/monthly)
    */
@@ -1666,16 +1953,16 @@ export type AccountSubscriptionSimulateSchema = {
     zip: string;
     [k: string]: unknown;
   };
-  plan: AccountPlanData;
+  plan: PerOwnerPricingPlanData;
 };
 
 /**
- * This interface was referenced by `AccountSubscription`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `validate.schema` link.
  */
-export type AccountSubscriptionValidateSchema = {
-  type?: AccountSubscriptionType;
-  plan: AccountPlanData;
+export type PerOwnerPricingSubscriptionValidateSchema = {
+  type?: PerOwnerPricingSubscriptionType;
+  plan: PerOwnerPricingPlanData;
   [k: string]: unknown;
 };
 
@@ -2115,11 +2402,11 @@ export type SitePlanAttributes = {
  * Stores the information regarding the current plan for the account.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "account_plan".
+ * via the `definition` "per_owner_pricing_plan".
  */
-export type AccountPlan = {
-  id: AccountPlanIdentity;
-  type: AccountPlanType;
+export type PerOwnerPricingPlan = {
+  id: PerOwnerPricingPlanIdentity;
+  type: PerOwnerPricingPlanType;
   /**
    * The name of the plan
    */
@@ -2223,10 +2510,10 @@ export type AccountPlan = {
 /**
  * JSON API attributes
  *
- * This interface was referenced by `AccountPlan`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export type AccountPlanAttributes = {
+export type PerOwnerPricingPlanAttributes = {
   /**
    * The name of the plan
    */
@@ -2445,11 +2732,11 @@ export type PerSitePricingBillingProfileUpdateInfoSchema = {
  * A billing profile
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "per_account_pricing_billing_profile".
+ * via the `definition` "per_owner_pricing_billing_profile".
  */
-export type PerAccountPricingBillingProfile = {
-  id: PerAccountPricingBillingProfileIdentity;
-  type: PerAccountPricingBillingProfileType;
+export type PerOwnerPricingBillingProfile = {
+  id: PerOwnerPricingBillingProfileIdentity;
+  type: PerOwnerPricingBillingProfileType;
   first_name: string;
   last_name: string;
   company: null | string;
@@ -2473,19 +2760,19 @@ export type PerAccountPricingBillingProfile = {
   unbilled_charges: number;
   discount_percentage: number;
 };
-export type PerAccountPricingBillingProfileSelfTargetSchema =
-  PerAccountPricingBillingProfile;
-export type PerAccountPricingBillingProfileUpdateCreditCardTargetSchema =
-  PerAccountPricingBillingProfile;
-export type PerAccountPricingBillingProfileUpdateInfoTargetSchema =
-  PerAccountPricingBillingProfile;
+export type PerOwnerPricingBillingProfileSelfTargetSchema =
+  PerOwnerPricingBillingProfile;
+export type PerOwnerPricingBillingProfileUpdateCreditCardTargetSchema =
+  PerOwnerPricingBillingProfile;
+export type PerOwnerPricingBillingProfileUpdateInfoTargetSchema =
+  PerOwnerPricingBillingProfile;
 /**
  * JSON API attributes
  *
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export type PerAccountPricingBillingProfileAttributes = {
+export type PerOwnerPricingBillingProfileAttributes = {
   first_name: string;
   last_name: string;
   company: null | string;
@@ -2511,10 +2798,10 @@ export type PerAccountPricingBillingProfileAttributes = {
 };
 
 /**
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `update_credit_card.schema` link.
  */
-export type PerAccountPricingBillingProfileUpdateCreditCardSchema = {
+export type PerOwnerPricingBillingProfileUpdateCreditCardSchema = {
   /**
    * JSON API type field
    */
@@ -2523,12 +2810,12 @@ export type PerAccountPricingBillingProfileUpdateCreditCardSchema = {
 };
 
 /**
- * This interface was referenced by `PerAccountPricingBillingProfile`'s JSON-Schema
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `update_info.schema` link.
  */
-export type PerAccountPricingBillingProfileUpdateInfoSchema = {
-  id?: PerAccountPricingBillingProfileIdentity;
-  type?: PerAccountPricingBillingProfileType;
+export type PerOwnerPricingBillingProfileUpdateInfoSchema = {
+  id?: PerOwnerPricingBillingProfileIdentity;
+  type?: PerOwnerPricingBillingProfileType;
   first_name: string;
   last_name: string;
   company: null | string;
@@ -2562,7 +2849,7 @@ export type Invoice = {
   };
   billing_profile:
     | PerSitePricingBillingProfileData
-    | PerAccountPricingBillingProfileData;
+    | PerOwnerPricingBillingProfileData;
 };
 
 /**
@@ -2602,14 +2889,14 @@ export type InvoiceAttributes = {
 export type InvoiceRelationships = {
   billing_profile:
     | PerSitePricingBillingProfileData
-    | PerAccountPricingBillingProfileData;
+    | PerOwnerPricingBillingProfileData;
 };
 
 /**
  * This interface was referenced by `Invoice`'s JSON-Schema
- * via the `per_account_pricing_billing_profile_collect_unpaid.schema` link.
+ * via the `per_owner_pricing_billing_profile_collect_unpaid.schema` link.
  */
-export type InvoicePerAccountPricingBillingProfileCollectUnpaidSchema = {
+export type InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema = {
   /**
    * JSON API type field
    */
@@ -2742,14 +3029,56 @@ export type JobResultAttributes = {
 export type SiteTransfer = {
   id: SiteTransferIdentity;
   type: SiteTransferType;
-  /**
-   * Email of the source account
-   */
-  source_account_email: string;
-  /**
-   * Email of the destination account
-   */
-  account_email: string;
+  source:
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'account';
+        /**
+         * Email of the account that owns the project
+         */
+        email: string;
+      }
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'organization';
+        /**
+         * Name of the organization that owns the project
+         */
+        name: string;
+        /**
+         * ID of the organization that owns the project
+         */
+        id: string;
+      };
+  destination:
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'account';
+        /**
+         * Email of the account that owns the project
+         */
+        email: string;
+      }
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'organization';
+        /**
+         * Name of the organization that owns the project
+         */
+        name: string;
+        /**
+         * ID of the organization that owns the project
+         */
+        id: string;
+      };
   /**
    * Name of the site to transfer
    */
@@ -2791,14 +3120,56 @@ export type SiteTransferMeta = {
  * via the `definition` "attributes".
  */
 export type SiteTransferAttributes = {
-  /**
-   * Email of the source account
-   */
-  source_account_email: string;
-  /**
-   * Email of the destination account
-   */
-  account_email: string;
+  source:
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'account';
+        /**
+         * Email of the account that owns the project
+         */
+        email: string;
+      }
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'organization';
+        /**
+         * Name of the organization that owns the project
+         */
+        name: string;
+        /**
+         * ID of the organization that owns the project
+         */
+        id: string;
+      };
+  destination:
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'account';
+        /**
+         * Email of the account that owns the project
+         */
+        email: string;
+      }
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'organization';
+        /**
+         * Name of the organization that owns the project
+         */
+        name: string;
+        /**
+         * ID of the organization that owns the project
+         */
+        id: string;
+      };
   /**
    * Name of the site to transfer
    */
@@ -2834,10 +3205,7 @@ export type SiteTransferRelationships = {
  */
 export type SiteTransferCreateSchema = {
   type?: SiteTransferType;
-  /**
-   * Email of the destination account
-   */
-  account_email?: string;
+  destination?: AccountData | OrganizationData;
 };
 
 /**
@@ -3048,7 +3416,7 @@ export type PaymentIntent = {
   /**
    * Stripe PaymentIntent client_secret
    */
-  client_secret: string;
+  client_secret: string | null;
   /**
    * Stripe PaymentIntent status
    */
@@ -3057,7 +3425,7 @@ export type PaymentIntent = {
 export type PaymentIntentCreateFromPaymentMethodTargetSchema = PaymentIntent;
 export type PaymentIntentCreateForPerSitePricingBillingProfileTargetSchema =
   PaymentIntent;
-export type PaymentIntentCreateForPerAccountPricingBillingProfileTargetSchema =
+export type PaymentIntentCreateForPerOwnerPricingBillingProfileTargetSchema =
   PaymentIntent;
 export type PaymentIntentConfirmTargetSchema = PaymentIntent;
 /**
@@ -3081,7 +3449,7 @@ export type PaymentIntentAttributes = {
   /**
    * Stripe PaymentIntent client_secret
    */
-  client_secret: string;
+  client_secret: string | null;
   /**
    * Stripe PaymentIntent status
    */
@@ -3120,9 +3488,9 @@ export type PaymentIntentCreateForPerSitePricingBillingProfileSchema = {
 
 /**
  * This interface was referenced by `PaymentIntent`'s JSON-Schema
- * via the `create_for_per_account_pricing_billing_profile.schema` link.
+ * via the `create_for_per_owner_pricing_billing_profile.schema` link.
  */
-export type PaymentIntentCreateForPerAccountPricingBillingProfileSchema = {
+export type PaymentIntentCreateForPerOwnerPricingBillingProfileSchema = {
   /**
    * JSON API type field
    */
@@ -3190,4 +3558,275 @@ export type OtpBackupCodesData = {
  */
 export type OtpBackupCodesAttributes = {
   codes: string[];
+};
+
+/**
+ * Organization role
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization_role".
+ */
+export type OrganizationRole = {
+  id: OrganizationRoleIdentity;
+  type: OrganizationRoleType;
+  /**
+   * Name of role
+   */
+  name: string;
+  /**
+   * Whether the role can read everything or not
+   */
+  can_read_everything: boolean;
+  /**
+   * Whether the role can access projects as owner or not
+   */
+  can_access_sites_as_owner: boolean;
+  /**
+   * Whether the role can create new sites or not
+   */
+  can_create_new_sites: boolean;
+  /**
+   * Whether the role can edit projects or not
+   */
+  can_edit_sites: boolean;
+  /**
+   * Whether the role can manage project transfers or not
+   */
+  can_manage_site_transfers: boolean;
+  /**
+   * Whether the role can delete projects or not
+   */
+  can_delete_sites: boolean;
+  /**
+   * Whether the role can manage members or not
+   */
+  can_manage_members: boolean;
+  /**
+   * Whether the role can manage billing or not
+   */
+  can_manage_billing: boolean;
+  /**
+   * Whether the role can manage organization or not
+   */
+  can_manage_organization: boolean;
+};
+export type OrganizationRoleSelfTargetSchema = OrganizationRole;
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `OrganizationRole`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationRoleData = {
+  type: OrganizationRoleType;
+  id: OrganizationRoleIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `OrganizationRole`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationRoleAttributes = {
+  /**
+   * Name of role
+   */
+  name: string;
+  /**
+   * Whether the role can read everything or not
+   */
+  can_read_everything: boolean;
+  /**
+   * Whether the role can access projects as owner or not
+   */
+  can_access_sites_as_owner: boolean;
+  /**
+   * Whether the role can create new sites or not
+   */
+  can_create_new_sites: boolean;
+  /**
+   * Whether the role can edit projects or not
+   */
+  can_edit_sites: boolean;
+  /**
+   * Whether the role can manage project transfers or not
+   */
+  can_manage_site_transfers: boolean;
+  /**
+   * Whether the role can delete projects or not
+   */
+  can_delete_sites: boolean;
+  /**
+   * Whether the role can manage members or not
+   */
+  can_manage_members: boolean;
+  /**
+   * Whether the role can manage billing or not
+   */
+  can_manage_billing: boolean;
+  /**
+   * Whether the role can manage organization or not
+   */
+  can_manage_organization: boolean;
+};
+
+/**
+ * A DatoCMS organization can be accessed by multiple people. Every invitation is linked to a specific role, which describes what actions it will be able to perform once the user will register.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization_invitation".
+ */
+export type OrganizationInvitation = {
+  id: OrganizationInvitationIdentity;
+  type: OrganizationInvitationType;
+  /**
+   * Email
+   */
+  email: string;
+  role: OrganizationRoleData;
+  meta: OrganizationInvitationMeta;
+};
+export type OrganizationInvitationCreateTargetSchema = OrganizationInvitation;
+export type OrganizationInvitationUpdateTargetSchema = OrganizationInvitation;
+export type OrganizationInvitationSelfTargetSchema = OrganizationInvitation;
+export type OrganizationInvitationDestroyTargetSchema = OrganizationInvitation;
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type OrganizationInvitationMeta = {
+  /**
+   * Whether the invitation has expired or not
+   */
+  expired: boolean;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationInvitationData = {
+  type: OrganizationInvitationType;
+  id: OrganizationInvitationIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationInvitationAttributes = {
+  /**
+   * Email
+   */
+  email: string;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type OrganizationInvitationRelationships = {
+  role: OrganizationRoleData;
+};
+
+/**
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type OrganizationInvitationCreateSchema = {
+  type?: OrganizationInvitationType;
+  /**
+   * Email
+   */
+  email: string;
+  role: OrganizationRoleData;
+};
+
+/**
+ * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type OrganizationInvitationUpdateSchema = {
+  id?: OrganizationInvitationIdentity;
+  type?: OrganizationInvitationType;
+  role?: OrganizationRoleData;
+  [k: string]: unknown;
+};
+
+/**
+ * A DatoCMS organization can be accessed by multiple people. Every membership is linked to a specific role, which describes what actions it will be able to perform once the user will register.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization_membership".
+ */
+export type OrganizationMembership = {
+  id: OrganizationMembershipIdentity;
+  type: OrganizationMembershipType;
+  role: OrganizationRoleData;
+  meta: OrganizationMembershipMeta;
+};
+export type OrganizationMembershipUpdateTargetSchema = OrganizationMembership;
+export type OrganizationMembershipSelfTargetSchema = OrganizationMembership;
+export type OrganizationMembershipMeTargetSchema = OrganizationMembership;
+export type OrganizationMembershipDestroyTargetSchema = OrganizationMembership;
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type OrganizationMembershipMeta = {
+  /**
+   * Email
+   */
+  email: string;
+  /**
+   * First name
+   */
+  first_name?: string | null;
+  /**
+   * Last name
+   */
+  last_name?: string | null;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationMembershipData = {
+  type: OrganizationMembershipType;
+  id: OrganizationMembershipIdentity;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type OrganizationMembershipRelationships = {
+  role: OrganizationRoleData;
+};
+
+/**
+ * This interface was referenced by `OrganizationMembership`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type OrganizationMembershipUpdateSchema = {
+  id?: OrganizationMembershipIdentity;
+  type?: OrganizationMembershipType;
+  role?: OrganizationRoleData;
+  [k: string]: unknown;
 };

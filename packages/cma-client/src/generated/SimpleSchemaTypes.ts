@@ -265,6 +265,23 @@ export type AuditLogEventType = 'audit_log_event';
  */
 export type AuditLogEventQueryTargetSchema = AuditLogEvent[];
 /**
+ * ID of organization
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationType = 'organization';
+/**
  * ID of plan
  *
  * This interface was referenced by `SitePlan`'s JSON-Schema
@@ -1581,6 +1598,7 @@ export type DatoApi = {
   sso_user?: SsoUser;
   audit_log_event?: AuditLogEvent;
   account?: Account;
+  organization?: Organization;
   site_plan?: SitePlan;
   menu_item?: MenuItem;
   item_type?: ItemType;
@@ -3168,10 +3186,6 @@ export type Account = {
    * Company name
    */
   company: string | null;
-  /**
-   * Password
-   */
-  password?: string;
 };
 
 /**
@@ -3208,10 +3222,6 @@ export type AccountAttributes = {
    * Company name
    */
   company: string | null;
-  /**
-   * Password
-   */
-  password?: string;
 };
 
 /**
@@ -3450,6 +3460,45 @@ export type AuditLogEventQuerySchema = {
    * Whether a detailed log complete with full request and response payload must be returned or not
    */
   detailed_log?: boolean;
+};
+
+/**
+ * DatoCMS organization
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization".
+ */
+export type Organization = {
+  id: OrganizationIdentity;
+  type: OrganizationType;
+  /**
+   * Name of the organization
+   */
+  name: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationData = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationAttributes = {
+  /**
+   * Name of the organization
+   */
+  name: string;
 };
 
 /**
@@ -6626,7 +6675,12 @@ export type Item = {
   id: ItemIdentity;
   type: ItemType1;
   item_type: ItemTypeData;
-  creator?: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator?:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
   meta: ItemMeta;
   [k: string]: unknown;
 };
@@ -6714,7 +6768,12 @@ export type ItemAttributes = {
  */
 export type ItemRelationships = {
   item_type: ItemTypeData;
-  creator?: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator?:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 
 /**
@@ -6725,7 +6784,12 @@ export type ItemValidateExistingSchema = {
   id?: ItemIdentity;
   type?: ItemType1;
   item_type: ItemTypeData;
-  creator?: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator?:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
   [k: string]: unknown;
 };
 
@@ -6802,7 +6866,12 @@ export type ItemUpdateSchema = {
   id?: ItemIdentity;
   type?: ItemType1;
   item_type?: ItemTypeData;
-  creator?: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator?:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
   /**
    * Meta information regarding the record
    */
@@ -6929,7 +6998,12 @@ export type ItemVersion = {
   type: ItemVersionType;
   item_type: ItemTypeData;
   item: ItemData;
-  editor: AccountData | AccessTokenData | UserData | SsoUserData;
+  editor:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
   meta: ItemVersionMeta;
   [k: string]: unknown;
 };
@@ -6989,7 +7063,12 @@ export type ItemVersionAttributes = {
 export type ItemVersionRelationships = {
   item_type: ItemTypeData;
   item: ItemData;
-  editor: AccountData | AccessTokenData | UserData | SsoUserData;
+  editor:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 
 /**
@@ -7158,7 +7237,12 @@ export type Upload = {
      */
     alpha: number;
   }[];
-  creator: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 export type UploadCreateJobSchema = Upload;
 export type UploadSelfTargetSchema = Upload;
@@ -7348,7 +7432,12 @@ export type UploadAttributes = {
  * via the `definition` "relationships".
  */
 export type UploadRelationships = {
-  creator: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 
 /**
@@ -7486,7 +7575,12 @@ export type UploadUpdateSchema = {
       } | null;
     };
   };
-  creator?: AccountData | AccessTokenData | UserData | SsoUserData;
+  creator?:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 
 /**
@@ -9670,7 +9764,8 @@ export type Site = {
     twitter_account?: null | string;
     [k: string]: unknown;
   } | null;
-  account: AccountData;
+  account: null | AccountData;
+  owner: AccountData | OrganizationData;
   /**
    * The list item types for the site
    */
@@ -9841,7 +9936,8 @@ export type SiteAttributes = {
  * via the `definition` "relationships".
  */
 export type SiteRelationships = {
-  account: AccountData;
+  account: null | AccountData;
+  owner: AccountData | OrganizationData;
   /**
    * The list item types for the site
    */

@@ -182,6 +182,25 @@
         "responseType": "AccountDeactivate_2FaTargetSchema",
         "name": "deactivate_2Fa",
         "rawName": "rawDeactivate_2Fa"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "convert_to_organization",
+        "urlTemplate": "/account/convert-to-organization",
+        "method": "POST",
+        "comment": "Convert to organization",
+        "requestBodyType": "AccountConvertToOrganizationSchema",
+        "requestStructure": {
+          "type": "organization",
+          "attributes": [
+            "name"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccountConvertToOrganizationJobSchema",
+        "name": "convertToOrganization",
+        "rawName": "rawConvertToOrganization"
       }
     ],
     "namespace": "account",
@@ -417,17 +436,17 @@
     "resourceClassName": "SiteSubscription"
   },
   {
-    "jsonApiType": "account_subscription",
+    "jsonApiType": "per_owner_pricing_subscription",
     "endpoints": [
       {
         "returnsCollection": false,
         "rel": "create",
-        "urlTemplate": "/account-subscriptions",
+        "urlTemplate": "/per-owner-pricing-subscriptions",
         "method": "POST",
         "comment": "Create a new subscription",
-        "requestBodyType": "AccountSubscriptionCreateSchema",
+        "requestBodyType": "PerOwnerPricingSubscriptionCreateSchema",
         "requestStructure": {
-          "type": "account_subscription",
+          "type": "per_owner_pricing_subscription",
           "attributes": [
             "payment_intent_id",
             "recurrence",
@@ -438,19 +457,19 @@
           ]
         },
         "queryParamsRequired": false,
-        "responseType": "AccountSubscriptionCreateTargetSchema",
+        "responseType": "PerOwnerPricingSubscriptionCreateTargetSchema",
         "name": "create",
         "rawName": "rawCreate"
       },
       {
         "returnsCollection": false,
         "rel": "simulate",
-        "urlTemplate": "/account-subscriptions/simulate",
+        "urlTemplate": "/per-owner-pricing-subscriptions/simulate",
         "method": "POST",
         "comment": "Simulate",
-        "requestBodyType": "AccountSubscriptionSimulateSchema",
+        "requestBodyType": "PerOwnerPricingSubscriptionSimulateSchema",
         "requestStructure": {
-          "type": "account_subscription",
+          "type": "per_owner_pricing_subscription",
           "attributes": [
             "recurrence",
             "billing_profile"
@@ -460,32 +479,32 @@
           ]
         },
         "queryParamsRequired": false,
-        "responseType": "AccountSubscriptionSimulateTargetSchema",
+        "responseType": "PerOwnerPricingSubscriptionSimulateTargetSchema",
         "name": "simulate",
         "rawName": "rawSimulate"
       },
       {
         "returnsCollection": false,
         "rel": "validate",
-        "urlTemplate": "/account-subscriptions/validate",
+        "urlTemplate": "/per-owner-pricing-subscriptions/validate",
         "method": "POST",
         "comment": "Validate a new subscription",
-        "requestBodyType": "AccountSubscriptionValidateSchema",
+        "requestBodyType": "PerOwnerPricingSubscriptionValidateSchema",
         "requestStructure": {
-          "type": "account_subscription",
+          "type": "per_owner_pricing_subscription",
           "attributes": [],
           "relationships": [
             "plan"
           ]
         },
         "queryParamsRequired": false,
-        "responseType": "AccountSubscriptionValidateTargetSchema",
+        "responseType": "PerOwnerPricingSubscriptionValidateTargetSchema",
         "name": "validate",
         "rawName": "rawValidate"
       }
     ],
-    "namespace": "accountSubscription",
-    "resourceClassName": "AccountSubscription"
+    "namespace": "perOwnerPricingSubscription",
+    "resourceClassName": "PerOwnerPricingSubscription"
   },
   {
     "jsonApiType": "site_plan",
@@ -506,22 +525,22 @@
     "resourceClassName": "SitePlan"
   },
   {
-    "jsonApiType": "account_plan",
+    "jsonApiType": "per_owner_pricing_plan",
     "endpoints": [
       {
         "returnsCollection": true,
         "rel": "instances",
-        "urlTemplate": "/account-plans",
+        "urlTemplate": "/per-owner-pricing-plans",
         "method": "GET",
         "comment": "Retrieve enabled plans for account",
         "queryParamsRequired": false,
-        "responseType": "AccountPlanInstancesTargetSchema",
+        "responseType": "PerOwnerPricingPlanInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
       }
     ],
-    "namespace": "accountPlans",
-    "resourceClassName": "AccountPlan"
+    "namespace": "perOwnerPricingPlans",
+    "resourceClassName": "PerOwnerPricingPlan"
   },
   {
     "jsonApiType": "per_site_pricing_billing_profile",
@@ -633,26 +652,26 @@
     "resourceClassName": "PerSitePricingBillingProfile"
   },
   {
-    "jsonApiType": "per_account_pricing_billing_profile",
+    "jsonApiType": "per_owner_pricing_billing_profile",
     "endpoints": [
       {
         "returnsCollection": false,
         "rel": "self",
-        "urlTemplate": "/per-account-pricing-billing-profile",
+        "urlTemplate": "/per-owner-pricing-billing-profile",
         "method": "GET",
         "comment": "Retrieve a billing profile",
         "queryParamsRequired": false,
-        "responseType": "PerAccountPricingBillingProfileSelfTargetSchema",
+        "responseType": "PerOwnerPricingBillingProfileSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
       },
       {
         "returnsCollection": false,
         "rel": "update_credit_card",
-        "urlTemplate": "/per-account-pricing-billing-profile/credit-card",
+        "urlTemplate": "/per-owner-pricing-billing-profile/credit-card",
         "method": "PUT",
         "comment": "Update a billing profile's credit card",
-        "requestBodyType": "PerAccountPricingBillingProfileUpdateCreditCardSchema",
+        "requestBodyType": "PerOwnerPricingBillingProfileUpdateCreditCardSchema",
         "requestStructure": {
           "type": "card",
           "attributes": [
@@ -661,19 +680,19 @@
           "relationships": []
         },
         "queryParamsRequired": false,
-        "responseType": "PerAccountPricingBillingProfileUpdateCreditCardTargetSchema",
+        "responseType": "PerOwnerPricingBillingProfileUpdateCreditCardTargetSchema",
         "name": "updateCreditCard",
         "rawName": "rawUpdateCreditCard"
       },
       {
         "returnsCollection": false,
         "rel": "update_info",
-        "urlTemplate": "/per-account-pricing-billing-profile/info",
+        "urlTemplate": "/per-owner-pricing-billing-profile/info",
         "method": "PUT",
         "comment": "Update a billing profile's billing information",
-        "requestBodyType": "PerAccountPricingBillingProfileUpdateInfoSchema",
+        "requestBodyType": "PerOwnerPricingBillingProfileUpdateInfoSchema",
         "requestStructure": {
-          "type": "per_account_pricing_billing_profile",
+          "type": "per_owner_pricing_billing_profile",
           "attributes": [
             "first_name",
             "last_name",
@@ -691,27 +710,27 @@
           "relationships": []
         },
         "queryParamsRequired": false,
-        "responseType": "PerAccountPricingBillingProfileUpdateInfoTargetSchema",
+        "responseType": "PerOwnerPricingBillingProfileUpdateInfoTargetSchema",
         "name": "updateInfo",
         "rawName": "rawUpdateInfo"
       }
     ],
-    "namespace": "perAccountPricingBillingProfile",
-    "resourceClassName": "PerAccountPricingBillingProfile"
+    "namespace": "perOwnerPricingBillingProfile",
+    "resourceClassName": "PerOwnerPricingBillingProfile"
   },
   {
     "jsonApiType": "invoice",
     "endpoints": [
       {
         "returnsCollection": true,
-        "rel": "per_account_pricing_billing_profile_instances",
-        "urlTemplate": "/per-account-pricing-billing-profile/invoices",
+        "rel": "per_owner_pricing_billing_profile_instances",
+        "urlTemplate": "/per-owner-pricing-billing-profile/invoices",
         "method": "GET",
         "comment": "Retrieve all invoices",
         "queryParamsRequired": false,
-        "responseType": "InvoicePerAccountPricingBillingProfileInstancesTargetSchema",
-        "name": "perAccountPricingBillingProfileList",
-        "rawName": "rawPerAccountPricingBillingProfileList"
+        "responseType": "InvoicePerOwnerPricingBillingProfileInstancesTargetSchema",
+        "name": "perOwnerPricingBillingProfileList",
+        "rawName": "rawPerOwnerPricingBillingProfileList"
       },
       {
         "returnsCollection": true,
@@ -731,11 +750,11 @@
       },
       {
         "returnsCollection": false,
-        "rel": "per_account_pricing_billing_profile_collect_unpaid",
-        "urlTemplate": "/per-account-pricing-billing-profile/invoices/collect-unpaid",
-        "method": "GET",
+        "rel": "per_owner_pricing_billing_profile_collect_unpaid",
+        "urlTemplate": "/per-owner-pricing-billing-profile/invoices/collect-unpaid",
+        "method": "POST",
         "comment": "Collect all unpaid invoices",
-        "requestBodyType": "InvoicePerAccountPricingBillingProfileCollectUnpaidSchema",
+        "requestBodyType": "InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema",
         "requestStructure": {
           "type": "invoice_collection",
           "attributes": [
@@ -744,15 +763,15 @@
           "relationships": []
         },
         "queryParamsRequired": false,
-        "responseType": "InvoicePerAccountPricingBillingProfileCollectUnpaidTargetSchema",
-        "name": "perAccountPricingBillingProfileCollectUnpaid",
-        "rawName": "rawPerAccountPricingBillingProfileCollectUnpaid"
+        "responseType": "InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema",
+        "name": "perOwnerPricingBillingProfileCollectUnpaid",
+        "rawName": "rawPerOwnerPricingBillingProfileCollectUnpaid"
       },
       {
         "returnsCollection": false,
         "rel": "per_site_pricing_billing_profile_collect_unpaid",
         "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/invoices/collect-unpaid",
-        "method": "GET",
+        "method": "POST",
         "comment": "Collect all unpaid invoices",
         "urlPlaceholder": {
           "variableName": "perSitePricingBillingProfileId",
@@ -862,7 +881,7 @@
         "requestStructure": {
           "type": "site_transfer",
           "attributes": [
-            "account_email"
+            "destination"
           ],
           "relationships": []
         },
@@ -1115,11 +1134,11 @@
       },
       {
         "returnsCollection": false,
-        "rel": "create_for_per_account_pricing_billing_profile",
-        "urlTemplate": "/per-account-pricing-billing-profile/payment-intents",
+        "rel": "create_for_per_owner_pricing_billing_profile",
+        "urlTemplate": "/per-owner-pricing-billing-profile/payment-intents",
         "method": "POST",
-        "comment": "Create a payment intent starting from an existing per-account billing profile",
-        "requestBodyType": "PaymentIntentCreateForPerAccountPricingBillingProfileSchema",
+        "comment": "Create a payment intent starting from an existing per-owner billing profile",
+        "requestBodyType": "PaymentIntentCreateForPerOwnerPricingBillingProfileSchema",
         "requestStructure": {
           "type": "payment_intent",
           "attributes": [
@@ -1128,10 +1147,10 @@
           "relationships": []
         },
         "queryParamsRequired": false,
-        "responseType": "PaymentIntentCreateForPerAccountPricingBillingProfileTargetSchema",
+        "responseType": "PaymentIntentCreateForPerOwnerPricingBillingProfileTargetSchema",
         "deprecated": "This API call is to be considered private and might change without notice",
-        "name": "createForPerAccountPricingBillingProfile",
-        "rawName": "rawCreateForPerAccountPricingBillingProfile"
+        "name": "createForPerOwnerPricingBillingProfile",
+        "rawName": "rawCreateForPerOwnerPricingBillingProfile"
       },
       {
         "returnsCollection": false,
@@ -1153,5 +1172,349 @@
     ],
     "namespace": "paymentIntent",
     "resourceClassName": "PaymentIntent"
+  },
+  {
+    "jsonApiType": "organization",
+    "endpoints": [
+      {
+        "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/organizations",
+        "method": "GET",
+        "comment": "List organizations",
+        "queryParamsType": "OrganizationInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/organizations/${organizationId}",
+        "method": "GET",
+        "comment": "Retrieve an organization",
+        "urlPlaceholder": {
+          "variableName": "organizationId",
+          "isEntityId": true,
+          "relType": "OrganizationData"
+        },
+        "queryParamsType": "OrganizationSelfHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationSelfTargetSchema",
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "create",
+        "urlTemplate": "/organizations",
+        "method": "POST",
+        "comment": "Create a new organization",
+        "requestBodyType": "OrganizationCreateSchema",
+        "requestStructure": {
+          "type": "organization",
+          "attributes": [
+            "name"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationCreateTargetSchema",
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "update",
+        "urlTemplate": "/organizations/${organizationId}",
+        "method": "PUT",
+        "comment": "Update an organization",
+        "urlPlaceholder": {
+          "variableName": "organizationId",
+          "isEntityId": true,
+          "relType": "OrganizationData"
+        },
+        "requestBodyType": "OrganizationUpdateSchema",
+        "requestStructure": {
+          "type": "organization",
+          "attributes": [
+            "name"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationUpdateTargetSchema",
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/organizations/${siteId}",
+        "method": "DELETE",
+        "comment": "Destroy an organization",
+        "urlPlaceholder": {
+          "variableName": "siteId",
+          "isEntityId": false,
+          "relType": "SiteData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationDestroyJobSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "organizations",
+    "resourceClassName": "Organization"
+  },
+  {
+    "jsonApiType": "organization_role",
+    "endpoints": [
+      {
+        "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/organization-roles",
+        "method": "GET",
+        "comment": "List organization roles",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationRoleInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/organization-roles/${organizationRoleId}",
+        "method": "GET",
+        "comment": "Retrieve an organization role",
+        "urlPlaceholder": {
+          "variableName": "organizationRoleId",
+          "isEntityId": true,
+          "relType": "OrganizationRoleData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationRoleSelfTargetSchema",
+        "name": "find",
+        "rawName": "rawFind"
+      }
+    ],
+    "namespace": "organizationRoles",
+    "resourceClassName": "OrganizationRole"
+  },
+  {
+    "jsonApiType": "organization_invitation",
+    "endpoints": [
+      {
+        "returnsCollection": false,
+        "rel": "create",
+        "urlTemplate": "/organization-invitations",
+        "method": "POST",
+        "comment": "Invite a new member",
+        "requestBodyType": "OrganizationInvitationCreateSchema",
+        "requestStructure": {
+          "type": "organization_invitation",
+          "attributes": [
+            "email"
+          ],
+          "relationships": [
+            "role"
+          ]
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationInvitationCreateTargetSchema",
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "update",
+        "urlTemplate": "/organization-invitations/${organizationInvitationId}",
+        "method": "PUT",
+        "comment": "Update an invitation",
+        "urlPlaceholder": {
+          "variableName": "organizationInvitationId",
+          "isEntityId": true,
+          "relType": "OrganizationInvitationData"
+        },
+        "requestBodyType": "OrganizationInvitationUpdateSchema",
+        "requestStructure": {
+          "type": "organization_invitation",
+          "attributes": [],
+          "relationships": [
+            "role"
+          ]
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationInvitationUpdateTargetSchema",
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/organization-invitations",
+        "method": "GET",
+        "comment": "List all invitations",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationInvitationInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/organization-invitations/${organizationInvitationId}",
+        "method": "GET",
+        "comment": "Retrieve an invitation",
+        "urlPlaceholder": {
+          "variableName": "organizationInvitationId",
+          "isEntityId": true,
+          "relType": "OrganizationInvitationData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationInvitationSelfTargetSchema",
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/organization-invitations/${organizationInvitationId}",
+        "method": "DELETE",
+        "comment": "Delete an invitation",
+        "urlPlaceholder": {
+          "variableName": "organizationInvitationId",
+          "isEntityId": true,
+          "relType": "OrganizationInvitationData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationInvitationDestroyTargetSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "resend",
+        "urlTemplate": "/organization-invitations/${organizationInvitationId}/resend",
+        "method": "POST",
+        "comment": "Resend an invitation",
+        "urlPlaceholder": {
+          "variableName": "organizationInvitationId",
+          "isEntityId": true,
+          "relType": "OrganizationInvitationData"
+        },
+        "queryParamsRequired": false,
+        "name": "resend",
+        "rawName": "rawResend"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "redeem",
+        "urlTemplate": "/organization-invitations/${organizationInvitationId}/redeem",
+        "method": "PUT",
+        "comment": "Redeem token",
+        "urlPlaceholder": {
+          "variableName": "organizationInvitationId",
+          "isEntityId": true,
+          "relType": "OrganizationInvitationData"
+        },
+        "queryParamsType": "OrganizationInvitationRedeemHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationInvitationRedeemTargetSchema",
+        "name": "redeem",
+        "rawName": "rawRedeem"
+      }
+    ],
+    "namespace": "organizationInvitations",
+    "resourceClassName": "OrganizationInvitation"
+  },
+  {
+    "jsonApiType": "organization_membership",
+    "endpoints": [
+      {
+        "returnsCollection": false,
+        "rel": "update",
+        "urlTemplate": "/organization-memberships/${organizationMembershipId}",
+        "method": "PUT",
+        "comment": "Update an organization membership",
+        "urlPlaceholder": {
+          "variableName": "organizationMembershipId",
+          "isEntityId": true,
+          "relType": "OrganizationMembershipData"
+        },
+        "requestBodyType": "OrganizationMembershipUpdateSchema",
+        "requestStructure": {
+          "type": "organization_membership",
+          "attributes": [],
+          "relationships": [
+            "role"
+          ]
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMembershipUpdateTargetSchema",
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/organization-memberships",
+        "method": "GET",
+        "comment": "List all organization memberships",
+        "queryParamsType": "OrganizationMembershipInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMembershipInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "self",
+        "urlTemplate": "/organization-memberships/${organizationMembershipId}",
+        "method": "GET",
+        "comment": "Retrieve an organization membership",
+        "urlPlaceholder": {
+          "variableName": "organizationMembershipId",
+          "isEntityId": true,
+          "relType": "OrganizationMembershipData"
+        },
+        "queryParamsType": "OrganizationMembershipSelfHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMembershipSelfTargetSchema",
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "me",
+        "urlTemplate": "/organization-memberships/me",
+        "method": "GET",
+        "comment": "Retrieve currently signed-in account organization membership",
+        "queryParamsType": "OrganizationMembershipMeHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMembershipMeTargetSchema",
+        "name": "findMe",
+        "rawName": "rawFindMe"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/organization-memberships/${organizationMembershipId}",
+        "method": "DELETE",
+        "comment": "Delete an organization membership",
+        "urlPlaceholder": {
+          "variableName": "organizationMembershipId",
+          "isEntityId": true,
+          "relType": "OrganizationMembershipData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMembershipDestroyTargetSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "organizationMemberships",
+    "resourceClassName": "OrganizationMembership"
   }
 ]

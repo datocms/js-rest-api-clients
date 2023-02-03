@@ -3,8 +3,8 @@ import * as SchemaTypes from '../SchemaTypes';
 import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
-export default class AccountPlan extends BaseResource {
-  static readonly TYPE: 'account_plan' = 'account_plan';
+export default class PerOwnerPricingPlan extends BaseResource {
+  static readonly TYPE: 'per_owner_pricing_plan' = 'per_owner_pricing_plan';
 
   /**
    * Retrieve enabled plans for account
@@ -14,7 +14,7 @@ export default class AccountPlan extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccountPlanInstancesTargetSchema>(
+      Utils.deserializeResponseBody<SimpleSchemaTypes.PerOwnerPricingPlanInstancesTargetSchema>(
         body,
       ),
     );
@@ -26,10 +26,12 @@ export default class AccountPlan extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.AccountPlanInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.AccountPlanInstancesTargetSchema>({
-      method: 'GET',
-      url: '/account-plans',
-    });
+  rawList(): Promise<SchemaTypes.PerOwnerPricingPlanInstancesTargetSchema> {
+    return this.client.request<SchemaTypes.PerOwnerPricingPlanInstancesTargetSchema>(
+      {
+        method: 'GET',
+        url: '/per-owner-pricing-plans',
+      },
+    );
   }
 }
