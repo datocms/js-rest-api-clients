@@ -1071,7 +1071,7 @@ export type PerOwnerPricingPlanAttributes = {
       }
     | {
         id: string;
-        type: 'account_managed_resource';
+        type: 'owner_managed_resource';
         free_of_charge_usage: number;
         extra_packets_available_in_some_plan: boolean;
         max_extra_packets: null | number;

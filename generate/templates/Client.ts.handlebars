@@ -18,6 +18,9 @@ export type ClientConfigOptions = {
   {{#if isCma}}
   /** The environment in which to perform every API request */
   environment?: string;
+  {{else}}
+  /** The organization ID in which to perform every API request */
+  organization?: string;
   {{/if}}
   /** Configure request timeout (in ms). When timeout is reached and `autoRetry` is active, a new request will be performed. Otherwise, a `TimeoutError` will be raised. Defaults to `30000` */
   requestTimeout?: number;
@@ -69,6 +72,13 @@ export class Client {
             ? { 'X-Environment': this.config.environment }
             : {}),
           'X-API-Version': '3',
+        },
+      {{else}}
+        extraHeaders: {
+          ...(this.config.extraHeaders || {}),
+          ...(this.config.organization
+            ? { 'X-Organization': this.config.organization }
+            : {}),
         },
       {{/if}}
       fetchJobResult: (jobId: string) => {
