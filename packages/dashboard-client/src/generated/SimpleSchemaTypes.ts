@@ -2841,6 +2841,7 @@ export type Invoice = {
   type: InvoiceType;
   date: string;
   total: number;
+  amount_due: number;
   status: string;
   last_failed_transaction: null | {
     code?: string;
@@ -2872,6 +2873,7 @@ export type InvoiceData = {
 export type InvoiceAttributes = {
   date: string;
   total: number;
+  amount_due: number;
   status: string;
   last_failed_transaction: null | {
     code?: string;

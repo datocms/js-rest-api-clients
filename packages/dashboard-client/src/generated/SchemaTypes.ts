@@ -2817,6 +2817,7 @@ export type Invoice = {
 export type InvoiceAttributes = {
   date: string;
   total: number;
+  amount_due: number;
   status: string;
   last_failed_transaction: null | {
     code?: string;
