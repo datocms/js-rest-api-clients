@@ -54,6 +54,8 @@ export class Client {
   organizationRoles: Resources.OrganizationRole;
   organizationInvitations: Resources.OrganizationInvitation;
   organizationMemberships: Resources.OrganizationMembership;
+  organizationMandateRequests: Resources.OrganizationMandateRequest;
+  organizationMandates: Resources.OrganizationMandate;
 
   config: ClientConfigOptions;
   jobResultsFetcher?: (jobId: string) => Promise<JobResult>;
@@ -87,6 +89,10 @@ export class Client {
     this.organizationRoles = new Resources.OrganizationRole(this);
     this.organizationInvitations = new Resources.OrganizationInvitation(this);
     this.organizationMemberships = new Resources.OrganizationMembership(this);
+    this.organizationMandateRequests = new Resources.OrganizationMandateRequest(
+      this,
+    );
+    this.organizationMandates = new Resources.OrganizationMandate(this);
   }
 
   get baseUrl() {
