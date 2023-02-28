@@ -1,6 +1,6 @@
 {
   "name": "@datocms/cma-client",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "JS client for DatoCMS REST Content Management API",
   "keywords": [
     "datocms",
@@ -40,7 +40,7 @@
     "@datocms/rest-client-utils": "^1.1.23"
   },
   "devDependencies": {
-    "@datocms/dashboard-client": "^1.2.6"
+    "@datocms/dashboard-client": "^1.2.7"
   },
   "gitHead": "c5c53fe30e67e79e8be0953b611c95f9ab3d0ebd"
 }
