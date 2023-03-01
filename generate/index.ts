@@ -136,7 +136,7 @@ async function generate(prefix: string, hyperschemaUrl: string) {
   }
 }
 
-const baseUrl = 'http://site-api.lvh.me:3001';
+const baseUrl = 'https://site-api.datocms.com';
 
 Promise.all([
   generate('cma', `${baseUrl}/docs/site-api-hyperschema.json`),
