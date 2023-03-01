@@ -34,4 +34,33 @@ export default class PerOwnerPricingPlan extends BaseResource {
       },
     );
   }
+
+  /**
+   * Retrieve plans that the organization can enable on other organizations given a mandate
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  activableAsAppointedOrganizationList() {
+    return this.rawActivableAsAppointedOrganizationList().then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.PerOwnerPricingPlanActivableAsAppointedOrganizationInstancesTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Retrieve plans that the organization can enable on other organizations given a mandate
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawActivableAsAppointedOrganizationList(): Promise<SchemaTypes.PerOwnerPricingPlanActivableAsAppointedOrganizationInstancesTargetSchema> {
+    return this.client.request<SchemaTypes.PerOwnerPricingPlanActivableAsAppointedOrganizationInstancesTargetSchema>(
+      {
+        method: 'GET',
+        url: '/per-owner-pricing-plans/activable-as-appointed-organization',
+      },
+    );
+  }
 }

@@ -599,6 +599,51 @@ export type OrganizationMembershipMeHrefSchema = {
   include?: string;
   [k: string]: unknown;
 };
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationMandateRequestType = 'organization_mandate_request';
+/**
+ * ID of mandate request
+ *
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationMandateRequestIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `OrganizationMandate`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationMandateType = 'organization_mandate';
+/**
+ * ID of mandate
+ *
+ * This interface was referenced by `OrganizationMandate`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `OrganizationMandate`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationMandateIdentity = string;
+/**
+ * This interface was referenced by `OrganizationMandate`'s JSON-Schema
+ * via the `given_instances.hrefSchema` link.
+ */
+export type OrganizationMandateGivenInstancesHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `active_plan`, `additional_enabled_plans`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
 
 export type DatoApi = {
   session?: Session;
@@ -627,6 +672,8 @@ export type DatoApi = {
   organization_role?: OrganizationRole;
   organization_invitation?: OrganizationInvitation;
   organization_membership?: OrganizationMembership;
+  organization_mandate_request?: OrganizationMandateRequest;
+  organization_mandate?: OrganizationMandate;
   [k: string]: unknown;
 };
 
@@ -1037,7 +1084,7 @@ export type PerOwnerPricingPlanAttributes = {
    */
   description: null | string;
   /**
-   * Whether this plan is active or legacy
+   * Whether this plan is active
    */
   active: boolean;
   /**
@@ -1134,6 +1181,15 @@ export type PerOwnerPricingPlanData = {
 export type PerOwnerPricingPlanInstancesTargetSchema = {
   data: PerOwnerPricingPlan[];
 };
+
+/**
+ * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
+ * via the `activable_as_appointed_organization_instances.targetSchema` link.
+ */
+export type PerOwnerPricingPlanActivableAsAppointedOrganizationInstancesTargetSchema =
+  {
+    data: PerOwnerPricingPlan[];
+  };
 
 /**
  * A subscription record
@@ -2032,6 +2088,7 @@ export type Organization = {
   id: OrganizationIdentity;
   attributes: OrganizationAttributes;
   relationships: OrganizationRelationships;
+  meta: OrganizationMeta;
 };
 
 /**
@@ -2059,6 +2116,23 @@ export type OrganizationRelationships = {
   };
   billing_profile: {
     data: null | PerOwnerPricingBillingProfileData;
+  };
+};
+
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type OrganizationMeta = {
+  discount_on_public_plans: number;
+  agency_partner: null | {
+    datocms_website_access_token: null | string;
+    enrollment_issues: null | {
+      days_left_to_comply: number;
+      missing_requirements: ('paid_activation' | 'published_profile')[];
+    };
   };
 };
 
@@ -3975,4 +4049,241 @@ export type OrganizationMembershipMeTargetSchema = {
  */
 export type OrganizationMembershipDestroyTargetSchema = {
   data: OrganizationMembership;
+};
+
+/**
+ * Agencies enrolled in the DatoCMS Partner program can request a mandate to manage their client's organizations
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization_mandate_request".
+ */
+export type OrganizationMandateRequest = {
+  type: OrganizationMandateRequestType;
+  id: OrganizationMandateRequestIdentity;
+  relationships: OrganizationMandateRequestRelationships;
+  meta: OrganizationMandateRequestMeta;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type OrganizationMandateRequestRelationships = {
+  /**
+   * Organization approving the mandate
+   */
+  approver_organization: {
+    data: OrganizationData;
+  };
+  /**
+   * Organization requesting the mandate
+   */
+  requester_organization: {
+    data: OrganizationData;
+  };
+};
+
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type OrganizationMandateRequestMeta = {
+  /**
+   * Name of the organization requesting the mandate
+   */
+  requester_organization_name: string;
+  /**
+   * Name of the organization approving the mandate
+   */
+  approver_organization_name: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationMandateRequestData = {
+  type: OrganizationMandateRequestType;
+  id: OrganizationMandateRequestIdentity;
+};
+
+/**
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type OrganizationMandateRequestCreateSchema = {
+  data: {
+    type: OrganizationMandateRequestType;
+    relationships: {
+      /**
+       * Organization approving the mandate
+       */
+      approver_organization: {
+        data: OrganizationData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type OrganizationMandateRequestCreateTargetSchema = {
+  data: OrganizationMandateRequest;
+};
+
+/**
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `pending_instances.targetSchema` link.
+ */
+export type OrganizationMandateRequestPendingInstancesTargetSchema = {
+  data: OrganizationMandateRequest[];
+};
+
+/**
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `requested_instances.targetSchema` link.
+ */
+export type OrganizationMandateRequestRequestedInstancesTargetSchema = {
+  data: OrganizationMandateRequest[];
+};
+
+/**
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type OrganizationMandateRequestDestroyTargetSchema = {
+  data: OrganizationMandateRequest;
+};
+
+/**
+ * Agencies enrolled in the DatoCMS Partner program can request a mandate to manage their client's organizations
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization_mandate".
+ */
+export type OrganizationMandate = {
+  type: OrganizationMandateType;
+  id: OrganizationMandateIdentity;
+  relationships: OrganizationMandateRelationships;
+  meta: OrganizationMandateMeta;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `OrganizationMandate`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type OrganizationMandateRelationships = {
+  /**
+   * Organization mandator of the mandate
+   */
+  mandator_organization: {
+    data: OrganizationData;
+  };
+  /**
+   * Organization appointed for the mandate
+   */
+  appointed_organization: {
+    data: OrganizationData;
+  };
+  /**
+   * Active plan on mandator organization
+   */
+  active_plan: {
+    data: PerOwnerPricingPlanData;
+  };
+  /**
+   * Additional plans enabled by the appointed organization
+   */
+  additional_enabled_plans: {
+    data: PerOwnerPricingPlanData[];
+  };
+};
+
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `OrganizationMandate`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type OrganizationMandateMeta = {
+  /**
+   * Name of the organization requesting the mandate
+   */
+  appointed_organization_name: string;
+  /**
+   * Name of the organization approving the mandate
+   */
+  mandator_organization_name: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `OrganizationMandate`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationMandateData = {
+  type: OrganizationMandateType;
+  id: OrganizationMandateIdentity;
+};
+
+/**
+ * This interface was referenced by `OrganizationMandate`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type OrganizationMandateUpdateSchema = {
+  data: {
+    type: OrganizationMandateType;
+    id: OrganizationMandateIdentity;
+    relationships: {
+      /**
+       * Additional plans enabled by the appointed organization
+       */
+      additional_enabled_plans?: {
+        data: PerOwnerPricingPlanData[];
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `OrganizationMandate`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type OrganizationMandateUpdateTargetSchema = {
+  data: OrganizationMandate;
+};
+
+/**
+ * This interface was referenced by `OrganizationMandate`'s JSON-Schema
+ * via the `approved_instances.targetSchema` link.
+ */
+export type OrganizationMandateApprovedInstancesTargetSchema = {
+  data: OrganizationMandate[];
+};
+
+/**
+ * This interface was referenced by `OrganizationMandate`'s JSON-Schema
+ * via the `given_instances.targetSchema` link.
+ */
+export type OrganizationMandateGivenInstancesTargetSchema = {
+  data: OrganizationMandate[];
+};
+
+/**
+ * This interface was referenced by `OrganizationMandate`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type OrganizationMandateDestroyTargetSchema = {
+  data: OrganizationMandate;
 };

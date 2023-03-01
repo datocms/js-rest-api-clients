@@ -537,6 +537,17 @@
         "responseType": "PerOwnerPricingPlanInstancesTargetSchema",
         "name": "list",
         "rawName": "rawList"
+      },
+      {
+        "returnsCollection": true,
+        "rel": "activable_as_appointed_organization_instances",
+        "urlTemplate": "/per-owner-pricing-plans/activable-as-appointed-organization",
+        "method": "GET",
+        "comment": "Retrieve plans that the organization can enable on other organizations given a mandate",
+        "queryParamsRequired": false,
+        "responseType": "PerOwnerPricingPlanActivableAsAppointedOrganizationInstancesTargetSchema",
+        "name": "activableAsAppointedOrganizationList",
+        "rawName": "rawActivableAsAppointedOrganizationList"
       }
     ],
     "namespace": "perOwnerPricingPlans",
@@ -1516,5 +1527,169 @@
     ],
     "namespace": "organizationMemberships",
     "resourceClassName": "OrganizationMembership"
+  },
+  {
+    "jsonApiType": "organization_mandate_request",
+    "endpoints": [
+      {
+        "returnsCollection": false,
+        "rel": "create",
+        "urlTemplate": "/organization-mandate-requests",
+        "method": "POST",
+        "comment": "Request a new mandate",
+        "requestBodyType": "OrganizationMandateRequestCreateSchema",
+        "requestStructure": {
+          "type": "organization_mandate_request",
+          "attributes": [],
+          "relationships": [
+            "approver_organization"
+          ]
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMandateRequestCreateTargetSchema",
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "returnsCollection": true,
+        "rel": "pending_instances",
+        "urlTemplate": "/organization-mandate-requests/pending",
+        "method": "GET",
+        "comment": "List all pending mandate requests",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMandateRequestPendingInstancesTargetSchema",
+        "name": "pendingList",
+        "rawName": "rawPendingList"
+      },
+      {
+        "returnsCollection": true,
+        "rel": "requested_instances",
+        "urlTemplate": "/organization-mandate-requests/requested",
+        "method": "GET",
+        "comment": "List all requested mandates",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMandateRequestRequestedInstancesTargetSchema",
+        "name": "requestedList",
+        "rawName": "rawRequestedList"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/organization-mandate-requests/${organizationMandateRequestId}",
+        "method": "DELETE",
+        "comment": "Delete a mandate request",
+        "urlPlaceholder": {
+          "variableName": "organizationMandateRequestId",
+          "isEntityId": true,
+          "relType": "OrganizationMandateRequestData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMandateRequestDestroyTargetSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "approve",
+        "urlTemplate": "/organization-mandate-requests/${organizationMandateRequestId}/approve",
+        "method": "PUT",
+        "comment": "Approve a mandate request",
+        "urlPlaceholder": {
+          "variableName": "organizationMandateRequestId",
+          "isEntityId": true,
+          "relType": "OrganizationMandateRequestData"
+        },
+        "queryParamsRequired": false,
+        "name": "approve",
+        "rawName": "rawApprove"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "reject",
+        "urlTemplate": "/organization-mandate-requests/${organizationMandateRequestId}/reject",
+        "method": "PUT",
+        "comment": "Reject a mandate request",
+        "urlPlaceholder": {
+          "variableName": "organizationMandateRequestId",
+          "isEntityId": true,
+          "relType": "OrganizationMandateRequestData"
+        },
+        "queryParamsRequired": false,
+        "name": "reject",
+        "rawName": "rawReject"
+      }
+    ],
+    "namespace": "organizationMandateRequests",
+    "resourceClassName": "OrganizationMandateRequest"
+  },
+  {
+    "jsonApiType": "organization_mandate",
+    "endpoints": [
+      {
+        "returnsCollection": false,
+        "rel": "update",
+        "urlTemplate": "/organization-mandates/${organizationMandateId}",
+        "method": "PUT",
+        "comment": "Update an organization mandate",
+        "urlPlaceholder": {
+          "variableName": "organizationMandateId",
+          "isEntityId": true,
+          "relType": "OrganizationMandateData"
+        },
+        "requestBodyType": "OrganizationMandateUpdateSchema",
+        "requestStructure": {
+          "type": "organization_mandate",
+          "attributes": [],
+          "relationships": [
+            "additional_enabled_plans"
+          ]
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMandateUpdateTargetSchema",
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "returnsCollection": true,
+        "rel": "approved_instances",
+        "urlTemplate": "/organization-mandates/approved",
+        "method": "GET",
+        "comment": "List all mandates that the organisation has approved",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMandateApprovedInstancesTargetSchema",
+        "name": "approvedList",
+        "rawName": "rawApprovedList"
+      },
+      {
+        "returnsCollection": true,
+        "rel": "given_instances",
+        "urlTemplate": "/organization-mandates/given",
+        "method": "GET",
+        "comment": "List all mandates that the organisation has been given",
+        "queryParamsType": "OrganizationMandateGivenInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMandateGivenInstancesTargetSchema",
+        "name": "givenList",
+        "rawName": "rawGivenList"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/organization-mandates/${organizationMandateId}",
+        "method": "DELETE",
+        "comment": "Cancel an organization mandate",
+        "urlPlaceholder": {
+          "variableName": "organizationMandateId",
+          "isEntityId": true,
+          "relType": "OrganizationMandateData"
+        },
+        "queryParamsRequired": false,
+        "responseType": "OrganizationMandateDestroyTargetSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "organizationMandates",
+    "resourceClassName": "OrganizationMandate"
   }
 ]

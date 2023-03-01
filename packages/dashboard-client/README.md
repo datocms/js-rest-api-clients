@@ -2,7 +2,7 @@
 
 # DatoCMS Dashboard Management API Client
 
-API client for [DatoCMS](https://www.datocms.com).
+Dashboard API client for [DatoCMS](https://www.datocms.com).
 
 <br /><br />
 <a href="https://www.datocms.com/">
