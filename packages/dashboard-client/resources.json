@@ -48,6 +48,7 @@
             "last_name",
             "company",
             "password",
+            "signup_to_newsletter",
             "acquisition_method"
           ],
           "relationships": []
@@ -1654,7 +1655,7 @@
         "rel": "approved_instances",
         "urlTemplate": "/organization-mandates/approved",
         "method": "GET",
-        "comment": "List all mandates that the organisation has approved",
+        "comment": "List all mandates that the organization has approved",
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateApprovedInstancesTargetSchema",
         "name": "approvedList",
@@ -1665,7 +1666,7 @@
         "rel": "given_instances",
         "urlTemplate": "/organization-mandates/given",
         "method": "GET",
-        "comment": "List all mandates that the organisation has been given",
+        "comment": "List all mandates that the organization has been given",
         "queryParamsType": "OrganizationMandateGivenInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateGivenInstancesTargetSchema",

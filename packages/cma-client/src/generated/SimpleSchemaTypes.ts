@@ -1329,6 +1329,30 @@ export type EditingSessionUpdateSchema =
       [k: string]: unknown;
     };
 /**
+ * This interface was referenced by `EditingSession`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type EditingSessionUpdateTargetSchema =
+  | EditingSession
+  | [EditingSession, FormData];
+/**
+ * ID of form data
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type FormDataIdentity = 'form_data';
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type FormDataType = 'form_data';
+/**
  * This interface was referenced by `SsoGroup`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
@@ -1628,6 +1652,7 @@ export type DatoApi = {
   upload_filter?: UploadFilter;
   site_invitation?: SiteInvitation;
   editing_session?: EditingSession;
+  form_data?: FormData;
   sso_group?: SsoGroup;
   sso_settings?: SsoSettings;
   white_label_settings?: WhiteLabelSettings;
@@ -8953,7 +8978,6 @@ export type EditingSession = {
   active_item_type: ItemTypeData;
   editor: AccountData | AccessTokenData | UserData;
 };
-export type EditingSessionUpdateTargetSchema = EditingSession;
 export type EditingSessionDestroyTargetSchema = EditingSession;
 /**
  * JSON API data
@@ -8993,6 +9017,54 @@ export type EditingSessionRelationships = {
   active_item: ItemData;
   active_item_type: ItemTypeData;
   editor: AccountData | AccessTokenData | UserData;
+};
+
+/**
+ * Form contents for an editing session
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "form_data".
+ */
+export type FormData = {
+  id: FormDataIdentity;
+  type: FormDataType;
+  form_data: null | {
+    [k: string]: unknown;
+  };
+  editor: AccountData;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type FormDataData = {
+  type: FormDataType;
+  id: FormDataIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type FormDataAttributes = {
+  form_data: null | {
+    [k: string]: unknown;
+  };
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type FormDataRelationships = {
+  editor: AccountData;
 };
 
 /**

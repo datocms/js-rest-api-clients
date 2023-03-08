@@ -54,7 +54,7 @@ export default class OrganizationMandate extends BaseResource {
   }
 
   /**
-   * List all mandates that the organisation has approved
+   * List all mandates that the organization has approved
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
@@ -68,7 +68,7 @@ export default class OrganizationMandate extends BaseResource {
   }
 
   /**
-   * List all mandates that the organisation has approved
+   * List all mandates that the organization has approved
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
@@ -83,7 +83,7 @@ export default class OrganizationMandate extends BaseResource {
   }
 
   /**
-   * List all mandates that the organisation has been given
+   * List all mandates that the organization has been given
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
@@ -99,7 +99,7 @@ export default class OrganizationMandate extends BaseResource {
   }
 
   /**
-   * List all mandates that the organisation has been given
+   * List all mandates that the organization has been given
    *
    * @throws {ApiError}
    * @throws {TimeoutError}

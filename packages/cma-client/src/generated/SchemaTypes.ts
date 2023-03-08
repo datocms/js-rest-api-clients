@@ -1065,6 +1065,23 @@ export type EditingSessionIdentity = string;
 /**
  * JSON API type field
  *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type FormDataType = 'form_data';
+/**
+ * ID of form data
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type FormDataIdentity = 'form_data';
+/**
+ * JSON API type field
+ *
  * This interface was referenced by `SsoSettings`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1337,6 +1354,7 @@ export type DatoApi = {
   upload_filter?: UploadFilter;
   site_invitation?: SiteInvitation;
   editing_session?: EditingSession;
+  form_data?: FormData;
   sso_group?: SsoGroup;
   sso_settings?: SsoSettings;
   white_label_settings?: WhiteLabelSettings;
@@ -9251,7 +9269,58 @@ export type EditingSessionUpdateSchema = {
  * via the `update.targetSchema` link.
  */
 export type EditingSessionUpdateTargetSchema = {
-  data: EditingSession;
+  data: EditingSession | [EditingSession, FormData];
+};
+
+/**
+ * Form contents for an editing session
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "form_data".
+ */
+export type FormData = {
+  type: FormDataType;
+  id: FormDataIdentity;
+  attributes: FormDataAttributes;
+  relationships: FormDataRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type FormDataAttributes = {
+  form_data: null | {
+    [k: string]: unknown;
+  };
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type FormDataRelationships = {
+  /**
+   * Account that's currently editing an item
+   */
+  editor: {
+    data: AccountData;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type FormDataData = {
+  type: FormDataType;
+  id: FormDataIdentity;
 };
 
 /**

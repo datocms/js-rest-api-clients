@@ -904,6 +904,10 @@ export type AccountCreateSchema = {
        * Password
        */
       password: string;
+      /**
+       * Whether the user opts-in to signup to DatoCMS newletter
+       */
+      signup_to_newsletter?: boolean;
       acquisition_method?: {
         source: string;
         medium: string;
@@ -1075,14 +1079,6 @@ export type PerOwnerPricingPlanAttributes = {
    * Additional enterprise features enabled
    */
   enterprise_features: string[];
-  /**
-   * Representative color of the plan
-   */
-  color_hex: null | string;
-  /**
-   * Description of the plan
-   */
-  description: null | string;
   /**
    * Whether this plan is active
    */
