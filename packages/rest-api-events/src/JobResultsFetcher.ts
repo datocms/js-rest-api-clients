@@ -2,11 +2,11 @@ import { GenericClient, JobResult } from './internalTypes';
 import {
   EventsSubscription,
   subscribeToEvents,
-  SubscriptionConfig as SubscribeToEventsSubscriptionConfig,
+  SubscriptionConfig,
 } from './subscribeToEvents';
 
-type SubscriptionConfig = Pick<
-  SubscribeToEventsSubscriptionConfig,
+export type SubscribeToEventsSubscriptionConfig = Pick<
+  SubscriptionConfig,
   'cluster' | 'appKey'
 >;
 
@@ -19,7 +19,7 @@ export class JobResultsFetcher<T extends GenericClient> {
     this.fetch = this.fetch.bind(this);
   }
 
-  async subscribeToEvents(config?: SubscriptionConfig) {
+  async subscribeToEvents(config?: SubscribeToEventsSubscriptionConfig) {
     if (!this.client.config.apiToken) {
       throw new Error('Missing API token!');
     }
