@@ -6,12 +6,12 @@
     "lint": "rome ci packages",
     "format": "rome check packages --apply-suggested && rome format --write packages",
     "test": "npm run lint && jest --maxConcurrency=5",
-    "generate": "BASE_URL='https://site-api.datocms.com' ./generate/index.ts && npm run format",
-    "dev-generate": "BASE_URL='http://site-api.lvh.me:3001' ./generate/index.ts && npm run format",
+    "generate": "./generate/index.ts && npm run format",
+    "generate-next": "GENERATE_FROM_DEV=true ./generate/index.ts && npm run format",
     "build": "lerna run build",
     "prepublishOnly": "npm run generate && ./generate/setClientVersion.ts && npm run build && npm run test",
     "publish": "lerna publish",
-    "publish-next": "lerna publish --dist-tag next"
+    "publish-next": "GENERATE_FROM_DEV=true lerna publish --dist-tag next"
   },
   "author": "Stefano Verna <s.verna@datocms.com>",
   "license": "MIT",
