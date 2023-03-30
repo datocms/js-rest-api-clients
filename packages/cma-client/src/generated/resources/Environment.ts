@@ -17,6 +17,7 @@ export default class Environment extends BaseResource {
   fork(
     environmentId: string | SimpleSchemaTypes.EnvironmentData,
     body: SimpleSchemaTypes.EnvironmentForkSchema,
+    queryParams?: SimpleSchemaTypes.EnvironmentForkHrefSchema,
   ) {
     return this.rawFork(
       Utils.toId(environmentId),
@@ -26,6 +27,7 @@ export default class Environment extends BaseResource {
         attributes: [],
         relationships: [],
       }),
+      queryParams,
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.EnvironmentForkJobSchema>(
         body,
@@ -44,11 +46,13 @@ export default class Environment extends BaseResource {
   rawFork(
     environmentId: string,
     body: SchemaTypes.EnvironmentForkSchema,
+    queryParams?: SchemaTypes.EnvironmentForkHrefSchema,
   ): Promise<SchemaTypes.EnvironmentForkJobSchema> {
     return this.client.request<SchemaTypes.EnvironmentForkJobSchema>({
       method: 'POST',
       url: `/environments/${environmentId}/fork`,
       body,
+      queryParams,
     });
   }
 

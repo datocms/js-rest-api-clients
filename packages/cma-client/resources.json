@@ -2097,6 +2097,7 @@
           "attributes": [],
           "relationships": []
         },
+        "queryParamsType": "EnvironmentForkHrefSchema",
         "queryParamsRequired": false,
         "responseType": "EnvironmentForkJobSchema",
         "name": "fork",

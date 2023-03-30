@@ -1115,6 +1115,25 @@ export type EnvironmentType = 'environment';
 export type EnvironmentForkTargetSchema = Job | Environment;
 /**
  * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `fork.hrefSchema` link.
+ */
+export type EnvironmentForkHrefSchema = {
+  /**
+   * Whether the call should immediately return a pending environment, or wait for the completion of the fork
+   */
+  immediate_return?: string;
+  /**
+   * Performing a fast fork reduces processing time, but it also prevents writing to the source environment during the process
+   */
+  fast?: string;
+  /**
+   * Force the fork, even if there are collaborators editing some records
+   */
+  force?: boolean;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
 export type EnvironmentInstancesTargetSchema = Environment[];
@@ -7923,6 +7942,14 @@ export type EnvironmentMeta = {
    */
   status: 'creating' | 'ready' | 'destroying';
   /**
+   * The completion percentage of the fork operation (only present if the status is `creating`)
+   */
+  fork_completion_percentage?: number;
+  /**
+   * Is this environment the in read-only mode because of a fast-fork?
+   */
+  read_only_mode: boolean;
+  /**
    * Date of creation
    */
   created_at: string;
@@ -7937,7 +7964,7 @@ export type EnvironmentMeta = {
   /**
    * ID of the environment that's been forked to generate this one
    */
-  forked_from?: string | null;
+  forked_from: string | null;
 };
 
 /**
