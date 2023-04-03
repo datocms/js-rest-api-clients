@@ -136,12 +136,13 @@ async function generate(prefix: string, hyperschemaUrl: string) {
   }
 }
 
+const baseUrl = process.env.GENERATE_FROM_DEV
+  ? 'http://site-api.lvh.me:3001'
+  : 'https://site-api.datocms.com';
+
 Promise.all([
-  generate('cma', `${process.env.BASE_URL}/docs/site-api-hyperschema.json`),
-  generate(
-    'dashboard',
-    `${process.env.BASE_URL}/docs/account-api-hyperschema.json`,
-  ),
+  generate('cma', `${baseUrl}/docs/site-api-hyperschema.json`),
+  generate('dashboard', `${baseUrl}/docs/account-api-hyperschema.json`),
 ])
   .then(() => console.log('Done'))
   .catch((e) => console.error(e));
