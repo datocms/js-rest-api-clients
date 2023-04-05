@@ -39,5 +39,5 @@
   "dependencies": {
     "@datocms/rest-client-utils": "^1.1.23"
   },
-  "gitHead": "c5c53fe30e67e79e8be0953b611c95f9ab3d0ebd"
+  "gitHead": "504a80c1a8c628acf6defc5c7ce9c58e777f9ecd"
 }
