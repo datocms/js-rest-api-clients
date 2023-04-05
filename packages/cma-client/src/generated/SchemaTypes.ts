@@ -382,7 +382,7 @@ export type ItemTypeCreateHrefSchema = {
   /**
    * Skip the creation of a menu item linked to the model
    */
-  skip_menu_item_creation?: string;
+  skip_menu_item_creation?: boolean;
   [k: string]: unknown;
 };
 /**
@@ -410,7 +410,7 @@ export type ItemTypeDestroyHrefSchema = {
   /**
    * Skip the deletion of the menu items linked to the model
    */
-  skip_menu_items_deletion?: string;
+  skip_menu_items_deletion?: boolean;
   [k: string]: unknown;
 };
 /**
@@ -530,7 +530,7 @@ export type ItemInstancesHrefSchema = {
   /**
    * For Modular Content fields and Structured Text fields. If set, returns full payload for nested blocks instead of IDs
    */
-  nested?: string;
+  nested?: boolean;
   /**
    * Attributes to filter records
    */
@@ -591,7 +591,7 @@ export type ItemReferencesHrefSchema = {
   /**
    * For Modular Content fields and Structured Text fields, return full payload for nested blocks instead of IDs
    */
-  nested?: 'true';
+  nested?: boolean;
   /**
    * Retrieve only the selected type of version that is linked to the record; current, published or both
    */
@@ -606,7 +606,7 @@ export type ItemSelfHrefSchema = {
   /**
    * For Modular Content fields and Structured Text fields. If set, returns full payload for nested blocks instead of IDs
    */
-  nested?: string;
+  nested?: boolean;
   /**
    * Whether you want the currently published versions (`published`, default) of your records, or the latest available (`current`)
    */
@@ -651,7 +651,7 @@ export type ItemPublishHrefSchema = {
   /**
    * If the record references other draft records, force a recursive publication
    */
-  recursive?: string;
+  recursive?: boolean;
   [k: string]: unknown;
 };
 /**
@@ -662,7 +662,7 @@ export type ItemUnpublishHrefSchema = {
   /**
    * If the record is referenced by other published records, unpublish them recursively
    */
-  recursive?: string;
+  recursive?: boolean;
   [k: string]: unknown;
 };
 /**
@@ -690,7 +690,7 @@ export type ItemVersionInstancesHrefSchema = {
   /**
    * For Modular Content fields and Structured Text fields. If set, returns full payload for nested blocks instead of IDs
    */
-  nested?: string;
+  nested?: boolean;
   /**
    * Attributes to manage results pagination
    */
@@ -803,7 +803,7 @@ export type UploadReferencesHrefSchema = {
   /**
    * For Modular Content fields and Structured Text fields, return full payload for nested blocks instead of IDs
    */
-  nested?: string;
+  nested?: boolean;
   /**
    * Retrieve only the selected type of version that is linked to the upload; current, published or both
    */
@@ -904,7 +904,7 @@ export type SearchResultInstancesHrefSchema = {
     /**
      * When any value is passed, it enables the fuzzy search: the Levenshtein Edit Distance is used to match more results.
      */
-    fuzzy?: string;
+    fuzzy?: boolean;
     /**
      * Text to search
      */
@@ -936,13 +936,13 @@ export type EnvironmentForkHrefSchema = {
   /**
    * Whether the call should immediately return a pending environment, or wait for the completion of the fork
    */
-  immediate_return?: string;
+  immediate_return?: boolean;
   /**
    * Performing a fast fork reduces processing time, but it also prevents writing to the source environment during the process
    */
-  fast?: string;
+  fast?: boolean;
   /**
-   * Force the fork, even if there are collaborators editing some records
+   * Force the start of fast fork, even if there are collaborators editing some records
    */
   force?: boolean;
   [k: string]: unknown;
