@@ -110,7 +110,7 @@ describe('item', () => {
       order_by: 'title_ASC',
       version: 'current',
       locale: 'en',
-      nested: 'true',
+      nested: true,
     });
 
     expect(allItems).toHaveLength(1);
@@ -253,12 +253,13 @@ describe('item', () => {
     expect((item.content as string[]).length).toEqual(2);
 
     const itemWithNestedBlocks = await client.items.find(item.id, {
-      nested: 'true',
+      nested: true,
     });
 
     await client.items.update(item.id, {
       content: (itemWithNestedBlocks.content as SchemaTypes.Item[]).map(
-        (block) => buildBlockRecord({
+        (block) =>
+          buildBlockRecord({
             id: block.id,
             text: `Updated ${block.attributes.text}`,
             item_type: block.relationships.item_type.data,
@@ -267,7 +268,7 @@ describe('item', () => {
     });
 
     const updatedItemWithNestedBlocks = await client.items.find(item.id, {
-      nested: 'true',
+      nested: true,
     });
 
     const updatedContent =

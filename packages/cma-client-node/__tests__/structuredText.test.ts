@@ -70,7 +70,7 @@ describe('structured text', () => {
     expect(content.document.children.length).toEqual(3);
 
     const itemWithNestedBlocks = await client.items.find(item.id, {
-      nested: 'true',
+      nested: true,
     });
 
     const nestedContent = itemWithNestedBlocks.content as Document;
@@ -100,7 +100,7 @@ describe('structured text', () => {
     });
 
     const updatedItemWithNestedBlocks = await client.items.find(item.id, {
-      nested: 'true',
+      nested: true,
     });
 
     const updatedNestedContent =
