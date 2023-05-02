@@ -1364,7 +1364,8 @@
           "type": "item",
           "attributes": "*",
           "relationships": [
-            "item_type"
+            "item_type",
+            "creator"
           ]
         },
         "queryParamsRequired": false,
@@ -1384,7 +1385,8 @@
           "type": "item",
           "attributes": "*",
           "relationships": [
-            "item_type"
+            "item_type",
+            "creator"
           ]
         },
         "queryParamsRequired": false,
@@ -3297,6 +3299,18 @@
         "responseType": "SiteActivateImprovedTimezoneManagementJobSchema",
         "name": "activateImprovedTimezoneManagement",
         "rawName": "rawActivateImprovedTimezoneManagement"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_hex_management",
+        "rel": "activate_improved_hex_management",
+        "urlTemplate": "/site/activate-improved-hex-management",
+        "method": "PUT",
+        "comment": "Activate improved hex management",
+        "queryParamsRequired": false,
+        "responseType": "SiteActivateImprovedHexManagementTargetSchema",
+        "name": "activateImprovedHexManagement",
+        "rawName": "rawActivateImprovedHexManagement"
       }
     ],
     "namespace": "site",

@@ -2195,6 +2195,10 @@ export type SitePlan = {
    */
   concurrent_realtime_connections: number;
   /**
+   * The maximum GraphQL query complexity a client can perform on our CDA.
+   */
+  gql_complexity: number;
+  /**
    * Period (in minutes) in which bursts of changes made to the same record by the same user (or API token) will be grouped into a single one
    */
   history_resolution_minutes: number;
@@ -2409,6 +2413,10 @@ export type SitePlanAttributes = {
    * Maximum number of clients connected at the same time to the Realtime Updates API. The limit is per-project
    */
   concurrent_realtime_connections: number;
+  /**
+   * The maximum GraphQL query complexity a client can perform on our CDA.
+   */
+  gql_complexity: number;
   /**
    * Period (in minutes) in which bursts of changes made to the same record by the same user (or API token) will be grouped into a single one
    */

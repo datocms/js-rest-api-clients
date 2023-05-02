@@ -553,6 +553,10 @@ export type ItemInstancesHrefSchema = {
     fields?: {
       [k: string]: unknown;
     };
+    /**
+     * When set, only valid records are included in the results.
+     */
+    only_valid?: string;
     [k: string]: unknown;
   };
   /**
@@ -3275,6 +3279,10 @@ export type SitePlanAttributes = {
    */
   concurrent_realtime_connections: number;
   /**
+   * The maximum GraphQL query complexity a client can perform on our CDA.
+   */
+  gql_complexity: number;
+  /**
    * Period (in minutes) in which bursts of changes made to the same record by the same user (or API token) will be grouped into a single one
    */
   history_resolution_minutes: number;
@@ -4135,7 +4143,7 @@ export type ItemTypeDestroyJobSchema = {
 };
 
 /**
- * DatoCMS offers a number of different fields that you can combine togheter to create a [Model](/docs/content-management-api/resources/item-type). Using the database metaphore, fields are like table columns, and when creating them you need to specify their type (`string`, `float`, etc.) and any required validation.
+ * DatoCMS offers a number of different fields that you can combine together to create a [Model](/docs/content-management-api/resources/item-type). Using the database metaphore, fields are like table columns, and when creating them you need to specify their type (`string`, `float`, etc.) and any required validation.
  *
  * ### Different field types require different settings
  *
@@ -4728,6 +4736,17 @@ export type ItemTypeDestroyJobSchema = {
  * | Parameter    | Type                    | Required | Description                    |
  * | ------------ | ----------------------- | -------- | ------------------------------ |
  * | `item_types` | `Array<Block Model ID>` | ✅       | Set of allowed Block Model IDs |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>sanitization</code></summary>
+ *
+ * Checks for the presence of malicious cose in HTML fields: content is valid if no dangerous code is present.
+ *
+ * | Parameter                      | Type      | Required | Description                                                  |
+ * | ------------------------------ | --------- | -------- | ------------------------------------------------------------ |
+ * | `sanitize_before_validation`   | `Boolean` | ✅       | Content is actively sanitized before applying the validation |
  *
  * </details>
  *
@@ -6426,6 +6445,17 @@ export type ItemValidateNewSchema = {
       item_type: {
         data: ItemTypeData;
       };
+      /**
+       * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
+       */
+      creator?: {
+        data:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
+      };
     };
   };
 };
@@ -6494,6 +6524,17 @@ export type ItemCreateSchema = {
        */
       item_type: {
         data: ItemTypeData;
+      };
+      /**
+       * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
+       */
+      creator?: {
+        data:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
       };
     };
   };
@@ -7114,6 +7155,10 @@ export type UploadAttributes = {
    * Blurhash for the asset
    */
   blurhash: string | null;
+  /**
+   * Base64 encoded ThumbHash for the asset
+   */
+  thumbhash: string | null;
   /**
    * Public Mux playback ID. Used with stream.mux.com to create the source URL for a video player.
    */
@@ -10192,6 +10237,10 @@ export type SiteMeta = {
    * Whether the Improved API Timezone Management option is active or not
    */
   improved_timezone_management: boolean;
+  /**
+   * Whether the Improved API Hex Management option is active or not
+   */
+  improved_hex_management: boolean;
 };
 
 /**
@@ -10330,6 +10379,10 @@ export type SiteUpdateSchema = {
        * Whether the Improved API Timezone Management option is active or not
        */
       improved_timezone_management?: boolean;
+      /**
+       * Whether the Improved API Hex Management option is active or not
+       */
+      improved_hex_management?: boolean;
     };
     relationships?: {
       sso_default_role?: {
@@ -10368,6 +10421,14 @@ export type SiteActivateImprovedTimezoneManagementTargetSchema = {
  * via the `activate_improved_timezone_management.jobSchema` link.
  */
 export type SiteActivateImprovedTimezoneManagementJobSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_hex_management.targetSchema` link.
+ */
+export type SiteActivateImprovedHexManagementTargetSchema = {
   data: Site;
 };
 

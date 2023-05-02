@@ -122,4 +122,37 @@ export default class Site extends BaseResource {
       },
     );
   }
+
+  /**
+   * Activate improved hex management
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_hex_management
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  activateImprovedHexManagement() {
+    return this.rawActivateImprovedHexManagement().then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedHexManagementTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Activate improved hex management
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_hex_management
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawActivateImprovedHexManagement(): Promise<SchemaTypes.SiteActivateImprovedHexManagementTargetSchema> {
+    return this.client.request<SchemaTypes.SiteActivateImprovedHexManagementTargetSchema>(
+      {
+        method: 'PUT',
+        url: '/site/activate-improved-hex-management',
+      },
+    );
+  }
 }

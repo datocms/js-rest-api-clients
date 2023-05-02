@@ -2631,6 +2631,10 @@ export type SitePlanAttributes = {
    */
   concurrent_realtime_connections: number;
   /**
+   * The maximum GraphQL query complexity a client can perform on our CDA.
+   */
+  gql_complexity: number;
+  /**
    * Period (in minutes) in which bursts of changes made to the same record by the same user (or API token) will be grouped into a single one
    */
   history_resolution_minutes: number;

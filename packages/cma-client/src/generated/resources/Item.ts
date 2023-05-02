@@ -148,7 +148,7 @@ export default class Item extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.ItemValidateNewSchema>(body, {
         type: 'item',
         attributes: '*',
-        relationships: ['item_type'],
+        relationships: ['item_type', 'creator'],
       }),
     );
   }
@@ -184,7 +184,7 @@ export default class Item extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.ItemCreateSchema>(body, {
         type: 'item',
         attributes: '*',
-        relationships: ['item_type'],
+        relationships: ['item_type', 'creator'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemCreateTargetSchema>(
