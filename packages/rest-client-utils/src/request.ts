@@ -16,6 +16,8 @@ import {
 const isBrowser =
   typeof window !== 'undefined' && typeof window.document !== 'undefined';
 
+const MAX_RETRY_COUNT_ON_TIMEOUT_ERROR = 5;
+
 export enum LogLevel {
   /** No logging */
   NONE = 0,
@@ -322,7 +324,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       error instanceof CanceledPromiseError ||
       (isErrorWithCode(error) && error.code.includes('ETIMEDOUT'))
     ) {
-      if (autoRetry) {
+      if (autoRetry && retryCount < MAX_RETRY_COUNT_ON_TIMEOUT_ERROR) {
         if (logLevel >= LogLevel.BASIC) {
           log(
             `[${requestId}] Timeout error, wait ${retryCount} seconds then retry...`,
