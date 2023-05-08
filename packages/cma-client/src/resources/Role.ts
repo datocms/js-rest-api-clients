@@ -30,11 +30,11 @@ function sameRule(
   obj1: Record<string, unknown>,
   obj2: Record<string, unknown>,
 ): boolean {
-  for (const key in Object.keys(obj1)) {
+  for (const key in obj1) {
     if (!sameValue(obj1[key], obj2[key])) return false;
   }
 
-  for (const key in Object.keys(obj2)) {
+  for (const key in obj2) {
     if (!sameValue(obj1[key], obj2[key])) return false;
   }
 
