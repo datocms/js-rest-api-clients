@@ -97,6 +97,8 @@ export default class Site extends BaseResource {
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
    */
   activateImprovedTimezoneManagement() {
     return this.rawActivateImprovedTimezoneManagement().then((body) =>
@@ -113,6 +115,8 @@ export default class Site extends BaseResource {
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
    */
   rawActivateImprovedTimezoneManagement(): Promise<SchemaTypes.SiteActivateImprovedTimezoneManagementJobSchema> {
     return this.client.request<SchemaTypes.SiteActivateImprovedTimezoneManagementJobSchema>(
@@ -130,6 +134,8 @@ export default class Site extends BaseResource {
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
    */
   activateImprovedHexManagement() {
     return this.rawActivateImprovedHexManagement().then((body) =>
@@ -146,12 +152,51 @@ export default class Site extends BaseResource {
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
    */
   rawActivateImprovedHexManagement(): Promise<SchemaTypes.SiteActivateImprovedHexManagementTargetSchema> {
     return this.client.request<SchemaTypes.SiteActivateImprovedHexManagementTargetSchema>(
       {
         method: 'PUT',
         url: '/site/activate-improved-hex-management',
+      },
+    );
+  }
+
+  /**
+   * Activate improved GraphQL multi-locale fields option
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_gql_multilocale_fields
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  activateImprovedGqlMultilocaleFields() {
+    return this.rawActivateImprovedGqlMultilocaleFields().then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedGqlMultilocaleFieldsTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Activate improved GraphQL multi-locale fields option
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_gql_multilocale_fields
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawActivateImprovedGqlMultilocaleFields(): Promise<SchemaTypes.SiteActivateImprovedGqlMultilocaleFieldsTargetSchema> {
+    return this.client.request<SchemaTypes.SiteActivateImprovedGqlMultilocaleFieldsTargetSchema>(
+      {
+        method: 'PUT',
+        url: '/site/activate-improved-gql-multilocale-fields',
       },
     );
   }

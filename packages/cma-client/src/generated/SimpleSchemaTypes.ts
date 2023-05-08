@@ -728,7 +728,7 @@ export type ItemBatchDestroyJobSchema = unknown[];
  */
 export type ItemBatchDestroyHrefSchema = {
   /**
-   * IDs of records to delete, comma separated
+   * IDs of records to delete, comma separated (a maximum of 200 IDs are allowed per request)
    */
   'filter[ids]': string;
 };
@@ -743,7 +743,7 @@ export type ItemBatchPublishJobSchema = unknown[];
  */
 export type ItemBatchPublishHrefSchema = {
   /**
-   * IDs of records to publish, comma separated
+   * IDs of records to publish, comma separated (a maximum of 200 IDs are allowed per request)
    */
   'filter[ids]': string;
 };
@@ -758,7 +758,7 @@ export type ItemBatchUnpublishJobSchema = unknown[];
  */
 export type ItemBatchUnpublishHrefSchema = {
   /**
-   * IDs of records to unpublish, comma separated
+   * IDs of records to unpublish, comma separated (a maximum of 200 IDs are allowed per request)
    */
   'filter[ids]': string;
 };
@@ -9918,6 +9918,7 @@ export type SiteSelfTargetSchema = Site;
 export type SiteUpdateJobSchema = Site;
 export type SiteActivateImprovedTimezoneManagementJobSchema = Site;
 export type SiteActivateImprovedHexManagementTargetSchema = Site;
+export type SiteActivateImprovedGqlMultilocaleFieldsTargetSchema = Site;
 /**
  * Meta attributes
  *
@@ -9933,6 +9934,10 @@ export type SiteMeta = {
    * Whether the Improved API Hex Management option is active or not
    */
   improved_hex_management: boolean;
+  /**
+   * Whether the Improved GraphQL multi-locale fields option is active or not
+   */
+  improved_gql_multilocale_fields: boolean;
 };
 
 /**
@@ -10209,6 +10214,10 @@ export type SiteUpdateSchema = {
      * Whether the Improved API Hex Management option is active or not
      */
     improved_hex_management?: boolean;
+    /**
+     * Whether the Improved GraphQL multi-locale fields option is active or not
+     */
+    improved_gql_multilocale_fields?: boolean;
   };
 };
 

@@ -3297,6 +3297,7 @@
         "comment": "Activate improved timezone management",
         "queryParamsRequired": false,
         "responseType": "SiteActivateImprovedTimezoneManagementJobSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "activateImprovedTimezoneManagement",
         "rawName": "rawActivateImprovedTimezoneManagement"
       },
@@ -3309,8 +3310,22 @@
         "comment": "Activate improved hex management",
         "queryParamsRequired": false,
         "responseType": "SiteActivateImprovedHexManagementTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "activateImprovedHexManagement",
         "rawName": "rawActivateImprovedHexManagement"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_gql_multilocale_fields",
+        "rel": "activate_improved_gql_multilocale_fields",
+        "urlTemplate": "/site/activate-improved-gql-multilocale-fields",
+        "method": "PUT",
+        "comment": "Activate improved GraphQL multi-locale fields option",
+        "queryParamsRequired": false,
+        "responseType": "SiteActivateImprovedGqlMultilocaleFieldsTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "activateImprovedGqlMultilocaleFields",
+        "rawName": "rawActivateImprovedGqlMultilocaleFields"
       }
     ],
     "namespace": "site",

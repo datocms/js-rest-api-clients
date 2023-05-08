@@ -623,7 +623,7 @@ export type ItemSelfHrefSchema = {
  */
 export type ItemBatchDestroyHrefSchema = {
   /**
-   * IDs of records to delete, comma separated
+   * IDs of records to delete, comma separated (a maximum of 200 IDs are allowed per request)
    */
   'filter[ids]': string;
 };
@@ -633,7 +633,7 @@ export type ItemBatchDestroyHrefSchema = {
  */
 export type ItemBatchPublishHrefSchema = {
   /**
-   * IDs of records to publish, comma separated
+   * IDs of records to publish, comma separated (a maximum of 200 IDs are allowed per request)
    */
   'filter[ids]': string;
 };
@@ -643,7 +643,7 @@ export type ItemBatchPublishHrefSchema = {
  */
 export type ItemBatchUnpublishHrefSchema = {
   /**
-   * IDs of records to unpublish, comma separated
+   * IDs of records to unpublish, comma separated (a maximum of 200 IDs are allowed per request)
    */
   'filter[ids]': string;
 };
@@ -6786,7 +6786,7 @@ export type ItemBulkPublishSchema = {
     type: 'item_bulk_publish_operation';
     relationships: {
       /**
-       * Records to publish
+       * Records to publish (a maximum of 200 records are allowed per request)
        */
       items: {
         data: ItemData[];
@@ -6828,7 +6828,7 @@ export type ItemBulkUnpublishSchema = {
     type: 'item_bulk_unpublish_operation';
     relationships: {
       /**
-       * Records to unpublish
+       * Records to unpublish (a maximum of 200 records are allowed per request)
        */
       items: {
         data: ItemData[];
@@ -6870,7 +6870,7 @@ export type ItemBulkDestroySchema = {
     type: 'item_bulk_destroy_operation';
     relationships: {
       /**
-       * Records to delete
+       * Records to delete (a maximum of 200 records are allowed per request)
        */
       items: {
         data: ItemData[];
@@ -6918,7 +6918,7 @@ export type ItemBulkMoveToStageSchema = {
     };
     relationships: {
       /**
-       * Records to move
+       * Records to move (a maximum of 200 records are allowed per request)
        */
       items: {
         data: ItemData[];
@@ -10241,6 +10241,10 @@ export type SiteMeta = {
    * Whether the Improved API Hex Management option is active or not
    */
   improved_hex_management: boolean;
+  /**
+   * Whether the Improved GraphQL multi-locale fields option is active or not
+   */
+  improved_gql_multilocale_fields: boolean;
 };
 
 /**
@@ -10383,6 +10387,10 @@ export type SiteUpdateSchema = {
        * Whether the Improved API Hex Management option is active or not
        */
       improved_hex_management?: boolean;
+      /**
+       * Whether the Improved GraphQL multi-locale fields option is active or not
+       */
+      improved_gql_multilocale_fields?: boolean;
     };
     relationships?: {
       sso_default_role?: {
@@ -10429,6 +10437,14 @@ export type SiteActivateImprovedTimezoneManagementJobSchema = {
  * via the `activate_improved_hex_management.targetSchema` link.
  */
 export type SiteActivateImprovedHexManagementTargetSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_gql_multilocale_fields.targetSchema` link.
+ */
+export type SiteActivateImprovedGqlMultilocaleFieldsTargetSchema = {
   data: Site;
 };
 
