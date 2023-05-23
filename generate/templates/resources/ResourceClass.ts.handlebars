@@ -27,7 +27,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
           {{{urlPlaceholder.variableName}}}: string | SimpleSchemaTypes.{{{urlPlaceholder.relType}}},
         {{/if}}
         {{#if requestBodyType}}
-          body: SimpleSchemaTypes.{{{requestBodyType}}},
+          body{{#if optionalRequestBody}}?{{/if}}: SimpleSchemaTypes.{{{requestBodyType}}},
         {{/if}}
         {{#if queryParamsType}}
           queryParams{{#unless queryParamsRequired}}?{{/unless}}: SimpleSchemaTypes.{{{queryParamsType}}},
@@ -38,7 +38,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
               Utils.toId({{{urlPlaceholder.variableName}}}),
             {{/if}}
             {{#if requestBodyType}}
-              Utils.serializeRequestBody<SchemaTypes.{{{requestBodyType}}}>(
+              {{#if optionalRequestBody}}body ? {{/if}}Utils.serializeRequestBody<SchemaTypes.{{{requestBodyType}}}>(
                 body,
                 {
                   {{#if urlPlaceholder.isEntityId}}
@@ -48,7 +48,8 @@ export default class {{{resourceClassName}}} extends BaseResource {
                   attributes: {{{stringify requestStructure.attributes}}},
                   relationships: {{{stringify requestStructure.relationships}}},
                 },
-              ),
+              )
+              {{#if optionalRequestBody}} : null{{/if}},
             {{/if}}
             {{#if queryParamsType}}
               queryParams,
@@ -80,7 +81,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
       {{{urlPlaceholder.variableName}}}: string,
     {{/if}}
     {{#if requestBodyType}}
-      body: SchemaTypes.{{{requestBodyType}}},
+      body{{#if optionalRequestBody}}?{{/if}}: SchemaTypes.{{{requestBodyType}}},
     {{/if}}
     {{#if queryParamsType}}
       queryParams{{#unless queryParamsRequired}}?{{/unless}}: SchemaTypes.{{{queryParamsType}}},

@@ -10,6 +10,7 @@
         "method": "POST",
         "comment": "Create a new role",
         "requestBodyType": "RoleCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "role",
           "attributes": [
@@ -61,6 +62,7 @@
           "relType": "RoleData"
         },
         "requestBodyType": "RoleUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "role",
           "attributes": [
@@ -106,6 +108,7 @@
         "urlTemplate": "/roles",
         "method": "GET",
         "comment": "List all roles",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "RoleInstancesTargetSchema",
         "name": "list",
@@ -123,6 +126,7 @@
           "isEntityId": true,
           "relType": "RoleData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "RoleSelfTargetSchema",
         "name": "find",
@@ -140,6 +144,7 @@
           "isEntityId": true,
           "relType": "RoleData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "RoleDestroyTargetSchema",
         "name": "destroy",
@@ -165,6 +170,7 @@
           "relType": "UserData"
         },
         "requestBodyType": "UserUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "user",
           "attributes": [
@@ -186,6 +192,7 @@
         "urlTemplate": "/users",
         "method": "GET",
         "comment": "List all collaborators",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "UserInstancesTargetSchema",
         "name": "list",
@@ -203,6 +210,7 @@
           "isEntityId": true,
           "relType": "UserData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "UserSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "UserSelfTargetSchema",
@@ -216,6 +224,7 @@
         "urlTemplate": "/users/me",
         "method": "GET",
         "comment": "Retrieve current signed-in user",
+        "optionalRequestBody": false,
         "queryParamsType": "UserMeHrefSchema",
         "queryParamsRequired": false,
         "responseType": "UserMeTargetSchema",
@@ -234,6 +243,7 @@
           "isEntityId": true,
           "relType": "UserData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "UserDestroyHrefSchema",
         "queryParamsRequired": false,
         "responseType": "UserDestroyTargetSchema",
@@ -254,6 +264,7 @@
         "urlTemplate": "/sso-users",
         "method": "GET",
         "comment": "List all users",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoUserInstancesTargetSchema",
         "name": "list",
@@ -271,6 +282,7 @@
           "isEntityId": false,
           "relType": "UserData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoUserSelfTargetSchema",
         "name": "find",
@@ -283,6 +295,7 @@
         "urlTemplate": "/sso-users/copy-users",
         "method": "POST",
         "comment": "Copy editors as SSO users",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoUserCopyUsersTargetSchema",
         "name": "copyUsers",
@@ -300,6 +313,7 @@
           "isEntityId": false,
           "relType": "UserData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "SsoUserDestroyHrefSchema",
         "queryParamsRequired": false,
         "responseType": "SsoUserDestroyTargetSchema",
@@ -321,6 +335,7 @@
         "method": "POST",
         "comment": "List Audit Log events",
         "requestBodyType": "AuditLogEventQuerySchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "audit_log_query",
           "attributes": [
@@ -350,6 +365,7 @@
         "method": "POST",
         "comment": "Create a new menu item",
         "requestBodyType": "MenuItemCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "menu_item",
           "attributes": [
@@ -382,6 +398,7 @@
           "relType": "MenuItemData"
         },
         "requestBodyType": "MenuItemUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "menu_item",
           "attributes": [
@@ -408,6 +425,7 @@
         "urlTemplate": "/menu-items",
         "method": "GET",
         "comment": "List all menu items",
+        "optionalRequestBody": false,
         "queryParamsType": "MenuItemInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "MenuItemInstancesTargetSchema",
@@ -426,6 +444,7 @@
           "isEntityId": true,
           "relType": "MenuItemData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "MenuItemSelfTargetSchema",
         "name": "find",
@@ -443,6 +462,7 @@
           "isEntityId": true,
           "relType": "MenuItemData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "MenuItemDestroyTargetSchema",
         "name": "destroy",
@@ -463,6 +483,7 @@
         "method": "POST",
         "comment": "Create a new model",
         "requestBodyType": "ItemTypeCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "item_type",
           "attributes": [
@@ -508,6 +529,7 @@
           "relType": "ItemTypeData"
         },
         "requestBodyType": "ItemTypeUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "item_type",
           "attributes": [
@@ -547,6 +569,7 @@
         "urlTemplate": "/item-types",
         "method": "GET",
         "comment": "List all models",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ItemTypeInstancesTargetSchema",
         "name": "list",
@@ -564,6 +587,7 @@
           "isEntityId": true,
           "relType": "ItemTypeData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ItemTypeSelfTargetSchema",
         "name": "find",
@@ -581,6 +605,7 @@
           "isEntityId": true,
           "relType": "ItemTypeData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ItemTypeDuplicateTargetSchema",
         "name": "duplicate",
@@ -598,6 +623,7 @@
           "isEntityId": true,
           "relType": "ItemTypeData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "ItemTypeDestroyHrefSchema",
         "queryParamsRequired": false,
         "responseType": "ItemTypeDestroyJobSchema",
@@ -624,6 +650,7 @@
           "relType": "ItemTypeData"
         },
         "requestBodyType": "FieldCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "field",
           "attributes": [
@@ -660,6 +687,7 @@
           "relType": "FieldData"
         },
         "requestBodyType": "FieldUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "field",
           "attributes": [
@@ -695,6 +723,7 @@
           "isEntityId": false,
           "relType": "ItemTypeData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldInstancesTargetSchema",
         "name": "list",
@@ -712,6 +741,7 @@
           "isEntityId": false,
           "relType": "ItemTypeData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldReferencingTargetSchema",
         "deprecated": "This API call is to be considered private and might change without notice",
@@ -730,6 +760,7 @@
           "isEntityId": false,
           "relType": "ItemTypeData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldRelatedTargetSchema",
         "deprecated": "This API call is to be considered private and might change without notice",
@@ -748,6 +779,7 @@
           "isEntityId": true,
           "relType": "FieldData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldSelfTargetSchema",
         "name": "find",
@@ -765,6 +797,7 @@
           "isEntityId": true,
           "relType": "FieldData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldDestroyJobSchema",
         "name": "destroy",
@@ -782,6 +815,7 @@
           "isEntityId": true,
           "relType": "FieldData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldDuplicateJobSchema",
         "name": "duplicate",
@@ -807,6 +841,7 @@
           "relType": "ItemTypeData"
         },
         "requestBodyType": "FieldsetCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "fieldset",
           "attributes": [
@@ -836,6 +871,7 @@
           "relType": "FieldsetData"
         },
         "requestBodyType": "FieldsetUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "fieldset",
           "attributes": [
@@ -864,6 +900,7 @@
           "isEntityId": false,
           "relType": "ItemTypeData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldsetInstancesTargetSchema",
         "name": "list",
@@ -881,6 +918,7 @@
           "isEntityId": true,
           "relType": "FieldsetData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldsetSelfTargetSchema",
         "name": "find",
@@ -898,6 +936,7 @@
           "isEntityId": true,
           "relType": "FieldsetData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldsetDestroyTargetSchema",
         "name": "destroy",
@@ -918,6 +957,7 @@
         "method": "POST",
         "comment": "Create a new session",
         "requestBodyType": "SessionCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "email_credentials",
           "attributes": [
@@ -948,6 +988,7 @@
         "method": "POST",
         "comment": "Create a new API token",
         "requestBodyType": "AccessTokenCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "access_token",
           "attributes": [
@@ -978,6 +1019,7 @@
           "relType": "AccessTokenData"
         },
         "requestBodyType": "AccessTokenUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "access_token",
           "attributes": [
@@ -1002,6 +1044,7 @@
         "urlTemplate": "/access_tokens",
         "method": "GET",
         "comment": "List all API tokens",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "AccessTokenInstancesTargetSchema",
         "name": "list",
@@ -1019,6 +1062,7 @@
           "isEntityId": true,
           "relType": "AccessTokenData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "AccessTokenSelfTargetSchema",
         "name": "find",
@@ -1036,6 +1080,7 @@
           "isEntityId": true,
           "relType": "AccessTokenData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "AccessTokenRegenerateTokenTargetSchema",
         "name": "regenerateToken",
@@ -1053,6 +1098,7 @@
           "isEntityId": true,
           "relType": "AccessTokenData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "AccessTokenDestroyHrefSchema",
         "queryParamsRequired": false,
         "responseType": "AccessTokenDestroyTargetSchema",
@@ -1074,6 +1120,7 @@
         "method": "POST",
         "comment": "Create a new plugin",
         "requestBodyType": "PluginCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "plugin",
           "attributes": [
@@ -1107,6 +1154,7 @@
           "relType": "PluginData"
         },
         "requestBodyType": "PluginUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "plugin",
           "attributes": [
@@ -1131,6 +1179,7 @@
         "urlTemplate": "/plugins",
         "method": "GET",
         "comment": "List all plugins",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PluginInstancesTargetSchema",
         "name": "list",
@@ -1142,12 +1191,13 @@
         "rel": "self",
         "urlTemplate": "/plugins/${pluginId}",
         "method": "GET",
-        "comment": "Retrieve a plugins",
+        "comment": "Retrieve a plugin",
         "urlPlaceholder": {
           "variableName": "pluginId",
           "isEntityId": true,
           "relType": "PluginData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PluginSelfTargetSchema",
         "name": "find",
@@ -1165,6 +1215,7 @@
           "isEntityId": true,
           "relType": "PluginData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PluginDestroyTargetSchema",
         "name": "destroy",
@@ -1182,6 +1233,7 @@
           "isEntityId": true,
           "relType": "PluginData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PluginFieldsTargetSchema",
         "name": "fields",
@@ -1206,6 +1258,7 @@
           "isEntityId": true,
           "relType": "JobResultData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "JobResultSelfTargetSchema",
         "name": "find",
@@ -1225,6 +1278,7 @@
         "urlTemplate": "/subscription-limits",
         "method": "GET",
         "comment": "Get all the subscription limits",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SubscriptionLimitInstancesTargetSchema",
         "name": "list",
@@ -1242,6 +1296,7 @@
           "isEntityId": true,
           "relType": "SubscriptionLimitData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SubscriptionLimitSelfTargetSchema",
         "name": "find",
@@ -1261,6 +1316,7 @@
         "urlTemplate": "/subscription-features",
         "method": "GET",
         "comment": "Get all the subscription features",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SubscriptionFeatureInstancesTargetSchema",
         "name": "list",
@@ -1280,6 +1336,7 @@
         "urlTemplate": "/build-events",
         "method": "GET",
         "comment": "List all deploy events",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "BuildEventInstancesTargetSchema",
         "name": "list",
@@ -1297,6 +1354,7 @@
           "isEntityId": true,
           "relType": "BuildEventData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "BuildEventSelfTargetSchema",
         "name": "find",
@@ -1316,6 +1374,7 @@
         "urlTemplate": "/items",
         "method": "GET",
         "comment": "List all records",
+        "optionalRequestBody": false,
         "queryParamsType": "ItemInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "ItemInstancesTargetSchema",
@@ -1339,6 +1398,7 @@
           "relType": "ItemData"
         },
         "requestBodyType": "ItemValidateExistingSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "item",
           "attributes": "*",
@@ -1360,6 +1420,7 @@
         "method": "POST",
         "comment": "Validates a record field",
         "requestBodyType": "ItemValidateNewSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "item",
           "attributes": "*",
@@ -1381,6 +1442,7 @@
         "method": "POST",
         "comment": "Create a new record",
         "requestBodyType": "ItemCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "item",
           "attributes": "*",
@@ -1406,6 +1468,7 @@
           "isEntityId": true,
           "relType": "ItemData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ItemDuplicateJobSchema",
         "name": "duplicate",
@@ -1424,6 +1487,7 @@
           "relType": "ItemData"
         },
         "requestBodyType": "ItemUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "item",
           "attributes": "*",
@@ -1449,6 +1513,7 @@
           "isEntityId": true,
           "relType": "ItemData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "ItemReferencesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "ItemReferencesTargetSchema",
@@ -1467,11 +1532,31 @@
           "isEntityId": true,
           "relType": "ItemData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "ItemSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "ItemSelfTargetSchema",
         "name": "find",
         "rawName": "rawFind"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/current_vs_published_state",
+        "rel": "current_vs_published_state",
+        "urlTemplate": "/items/${itemId}/current-vs-published-state",
+        "method": "GET",
+        "comment": "Retrieve information regarding changes between current and published versions of the record",
+        "urlPlaceholder": {
+          "variableName": "itemId",
+          "isEntityId": true,
+          "relType": "ItemData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "ItemCurrentVsPublishedStateTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "currentVsPublishedState",
+        "rawName": "rawCurrentVsPublishedState"
       },
       {
         "returnsCollection": false,
@@ -1485,6 +1570,7 @@
           "isEntityId": true,
           "relType": "ItemData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ItemDestroyJobSchema",
         "name": "destroy",
@@ -1497,6 +1583,7 @@
         "urlTemplate": "/items",
         "method": "DELETE",
         "comment": "Delete multiple records",
+        "optionalRequestBody": false,
         "queryParamsType": "ItemBatchDestroyHrefSchema",
         "queryParamsRequired": true,
         "responseType": "ItemBatchDestroyJobSchema",
@@ -1511,6 +1598,7 @@
         "urlTemplate": "/items/publish",
         "method": "PUT",
         "comment": "Publish multiple records",
+        "optionalRequestBody": false,
         "queryParamsType": "ItemBatchPublishHrefSchema",
         "queryParamsRequired": true,
         "responseType": "ItemBatchPublishJobSchema",
@@ -1525,6 +1613,7 @@
         "urlTemplate": "/items/unpublish",
         "method": "PUT",
         "comment": "Unpublish multiple records",
+        "optionalRequestBody": false,
         "queryParamsType": "ItemBatchUnpublishHrefSchema",
         "queryParamsRequired": true,
         "responseType": "ItemBatchUnpublishJobSchema",
@@ -1544,6 +1633,16 @@
           "isEntityId": true,
           "relType": "ItemData"
         },
+        "requestBodyType": "ItemPublishSchema",
+        "optionalRequestBody": true,
+        "requestStructure": {
+          "type": "selective_publish_operation",
+          "attributes": [
+            "content_in_locales",
+            "non_localized_content"
+          ],
+          "relationships": []
+        },
         "queryParamsType": "ItemPublishHrefSchema",
         "queryParamsRequired": false,
         "responseType": "ItemPublishTargetSchema",
@@ -1562,6 +1661,15 @@
           "isEntityId": true,
           "relType": "ItemData"
         },
+        "requestBodyType": "ItemUnpublishSchema",
+        "optionalRequestBody": true,
+        "requestStructure": {
+          "type": "selective_unpublish_operation",
+          "attributes": [
+            "content_in_locales"
+          ],
+          "relationships": []
+        },
         "queryParamsType": "ItemUnpublishHrefSchema",
         "queryParamsRequired": false,
         "responseType": "ItemUnpublishTargetSchema",
@@ -1576,6 +1684,7 @@
         "method": "POST",
         "comment": "Publish items in bulk",
         "requestBodyType": "ItemBulkPublishSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "item_bulk_publish_operation",
           "attributes": [],
@@ -1596,6 +1705,7 @@
         "method": "POST",
         "comment": "Unpublish items in bulk",
         "requestBodyType": "ItemBulkUnpublishSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "item_bulk_unpublish_operation",
           "attributes": [],
@@ -1616,6 +1726,7 @@
         "method": "POST",
         "comment": "Destroy items in bulk",
         "requestBodyType": "ItemBulkDestroySchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "item_bulk_destroy_operation",
           "attributes": [],
@@ -1636,6 +1747,7 @@
         "method": "POST",
         "comment": "Move items to stage in bulk",
         "requestBodyType": "ItemBulkMoveToStageSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "item_bulk_move_to_stage_operation",
           "attributes": [
@@ -1669,6 +1781,7 @@
           "isEntityId": true,
           "relType": "ItemVersionData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ItemVersionRestoreJobSchema",
         "name": "restore",
@@ -1686,6 +1799,7 @@
           "isEntityId": false,
           "relType": "ItemData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "ItemVersionInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "ItemVersionInstancesTargetSchema",
@@ -1708,6 +1822,7 @@
           "isEntityId": true,
           "relType": "ItemVersionData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ItemVersionSelfTargetSchema",
         "name": "find",
@@ -1728,6 +1843,7 @@
         "method": "POST",
         "comment": "Create a new upload",
         "requestBodyType": "UploadCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload",
           "attributes": [
@@ -1752,6 +1868,7 @@
         "urlTemplate": "/uploads",
         "method": "GET",
         "comment": "List all uploads",
+        "optionalRequestBody": false,
         "queryParamsType": "UploadInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "UploadInstancesTargetSchema",
@@ -1774,6 +1891,7 @@
           "isEntityId": true,
           "relType": "UploadData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "UploadSelfTargetSchema",
         "name": "find",
@@ -1791,6 +1909,7 @@
           "isEntityId": true,
           "relType": "UploadData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "UploadDestroyTargetSchema",
         "name": "destroy",
@@ -1809,6 +1928,7 @@
           "relType": "UploadData"
         },
         "requestBodyType": "UploadUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload",
           "attributes": [
@@ -1837,6 +1957,7 @@
         "method": "PUT",
         "comment": "Batch add tags to uploads",
         "requestBodyType": "UploadBatchAddTagsSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload",
           "attributes": [
@@ -1858,6 +1979,7 @@
         "urlTemplate": "/uploads/batch-destroy",
         "method": "DELETE",
         "comment": "Delete multiple uploads",
+        "optionalRequestBody": false,
         "queryParamsType": "UploadBatchDestroyHrefSchema",
         "queryParamsRequired": false,
         "responseType": "UploadBatchDestroyJobSchema",
@@ -1877,6 +1999,7 @@
           "isEntityId": true,
           "relType": "UploadData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "UploadReferencesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "UploadReferencesTargetSchema",
@@ -1891,6 +2014,7 @@
         "method": "POST",
         "comment": "Add tags to assets in bulk",
         "requestBodyType": "UploadBulkTagSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload_bulk_tag_operation",
           "attributes": [
@@ -1913,6 +2037,7 @@
         "method": "POST",
         "comment": "Destroy uploads",
         "requestBodyType": "UploadBulkDestroySchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload_bulk_destroy_operation",
           "attributes": [],
@@ -1940,6 +2065,7 @@
         "method": "POST",
         "comment": "Request a new upload",
         "requestBodyType": "UploadRequestCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload_request",
           "attributes": [
@@ -1972,10 +2098,12 @@
           "relType": "ItemData"
         },
         "requestBodyType": "ScheduledPublicationCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "scheduled_publication",
           "attributes": [
-            "publication_scheduled_at"
+            "publication_scheduled_at",
+            "selective_publication"
           ],
           "relationships": []
         },
@@ -1996,6 +2124,7 @@
           "isEntityId": false,
           "relType": "ItemData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ScheduledPublicationDestroyTargetSchema",
         "name": "destroy",
@@ -2021,10 +2150,12 @@
           "relType": "ItemData"
         },
         "requestBodyType": "ScheduledUnpublishingCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "scheduled_unpublishing",
           "attributes": [
-            "unpublishing_scheduled_at"
+            "unpublishing_scheduled_at",
+            "content_in_locales"
           ],
           "relationships": []
         },
@@ -2045,6 +2176,7 @@
           "isEntityId": false,
           "relType": "ItemData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ScheduledUnpublishingDestroyTargetSchema",
         "name": "destroy",
@@ -2064,6 +2196,7 @@
         "urlTemplate": "/search-results",
         "method": "GET",
         "comment": "Search for results",
+        "optionalRequestBody": false,
         "queryParamsType": "SearchResultInstancesHrefSchema",
         "queryParamsRequired": true,
         "responseType": "SearchResultInstancesTargetSchema",
@@ -2094,6 +2227,7 @@
           "relType": "EnvironmentData"
         },
         "requestBodyType": "EnvironmentForkSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "environment",
           "attributes": [],
@@ -2117,6 +2251,7 @@
           "isEntityId": true,
           "relType": "EnvironmentData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "EnvironmentPromoteTargetSchema",
         "name": "promote",
@@ -2129,6 +2264,7 @@
         "urlTemplate": "/environments",
         "method": "GET",
         "comment": "List all environments",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "EnvironmentInstancesTargetSchema",
         "name": "list",
@@ -2146,6 +2282,7 @@
           "isEntityId": true,
           "relType": "EnvironmentData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "EnvironmentSelfTargetSchema",
         "name": "find",
@@ -2163,6 +2300,7 @@
           "isEntityId": true,
           "relType": "EnvironmentData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "EnvironmentDestroyJobSchema",
         "name": "destroy",
@@ -2182,6 +2320,7 @@
         "urlTemplate": "/maintenance-mode",
         "method": "GET",
         "comment": "Retrieve maintenence mode",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "MaintenanceModeSelfTargetSchema",
         "name": "find",
@@ -2194,6 +2333,7 @@
         "urlTemplate": "/maintenance-mode/activate",
         "method": "PUT",
         "comment": "Activate maintenance mode: this means that the primary environment will be read-only",
+        "optionalRequestBody": false,
         "queryParamsType": "MaintenanceModeActivateHrefSchema",
         "queryParamsRequired": false,
         "responseType": "MaintenanceModeActivateTargetSchema",
@@ -2207,6 +2347,7 @@
         "urlTemplate": "/maintenance-mode/deactivate",
         "method": "PUT",
         "comment": "De-activate maintenance mode",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "MaintenanceModeDeactivateTargetSchema",
         "name": "deactivate",
@@ -2227,6 +2368,7 @@
         "method": "POST",
         "comment": "Create a new webhook",
         "requestBodyType": "WebhookCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "webhook",
           "attributes": [
@@ -2261,6 +2403,7 @@
           "relType": "UserData"
         },
         "requestBodyType": "WebhookUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "webhook",
           "attributes": [
@@ -2289,6 +2432,7 @@
         "urlTemplate": "/webhooks",
         "method": "GET",
         "comment": "List all webhooks",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "WebhookInstancesTargetSchema",
         "name": "list",
@@ -2306,6 +2450,7 @@
           "isEntityId": false,
           "relType": "UserData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "WebhookSelfTargetSchema",
         "name": "find",
@@ -2323,6 +2468,7 @@
           "isEntityId": false,
           "relType": "UserData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "WebhookDestroyTargetSchema",
         "name": "destroy",
@@ -2342,6 +2488,7 @@
         "urlTemplate": "/webhook_calls",
         "method": "GET",
         "comment": "List all webhooks calls",
+        "optionalRequestBody": false,
         "queryParamsType": "WebhookCallInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "WebhookCallInstancesTargetSchema",
@@ -2364,6 +2511,7 @@
           "isEntityId": false,
           "relType": "UserData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "resendWebhook",
         "rawName": "rawResendWebhook"
@@ -2382,6 +2530,7 @@
         "urlTemplate": "/build-triggers",
         "method": "GET",
         "comment": "List all build triggers for a site",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "BuildTriggerInstancesTargetSchema",
         "name": "list",
@@ -2399,6 +2548,7 @@
           "isEntityId": true,
           "relType": "BuildTriggerData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "BuildTriggerSelfTargetSchema",
         "name": "find",
@@ -2412,6 +2562,7 @@
         "method": "POST",
         "comment": "Create build trigger",
         "requestBodyType": "BuildTriggerCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "build_trigger",
           "attributes": [
@@ -2443,6 +2594,7 @@
           "relType": "BuildTriggerData"
         },
         "requestBodyType": "BuildTriggerUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "build_trigger",
           "attributes": [
@@ -2472,6 +2624,7 @@
           "isEntityId": true,
           "relType": "BuildTriggerData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "trigger",
         "rawName": "rawTrigger"
@@ -2488,6 +2641,7 @@
           "isEntityId": true,
           "relType": "BuildTriggerData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "abort",
         "rawName": "rawAbort"
@@ -2504,6 +2658,7 @@
           "isEntityId": true,
           "relType": "BuildTriggerData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "abortIndexing",
         "rawName": "rawAbortIndexing"
@@ -2520,6 +2675,7 @@
           "isEntityId": true,
           "relType": "BuildTriggerData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "reindex",
         "rawName": "rawReindex"
@@ -2536,6 +2692,7 @@
           "isEntityId": true,
           "relType": "BuildTriggerData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "BuildTriggerDestroyTargetSchema",
         "name": "destroy",
@@ -2556,6 +2713,7 @@
         "method": "POST",
         "comment": "Create a new filter",
         "requestBodyType": "ItemTypeFilterCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "item_type_filter",
           "attributes": [
@@ -2587,6 +2745,7 @@
           "relType": "ItemTypeFilterData"
         },
         "requestBodyType": "ItemTypeFilterUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "item_type_filter",
           "attributes": [
@@ -2612,6 +2771,7 @@
         "urlTemplate": "/item-type-filters",
         "method": "GET",
         "comment": "List all filters",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ItemTypeFilterInstancesTargetSchema",
         "name": "list",
@@ -2629,6 +2789,7 @@
           "isEntityId": true,
           "relType": "ItemTypeFilterData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ItemTypeFilterSelfTargetSchema",
         "name": "find",
@@ -2646,6 +2807,7 @@
           "isEntityId": true,
           "relType": "ItemTypeFilterData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ItemTypeFilterDestroyTargetSchema",
         "name": "destroy",
@@ -2666,6 +2828,7 @@
         "method": "POST",
         "comment": "Create a new filter",
         "requestBodyType": "UploadFilterCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload_filter",
           "attributes": [
@@ -2693,6 +2856,7 @@
           "relType": "UploadFilterData"
         },
         "requestBodyType": "UploadFilterUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload_filter",
           "attributes": [
@@ -2714,6 +2878,7 @@
         "urlTemplate": "/upload-filters",
         "method": "GET",
         "comment": "List all filters",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "UploadFilterInstancesTargetSchema",
         "name": "list",
@@ -2731,6 +2896,7 @@
           "isEntityId": true,
           "relType": "UploadFilterData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "UploadFilterSelfTargetSchema",
         "name": "find",
@@ -2748,6 +2914,7 @@
           "isEntityId": true,
           "relType": "UploadFilterData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "UploadFilterDestroyTargetSchema",
         "name": "destroy",
@@ -2768,6 +2935,7 @@
         "method": "POST",
         "comment": "Invite a new user",
         "requestBodyType": "SiteInvitationCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_invitation",
           "attributes": [
@@ -2795,6 +2963,7 @@
           "relType": "SiteInvitationData"
         },
         "requestBodyType": "SiteInvitationUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_invitation",
           "attributes": [],
@@ -2814,6 +2983,7 @@
         "urlTemplate": "/site-invitations",
         "method": "GET",
         "comment": "List all invitations",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteInvitationInstancesTargetSchema",
         "name": "list",
@@ -2831,6 +3001,7 @@
           "isEntityId": true,
           "relType": "SiteInvitationData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteInvitationSelfTargetSchema",
         "name": "find",
@@ -2848,6 +3019,7 @@
           "isEntityId": true,
           "relType": "SiteInvitationData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteInvitationDestroyTargetSchema",
         "name": "destroy",
@@ -2865,6 +3037,7 @@
           "isEntityId": true,
           "relType": "SiteInvitationData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "resend",
         "rawName": "rawResend"
@@ -2883,6 +3056,7 @@
         "urlTemplate": "/editing-sessions",
         "method": "GET",
         "comment": "List all editing sessions",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "EditingSessionInstancesTargetSchema",
         "deprecated": "This API call is to be considered private and might change without notice",
@@ -2902,6 +3076,7 @@
           "relType": "EditingSessionData"
         },
         "requestBodyType": "EditingSessionUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "*",
           "attributes": [],
@@ -2928,6 +3103,7 @@
           "isEntityId": true,
           "relType": "EditingSessionData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "EditingSessionDestroyTargetSchema",
         "deprecated": "This API call is to be considered private and might change without notice",
@@ -2948,6 +3124,7 @@
         "urlTemplate": "/sso-groups",
         "method": "GET",
         "comment": "List all SSO groups",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoGroupInstancesTargetSchema",
         "name": "list",
@@ -2965,6 +3142,7 @@
           "isEntityId": true,
           "relType": "SsoGroupData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoGroupCopyRolesTargetSchema",
         "name": "copyRoles",
@@ -2983,6 +3161,7 @@
           "relType": "SsoGroupData"
         },
         "requestBodyType": "SsoGroupUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "sso_group",
           "attributes": [
@@ -3009,6 +3188,7 @@
           "isEntityId": true,
           "relType": "SsoGroupData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoGroupDestroyTargetSchema",
         "name": "destroy",
@@ -3028,6 +3208,7 @@
         "urlTemplate": "/sso-settings",
         "method": "GET",
         "comment": "Retrieve SSO Settings",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoSettingsSelfTargetSchema",
         "name": "find",
@@ -3040,6 +3221,7 @@
         "urlTemplate": "/sso-settings/generate-token",
         "method": "PUT",
         "comment": "Generate SSO token",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoSettingsGenerateTokenTargetSchema",
         "name": "generateToken",
@@ -3053,6 +3235,7 @@
         "method": "PUT",
         "comment": "Update SSO Settings",
         "requestBodyType": "SsoSettingsUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "sso_settings",
           "attributes": [
@@ -3082,6 +3265,7 @@
         "urlTemplate": "/white-label-settings",
         "method": "GET",
         "comment": "Retrieve white-label settings",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "WhiteLabelSettingsSelfTargetSchema",
         "name": "find",
@@ -3095,6 +3279,7 @@
         "method": "PUT",
         "comment": "Update white-label settings",
         "requestBodyType": "WhiteLabelSettingsUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "white_label_settings",
           "attributes": [
@@ -3121,6 +3306,7 @@
         "urlTemplate": "/public-info",
         "method": "GET",
         "comment": "Retrieve public site info",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PublicInfoSelfTargetSchema",
         "name": "find",
@@ -3140,6 +3326,7 @@
         "urlTemplate": "/daily-site-usages",
         "method": "GET",
         "comment": "Retrieve project's daily usage info",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "DailyUsageInstancesTargetSchema",
         "name": "list",
@@ -3164,6 +3351,7 @@
           "isEntityId": true,
           "relType": "UsageCounterData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "UsageCounterSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "UsageCounterSelfTargetSchema",
@@ -3184,6 +3372,7 @@
         "urlTemplate": "/upload-tags",
         "method": "GET",
         "comment": "List all manually created upload tags",
+        "optionalRequestBody": false,
         "queryParamsType": "UploadTagInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "UploadTagInstancesTargetSchema",
@@ -3202,6 +3391,7 @@
         "method": "POST",
         "comment": "Create a new upload tag",
         "requestBodyType": "UploadTagCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload_tag",
           "attributes": [
@@ -3228,6 +3418,7 @@
         "urlTemplate": "/upload-smart-tags",
         "method": "GET",
         "comment": "List all automatically created upload tags",
+        "optionalRequestBody": false,
         "queryParamsType": "UploadSmartTagInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "UploadSmartTagInstancesTargetSchema",
@@ -3252,6 +3443,7 @@
         "urlTemplate": "/site",
         "method": "GET",
         "comment": "Retrieve the site",
+        "optionalRequestBody": false,
         "queryParamsType": "SiteSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "SiteSelfTargetSchema",
@@ -3266,6 +3458,7 @@
         "method": "PUT",
         "comment": "Update the site's settings",
         "requestBodyType": "SiteUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "site",
           "attributes": [
@@ -3295,6 +3488,7 @@
         "urlTemplate": "/site/activate-improved-timezone-management",
         "method": "PUT",
         "comment": "Activate improved timezone management",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteActivateImprovedTimezoneManagementJobSchema",
         "deprecated": "This API call is to be considered private and might change without notice",
@@ -3308,6 +3502,7 @@
         "urlTemplate": "/site/activate-improved-hex-management",
         "method": "PUT",
         "comment": "Activate improved hex management",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteActivateImprovedHexManagementTargetSchema",
         "deprecated": "This API call is to be considered private and might change without notice",
@@ -3321,6 +3516,7 @@
         "urlTemplate": "/site/activate-improved-gql-multilocale-fields",
         "method": "PUT",
         "comment": "Activate improved GraphQL multi-locale fields option",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteActivateImprovedGqlMultilocaleFieldsTargetSchema",
         "deprecated": "This API call is to be considered private and might change without notice",
@@ -3342,6 +3538,7 @@
         "method": "POST",
         "comment": "Create a new workflow",
         "requestBodyType": "WorkflowCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "workflow",
           "attributes": [
@@ -3369,6 +3566,7 @@
           "relType": "WorkflowData"
         },
         "requestBodyType": "WorkflowUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "workflow",
           "attributes": [
@@ -3390,6 +3588,7 @@
         "urlTemplate": "/workflows",
         "method": "GET",
         "comment": "List all workflows",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "WorkflowInstancesTargetSchema",
         "name": "list",
@@ -3407,6 +3606,7 @@
           "isEntityId": true,
           "relType": "WorkflowData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "WorkflowSelfTargetSchema",
         "name": "find",
@@ -3424,6 +3624,7 @@
           "isEntityId": true,
           "relType": "WorkflowData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "destroy",
         "rawName": "rawDestroy"

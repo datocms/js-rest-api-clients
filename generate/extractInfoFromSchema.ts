@@ -23,6 +23,7 @@ export type EndpointInfo = {
   };
   simpleMethodAvailable: boolean;
   requestBodyType?: string;
+  optionalRequestBody: boolean;
   requestStructure?: {
     type: string;
     attributes: string[] | '*';
@@ -298,6 +299,7 @@ function generateResourceInfo(
       requestBodyType: link.schema
         ? `${toSafeName(baseTypeName, true)}${toSafeName(link.rel, true)}Schema`
         : undefined,
+      optionalRequestBody: Boolean(link.schema?.type?.includes('null')),
       simpleMethodAvailable: true,
       requestStructure: link.schema
         ? {

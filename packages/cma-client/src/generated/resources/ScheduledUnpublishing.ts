@@ -24,7 +24,7 @@ export default class ScheduledUnpublishing extends BaseResource {
         body,
         {
           type: 'scheduled_unpublishing',
-          attributes: ['unpublishing_scheduled_at'],
+          attributes: ['unpublishing_scheduled_at', 'content_in_locales'],
           relationships: [],
         },
       ),

@@ -365,6 +365,45 @@ export default class Item extends BaseResource {
   }
 
   /**
+   * Retrieve information regarding changes between current and published versions of the record
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item/current_vs_published_state
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  currentVsPublishedState(itemId: string | SimpleSchemaTypes.ItemData) {
+    return this.rawCurrentVsPublishedState(Utils.toId(itemId)).then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemCurrentVsPublishedStateTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Retrieve information regarding changes between current and published versions of the record
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item/current_vs_published_state
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawCurrentVsPublishedState(
+    itemId: string,
+  ): Promise<SchemaTypes.ItemCurrentVsPublishedStateTargetSchema> {
+    return this.client.request<SchemaTypes.ItemCurrentVsPublishedStateTargetSchema>(
+      {
+        method: 'GET',
+        url: `/items/${itemId}/current-vs-published-state`,
+      },
+    );
+  }
+
+  /**
    * Delete a record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/destroy
@@ -519,9 +558,21 @@ export default class Item extends BaseResource {
    */
   publish(
     itemId: string | SimpleSchemaTypes.ItemData,
+    body?: SimpleSchemaTypes.ItemPublishSchema,
     queryParams?: SimpleSchemaTypes.ItemPublishHrefSchema,
   ) {
-    return this.rawPublish(Utils.toId(itemId), queryParams).then((body) =>
+    return this.rawPublish(
+      Utils.toId(itemId),
+      body
+        ? Utils.serializeRequestBody<SchemaTypes.ItemPublishSchema>(body, {
+            id: Utils.toId(itemId),
+            type: 'selective_publish_operation',
+            attributes: ['content_in_locales', 'non_localized_content'],
+            relationships: [],
+          })
+        : null,
+      queryParams,
+    ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemPublishTargetSchema>(
         body,
       ),
@@ -538,11 +589,13 @@ export default class Item extends BaseResource {
    */
   rawPublish(
     itemId: string,
+    body?: SchemaTypes.ItemPublishSchema,
     queryParams?: SchemaTypes.ItemPublishHrefSchema,
   ): Promise<SchemaTypes.ItemPublishTargetSchema> {
     return this.client.request<SchemaTypes.ItemPublishTargetSchema>({
       method: 'PUT',
       url: `/items/${itemId}/publish`,
+      body,
       queryParams,
     });
   }
@@ -557,9 +610,21 @@ export default class Item extends BaseResource {
    */
   unpublish(
     itemId: string | SimpleSchemaTypes.ItemData,
+    body?: SimpleSchemaTypes.ItemUnpublishSchema,
     queryParams?: SimpleSchemaTypes.ItemUnpublishHrefSchema,
   ) {
-    return this.rawUnpublish(Utils.toId(itemId), queryParams).then((body) =>
+    return this.rawUnpublish(
+      Utils.toId(itemId),
+      body
+        ? Utils.serializeRequestBody<SchemaTypes.ItemUnpublishSchema>(body, {
+            id: Utils.toId(itemId),
+            type: 'selective_unpublish_operation',
+            attributes: ['content_in_locales'],
+            relationships: [],
+          })
+        : null,
+      queryParams,
+    ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.ItemUnpublishTargetSchema>(
         body,
       ),
@@ -576,11 +641,13 @@ export default class Item extends BaseResource {
    */
   rawUnpublish(
     itemId: string,
+    body?: SchemaTypes.ItemUnpublishSchema,
     queryParams?: SchemaTypes.ItemUnpublishHrefSchema,
   ): Promise<SchemaTypes.ItemUnpublishTargetSchema> {
     return this.client.request<SchemaTypes.ItemUnpublishTargetSchema>({
       method: 'PUT',
       url: `/items/${itemId}/unpublish`,
+      body,
       queryParams,
     });
   }

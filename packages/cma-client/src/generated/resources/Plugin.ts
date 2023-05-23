@@ -141,7 +141,7 @@ export default class Plugin extends BaseResource {
   }
 
   /**
-   * Retrieve a plugins
+   * Retrieve a plugin
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/self
    *
@@ -157,7 +157,7 @@ export default class Plugin extends BaseResource {
   }
 
   /**
-   * Retrieve a plugins
+   * Retrieve a plugin
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/plugin/self
    *

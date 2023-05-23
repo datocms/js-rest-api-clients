@@ -24,7 +24,7 @@ export default class ScheduledPublication extends BaseResource {
         body,
         {
           type: 'scheduled_publication',
-          attributes: ['publication_scheduled_at'],
+          attributes: ['publication_scheduled_at', 'selective_publication'],
           relationships: [],
         },
       ),

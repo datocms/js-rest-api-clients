@@ -618,57 +618,56 @@ export type ItemSelfHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_destroy.hrefSchema` link.
+ * JSON API type field
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "type".
  */
-export type ItemBatchDestroyHrefSchema = {
-  /**
-   * IDs of records to delete, comma separated (a maximum of 200 IDs are allowed per request)
-   */
-  'filter[ids]': string;
-};
+export type ItemCurrentVsPublishedStateType = 'item_current_vs_published_state';
 /**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_publish.hrefSchema` link.
+ * ID of record
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "id".
  */
-export type ItemBatchPublishHrefSchema = {
-  /**
-   * IDs of records to publish, comma separated (a maximum of 200 IDs are allowed per request)
-   */
-  'filter[ids]': string;
-};
+export type ItemCurrentVsPublishedStateIdentity = string;
 /**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_unpublish.hrefSchema` link.
+ * JSON API type field
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "type".
  */
-export type ItemBatchUnpublishHrefSchema = {
-  /**
-   * IDs of records to unpublish, comma separated (a maximum of 200 IDs are allowed per request)
-   */
-  'filter[ids]': string;
-};
+export type ScheduledPublicationType = 'scheduled_publication';
 /**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `publish.hrefSchema` link.
+ * ID of scheduled_publication
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "id".
  */
-export type ItemPublishHrefSchema = {
-  /**
-   * If the record references other draft records, force a recursive publication
-   */
-  recursive?: boolean;
-  [k: string]: unknown;
-};
+export type ScheduledPublicationIdentity = string;
 /**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `unpublish.hrefSchema` link.
+ * JSON API type field
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "type".
  */
-export type ItemUnpublishHrefSchema = {
-  /**
-   * If the record is referenced by other published records, unpublish them recursively
-   */
-  recursive?: boolean;
-  [k: string]: unknown;
-};
+export type ScheduledUnpublishingType = 'scheduled_unpublishing';
+/**
+ * ID of scheduled_unpublishing
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type ScheduledUnpublishingIdentity = string;
 /**
  * JSON API type field
  *
@@ -709,6 +708,98 @@ export type ItemVersionInstancesHrefSchema = {
     limit?: number;
     [k: string]: unknown;
   };
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `batch_destroy.hrefSchema` link.
+ */
+export type ItemBatchDestroyHrefSchema = {
+  /**
+   * IDs of records to delete, comma separated (a maximum of 200 IDs are allowed per request)
+   */
+  'filter[ids]': string;
+};
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `batch_publish.hrefSchema` link.
+ */
+export type ItemBatchPublishHrefSchema = {
+  /**
+   * IDs of records to publish, comma separated (a maximum of 200 IDs are allowed per request)
+   */
+  'filter[ids]': string;
+};
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `batch_unpublish.hrefSchema` link.
+ */
+export type ItemBatchUnpublishHrefSchema = {
+  /**
+   * IDs of records to unpublish, comma separated (a maximum of 200 IDs are allowed per request)
+   */
+  'filter[ids]': string;
+};
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `publish.schema` link.
+ */
+export type ItemPublishSchema = {
+  data: {
+    /**
+     * JSON API type field
+     */
+    type: 'selective_publish_operation';
+    attributes: {
+      /**
+       * List of locales whose content will be published
+       */
+      content_in_locales: string[];
+      /**
+       * Whether non-localized content has to be published or not
+       */
+      non_localized_content: boolean;
+    };
+  };
+} | null;
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `publish.hrefSchema` link.
+ */
+export type ItemPublishHrefSchema = {
+  /**
+   * If the record references other draft records, force a recursive publication
+   */
+  recursive?: boolean;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `unpublish.schema` link.
+ */
+export type ItemUnpublishSchema = {
+  data: {
+    /**
+     * JSON API type field
+     */
+    type: 'selective_unpublish_operation';
+    attributes: {
+      /**
+       * List of locales whose content will be unpublished
+       */
+      content_in_locales: string[];
+    };
+  };
+} | null;
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `unpublish.hrefSchema` link.
+ */
+export type ItemUnpublishHrefSchema = {
+  /**
+   * If the record is referenced by other published records, unpublish them recursively
+   */
+  recursive?: boolean;
   [k: string]: unknown;
 };
 /**
@@ -831,40 +922,6 @@ export type UploadRequestType = 'upload_request';
  * via the `definition` "id".
  */
 export type UploadRequestIdentity = string;
-/**
- * JSON API type field
- *
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `definition` "type".
- */
-export type ScheduledPublicationType = 'scheduled_publication';
-/**
- * ID of scheduled_publication
- *
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `definition` "id".
- */
-export type ScheduledPublicationIdentity = string;
-/**
- * JSON API type field
- *
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `definition` "type".
- */
-export type ScheduledUnpublishingType = 'scheduled_unpublishing';
-/**
- * ID of scheduled_unpublishing
- *
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `definition` "id".
- */
-export type ScheduledUnpublishingIdentity = string;
 /**
  * JSON API type field
  *
@@ -1362,6 +1419,7 @@ export type DatoApi = {
   subscription_feature?: SubscriptionFeature;
   build_event?: BuildEvent;
   item?: Item;
+  item_current_vs_published_state?: ItemCurrentVsPublishedState;
   item_version?: ItemVersion;
   upload?: Upload;
   upload_request?: UploadRequest;
@@ -6682,6 +6740,418 @@ export type ItemSelfTargetSchema = {
 
 /**
  * This interface was referenced by `Item`'s JSON-Schema
+ * via the `current_vs_published_state.targetSchema` link.
+ */
+export type ItemCurrentVsPublishedStateTargetSchema = {
+  data: ItemCurrentVsPublishedState;
+  included: (ScheduledPublication | ScheduledUnpublishing | ItemVersion)[];
+};
+
+/**
+ * Information about the record
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "item_current_vs_published_state".
+ */
+export type ItemCurrentVsPublishedState = {
+  type: ItemCurrentVsPublishedStateType;
+  id: ItemCurrentVsPublishedStateIdentity;
+  attributes: ItemCurrentVsPublishedStateAttributes;
+  relationships: ItemCurrentVsPublishedStateRelationships;
+};
+
+/**
+ * The JSON data associated to the record
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type ItemCurrentVsPublishedStateAttributes = {
+  current_version_locales: string[];
+  published_version_locales: string[];
+  changed_locales: string[];
+  added_locales: string[];
+  removed_locales: string[];
+  non_localized_fields_changed: boolean;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type ItemCurrentVsPublishedStateRelationships = {
+  /**
+   * The scheduled publication entity, if available
+   */
+  scheduled_publication: {
+    data: ScheduledPublicationData | null;
+  };
+  /**
+   * The scheduled unpublishing entity, if available
+   */
+  scheduled_unpublishing: {
+    data: ScheduledUnpublishingData | null;
+  };
+  /**
+   * The currently published version for the record, if available
+   */
+  published_version: {
+    data: ItemVersionData | null;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ScheduledPublicationData = {
+  type: ScheduledPublicationType;
+  id: ScheduledPublicationIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ScheduledUnpublishingData = {
+  type: ScheduledUnpublishingType;
+  id: ScheduledUnpublishingIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ItemVersionData = {
+  type: ItemVersionType;
+  id: ItemVersionIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ItemCurrentVsPublishedStateData = {
+  type: ItemCurrentVsPublishedStateType;
+  id: ItemCurrentVsPublishedStateIdentity;
+};
+
+/**
+ * You can create scheduled publication to publish records in the future
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "scheduled_publication".
+ */
+export type ScheduledPublication = {
+  type: ScheduledPublicationType;
+  id: ScheduledPublicationIdentity;
+  attributes: ScheduledPublicationAttributes;
+  relationships: ScheduledPublicationRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type ScheduledPublicationAttributes = {
+  /**
+   * The future date for the publication
+   */
+  publication_scheduled_at: string;
+  /**
+   * Specifies which content should be published. If null, the whole record will be published.
+   */
+  selective_publication: null | {
+    /**
+     * List of locales whose content will be published
+     */
+    content_in_locales: string[];
+    /**
+     * Whether the non-localized content has to be published or not
+     */
+    non_localized_content: boolean;
+  };
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type ScheduledPublicationRelationships = {
+  /**
+   * Item
+   */
+  item: {
+    data: ItemData;
+  };
+};
+
+/**
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type ScheduledPublicationCreateSchema = {
+  data: {
+    type: ScheduledPublicationType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The future date for the publication
+       */
+      publication_scheduled_at: string;
+      /**
+       * Specifies which content should be published. If null, the whole record will be published.
+       */
+      selective_publication?: null | {
+        /**
+         * List of locales whose content will be published
+         */
+        content_in_locales: string[];
+        /**
+         * Whether the non-localized content has to be published or not
+         */
+        non_localized_content: boolean;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type ScheduledPublicationCreateTargetSchema = {
+  data: ScheduledPublication;
+  included: Item[];
+};
+
+/**
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type ScheduledPublicationDestroyTargetSchema = {
+  data: Item;
+};
+
+/**
+ * You can create a scheduled unpublishing to unpublish records in the future
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "scheduled_unpublishing".
+ */
+export type ScheduledUnpublishing = {
+  type: ScheduledUnpublishingType;
+  id: ScheduledUnpublishingIdentity;
+  attributes: ScheduledUnpublishingAttributes;
+  relationships: ScheduledUnpublishingRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type ScheduledUnpublishingAttributes = {
+  /**
+   * The future date for the unpublishing
+   */
+  unpublishing_scheduled_at: string;
+  /**
+   * List of locales whose content will be unpublished, or nil if the whole record needs to be unpublished
+   */
+  content_in_locales: null | string[];
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type ScheduledUnpublishingRelationships = {
+  /**
+   * Item
+   */
+  item: {
+    data: ItemData;
+  };
+};
+
+/**
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type ScheduledUnpublishingCreateSchema = {
+  data: {
+    type: ScheduledUnpublishingType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The future date for the unpublishing
+       */
+      unpublishing_scheduled_at: string;
+      /**
+       * List of locales whose content will be unpublished, or nil if the whole record needs to be unpublished
+       */
+      content_in_locales?: null | string[];
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type ScheduledUnpublishingCreateTargetSchema = {
+  data: ScheduledUnpublishing;
+  included: Item[];
+};
+
+/**
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type ScheduledUnpublishingDestroyTargetSchema = {
+  data: Item;
+};
+
+/**
+ * Every change to a record is stored as a separate record version in DatoCMS.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "item_version".
+ */
+export type ItemVersion = {
+  type: ItemVersionType;
+  id: ItemVersionIdentity;
+  attributes: ItemVersionAttributes;
+  relationships: ItemVersionRelationships;
+  meta: ItemVersionMeta;
+};
+
+/**
+ * The JSON data associated to the record version
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type ItemVersionAttributes = {
+  [k: string]: unknown;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type ItemVersionRelationships = {
+  /**
+   * The record version's model
+   */
+  item_type: {
+    data: ItemTypeData;
+  };
+  /**
+   * The record this version belongs to
+   */
+  item: {
+    data: ItemData;
+  };
+  /**
+   * The entity (account/collaborator/access token/sso user) who made this change to the record. It must be an object with `type` (e.g. 'account') and `id` properties.
+   */
+  editor: {
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
+  };
+};
+
+/**
+ * Meta information regarding the record version
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type ItemVersionMeta = {
+  /**
+   * Date of record version creation
+   */
+  created_at: string;
+  /**
+   * Whether the record version is valid or not
+   */
+  is_valid: boolean;
+  /**
+   * Whether the record version is the published version or not
+   */
+  is_published: boolean;
+  /**
+   * Whether the record version is the most recent version or not
+   */
+  is_current: boolean;
+};
+
+/**
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `restore.targetSchema` link.
+ */
+export type ItemVersionRestoreTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `restore.jobSchema` link.
+ */
+export type ItemVersionRestoreJobSchema = {
+  data: [Item, ItemVersion];
+};
+
+/**
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type ItemVersionInstancesTargetSchema = {
+  data: ItemVersion[];
+  meta: {
+    total_count: number;
+  };
+};
+
+/**
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type ItemVersionSelfTargetSchema = {
+  data: ItemVersion;
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `destroy.targetSchema` link.
  */
 export type ItemDestroyTargetSchema = {
@@ -6946,133 +7416,6 @@ export type ItemBulkMoveToStageJobSchema = {
     successful: number;
     failed: number;
   };
-};
-
-/**
- * Every change to a record is stored as a separate record version in DatoCMS.
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "item_version".
- */
-export type ItemVersion = {
-  type: ItemVersionType;
-  id: ItemVersionIdentity;
-  attributes: ItemVersionAttributes;
-  relationships: ItemVersionRelationships;
-  meta: ItemVersionMeta;
-};
-
-/**
- * The JSON data associated to the record version
- *
- * This interface was referenced by `ItemVersion`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type ItemVersionAttributes = {
-  [k: string]: unknown;
-};
-
-/**
- * JSON API links
- *
- * This interface was referenced by `ItemVersion`'s JSON-Schema
- * via the `definition` "relationships".
- */
-export type ItemVersionRelationships = {
-  /**
-   * The record version's model
-   */
-  item_type: {
-    data: ItemTypeData;
-  };
-  /**
-   * The record this version belongs to
-   */
-  item: {
-    data: ItemData;
-  };
-  /**
-   * The entity (account/collaborator/access token/sso user) who made this change to the record. It must be an object with `type` (e.g. 'account') and `id` properties.
-   */
-  editor: {
-    data:
-      | AccountData
-      | AccessTokenData
-      | UserData
-      | SsoUserData
-      | OrganizationData;
-  };
-};
-
-/**
- * Meta information regarding the record version
- *
- * This interface was referenced by `ItemVersion`'s JSON-Schema
- * via the `definition` "meta".
- */
-export type ItemVersionMeta = {
-  /**
-   * Date of record version creation
-   */
-  created_at: string;
-  /**
-   * Whether the record version is valid or not
-   */
-  is_valid: boolean;
-  /**
-   * Whether the record version is the published version or not
-   */
-  is_published: boolean;
-  /**
-   * Whether the record version is the most recent version or not
-   */
-  is_current: boolean;
-};
-
-/**
- * JSON API data
- *
- * This interface was referenced by `ItemVersion`'s JSON-Schema
- * via the `definition` "data".
- */
-export type ItemVersionData = {
-  type: ItemVersionType;
-  id: ItemVersionIdentity;
-};
-
-/**
- * This interface was referenced by `ItemVersion`'s JSON-Schema
- * via the `restore.targetSchema` link.
- */
-export type ItemVersionRestoreTargetSchema = {
-  data: Job;
-};
-
-/**
- * This interface was referenced by `ItemVersion`'s JSON-Schema
- * via the `restore.jobSchema` link.
- */
-export type ItemVersionRestoreJobSchema = {
-  data: [Item, ItemVersion];
-};
-
-/**
- * This interface was referenced by `ItemVersion`'s JSON-Schema
- * via the `instances.targetSchema` link.
- */
-export type ItemVersionInstancesTargetSchema = {
-  data: ItemVersion[];
-  meta: {
-    total_count: number;
-  };
-};
-
-/**
- * This interface was referenced by `ItemVersion`'s JSON-Schema
- * via the `self.targetSchema` link.
- */
-export type ItemVersionSelfTargetSchema = {
-  data: ItemVersion;
 };
 
 /**
@@ -7715,166 +8058,6 @@ export type UploadRequestCreateSchema = {
  */
 export type UploadRequestCreateTargetSchema = {
   data: UploadRequest;
-};
-
-/**
- * You can create scheduled publication to publish records in the future
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "scheduled_publication".
- */
-export type ScheduledPublication = {
-  type: ScheduledPublicationType;
-  id: ScheduledPublicationIdentity;
-  attributes: ScheduledPublicationAttributes;
-  relationships: ScheduledPublicationRelationships;
-};
-
-/**
- * JSON API attributes
- *
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type ScheduledPublicationAttributes = {
-  /**
-   * The future date for the publication
-   */
-  publication_scheduled_at: string;
-};
-
-/**
- * JSON API links
- *
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `definition` "relationships".
- */
-export type ScheduledPublicationRelationships = {
-  /**
-   * Item
-   */
-  item: {
-    data: ItemData;
-  };
-};
-
-/**
- * JSON API data
- *
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `definition` "data".
- */
-export type ScheduledPublicationData = {
-  type: ScheduledPublicationType;
-  id: ScheduledPublicationIdentity;
-};
-
-/**
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `create.schema` link.
- */
-export type ScheduledPublicationCreateSchema = {
-  data: {
-    type: ScheduledPublicationType;
-    attributes: ScheduledPublicationAttributes;
-  };
-};
-
-/**
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `create.targetSchema` link.
- */
-export type ScheduledPublicationCreateTargetSchema = {
-  data: ScheduledPublication;
-  included: Item[];
-};
-
-/**
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `destroy.targetSchema` link.
- */
-export type ScheduledPublicationDestroyTargetSchema = {
-  data: Item;
-};
-
-/**
- * You can create a scheduled unpublishing to unpublish records in the future
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "scheduled_unpublishing".
- */
-export type ScheduledUnpublishing = {
-  type: ScheduledUnpublishingType;
-  id: ScheduledUnpublishingIdentity;
-  attributes: ScheduledUnpublishingAttributes;
-  relationships: ScheduledUnpublishingRelationships;
-};
-
-/**
- * JSON API attributes
- *
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type ScheduledUnpublishingAttributes = {
-  /**
-   * The future date for the unpublishing
-   */
-  unpublishing_scheduled_at: string;
-};
-
-/**
- * JSON API links
- *
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `definition` "relationships".
- */
-export type ScheduledUnpublishingRelationships = {
-  /**
-   * Item
-   */
-  item: {
-    data: ItemData;
-  };
-};
-
-/**
- * JSON API data
- *
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `definition` "data".
- */
-export type ScheduledUnpublishingData = {
-  type: ScheduledUnpublishingType;
-  id: ScheduledUnpublishingIdentity;
-};
-
-/**
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `create.schema` link.
- */
-export type ScheduledUnpublishingCreateSchema = {
-  data: {
-    type: ScheduledUnpublishingType;
-    attributes: ScheduledUnpublishingAttributes;
-  };
-};
-
-/**
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `create.targetSchema` link.
- */
-export type ScheduledUnpublishingCreateTargetSchema = {
-  data: ScheduledUnpublishing;
-  included: Item[];
-};
-
-/**
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `destroy.targetSchema` link.
- */
-export type ScheduledUnpublishingDestroyTargetSchema = {
-  data: Item;
 };
 
 /**

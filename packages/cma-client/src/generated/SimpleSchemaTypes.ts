@@ -718,6 +718,74 @@ export type ItemSelfHrefSchema = {
   [k: string]: unknown;
 };
 /**
+ * ID of record
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type ItemCurrentVsPublishedStateIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type ItemCurrentVsPublishedStateType = 'item_current_vs_published_state';
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type ScheduledPublicationType = 'scheduled_publication';
+/**
+ * ID of scheduled_publication
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type ScheduledPublicationIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type ScheduledUnpublishingType = 'scheduled_unpublishing';
+/**
+ * ID of scheduled_unpublishing
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type ScheduledUnpublishingIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type ItemVersionType = 'item_version';
+/**
+ * ID of record version
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type ItemVersionIdentity = string;
+/**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `batch_destroy.jobSchema` link.
  */
@@ -764,6 +832,24 @@ export type ItemBatchUnpublishHrefSchema = {
 };
 /**
  * This interface was referenced by `Item`'s JSON-Schema
+ * via the `publish.schema` link.
+ */
+export type ItemPublishSchema = {
+  /**
+   * JSON API type field
+   */
+  type?: 'selective_publish_operation';
+  /**
+   * List of locales whose content will be published
+   */
+  content_in_locales: string[];
+  /**
+   * Whether non-localized content has to be published or not
+   */
+  non_localized_content: boolean;
+} | null;
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `publish.hrefSchema` link.
  */
 export type ItemPublishHrefSchema = {
@@ -773,6 +859,20 @@ export type ItemPublishHrefSchema = {
   recursive?: boolean;
   [k: string]: unknown;
 };
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `unpublish.schema` link.
+ */
+export type ItemUnpublishSchema = {
+  /**
+   * JSON API type field
+   */
+  type?: 'selective_unpublish_operation';
+  /**
+   * List of locales whose content will be unpublished
+   */
+  content_in_locales: string[];
+} | null;
 /**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `unpublish.hrefSchema` link.
@@ -804,23 +904,6 @@ export type ItemBulkDestroyJobSchema = unknown[];
  * via the `bulk_move_to_stage.jobSchema` link.
  */
 export type ItemBulkMoveToStageJobSchema = unknown[];
-/**
- * ID of record version
- *
- * This interface was referenced by `ItemVersion`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `ItemVersion`'s JSON-Schema
- * via the `definition` "id".
- */
-export type ItemVersionIdentity = string;
-/**
- * JSON API type field
- *
- * This interface was referenced by `ItemVersion`'s JSON-Schema
- * via the `definition` "type".
- */
-export type ItemVersionType = 'item_version';
 /**
  * This interface was referenced by `ItemVersion`'s JSON-Schema
  * via the `restore.jobSchema` link.
@@ -1006,40 +1089,6 @@ export type UploadRequestIdentity = string;
  * via the `definition` "type".
  */
 export type UploadRequestType = 'upload_request';
-/**
- * ID of scheduled_publication
- *
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `definition` "id".
- */
-export type ScheduledPublicationIdentity = string;
-/**
- * JSON API type field
- *
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `definition` "type".
- */
-export type ScheduledPublicationType = 'scheduled_publication';
-/**
- * ID of scheduled_unpublishing
- *
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `definition` "id".
- */
-export type ScheduledUnpublishingIdentity = string;
-/**
- * JSON API type field
- *
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `definition` "type".
- */
-export type ScheduledUnpublishingType = 'scheduled_unpublishing';
 /**
  * ID of result
  *
@@ -1660,6 +1709,7 @@ export type DatoApi = {
   subscription_feature?: SubscriptionFeature;
   build_event?: BuildEvent;
   item?: Item;
+  item_current_vs_published_state?: ItemCurrentVsPublishedState;
   item_version?: ItemVersion;
   upload?: Upload;
   upload_request?: UploadRequest;
@@ -7008,6 +7058,101 @@ export type ItemUpdateSchema = {
 };
 
 /**
+ * Information about the record
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `current_vs_published_state.targetSchema` link.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "item_current_vs_published_state".
+ */
+export type ItemCurrentVsPublishedState = {
+  id: ItemCurrentVsPublishedStateIdentity;
+  type: ItemCurrentVsPublishedStateType;
+  current_version_locales: string[];
+  published_version_locales: string[];
+  changed_locales: string[];
+  added_locales: string[];
+  removed_locales: string[];
+  non_localized_fields_changed: boolean;
+  scheduled_publication: ScheduledPublicationData | null;
+  scheduled_unpublishing: ScheduledUnpublishingData | null;
+  published_version: ItemVersionData | null;
+};
+export type ItemCurrentVsPublishedStateTargetSchema =
+  ItemCurrentVsPublishedState;
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ScheduledPublicationData = {
+  type: ScheduledPublicationType;
+  id: ScheduledPublicationIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ScheduledUnpublishingData = {
+  type: ScheduledUnpublishingType;
+  id: ScheduledUnpublishingIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ItemVersionData = {
+  type: ItemVersionType;
+  id: ItemVersionIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ItemCurrentVsPublishedStateData = {
+  type: ItemCurrentVsPublishedStateType;
+  id: ItemCurrentVsPublishedStateIdentity;
+};
+
+/**
+ * The JSON data associated to the record
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type ItemCurrentVsPublishedStateAttributes = {
+  current_version_locales: string[];
+  published_version_locales: string[];
+  changed_locales: string[];
+  added_locales: string[];
+  removed_locales: string[];
+  non_localized_fields_changed: boolean;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type ItemCurrentVsPublishedStateRelationships = {
+  scheduled_publication: ScheduledPublicationData | null;
+  scheduled_unpublishing: ScheduledUnpublishingData | null;
+  published_version: ItemVersionData | null;
+};
+
+/**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_publish.schema` link.
  */
@@ -7110,17 +7255,6 @@ export type ItemVersionMeta = {
    * Whether the record version is the most recent version or not
    */
   is_current: boolean;
-};
-
-/**
- * JSON API data
- *
- * This interface was referenced by `ItemVersion`'s JSON-Schema
- * via the `definition` "data".
- */
-export type ItemVersionData = {
-  type: ItemVersionType;
-  id: ItemVersionIdentity;
 };
 
 /**
@@ -7765,20 +7899,22 @@ export type ScheduledPublication = {
    * The future date for the publication
    */
   publication_scheduled_at: string;
+  /**
+   * Specifies which content should be published. If null, the whole record will be published.
+   */
+  selective_publication: null | {
+    /**
+     * List of locales whose content will be published
+     */
+    content_in_locales: string[];
+    /**
+     * Whether the non-localized content has to be published or not
+     */
+    non_localized_content: boolean;
+  };
   item: ItemData;
 };
 export type ScheduledPublicationCreateTargetSchema = ScheduledPublication;
-/**
- * JSON API data
- *
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `definition` "data".
- */
-export type ScheduledPublicationData = {
-  type: ScheduledPublicationType;
-  id: ScheduledPublicationIdentity;
-};
-
 /**
  * JSON API attributes
  *
@@ -7790,6 +7926,19 @@ export type ScheduledPublicationAttributes = {
    * The future date for the publication
    */
   publication_scheduled_at: string;
+  /**
+   * Specifies which content should be published. If null, the whole record will be published.
+   */
+  selective_publication: null | {
+    /**
+     * List of locales whose content will be published
+     */
+    content_in_locales: string[];
+    /**
+     * Whether the non-localized content has to be published or not
+     */
+    non_localized_content: boolean;
+  };
 };
 
 /**
@@ -7808,7 +7957,23 @@ export type ScheduledPublicationRelationships = {
  */
 export type ScheduledPublicationCreateSchema = {
   type?: ScheduledPublicationType;
-  [k: string]: unknown;
+  /**
+   * The future date for the publication
+   */
+  publication_scheduled_at: string;
+  /**
+   * Specifies which content should be published. If null, the whole record will be published.
+   */
+  selective_publication?: null | {
+    /**
+     * List of locales whose content will be published
+     */
+    content_in_locales: string[];
+    /**
+     * Whether the non-localized content has to be published or not
+     */
+    non_localized_content: boolean;
+  };
 };
 
 /**
@@ -7824,20 +7989,13 @@ export type ScheduledUnpublishing = {
    * The future date for the unpublishing
    */
   unpublishing_scheduled_at: string;
+  /**
+   * List of locales whose content will be unpublished, or nil if the whole record needs to be unpublished
+   */
+  content_in_locales: null | string[];
   item: ItemData;
 };
 export type ScheduledUnpublishingCreateTargetSchema = ScheduledUnpublishing;
-/**
- * JSON API data
- *
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `definition` "data".
- */
-export type ScheduledUnpublishingData = {
-  type: ScheduledUnpublishingType;
-  id: ScheduledUnpublishingIdentity;
-};
-
 /**
  * JSON API attributes
  *
@@ -7849,6 +8007,10 @@ export type ScheduledUnpublishingAttributes = {
    * The future date for the unpublishing
    */
   unpublishing_scheduled_at: string;
+  /**
+   * List of locales whose content will be unpublished, or nil if the whole record needs to be unpublished
+   */
+  content_in_locales: null | string[];
 };
 
 /**
@@ -7867,7 +8029,14 @@ export type ScheduledUnpublishingRelationships = {
  */
 export type ScheduledUnpublishingCreateSchema = {
   type?: ScheduledUnpublishingType;
-  [k: string]: unknown;
+  /**
+   * The future date for the unpublishing
+   */
+  unpublishing_scheduled_at: string;
+  /**
+   * List of locales whose content will be unpublished, or nil if the whole record needs to be unpublished
+   */
+  content_in_locales?: null | string[];
 };
 
 /**

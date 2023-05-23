@@ -9,6 +9,7 @@
         "method": "POST",
         "comment": "Create a new session",
         "requestBodyType": "SessionCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "*",
           "attributes": [
@@ -40,6 +41,7 @@
         "method": "POST",
         "comment": "Create a new account",
         "requestBodyType": "AccountCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "account",
           "attributes": [
@@ -65,6 +67,7 @@
         "method": "PUT",
         "comment": "Update a account",
         "requestBodyType": "AccountUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "account",
           "attributes": [
@@ -90,6 +93,7 @@
         "method": "POST",
         "comment": "Delete a account",
         "requestBodyType": "AccountDestroySchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "account_destroy_request",
           "attributes": [
@@ -109,6 +113,7 @@
         "urlTemplate": "/account",
         "method": "GET",
         "comment": "Retrieve a account",
+        "optionalRequestBody": false,
         "queryParamsType": "AccountSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "AccountSelfTargetSchema",
@@ -122,6 +127,7 @@
         "method": "POST",
         "comment": "Request a password reset",
         "requestBodyType": "AccountResetPasswordSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "account",
           "attributes": [
@@ -140,6 +146,7 @@
         "method": "PUT",
         "comment": "Activates 2-factor authorization",
         "requestBodyType": "AccountActivate_2FaSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "2fa_activation",
           "attributes": [
@@ -159,6 +166,7 @@
         "urlTemplate": "/account/reset-2fa",
         "method": "PUT",
         "comment": "Generates 2-factor authorization secrets",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "AccountReset_2FaTargetSchema",
         "name": "reset_2Fa",
@@ -171,6 +179,7 @@
         "method": "PUT",
         "comment": "De-activates 2-factor authorization",
         "requestBodyType": "AccountDeactivate_2FaSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "2fa_deactivation",
           "attributes": [
@@ -191,6 +200,7 @@
         "method": "POST",
         "comment": "Convert to organization",
         "requestBodyType": "AccountConvertToOrganizationSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization",
           "attributes": [
@@ -221,6 +231,7 @@
           "isEntityId": true,
           "relType": "SiteData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "SiteSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "SiteSelfTargetSchema",
@@ -233,6 +244,7 @@
         "urlTemplate": "/sites",
         "method": "GET",
         "comment": "List all projects",
+        "optionalRequestBody": false,
         "queryParamsType": "SiteInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "SiteInstancesTargetSchema",
@@ -250,6 +262,7 @@
         "method": "POST",
         "comment": "Create a new project",
         "requestBodyType": "SiteCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "site",
           "attributes": [
@@ -276,6 +289,7 @@
           "relType": "SiteData"
         },
         "requestBodyType": "SiteUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "site",
           "attributes": [
@@ -302,6 +316,7 @@
           "isEntityId": true,
           "relType": "SiteData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteDestroyJobSchema",
         "name": "destroy",
@@ -319,6 +334,7 @@
           "relType": "SiteData"
         },
         "requestBodyType": "SiteDuplicateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "site",
           "attributes": [
@@ -357,6 +373,7 @@
           "relType": "SiteData"
         },
         "requestBodyType": "SiteSubscriptionCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_subscription",
           "attributes": [
@@ -386,6 +403,7 @@
           "relType": "SiteData"
         },
         "requestBodyType": "SiteSubscriptionSimulateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_subscription",
           "attributes": [
@@ -416,6 +434,7 @@
           "relType": "SiteData"
         },
         "requestBodyType": "SiteSubscriptionValidateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_subscription",
           "attributes": [
@@ -446,6 +465,7 @@
         "method": "POST",
         "comment": "Create a new subscription",
         "requestBodyType": "PerOwnerPricingSubscriptionCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "per_owner_pricing_subscription",
           "attributes": [
@@ -469,6 +489,7 @@
         "method": "POST",
         "comment": "Simulate",
         "requestBodyType": "PerOwnerPricingSubscriptionSimulateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "per_owner_pricing_subscription",
           "attributes": [
@@ -491,6 +512,7 @@
         "method": "POST",
         "comment": "Validate a new subscription",
         "requestBodyType": "PerOwnerPricingSubscriptionValidateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "per_owner_pricing_subscription",
           "attributes": [],
@@ -516,6 +538,7 @@
         "urlTemplate": "/site-plans",
         "method": "GET",
         "comment": "Retrieve enabled plans for account",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SitePlanInstancesTargetSchema",
         "name": "list",
@@ -534,6 +557,7 @@
         "urlTemplate": "/per-owner-pricing-plans",
         "method": "GET",
         "comment": "Retrieve enabled plans for account",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PerOwnerPricingPlanInstancesTargetSchema",
         "name": "list",
@@ -545,6 +569,7 @@
         "urlTemplate": "/per-owner-pricing-plans/activable-as-appointed-organization",
         "method": "GET",
         "comment": "Retrieve plans that the organization can enable on other organizations given a mandate",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PerOwnerPricingPlanActivableAsAppointedOrganizationInstancesTargetSchema",
         "name": "activableAsAppointedOrganizationList",
@@ -563,6 +588,7 @@
         "urlTemplate": "/per-site-pricing-billing-profiles",
         "method": "GET",
         "comment": "Retrieve all account's billing profiles",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PerSitePricingBillingProfileInstancesTargetSchema",
         "name": "list",
@@ -579,6 +605,7 @@
           "isEntityId": true,
           "relType": "PerSitePricingBillingProfileData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "PerSitePricingBillingProfileSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "PerSitePricingBillingProfileSelfTargetSchema",
@@ -597,6 +624,7 @@
           "relType": "PerSitePricingBillingProfileData"
         },
         "requestBodyType": "PerSitePricingBillingProfileUpdateCreditCardSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "card",
           "attributes": [
@@ -621,6 +649,7 @@
           "relType": "PerSitePricingBillingProfileData"
         },
         "requestBodyType": "PerSitePricingBillingProfileUpdateInfoSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "per_site_pricing_billing_profile",
           "attributes": [
@@ -654,6 +683,7 @@
           "isEntityId": true,
           "relType": "PerSitePricingBillingProfileData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PerSitePricingBillingProfileDestroyTargetSchema",
         "name": "destroy",
@@ -672,6 +702,7 @@
         "urlTemplate": "/per-owner-pricing-billing-profile",
         "method": "GET",
         "comment": "Retrieve a billing profile",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PerOwnerPricingBillingProfileSelfTargetSchema",
         "name": "find",
@@ -684,6 +715,7 @@
         "method": "PUT",
         "comment": "Update a billing profile's credit card",
         "requestBodyType": "PerOwnerPricingBillingProfileUpdateCreditCardSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "card",
           "attributes": [
@@ -703,6 +735,7 @@
         "method": "PUT",
         "comment": "Update a billing profile's billing information",
         "requestBodyType": "PerOwnerPricingBillingProfileUpdateInfoSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "per_owner_pricing_billing_profile",
           "attributes": [
@@ -739,6 +772,7 @@
         "urlTemplate": "/per-owner-pricing-billing-profile/invoices",
         "method": "GET",
         "comment": "Retrieve all invoices",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "InvoicePerOwnerPricingBillingProfileInstancesTargetSchema",
         "name": "perOwnerPricingBillingProfileList",
@@ -755,6 +789,7 @@
           "isEntityId": false,
           "relType": "PerSitePricingBillingProfileData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "InvoicePerSitePricingBillingProfileInstancesTargetSchema",
         "name": "perSitePricingBillingProfileList",
@@ -767,6 +802,7 @@
         "method": "POST",
         "comment": "Collect all unpaid invoices",
         "requestBodyType": "InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "invoice_collection",
           "attributes": [
@@ -791,6 +827,7 @@
           "relType": "PerSitePricingBillingProfileData"
         },
         "requestBodyType": "InvoicePerSitePricingBillingProfileCollectUnpaidSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "invoice_collection",
           "attributes": [
@@ -816,6 +853,7 @@
         "urlTemplate": "/resource-usages",
         "method": "GET",
         "comment": "Retrieve all resource usages",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ResourceUsageInstancesTargetSchema",
         "name": "list",
@@ -839,6 +877,7 @@
           "isEntityId": true,
           "relType": "JobResultData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "JobResultSelfTargetSchema",
         "name": "find",
@@ -857,6 +896,7 @@
         "urlTemplate": "/site-transfers",
         "method": "GET",
         "comment": "List all pending transfer requests",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteTransferInstancesTargetSchema",
         "name": "list",
@@ -873,6 +913,7 @@
           "isEntityId": true,
           "relType": "SiteTransferData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteTransferSelfTargetSchema",
         "name": "find",
@@ -890,6 +931,7 @@
           "relType": "SiteData"
         },
         "requestBodyType": "SiteTransferCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_transfer",
           "attributes": [
@@ -913,6 +955,7 @@
           "isEntityId": false,
           "relType": "SiteData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteTransferDestroyTargetSchema",
         "name": "destroy",
@@ -930,6 +973,7 @@
           "relType": "SiteTransferData"
         },
         "requestBodyType": "SiteTransferSimulateAcceptSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_transfer",
           "attributes": [
@@ -955,6 +999,7 @@
           "relType": "SiteTransferData"
         },
         "requestBodyType": "SiteTransferAcceptSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_transfer",
           "attributes": [
@@ -980,6 +1025,7 @@
           "isEntityId": true,
           "relType": "SiteTransferData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "decline",
         "rawName": "rawDecline"
@@ -1002,6 +1048,7 @@
           "isEntityId": true,
           "relType": "SiteInvitationData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "SiteInvitationRedeemHrefSchema",
         "queryParamsRequired": false,
         "responseType": "SiteInvitationRedeemTargetSchema",
@@ -1026,6 +1073,7 @@
           "isEntityId": false,
           "relType": "SiteData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SubscriptionLimitInstancesTargetSchema",
         "name": "list",
@@ -1049,6 +1097,7 @@
           "isEntityId": false,
           "relType": "SiteData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SubscriptionFeatureInstancesTargetSchema",
         "name": "list",
@@ -1067,6 +1116,7 @@
         "urlTemplate": "/oauth_applications",
         "method": "GET",
         "comment": "List all authorized applications",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OauthApplicationInstancesTargetSchema",
         "name": "list",
@@ -1083,6 +1133,7 @@
           "isEntityId": true,
           "relType": "OauthApplicationData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "destroy",
         "rawName": "rawDestroy"
@@ -1106,6 +1157,7 @@
           "relType": "PaymentMethodData"
         },
         "requestBodyType": "PaymentIntentCreateFromPaymentMethodSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "payment_intent",
           "attributes": [
@@ -1131,6 +1183,7 @@
           "relType": "PerSitePricingBillingProfileData"
         },
         "requestBodyType": "PaymentIntentCreateForPerSitePricingBillingProfileSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "payment_intent",
           "attributes": [
@@ -1151,6 +1204,7 @@
         "method": "POST",
         "comment": "Create a payment intent starting from an existing per-owner billing profile",
         "requestBodyType": "PaymentIntentCreateForPerOwnerPricingBillingProfileSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "payment_intent",
           "attributes": [
@@ -1175,6 +1229,7 @@
           "isEntityId": true,
           "relType": "PaymentIntentData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PaymentIntentConfirmTargetSchema",
         "deprecated": "This API call is to be considered private and might change without notice",
@@ -1194,6 +1249,7 @@
         "urlTemplate": "/organizations",
         "method": "GET",
         "comment": "List organizations",
+        "optionalRequestBody": false,
         "queryParamsType": "OrganizationInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "OrganizationInstancesTargetSchema",
@@ -1211,6 +1267,7 @@
           "isEntityId": true,
           "relType": "OrganizationData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "OrganizationSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "OrganizationSelfTargetSchema",
@@ -1224,6 +1281,7 @@
         "method": "POST",
         "comment": "Create a new organization",
         "requestBodyType": "OrganizationCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization",
           "attributes": [
@@ -1248,6 +1306,7 @@
           "relType": "OrganizationData"
         },
         "requestBodyType": "OrganizationUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization",
           "attributes": [
@@ -1271,6 +1330,7 @@
           "isEntityId": false,
           "relType": "SiteData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationDestroyJobSchema",
         "name": "destroy",
@@ -1289,6 +1349,7 @@
         "urlTemplate": "/organization-roles",
         "method": "GET",
         "comment": "List organization roles",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationRoleInstancesTargetSchema",
         "name": "list",
@@ -1305,6 +1366,7 @@
           "isEntityId": true,
           "relType": "OrganizationRoleData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationRoleSelfTargetSchema",
         "name": "find",
@@ -1324,6 +1386,7 @@
         "method": "POST",
         "comment": "Invite a new member",
         "requestBodyType": "OrganizationInvitationCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization_invitation",
           "attributes": [
@@ -1350,6 +1413,7 @@
           "relType": "OrganizationInvitationData"
         },
         "requestBodyType": "OrganizationInvitationUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization_invitation",
           "attributes": [],
@@ -1368,6 +1432,7 @@
         "urlTemplate": "/organization-invitations",
         "method": "GET",
         "comment": "List all invitations",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationInvitationInstancesTargetSchema",
         "name": "list",
@@ -1384,6 +1449,7 @@
           "isEntityId": true,
           "relType": "OrganizationInvitationData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationInvitationSelfTargetSchema",
         "name": "find",
@@ -1400,6 +1466,7 @@
           "isEntityId": true,
           "relType": "OrganizationInvitationData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationInvitationDestroyTargetSchema",
         "name": "destroy",
@@ -1416,6 +1483,7 @@
           "isEntityId": true,
           "relType": "OrganizationInvitationData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "resend",
         "rawName": "rawResend"
@@ -1431,6 +1499,7 @@
           "isEntityId": true,
           "relType": "OrganizationInvitationData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "OrganizationInvitationRedeemHrefSchema",
         "queryParamsRequired": false,
         "responseType": "OrganizationInvitationRedeemTargetSchema",
@@ -1456,6 +1525,7 @@
           "relType": "OrganizationMembershipData"
         },
         "requestBodyType": "OrganizationMembershipUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization_membership",
           "attributes": [],
@@ -1474,6 +1544,7 @@
         "urlTemplate": "/organization-memberships",
         "method": "GET",
         "comment": "List all organization memberships",
+        "optionalRequestBody": false,
         "queryParamsType": "OrganizationMembershipInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "OrganizationMembershipInstancesTargetSchema",
@@ -1491,6 +1562,7 @@
           "isEntityId": true,
           "relType": "OrganizationMembershipData"
         },
+        "optionalRequestBody": false,
         "queryParamsType": "OrganizationMembershipSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "OrganizationMembershipSelfTargetSchema",
@@ -1503,6 +1575,7 @@
         "urlTemplate": "/organization-memberships/me",
         "method": "GET",
         "comment": "Retrieve currently signed-in account organization membership",
+        "optionalRequestBody": false,
         "queryParamsType": "OrganizationMembershipMeHrefSchema",
         "queryParamsRequired": false,
         "responseType": "OrganizationMembershipMeTargetSchema",
@@ -1520,6 +1593,7 @@
           "isEntityId": true,
           "relType": "OrganizationMembershipData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationMembershipDestroyTargetSchema",
         "name": "destroy",
@@ -1539,6 +1613,7 @@
         "method": "POST",
         "comment": "Request a new mandate",
         "requestBodyType": "OrganizationMandateRequestCreateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization_mandate_request",
           "attributes": [],
@@ -1557,6 +1632,7 @@
         "urlTemplate": "/organization-mandate-requests/pending",
         "method": "GET",
         "comment": "List all pending mandate requests",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateRequestPendingInstancesTargetSchema",
         "name": "pendingList",
@@ -1568,6 +1644,7 @@
         "urlTemplate": "/organization-mandate-requests/requested",
         "method": "GET",
         "comment": "List all requested mandates",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateRequestRequestedInstancesTargetSchema",
         "name": "requestedList",
@@ -1584,6 +1661,7 @@
           "isEntityId": true,
           "relType": "OrganizationMandateRequestData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateRequestDestroyTargetSchema",
         "name": "destroy",
@@ -1600,6 +1678,7 @@
           "isEntityId": true,
           "relType": "OrganizationMandateRequestData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "approve",
         "rawName": "rawApprove"
@@ -1615,6 +1694,7 @@
           "isEntityId": true,
           "relType": "OrganizationMandateRequestData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "reject",
         "rawName": "rawReject"
@@ -1638,6 +1718,7 @@
           "relType": "OrganizationMandateData"
         },
         "requestBodyType": "OrganizationMandateUpdateSchema",
+        "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization_mandate",
           "attributes": [],
@@ -1656,6 +1737,7 @@
         "urlTemplate": "/organization-mandates/approved",
         "method": "GET",
         "comment": "List all mandates that the organization has approved",
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateApprovedInstancesTargetSchema",
         "name": "approvedList",
@@ -1667,6 +1749,7 @@
         "urlTemplate": "/organization-mandates/given",
         "method": "GET",
         "comment": "List all mandates that the organization has been given",
+        "optionalRequestBody": false,
         "queryParamsType": "OrganizationMandateGivenInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateGivenInstancesTargetSchema",
@@ -1684,6 +1767,7 @@
           "isEntityId": true,
           "relType": "OrganizationMandateData"
         },
+        "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateDestroyTargetSchema",
         "name": "destroy",

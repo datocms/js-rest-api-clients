@@ -154,11 +154,27 @@ export default function simplifyLinks(schema: any) {
     simplifyEntityRelationships(schema);
     if (schema.links) {
       schema.links.forEach((link: any) => {
+        const originalSchema = link.schema;
+
         link.schema = applyToInnerObject(
           `${jsonApiType} ${link.rel} schema`,
-          link.schema?.properties?.data,
+          originalSchema?.properties?.data,
           simplifySchema,
         );
+
+        if (originalSchema?.type.includes('null')) {
+          if (link.schema?.type === 'object') {
+            link.schema.type = ['object', 'null'];
+          } else {
+            throw new Error(
+              `Problem with ${jsonApiType} ${link.rel} schema: ${JSON.stringify(
+                originalSchema,
+                null,
+                2,
+              )}!`,
+            );
+          }
+        }
 
         link.targetSchema = simplifyTargetSchema(
           link.targetSchema?.properties?.data,
