@@ -2767,6 +2767,7 @@ export type PerSitePricingBillingProfileAttributes = {
   vat_number: null | string;
   defaulting: boolean;
   credits: number;
+  total_dues: number;
   cf_cod_fiscale: null | string;
   coupons: string[];
   is_active: boolean;
