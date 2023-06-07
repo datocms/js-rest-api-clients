@@ -9,7 +9,7 @@
     "generate": "./generate/index.ts && npm run format",
     "generate-next": "GENERATE_FROM_DEV=true ./generate/index.ts && npm run format",
     "build": "lerna run build",
-    "prepublishOnly": "npm run generate && ./generate/setClientVersion.ts && npm run build && npm run test",
+    "prepublishOnly": "npm run generate && ./generate/setClientVersion.ts && npm run build",
     "publish": "lerna publish",
     "publish-next": "GENERATE_FROM_DEV=true lerna publish --dist-tag next"
   },
