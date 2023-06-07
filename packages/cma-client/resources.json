@@ -65,6 +65,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "role",
+          "idRequired": true,
           "attributes": [
             "name",
             "can_edit_favicon",
@@ -173,6 +174,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "user",
+          "idRequired": true,
           "attributes": [
             "is_active"
           ],
@@ -401,6 +403,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "menu_item",
+          "idRequired": true,
           "attributes": [
             "label",
             "external_url",
@@ -532,6 +535,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "item_type",
+          "idRequired": true,
           "attributes": [
             "name",
             "api_key",
@@ -690,6 +694,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "field",
+          "idRequired": true,
           "attributes": [
             "default_value",
             "label",
@@ -874,6 +879,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "fieldset",
+          "idRequired": true,
           "attributes": [
             "title",
             "hint",
@@ -1022,6 +1028,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "access_token",
+          "idRequired": true,
           "attributes": [
             "name",
             "can_access_cda",
@@ -1157,6 +1164,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "plugin",
+          "idRequired": true,
           "attributes": [
             "name",
             "description",
@@ -1401,6 +1409,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "item",
+          "idRequired": true,
           "attributes": "*",
           "relationships": [
             "item_type",
@@ -1490,6 +1499,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "item",
+          "idRequired": true,
           "attributes": "*",
           "relationships": [
             "item_type",
@@ -1931,6 +1941,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload",
+          "idRequired": true,
           "attributes": [
             "path",
             "basename",
@@ -2230,6 +2241,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "environment",
+          "idRequired": true,
           "attributes": [],
           "relationships": []
         },
@@ -2406,6 +2418,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "webhook",
+          "idRequired": true,
           "attributes": [
             "name",
             "url",
@@ -2597,6 +2610,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "build_trigger",
+          "idRequired": true,
           "attributes": [
             "name",
             "adapter",
@@ -2748,6 +2762,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "item_type_filter",
+          "idRequired": true,
           "attributes": [
             "name",
             "columns",
@@ -2859,6 +2874,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload_filter",
+          "idRequired": true,
           "attributes": [
             "name",
             "shared",
@@ -2966,6 +2982,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_invitation",
+          "idRequired": true,
           "attributes": [],
           "relationships": [
             "role"
@@ -3164,6 +3181,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "sso_group",
+          "idRequired": true,
           "attributes": [
             "priority"
           ],
@@ -3238,6 +3256,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "sso_settings",
+          "idRequired": true,
           "attributes": [
             "idp_saml_metadata_url",
             "idp_saml_metadata_xml"
@@ -3282,6 +3301,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "white_label_settings",
+          "idRequired": true,
           "attributes": [
             "custom_i18n_messages_template_url"
           ],
@@ -3461,6 +3481,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "site",
+          "idRequired": true,
           "attributes": [
             "no_index",
             "favicon",
@@ -3569,6 +3590,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "workflow",
+          "idRequired": true,
           "attributes": [
             "name",
             "api_key",

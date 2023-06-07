@@ -94,7 +94,6 @@ export default class PerSitePricingBillingProfile extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.PerSitePricingBillingProfileUpdateCreditCardSchema>(
         body,
         {
-          id: Utils.toId(perSitePricingBillingProfileId),
           type: 'card',
           attributes: ['payment_intent_id'],
           relationships: [],

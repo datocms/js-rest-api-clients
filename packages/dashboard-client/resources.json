@@ -70,6 +70,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "account",
+          "idRequired": true,
           "attributes": [
             "email",
             "first_name",
@@ -292,6 +293,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "site",
+          "idRequired": true,
           "attributes": [
             "name",
             "domain",
@@ -652,6 +654,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "per_site_pricing_billing_profile",
+          "idRequired": true,
           "attributes": [
             "first_name",
             "last_name",
@@ -738,6 +741,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "per_owner_pricing_billing_profile",
+          "idRequired": true,
           "attributes": [
             "first_name",
             "last_name",
@@ -976,6 +980,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_transfer",
+          "idRequired": true,
           "attributes": [
             "billing_profile"
           ],
@@ -1002,6 +1007,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_transfer",
+          "idRequired": true,
           "attributes": [
             "payment_intent_id",
             "billing_profile"
@@ -1309,6 +1315,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization",
+          "idRequired": true,
           "attributes": [
             "name"
           ],
@@ -1416,6 +1423,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization_invitation",
+          "idRequired": true,
           "attributes": [],
           "relationships": [
             "role"
@@ -1528,6 +1536,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization_membership",
+          "idRequired": true,
           "attributes": [],
           "relationships": [
             "role"
@@ -1721,6 +1730,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization_mandate",
+          "idRequired": true,
           "attributes": [],
           "relationships": [
             "additional_enabled_plans"

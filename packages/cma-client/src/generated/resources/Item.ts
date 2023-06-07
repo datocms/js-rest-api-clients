@@ -565,7 +565,6 @@ export default class Item extends BaseResource {
       Utils.toId(itemId),
       body
         ? Utils.serializeRequestBody<SchemaTypes.ItemPublishSchema>(body, {
-            id: Utils.toId(itemId),
             type: 'selective_publish_operation',
             attributes: ['content_in_locales', 'non_localized_content'],
             relationships: [],
@@ -617,7 +616,6 @@ export default class Item extends BaseResource {
       Utils.toId(itemId),
       body
         ? Utils.serializeRequestBody<SchemaTypes.ItemUnpublishSchema>(body, {
-            id: Utils.toId(itemId),
             type: 'selective_unpublish_operation',
             attributes: ['content_in_locales'],
             relationships: [],

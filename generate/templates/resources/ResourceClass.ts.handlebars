@@ -42,7 +42,9 @@ export default class {{{resourceClassName}}} extends BaseResource {
                 body,
                 {
                   {{#if urlPlaceholder.isEntityId}}
-                    id: Utils.toId({{{urlPlaceholder.variableName}}}),
+                    {{#if requestStructure.idRequired}}
+                      id: Utils.toId({{{urlPlaceholder.variableName}}}),
+                    {{/if}}
                   {{/if}}
                   type: {{{stringify requestStructure.type}}},
                   attributes: {{{stringify requestStructure.attributes}}},

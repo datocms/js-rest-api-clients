@@ -26,6 +26,7 @@ export type EndpointInfo = {
   optionalRequestBody: boolean;
   requestStructure?: {
     type: string;
+    idRequired: boolean;
     attributes: string[] | '*';
     relationships: string[] | '*';
   };
@@ -91,9 +92,9 @@ function recursivelyFindSchemaKeys(schema: JsonRefParser.JSONSchema): string[] {
   }
 
   if (schema.anyOf) {
-    return schema.anyOf
-      .map((x) => recursivelyFindSchemaKeys(x as JsonRefParser.JSONSchema))
-      .flat();
+    return schema.anyOf.flatMap((x) =>
+      recursivelyFindSchemaKeys(x as JsonRefParser.JSONSchema),
+    );
   }
 
   throw new Error('Ouch! 2');
@@ -124,11 +125,9 @@ function findPropertiesInProperty(
   }
 
   if (schema.anyOf) {
-    return schema.anyOf
-      .map((x) =>
-        findPropertiesInProperty(x as JsonRefParser.JSONSchema, property),
-      )
-      .flat();
+    return schema.anyOf.flatMap((x) =>
+      findPropertiesInProperty(x as JsonRefParser.JSONSchema, property),
+    );
   }
 
   throw new Error("Don't know how to handle!");
@@ -184,6 +183,51 @@ function findTypeInDataProperty(schema: JsonRefParser.JSONSchema) {
   return findTypeInDataObject(dataSchema);
 }
 
+function findIdInDataObject(dataSchema: JsonRefParser.JSONSchema) {
+  if (dataSchema.type !== 'object') {
+    throw new Error('Data not an object?');
+  }
+
+  if (typeof dataSchema.properties !== 'object') {
+    throw new Error('Missing data?');
+  }
+
+  return (
+    dataSchema.properties.id && typeof dataSchema.properties.id === 'object'
+  );
+}
+
+function findIdInDataProperty(schema: JsonRefParser.JSONSchema) {
+  if (typeof schema.properties?.data !== 'object') {
+    throw new Error('Missing data!');
+  }
+
+  let dataSchema = schema.properties.data;
+
+  if (schema.type === 'array') {
+    if (typeof schema.items !== 'object') {
+      throw new Error('No items?');
+    }
+    dataSchema = schema.items!;
+  }
+
+  if (dataSchema.anyOf) {
+    const types = [
+      ...new Set(
+        dataSchema.anyOf.map((s) =>
+          findIdInDataObject(s as JsonRefParser.JSONSchema),
+        ),
+      ),
+    ];
+    if (types.length !== 1) {
+      throw new Error('Too complex, dont know how to handle the case!');
+    }
+    return types[0];
+  }
+
+  return findIdInDataObject(dataSchema);
+}
+
 function findPropertiesInDataProperty(
   schema: JsonRefParser.JSONSchema,
   property: string,
@@ -223,7 +267,7 @@ function generateResourceInfo(
           isEntityId: placeholder === jsonApiType,
           relType: toSafeName(`${placeholder}_data`, true),
         });
-        return '${' + variableName + '}';
+        return `\${${variableName}}`;
       },
     );
 
@@ -255,8 +299,7 @@ function generateResourceInfo(
         : link.rel;
 
     const paginationLimitProperty =
-      link.hrefSchema &&
-      link.hrefSchema.properties &&
+      link.hrefSchema?.properties &&
       'page' in link.hrefSchema.properties &&
       typeof link.hrefSchema.properties.page === 'object' &&
       link.hrefSchema.properties.page.properties &&
@@ -266,8 +309,7 @@ function generateResourceInfo(
       link.hrefSchema.properties.page.properties.limit;
 
     const queryParamsRequired = Boolean(
-      link.hrefSchema &&
-        link.hrefSchema.required &&
+      link.hrefSchema?.required &&
         Array.isArray(link.hrefSchema.required) &&
         link.hrefSchema.required.length > 0,
     );
@@ -304,6 +346,7 @@ function generateResourceInfo(
       requestStructure: link.schema
         ? {
             type: findTypeInDataProperty(link.schema),
+            idRequired: findIdInDataProperty(link.schema),
             attributes: findPropertiesInDataProperty(link.schema, 'attributes'),
             relationships: findPropertiesInDataProperty(
               link.schema,
