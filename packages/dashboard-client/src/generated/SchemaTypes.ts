@@ -2647,6 +2647,10 @@ export type SitePlanAttributes = {
    */
   workflows: boolean;
   /**
+   * Whether visual editing is enabled or not
+   */
+  visual_editing: boolean;
+  /**
    * Number of workflows allowed
    */
   workflows_count: number;

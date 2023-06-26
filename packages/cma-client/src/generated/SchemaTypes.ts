@@ -548,7 +548,7 @@ export type ItemInstancesHrefSchema = {
      */
     query?: string;
     /**
-     * Same as [GraphQL API records filters](/docs/content-delivery-api/filtering-records). Use snake_case for fields names. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
+     * Same as [GraphQL API records filters](/docs/content-delivery-api/filtering-records): you must use square brackets to indicate nesting levels. E.g. if you wanna [filter by parent record](/docs/content-delivery-api/filtering-records#parent) in a tree of records, you must use `filter[fields][parent][eq]=<ID_VALUE>`. Use snake_case for fields names. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
      */
     fields?: {
       [k: string]: unknown;
@@ -3352,6 +3352,10 @@ export type SitePlanAttributes = {
    * Whether workflows are enabled or not
    */
   workflows: boolean;
+  /**
+   * Whether visual editing is enabled or not
+   */
+  visual_editing: boolean;
   /**
    * Number of workflows allowed
    */

@@ -2211,6 +2211,10 @@ export type SitePlan = {
    */
   workflows: boolean;
   /**
+   * Whether visual editing is enabled or not
+   */
+  visual_editing: boolean;
+  /**
    * Number of workflows allowed
    */
   workflows_count: number;
@@ -2429,6 +2433,10 @@ export type SitePlanAttributes = {
    * Whether workflows are enabled or not
    */
   workflows: boolean;
+  /**
+   * Whether visual editing is enabled or not
+   */
+  visual_editing: boolean;
   /**
    * Number of workflows allowed
    */
