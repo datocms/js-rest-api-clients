@@ -1329,13 +1329,13 @@
       {
         "returnsCollection": false,
         "rel": "destroy",
-        "urlTemplate": "/organizations/${siteId}",
+        "urlTemplate": "/organizations/${organizationId}",
         "method": "DELETE",
         "comment": "Destroy an organization",
         "urlPlaceholder": {
-          "variableName": "siteId",
-          "isEntityId": false,
-          "relType": "SiteData"
+          "variableName": "organizationId",
+          "isEntityId": true,
+          "relType": "OrganizationData"
         },
         "requestBodyType": "OrganizationDestroySchema",
         "optionalRequestBody": false,

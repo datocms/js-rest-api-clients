@@ -155,11 +155,11 @@ export default class Organization extends BaseResource {
    * @throws {TimeoutError}
    */
   destroy(
-    siteId: string | SimpleSchemaTypes.SiteData,
+    organizationId: string | SimpleSchemaTypes.OrganizationData,
     body: SimpleSchemaTypes.OrganizationDestroySchema,
   ) {
     return this.rawDestroy(
-      Utils.toId(siteId),
+      Utils.toId(organizationId),
       Utils.serializeRequestBody<SchemaTypes.OrganizationDestroySchema>(body, {
         type: 'organization_destroy_request',
         attributes: ['otp_code', 'password'],
@@ -179,12 +179,12 @@ export default class Organization extends BaseResource {
    * @throws {TimeoutError}
    */
   rawDestroy(
-    siteId: string,
+    organizationId: string,
     body: SchemaTypes.OrganizationDestroySchema,
   ): Promise<SchemaTypes.OrganizationDestroyJobSchema> {
     return this.client.request<SchemaTypes.OrganizationDestroyJobSchema>({
       method: 'DELETE',
-      url: `/organizations/${siteId}`,
+      url: `/organizations/${organizationId}`,
       body,
     });
   }
