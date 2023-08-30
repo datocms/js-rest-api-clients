@@ -200,7 +200,11 @@ export default class SiteInvitation extends BaseResource {
    * @throws {TimeoutError}
    */
   resend(siteInvitationId: string | SimpleSchemaTypes.SiteInvitationData) {
-    return this.rawResend(Utils.toId(siteInvitationId));
+    return this.rawResend(Utils.toId(siteInvitationId)).then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteInvitationResendTargetSchema>(
+        body,
+      ),
+    );
   }
 
   /**
@@ -211,8 +215,10 @@ export default class SiteInvitation extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawResend(siteInvitationId: string): Promise<void> {
-    return this.client.request<void>({
+  rawResend(
+    siteInvitationId: string,
+  ): Promise<SchemaTypes.SiteInvitationResendTargetSchema> {
+    return this.client.request<SchemaTypes.SiteInvitationResendTargetSchema>({
       method: 'POST',
       url: `/site-invitations/${siteInvitationId}/resend`,
     });

@@ -9136,12 +9136,17 @@ export type SiteInvitation = {
    * Whether this invitation has expired
    */
   expired: boolean;
+  /**
+   * The link to join a DatoCMS project. Shown only on creation and reset
+   */
+  invitation_link?: null | string;
   role: RoleData;
 };
 export type SiteInvitationCreateTargetSchema = SiteInvitation;
 export type SiteInvitationUpdateTargetSchema = SiteInvitation;
 export type SiteInvitationSelfTargetSchema = SiteInvitation;
 export type SiteInvitationDestroyTargetSchema = SiteInvitation;
+export type SiteInvitationResendTargetSchema = SiteInvitation;
 /**
  * JSON API data
  *
@@ -9168,6 +9173,10 @@ export type SiteInvitationAttributes = {
    * Whether this invitation has expired
    */
   expired: boolean;
+  /**
+   * The link to join a DatoCMS project. Shown only on creation and reset
+   */
+  invitation_link?: null | string;
 };
 
 /**

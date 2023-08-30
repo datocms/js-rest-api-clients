@@ -9271,6 +9271,10 @@ export type SiteInvitationAttributes = {
    * Whether this invitation has expired
    */
   expired: boolean;
+  /**
+   * The link to join a DatoCMS project. Shown only on creation and reset
+   */
+  invitation_link?: null | string;
 };
 
 /**
@@ -9379,6 +9383,14 @@ export type SiteInvitationSelfTargetSchema = {
  * via the `destroy.targetSchema` link.
  */
 export type SiteInvitationDestroyTargetSchema = {
+  data: SiteInvitation;
+};
+
+/**
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `resend.targetSchema` link.
+ */
+export type SiteInvitationResendTargetSchema = {
   data: SiteInvitation;
 };
 

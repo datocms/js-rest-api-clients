@@ -3056,6 +3056,7 @@
         },
         "optionalRequestBody": false,
         "queryParamsRequired": false,
+        "responseType": "SiteInvitationResendTargetSchema",
         "name": "resend",
         "rawName": "rawResend"
       }
