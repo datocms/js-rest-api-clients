@@ -1337,7 +1337,16 @@
           "isEntityId": false,
           "relType": "SiteData"
         },
+        "requestBodyType": "OrganizationDestroySchema",
         "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "organization_destroy_request",
+          "attributes": [
+            "otp_code",
+            "password"
+          ],
+          "relationships": []
+        },
         "queryParamsRequired": false,
         "responseType": "OrganizationDestroyJobSchema",
         "name": "destroy",

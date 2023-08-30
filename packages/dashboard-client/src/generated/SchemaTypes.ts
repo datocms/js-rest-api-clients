@@ -2220,6 +2220,29 @@ export type OrganizationUpdateTargetSchema = {
 
 /**
  * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `destroy.schema` link.
+ */
+export type OrganizationDestroySchema = {
+  data: {
+    /**
+     * JSON API type field
+     */
+    type: 'organization_destroy_request';
+    attributes: {
+      /**
+       * OTP code
+       */
+      otp_code: string;
+      /**
+       * Current password
+       */
+      password: string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
  * via the `destroy.targetSchema` link.
  */
 export type OrganizationDestroyTargetSchema = {
