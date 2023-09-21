@@ -667,7 +667,8 @@
             "appearance",
             "position",
             "hint",
-            "default_value"
+            "default_value",
+            "deep_filtering_enabled"
           ],
           "relationships": [
             "fieldset"
@@ -705,7 +706,8 @@
             "appearance",
             "position",
             "field_type",
-            "hint"
+            "hint",
+            "deep_filtering_enabled"
           ],
           "relationships": [
             "fieldset"
