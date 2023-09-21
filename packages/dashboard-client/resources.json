@@ -1329,24 +1329,15 @@
       {
         "returnsCollection": false,
         "rel": "destroy",
-        "urlTemplate": "/organizations/${organizationId}",
+        "urlTemplate": "/organizations/${siteId}",
         "method": "DELETE",
         "comment": "Destroy an organization",
         "urlPlaceholder": {
-          "variableName": "organizationId",
-          "isEntityId": true,
-          "relType": "OrganizationData"
+          "variableName": "siteId",
+          "isEntityId": false,
+          "relType": "SiteData"
         },
-        "requestBodyType": "OrganizationDestroySchema",
         "optionalRequestBody": false,
-        "requestStructure": {
-          "type": "organization_destroy_request",
-          "attributes": [
-            "otp_code",
-            "password"
-          ],
-          "relationships": []
-        },
         "queryParamsRequired": false,
         "responseType": "OrganizationDestroyJobSchema",
         "name": "destroy",
