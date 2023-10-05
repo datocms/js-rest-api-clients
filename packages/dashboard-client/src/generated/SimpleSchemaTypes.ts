@@ -1601,6 +1601,10 @@ export type SiteCreateSchema = {
    */
   internal_subdomain?: string;
   /**
+   * Main locale for the project
+   */
+  main_locale?: string;
+  /**
    * Site template
    */
   template?: string | null;
