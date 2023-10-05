@@ -22,7 +22,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci
-      - run: lerna -v
-      - run: lerna bootstrap
+      - run: ./node_modules/.bin/lerna -v
+      - run: ./node_modules/.bin/lerna bootstrap
       - run: npm run build --if-present
       - run: npm test
