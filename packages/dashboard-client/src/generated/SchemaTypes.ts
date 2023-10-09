@@ -2131,7 +2131,11 @@ export type OrganizationMeta = {
     datocms_website_access_token: null | string;
     enrollment_issues: null | {
       days_left_to_comply: number;
-      missing_requirements: ('paid_activation' | 'published_profile')[];
+      missing_requirements: (
+        | 'paid_activation'
+        | 'published_profile'
+        | 'published_showcase_project'
+      )[];
     };
   };
 };
