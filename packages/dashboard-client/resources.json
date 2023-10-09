@@ -269,7 +269,6 @@
           "attributes": [
             "name",
             "internal_subdomain",
-            "main_locale",
             "template"
           ],
           "relationships": []

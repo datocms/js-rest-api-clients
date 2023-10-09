@@ -5689,10 +5689,6 @@ export type Field = {
    * Ordering index
    */
   position: number;
-  /**
-   * Whether deep filtering for block models is enabled in GraphQL or not
-   */
-  deep_filtering_enabled: boolean;
   item_type: ItemTypeData;
   fieldset: null | FieldsetData;
 };
@@ -5815,10 +5811,6 @@ export type FieldAttributes = {
    * Ordering index
    */
   position: number;
-  /**
-   * Whether deep filtering for block models is enabled in GraphQL or not
-   */
-  deep_filtering_enabled: boolean;
 };
 
 /**
@@ -5945,10 +5937,6 @@ export type FieldCreateSchema = {
     | {
         [k: string]: unknown;
       };
-  /**
-   * Whether deep filtering for block models is enabled in GraphQL or not
-   */
-  deep_filtering_enabled?: boolean;
   fieldset?: null | FieldsetData;
 };
 
@@ -6066,10 +6054,6 @@ export type FieldUpdateSchema = {
    * Field hint
    */
   hint?: string | null;
-  /**
-   * Whether deep filtering for block models is enabled in GraphQL or not
-   */
-  deep_filtering_enabled?: boolean;
   fieldset?: null | FieldsetData;
 };
 
