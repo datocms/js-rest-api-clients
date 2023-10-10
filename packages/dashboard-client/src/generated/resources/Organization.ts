@@ -184,7 +184,7 @@ export default class Organization extends BaseResource {
   ): Promise<SchemaTypes.OrganizationDestroyJobSchema> {
     return this.client.request<SchemaTypes.OrganizationDestroyJobSchema>({
       method: 'POST',
-      url: `/organizations/${organizationId}`,
+      url: `/organizations/${organizationId}/destroy`,
       body,
     });
   }
