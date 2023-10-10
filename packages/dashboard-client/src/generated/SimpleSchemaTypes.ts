@@ -1345,6 +1345,25 @@ export type OrganizationUpdateSchema = {
 };
 
 /**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `destroy.schema` link.
+ */
+export type OrganizationDestroySchema = {
+  /**
+   * JSON API type field
+   */
+  type?: 'organization_destroy_request';
+  /**
+   * OTP code
+   */
+  otp_code?: string;
+  /**
+   * Current password
+   */
+  password: string;
+};
+
+/**
  * A project represents a specific DatoCMS administrative area
  *
  * This interface was referenced by `SiteTransfer`'s JSON-Schema

@@ -4943,7 +4943,7 @@ export type JobData = {
  * </details>
  *
  * <details>
- * <summary>SEO (<code>seo</code>)</summary>
+ * <summary>SEO and Social (<code>seo</code>)</summary>
  *
  * | Property                       | Value                                                                                        |
  * | ------------------------------ | -------------------------------------------------------------------------------------------- |
@@ -5085,7 +5085,7 @@ export type JobData = {
  *
  * | Parameter | Type            | Required | Description           |
  * | --------- | --------------- | -------- | --------------------- |
- * | `values`  | `Array<String>` | ✅       | Set of allowed values |
+ * | `values`  | `Array<String>` | ✅        | Set of allowed values |
  *
  * </details>
  *
@@ -5170,7 +5170,7 @@ export type JobData = {
  *
  * | Parameter                                         | Type                                                                     | Required | Description                                                                                         |
  * | ------------------------------------------------- | ------------------------------------------------------------------------ | -------- | --------------------------------------------------------------------------------------------------- |
- * | `item_types`                                      | `Array<Model ID>`                                                        | ✅       | Set of allowed model IDs                                                                            |
+ * | `item_types`                                      | `Array<Model ID>`                                                        | ✅        | Set of allowed model IDs                                                                            |
  * | `on_publish_with_unpublished_references_strategy` | `"fail"`, `"publish_references"` (default value: `"fail"`)               |          | Strategy to apply when a publishing is requested and this field references some unpublished records |
  * | `on_reference_unpublish_strategy`                 | `"fail"`, `"unpublish"`, `"delete_references"` (default value: `"fail"`) |          | Strategy to apply when unpublishing is requested for a record referenced by this field              |
  * | `on_reference_delete_strategy`                    | `"fail"`, `"delete_references"` (default value: `"delete_references"`)   |          | Strategy to apply when deletion is requested for a record referenced by this field                  |
@@ -5199,7 +5199,7 @@ export type JobData = {
  *
  * | Parameter                                         | Type                                                                     | Required | Description                                                                                         |
  * | ------------------------------------------------- | ------------------------------------------------------------------------ | -------- | --------------------------------------------------------------------------------------------------- |
- * | `item_types`                                      | `Array<Model ID>`                                                        | ✅       | Set of allowed model IDs                                                                            |
+ * | `item_types`                                      | `Array<Model ID>`                                                        | ✅        | Set of allowed model IDs                                                                            |
  * | `on_publish_with_unpublished_references_strategy` | `"fail"`, `"publish_references"` (default value: `"fail"`)               |          | Strategy to apply when a publishing is requested and this field references some unpublished records |
  * | `on_reference_unpublish_strategy`                 | `"fail"`, `"unpublish"`, `"delete_references"` (default value: `"fail"`) |          | Strategy to apply when unpublishing is requested for a record referenced by this field              |
  * | `on_reference_delete_strategy`                    | `"fail"`, `"delete_references"` (default value: `"delete_references"`)   |          | Strategy to apply when deletion is requested for a record referenced by this field                  |
@@ -5274,7 +5274,7 @@ export type JobData = {
  * <details>
  * <summary><code>required_seo_fields</code></summary>
  *
- * SEO field is to specify one or more properties, or it won't be valid.
+ * SEO field has to specify one or more properties, or it won't be valid.
  *
  * | Parameter      | Type      | Required | Description                                        |
  * | -------------- | --------- | -------- | -------------------------------------------------- |
@@ -5322,7 +5322,7 @@ export type JobData = {
  *
  * | Parameter    | Type                    | Required | Description                    |
  * | ------------ | ----------------------- | -------- | ------------------------------ |
- * | `item_types` | `Array<Block Model ID>` | ✅       | Set of allowed Block Model IDs |
+ * | `item_types` | `Array<Block Model ID>` | ✅        | Set of allowed Block Model IDs |
  *
  * </details>
  *
@@ -5331,9 +5331,9 @@ export type JobData = {
  *
  * Checks for the presence of malicious cose in HTML fields: content is valid if no dangerous code is present.
  *
- * | Parameter                      | Type      | Required | Description                                                  |
- * | ------------------------------ | --------- | -------- | ------------------------------------------------------------ |
- * | `sanitize_before_validation`   | `Boolean` | ✅       | Content is actively sanitized before applying the validation |
+ * | Parameter                    | Type      | Required | Description                                                  |
+ * | ---------------------------- | --------- | -------- | ------------------------------------------------------------ |
+ * | `sanitize_before_validation` | `Boolean` | ✅        | Content is actively sanitized before applying the validation |
  *
  * </details>
  *
@@ -5344,7 +5344,7 @@ export type JobData = {
  *
  * | Parameter    | Type                    | Required | Description                    |
  * | ------------ | ----------------------- | -------- | ------------------------------ |
- * | `item_types` | `Array<Block Model ID>` | ✅       | Set of allowed Block Model IDs |
+ * | `item_types` | `Array<Block Model ID>` | ✅        | Set of allowed Block Model IDs |
  *
  * </details>
  *
@@ -5355,7 +5355,7 @@ export type JobData = {
  *
  * | Parameter                                         | Type                                                                                  | Required | Description                                                                                         |
  * | ------------------------------------------------- | ------------------------------------------------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------- |
- * | `item_types`                                      | `Array<Model ID>`                                                                     | ✅       | Set of allowed model IDs                                                                            |
+ * | `item_types`                                      | `Array<Model ID>`                                                                     | ✅        | Set of allowed model IDs                                                                            |
  * | `on_publish_with_unpublished_references_strategy` | `"fail"`, `"publish_references"` (default value: `"fail"`)                            |          | Strategy to apply when a publishing is requested and this field references some unpublished records |
  * | `on_reference_unpublish_strategy`                 | `"fail"`, `"unpublish"`, `"delete_references"` (default value: `"delete_references"`) |          | Strategy to apply when unpublishing is requested for a record referenced by this field              |
  * | `on_reference_delete_strategy`                    | `"fail"`, `"delete_references"` (default value: `"delete_references"`)                |          | Strategy to apply when deletion is requested for a record referenced by this field                  |
@@ -5400,7 +5400,7 @@ export type JobData = {
  *
  * | Parameter        | Type       | Required | Description                                      |
  * | ---------------- | ---------- | -------- | ------------------------------------------------ |
- * | `title_field_id` | `Field ID` | ✅       | The field that will be used to generate the slug |
+ * | `title_field_id` | `Field ID` | ✅        | The field that will be used to generate the slug |
  *
  * </details>
  *
@@ -5422,8 +5422,8 @@ export type JobData = {
  *
  * | Parameter        | Type                               | Required | Description                               |
  * | ---------------- | ---------------------------------- | -------- | ----------------------------------------- |
- * | `positive_radio` | `{ label: string, hint?: string }` | ✅       | Radio input for positive choice (`true`)  |
- * | `negative_radio` | `{ label: string, hint?: string }` | ✅       | Radio input for negative choice (`false`) |
+ * | `positive_radio` | `{ label: string, hint?: string }` | ✅        | Radio input for positive choice (`true`)  |
+ * | `negative_radio` | `{ label: string, hint?: string }` | ✅        | Radio input for negative choice (`false`) |
  *
  * </details>
  *
@@ -5434,7 +5434,7 @@ export type JobData = {
  *
  * | Parameter | Type                                                     | Required | Description                 |
  * | --------- | -------------------------------------------------------- | -------- | --------------------------- |
- * | `radios`  | `Array<{ label: string, value: string, hint?: string }>` | ✅       | The different radio options |
+ * | `radios`  | `Array<{ label: string, value: string, hint?: string }>` | ✅        | The different radio options |
  *
  * </details>
  *
@@ -5445,7 +5445,7 @@ export type JobData = {
  *
  * | Parameter | Type                                                     | Required | Description                  |
  * | --------- | -------------------------------------------------------- | -------- | ---------------------------- |
- * | `options` | `Array<{ label: string, value: string, hint?: string }>` | ✅       | The different select options |
+ * | `options` | `Array<{ label: string, value: string, hint?: string }>` | ✅        | The different select options |
  *
  * </details>
  *
@@ -5456,7 +5456,7 @@ export type JobData = {
  *
  * | Parameter | Type                                                     | Required | Description                  |
  * | --------- | -------------------------------------------------------- | -------- | ---------------------------- |
- * | `options` | `Array<{ label: string, value: string, hint?: string }>` | ✅       | The different select options |
+ * | `options` | `Array<{ label: string, value: string, hint?: string }>` | ✅        | The different select options |
  *
  * </details>
  *
@@ -5467,7 +5467,7 @@ export type JobData = {
  *
  * | Parameter | Type                                                     | Required | Description                  |
  * | --------- | -------------------------------------------------------- | -------- | ---------------------------- |
- * | `options` | `Array<{ label: string, value: string, hint?: string }>` | ✅       | The different select options |
+ * | `options` | `Array<{ label: string, value: string, hint?: string }>` | ✅        | The different select options |
  *
  * </details>
  *
@@ -5478,7 +5478,7 @@ export type JobData = {
  *
  * | Parameter | Type      | Required | Description                                                                      |
  * | --------- | --------- | -------- | -------------------------------------------------------------------------------- |
- * | `heading` | `Boolean` | ✅       | Indicates if the field should be shown bigger, as a field representing a heading |
+ * | `heading` | `Boolean` | ✅        | Indicates if the field should be shown bigger, as a field representing a heading |
  *
  * </details>
  *
@@ -5489,7 +5489,7 @@ export type JobData = {
  *
  * | Parameter | Type            | Required | Description                                                                                                                                                                                                       |
  * | --------- | --------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
- * | `toolbar` | `Array<String>` | ✅       | Specify which buttons the toolbar should have. Valid values: `"heading"`, `"bold"`, `"italic"`, `"strikethrough"`, `"code"`, `"unordered_list"`, `"ordered_list"`, `"quote"`, `"link"`, `"image"`, `"fullscreen"` |
+ * | `toolbar` | `Array<String>` | ✅        | Specify which buttons the toolbar should have. Valid values: `"heading"`, `"bold"`, `"italic"`, `"strikethrough"`, `"code"`, `"unordered_list"`, `"ordered_list"`, `"quote"`, `"link"`, `"image"`, `"fullscreen"` |
  *
  * </details>
  *
@@ -5500,7 +5500,7 @@ export type JobData = {
  *
  * | Parameter | Type            | Required | Description                                                                                                                                                                                                                                                                                                                                                     |
  * | --------- | --------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
- * | `toolbar` | `Array<String>` | ✅       | Specify which buttons the toolbar should have. Valid values: `"format"`, `"bold"`, `"italic"`, `"strikethrough"`, `"code"`, `"ordered_list"`, `"unordered_list"`, `"quote"`, `"table"`, `"link"`, `"image"`, `"show_source"`, `"undo"`, `"redo"`, `"align_left"`, `"align_center"`, `"align_right"`, `"align_justify"`, `"outdent"`, `"indent"`, `"fullscreen"` |
+ * | `toolbar` | `Array<String>` | ✅        | Specify which buttons the toolbar should have. Valid values: `"format"`, `"bold"`, `"italic"`, `"strikethrough"`, `"code"`, `"ordered_list"`, `"unordered_list"`, `"quote"`, `"table"`, `"link"`, `"image"`, `"show_source"`, `"undo"`, `"redo"`, `"align_left"`, `"align_center"`, `"align_right"`, `"align_justify"`, `"outdent"`, `"indent"`, `"fullscreen"` |
  *
  * </details>
  *
@@ -5518,8 +5518,8 @@ export type JobData = {
  *
  * | Parameter       | Type                      | Required | Description                                               |
  * | --------------- | ------------------------- | -------- | --------------------------------------------------------- |
- * | `enable_alpha`  | `Boolean`                 | ✅       | Should the color picker allow to specify the alpha value? |
- * | `preset_colors` | `Array<Hex color string>` | ✅       | List of preset colors to offer to the user                |
+ * | `enable_alpha`  | `Boolean`                 | ✅        | Should the color picker allow to specify the alpha value? |
+ * | `preset_colors` | `Array<Hex color string>` | ✅        | List of preset colors to offer to the user                |
  *
  * </details>
  *
@@ -5552,9 +5552,9 @@ export type JobData = {
  *
  * | Parameter                 | Type             | Required | Description                                                                                                                                   |
  * | ------------------------- | ---------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
- * | `nodes`                   | `Array<String>`  | ✅       | Specify which nodes the field should allow. Valid values: `"blockquote"`, `"code"`, `"heading"`, `"link"`, `"list"`, `"thematicBreak"`        |
- * | `marks`                   | `Array<String>`  | ✅       | Specify which marks the field should allow. Valid values: `"strong"`, `"emphasis"`, `"underline"`, `"strikethrough"`, `"code"`, `"highlight"` |
- * | `heading_levels`          | `Array<Integer>` | ✅       | If `nodes` includes `"heading"`, specify which heading levels the field should allow. Valid values: numbers between 1 and 6                   |
+ * | `nodes`                   | `Array<String>`  | ✅        | Specify which nodes the field should allow. Valid values: `"blockquote"`, `"code"`, `"heading"`, `"link"`, `"list"`, `"thematicBreak"`        |
+ * | `marks`                   | `Array<String>`  | ✅        | Specify which marks the field should allow. Valid values: `"strong"`, `"emphasis"`, `"underline"`, `"strikethrough"`, `"code"`, `"highlight"` |
+ * | `heading_levels`          | `Array<Integer>` | ✅        | If `nodes` includes `"heading"`, specify which heading levels the field should allow. Valid values: numbers between 1 and 6                   |
  * | `blocks_start_collapsed`  | `Boolean`        |          | Whether you want block nodes collapsed by default or not                                                                                      |
  * | `show_links_target_blank` | `Boolean`        |          | Whether you want to show the "Open this link in a new tab?" checkbox, that fills in the `target: "_blank"` meta attribute for links           |
  * | `show_links_meta_editor`  | `Boolean`        |          | Whether you want to show the complete meta editor for links                                                                                   |
