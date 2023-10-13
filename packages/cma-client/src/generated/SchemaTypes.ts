@@ -4234,7 +4234,7 @@ export type ItemTypeDestroyJobSchema = {
  *
  * Below you'll find a summary of all the validators available for each field type with their settings.
  *
- * Some validators are required for a specific type of field. For example, the _Slug_ field needs to have a `slug_title_field` validator to specify the ID of the _Single-line string_ field that will be used to generate the slug itself.
+ * Some validators are required for a specific type of field. For example, the _Modular Content_ field needs to have a `rich_text_blocks` validator, specifying which types of blocks it can contain.
  *
  * ### Specifying the appearance
  *
@@ -4420,23 +4420,22 @@ export type ItemTypeDestroyJobSchema = {
  * <details>
  * <summary>SEO and Social (<code>seo</code>)</summary>
  *
- * | Property                       | Value                                                                                        |
- * | ------------------------------ | -------------------------------------------------------------------------------------------- |
- * | Code                           | `seo`                                                                                        |
- * | Built-in editors for the field | `seo`                                                                                        |
- * | Available validators           | `required_seo_fields`, `file_size`, `image_dimensions`, `title_length`, `description_length` |
+ * | Property                       | Value                                                                                                              |
+ * | ------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+ * | Code                           | `seo`                                                                                                              |
+ * | Built-in editors for the field | `seo`                                                                                                              |
+ * | Available validators           | `required_seo_fields`, `file_size`, `image_dimensions`, `image_aspect_ratio`, `title_length`, `description_length` |
  *
  * </details>
  *
  * <details>
  * <summary>Slug (<code>slug</code>)</summary>
  *
- * | Property                       | Value                               |
- * | ------------------------------ | ----------------------------------- |
- * | Code                           | `slug`                              |
- * | Built-in editors for the field | `slug`                              |
- * | Required validators            | `slug_title_field`                  |
- * | Other validators available     | `required`, `length`, `slug_format` |
+ * | Property                       | Value                                                   |
+ * | ------------------------------ | ------------------------------------------------------- |
+ * | Code                           | `slug`                                                  |
+ * | Built-in editors for the field | `slug`                                                  |
+ * | Available validators           | `required`, `length`, `slug_format`, `slug_title_field` |
  *
  * </details>
  *
@@ -4454,22 +4453,22 @@ export type ItemTypeDestroyJobSchema = {
  * <details>
  * <summary>Single-asset (<code>file</code>)</summary>
  *
- * | Property                       | Value                                                                          |
- * | ------------------------------ | ------------------------------------------------------------------------------ |
- * | Code                           | `file`                                                                         |
- * | Built-in editors for the field | `file`                                                                         |
- * | Available validators           | `required`, `file_size`, `image_dimensions`, `extension`, `required_alt_title` |
+ * | Property                       | Value                                                                                                |
+ * | ------------------------------ | ---------------------------------------------------------------------------------------------------- |
+ * | Code                           | `file`                                                                                               |
+ * | Built-in editors for the field | `file`                                                                                               |
+ * | Available validators           | `required`, `file_size`, `image_dimensions`, `image_aspect_ratio`, `extension`, `required_alt_title` |
  *
  * </details>
  *
  * <details>
  * <summary>Asset gallery (<code>gallery</code>)</summary>
  *
- * | Property                       | Value                                                                      |
- * | ------------------------------ | -------------------------------------------------------------------------- |
- * | Code                           | `gallery`                                                                  |
- * | Built-in editors for the field | `gallery`                                                                  |
- * | Available validators           | `size`, `file_size`, `image_dimensions`, `extension`, `required_alt_title` |
+ * | Property                       | Value                                                                                            |
+ * | ------------------------------ | ------------------------------------------------------------------------------------------------ |
+ * | Code                           | `gallery`                                                                                        |
+ * | Built-in editors for the field | `gallery`                                                                                        |
+ * | Available validators           | `size`, `file_size`, `image_dimensions`, `image_aspect_ratio`, `extension`, `required_alt_title` |
  *
  * </details>
  *
@@ -4625,7 +4624,7 @@ export type ItemTypeDestroyJobSchema = {
  * <details>
  * <summary><code>image_dimensions</code></summary>
  *
- * Accept assets only within a specified height/width range.
+ * Accept assets only within a specified height and width range.
  *
  * | Parameter          | Type      | Required | Description                      |
  * | ------------------ | --------- | -------- | -------------------------------- |
@@ -4634,7 +4633,25 @@ export type ItemTypeDestroyJobSchema = {
  * | `height_min_value` | `Integer` |          | Numeric value for minimum width  |
  * | `height_max_value` | `Integer` |          | Numeric value for maximum height |
  *
- * At least one parameter must be specified.
+ * At least one pair of height/width parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>image_aspect_ratio</code></summary>
+ *
+ * Accept assets only within a specified aspect ratio range.
+ *
+ * | Parameter            | Type      | Required | Description                                    |
+ * | -------------------- | --------- | -------- | ---------------------------------------------- |
+ * | `min_ar_numerator`   | `Integer` |          | Numerator part of the minimum aspect ratio     |
+ * | `min_ar_denominator` | `Integer` |          | Denominator part of the minimum aspect ratio   |
+ * | `eq_ar_numerator`    | `Integer` |          | Numerator part for the required aspect ratio   |
+ * | `eq_ar_denominator`  | `Integer` |          | Denominator part for the required aspect ratio |
+ * | `max_ar_numerator`   | `Integer` |          | Numerator part of the maximum aspect ratio     |
+ * | `max_ar_denominator` | `Integer` |          | Denominator part of the maximum aspect ratio   |
+ *
+ * At least one pair of numerator/denominator must be specified.
  *
  * </details>
  *
@@ -6347,6 +6364,13 @@ export type BuildEventSelfTargetSchema = {
 
 /**
  * DatoCMS stores the individual pieces of content you create from a model as records, which are much like table rows in a database. For backward-compatibility reasons, the API refers to records as "items".
+ *
+ * You can learn how the records are structured at the API level, and everything that is necessary to interact with the records through CMA in the following detail sections:
+ *
+ * * [List/filter records](https://www.datocms.com/docs/content-management-api/resources/item/instances)
+ * * [Create new records](https://www.datocms.com/docs/content-management-api/resources/item/create)
+ * * [Update existing records](https://www.datocms.com/docs/content-management-api/resources/item/update)
+ *
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "item".

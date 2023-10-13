@@ -51,6 +51,8 @@
             "company",
             "password",
             "signup_to_newsletter",
+            "role_description",
+            "role_context",
             "acquisition_method"
           ],
           "relationships": []
@@ -474,7 +476,8 @@
           "attributes": [
             "payment_intent_id",
             "recurrence",
-            "billing_profile"
+            "billing_profile",
+            "downgrade_reason"
           ],
           "relationships": [
             "plan"

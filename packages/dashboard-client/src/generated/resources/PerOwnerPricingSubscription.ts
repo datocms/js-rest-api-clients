@@ -19,7 +19,12 @@ export default class PerOwnerPricingSubscription extends BaseResource {
         body,
         {
           type: 'per_owner_pricing_subscription',
-          attributes: ['payment_intent_id', 'recurrence', 'billing_profile'],
+          attributes: [
+            'payment_intent_id',
+            'recurrence',
+            'billing_profile',
+            'downgrade_reason',
+          ],
           relationships: ['plan'],
         },
       ),

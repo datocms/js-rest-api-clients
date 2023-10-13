@@ -908,6 +908,22 @@ export type AccountCreateSchema = {
        * Whether the user opts-in to signup to DatoCMS newletter
        */
       signup_to_newsletter?: boolean;
+      /**
+       * Role description that best describes you
+       */
+      role_description?:
+        | 'cto'
+        | 'lead_developer'
+        | 'frontend_developer'
+        | 'web_designer'
+        | 'digital_marketing'
+        | 'project_manager'
+        | 'designer'
+        | 'content';
+      /**
+       * Context in which you perform your role
+       */
+      role_context?: 'agency' | 'company' | 'freelancer' | 'student';
       acquisition_method?: {
         source: string;
         medium: string;
@@ -1287,6 +1303,10 @@ export type PerOwnerPricingSubscriptionCreateSchema = {
         po_number?: null | string;
         zip: string;
       };
+      /**
+       * Reason for the downgrade (only considered in case of switch to free plan)
+       */
+      downgrade_reason?: string;
     };
     relationships: {
       /**

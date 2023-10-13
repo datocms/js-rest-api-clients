@@ -23,6 +23,8 @@ export default class Account extends BaseResource {
           'company',
           'password',
           'signup_to_newsletter',
+          'role_description',
+          'role_context',
           'acquisition_method',
         ],
         relationships: [],
