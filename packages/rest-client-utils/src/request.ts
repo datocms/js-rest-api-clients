@@ -1,5 +1,6 @@
+/// <reference lib="dom" />
+
 import { buildNormalizedParams } from './buildNormalizedParams';
-import { fetch as universalFetch } from '@whatwg-node/fetch';
 import {
   ApiError,
   ApiErrorInitObject,
@@ -32,6 +33,7 @@ export enum LogLevel {
 type RequestOptions = {
   baseUrl: string;
   fetchJobResult: (jobId: string) => Promise<JobResult>;
+  fetchFn?: typeof fetch;
   apiToken: string | null;
   extraHeaders?: Record<string, string>;
   logLevel?: LogLevel;
@@ -143,6 +145,19 @@ export async function request<T>(options: RequestOptions): Promise<T> {
   const requestId = requestCount;
   requestCount += 1;
 
+  const fetchFn =
+    options.fetchFn ||
+    (typeof fetch === 'undefined' ? undefined : fetch) ||
+    (typeof globalThis === 'undefined' ? undefined : globalThis.fetch);
+
+  if (typeof fetchFn === 'undefined') {
+    console.log(global);
+    console.log(global.fetch);
+    throw new Error(
+      'fetch() is not available: either polyfill it globally, or provide it as fetchFn option.',
+    );
+  }
+
   const preCallStack = options.preCallStack;
   const userAgent = options.userAgent || '@datocms/rest-client-utils';
   const retryCount = options.retryCount || 1;
@@ -189,7 +204,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
 
   try {
     const requestPromise = makeCancelablePromise(
-      universalFetch(url, {
+      fetchFn(url, {
         method: options.method,
         headers,
         body,

@@ -21,7 +21,7 @@ export type RoleType = 'role';
  */
 export type RoleIdentity = string;
 /**
- * ID of item type
+ * RFC 4122 UUID of item type expressed in URL-safe base64 format
  *
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `definition` "identity".
@@ -31,7 +31,7 @@ export type RoleIdentity = string;
  */
 export type ItemTypeIdentity = string;
 /**
- * ID of workflow
+ * RFC 4122 UUID of workflow expressed in URL-safe base64 format
  *
  * This interface was referenced by `Workflow`'s JSON-Schema
  * via the `definition` "identity".
@@ -271,7 +271,7 @@ export type SitePlanIdentity = string;
  */
 export type MenuItemType = 'menu_item';
 /**
- * ID of menu item
+ * RFC 4122 UUID of menu item expressed in URL-safe base64 format
  *
  * This interface was referenced by `MenuItem`'s JSON-Schema
  * via the `definition` "identity".
@@ -295,7 +295,7 @@ export type ItemTypeType = 'item_type';
  */
 export type ItemTypeFilterType = 'item_type_filter';
 /**
- * ID of filter
+ * RFC 4122 UUID of filter expressed in URL-safe base64 format
  *
  * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
  * via the `definition` "identity".
@@ -324,7 +324,7 @@ export type MenuItemInstancesHrefSchema = {
  */
 export type ItemType1 = 'item';
 /**
- * ID of record
+ * RFC 4122 UUID of record expressed in URL-safe base64 format
  *
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "identity".
@@ -341,7 +341,7 @@ export type ItemIdentity = string;
  */
 export type FieldType = 'field';
 /**
- * ID of field
+ * RFC 4122 UUID of field expressed in URL-safe base64 format
  *
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `definition` "identity".
@@ -358,7 +358,7 @@ export type FieldIdentity = string;
  */
 export type FieldsetType = 'fieldset';
 /**
- * ID of fieldset
+ * RFC 4122 UUID of fieldset expressed in URL-safe base64 format
  *
  * This interface was referenced by `Fieldset`'s JSON-Schema
  * via the `definition` "identity".
@@ -438,7 +438,7 @@ export type SessionIdentity = string;
  */
 export type PluginType = 'plugin';
 /**
- * ID of plugin
+ * RFC 4122 UUID of plugin expressed in URL-safe base64 format
  *
  * This interface was referenced by `Plugin`'s JSON-Schema
  * via the `definition` "identity".
@@ -625,7 +625,7 @@ export type ItemSelfHrefSchema = {
  */
 export type ItemCurrentVsPublishedStateType = 'item_current_vs_published_state';
 /**
- * ID of record
+ * RFC 4122 UUID of record expressed in URL-safe base64 format
  *
  * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
  * via the `definition` "identity".
@@ -676,7 +676,7 @@ export type ScheduledUnpublishingIdentity = string;
  */
 export type ItemVersionType = 'item_version';
 /**
- * ID of record version
+ * RFC 4122 UUID of redord version expressed in URL-safe base64 format
  *
  * This interface was referenced by `ItemVersion`'s JSON-Schema
  * via the `definition` "identity".
@@ -810,7 +810,7 @@ export type ItemUnpublishHrefSchema = {
  */
 export type UploadType = 'upload';
 /**
- * ID of upload
+ * RFC 4122 UUID of upload expressed in URL-safe base64 format
  *
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `definition` "identity".
@@ -1099,7 +1099,7 @@ export type WebhookCallInstancesHrefSchema = {
  */
 export type UploadFilterType = 'upload_filter';
 /**
- * ID of filter
+ * RFC 4122 UUID of upload filter expressed in URL-safe base64 format
  *
  * This interface was referenced by `UploadFilter`'s JSON-Schema
  * via the `definition` "identity".

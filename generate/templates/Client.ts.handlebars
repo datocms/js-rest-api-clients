@@ -32,6 +32,8 @@ export type ClientConfigOptions = {
   logFn?: (message: string) => void;
   /** Whether to automatically retry failed requests (ie. timeout, rate-limiting, etc.), with a linear incremental backoff. Defaults to `true` */
   autoRetry?: boolean;
+  /** If fetch() is not available in your environment, you can provide it */
+  fetchFn?: Parameters<typeof request>[0]['fetchFn'];
 };
 
 export class Client {
