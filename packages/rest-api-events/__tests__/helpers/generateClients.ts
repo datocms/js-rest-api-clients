@@ -4,6 +4,10 @@ import {
   ClientConfigOptions as DashboardClientConfigOptions,
 } from '@datocms/dashboard-client';
 
+import { fetch as ponyfillFetch } from '@whatwg-node/fetch';
+
+const fetchFn = typeof fetch === 'undefined' ? ponyfillFetch : fetch;
+
 export async function generateNewDashboardClient(
   config?: Partial<DashboardClientConfigOptions>,
 ) {
@@ -14,6 +18,7 @@ export async function generateNewDashboardClient(
     ...config,
     apiToken: null,
     baseUrl: process.env.ACCOUNT_API_BASE_URL,
+    fetchFn,
   });
 
   const account = await client.account.create({
@@ -27,5 +32,6 @@ export async function generateNewDashboardClient(
     ...config,
     apiToken: account.id,
     baseUrl: process.env.ACCOUNT_API_BASE_URL,
+    fetchFn,
   });
 }

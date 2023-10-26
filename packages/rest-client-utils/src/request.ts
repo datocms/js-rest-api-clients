@@ -151,8 +151,6 @@ export async function request<T>(options: RequestOptions): Promise<T> {
     (typeof globalThis === 'undefined' ? undefined : globalThis.fetch);
 
   if (typeof fetchFn === 'undefined') {
-    console.log(global);
-    console.log(global.fetch);
     throw new Error(
       'fetch() is not available: either polyfill it globally, or provide it as fetchFn option.',
     );
