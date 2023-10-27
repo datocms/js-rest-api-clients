@@ -1,10 +1,14 @@
 import { ApiError, buildClient, SimpleSchemaTypes } from '../src';
 import { generateNewDashboardClient } from './helpers/generateClients';
 
+import { fetch as ponyfillFetch } from '@whatwg-node/fetch';
+
+const fetchFn = typeof fetch === 'undefined' ? ponyfillFetch : fetch;
+
 describe('@datocms/client', () => {
   it.concurrent('first test', async () => {
     try {
-      const client = buildClient({ apiToken: 'XXX' });
+      const client = buildClient({ apiToken: 'XXX', fetchFn });
       await client.items.list({});
     } catch (e) {
       if (!(e instanceof ApiError)) {
@@ -26,6 +30,7 @@ describe('@datocms/client', () => {
 
     const cmaClient = buildClient({
       apiToken: site.readwrite_token!,
+      fetchFn,
     });
 
     const itemType = await cmaClient.itemTypes.create({
@@ -54,6 +59,7 @@ describe('@datocms/client', () => {
   it.concurrent('iterators', async () => {
     const client = buildClient({
       apiToken: 'faeb9172e232a75339242faafb9e56de8c8f13b735f7090964',
+      fetchFn,
     });
 
     const allItems: SimpleSchemaTypes.Item[] = [];
