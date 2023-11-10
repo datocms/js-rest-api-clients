@@ -52,7 +52,9 @@ export function uploadFileOrBlobAndReturnPath(
         });
       }
 
-      const { id, url } = await client.uploadRequest.create({ filename });
+      const { id, url, request_headers } = await client.uploadRequest.create({
+        filename,
+      });
 
       if (isCanceledBeforeUpload) {
         throw new CanceledPromiseError();
@@ -67,7 +69,10 @@ export function uploadFileOrBlobAndReturnPath(
         });
       }
 
-      uploadPromise = uploadFileOrBlobToS3(fileOrBlob, url, options);
+      uploadPromise = uploadFileOrBlobToS3(fileOrBlob, url, {
+        ...options,
+        additionalHeaders: request_headers as Record<string, string>,
+      });
 
       await uploadPromise;
 

@@ -4,12 +4,13 @@ import { OnProgressInfo } from './uploadFileOrBlobAndReturnPath';
 
 type Options = {
   onProgress?: (info: OnProgressInfo) => void;
+  additionalHeaders?: Record<string, string>;
 };
 
 export function uploadFileOrBlobToS3(
   fileOrBlob: File | Blob,
   url: string,
-  { onProgress }: Options = {},
+  { onProgress, additionalHeaders }: Options = {},
 ): CancelablePromise<void> {
   const xhr = new XMLHttpRequest();
 
@@ -38,6 +39,11 @@ export function uploadFileOrBlobToS3(
 
       xhr.addEventListener('error', reject, false);
       xhr.open('PUT', url, true);
+      if (additionalHeaders) {
+        for (const [header, value] of Object.entries(additionalHeaders)) {
+          xhr.setRequestHeader(header, value);
+        }
+      }
       xhr.send(fileOrBlob);
     }),
     () => {

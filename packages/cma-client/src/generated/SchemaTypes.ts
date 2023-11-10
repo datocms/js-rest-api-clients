@@ -8069,6 +8069,12 @@ export type UploadRequestAttributes = {
    * The URL to use to upload the file with a direct PUT request
    */
   url: string;
+  /**
+   * Specifies the additional headers that need to be included in the direct PUT upload request
+   */
+  request_headers: {
+    [k: string]: unknown;
+  };
   [k: string]: unknown;
 };
 

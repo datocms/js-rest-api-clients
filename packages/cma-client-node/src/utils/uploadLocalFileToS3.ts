@@ -10,12 +10,13 @@ import { makeCancelablePromise } from '@datocms/rest-client-utils';
 
 type Options = {
   onProgress?: (info: OnProgressInfo) => void;
+  additionalHeaders?: Record<string, string>;
 };
 
 export function uploadLocalFileToS3(
   filePath: string,
   url: string,
-  { onProgress }: Options = {},
+  { onProgress, additionalHeaders }: Options = {},
 ): CancelablePromise<void> {
   let isCanceled = false;
   let putPromise: CancelableRequest<Response<unknown>> | undefined;
@@ -35,6 +36,7 @@ export function uploadLocalFileToS3(
       try {
         putPromise = got.put(url, {
           headers: {
+            ...(additionalHeaders || {}),
             'Content-Type': mime.lookup(filePath) || 'application/octet-stream',
             'Content-Length': `${totalLength}`,
           },
