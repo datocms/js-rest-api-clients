@@ -37,10 +37,12 @@
     "url": "https://github.com/datocms/js-rest-api-clients/issues"
   },
   "dependencies": {
-    "@datocms/rest-client-utils": "^3.0.1"
+    "@datocms/rest-client-utils": "^3.0.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@datocms/dashboard-client": "^3.0.4"
+    "@datocms/dashboard-client": "^3.0.4",
+    "@types/uuid": "^9.0.7"
   },
   "gitHead": "504a80c1a8c628acf6defc5c7ce9c58e777f9ecd"
 }

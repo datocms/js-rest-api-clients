@@ -10,6 +10,7 @@ export {
   SchemaTypes,
   SimpleSchemaTypes,
   buildBlockRecord,
+  generateId,
   buildClient as buildBaseClient,
   ApiError,
   LogLevel,
