@@ -3259,7 +3259,6 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "sso_settings",
-          "idRequired": true,
           "attributes": [
             "idp_saml_metadata_url",
             "idp_saml_metadata_xml"
@@ -3304,7 +3303,6 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "white_label_settings",
-          "idRequired": true,
           "attributes": [
             "custom_i18n_messages_template_url"
           ],
@@ -3484,7 +3482,6 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "site",
-          "idRequired": true,
           "attributes": [
             "no_index",
             "favicon",

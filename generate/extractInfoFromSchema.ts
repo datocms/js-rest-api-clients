@@ -26,7 +26,7 @@ export type EndpointInfo = {
   optionalRequestBody: boolean;
   requestStructure?: {
     type: string;
-    idRequired: boolean;
+    idRequired?: boolean;
     attributes: string[] | '*';
     relationships: string[] | '*';
   };
@@ -183,7 +183,7 @@ function findTypeInDataProperty(schema: JsonRefParser.JSONSchema) {
   return findTypeInDataObject(dataSchema);
 }
 
-function findIdInDataObject(dataSchema: JsonRefParser.JSONSchema) {
+function findRequiredIdInDataObject(dataSchema: JsonRefParser.JSONSchema) {
   if (dataSchema.type !== 'object') {
     throw new Error('Data not an object?');
   }
@@ -192,9 +192,13 @@ function findIdInDataObject(dataSchema: JsonRefParser.JSONSchema) {
     throw new Error('Missing data?');
   }
 
-  return (
-    dataSchema.properties.id && typeof dataSchema.properties.id === 'object'
-  );
+  const idIsRequired =
+    dataSchema.properties.id &&
+    typeof dataSchema.properties.id === 'object' &&
+    Array.isArray(dataSchema.required) &&
+    dataSchema.required.includes('id');
+
+  return idIsRequired || undefined;
 }
 
 function findIdInDataProperty(schema: JsonRefParser.JSONSchema) {
@@ -215,7 +219,7 @@ function findIdInDataProperty(schema: JsonRefParser.JSONSchema) {
     const types = [
       ...new Set(
         dataSchema.anyOf.map((s) =>
-          findIdInDataObject(s as JsonRefParser.JSONSchema),
+          findRequiredIdInDataObject(s as JsonRefParser.JSONSchema),
         ),
       ),
     ];
@@ -225,7 +229,7 @@ function findIdInDataProperty(schema: JsonRefParser.JSONSchema) {
     return types[0];
   }
 
-  return findIdInDataObject(dataSchema);
+  return findRequiredIdInDataObject(dataSchema);
 }
 
 function findPropertiesInDataProperty(

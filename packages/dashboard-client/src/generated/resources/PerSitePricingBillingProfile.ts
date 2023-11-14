@@ -142,7 +142,6 @@ export default class PerSitePricingBillingProfile extends BaseResource {
       Utils.serializeRequestBody<SchemaTypes.PerSitePricingBillingProfileUpdateInfoSchema>(
         body,
         {
-          id: Utils.toId(perSitePricingBillingProfileId),
           type: 'per_site_pricing_billing_profile',
           attributes: [
             'first_name',
