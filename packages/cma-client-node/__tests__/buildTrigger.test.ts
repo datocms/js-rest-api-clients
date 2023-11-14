@@ -1,4 +1,4 @@
-import { generateNewCmaClient } from './helpers/generateClients';
+import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 
 describe('build triggers', () => {
   it.concurrent('create, find, list, update, destroy, trigger', async () => {

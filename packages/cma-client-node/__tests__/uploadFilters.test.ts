@@ -1,4 +1,4 @@
-import { generateNewCmaClient } from './helpers/generateClients';
+import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 
 describe('uploadFilters', () => {
   test('create, find, all, update, destroy', async () => {

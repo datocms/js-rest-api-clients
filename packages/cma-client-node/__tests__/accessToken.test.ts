@@ -1,4 +1,4 @@
-import { generateNewCmaClient } from './helpers/generateClients';
+import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 
 describe('Access tokens', () => {
   it.concurrent('create, find, list, update, destroy', async () => {

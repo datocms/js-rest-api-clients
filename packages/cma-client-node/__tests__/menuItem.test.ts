@@ -1,5 +1,5 @@
 import { LogLevel } from '../src';
-import { generateNewCmaClient } from './helpers/generateClients';
+import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 
 describe('menu item', () => {
   it.concurrent('create, find, list, update, destroy', async () => {

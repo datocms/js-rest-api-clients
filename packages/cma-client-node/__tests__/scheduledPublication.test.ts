@@ -1,4 +1,4 @@
-import { generateNewCmaClient } from './helpers/generateClients';
+import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 
 describe('scheduledPublication', () => {
   it.concurrent('publish, unpublish', async () => {

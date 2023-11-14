@@ -1,4 +1,4 @@
-import { generateNewCmaClient } from './helpers/generateClients';
+import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 import { ApiError, buildBlockRecord, SchemaTypes } from '../src';
 
 describe('item', () => {

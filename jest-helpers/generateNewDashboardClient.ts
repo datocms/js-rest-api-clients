@@ -1,24 +1,23 @@
-import {
-  buildClient as buildDashboardClient,
-  LogLevel,
-  ClientConfigOptions as DashboardClientConfigOptions,
-} from '@datocms/dashboard-client';
+import { buildClient, ClientConfigOptions } from '../packages/dashboard-client';
 
 import { fetch as ponyfillFetch } from '@whatwg-node/fetch';
 
 const fetchFn = typeof fetch === 'undefined' ? ponyfillFetch : fetch;
 
+export const baseConfigOptions: Partial<ClientConfigOptions> = {
+  baseUrl: process.env.ACCOUNT_API_BASE_URL,
+  fetchFn,
+};
+
 export async function generateNewDashboardClient(
-  config?: Partial<DashboardClientConfigOptions>,
+  extraConfig?: Partial<ClientConfigOptions>,
 ) {
   const randomString =
     Math.random().toString(36).substring(7) + new Date().getTime();
 
-  const client = buildDashboardClient({
-    ...config,
+  const client = buildClient({
     apiToken: null,
-    baseUrl: process.env.ACCOUNT_API_BASE_URL,
-    fetchFn,
+    ...baseConfigOptions,
   });
 
   const account = await client.account.create({
@@ -28,10 +27,9 @@ export async function generateNewDashboardClient(
     company: 'DatoCMS',
   });
 
-  return buildDashboardClient({
-    ...config,
+  return buildClient({
+    ...extraConfig,
     apiToken: account.id,
-    baseUrl: process.env.ACCOUNT_API_BASE_URL,
-    fetchFn,
+    ...baseConfigOptions,
   });
 }

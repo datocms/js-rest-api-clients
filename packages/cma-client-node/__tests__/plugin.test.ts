@@ -1,4 +1,4 @@
-import { generateNewCmaClient } from './helpers/generateClients';
+import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 
 describe('plugins', () => {
   it.concurrent('create, find, all, duplicate, update, destroy', async () => {

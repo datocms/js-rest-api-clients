@@ -1,14 +1,10 @@
+import { baseConfigOptions } from '../../../jest-helpers/generateNewCmaClient';
 import { ApiError, buildClient, SimpleSchemaTypes } from '../src';
-import { generateNewDashboardClient } from './helpers/generateClients';
-
-import { fetch as ponyfillFetch } from '@whatwg-node/fetch';
-
-const fetchFn = typeof fetch === 'undefined' ? ponyfillFetch : fetch;
 
 describe('@datocms/client', () => {
   it.concurrent('first test', async () => {
     try {
-      const client = buildClient({ apiToken: 'XXX', fetchFn });
+      const client = buildClient({ apiToken: 'XXX', ...baseConfigOptions });
       await client.items.list({});
     } catch (e) {
       if (!(e instanceof ApiError)) {
@@ -22,44 +18,10 @@ describe('@datocms/client', () => {
     }
   });
 
-  it.concurrent('creating project', async () => {
-    const dashboardClient = await generateNewDashboardClient();
-    const site = await dashboardClient.sites.create({
-      name: 'Foo bar',
-    });
-
-    const cmaClient = buildClient({
-      apiToken: site.readwrite_token!,
-      fetchFn,
-    });
-
-    const itemType = await cmaClient.itemTypes.create({
-      name: 'Foo',
-      api_key: 'foo',
-    });
-
-    const field = await cmaClient.fields.create(itemType.api_key, {
-      label: 'Foo',
-      api_key: 'foo',
-      field_type: 'string',
-    });
-
-    await cmaClient.fields.update(field, { api_key: 'new_foo' });
-
-    const role = await cmaClient.roles.create({
-      name: 'Foo',
-    });
-
-    const siteInvitation = await cmaClient.siteInvitations.create({
-      email: 'foo@bar.com',
-      role,
-    });
-  });
-
   it.concurrent('iterators', async () => {
     const client = buildClient({
       apiToken: 'faeb9172e232a75339242faafb9e56de8c8f13b735f7090964',
-      fetchFn,
+      ...baseConfigOptions,
     });
 
     const allItems: SimpleSchemaTypes.Item[] = [];

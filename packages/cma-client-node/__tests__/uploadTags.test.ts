@@ -1,5 +1,5 @@
 import { SimpleSchemaTypes } from '../src';
-import { generateNewCmaClient } from './helpers/generateClients';
+import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 
 describe('uploadTags', () => {
   test('smart tags and tags', async () => {

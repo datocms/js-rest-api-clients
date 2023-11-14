@@ -1,25 +1,14 @@
-import { buildClient } from '@datocms/cma-client';
 import { withEventsSubscription } from '../src';
-import { generateNewDashboardClient } from './helpers/generateClients';
-
-import { fetch as ponyfillFetch } from '@whatwg-node/fetch';
-
-const fetchFn = typeof fetch === 'undefined' ? ponyfillFetch : fetch;
+import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 
 describe('@datocms/rest-api-events', () => {
   it.concurrent('first test', async () => {
-    const dashboardClient = await generateNewDashboardClient();
+    const rawClient = await generateNewCmaClient();
 
-    const site = await dashboardClient.sites.create({
-      name: 'Foo bar',
+    const [client, unsubscribe] = await withEventsSubscription(rawClient, {
+      appKey: process.env.PUSHER_APP_KEY,
+      cluster: process.env.PUSHER_CLUSTER,
     });
-
-    const [client, unsubscribe] = await withEventsSubscription(
-      buildClient({
-        apiToken: site.readwrite_token!,
-        fetchFn,
-      }),
-    );
 
     const itemType = await client.itemTypes.create({
       api_key: 'foo',

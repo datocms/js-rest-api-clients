@@ -1,4 +1,4 @@
-import { generateNewCmaClient } from './helpers/generateClients';
+import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 import u from 'unist-builder';
 import map from 'unist-util-map';
 import { Block, Document, isBlock, Node } from 'datocms-structured-text-utils';
