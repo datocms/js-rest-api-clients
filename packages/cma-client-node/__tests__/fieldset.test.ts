@@ -1,4 +1,5 @@
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
+import { generateId } from '../../cma-client/src';
 
 describe('Fieldsets', () => {
   it.concurrent('create, find, all, update, destroy, duplicate', async () => {
@@ -33,5 +34,27 @@ describe('Fieldsets', () => {
 
     await client.fieldsets.destroy(fieldset);
     expect(await client.fieldsets.list(itemType)).toHaveLength(0);
+  });
+
+  it.concurrent('create with explicit ID', async () => {
+    const client = await generateNewCmaClient();
+
+    const newId = generateId();
+
+    const itemType = await client.itemTypes.create({
+      name: 'Article',
+      api_key: 'item_type',
+    });
+
+    const fieldset = await client.fieldsets.create(itemType, {
+      id: newId,
+      title: 'My fieldset',
+      position: 1,
+      hint: 'foo bar',
+      collapsible: true,
+      start_collapsed: true,
+    });
+
+    expect(fieldset.id).toEqual(newId);
   });
 });

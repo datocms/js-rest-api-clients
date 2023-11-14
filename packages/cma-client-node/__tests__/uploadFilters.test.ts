@@ -1,4 +1,5 @@
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
+import { generateId } from '../../cma-client/src';
 
 describe('uploadFilters', () => {
   test('create, find, all, update, destroy', async () => {
@@ -29,5 +30,23 @@ describe('uploadFilters', () => {
 
     await client.uploadFilters.destroy(filter);
     expect(await client.uploadFilters.list()).toHaveLength(0);
+  });
+
+  it.concurrent('create with explicit ID', async () => {
+    const client = await generateNewCmaClient();
+
+    const newId = generateId();
+
+    const filter = await client.uploadFilters.create({
+      id: newId,
+      name: 'My filter',
+      shared: true,
+      filter: {
+        in_use: {
+          eq: false,
+        },
+      },
+    });
+    expect(filter.id).toEqual(newId);
   });
 });

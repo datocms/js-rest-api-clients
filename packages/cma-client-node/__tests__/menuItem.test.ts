@@ -1,5 +1,6 @@
 import { LogLevel } from '../src';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
+import { generateId } from '../../cma-client/src';
 
 describe('menu item', () => {
   it.concurrent('create, find, list, update, destroy', async () => {
@@ -26,5 +27,19 @@ describe('menu item', () => {
 
     await client.menuItems.destroy(menuItem);
     expect(await client.menuItems.list()).toHaveLength(0);
+  });
+
+  it.concurrent('create with explicit ID', async () => {
+    const client = await generateNewCmaClient();
+
+    const newId = generateId();
+
+    const menuItem = await client.menuItems.create({
+      id: newId,
+      label: 'Browse Articles',
+      position: 1,
+    });
+
+    expect(menuItem.id).toEqual(newId);
   });
 });

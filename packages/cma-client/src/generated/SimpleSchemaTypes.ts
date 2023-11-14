@@ -4168,6 +4168,7 @@ export type MenuItemRelationships = {
  * via the `create.schema` link.
  */
 export type MenuItemCreateSchema = {
+  id?: MenuItemIdentity;
   type?: MenuItemType;
   /**
    * The label of the menu item
@@ -4460,6 +4461,7 @@ export type ItemTypeRelationships = {
  * via the `create.schema` link.
  */
 export type ItemTypeCreateSchema = {
+  id?: ItemTypeIdentity;
   type?: ItemTypeType;
   /**
    * Name of the model
@@ -5854,6 +5856,7 @@ export type FieldRelationships = {
  * via the `create.schema` link.
  */
 export type FieldCreateSchema = {
+  id?: FieldIdentity;
   type?: FieldType;
   /**
    * The label of the field
@@ -6169,6 +6172,7 @@ export type FieldsetRelationships = {
  * via the `create.schema` link.
  */
 export type FieldsetCreateSchema = {
+  id?: FieldsetIdentity;
   type?: FieldsetType;
   /**
    * The title of the fieldset
@@ -6462,6 +6466,7 @@ export type PluginAttributes = {
  * via the `create.schema` link.
  */
 export type PluginCreateSchema = {
+  id?: PluginIdentity;
   type?: PluginType;
   /**
    * NPM package name of the public plugin you want to install. For public plugins, that's the only attribute you need to pass.
@@ -6979,6 +6984,7 @@ export type ItemValidateNewSchema = {
  * via the `create.schema` link.
  */
 export type ItemCreateSchema = {
+  id?: ItemIdentity;
   type?: ItemType1;
   item_type: ItemTypeData;
   creator?:
@@ -7714,6 +7720,7 @@ export type UploadRelationships = {
  * via the `create.schema` link.
  */
 export type UploadCreateSchema = {
+  id?: UploadIdentity;
   type?: UploadType;
   /**
    * Upload path
@@ -8960,6 +8967,7 @@ export type ItemTypeFilterRelationships = {
  * via the `create.schema` link.
  */
 export type ItemTypeFilterCreateSchema = {
+  id?: ItemTypeFilterIdentity;
   type?: ItemTypeFilterType;
   /**
    * The name of the filter
@@ -9131,6 +9139,7 @@ export type UploadFilterAttributes = {
  * via the `create.schema` link.
  */
 export type UploadFilterCreateSchema = {
+  id?: UploadFilterIdentity;
   type?: UploadFilterType;
   /**
    * The name of the filter
@@ -10584,6 +10593,7 @@ export type WorkflowAttributes = {
  * via the `create.schema` link.
  */
 export type WorkflowCreateSchema = {
+  id?: WorkflowIdentity;
   type?: WorkflowType;
   /**
    * The name of the workflow

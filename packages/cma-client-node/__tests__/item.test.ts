@@ -1,5 +1,6 @@
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 import { ApiError, buildBlockRecord, SchemaTypes } from '../src';
+import { generateId } from '../../cma-client/src';
 
 describe('item', () => {
   it.concurrent('bulk publish/unpublish/destroy works', async () => {
@@ -275,5 +276,34 @@ describe('item', () => {
 
     expect(updatedContent[0].attributes.text).toEqual('Updated Foo');
     expect(updatedContent[1].attributes.text).toEqual('Updated Bar');
+  });
+
+  it.concurrent('create with explicit ID', async () => {
+    const client = await generateNewCmaClient();
+
+    const newId = generateId();
+
+    const itemType = await client.itemTypes.create({
+      name: 'Article',
+      api_key: 'article',
+    });
+
+    await client.fields.create(itemType.id, {
+      label: 'Title',
+      field_type: 'string',
+      api_key: 'title',
+    });
+
+    const item = await client.items.create({
+      id: newId,
+      title: 'My first blog post',
+      item_type: itemType,
+    });
+
+    await client.items.bulkPublish({
+      items: [item],
+    });
+
+    expect(item.id).toEqual(newId);
   });
 });
