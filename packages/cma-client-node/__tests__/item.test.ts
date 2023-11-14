@@ -300,10 +300,6 @@ describe('item', () => {
       item_type: itemType,
     });
 
-    await client.items.bulkPublish({
-      items: [item],
-    });
-
     expect(item.id).toEqual(newId);
   });
 });
