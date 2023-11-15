@@ -2408,13 +2408,13 @@
         "returnsCollection": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook/update",
         "rel": "update",
-        "urlTemplate": "/webhooks/${userId}",
+        "urlTemplate": "/webhooks/${webhookId}",
         "method": "PUT",
         "comment": "Update a webhook",
         "urlPlaceholder": {
-          "variableName": "userId",
-          "isEntityId": false,
-          "relType": "UserData"
+          "variableName": "webhookId",
+          "isEntityId": true,
+          "relType": "WebhookData"
         },
         "requestBodyType": "WebhookUpdateSchema",
         "optionalRequestBody": false,
@@ -2457,13 +2457,13 @@
         "returnsCollection": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook/self",
         "rel": "self",
-        "urlTemplate": "/webhooks/${userId}",
+        "urlTemplate": "/webhooks/${webhookId}",
         "method": "GET",
         "comment": "Retrieve a webhook",
         "urlPlaceholder": {
-          "variableName": "userId",
-          "isEntityId": false,
-          "relType": "UserData"
+          "variableName": "webhookId",
+          "isEntityId": true,
+          "relType": "WebhookData"
         },
         "optionalRequestBody": false,
         "queryParamsRequired": false,
@@ -2475,13 +2475,13 @@
         "returnsCollection": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook/destroy",
         "rel": "destroy",
-        "urlTemplate": "/webhooks/${userId}",
+        "urlTemplate": "/webhooks/${webhookId}",
         "method": "DELETE",
         "comment": "Delete a webhook",
         "urlPlaceholder": {
-          "variableName": "userId",
-          "isEntityId": false,
-          "relType": "UserData"
+          "variableName": "webhookId",
+          "isEntityId": true,
+          "relType": "WebhookData"
         },
         "optionalRequestBody": false,
         "queryParamsRequired": false,
