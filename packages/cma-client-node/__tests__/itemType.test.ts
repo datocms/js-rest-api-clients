@@ -1,4 +1,5 @@
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
+import { generateId } from '../../cma-client/src';
 
 describe('item type', () => {
   it.concurrent('create, find, all, duplicate, update, destroy', async () => {
@@ -43,5 +44,19 @@ describe('item type', () => {
     expect(updatedItemType.title_field?.id).toEqual(field.id);
 
     await client.itemTypes.destroy(itemType.id);
+  });
+
+  it.concurrent('create with explicit ID', async () => {
+    const client = await generateNewCmaClient();
+
+    const newId = generateId();
+
+    const itemType = await client.itemTypes.create({
+      id: newId,
+      name: 'Article',
+      api_key: 'article',
+    });
+
+    expect(itemType.id).toEqual(newId);
   });
 });

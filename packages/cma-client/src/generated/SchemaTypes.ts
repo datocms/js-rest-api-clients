@@ -3553,6 +3553,7 @@ export type MenuItemData = {
  */
 export type MenuItemCreateSchema = {
   data: {
+    id?: MenuItemIdentity;
     type: MenuItemType;
     /**
      * JSON API attributes
@@ -3898,6 +3899,7 @@ export type ItemTypeMeta = {
  */
 export type ItemTypeCreateSchema = {
   data: {
+    id?: ItemTypeIdentity;
     type: ItemTypeType;
     /**
      * JSON API attributes
@@ -5225,6 +5227,7 @@ export type FieldRelationships = {
  */
 export type FieldCreateSchema = {
   data: {
+    id?: FieldIdentity;
     type: FieldType;
     /**
      * JSON API attributes
@@ -5654,6 +5657,7 @@ export type FieldsetRelationships = {
  */
 export type FieldsetCreateSchema = {
   data: {
+    id?: FieldsetIdentity;
     type: FieldsetType;
     /**
      * JSON API attributes
@@ -5952,6 +5956,7 @@ export type PluginData = {
  */
 export type PluginCreateSchema = {
   data: {
+    id?: PluginIdentity;
     type: PluginType;
     attributes: {
       /**
@@ -6564,6 +6569,7 @@ export type ItemValidateNewSchema = {
  */
 export type ItemCreateSchema = {
   data: {
+    id?: ItemIdentity;
     type: ItemType1;
     /**
      * The JSON data associated to the record
@@ -7678,6 +7684,7 @@ export type UploadData = {
  */
 export type UploadCreateSchema = {
   data: {
+    id?: UploadIdentity;
     type: UploadType;
     attributes: {
       /**
@@ -8972,6 +8979,7 @@ export type ItemTypeFilterRelationships = {
  */
 export type ItemTypeFilterCreateSchema = {
   data: {
+    id?: ItemTypeFilterIdentity;
     type: ItemTypeFilterType;
     attributes: {
       /**
@@ -9192,6 +9200,7 @@ export type UploadFilterData = {
  */
 export type UploadFilterCreateSchema = {
   data: {
+    id?: UploadFilterIdentity;
     type: UploadFilterType;
     /**
      * JSON API attributes
@@ -10765,6 +10774,7 @@ export type WorkflowAttributes = {
  */
 export type WorkflowCreateSchema = {
   data: {
+    id?: WorkflowIdentity;
     type: WorkflowType;
     /**
      * JSON API attributes

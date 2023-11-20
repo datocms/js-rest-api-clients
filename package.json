@@ -12,7 +12,7 @@
     "build": "lerna run build",
     "prepublishOnly": "npm run generate && ./generate/setClientVersion.ts && npm run build && npm run test",
     "publish": "lerna publish",
-    "publish-next": "GENERATE_FROM_DEV=true lerna publish --dist-tag next"
+    "publish-next": "GENERATE_FROM_DEV=true ACCOUNT_API_BASE_URL=http://account-api.lvh.me:3001 SITE_API_BASE_URL=http://site-api.lvh.me:3001 PUSHER_APP_KEY=12a5ddac68784be0fc59 PUSHER_CLUSTER=eu lerna publish --dist-tag next"
   },
   "author": "Stefano Verna <s.verna@datocms.com>",
   "license": "MIT",

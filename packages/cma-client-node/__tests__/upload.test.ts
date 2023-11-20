@@ -1,5 +1,6 @@
 import { LogLevel } from '../src';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
+import { generateId } from '../../cma-client/src';
 
 describe('upload', () => {
   it.concurrent('upload local file', async () => {
@@ -56,5 +57,18 @@ describe('upload', () => {
     const items = await client.uploads.references(upload.id);
 
     expect(items.length).toEqual(1);
+  });
+
+  it.concurrent('create with explicit ID', async () => {
+    const client = await generateNewCmaClient();
+
+    const newId = generateId();
+
+    const upload = await client.uploads.createFromLocalFile({
+      id: newId,
+      localPath: `${__dirname}/fixtures/text.txt`,
+    });
+
+    expect(upload.id).toEqual(newId);
   });
 });
