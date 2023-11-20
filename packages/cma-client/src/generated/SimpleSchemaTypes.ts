@@ -609,7 +609,7 @@ export type ItemInstancesTargetSchema = Item[];
  */
 export type ItemInstancesHrefSchema = {
   /**
-   * For Modular Content fields and Structured Text fields. If set, returns full payload for nested blocks instead of IDs
+   * For Modular Content, Structured Text and Single Block fields. If set, returns full payload for nested blocks instead of IDs
    */
   nested?: boolean;
   /**
@@ -679,7 +679,7 @@ export type ItemReferencesTargetSchema = Item[];
  */
 export type ItemReferencesHrefSchema = {
   /**
-   * For Modular Content fields and Structured Text fields, return full payload for nested blocks instead of IDs
+   * For Modular Content, Structured Text and Single Block fields, return full payload for nested blocks instead of IDs
    */
   nested?: boolean;
   /**
@@ -694,7 +694,7 @@ export type ItemReferencesHrefSchema = {
  */
 export type ItemSelfHrefSchema = {
   /**
-   * For Modular Content fields and Structured Text fields. If set, returns full payload for nested blocks instead of IDs
+   * For Modular Content, Structured Text and Single Block fields. If set, returns full payload for nested blocks instead of IDs
    */
   nested?: boolean;
   /**
@@ -895,7 +895,7 @@ export type ItemVersionInstancesTargetSchema = ItemVersion[];
  */
 export type ItemVersionInstancesHrefSchema = {
   /**
-   * For Modular Content fields and Structured Text fields. If set, returns full payload for nested blocks instead of IDs
+   * For Modular Content, Structured Text and Single Block fields. If set, returns full payload for nested blocks instead of IDs
    */
   nested?: boolean;
   /**
@@ -1026,7 +1026,7 @@ export type UploadReferencesTargetSchema = Item[];
  */
 export type UploadReferencesHrefSchema = {
   /**
-   * For Modular Content fields and Structured Text fields, return full payload for nested blocks instead of IDs
+   * For Modular Content, Structured Text and Single Block fields, return full payload for nested blocks instead of IDs
    */
   nested?: boolean;
   /**
@@ -5093,6 +5093,18 @@ export type JobData = {
  * </details>
  *
  * <details>
+ * <summary>Single Block (<code>single_block</code>)</summary>
+ *
+ * | Property                       | Value                                           |
+ * | ------------------------------ | ----------------------------------------------- |
+ * | Code                           | `single_block`                                  |
+ * | Built-in editors for the field | `framed_single_block`, `frameless_single_block` |
+ * | Required validators            | `single_block_blocks`                           |
+ * | Other validators available     | `required`                                      |
+ *
+ * </details>
+ *
+ * <details>
  * <summary>Structured text (<code>structured_text</code>)</summary>
  *
  * | Property                       | Value                                             |
@@ -5394,6 +5406,17 @@ export type JobData = {
  *
  * Only accept references to block records of the specified block models.
  *
+ * | Parameter    | Type                    | Required | Description                     |
+ * | ------------ | ----------------------- | -------- | ------------------------------ |
+ * | `item_types` | `Array<Block Model ID>` | ✅        | Set of allowed Block Model IDs |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>single_block_blocks</code></summary>
+ *
+ * Only accept references to block records of the specified block models.
+ *
  * | Parameter    | Type                    | Required | Description                    |
  * | ------------ | ----------------------- | -------- | ------------------------------ |
  * | `item_types` | `Array<Block Model ID>` | ✅        | Set of allowed Block Model IDs |
@@ -5613,10 +5636,10 @@ export type JobData = {
  *
  * Built-in editor for _seo_ fields.
  *
- * | Parameter  | Type            | Required | Description                                                                                                                                             |
- * | ---------- | --------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
- * | `fields`   | `Array<String>` | ✅        | Specify which fields of the SEO input should be visible to editors. Valid values: `"title"`, `"description"`, `"image"`, `"no_index"`, `"twitter_card"` |
- * | `previews` | `Array<String>` | ✅        | Specify which previews should be visible to editors. Valid values: `"google_search"`, `"twitter"`, `"slack"`, `"whatsapp"`, `"telegram"`, `"facebook"`  |
+ * | Parameter  | Type            | Required | Description                                                                                                                                                          |
+ * | ---------- | --------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+ * | `fields`   | `Array<String>` | ✅        | Specify which fields of the SEO input should be visible to editors. Valid values: `"title"`, `"description"`, `"image"`, `"no_index"`, `"twitter_card"`              |
+ * | `previews` | `Array<String>` | ✅        | Specify which previews should be visible to editors. Valid values: `"google_search"`, `"twitter"`, `"slack"`, `"whatsapp"`, `"telegram"`, `"facebook"`, `"linkedin"` |
  *
  * </details>
  *
@@ -5628,6 +5651,17 @@ export type JobData = {
  * | Parameter         | Type      | Required | Description                                                |
  * | ----------------- | --------- | -------- | ---------------------------------------------------------- |
  * | `start_collapsed` | `Boolean` |          | Whether you want block records collapsed by default or not |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>framed_single_block</code></summary>
+ *
+ * Built-in editor for _Single block_ fields.
+ *
+ * | Parameter         | Type      | Required | Description                                                |
+ * | ----------------- | --------- | -------- | ---------------------------------------------------------- |
+ * | `start_collapsed` | `Boolean` |          | Whether you want block record collapsed by default or not |
  *
  * </details>
  *
@@ -5676,25 +5710,26 @@ export type Field = {
    * Type of input
    */
   field_type:
-    | 'string'
-    | 'text'
     | 'boolean'
-    | 'integer'
-    | 'float'
+    | 'color'
     | 'date'
     | 'date_time'
-    | 'color'
+    | 'file'
+    | 'float'
+    | 'gallery'
+    | 'integer'
     | 'json'
     | 'lat_lon'
-    | 'seo'
-    | 'slug'
-    | 'video'
-    | 'file'
-    | 'gallery'
     | 'link'
     | 'links'
     | 'rich_text'
-    | 'structured_text';
+    | 'seo'
+    | 'single_block'
+    | 'slug'
+    | 'string'
+    | 'structured_text'
+    | 'text'
+    | 'video';
   /**
    * Whether the field needs to be multilanguage or not
    */
@@ -5802,25 +5837,26 @@ export type FieldAttributes = {
    * Type of input
    */
   field_type:
-    | 'string'
-    | 'text'
     | 'boolean'
-    | 'integer'
-    | 'float'
+    | 'color'
     | 'date'
     | 'date_time'
-    | 'color'
+    | 'file'
+    | 'float'
+    | 'gallery'
+    | 'integer'
     | 'json'
     | 'lat_lon'
-    | 'seo'
-    | 'slug'
-    | 'video'
-    | 'file'
-    | 'gallery'
     | 'link'
     | 'links'
     | 'rich_text'
-    | 'structured_text';
+    | 'seo'
+    | 'single_block'
+    | 'slug'
+    | 'string'
+    | 'structured_text'
+    | 'text'
+    | 'video';
   /**
    * Whether the field needs to be multilanguage or not
    */
@@ -5933,25 +5969,26 @@ export type FieldCreateSchema = {
    * Type of input
    */
   field_type:
-    | 'string'
-    | 'text'
     | 'boolean'
-    | 'integer'
-    | 'float'
+    | 'color'
     | 'date'
     | 'date_time'
-    | 'color'
+    | 'file'
+    | 'float'
+    | 'gallery'
+    | 'integer'
     | 'json'
     | 'lat_lon'
-    | 'seo'
-    | 'slug'
-    | 'video'
-    | 'file'
-    | 'gallery'
     | 'link'
     | 'links'
     | 'rich_text'
-    | 'structured_text';
+    | 'seo'
+    | 'single_block'
+    | 'slug'
+    | 'string'
+    | 'structured_text'
+    | 'text'
+    | 'video';
   /**
    * Field API key
    */
@@ -6130,25 +6167,26 @@ export type FieldUpdateSchema = {
    * Type of input
    */
   field_type?:
-    | 'string'
-    | 'text'
     | 'boolean'
-    | 'integer'
-    | 'float'
+    | 'color'
     | 'date'
     | 'date_time'
-    | 'color'
+    | 'file'
+    | 'float'
+    | 'gallery'
+    | 'integer'
     | 'json'
     | 'lat_lon'
-    | 'seo'
-    | 'slug'
-    | 'video'
-    | 'file'
-    | 'gallery'
     | 'link'
     | 'links'
     | 'rich_text'
-    | 'structured_text';
+    | 'seo'
+    | 'single_block'
+    | 'slug'
+    | 'string'
+    | 'structured_text'
+    | 'text'
+    | 'video';
   /**
    * Field hint
    */
