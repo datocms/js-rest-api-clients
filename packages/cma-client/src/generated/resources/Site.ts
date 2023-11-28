@@ -62,6 +62,7 @@ export default class Site extends BaseResource {
           'timezone',
           'require_2fa',
           'ip_tracking_enabled',
+          'force_use_of_sandbox_environments',
         ],
         relationships: ['sso_default_role'],
       }),

@@ -1757,7 +1757,7 @@ export type Role = {
    */
   can_edit_favicon: boolean;
   /**
-   * Can change project name and 2FA settings
+   * Can change project global properties
    */
   can_edit_site: boolean;
   /**
@@ -2000,7 +2000,7 @@ export type RoleMeta = {
      */
     can_edit_favicon: boolean;
     /**
-     * Can change project name and 2FA settings
+     * Can change project global properties
      */
     can_edit_site: boolean;
     /**
@@ -2228,7 +2228,7 @@ export type RoleAttributes = {
    */
   can_edit_favicon: boolean;
   /**
-   * Can change project name and 2FA settings
+   * Can change project global properties
    */
   can_edit_site: boolean;
   /**
@@ -2464,7 +2464,7 @@ export type RoleCreateSchema = {
    */
   can_edit_favicon?: boolean;
   /**
-   * Can change project name and 2FA settings
+   * Can change project global properties
    */
   can_edit_site?: boolean;
   /**
@@ -2693,7 +2693,7 @@ export type RoleUpdateSchema = {
    */
   can_edit_favicon?: boolean;
   /**
-   * Can change project name and 2FA settings
+   * Can change project global properties
    */
   can_edit_site?: boolean;
   /**
@@ -10081,6 +10081,10 @@ export type Site = {
    */
   ip_tracking_enabled: boolean;
   /**
+   * If enabled, blocks schema changes of primary environment
+   */
+  force_use_of_sandbox_environments: boolean;
+  /**
    * Specifies the theme to use in administrative area
    */
   theme: {
@@ -10253,6 +10257,10 @@ export type SiteAttributes = {
    * Specifies whether you want IPs to be tracked in the Project usages section
    */
   ip_tracking_enabled: boolean;
+  /**
+   * If enabled, blocks schema changes of primary environment
+   */
+  force_use_of_sandbox_environments: boolean;
   /**
    * Specifies the theme to use in administrative area
    */
@@ -10451,6 +10459,10 @@ export type SiteUpdateSchema = {
    * Specifies whether you want IPs to be tracked in the Project usages section
    */
   ip_tracking_enabled?: boolean;
+  /**
+   * If enabled, blocks schema changes of primary environment
+   */
+  force_use_of_sandbox_environments?: boolean;
   sso_default_role?: RoleData;
   meta?: {
     /**
