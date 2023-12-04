@@ -1256,9 +1256,9 @@ export type PerOwnerPricingSubscriptionAttributes = {
  */
 export type PerOwnerPricingSubscriptionMeta = {
   /**
-   * Whether account can be billed if it has no credit-card information or not
+   * Whether payments collection will be performed off-line, without using credit cards
    */
-  billable_without_payment_method: boolean;
+  manual_payments_collection: boolean;
 };
 
 /**
