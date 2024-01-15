@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class PaymentIntent extends BaseResource {
-  static readonly TYPE: 'payment_intent' = 'payment_intent';
+  static readonly TYPE = 'payment_intent' as const;
 
   /**
    * Create a payment intent starting from a payment method

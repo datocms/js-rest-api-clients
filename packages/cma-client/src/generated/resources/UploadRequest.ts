@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class UploadRequest extends BaseResource {
-  static readonly TYPE: 'upload_request' = 'upload_request';
+  static readonly TYPE = 'upload_request' as const;
 
   /**
    * Request a new upload

@@ -4,8 +4,6 @@
  */
 
 /**
- * JSON API type field
- *
  * This interface was referenced by `Role`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -61,8 +59,6 @@ export type EnvironmentIdentity = string;
  */
 export type BuildTriggerIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `User`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -89,8 +85,6 @@ export type UserSelfHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `SsoUser`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -106,8 +100,6 @@ export type SsoUserType = 'sso_user';
  */
 export type SsoUserIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `SsoGroup`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -138,8 +130,6 @@ export type SsoUserDestroyHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `AccessToken`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -170,8 +160,6 @@ export type AccessTokenDestroyHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -213,8 +201,6 @@ export type UserDestroyHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `AuditLogEvent`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -230,8 +216,6 @@ export type AuditLogEventType = 'audit_log_event';
  */
 export type AuditLogEventIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `Organization`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -247,8 +231,6 @@ export type OrganizationType = 'organization';
  */
 export type OrganizationIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `SitePlan`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -264,8 +246,6 @@ export type SitePlanType = 'site_plan';
  */
 export type SitePlanIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `MenuItem`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -281,15 +261,11 @@ export type MenuItemType = 'menu_item';
  */
 export type MenuItemIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `definition` "type".
  */
 export type ItemTypeType = 'item_type';
 /**
- * JSON API type field
- *
  * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -319,6 +295,33 @@ export type MenuItemInstancesHrefSchema = {
 /**
  * JSON API type field
  *
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SchemaMenuItemType = 'schema_menu_item';
+/**
+ * RFC 4122 UUID of schema menu item expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SchemaMenuItemIdentity = string;
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type SchemaMenuItemInstancesHrefSchema = {
+  filter?: {
+    /**
+     * IDs to fetch, comma separated
+     */
+    ids: string;
+  };
+};
+/**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -334,8 +337,6 @@ export type ItemType1 = 'item';
  */
 export type ItemIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -351,8 +352,6 @@ export type FieldType = 'field';
  */
 export type FieldIdentity = string;
 /**
- * JSON API type fieldset
- *
  * This interface was referenced by `Fieldset`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -368,8 +367,6 @@ export type FieldsetType = 'fieldset';
  */
 export type FieldsetIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `Workflow`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -386,8 +383,6 @@ export type ItemTypeCreateHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `Job`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -414,8 +409,6 @@ export type ItemTypeDestroyHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `Session`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -431,8 +424,6 @@ export type SessionType = 'session';
  */
 export type SessionIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `Plugin`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -448,8 +439,6 @@ export type PluginType = 'plugin';
  */
 export type PluginIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `JobResult`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -465,8 +454,6 @@ export type JobResultType = 'job_result';
  */
 export type JobResultIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -482,8 +469,6 @@ export type SubscriptionLimitType = 'subscription_limit';
  */
 export type SubscriptionLimitIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `SubscriptionFeature`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -499,8 +484,6 @@ export type SubscriptionFeatureType = 'subscription_feature';
  */
 export type SubscriptionFeatureIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `BuildEvent`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -516,8 +499,6 @@ export type BuildEventType = 'build_event';
  */
 export type BuildEventIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `BuildTrigger`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -618,8 +599,6 @@ export type ItemSelfHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -635,8 +614,6 @@ export type ItemCurrentVsPublishedStateType = 'item_current_vs_published_state';
  */
 export type ItemCurrentVsPublishedStateIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `ScheduledPublication`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -652,8 +629,6 @@ export type ScheduledPublicationType = 'scheduled_publication';
  */
 export type ScheduledPublicationIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -669,8 +644,6 @@ export type ScheduledUnpublishingType = 'scheduled_unpublishing';
  */
 export type ScheduledUnpublishingIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `ItemVersion`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -747,16 +720,16 @@ export type ItemBatchUnpublishHrefSchema = {
 export type ItemPublishSchema = {
   data: {
     /**
-     * JSON API type field
+     * Publish only the specified locales & non-localized content (see following attributes). To publish the entire record, simply avoid passing a request body to the endpoint.
      */
     type: 'selective_publish_operation';
     attributes: {
       /**
-       * List of locales whose content will be published
+       * Array of [valid locale codes in this project](/product-updates/get-locales-list-from-graphql) to publish.
        */
       content_in_locales: string[];
       /**
-       * Whether non-localized content has to be published or not
+       * Whether non-localized content will be published
        */
       non_localized_content: boolean;
     };
@@ -768,7 +741,7 @@ export type ItemPublishSchema = {
  */
 export type ItemPublishHrefSchema = {
   /**
-   * If the record references other draft records, force a recursive publication
+   * When `recursive` is `true`, if the record belongs to a [tree-like collection](https://www.datocms.com/docs/content-modelling/trees), and any of the parent records aren't published, those parent records will published as well. When `recursive` is `false` or not specified, an `UNPUBLISHED_PARENT` error will occur in such cases.
    */
   recursive?: boolean;
   [k: string]: unknown;
@@ -779,13 +752,10 @@ export type ItemPublishHrefSchema = {
  */
 export type ItemUnpublishSchema = {
   data: {
-    /**
-     * JSON API type field
-     */
     type: 'selective_unpublish_operation';
     attributes: {
       /**
-       * List of locales whose content will be unpublished
+       * Array of locales to publish. They must be currently published in this record. To unpublish all locales, do NOT use this parameter, but instead unpublish the entire record by leaving the body blank (see example above).
        */
       content_in_locales: string[];
     };
@@ -797,14 +767,12 @@ export type ItemUnpublishSchema = {
  */
 export type ItemUnpublishHrefSchema = {
   /**
-   * If the record is referenced by other published records, unpublish them recursively
+   * When `recursive` is `true`, if the record belongs to a [tree-like collection](https://www.datocms.com/docs/content-modelling/trees), and any of the children records are published, those children records will unpublished as well. When `recursive` is `false` or not specified, a `PUBLISHED_CHILDREN` error will occur in such cases.
    */
   recursive?: boolean;
   [k: string]: unknown;
 };
 /**
- * JSON API type upload
- *
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -906,8 +874,6 @@ export type UploadReferencesHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `UploadRequest`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -923,8 +889,6 @@ export type UploadRequestType = 'upload_request';
  */
 export type UploadRequestIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `SearchResult`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -983,8 +947,6 @@ export type SearchResultInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `Environment`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1009,8 +971,6 @@ export type EnvironmentForkHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `MaintenanceMode`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1037,8 +997,6 @@ export type MaintenanceModeActivateHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `Webhook`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1054,8 +1012,6 @@ export type WebhookType = 'webhook';
  */
 export type WebhookIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `WebhookCall`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1092,8 +1048,6 @@ export type WebhookCallInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `UploadFilter`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1109,8 +1063,6 @@ export type UploadFilterType = 'upload_filter';
  */
 export type UploadFilterIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `SiteInvitation`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1126,8 +1078,6 @@ export type SiteInvitationType = 'site_invitation';
  */
 export type SiteInvitationIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `EditingSession`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1143,8 +1093,6 @@ export type EditingSessionType = 'editing_session';
  */
 export type EditingSessionIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `FormData`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1160,8 +1108,6 @@ export type FormDataType = 'form_data';
  */
 export type FormDataIdentity = 'form_data';
 /**
- * JSON API type field
- *
  * This interface was referenced by `SsoSettings`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1177,8 +1123,6 @@ export type SsoSettingsType = 'sso_settings';
  */
 export type SsoSettingsIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1194,8 +1138,6 @@ export type WhiteLabelSettingsType = 'white_label_settings';
  */
 export type WhiteLabelSettingsIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `PublicInfo`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1211,8 +1153,6 @@ export type PublicInfoType = 'public_info';
  */
 export type PublicInfoIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `DailyUsage`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1228,8 +1168,6 @@ export type DailyUsageType = 'daily_usage';
  */
 export type DailyUsageIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `UsageCounter`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1274,8 +1212,6 @@ export type UsageCounterSelfHrefSchema = {
   period?: 'today' | 'current_month' | 'last_month';
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `UploadTag`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1322,8 +1258,6 @@ export type UploadTagInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `UploadSmartTag`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1370,8 +1304,6 @@ export type UploadSmartTagInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1407,6 +1339,7 @@ export type DatoApi = {
   organization?: Organization;
   site_plan?: SitePlan;
   menu_item?: MenuItem;
+  schema_menu_item?: SchemaMenuItem;
   item_type?: ItemType;
   field?: Field;
   fieldset?: Fieldset;
@@ -3126,9 +3059,6 @@ export type AuditLogEventData = {
  */
 export type AuditLogEventQuerySchema = {
   data: {
-    /**
-     * JSON API type field
-     */
     type: 'audit_log_query';
     attributes: {
       /**
@@ -3689,6 +3619,208 @@ export type MenuItemSelfTargetSchema = {
  */
 export type MenuItemDestroyTargetSchema = {
   data: MenuItem;
+};
+
+/**
+ * In DatoCMS you can organize the different models and blocks present in your administrative area reordering and grouping them, so that their purpose will be more clear to the final editor.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "schema_menu_item".
+ */
+export type SchemaMenuItem = {
+  type: SchemaMenuItemType;
+  id: SchemaMenuItemIdentity;
+  attributes: SchemaMenuItemAttributes;
+  relationships: SchemaMenuItemRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SchemaMenuItemAttributes = {
+  /**
+   * The label of the schema menu item (only present when the schema menu item is not linked to an item type)
+   */
+  label: null | string;
+  /**
+   * Ordering index
+   */
+  position: number;
+  /**
+   * Indicates if the schema menu item refers to an item type or a modular block
+   */
+  kind: 'item_type' | 'modular_block';
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type SchemaMenuItemRelationships = {
+  /**
+   * Item type associated with the schema menu item
+   */
+  item_type: {
+    data: ItemTypeData | null;
+  };
+  /**
+   * Parent schema menu item
+   */
+  parent: {
+    data: null | SchemaMenuItemData;
+  };
+  /**
+   * Underlying schema menu items
+   */
+  children: {
+    data: SchemaMenuItemData[];
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SchemaMenuItemData = {
+  type: SchemaMenuItemType;
+  id: SchemaMenuItemIdentity;
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type SchemaMenuItemCreateSchema = {
+  data: {
+    id?: SchemaMenuItemIdentity;
+    type: SchemaMenuItemType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The label of the schema menu item (only present when the schema menu item is not linked to an item type)
+       */
+      label: null | string;
+      /**
+       * Ordering index
+       */
+      position?: number;
+      /**
+       * Indicates if the schema menu item refers to an item type or a modular block
+       */
+      kind: 'item_type' | 'modular_block';
+    };
+    relationships?: {
+      /**
+       * Item type associated with the menu item
+       */
+      item_type?: {
+        data: ItemTypeData | null;
+      };
+      /**
+       * Parent schema menu item
+       */
+      parent?: {
+        data: null | SchemaMenuItemData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type SchemaMenuItemCreateTargetSchema = {
+  data: SchemaMenuItem;
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type SchemaMenuItemUpdateSchema = {
+  data: {
+    type: SchemaMenuItemType;
+    id: SchemaMenuItemIdentity;
+    /**
+     * JSON API attributes
+     */
+    attributes?: {
+      /**
+       * The label of the schema menu item (only present when the schema menu item is not linked to an item type)
+       */
+      label?: null | string;
+      /**
+       * Ordering index
+       */
+      position?: number;
+      /**
+       * Indicates if the schema menu item refers to an item type or a modular block
+       */
+      kind?: 'item_type' | 'modular_block';
+    };
+    relationships?: {
+      /**
+       * Item type associated with the menu item
+       */
+      item_type?: {
+        data: ItemTypeData | null;
+      };
+      /**
+       * Parent schema menu item
+       */
+      parent?: {
+        data: null | SchemaMenuItemData;
+      };
+      /**
+       * Underlying schema menu items
+       */
+      children?: {
+        data: SchemaMenuItemData[];
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type SchemaMenuItemUpdateTargetSchema = {
+  data: SchemaMenuItem;
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type SchemaMenuItemInstancesTargetSchema = {
+  data: SchemaMenuItem[];
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type SchemaMenuItemSelfTargetSchema = {
+  data: SchemaMenuItem;
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type SchemaMenuItemDestroyTargetSchema = {
+  data: SchemaMenuItem;
 };
 
 /**
@@ -5029,6 +5161,18 @@ export type ItemTypeDestroyJobSchema = {
  * </details>
  *
  * <details>
+ * <summary><code>seo</code></summary>
+ *
+ * Built-in editor for _seo_ fields.
+ *
+ * | Parameter  | Type            | Required | Description                                                                                                                                             |
+ * | ---------- | --------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+ * | `fields`   | `Array<String>` | ✅        | Specify which fields of the SEO input should be visible to editors. Valid values: `"title"`, `"description"`, `"image"`, `"no_index"`, `"twitter_card"` |
+ * | `previews` | `Array<String>` | ✅        | Specify which previews should be visible to editors. Valid values: `"google_search"`, `"twitter"`, `"slack"`, `"whatsapp"`, `"telegram"`, `"facebook"`  |
+ *
+ * </details>
+ *
+ * <details>
  * <summary><code>rich_text</code></summary>
  *
  * Built-in editor for _Modular content_ fields.
@@ -5805,9 +5949,6 @@ export type SessionData = {
  */
 export type SessionCreateSchema = {
   data: {
-    /**
-     * JSON API type field
-     */
     type: 'email_credentials';
     /**
      * JSON API attributes
@@ -7296,9 +7437,6 @@ export type ItemUnpublishTargetSchema = {
  */
 export type ItemBulkPublishSchema = {
   data: {
-    /**
-     * JSON API type field
-     */
     type: 'item_bulk_publish_operation';
     relationships: {
       /**
@@ -7338,9 +7476,6 @@ export type ItemBulkPublishJobSchema = {
  */
 export type ItemBulkUnpublishSchema = {
   data: {
-    /**
-     * JSON API type field
-     */
     type: 'item_bulk_unpublish_operation';
     relationships: {
       /**
@@ -7380,9 +7515,6 @@ export type ItemBulkUnpublishJobSchema = {
  */
 export type ItemBulkDestroySchema = {
   data: {
-    /**
-     * JSON API type field
-     */
     type: 'item_bulk_destroy_operation';
     relationships: {
       /**
@@ -7422,9 +7554,6 @@ export type ItemBulkDestroyJobSchema = {
  */
 export type ItemBulkMoveToStageSchema = {
   data: {
-    /**
-     * JSON API type field
-     */
     type: 'item_bulk_move_to_stage_operation';
     attributes: {
       /**
@@ -7968,9 +8097,6 @@ export type UploadReferencesTargetSchema = {
  */
 export type UploadBulkTagSchema = {
   data: {
-    /**
-     * JSON API type field
-     */
     type: 'upload_bulk_tag_operation';
     /**
      * JSON API attributes
@@ -8018,9 +8144,6 @@ export type UploadBulkTagJobSchema = {
  */
 export type UploadBulkDestroySchema = {
   data: {
-    /**
-     * JSON API type field
-     */
     type: 'upload_bulk_destroy_operation';
     relationships: {
       /**
@@ -9856,9 +9979,6 @@ export type SsoSettingsSelfTargetSchema = {
 export type SsoSettingsGenerateTokenTargetSchema = {
   data: {
     id: SsoSettingsIdentity;
-    /**
-     * JSON API type field
-     */
     type: 'sso_token';
     attributes: {
       /**
@@ -10499,6 +10619,14 @@ export type SiteMeta = {
    * Whether the Improved GraphQL multi-locale fields option is active or not
    */
   improved_gql_multilocale_fields: boolean;
+  /**
+   * Whether the Improved GraphQL visibility control option is active or not
+   */
+  improved_gql_visibility_control: boolean;
+  /**
+   * Whether the Improved boolean fields option is active or not
+   */
+  improved_boolean_fields: boolean;
 };
 
 /**
@@ -10649,6 +10777,14 @@ export type SiteUpdateSchema = {
        * Whether the Improved GraphQL multi-locale fields option is active or not
        */
       improved_gql_multilocale_fields?: boolean;
+      /**
+       * Whether the Improved GraphQL visibility control option is active or not
+       */
+      improved_gql_visibility_control?: boolean;
+      /**
+       * Whether the Improved boolean fields option is active or not
+       */
+      improved_boolean_fields?: boolean;
     };
     relationships?: {
       sso_default_role?: {
@@ -10703,6 +10839,22 @@ export type SiteActivateImprovedHexManagementTargetSchema = {
  * via the `activate_improved_gql_multilocale_fields.targetSchema` link.
  */
 export type SiteActivateImprovedGqlMultilocaleFieldsTargetSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_gql_visibility_control.targetSchema` link.
+ */
+export type SiteActivateImprovedGqlVisibilityControlTargetSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_boolean_fields.targetSchema` link.
+ */
+export type SiteActivateImprovedBooleanFieldsTargetSchema = {
   data: Site;
 };
 

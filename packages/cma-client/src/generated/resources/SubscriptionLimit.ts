@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class SubscriptionLimit extends BaseResource {
-  static readonly TYPE: 'subscription_limit' = 'subscription_limit';
+  static readonly TYPE = 'subscription_limit' as const;
 
   /**
    * Get all the subscription limits

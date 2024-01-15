@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class WhiteLabelSettings extends BaseResource {
-  static readonly TYPE: 'white_label_settings' = 'white_label_settings';
+  static readonly TYPE = 'white_label_settings' as const;
 
   /**
    * Retrieve white-label settings

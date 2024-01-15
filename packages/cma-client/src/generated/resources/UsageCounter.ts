@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class UsageCounter extends BaseResource {
-  static readonly TYPE: 'usage_counter' = 'usage_counter';
+  static readonly TYPE = 'usage_counter' as const;
 
   /**
    * Retrieve a project's usage counter

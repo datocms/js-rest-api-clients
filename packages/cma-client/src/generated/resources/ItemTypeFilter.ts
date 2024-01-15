@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class ItemTypeFilter extends BaseResource {
-  static readonly TYPE: 'item_type_filter' = 'item_type_filter';
+  static readonly TYPE = 'item_type_filter' as const;
 
   /**
    * Create a new filter

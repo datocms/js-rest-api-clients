@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class Workflow extends BaseResource {
-  static readonly TYPE: 'workflow' = 'workflow';
+  static readonly TYPE = 'workflow' as const;
 
   /**
    * Create a new workflow

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class UploadFilter extends BaseResource {
-  static readonly TYPE: 'upload_filter' = 'upload_filter';
+  static readonly TYPE = 'upload_filter' as const;
 
   /**
    * Create a new filter

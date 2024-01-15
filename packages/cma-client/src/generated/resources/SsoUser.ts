@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class SsoUser extends BaseResource {
-  static readonly TYPE: 'sso_user' = 'sso_user';
+  static readonly TYPE = 'sso_user' as const;
 
   /**
    * List all users

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class Webhook extends BaseResource {
-  static readonly TYPE: 'webhook' = 'webhook';
+  static readonly TYPE = 'webhook' as const;
 
   /**
    * Create a new webhook

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class ItemVersion extends BaseResource {
-  static readonly TYPE: 'item_version' = 'item_version';
+  static readonly TYPE = 'item_version' as const;
 
   /**
    * Restore an old record version

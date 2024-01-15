@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class OrganizationMandate extends BaseResource {
-  static readonly TYPE: 'organization_mandate' = 'organization_mandate';
+  static readonly TYPE = 'organization_mandate' as const;
 
   /**
    * Update an organization mandate

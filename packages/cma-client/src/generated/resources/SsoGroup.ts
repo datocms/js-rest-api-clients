@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class SsoGroup extends BaseResource {
-  static readonly TYPE: 'sso_group' = 'sso_group';
+  static readonly TYPE = 'sso_group' as const;
 
   /**
    * List all SSO groups

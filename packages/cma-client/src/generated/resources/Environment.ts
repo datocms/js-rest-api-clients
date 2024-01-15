@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class Environment extends BaseResource {
-  static readonly TYPE: 'environment' = 'environment';
+  static readonly TYPE = 'environment' as const;
 
   /**
    * Fork an existing environment

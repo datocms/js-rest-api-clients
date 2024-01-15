@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class OrganizationRole extends BaseResource {
-  static readonly TYPE: 'organization_role' = 'organization_role';
+  static readonly TYPE = 'organization_role' as const;
 
   /**
    * List organization roles

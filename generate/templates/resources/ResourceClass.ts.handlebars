@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class {{{resourceClassName}}} extends BaseResource {
-  static readonly TYPE: '{{jsonApiType}}' = '{{jsonApiType}}';
+  static readonly TYPE = '{{jsonApiType}}' as const;
 
   {{#each endpoints}}
     {{#if simpleMethodAvailable}}

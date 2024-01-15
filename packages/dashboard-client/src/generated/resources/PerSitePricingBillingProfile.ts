@@ -4,8 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class PerSitePricingBillingProfile extends BaseResource {
-  static readonly TYPE: 'per_site_pricing_billing_profile' =
-    'per_site_pricing_billing_profile';
+  static readonly TYPE = 'per_site_pricing_billing_profile' as const;
 
   /**
    * Retrieve all account's billing profiles

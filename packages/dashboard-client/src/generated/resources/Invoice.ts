@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class Invoice extends BaseResource {
-  static readonly TYPE: 'invoice' = 'invoice';
+  static readonly TYPE = 'invoice' as const;
 
   /**
    * Retrieve all invoices

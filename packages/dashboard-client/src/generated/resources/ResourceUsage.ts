@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class ResourceUsage extends BaseResource {
-  static readonly TYPE: 'resource_usage' = 'resource_usage';
+  static readonly TYPE = 'resource_usage' as const;
 
   /**
    * Retrieve all resource usages

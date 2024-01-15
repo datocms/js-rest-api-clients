@@ -14,15 +14,11 @@
  */
 export type SessionIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `Session`'s JSON-Schema
  * via the `definition` "type".
  */
 export type SessionType = 'session';
 /**
- * JSON API type field
- *
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -43,9 +39,6 @@ export type AccountIdentity = string;
  */
 export type SessionCreateSchema =
   | {
-      /**
-       * JSON API type field
-       */
       type?: 'email_credentials';
       /**
        * Email
@@ -61,9 +54,6 @@ export type SessionCreateSchema =
       otp_code?: string;
     }
   | {
-      /**
-       * JSON API type field
-       */
       type?: 'password_reset';
       /**
        * Reset token
@@ -83,8 +73,6 @@ export type SessionCreateSchema =
       otp_code?: string;
     };
 /**
- * JSON API type field
- *
  * This interface was referenced by `PerOwnerPricingSubscription`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -100,8 +88,6 @@ export type PerOwnerPricingSubscriptionType = 'per_owner_pricing_subscription';
  */
 export type PerOwnerPricingSubscriptionIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -128,8 +114,6 @@ export type PerOwnerPricingBillingProfileIdentity = string;
  */
 export type JobIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `Job`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -146,8 +130,6 @@ export type AccountSelfHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * JSON API type field
- *
  * This interface was referenced by `Organization`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -200,15 +182,11 @@ export type OrganizationSelfHrefSchema = {
  */
 export type SiteIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `definition` "type".
  */
 export type SiteType = 'site';
 /**
- * JSON API type field
- *
  * This interface was referenced by `SiteSubscription`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -224,8 +202,6 @@ export type SiteSubscriptionType = 'site_subscription';
  */
 export type SiteSubscriptionIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `SitePlan`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -241,8 +217,6 @@ export type SitePlanType = 'site_plan';
  */
 export type SitePlanIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `SiteTransfer`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -326,8 +300,6 @@ export type SiteCreateTargetSchema = Site | Job;
  */
 export type SiteDestroyTargetSchema = Site | Job;
 /**
- * JSON API type field
- *
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -354,15 +326,11 @@ export type PerSitePricingBillingProfileIdentity = string;
  */
 export type NextInvoiceEstimateIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `NextInvoiceEstimate`'s JSON-Schema
  * via the `definition` "type".
  */
 export type NextInvoiceEstimateType = 'next_invoice_estimate';
 /**
- * JSON API type field
- *
  * This interface was referenced by `PerOwnerPricingPlan`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -429,8 +397,6 @@ export type PerSitePricingBillingProfileSelfHrefSchema = {
  */
 export type InvoiceIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `Invoice`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -470,8 +436,6 @@ export type InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema =
  */
 export type ResourceUsageIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `ResourceUsage`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -492,8 +456,6 @@ export type ResourceUsageInstancesTargetSchema = ResourceUsage[];
  */
 export type JobResultIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `JobResult`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -514,8 +476,6 @@ export type SiteTransferInstancesTargetSchema = SiteTransfer[];
  */
 export type SiteInvitationIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `SiteInvitation`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -542,8 +502,6 @@ export type SiteInvitationRedeemHrefSchema = {
  */
 export type SubscriptionLimitIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -564,8 +522,6 @@ export type SubscriptionLimitInstancesTargetSchema = SubscriptionLimit[];
  */
 export type SubscriptionFeatureIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `SubscriptionFeature`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -586,8 +542,6 @@ export type SubscriptionFeatureInstancesTargetSchema = SubscriptionFeature[];
  */
 export type OauthApplicationIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `OauthApplication`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -608,8 +562,6 @@ export type OauthApplicationInstancesTargetSchema = OauthApplication[];
  */
 export type PaymentIntentIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `PaymentIntent`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -625,8 +577,6 @@ export type PaymentIntentType = 'payment_intent';
  */
 export type PaymentMethodIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `PaymentMethod`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -642,8 +592,6 @@ export type PaymentMethodType = 'payment_method';
  */
 export type OtpBackupCodesIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `OtpBackupCodes`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -659,8 +607,6 @@ export type OtpBackupCodesType = 'otp_backup_codes';
  */
 export type OrganizationRoleIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `OrganizationRole`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -681,8 +627,6 @@ export type OrganizationRoleInstancesTargetSchema = OrganizationRole[];
  */
 export type OrganizationInvitationIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `OrganizationInvitation`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -715,8 +659,6 @@ export type OrganizationInvitationRedeemHrefSchema = {
  */
 export type OrganizationMembershipIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `OrganizationMembership`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -771,8 +713,6 @@ export type OrganizationMembershipMeHrefSchema = {
  */
 export type OrganizationMandateRequestIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -800,8 +740,6 @@ export type OrganizationMandateRequestRequestedInstancesTargetSchema =
  */
 export type OrganizationMandateIdentity = string;
 /**
- * JSON API type field
- *
  * This interface was referenced by `OrganizationMandate`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1118,9 +1056,6 @@ export type AccountUpdateSchema = {
  * via the `destroy.schema` link.
  */
 export type AccountDestroySchema = {
-  /**
-   * JSON API type field
-   */
   type?: 'account_destroy_request';
   /**
    * OTP code
@@ -1184,9 +1119,6 @@ export type AccountResetPasswordSchema = {
  * via the `activate_2fa.schema` link.
  */
 export type AccountActivate_2FaSchema = {
-  /**
-   * JSON API type field
-   */
   type?: string;
   /**
    * OTP code
@@ -1207,9 +1139,6 @@ export type AccountReset_2FaTargetSchema = {
    * ID of account
    */
   id: string;
-  /**
-   * JSON API type field
-   */
   type: string;
   attributes: {
     /**
@@ -1224,9 +1153,6 @@ export type AccountReset_2FaTargetSchema = {
  * via the `deactivate_2fa.schema` link.
  */
 export type AccountDeactivate_2FaSchema = {
-  /**
-   * JSON API type field
-   */
   type?: string;
   /**
    * OTP code
@@ -1365,9 +1291,6 @@ export type OrganizationUpdateSchema = {
  * via the `destroy.schema` link.
  */
 export type OrganizationDestroySchema = {
-  /**
-   * JSON API type field
-   */
   type?: 'organization_destroy_request';
   /**
    * OTP code
@@ -2849,9 +2772,6 @@ export type PerSitePricingBillingProfileRelationships = {
  * via the `update_credit_card.schema` link.
  */
 export type PerSitePricingBillingProfileUpdateCreditCardSchema = {
-  /**
-   * JSON API type field
-   */
   type?: 'card';
   payment_intent_id: string;
 };
@@ -2950,9 +2870,6 @@ export type PerOwnerPricingBillingProfileAttributes = {
  * via the `update_credit_card.schema` link.
  */
 export type PerOwnerPricingBillingProfileUpdateCreditCardSchema = {
-  /**
-   * JSON API type field
-   */
   type?: 'card';
   payment_intent_id: string;
 };
@@ -3047,9 +2964,6 @@ export type InvoiceRelationships = {
  * via the `per_owner_pricing_billing_profile_collect_unpaid.schema` link.
  */
 export type InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema = {
-  /**
-   * JSON API type field
-   */
   type?: 'invoice_collection';
   payment_intent_id: string;
 };
@@ -3059,9 +2973,6 @@ export type InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema = {
  * via the `per_site_pricing_billing_profile_collect_unpaid.schema` link.
  */
 export type InvoicePerSitePricingBillingProfileCollectUnpaidSchema = {
-  /**
-   * JSON API type field
-   */
   type?: 'invoice_collection';
   payment_intent_id: string;
 };
@@ -3611,9 +3522,6 @@ export type PaymentIntentAttributes = {
  * via the `create_from_payment_method.schema` link.
  */
 export type PaymentIntentCreateFromPaymentMethodSchema = {
-  /**
-   * JSON API type field
-   */
   type?: 'payment_intent';
   /**
    * Amount to charge
@@ -3626,9 +3534,6 @@ export type PaymentIntentCreateFromPaymentMethodSchema = {
  * via the `create_for_per_site_pricing_billing_profile.schema` link.
  */
 export type PaymentIntentCreateForPerSitePricingBillingProfileSchema = {
-  /**
-   * JSON API type field
-   */
   type?: 'payment_intent';
   /**
    * Amount to charge
@@ -3641,9 +3546,6 @@ export type PaymentIntentCreateForPerSitePricingBillingProfileSchema = {
  * via the `create_for_per_owner_pricing_billing_profile.schema` link.
  */
 export type PaymentIntentCreateForPerOwnerPricingBillingProfileSchema = {
-  /**
-   * JSON API type field
-   */
   type?: 'payment_intent';
   /**
    * Amount to charge

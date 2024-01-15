@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class SsoSettings extends BaseResource {
-  static readonly TYPE: 'sso_settings' = 'sso_settings';
+  static readonly TYPE = 'sso_settings' as const;
 
   /**
    * Retrieve SSO Settings

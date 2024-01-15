@@ -476,6 +476,122 @@
     "resourceClassName": "MenuItem"
   },
   {
+    "jsonApiType": "schema_menu_item",
+    "endpoints": [
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/schema-menu_item/create",
+        "rel": "create",
+        "urlTemplate": "/schema-menu-items",
+        "method": "POST",
+        "comment": "Create a new schema menu item",
+        "requestBodyType": "SchemaMenuItemCreateSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "schema_menu_item",
+          "attributes": [
+            "label",
+            "position",
+            "kind"
+          ],
+          "relationships": [
+            "item_type",
+            "parent"
+          ]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SchemaMenuItemCreateTargetSchema",
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/schema-menu_item/update",
+        "rel": "update",
+        "urlTemplate": "/schema-menu-items/${schemaMenuItemId}",
+        "method": "PUT",
+        "comment": "Update a schema menu item",
+        "urlPlaceholder": {
+          "variableName": "schemaMenuItemId",
+          "isEntityId": true,
+          "relType": "SchemaMenuItemData"
+        },
+        "requestBodyType": "SchemaMenuItemUpdateSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "schema_menu_item",
+          "idRequired": true,
+          "attributes": [
+            "label",
+            "position",
+            "kind"
+          ],
+          "relationships": [
+            "item_type",
+            "parent",
+            "children"
+          ]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SchemaMenuItemUpdateTargetSchema",
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/schema-menu_item/instances",
+        "rel": "instances",
+        "urlTemplate": "/schema-menu-items",
+        "method": "GET",
+        "comment": "List all schema menu items",
+        "optionalRequestBody": false,
+        "queryParamsType": "SchemaMenuItemInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "SchemaMenuItemInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/schema-menu_item/self",
+        "rel": "self",
+        "urlTemplate": "/schema-menu-items/${schemaMenuItemId}",
+        "method": "GET",
+        "comment": "Retrieve a schema menu item",
+        "urlPlaceholder": {
+          "variableName": "schemaMenuItemId",
+          "isEntityId": true,
+          "relType": "SchemaMenuItemData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "SchemaMenuItemSelfTargetSchema",
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/schema-menu_item/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/schema-menu-items/${schemaMenuItemId}",
+        "method": "DELETE",
+        "comment": "Delete a schema menu item",
+        "urlPlaceholder": {
+          "variableName": "schemaMenuItemId",
+          "isEntityId": true,
+          "relType": "SchemaMenuItemData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "SchemaMenuItemDestroyTargetSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "schemaMenuItems",
+    "resourceClassName": "SchemaMenuItem"
+  },
+  {
     "jsonApiType": "item_type",
     "endpoints": [
       {
@@ -3544,6 +3660,34 @@
         "deprecated": "This API call is to be considered private and might change without notice",
         "name": "activateImprovedGqlMultilocaleFields",
         "rawName": "rawActivateImprovedGqlMultilocaleFields"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_gql_visibility_control",
+        "rel": "activate_improved_gql_visibility_control",
+        "urlTemplate": "/site/activate-improved-gql-visibility-control",
+        "method": "PUT",
+        "comment": "Activate improved GraphQL visibility control option",
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "SiteActivateImprovedGqlVisibilityControlTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "activateImprovedGqlVisibilityControl",
+        "rawName": "rawActivateImprovedGqlVisibilityControl"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_boolean_fields",
+        "rel": "activate_improved_boolean_fields",
+        "urlTemplate": "/site/activate-improved-boolean-fields",
+        "method": "PUT",
+        "comment": "Activate improved Boolean fields option",
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "SiteActivateImprovedBooleanFieldsTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "activateImprovedBooleanFields",
+        "rawName": "rawActivateImprovedBooleanFields"
       }
     ],
     "namespace": "site",

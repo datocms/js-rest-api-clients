@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class ScheduledUnpublishing extends BaseResource {
-  static readonly TYPE: 'scheduled_unpublishing' = 'scheduled_unpublishing';
+  static readonly TYPE = 'scheduled_unpublishing' as const;
 
   /**
    * Create a new scheduled unpublishing

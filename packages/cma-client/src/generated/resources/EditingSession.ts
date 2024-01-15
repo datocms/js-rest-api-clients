@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class EditingSession extends BaseResource {
-  static readonly TYPE: 'editing_session' = 'editing_session';
+  static readonly TYPE = 'editing_session' as const;
 
   /**
    * List all editing sessions

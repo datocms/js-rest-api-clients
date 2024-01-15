@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class SearchResult extends BaseResource {
-  static readonly TYPE: 'search_result' = 'search_result';
+  static readonly TYPE = 'search_result' as const;
 
   /**
    * Search for results

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class SiteSubscription extends BaseResource {
-  static readonly TYPE: 'site_subscription' = 'site_subscription';
+  static readonly TYPE = 'site_subscription' as const;
 
   /**
    * Create a new subscription
