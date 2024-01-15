@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class Role extends BaseResource {
-  static readonly TYPE: 'role' = 'role';
+  static readonly TYPE = 'role' as const;
 
   /**
    * Create a new role

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class DailyUsage extends BaseResource {
-  static readonly TYPE: 'daily_usage' = 'daily_usage';
+  static readonly TYPE = 'daily_usage' as const;
 
   /**
    * Retrieve project's daily usage info

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class Site extends BaseResource {
-  static readonly TYPE: 'site' = 'site';
+  static readonly TYPE = 'site' as const;
 
   /**
    * Retrieve a project

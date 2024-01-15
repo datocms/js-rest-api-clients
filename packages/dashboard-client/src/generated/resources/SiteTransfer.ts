@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class SiteTransfer extends BaseResource {
-  static readonly TYPE: 'site_transfer' = 'site_transfer';
+  static readonly TYPE = 'site_transfer' as const;
 
   /**
    * List all pending transfer requests

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class MaintenanceMode extends BaseResource {
-  static readonly TYPE: 'maintenance_mode' = 'maintenance_mode';
+  static readonly TYPE = 'maintenance_mode' as const;
 
   /**
    * Retrieve maintenence mode

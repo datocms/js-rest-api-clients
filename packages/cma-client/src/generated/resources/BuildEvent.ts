@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class BuildEvent extends BaseResource {
-  static readonly TYPE: 'build_event' = 'build_event';
+  static readonly TYPE = 'build_event' as const;
 
   /**
    * List all deploy events

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class PublicInfo extends BaseResource {
-  static readonly TYPE: 'public_info' = 'public_info';
+  static readonly TYPE = 'public_info' as const;
 
   /**
    * Retrieve public site info

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class Item extends BaseResource {
-  static readonly TYPE: 'item' = 'item';
+  static readonly TYPE = 'item' as const;
 
   /**
    * List all records

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class Site extends BaseResource {
-  static readonly TYPE: 'site' = 'site';
+  static readonly TYPE = 'site' as const;
 
   /**
    * Retrieve the site
@@ -198,6 +198,80 @@ export default class Site extends BaseResource {
       {
         method: 'PUT',
         url: '/site/activate-improved-gql-multilocale-fields',
+      },
+    );
+  }
+
+  /**
+   * Activate improved GraphQL visibility control option
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_gql_visibility_control
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  activateImprovedGqlVisibilityControl() {
+    return this.rawActivateImprovedGqlVisibilityControl().then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedGqlVisibilityControlTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Activate improved GraphQL visibility control option
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_gql_visibility_control
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawActivateImprovedGqlVisibilityControl(): Promise<SchemaTypes.SiteActivateImprovedGqlVisibilityControlTargetSchema> {
+    return this.client.request<SchemaTypes.SiteActivateImprovedGqlVisibilityControlTargetSchema>(
+      {
+        method: 'PUT',
+        url: '/site/activate-improved-gql-visibility-control',
+      },
+    );
+  }
+
+  /**
+   * Activate improved Boolean fields option
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_boolean_fields
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  activateImprovedBooleanFields() {
+    return this.rawActivateImprovedBooleanFields().then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedBooleanFieldsTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Activate improved Boolean fields option
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_boolean_fields
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawActivateImprovedBooleanFields(): Promise<SchemaTypes.SiteActivateImprovedBooleanFieldsTargetSchema> {
+    return this.client.request<SchemaTypes.SiteActivateImprovedBooleanFieldsTargetSchema>(
+      {
+        method: 'PUT',
+        url: '/site/activate-improved-boolean-fields',
       },
     );
   }

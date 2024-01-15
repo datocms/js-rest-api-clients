@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class SiteInvitation extends BaseResource {
-  static readonly TYPE: 'site_invitation' = 'site_invitation';
+  static readonly TYPE = 'site_invitation' as const;
 
   /**
    * Invite a new user

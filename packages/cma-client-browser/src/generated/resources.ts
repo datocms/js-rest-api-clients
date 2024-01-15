@@ -5,6 +5,7 @@ export const User = Resources.User;
 export const SsoUser = Resources.SsoUser;
 export const AuditLogEvent = Resources.AuditLogEvent;
 export const MenuItem = Resources.MenuItem;
+export const SchemaMenuItem = Resources.SchemaMenuItem;
 export const ItemType = Resources.ItemType;
 export const Field = Resources.Field;
 export const Fieldset = Resources.Fieldset;

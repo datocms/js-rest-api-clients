@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class BuildTrigger extends BaseResource {
-  static readonly TYPE: 'build_trigger' = 'build_trigger';
+  static readonly TYPE = 'build_trigger' as const;
 
   /**
    * List all build triggers for a site

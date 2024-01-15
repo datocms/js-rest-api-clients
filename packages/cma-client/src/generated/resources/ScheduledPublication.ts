@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class ScheduledPublication extends BaseResource {
-  static readonly TYPE: 'scheduled_publication' = 'scheduled_publication';
+  static readonly TYPE = 'scheduled_publication' as const;
 
   /**
    * Create a new scheduled publication

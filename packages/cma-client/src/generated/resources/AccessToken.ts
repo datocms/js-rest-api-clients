@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class AccessToken extends BaseResource {
-  static readonly TYPE: 'access_token' = 'access_token';
+  static readonly TYPE = 'access_token' as const;
 
   /**
    * Create a new API token

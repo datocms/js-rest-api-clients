@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class MenuItem extends BaseResource {
-  static readonly TYPE: 'menu_item' = 'menu_item';
+  static readonly TYPE = 'menu_item' as const;
 
   /**
    * Create a new menu item

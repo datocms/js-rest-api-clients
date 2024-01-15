@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class Account extends BaseResource {
-  static readonly TYPE: 'account' = 'account';
+  static readonly TYPE = 'account' as const;
 
   /**
    * Create a new account

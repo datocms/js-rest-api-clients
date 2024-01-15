@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class ItemType extends BaseResource {
-  static readonly TYPE: 'item_type' = 'item_type';
+  static readonly TYPE = 'item_type' as const;
 
   /**
    * Create a new model

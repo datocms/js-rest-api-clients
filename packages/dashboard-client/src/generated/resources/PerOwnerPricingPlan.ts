@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class PerOwnerPricingPlan extends BaseResource {
-  static readonly TYPE: 'per_owner_pricing_plan' = 'per_owner_pricing_plan';
+  static readonly TYPE = 'per_owner_pricing_plan' as const;
 
   /**
    * Retrieve enabled plans for account

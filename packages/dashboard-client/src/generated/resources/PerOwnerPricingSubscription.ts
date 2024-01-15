@@ -4,8 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class PerOwnerPricingSubscription extends BaseResource {
-  static readonly TYPE: 'per_owner_pricing_subscription' =
-    'per_owner_pricing_subscription';
+  static readonly TYPE = 'per_owner_pricing_subscription' as const;
 
   /**
    * Create a new subscription

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class OauthApplication extends BaseResource {
-  static readonly TYPE: 'oauth_application' = 'oauth_application';
+  static readonly TYPE = 'oauth_application' as const;
 
   /**
    * List all authorized applications

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class JobResult extends BaseResource {
-  static readonly TYPE: 'job_result' = 'job_result';
+  static readonly TYPE = 'job_result' as const;
 
   /**
    * Retrieve a job result

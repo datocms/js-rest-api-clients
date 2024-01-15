@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class Fieldset extends BaseResource {
-  static readonly TYPE: 'fieldset' = 'fieldset';
+  static readonly TYPE = 'fieldset' as const;
 
   /**
    * Create a new fieldset

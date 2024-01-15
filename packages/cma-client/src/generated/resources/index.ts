@@ -3,6 +3,7 @@ export { default as User } from './User';
 export { default as SsoUser } from './SsoUser';
 export { default as AuditLogEvent } from './AuditLogEvent';
 export { default as MenuItem } from './MenuItem';
+export { default as SchemaMenuItem } from './SchemaMenuItem';
 export { default as ItemType } from './ItemType';
 export { default as Field } from './Field';
 export { default as Fieldset } from './Fieldset';

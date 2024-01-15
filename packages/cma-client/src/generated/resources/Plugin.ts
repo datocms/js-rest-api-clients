@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class Plugin extends BaseResource {
-  static readonly TYPE: 'plugin' = 'plugin';
+  static readonly TYPE = 'plugin' as const;
 
   /**
    * Create a new plugin

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class Field extends BaseResource {
-  static readonly TYPE: 'field' = 'field';
+  static readonly TYPE = 'field' as const;
 
   /**
    * Create a new field

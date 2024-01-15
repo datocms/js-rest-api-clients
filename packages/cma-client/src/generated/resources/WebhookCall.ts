@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class WebhookCall extends BaseResource {
-  static readonly TYPE: 'webhook_call' = 'webhook_call';
+  static readonly TYPE = 'webhook_call' as const;
 
   /**
    * List all webhooks calls

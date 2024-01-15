@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class User extends BaseResource {
-  static readonly TYPE: 'user' = 'user';
+  static readonly TYPE = 'user' as const;
 
   /**
    * Update a collaborator

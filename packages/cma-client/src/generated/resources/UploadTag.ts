@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class UploadTag extends BaseResource {
-  static readonly TYPE: 'upload_tag' = 'upload_tag';
+  static readonly TYPE = 'upload_tag' as const;
 
   /**
    * List all manually created upload tags

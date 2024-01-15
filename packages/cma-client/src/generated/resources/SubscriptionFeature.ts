@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class SubscriptionFeature extends BaseResource {
-  static readonly TYPE: 'subscription_feature' = 'subscription_feature';
+  static readonly TYPE = 'subscription_feature' as const;
 
   /**
    * Get all the subscription features

@@ -4,7 +4,7 @@ import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
 
 export default class AuditLogEvent extends BaseResource {
-  static readonly TYPE: 'audit_log_event' = 'audit_log_event';
+  static readonly TYPE = 'audit_log_event' as const;
 
   /**
    * List Audit Log events
