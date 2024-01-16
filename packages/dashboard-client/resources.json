@@ -272,6 +272,7 @@
             "name",
             "internal_subdomain",
             "main_locale",
+            "theme_hue",
             "template"
           ],
           "relationships": []

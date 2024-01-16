@@ -9722,35 +9722,31 @@ export type PublicInfo = {
    * Specifies the color-scheme for the project
    */
   theme: {
-    primary_color?: {
+    primary_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
       [k: string]: unknown;
     };
-    light_color?: {
+    light_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
-    accent_color?: {
+    accent_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
-    dark_color?: {
+    dark_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
-    [k: string]: unknown;
   };
   /**
    * Additional information (only returned on authenticated requests)
@@ -9805,35 +9801,31 @@ export type PublicInfoAttributes = {
    * Specifies the color-scheme for the project
    */
   theme: {
-    primary_color?: {
+    primary_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
       [k: string]: unknown;
     };
-    light_color?: {
+    light_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
-    accent_color?: {
+    accent_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
-    dark_color?: {
+    dark_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
-    [k: string]: unknown;
   };
   /**
    * Additional information (only returned on authenticated requests)
@@ -10131,39 +10123,42 @@ export type Site = {
    * Specifies the theme to use in administrative area
    */
   theme: {
+    /**
+     * If type is monochromatic, the hue will determine the color palette. Dark color is a legacy property, and it won't be used on the interface
+     */
+    type: 'custom' | 'monochromatic';
+    /**
+     * If the type is monochromatic, the value will fall between 0 and 359. If it's not, the value will be null.
+     */
+    hue: number | null;
     primary_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
     light_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
     accent_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
     dark_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
     /**
-     * The site logo
+     * The upload ID that is used as the logo for the project
      */
     logo: string | null;
-    [k: string]: unknown;
   };
   /**
    * Specifies default global settings
@@ -10318,39 +10313,42 @@ export type SiteAttributes = {
    * Specifies the theme to use in administrative area
    */
   theme: {
+    /**
+     * If type is monochromatic, the hue will determine the color palette. Dark color is a legacy property, and it won't be used on the interface
+     */
+    type: 'custom' | 'monochromatic';
+    /**
+     * If the type is monochromatic, the value will fall between 0 and 359. If it's not, the value will be null.
+     */
+    hue: number | null;
     primary_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
     light_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
     accent_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
     dark_color: {
       red: number;
       green: number;
       blue: number;
       alpha: number;
-      [k: string]: unknown;
     };
     /**
-     * The site logo
+     * The upload ID that is used as the logo for the project
      */
     logo: string | null;
-    [k: string]: unknown;
   };
   /**
    * Specifies default global settings
@@ -10458,44 +10456,57 @@ export type SiteUpdateSchema = {
    * Site name
    */
   name?: string;
-  /**
-   * Specifies the theme to use in administrative area
-   */
-  theme?: {
-    primary_color: {
-      red: number;
-      green: number;
-      blue: number;
-      alpha: number;
-      [k: string]: unknown;
-    };
-    light_color: {
-      red: number;
-      green: number;
-      blue: number;
-      alpha: number;
-      [k: string]: unknown;
-    };
-    accent_color: {
-      red: number;
-      green: number;
-      blue: number;
-      alpha: number;
-      [k: string]: unknown;
-    };
-    dark_color: {
-      red: number;
-      green: number;
-      blue: number;
-      alpha: number;
-      [k: string]: unknown;
-    };
-    /**
-     * The site logo
-     */
-    logo: string | null;
-    [k: string]: unknown;
-  };
+  theme?:
+    | {
+        /**
+         * Type of theme color palette
+         */
+        type: 'monochromatic';
+        /**
+         * If the type is monochromatic, the value will fall between 0 and 359. If it's not, the value will be null.
+         */
+        hue: number | null;
+        /**
+         * The upload ID that is used as the logo for the project
+         */
+        logo: string | null;
+        [k: string]: unknown;
+      }
+    | {
+        /**
+         * Type of theme color palette
+         */
+        type?: 'custom';
+        /**
+         * The upload ID that is used as the logo for the project
+         */
+        logo: string | null;
+        primary_color: {
+          red: number;
+          green: number;
+          blue: number;
+          alpha: number;
+        };
+        light_color: {
+          red: number;
+          green: number;
+          blue: number;
+          alpha: number;
+        };
+        accent_color: {
+          red: number;
+          green: number;
+          blue: number;
+          alpha: number;
+        };
+        dark_color?: {
+          red: number;
+          green: number;
+          blue: number;
+          alpha: number;
+        };
+        [k: string]: unknown;
+      };
   /**
    * Available locales
    */

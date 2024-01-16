@@ -1567,6 +1567,10 @@ export type SiteCreateSchema = {
    */
   main_locale?: string;
   /**
+   * Theme hue for the project (from 0 to 359)
+   */
+  theme_hue?: number;
+  /**
    * Site template
    */
   template?: string | null;

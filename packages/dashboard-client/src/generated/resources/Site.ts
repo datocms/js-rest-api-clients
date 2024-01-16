@@ -123,7 +123,13 @@ export default class Site extends BaseResource {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.SiteCreateSchema>(body, {
         type: 'site',
-        attributes: ['name', 'internal_subdomain', 'main_locale', 'template'],
+        attributes: [
+          'name',
+          'internal_subdomain',
+          'main_locale',
+          'theme_hue',
+          'template',
+        ],
         relationships: [],
       }),
     ).then((body) =>
