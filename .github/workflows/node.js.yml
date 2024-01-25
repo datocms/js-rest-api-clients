@@ -26,3 +26,7 @@ jobs:
       - run: ./node_modules/.bin/lerna bootstrap
       - run: npm run build --if-present
       - run: npm test
+        env:
+          DATOCMS_ACCOUNT_EMAIL: ${{ secrets.DATOCMS_ACCOUNT_EMAIL }}
+          DATOCMS_ACCOUNT_PASSWORD: ${{ secrets.DATOCMS_ACCOUNT_PASSWORD }}
+          DATOCMS_ORGANIZATION_ID: ${{ secrets.DATOCMS_ORGANIZATION_ID }}

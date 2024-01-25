@@ -5,9 +5,14 @@ describe('site', () => {
     const client = await generateNewCmaClient();
 
     const fetchedSite = await client.site.find();
-    expect(fetchedSite.name).toEqual('Project');
+    expect(fetchedSite.name).toContain('Project');
 
-    const updatedSite = await client.site.update({ name: 'New project' });
-    expect(updatedSite.name).toEqual('New project');
+    const randomString =
+      Math.random().toString(36).substring(7) + new Date().getTime();
+
+    const newName = `New project ${randomString}`;
+
+    const updatedSite = await client.site.update({ name: newName });
+    expect(updatedSite.name).toEqual(newName);
   });
 });

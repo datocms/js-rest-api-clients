@@ -1,11 +1,13 @@
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
+  preset: "ts-jest",
+  testEnvironment: "node",
   testTimeout: 60000,
-  testMatch: ['**/*.test.ts'],
+  testMatch: ["**/*.test.ts"],
   transformIgnorePatterns: [
-    '/packages/cma-client-node/node_modules/(?!(got|p-cancelable|@szmarczak|lowercase-keys)/)',
+    "/packages/cma-client-node/node_modules/(?!(got|p-cancelable|@szmarczak|lowercase-keys)/)",
   ],
+  setupFiles: ["dotenv/config"],
+  globalSetup: "./jest-helpers/globalSetup.ts",
   // collectCoverage: true,
   // collectCoverageFrom: [
   //   'packages/**/*.[jt]s?(x)',

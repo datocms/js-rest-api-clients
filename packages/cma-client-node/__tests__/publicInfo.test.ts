@@ -5,6 +5,6 @@ describe('Public info', () => {
     const client = await generateNewCmaClient();
 
     const publicInfo = await client.publicInfo.find();
-    expect(publicInfo.name).toEqual('Project');
+    expect(publicInfo.name).toContain('Project');
   });
 });
