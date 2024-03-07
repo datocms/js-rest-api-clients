@@ -2646,6 +2646,10 @@ export type SitePlanAttributes = {
    */
   maximum_single_upload_bytes: number;
   /**
+   * Maximum size (in bytes) for a record, including its block records
+   */
+  item_byte_size: number;
+  /**
    * Available extra packets
    */
   extra_packets: {

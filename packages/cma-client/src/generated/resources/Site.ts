@@ -275,4 +275,55 @@ export default class Site extends BaseResource {
       },
     );
   }
+
+  /**
+   * Update CDN settings default assets
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/update_assets_cdn_default_settings
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  updateAssetsCdnDefaultSettings(
+    body: SimpleSchemaTypes.SiteUpdateAssetsCdnDefaultSettingsSchema,
+  ) {
+    return this.rawUpdateAssetsCdnDefaultSettings(
+      Utils.serializeRequestBody<SchemaTypes.SiteUpdateAssetsCdnDefaultSettingsSchema>(
+        body,
+        {
+          type: 'assets-cdn-default-settings',
+          attributes: ['assets_cdn_default_settings'],
+          relationships: [],
+        },
+      ),
+    ).then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteUpdateAssetsCdnDefaultSettingsTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Update CDN settings default assets
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/update_assets_cdn_default_settings
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawUpdateAssetsCdnDefaultSettings(
+    body: SchemaTypes.SiteUpdateAssetsCdnDefaultSettingsSchema,
+  ): Promise<SchemaTypes.SiteUpdateAssetsCdnDefaultSettingsTargetSchema> {
+    return this.client.request<SchemaTypes.SiteUpdateAssetsCdnDefaultSettingsTargetSchema>(
+      {
+        method: 'PUT',
+        url: '/site/assets-cdn-default-settings',
+        body,
+      },
+    );
+  }
 }

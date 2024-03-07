@@ -425,6 +425,14 @@ export type ItemTypeCreateHrefSchema = {
    * Skip the creation of a menu item linked to the model
    */
   skip_menu_item_creation?: boolean;
+  /**
+   * Explicitely specify the ID of the menu item that will be linked to the model
+   */
+  menu_item_id?: string;
+  /**
+   * Explicitely specify the ID of the schema menu item that will be linked to the model
+   */
+  schema_menu_item_id?: string;
   [k: string]: unknown;
 };
 /**
@@ -1400,6 +1408,32 @@ export type SsoSettingsType = 'sso_settings';
 /**
  * ID
  *
+ * This interface was referenced by `EmojiSuggestions`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `EmojiSuggestions`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type EmojiSuggestionsIdentity = string;
+/**
+ * This interface was referenced by `EmojiSuggestions`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type EmojiSuggestionsType = 'emoji_suggestions';
+/**
+ * This interface was referenced by `EmojiSuggestions`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type EmojiSuggestionsSelfHrefSchema = {
+  /**
+   * The term for which we are seeking suggestions for emojis
+   */
+  term?: string;
+  [k: string]: unknown;
+};
+/**
+ * ID
+ *
  * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
  * via the `definition` "identity".
  *
@@ -1666,6 +1700,7 @@ export type DatoApi = {
   form_data?: FormData;
   sso_group?: SsoGroup;
   sso_settings?: SsoSettings;
+  emoji_suggestions?: EmojiSuggestions;
   white_label_settings?: WhiteLabelSettings;
   public_info?: PublicInfo;
   daily_usage?: DailyUsage;
@@ -3704,6 +3739,10 @@ export type SitePlan = {
    */
   maximum_single_upload_bytes: number;
   /**
+   * Maximum size (in bytes) for a record, including its block records
+   */
+  item_byte_size: number;
+  /**
    * Available extra packets
    */
   extra_packets: {
@@ -3937,6 +3976,10 @@ export type SitePlanAttributes = {
    * Maximum size in bytes for a single file upload
    */
   maximum_single_upload_bytes: number;
+  /**
+   * Maximum size (in bytes) for a record, including its block records
+   */
+  item_byte_size: number;
   /**
    * Available extra packets
    */
@@ -9675,6 +9718,45 @@ export type SsoSettingsUpdateSchema = {
 };
 
 /**
+ * The entity suggests several emojis that are connected to a specific term
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "emoji_suggestions".
+ */
+export type EmojiSuggestions = {
+  id: EmojiSuggestionsIdentity;
+  type: EmojiSuggestionsType;
+  /**
+   * Emojis connected to a specific term
+   */
+  emojis: string[];
+};
+export type EmojiSuggestionsSelfTargetSchema = EmojiSuggestions;
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `EmojiSuggestions`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type EmojiSuggestionsData = {
+  type: EmojiSuggestionsType;
+  id: EmojiSuggestionsIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `EmojiSuggestions`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type EmojiSuggestionsAttributes = {
+  /**
+   * Emojis connected to a specific term
+   */
+  emojis: string[];
+};
+
+/**
  * Represents the white-label settings of the current DatoCMS project
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -10158,6 +10240,37 @@ export type Site = {
    */
   force_use_of_sandbox_environments: boolean;
   /**
+   * Allows setting default parameters for assets served through the CDN
+   */
+  assets_cdn_default_settings: {
+    /**
+     * Allows setting default parameters for optimizing images served by the CDN
+     */
+    image: {
+      /**
+       * Controls the output quality of lossy file formats (jpg, pjpg, webp, avif, or jxr). Valid values are in the range 0 – 100 and the default is 75.
+       */
+      q?: number;
+      /**
+       * The auto parameter helps automating a baseline level of optimization. Specify one or more settings
+       */
+      auto?: ('compress' | 'format' | 'enhance' | 'true' | 'redeye')[];
+      /**
+       * Specifies the color space of the output image
+       */
+      cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip';
+    };
+    /**
+     * Allows setting default parameters for optimizing videos served by the CDN
+     */
+    video: {
+      /**
+       * When true, attempting to retrieve raw video files directly instead of their optimized counterparts will result in a HTTP 422 status code
+       */
+      disable_serving_raw_videos?: boolean;
+    };
+  };
+  /**
    * Specifies the theme to use in administrative area
    */
   theme: {
@@ -10248,6 +10361,7 @@ export type SiteActivateImprovedHexManagementTargetSchema = Site;
 export type SiteActivateImprovedGqlMultilocaleFieldsTargetSchema = Site;
 export type SiteActivateImprovedGqlVisibilityControlTargetSchema = Site;
 export type SiteActivateImprovedBooleanFieldsTargetSchema = Site;
+export type SiteUpdateAssetsCdnDefaultSettingsTargetSchema = Site;
 /**
  * Meta attributes
  *
@@ -10275,6 +10389,10 @@ export type SiteMeta = {
    * Whether the Improved boolean fields option is active or not
    */
   improved_boolean_fields: boolean;
+  /**
+   * Whether the site has custom upload storage settings
+   */
+  custom_upload_storage_settings?: boolean;
 };
 
 /**
@@ -10347,6 +10465,37 @@ export type SiteAttributes = {
    * If enabled, blocks schema changes of primary environment
    */
   force_use_of_sandbox_environments: boolean;
+  /**
+   * Allows setting default parameters for assets served through the CDN
+   */
+  assets_cdn_default_settings: {
+    /**
+     * Allows setting default parameters for optimizing images served by the CDN
+     */
+    image: {
+      /**
+       * Controls the output quality of lossy file formats (jpg, pjpg, webp, avif, or jxr). Valid values are in the range 0 – 100 and the default is 75.
+       */
+      q?: number;
+      /**
+       * The auto parameter helps automating a baseline level of optimization. Specify one or more settings
+       */
+      auto?: ('compress' | 'format' | 'enhance' | 'true' | 'redeye')[];
+      /**
+       * Specifies the color space of the output image
+       */
+      cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip';
+    };
+    /**
+     * Allows setting default parameters for optimizing videos served by the CDN
+     */
+    video: {
+      /**
+       * When true, attempting to retrieve raw video files directly instead of their optimized counterparts will result in a HTTP 422 status code
+       */
+      disable_serving_raw_videos?: boolean;
+    };
+  };
   /**
    * Specifies the theme to use in administrative area
    */
@@ -10587,6 +10736,49 @@ export type SiteUpdateSchema = {
      * Whether the Improved boolean fields option is active or not
      */
     improved_boolean_fields?: boolean;
+    /**
+     * Whether the site has custom upload storage settings
+     */
+    custom_upload_storage_settings?: boolean;
+  };
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `update_assets_cdn_default_settings.schema` link.
+ */
+export type SiteUpdateAssetsCdnDefaultSettingsSchema = {
+  type?: string;
+  /**
+   * Allows setting default parameters for assets served through the CDN
+   */
+  assets_cdn_default_settings: {
+    /**
+     * Allows setting default parameters for optimizing images served by the CDN
+     */
+    image: {
+      /**
+       * Controls the output quality of lossy file formats (jpg, pjpg, webp, avif, or jxr). Valid values are in the range 0 – 100 and the default is 75.
+       */
+      q?: number;
+      /**
+       * The auto parameter helps automating a baseline level of optimization. Specify one or more settings
+       */
+      auto?: ('compress' | 'format' | 'enhance' | 'true' | 'redeye')[];
+      /**
+       * Specifies the color space of the output image
+       */
+      cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip';
+    };
+    /**
+     * Allows setting default parameters for optimizing videos served by the CDN
+     */
+    video: {
+      /**
+       * When true, attempting to retrieve raw video files directly instead of their optimized counterparts will result in a HTTP 422 status code
+       */
+      disable_serving_raw_videos?: boolean;
+    };
   };
 };
 

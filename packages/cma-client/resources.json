@@ -3393,6 +3393,28 @@
     "resourceClassName": "SsoSettings"
   },
   {
+    "jsonApiType": "emoji_suggestions",
+    "endpoints": [
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/emoji-suggestions/self",
+        "rel": "self",
+        "urlTemplate": "/emoji-suggestions",
+        "method": "GET",
+        "comment": "Retrieve emoji suggestions",
+        "optionalRequestBody": false,
+        "queryParamsType": "EmojiSuggestionsSelfHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "EmojiSuggestionsSelfTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "find",
+        "rawName": "rawFind"
+      }
+    ],
+    "namespace": "emojiSuggestions",
+    "resourceClassName": "EmojiSuggestions"
+  },
+  {
     "jsonApiType": "white_label_settings",
     "endpoints": [
       {
@@ -3688,6 +3710,28 @@
         "deprecated": "This API call is to be considered private and might change without notice",
         "name": "activateImprovedBooleanFields",
         "rawName": "rawActivateImprovedBooleanFields"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/update_assets_cdn_default_settings",
+        "rel": "update_assets_cdn_default_settings",
+        "urlTemplate": "/site/assets-cdn-default-settings",
+        "method": "PUT",
+        "comment": "Update CDN settings default assets",
+        "requestBodyType": "SiteUpdateAssetsCdnDefaultSettingsSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "assets-cdn-default-settings",
+          "attributes": [
+            "assets_cdn_default_settings"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteUpdateAssetsCdnDefaultSettingsTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "updateAssetsCdnDefaultSettings",
+        "rawName": "rawUpdateAssetsCdnDefaultSettings"
       }
     ],
     "namespace": "site",

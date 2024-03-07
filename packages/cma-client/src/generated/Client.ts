@@ -68,6 +68,7 @@ export class Client {
   editingSessions: Resources.EditingSession;
   ssoGroups: Resources.SsoGroup;
   ssoSettings: Resources.SsoSettings;
+  emojiSuggestions: Resources.EmojiSuggestions;
   whiteLabelSettings: Resources.WhiteLabelSettings;
   publicInfo: Resources.PublicInfo;
   dailyUsages: Resources.DailyUsage;
@@ -118,6 +119,7 @@ export class Client {
     this.editingSessions = new Resources.EditingSession(this);
     this.ssoGroups = new Resources.SsoGroup(this);
     this.ssoSettings = new Resources.SsoSettings(this);
+    this.emojiSuggestions = new Resources.EmojiSuggestions(this);
     this.whiteLabelSettings = new Resources.WhiteLabelSettings(this);
     this.publicInfo = new Resources.PublicInfo(this);
     this.dailyUsages = new Resources.DailyUsage(this);

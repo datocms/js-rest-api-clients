@@ -32,6 +32,7 @@ export { default as SiteInvitation } from './SiteInvitation';
 export { default as EditingSession } from './EditingSession';
 export { default as SsoGroup } from './SsoGroup';
 export { default as SsoSettings } from './SsoSettings';
+export { default as EmojiSuggestions } from './EmojiSuggestions';
 export { default as WhiteLabelSettings } from './WhiteLabelSettings';
 export { default as PublicInfo } from './PublicInfo';
 export { default as DailyUsage } from './DailyUsage';

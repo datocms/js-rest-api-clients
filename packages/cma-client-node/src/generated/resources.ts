@@ -34,6 +34,7 @@ export const SiteInvitation = Resources.SiteInvitation;
 export const EditingSession = Resources.EditingSession;
 export const SsoGroup = Resources.SsoGroup;
 export const SsoSettings = Resources.SsoSettings;
+export const EmojiSuggestions = Resources.EmojiSuggestions;
 export const WhiteLabelSettings = Resources.WhiteLabelSettings;
 export const PublicInfo = Resources.PublicInfo;
 export const DailyUsage = Resources.DailyUsage;
