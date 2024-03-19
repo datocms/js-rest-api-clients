@@ -7,7 +7,7 @@ function isOldEnough(isoDatetime: string) {
   const date = new Date(isoDatetime);
   const currentTime = new Date();
 
-  return Number(currentTime) - Number(date) > 60 * 60 * 1000;
+  return Number(currentTime) - Number(date) > 30 * 60 * 1000;
 }
 
 export default async () => {

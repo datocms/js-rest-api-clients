@@ -1,6 +1,5 @@
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 import { generateId } from '../../cma-client/src';
-import { LogLevel } from '../src';
 
 describe('upload', () => {
   it.concurrent('upload local file', async () => {
@@ -17,13 +16,13 @@ describe('upload', () => {
     const client = await generateNewCmaClient();
 
     const upload = await client.uploads.createFromUrl({
-      url: 'https://www.datocms-assets.com/205/1525789775-dato.png?w=16',
+      url: 'https://www.datocms-assets.com/205/1525789775-dato.png',
     });
 
     expect(upload.path.endsWith('dato.png')).toBeTruthy();
 
     const secondUpload = await client.uploads.createFromUrl({
-      url: 'https://www.datocms-assets.com/205/1525789775-dato.png?w=16',
+      url: 'https://www.datocms-assets.com/205/1525789775-dato.png',
       skipCreationIfAlreadyExists: true,
     });
 
