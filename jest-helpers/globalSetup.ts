@@ -12,6 +12,9 @@ function isOldEnough(isoDatetime: string) {
 }
 
 export default async () => {
+  console.log('');
+  console.log('Global setup: preparing environment...');
+
   const client = await generateNewDashboardClient();
 
   // Context: multiple processes might be running tests in parallel (like in Github Actions)
@@ -22,11 +25,12 @@ export default async () => {
     // We don't want to destroy sites that might be used by other processes,
     // let's only delete old ones
 
-    // biome-ignore lint/style/noNonNullAssertion: Always present
     if (isOldEnough(site.created_at!)) {
       siteIds.push(site.id);
     }
   }
+
+  console.log(`Deleting ${siteIds.length} projects...`);
 
   await Promise.all(
     siteIds.map(async (id) => {
@@ -39,6 +43,8 @@ export default async () => {
         }
 
         throw e;
+      } finally {
+        process.stdout.write('.');
       }
     }),
   );

@@ -23,7 +23,6 @@ export async function generateNewCmaClient(
 
   return buildClient({
     ...extraConfig,
-    // biome-ignore lint/style/noNonNullAssertion: We're owners of the site, so readwrite_token is present
     apiToken: site.readwrite_token!,
     ...baseConfigOptions,
   });
