@@ -30,6 +30,15 @@ export enum LogLevel {
   BODY_AND_HEADERS = 3,
 }
 
+type Job = {
+  type: 'job';
+  id: string;
+};
+
+type JobResponse = {
+  data: Job;
+};
+
 type RequestOptions = {
   baseUrl: string;
   fetchJobResult: (jobId: string) => Promise<JobResult>;
@@ -260,19 +269,19 @@ export async function request<T>(options: RequestOptions): Promise<T> {
     if (logLevel >= LogLevel.BASIC) {
       log(`[${requestId}] Status: ${response.status} (${response.statusText})`);
       if (logLevel >= LogLevel.BODY_AND_HEADERS) {
-        [
+        for (const key of [
           'x-api-version',
           'x-environment',
           'x-queue-time',
           'x-ratelimit-remaining',
           'x-request-id',
           'cf-ray',
-        ].forEach((key) => {
+        ]) {
           const value = response.headers.get(key);
           if (value) {
             log(`[${requestId}] ${key}: ${value}`);
           }
-        });
+        }
       }
     }
 
@@ -284,7 +293,9 @@ export async function request<T>(options: RequestOptions): Promise<T> {
     }
 
     if (response.status === 202) {
-      const jobResult = await options.fetchJobResult(responseBody.data.id);
+      const jobResult = await options.fetchJobResult(
+        (responseBody as JobResponse).data.id,
+      );
 
       if (jobResult.status < 200 || jobResult.status >= 300) {
         throw new ApiError(
@@ -304,7 +315,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
     }
 
     if (response.status >= 200 && response.status < 300) {
-      return responseBody;
+      return responseBody as T;
     }
 
     const error = new ApiError(
