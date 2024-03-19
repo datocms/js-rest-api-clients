@@ -1,8 +1,8 @@
-import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
+import { SchemaTypes, buildBlockRecord } from '@datocms/cma-client';
+import { Block, Document, Node, isBlock } from 'datocms-structured-text-utils';
 import u from 'unist-builder';
 import map from 'unist-util-map';
-import { Block, Document, isBlock, Node } from 'datocms-structured-text-utils';
-import { buildBlockRecord, SchemaTypes } from '@datocms/cma-client';
+import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 
 function isDastNode(node: unknown): node is Node {
   return !!(

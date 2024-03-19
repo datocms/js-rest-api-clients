@@ -1,5 +1,5 @@
+import { SchemaTypes, buildBlockRecord } from '@datocms/cma-client';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
-import { buildBlockRecord, SchemaTypes } from '@datocms/cma-client';
 
 describe('single block', () => {
   it.concurrent('create, update', async () => {

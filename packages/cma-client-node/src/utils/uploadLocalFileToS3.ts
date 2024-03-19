@@ -1,12 +1,12 @@
-import got, { CancelError, CancelableRequest, Response } from 'got';
 import { createReadStream, promises } from 'fs';
-import mime from 'mime-types';
-import { OnProgressInfo } from './uploadLocalFileAndReturnPath';
 import {
   CancelablePromise,
   CanceledPromiseError,
 } from '@datocms/rest-client-utils';
 import { makeCancelablePromise } from '@datocms/rest-client-utils';
+import got, { CancelError, CancelableRequest, Response } from 'got';
+import mime from 'mime-types';
+import { OnProgressInfo } from './uploadLocalFileAndReturnPath';
 
 type Options = {
   onProgress?: (info: OnProgressInfo) => void;

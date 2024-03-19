@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
+import BaseResource from '../../BaseResource';
 import * as SchemaTypes from '../SchemaTypes';
 import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
-import BaseResource from '../../BaseResource';
 
 export default class ItemVersion extends BaseResource {
   static readonly TYPE = 'item_version' as const;

@@ -4,7 +4,7 @@ import {
   CanceledPromiseError,
   makeCancelablePromise,
 } from '@datocms/rest-client-utils';
-import { downloadFile, DownloadResult } from '../utils/downloadFile';
+import { DownloadResult, downloadFile } from '../utils/downloadFile';
 import md5 from '../utils/md5';
 import {
   OnProgressInfo,

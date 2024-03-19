@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
+import BaseResource from '../../BaseResource';
 import * as SchemaTypes from '../SchemaTypes';
 import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
-import BaseResource from '../../BaseResource';
 
 export default class SubscriptionFeature extends BaseResource {
   static readonly TYPE = 'subscription_feature' as const;

@@ -8,11 +8,11 @@ import {
   TimeoutErrorInitObject,
 } from './errors';
 import { JobResult } from './internalTypes';
-import { wait } from './wait';
 import {
-  makeCancelablePromise,
   CanceledPromiseError,
+  makeCancelablePromise,
 } from './makeCancelablePromise';
+import { wait } from './wait';
 
 const isBrowser =
   typeof window !== 'undefined' && typeof window.document !== 'undefined';

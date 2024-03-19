@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "lint": "rome ci packages",
-    "format": "rome check packages --apply-suggested && rome format --write packages",
+    "lint": "biome ci packages",
+    "format": "biome check packages --apply-unsafe && biome format --write packages",
     "test": "npm run lint && jest --maxConcurrency=5",
     "test-next": "ACCOUNT_API_BASE_URL=http://account-api.lvh.me:3001 SITE_API_BASE_URL=http://site-api.lvh.me:3001 PUSHER_APP_KEY=12a5ddac68784be0fc59 PUSHER_CLUSTER=eu npm run test",
     "generate": "./generate/index.ts && npm run format",
@@ -30,7 +30,7 @@
     "lerna": "^4.0.0",
     "lint-staged": "^13.1.0",
     "rimraf": "^3.0.2",
-    "rome": "^11.0.0",
+    "@biomejs/biome": "1.2.2",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3",
@@ -48,7 +48,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
-      "rome ci"
+      "biome ci"
     ]
   }
 }

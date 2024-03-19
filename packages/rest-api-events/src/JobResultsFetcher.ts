@@ -1,8 +1,8 @@
 import { GenericClient, JobResult } from './internalTypes';
 import {
   EventsSubscription,
-  subscribeToEvents,
   SubscriptionConfig,
+  subscribeToEvents,
 } from './subscribeToEvents';
 
 export type SubscribeToEventsSubscriptionConfig = Pick<

@@ -1,10 +1,10 @@
+import { basename } from 'path';
 import { Client } from '@datocms/cma-client';
 import { makeCancelablePromise } from '@datocms/rest-client-utils';
 import {
   CancelablePromise,
   CanceledPromiseError,
 } from '@datocms/rest-client-utils';
-import { basename } from 'path';
 import { uploadLocalFileToS3 } from './uploadLocalFileToS3';
 
 export type OnProgressDownloadingFileInfo = {

@@ -1,4 +1,8 @@
 {
+  "$schema": "https://biomejs.dev/schemas/1.2.2/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
   "files": {
     "ignore": ["dist", "node_modules"]
   },
@@ -14,6 +18,9 @@
       },
       "style": {
         "noNonNullAssertion": "off"
+      },
+      "complexity": {
+        "noBannedTypes": "off"
       }
     }
   },

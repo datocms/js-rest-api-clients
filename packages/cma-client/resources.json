@@ -40,9 +40,7 @@
             "positive_build_trigger_permissions",
             "negative_build_trigger_permissions"
           ],
-          "relationships": [
-            "inherits_permissions_from"
-          ]
+          "relationships": ["inherits_permissions_from"]
         },
         "queryParamsRequired": false,
         "responseType": "RoleCreateTargetSchema",
@@ -93,9 +91,7 @@
             "positive_build_trigger_permissions",
             "negative_build_trigger_permissions"
           ],
-          "relationships": [
-            "inherits_permissions_from"
-          ]
+          "relationships": ["inherits_permissions_from"]
         },
         "queryParamsRequired": false,
         "responseType": "RoleUpdateTargetSchema",
@@ -175,12 +171,8 @@
         "requestStructure": {
           "type": "user",
           "idRequired": true,
-          "attributes": [
-            "is_active"
-          ],
-          "relationships": [
-            "role"
-          ]
+          "attributes": ["is_active"],
+          "relationships": ["role"]
         },
         "queryParamsRequired": false,
         "responseType": "UserUpdateTargetSchema",
@@ -340,11 +332,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "audit_log_query",
-          "attributes": [
-            "filter",
-            "next_token",
-            "detailed_log"
-          ],
+          "attributes": ["filter", "next_token", "detailed_log"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -376,11 +364,7 @@
             "position",
             "open_in_new_tab"
           ],
-          "relationships": [
-            "item_type",
-            "item_type_filter",
-            "parent"
-          ]
+          "relationships": ["item_type", "item_type_filter", "parent"]
         },
         "queryParamsRequired": false,
         "responseType": "MenuItemCreateTargetSchema",
@@ -410,11 +394,7 @@
             "position",
             "open_in_new_tab"
           ],
-          "relationships": [
-            "item_type",
-            "item_type_filter",
-            "parent"
-          ]
+          "relationships": ["item_type", "item_type_filter", "parent"]
         },
         "queryParamsRequired": false,
         "responseType": "MenuItemUpdateTargetSchema",
@@ -489,15 +469,8 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "schema_menu_item",
-          "attributes": [
-            "label",
-            "position",
-            "kind"
-          ],
-          "relationships": [
-            "item_type",
-            "parent"
-          ]
+          "attributes": ["label", "position", "kind"],
+          "relationships": ["item_type", "parent"]
         },
         "queryParamsRequired": false,
         "responseType": "SchemaMenuItemCreateTargetSchema",
@@ -521,16 +494,8 @@
         "requestStructure": {
           "type": "schema_menu_item",
           "idRequired": true,
-          "attributes": [
-            "label",
-            "position",
-            "kind"
-          ],
-          "relationships": [
-            "item_type",
-            "parent",
-            "children"
-          ]
+          "attributes": ["label", "position", "kind"],
+          "relationships": ["item_type", "parent", "children"]
         },
         "queryParamsRequired": false,
         "responseType": "SchemaMenuItemUpdateTargetSchema",
@@ -786,9 +751,7 @@
             "default_value",
             "deep_filtering_enabled"
           ],
-          "relationships": [
-            "fieldset"
-          ]
+          "relationships": ["fieldset"]
         },
         "queryParamsRequired": false,
         "responseType": "FieldCreateJobSchema",
@@ -825,9 +788,7 @@
             "hint",
             "deep_filtering_enabled"
           ],
-          "relationships": [
-            "fieldset"
-          ]
+          "relationships": ["fieldset"]
         },
         "queryParamsRequired": false,
         "responseType": "FieldUpdateJobSchema",
@@ -1084,11 +1045,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "email_credentials",
-          "attributes": [
-            "email",
-            "password",
-            "otp_code"
-          ],
+          "attributes": ["email", "password", "otp_code"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -1121,9 +1078,7 @@
             "can_access_cda_preview",
             "can_access_cma"
           ],
-          "relationships": [
-            "role"
-          ]
+          "relationships": ["role"]
         },
         "queryParamsRequired": false,
         "responseType": "AccessTokenCreateTargetSchema",
@@ -1153,9 +1108,7 @@
             "can_access_cda_preview",
             "can_access_cma"
           ],
-          "relationships": [
-            "role"
-          ]
+          "relationships": ["role"]
         },
         "queryParamsRequired": false,
         "responseType": "AccessTokenUpdateTargetSchema",
@@ -1529,10 +1482,7 @@
           "type": "item",
           "idRequired": true,
           "attributes": "*",
-          "relationships": [
-            "item_type",
-            "creator"
-          ]
+          "relationships": ["item_type", "creator"]
         },
         "queryParamsRequired": false,
         "deprecated": "This API call is to be considered private and might change without notice",
@@ -1551,10 +1501,7 @@
         "requestStructure": {
           "type": "item",
           "attributes": "*",
-          "relationships": [
-            "item_type",
-            "creator"
-          ]
+          "relationships": ["item_type", "creator"]
         },
         "queryParamsRequired": false,
         "deprecated": "This API call is to be considered private and might change without notice",
@@ -1573,10 +1520,7 @@
         "requestStructure": {
           "type": "item",
           "attributes": "*",
-          "relationships": [
-            "item_type",
-            "creator"
-          ]
+          "relationships": ["item_type", "creator"]
         },
         "queryParamsRequired": false,
         "responseType": "ItemCreateTargetSchema",
@@ -1619,10 +1563,7 @@
           "type": "item",
           "idRequired": true,
           "attributes": "*",
-          "relationships": [
-            "item_type",
-            "creator"
-          ]
+          "relationships": ["item_type", "creator"]
         },
         "queryParamsRequired": false,
         "responseType": "ItemUpdateTargetSchema",
@@ -1765,10 +1706,7 @@
         "optionalRequestBody": true,
         "requestStructure": {
           "type": "selective_publish_operation",
-          "attributes": [
-            "content_in_locales",
-            "non_localized_content"
-          ],
+          "attributes": ["content_in_locales", "non_localized_content"],
           "relationships": []
         },
         "queryParamsType": "ItemPublishHrefSchema",
@@ -1793,9 +1731,7 @@
         "optionalRequestBody": true,
         "requestStructure": {
           "type": "selective_unpublish_operation",
-          "attributes": [
-            "content_in_locales"
-          ],
+          "attributes": ["content_in_locales"],
           "relationships": []
         },
         "queryParamsType": "ItemUnpublishHrefSchema",
@@ -1816,9 +1752,7 @@
         "requestStructure": {
           "type": "item_bulk_publish_operation",
           "attributes": [],
-          "relationships": [
-            "items"
-          ]
+          "relationships": ["items"]
         },
         "queryParamsRequired": false,
         "responseType": "ItemBulkPublishJobSchema",
@@ -1837,9 +1771,7 @@
         "requestStructure": {
           "type": "item_bulk_unpublish_operation",
           "attributes": [],
-          "relationships": [
-            "items"
-          ]
+          "relationships": ["items"]
         },
         "queryParamsRequired": false,
         "responseType": "ItemBulkUnpublishJobSchema",
@@ -1858,9 +1790,7 @@
         "requestStructure": {
           "type": "item_bulk_destroy_operation",
           "attributes": [],
-          "relationships": [
-            "items"
-          ]
+          "relationships": ["items"]
         },
         "queryParamsRequired": false,
         "responseType": "ItemBulkDestroyJobSchema",
@@ -1878,12 +1808,8 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "item_bulk_move_to_stage_operation",
-          "attributes": [
-            "stage"
-          ],
-          "relationships": [
-            "items"
-          ]
+          "attributes": ["stage"],
+          "relationships": ["items"]
         },
         "queryParamsRequired": false,
         "responseType": "ItemBulkMoveToStageJobSchema",
@@ -2069,9 +1995,7 @@
             "tags",
             "default_field_metadata"
           ],
-          "relationships": [
-            "creator"
-          ]
+          "relationships": ["creator"]
         },
         "queryParamsRequired": false,
         "responseType": "UploadUpdateJobSchema",
@@ -2089,9 +2013,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload",
-          "attributes": [
-            "tags"
-          ],
+          "attributes": ["tags"],
           "relationships": []
         },
         "queryParamsType": "UploadBatchAddTagsHrefSchema",
@@ -2146,12 +2068,8 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload_bulk_tag_operation",
-          "attributes": [
-            "tags"
-          ],
-          "relationships": [
-            "uploads"
-          ]
+          "attributes": ["tags"],
+          "relationships": ["uploads"]
         },
         "queryParamsRequired": false,
         "responseType": "UploadBulkTagJobSchema",
@@ -2170,9 +2088,7 @@
         "requestStructure": {
           "type": "upload_bulk_destroy_operation",
           "attributes": [],
-          "relationships": [
-            "uploads"
-          ]
+          "relationships": ["uploads"]
         },
         "queryParamsRequired": false,
         "responseType": "UploadBulkDestroyJobSchema",
@@ -2197,9 +2113,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload_request",
-          "attributes": [
-            "filename"
-          ],
+          "attributes": ["filename"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -2230,10 +2144,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "scheduled_publication",
-          "attributes": [
-            "publication_scheduled_at",
-            "selective_publication"
-          ],
+          "attributes": ["publication_scheduled_at", "selective_publication"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -2282,10 +2193,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "scheduled_unpublishing",
-          "attributes": [
-            "unpublishing_scheduled_at",
-            "content_in_locales"
-          ],
+          "attributes": ["unpublishing_scheduled_at", "content_in_locales"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -2848,16 +2756,8 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "item_type_filter",
-          "attributes": [
-            "name",
-            "filter",
-            "columns",
-            "order_by",
-            "shared"
-          ],
-          "relationships": [
-            "item_type"
-          ]
+          "attributes": ["name", "filter", "columns", "order_by", "shared"],
+          "relationships": ["item_type"]
         },
         "queryParamsRequired": false,
         "responseType": "ItemTypeFilterCreateTargetSchema",
@@ -2881,16 +2781,8 @@
         "requestStructure": {
           "type": "item_type_filter",
           "idRequired": true,
-          "attributes": [
-            "name",
-            "columns",
-            "order_by",
-            "shared",
-            "filter"
-          ],
-          "relationships": [
-            "item_type"
-          ]
+          "attributes": ["name", "columns", "order_by", "shared", "filter"],
+          "relationships": ["item_type"]
         },
         "queryParamsRequired": false,
         "responseType": "ItemTypeFilterUpdateTargetSchema",
@@ -2964,11 +2856,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload_filter",
-          "attributes": [
-            "name",
-            "filter",
-            "shared"
-          ],
+          "attributes": ["name", "filter", "shared"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -2993,11 +2881,7 @@
         "requestStructure": {
           "type": "upload_filter",
           "idRequired": true,
-          "attributes": [
-            "name",
-            "shared",
-            "filter"
-          ],
+          "attributes": ["name", "shared", "filter"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -3072,12 +2956,8 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_invitation",
-          "attributes": [
-            "email"
-          ],
-          "relationships": [
-            "role"
-          ]
+          "attributes": ["email"],
+          "relationships": ["role"]
         },
         "queryParamsRequired": false,
         "responseType": "SiteInvitationCreateTargetSchema",
@@ -3102,9 +2982,7 @@
           "type": "site_invitation",
           "idRequired": true,
           "attributes": [],
-          "relationships": [
-            "role"
-          ]
+          "relationships": ["role"]
         },
         "queryParamsRequired": false,
         "responseType": "SiteInvitationUpdateTargetSchema",
@@ -3216,11 +3094,7 @@
         "requestStructure": {
           "type": "*",
           "attributes": [],
-          "relationships": [
-            "item",
-            "item",
-            "item"
-          ]
+          "relationships": ["item", "item", "item"]
         },
         "queryParamsRequired": false,
         "responseType": "EditingSessionUpdateTargetSchema",
@@ -3301,12 +3175,8 @@
         "requestStructure": {
           "type": "sso_group",
           "idRequired": true,
-          "attributes": [
-            "priority"
-          ],
-          "relationships": [
-            "role"
-          ]
+          "attributes": ["priority"],
+          "relationships": ["role"]
         },
         "queryParamsRequired": false,
         "responseType": "SsoGroupUpdateTargetSchema",
@@ -3375,13 +3245,8 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "sso_settings",
-          "attributes": [
-            "idp_saml_metadata_url",
-            "idp_saml_metadata_xml"
-          ],
-          "relationships": [
-            "default_role"
-          ]
+          "attributes": ["idp_saml_metadata_url", "idp_saml_metadata_xml"],
+          "relationships": ["default_role"]
         },
         "queryParamsRequired": false,
         "responseType": "SsoSettingsUpdateTargetSchema",
@@ -3441,9 +3306,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "white_label_settings",
-          "attributes": [
-            "custom_i18n_messages_template_url"
-          ],
+          "attributes": ["custom_i18n_messages_template_url"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -3553,9 +3416,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload_tag",
-          "attributes": [
-            "name"
-          ],
+          "attributes": ["name"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -3632,9 +3493,7 @@
             "ip_tracking_enabled",
             "force_use_of_sandbox_environments"
           ],
-          "relationships": [
-            "sso_default_role"
-          ]
+          "relationships": ["sso_default_role"]
         },
         "queryParamsRequired": false,
         "responseType": "SiteUpdateJobSchema",
@@ -3722,9 +3581,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "assets-cdn-default-settings",
-          "attributes": [
-            "assets_cdn_default_settings"
-          ],
+          "attributes": ["assets_cdn_default_settings"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -3751,11 +3608,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "workflow",
-          "attributes": [
-            "name",
-            "api_key",
-            "stages"
-          ],
+          "attributes": ["name", "api_key", "stages"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -3780,11 +3633,7 @@
         "requestStructure": {
           "type": "workflow",
           "idRequired": true,
-          "attributes": [
-            "name",
-            "api_key",
-            "stages"
-          ],
+          "attributes": ["name", "api_key", "stages"],
           "relationships": []
         },
         "queryParamsRequired": false,

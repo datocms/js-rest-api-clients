@@ -1,5 +1,3 @@
-import { dir } from 'tmp-promise';
-import got, { CancelableRequest, Response, CancelError } from 'got';
 import { promises } from 'fs';
 import { basename, join } from 'path';
 import { URL } from 'url';
@@ -8,6 +6,8 @@ import {
   CanceledPromiseError,
   makeCancelablePromise,
 } from '@datocms/rest-client-utils';
+import got, { CancelError, CancelableRequest, Response } from 'got';
+import { dir } from 'tmp-promise';
 import { OnProgressInfo } from './uploadLocalFileAndReturnPath';
 
 type Options = {

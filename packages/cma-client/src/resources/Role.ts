@@ -1,5 +1,5 @@
-import BaseRole from '../generated/resources/Role';
 import * as SimpleSchemaTypes from '../generated/SimpleSchemaTypes';
+import BaseRole from '../generated/resources/Role';
 
 export type UpdateRoleDiff<T> = {
   add?: Omit<T, 'environment'>[];

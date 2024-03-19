@@ -1,6 +1,6 @@
 import * as Utils from '@datocms/rest-client-utils';
-import * as SimpleSchemaTypes from './generated/SimpleSchemaTypes';
 import * as SchemaTypes from './generated/SchemaTypes';
+import * as SimpleSchemaTypes from './generated/SimpleSchemaTypes';
 import { Item } from './generated/resources';
 
 export function buildBlockRecord(body: SimpleSchemaTypes.ItemUpdateSchema) {

@@ -1,5 +1,5 @@
 import { baseConfigOptions } from '../../../jest-helpers/generateNewCmaClient';
-import { ApiError, buildClient, SimpleSchemaTypes } from '../src';
+import { ApiError, SimpleSchemaTypes, buildClient } from '../src';
 
 describe('@datocms/client', () => {
   it.concurrent('first test', async () => {

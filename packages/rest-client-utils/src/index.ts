@@ -1,5 +1,3 @@
-'use strict';
-
 export * from './errors';
 export * from './deserialize';
 export * from './pollJobResult';

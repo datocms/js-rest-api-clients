@@ -1,6 +1,6 @@
-import { LogLevel } from '../src';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 import { generateId } from '../../cma-client/src';
+import { LogLevel } from '../src';
 
 describe('upload', () => {
   it.concurrent('upload local file', async () => {

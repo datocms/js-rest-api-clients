@@ -1,5 +1,5 @@
-import { withEventsSubscription } from '../src';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
+import { withEventsSubscription } from '../src';
 
 describe('@datocms/rest-api-events', () => {
   it.concurrent('first test', async () => {

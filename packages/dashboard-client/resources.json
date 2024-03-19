@@ -99,10 +99,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "account_destroy_request",
-          "attributes": [
-            "otp_code",
-            "password"
-          ],
+          "attributes": ["otp_code", "password"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -133,9 +130,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "account",
-          "attributes": [
-            "email"
-          ],
+          "attributes": ["email"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -152,10 +147,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "2fa_activation",
-          "attributes": [
-            "otp_code",
-            "password"
-          ],
+          "attributes": ["otp_code", "password"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -185,10 +177,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "2fa_deactivation",
-          "attributes": [
-            "otp_code",
-            "password"
-          ],
+          "attributes": ["otp_code", "password"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -206,9 +195,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization",
-          "attributes": [
-            "name"
-          ],
+          "attributes": ["name"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -351,10 +338,7 @@
             "extra_packets",
             "billing_profile"
           ],
-          "relationships": [
-            "plan",
-            "billing_profile"
-          ]
+          "relationships": ["plan", "billing_profile"]
         },
         "queryParamsRequired": false,
         "responseType": "SiteDuplicateJobSchema",
@@ -388,10 +372,7 @@
             "extra_packets",
             "billing_profile"
           ],
-          "relationships": [
-            "plan",
-            "billing_profile"
-          ]
+          "relationships": ["plan", "billing_profile"]
         },
         "queryParamsRequired": false,
         "responseType": "SiteSubscriptionCreateTargetSchema",
@@ -419,10 +400,7 @@
             "ignore_content",
             "billing_profile"
           ],
-          "relationships": [
-            "plan",
-            "billing_profile"
-          ]
+          "relationships": ["plan", "billing_profile"]
         },
         "queryParamsRequired": false,
         "responseType": "SiteSubscriptionSimulateTargetSchema",
@@ -443,14 +421,8 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_subscription",
-          "attributes": [
-            "extra_packets",
-            "ignore_content",
-            "is_duplicate"
-          ],
-          "relationships": [
-            "plan"
-          ]
+          "attributes": ["extra_packets", "ignore_content", "is_duplicate"],
+          "relationships": ["plan"]
         },
         "queryParamsRequired": false,
         "responseType": "SiteSubscriptionValidateTargetSchema",
@@ -480,9 +452,7 @@
             "billing_profile",
             "downgrade_reason"
           ],
-          "relationships": [
-            "plan"
-          ]
+          "relationships": ["plan"]
         },
         "queryParamsRequired": false,
         "responseType": "PerOwnerPricingSubscriptionCreateTargetSchema",
@@ -499,13 +469,8 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "per_owner_pricing_subscription",
-          "attributes": [
-            "recurrence",
-            "billing_profile"
-          ],
-          "relationships": [
-            "plan"
-          ]
+          "attributes": ["recurrence", "billing_profile"],
+          "relationships": ["plan"]
         },
         "queryParamsRequired": false,
         "responseType": "PerOwnerPricingSubscriptionSimulateTargetSchema",
@@ -523,9 +488,7 @@
         "requestStructure": {
           "type": "per_owner_pricing_subscription",
           "attributes": [],
-          "relationships": [
-            "plan"
-          ]
+          "relationships": ["plan"]
         },
         "queryParamsRequired": false,
         "responseType": "PerOwnerPricingSubscriptionValidateTargetSchema",
@@ -634,9 +597,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "card",
-          "attributes": [
-            "payment_intent_id"
-          ],
+          "attributes": ["payment_intent_id"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -725,9 +686,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "card",
-          "attributes": [
-            "payment_intent_id"
-          ],
+          "attributes": ["payment_intent_id"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -812,9 +771,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "invoice_collection",
-          "attributes": [
-            "payment_intent_id"
-          ],
+          "attributes": ["payment_intent_id"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -837,9 +794,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "invoice_collection",
-          "attributes": [
-            "payment_intent_id"
-          ],
+          "attributes": ["payment_intent_id"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -941,9 +896,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "site_transfer",
-          "attributes": [
-            "destination"
-          ],
+          "attributes": ["destination"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -984,12 +937,8 @@
         "requestStructure": {
           "type": "site_transfer",
           "idRequired": true,
-          "attributes": [
-            "billing_profile"
-          ],
-          "relationships": [
-            "billing_profile"
-          ]
+          "attributes": ["billing_profile"],
+          "relationships": ["billing_profile"]
         },
         "queryParamsRequired": false,
         "responseType": "SiteTransferSimulateAcceptTargetSchema",
@@ -1011,13 +960,8 @@
         "requestStructure": {
           "type": "site_transfer",
           "idRequired": true,
-          "attributes": [
-            "payment_intent_id",
-            "billing_profile"
-          ],
-          "relationships": [
-            "billing_profile"
-          ]
+          "attributes": ["payment_intent_id", "billing_profile"],
+          "relationships": ["billing_profile"]
         },
         "queryParamsRequired": false,
         "responseType": "SiteTransferAcceptTargetSchema",
@@ -1169,9 +1113,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "payment_intent",
-          "attributes": [
-            "amount"
-          ],
+          "attributes": ["amount"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -1195,9 +1137,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "payment_intent",
-          "attributes": [
-            "amount"
-          ],
+          "attributes": ["amount"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -1216,9 +1156,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "payment_intent",
-          "attributes": [
-            "amount"
-          ],
+          "attributes": ["amount"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -1293,9 +1231,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization",
-          "attributes": [
-            "name"
-          ],
+          "attributes": ["name"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -1319,9 +1255,7 @@
         "requestStructure": {
           "type": "organization",
           "idRequired": true,
-          "attributes": [
-            "name"
-          ],
+          "attributes": ["name"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -1344,10 +1278,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization_destroy_request",
-          "attributes": [
-            "otp_code",
-            "password"
-          ],
+          "attributes": ["otp_code", "password"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -1408,12 +1339,8 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "organization_invitation",
-          "attributes": [
-            "email"
-          ],
-          "relationships": [
-            "role"
-          ]
+          "attributes": ["email"],
+          "relationships": ["role"]
         },
         "queryParamsRequired": false,
         "responseType": "OrganizationInvitationCreateTargetSchema",
@@ -1437,9 +1364,7 @@
           "type": "organization_invitation",
           "idRequired": true,
           "attributes": [],
-          "relationships": [
-            "role"
-          ]
+          "relationships": ["role"]
         },
         "queryParamsRequired": false,
         "responseType": "OrganizationInvitationUpdateTargetSchema",
@@ -1550,9 +1475,7 @@
           "type": "organization_membership",
           "idRequired": true,
           "attributes": [],
-          "relationships": [
-            "role"
-          ]
+          "relationships": ["role"]
         },
         "queryParamsRequired": false,
         "responseType": "OrganizationMembershipUpdateTargetSchema",
@@ -1638,9 +1561,7 @@
         "requestStructure": {
           "type": "organization_mandate_request",
           "attributes": [],
-          "relationships": [
-            "approver_organization"
-          ]
+          "relationships": ["approver_organization"]
         },
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateRequestCreateTargetSchema",
@@ -1744,9 +1665,7 @@
           "type": "organization_mandate",
           "idRequired": true,
           "attributes": [],
-          "relationships": [
-            "additional_enabled_plans"
-          ]
+          "relationships": ["additional_enabled_plans"]
         },
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateUpdateTargetSchema",

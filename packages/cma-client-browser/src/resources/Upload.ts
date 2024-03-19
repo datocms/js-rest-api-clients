@@ -1,13 +1,13 @@
 import { Resources, SimpleSchemaTypes } from '@datocms/cma-client';
 import {
-  uploadFileOrBlobAndReturnPath,
-  OnProgressInfo,
-} from '../utils/uploadFileOrBlobAndReturnPath';
-import {
   CancelablePromise,
   CanceledPromiseError,
   makeCancelablePromise,
 } from '@datocms/rest-client-utils';
+import {
+  OnProgressInfo,
+  uploadFileOrBlobAndReturnPath,
+} from '../utils/uploadFileOrBlobAndReturnPath';
 
 export type OnProgressCreatingUploadObjectInfo = {
   type: 'CREATING_UPLOAD_OBJECT';

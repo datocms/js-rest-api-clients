@@ -1,6 +1,6 @@
-import * as Resources from './resources';
-import { request, pollJobResult, LogLevel } from '@datocms/rest-client-utils';
+import { LogLevel, pollJobResult, request } from '@datocms/rest-client-utils';
 import { JobResult } from './SimpleSchemaTypes';
+import * as Resources from './resources';
 
 export type RequestOptions = {
   method: 'GET' | 'PUT' | 'POST' | 'DELETE';
