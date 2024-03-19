@@ -194,10 +194,9 @@ export class ApiError extends Error {
     const planUpgradeError = this.findError('PLAN_UPGRADE_REQUIRED');
 
     if (planUpgradeError) {
-      const { limit } = planUpgradeError.attributes.details as Record<
-        string,
-        string
-      >;
+      const { limit } = planUpgradeError.attributes.details as {
+        limit: string;
+      };
       return `${humanMessageForPlanUpgradeLimit[limit]}. Please head over to your account dashboard (https://dashboard.datocms.com/) to upgrade the plan or, if no publicly available plan suits your needs, contact our Sales team (https://www.datocms.com/contact) to get a custom quote!`;
     }
 

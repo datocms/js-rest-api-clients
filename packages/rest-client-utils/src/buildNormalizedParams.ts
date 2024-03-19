@@ -1,33 +1,58 @@
+const ARRAY_INDEX = '__ARRAY_INDEX__';
+
 function buildKey(path: string[]) {
   return path.reduce(
-    (result, chunk, index) => (index === 0 ? chunk : `${result}[${chunk}]`),
+    (result, chunk, index) =>
+      index === 0
+        ? chunk
+        : chunk === ARRAY_INDEX
+          ? `${result}[]`
+          : `${result}[${chunk}]`,
     '',
   );
 }
 
+function serializeValue(value: unknown) {
+  if (typeof value === 'number' || typeof value === 'string') {
+    return value.toString();
+  }
+
+  if (value === true) {
+    return 'true';
+  }
+
+  if (value === false) {
+    return 'false';
+  }
+
+  throw `Don't know how to serialize param value ${JSON.stringify(value)}`;
+}
+
 export function buildNormalizedParams(
-  input: Record<string, unknown>,
+  value: unknown,
   path: string[] = [],
 ): [string, string][] {
   const result: [string, string][] = [];
 
-  for (const [key, value] of Object.entries(input)) {
-    if (typeof value === 'number' || typeof value === 'string') {
-      result.push([buildKey([...path, key]), value.toString()]);
-    } else if (value === true) {
-      result.push([buildKey([...path, key]), 'true']);
-    } else if (value === false) {
-      result.push([buildKey([...path, key]), 'false']);
-    } else if (typeof value === 'object') {
-      if (Array.isArray(value)) {
-        for (const innerValue of value) {
-          result.push([`${buildKey([...path, key])}[]`, innerValue.toString()]);
+  if (
+    typeof value === 'number' ||
+    typeof value === 'string' ||
+    typeof value === 'boolean'
+  ) {
+    result.push([buildKey(path), serializeValue(value)]);
+  } else if (typeof value === 'object') {
+    if (Array.isArray(value)) {
+      for (const innerValue of value as unknown[]) {
+        for (const param of buildNormalizedParams(innerValue, [
+          ...path,
+          ARRAY_INDEX,
+        ])) {
+          result.push(param);
         }
-      } else if (value) {
-        for (const param of buildNormalizedParams(
-          value as Record<string, unknown>,
-          [...path, key],
-        )) {
+      }
+    } else if (value) {
+      for (const [key, innerValue] of Object.entries(value)) {
+        for (const param of buildNormalizedParams(innerValue, [...path, key])) {
           result.push(param);
         }
       }

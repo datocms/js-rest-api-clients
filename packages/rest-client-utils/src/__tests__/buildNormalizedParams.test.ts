@@ -1,6 +1,6 @@
 import { buildNormalizedParams } from '../buildNormalizedParams';
 
-describe('URLQueryParams', () => {
+describe('buildNormalizedParams', () => {
   it('encodes complex params', async () => {
     expect(buildNormalizedParams({ foo: 0 })).toMatchInlineSnapshot(`
       [

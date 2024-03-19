@@ -74,7 +74,7 @@ export function subscribeToEvents({
             payload,
           };
           if (listeners[jobId]) {
-            listeners[jobId](jobResult);
+            listeners[jobId]!(jobResult);
             delete listeners[jobId];
           } else {
             pastEmissions[jobId] = jobResult;
@@ -87,7 +87,7 @@ export function subscribeToEvents({
         waitJobResult: (jobId: string) => {
           return new Promise<JobResult>((resolve) => {
             if (pastEmissions[jobId]) {
-              resolve(pastEmissions[jobId]);
+              resolve(pastEmissions[jobId]!);
               delete pastEmissions[jobId];
             } else {
               listeners[jobId] = resolve;

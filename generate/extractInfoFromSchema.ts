@@ -1,8 +1,8 @@
-import fetch from 'cross-fetch';
 import JsonRefParser, { JSONSchema } from '@apidevtools/json-schema-ref-parser';
+import fetch from 'cross-fetch';
 import { compile as hyperschemaToTypings } from 'hyperschema-to-ts';
-import toSafeName from './toSafeName';
 import simplifySchema from './generateSimplifiedSchema';
+import toSafeName from './toSafeName';
 
 const identityRegexp =
   /\{\(.*?definitions%2F(.*?)%2Fdefinitions%2Fidentity\)}/g;
@@ -177,7 +177,8 @@ function findTypeInDataProperty(schema: JsonRefParser.JSONSchema) {
     if (types.length !== 1) {
       return '*';
     }
-    return types[0];
+
+    return types[0]!;
   }
 
   return findTypeInDataObject(dataSchema);
@@ -289,18 +290,22 @@ function generateResourceInfo(
           true,
         )}JobSchema`
       : link.targetSchema
-      ? `${toSafeName(baseTypeName, true)}${toSafeName(
-          link.rel,
-          true,
-        )}TargetSchema`
-      : undefined;
+        ? `${toSafeName(baseTypeName, true)}${toSafeName(
+            link.rel,
+            true,
+          )}TargetSchema`
+        : undefined;
 
     const normalizedRel =
       link.rel in relToMethodName
         ? relToMethodName[link.rel]
         : link.rel.includes('_instances')
-        ? link.rel.replace('_instances', '_list')
-        : link.rel;
+          ? link.rel.replace('_instances', '_list')
+          : link.rel;
+
+    if (!normalizedRel) {
+      throw new Error('Should not happen!');
+    }
 
     const paginationLimitProperty =
       link.hrefSchema?.properties &&

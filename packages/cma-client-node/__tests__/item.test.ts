@@ -1,6 +1,6 @@
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
-import { ApiError, buildBlockRecord, SchemaTypes } from '../src';
 import { generateId } from '../../cma-client/src';
+import { ApiError, buildBlockRecord, SchemaTypes } from '../src';
 
 describe('item', () => {
   it.concurrent('bulk publish/unpublish/destroy works', async () => {
@@ -115,7 +115,7 @@ describe('item', () => {
     });
 
     expect(allItems).toHaveLength(1);
-    expect(allItems[0].item_type).not.toBeUndefined();
+    expect(allItems[0]!.item_type).not.toBeUndefined();
 
     const updatedItem = await client.items.update(item.id, {
       ...item,
@@ -134,7 +134,7 @@ describe('item', () => {
 
     const list = await client.items.list();
 
-    expect(list[0].title).toEqual('Updated 2 (duplicate)');
+    expect(list[0]!.title).toEqual('Updated 2 (duplicate)');
 
     await client.items.destroy(item.id);
   });
@@ -259,7 +259,8 @@ describe('item', () => {
 
     await client.items.update(item.id, {
       content: (itemWithNestedBlocks.content as SchemaTypes.Item[]).map(
-        (block) => buildBlockRecord({
+        (block) =>
+          buildBlockRecord({
             id: block.id,
             text: `Updated ${block.attributes.text}`,
             item_type: block.relationships.item_type.data,
@@ -274,8 +275,8 @@ describe('item', () => {
     const updatedContent =
       updatedItemWithNestedBlocks.content as SchemaTypes.Item[];
 
-    expect(updatedContent[0].attributes.text).toEqual('Updated Foo');
-    expect(updatedContent[1].attributes.text).toEqual('Updated Bar');
+    expect(updatedContent[0]!.attributes.text).toEqual('Updated Foo');
+    expect(updatedContent[1]!.attributes.text).toEqual('Updated Bar');
   });
 
   it.concurrent('create with explicit ID', async () => {

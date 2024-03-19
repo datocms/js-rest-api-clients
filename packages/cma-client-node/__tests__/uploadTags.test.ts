@@ -1,5 +1,5 @@
-import { SimpleSchemaTypes } from '../src';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
+import { SimpleSchemaTypes } from '../src';
 
 describe('uploadTags', () => {
   test('smart tags and tags', async () => {
@@ -22,9 +22,9 @@ describe('uploadTags', () => {
       allTags.push(tag);
     }
 
-    expect(allTags[0].name).toEqual('foo');
+    expect(allTags[0]!.name).toEqual('foo');
 
     const smartTags = await client.uploadSmartTags.list();
-    expect(smartTags[0].name).toEqual('gray');
+    expect(smartTags[0]!.name).toEqual('gray');
   });
 });

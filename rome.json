@@ -11,6 +11,9 @@
       },
       "performance": {
         "noDelete": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off"
       }
     }
   },

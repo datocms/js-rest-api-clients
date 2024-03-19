@@ -8,7 +8,7 @@ export default function toSafeName(string: string, pascalCase: boolean) {
   // Rest: a-zA-Z | _ | $ | 0-9
 
   return (
-    (pascalCase ? string[0].toUpperCase() + string.slice(1) : string)
+    (pascalCase ? string[0]!.toUpperCase() + string.slice(1) : string)
       // replace chars which are not valid for typescript identifiers with whitespace
       .replace(/(^\s*[^a-zA-Z_$])|([^a-zA-Z_$\d])/g, ' ')
       // uppercase leading underscores followed by lowercase

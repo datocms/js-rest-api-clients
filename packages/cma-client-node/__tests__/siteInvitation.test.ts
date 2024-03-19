@@ -8,7 +8,7 @@ describe('site invitations', () => {
 
     const invitation = await client.siteInvitations.create({
       email: 'user.tester@datocms.com',
-      role: { id: roles[0].id, type: 'role' },
+      role: { id: roles[0]!.id, type: 'role' },
     });
 
     const foundInvitation = await client.siteInvitations.find(invitation.id);

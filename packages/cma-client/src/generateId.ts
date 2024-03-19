@@ -13,7 +13,7 @@ export function generateId() {
   const bytes = v4(null, new Uint8Array(16));
 
   // unset first bit to ensure [A-Za-f] first char
-  bytes[0] = bytes[0] & 0x7f;
+  bytes[0] = bytes[0]! & 0x7f;
 
   const base64 = toBase64(bytes);
 
