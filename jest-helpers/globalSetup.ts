@@ -1,14 +1,13 @@
+import { ConcurrentPromiseQueue } from 'concurrent-promise-queue';
 import 'dotenv/config';
 import { ApiError } from '../packages/dashboard-client';
 import { generateNewDashboardClient } from './generateNewDashboardClient';
 
 function isOldEnough(isoDatetime: string) {
-  const datetime = new Date(isoDatetime);
+  const date = new Date(isoDatetime);
+  const currentTime = new Date();
 
-  const oneDayAgo = new Date();
-  oneDayAgo.setDate(oneDayAgo.getDate() - 1);
-
-  return datetime < oneDayAgo;
+  return Number(currentTime) - Number(date) > 60 * 60 * 1000;
 }
 
 export default async () => {
@@ -21,7 +20,12 @@ export default async () => {
 
   const siteIds: string[] = [];
 
-  for await (const site of client.sites.listPagedIterator()) {
+  console.log('Fetching existing projects...');
+
+  for await (const site of client.sites.listPagedIterator(
+    {},
+    { perPage: 50, concurrency: 5 },
+  )) {
     // We don't want to destroy sites that might be used by other processes,
     // let's only delete old ones
 
@@ -32,20 +36,26 @@ export default async () => {
 
   console.log(`Deleting ${siteIds.length} projects...`);
 
-  await Promise.all(
-    siteIds.map(async (id) => {
-      try {
-        await client.sites.destroy(id);
-      } catch (e) {
-        if (e instanceof ApiError && e.findError('NOT_FOUND')) {
-          // Other processes might have already deleted the project
-          return;
-        }
+  const queue = new ConcurrentPromiseQueue({
+    maxNumberOfConcurrentPromises: 10,
+  });
 
-        throw e;
-      } finally {
-        process.stdout.write('.');
-      }
-    }),
+  await Promise.all(
+    siteIds.map((id) =>
+      queue.addPromise(async () => {
+        try {
+          await client.sites.destroy(id);
+        } catch (e) {
+          if (e instanceof ApiError && e.findError('NOT_FOUND')) {
+            // Other processes might have already deleted the project
+            return;
+          }
+
+          throw e;
+        } finally {
+          process.stdout.write('.');
+        }
+      }),
+    ),
   );
 };

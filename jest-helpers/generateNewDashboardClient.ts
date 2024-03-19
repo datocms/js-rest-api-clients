@@ -62,6 +62,8 @@ export async function generateNewDashboardClient(
     });
 
     try {
+      console.log(`Trying with ${email}...`);
+
       const account = await client.session.rawCreate({
         data: {
           type: 'email_credentials',
