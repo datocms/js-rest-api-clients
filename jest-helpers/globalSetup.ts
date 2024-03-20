@@ -44,23 +44,22 @@ export default async () => {
   });
 
   await Promise.all(
-    shuffleArray(
-      siteIds.map((id) =>
-        queue.addPromise(async () => {
-          try {
-            await client.sites.destroy(id);
-          } catch (e) {
-            if (e instanceof ApiError && e.findError('NOT_FOUND')) {
-              // Other processes might have already deleted the project
-              return;
-            }
-
-            throw e;
-          } finally {
-            process.stdout.write('.');
+    // Different parallel processes can start deleting different files
+    shuffleArray(siteIds).map((id) =>
+      queue.addPromise(async () => {
+        try {
+          await client.sites.destroy(id);
+        } catch (e) {
+          if (e instanceof ApiError && e.findError('NOT_FOUND')) {
+            // Other processes might have already deleted the project
+            return;
           }
-        }),
-      ),
+
+          throw e;
+        } finally {
+          process.stdout.write('.');
+        }
+      }),
     ),
   );
 };
