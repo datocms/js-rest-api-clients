@@ -1,7 +1,10 @@
 import { ConcurrentPromiseQueue } from 'concurrent-promise-queue';
 import 'dotenv/config';
 import { ApiError } from '../packages/dashboard-client';
-import { generateNewDashboardClient } from './generateNewDashboardClient';
+import {
+  generateNewDashboardClient,
+  shuffleArray,
+} from './generateNewDashboardClient';
 
 function isOldEnough(isoDatetime: string) {
   const date = new Date(isoDatetime);
@@ -37,25 +40,27 @@ export default async () => {
   console.log(`Deleting ${siteIds.length} projects...`);
 
   const queue = new ConcurrentPromiseQueue({
-    maxNumberOfConcurrentPromises: 10,
+    maxNumberOfConcurrentPromises: 20,
   });
 
   await Promise.all(
-    siteIds.map((id) =>
-      queue.addPromise(async () => {
-        try {
-          await client.sites.destroy(id);
-        } catch (e) {
-          if (e instanceof ApiError && e.findError('NOT_FOUND')) {
-            // Other processes might have already deleted the project
-            return;
-          }
+    shuffleArray(
+      siteIds.map((id) =>
+        queue.addPromise(async () => {
+          try {
+            await client.sites.destroy(id);
+          } catch (e) {
+            if (e instanceof ApiError && e.findError('NOT_FOUND')) {
+              // Other processes might have already deleted the project
+              return;
+            }
 
-          throw e;
-        } finally {
-          process.stdout.write('.');
-        }
-      }),
+            throw e;
+          } finally {
+            process.stdout.write('.');
+          }
+        }),
+      ),
     ),
   );
 };

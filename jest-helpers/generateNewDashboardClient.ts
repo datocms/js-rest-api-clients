@@ -13,7 +13,7 @@ export const baseConfigOptions: Partial<ClientConfigOptions> = {
   fetchFn,
 };
 
-function shuffleArray<T>(source: T[]) {
+export function shuffleArray<T>(source: T[]) {
   const array = [...source];
 
   for (let i = array.length - 1; i > 0; i--) {
