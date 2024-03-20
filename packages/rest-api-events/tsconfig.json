@@ -4,12 +4,20 @@
     "target": "es5",
     "declarationDir": "dist/types",
     "outDir": "dist/cjs",
-    "lib": ["es2015", "es2016", "es2017", "DOM"],
+    "lib": [
+      "es2015",
+      "es2016",
+      "es2017",
+      "DOM"
+    ],
     "typeRoots": [
       "../../node_modules/@types",
       "node_modules/@types",
       "src/typings"
     ]
   },
-  "include": ["src"]
+  "include": [
+    "../../reset.d.ts",
+    "src"
+  ]
 }
