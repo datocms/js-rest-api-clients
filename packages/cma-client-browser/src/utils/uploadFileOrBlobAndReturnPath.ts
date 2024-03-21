@@ -34,11 +34,17 @@ export function uploadFileOrBlobAndReturnPath(
   fileOrBlob: File | Blob,
   options: Options = {},
 ): CancelablePromise<string> {
-  if (!(options.filename && 'name' in fileOrBlob)) {
+  let filename: string;
+
+  if (options.filename) {
+    // If a filename is explicitly provided, use it
+    filename = options.filename;
+  } else if (fileOrBlob instanceof File && fileOrBlob.name) {
+    // Files extend Blobs and may have a `name` property. Blobs never have names.
+    filename = fileOrBlob.name;
+  } else {
     throw new Error('Missing filename, please provide it as an option!');
   }
-
-  const filename = options.filename || fileOrBlob.name;
 
   let isCanceledBeforeUpload = false;
   let uploadPromise: CancelablePromise<void> | undefined = undefined;
