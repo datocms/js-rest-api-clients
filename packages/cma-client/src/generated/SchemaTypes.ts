@@ -1202,6 +1202,21 @@ export type DailyUsageType = 'daily_usage';
  */
 export type DailyUsageIdentity = string;
 /**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SiteType = 'site';
+/**
+ * ID of site
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SiteIdentity = string;
+/**
  * This interface was referenced by `UsageCounter`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1337,21 +1352,6 @@ export type UploadSmartTagInstancesHrefSchema = {
   };
   [k: string]: unknown;
 };
-/**
- * This interface was referenced by `Site`'s JSON-Schema
- * via the `definition` "type".
- */
-export type SiteType = 'site';
-/**
- * ID of site
- *
- * This interface was referenced by `Site`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `Site`'s JSON-Schema
- * via the `definition` "id".
- */
-export type SiteIdentity = string;
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `self.hrefSchema` link.
@@ -10359,6 +10359,7 @@ export type DailyUsage = {
   type: DailyUsageType;
   id: DailyUsageIdentity;
   attributes: DailyUsageAttributes;
+  relationships?: DailyUsageRelationships;
 };
 
 /**
@@ -10385,6 +10386,10 @@ export type DailyUsageAttributes = {
    */
   cda_traffic_bytes: number;
   /**
+   * Content management API traffic
+   */
+  cma_traffic_bytes: number;
+  /**
    * Uploads requests traffic
    */
   assets_traffic_bytes: number;
@@ -10392,6 +10397,36 @@ export type DailyUsageAttributes = {
    * Video streaming seconds
    */
   mux_delivered_seconds: number;
+  /**
+   * Video encoding seconds
+   */
+  mux_encoded_seconds: number;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type DailyUsageRelationships = {
+  /**
+   * Site that generate the usage
+   */
+  site?: {
+    data: SiteData;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SiteData = {
+  type: SiteType;
+  id: SiteIdentity;
 };
 
 /**
@@ -10815,17 +10850,6 @@ export type SiteMeta = {
    * Whether the site has custom upload storage settings
    */
   custom_upload_storage_settings?: boolean;
-};
-
-/**
- * JSON API data
- *
- * This interface was referenced by `Site`'s JSON-Schema
- * via the `definition` "data".
- */
-export type SiteData = {
-  type: SiteType;
-  id: SiteIdentity;
 };
 
 /**

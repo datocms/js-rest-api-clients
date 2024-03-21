@@ -446,6 +446,26 @@ export type ResourceUsageType = 'resource_usage';
  */
 export type ResourceUsageInstancesTargetSchema = ResourceUsage[];
 /**
+ * ID of site
+ *
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type DailyUsageIdentity = string;
+/**
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type DailyUsageType = 'daily_usage';
+/**
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type DailyUsageInstancesTargetSchema = DailyUsage[];
+/**
  * ID of job result
  *
  * This interface was referenced by `JobResult`'s JSON-Schema
@@ -780,6 +800,7 @@ export type DatoApi = {
   per_owner_pricing_billing_profile?: PerOwnerPricingBillingProfile;
   invoice?: Invoice;
   resource_usage?: ResourceUsage;
+  daily_usage?: DailyUsage;
   job_result?: JobResult;
   site_transfer?: SiteTransfer;
   site_invitation?: SiteInvitation;
@@ -3046,6 +3067,112 @@ export type ResourceUsageAttributes = {
         site_name: string;
         current_usage: number;
       }[];
+};
+
+/**
+ * DatoCMS resources usage organized by day
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "daily_usage".
+ */
+export type DailyUsage = {
+  id: DailyUsageIdentity;
+  type: DailyUsageType;
+  /**
+   * The date the data are referring to
+   */
+  date: string;
+  /**
+   * Number of API calls to content delivery API
+   */
+  cda_api_calls: number;
+  /**
+   * Number of API calls to content management API
+   */
+  cma_api_calls: number;
+  /**
+   * Content delivery API traffic
+   */
+  cda_traffic_bytes: number;
+  /**
+   * Content management API traffic
+   */
+  cma_traffic_bytes: number;
+  /**
+   * Uploads requests traffic
+   */
+  assets_traffic_bytes: number;
+  /**
+   * Video streaming seconds
+   */
+  mux_delivered_seconds: number;
+  /**
+   * Video encoding seconds
+   */
+  mux_encoded_seconds: number;
+  site?: SiteData;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type DailyUsageData = {
+  type: DailyUsageType;
+  id: DailyUsageIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type DailyUsageAttributes = {
+  /**
+   * The date the data are referring to
+   */
+  date: string;
+  /**
+   * Number of API calls to content delivery API
+   */
+  cda_api_calls: number;
+  /**
+   * Number of API calls to content management API
+   */
+  cma_api_calls: number;
+  /**
+   * Content delivery API traffic
+   */
+  cda_traffic_bytes: number;
+  /**
+   * Content management API traffic
+   */
+  cma_traffic_bytes: number;
+  /**
+   * Uploads requests traffic
+   */
+  assets_traffic_bytes: number;
+  /**
+   * Video streaming seconds
+   */
+  mux_delivered_seconds: number;
+  /**
+   * Video encoding seconds
+   */
+  mux_encoded_seconds: number;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type DailyUsageRelationships = {
+  site?: SiteData;
 };
 
 /**

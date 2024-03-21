@@ -826,6 +826,25 @@
     "resourceClassName": "ResourceUsage"
   },
   {
+    "jsonApiType": "daily_usage",
+    "endpoints": [
+      {
+        "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/daily-site-usages",
+        "method": "GET",
+        "comment": "Retrieve daily usage info for either an account or an organization",
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "DailyUsageInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      }
+    ],
+    "namespace": "dailyUsages",
+    "resourceClassName": "DailyUsage"
+  },
+  {
     "jsonApiType": "job_result",
     "endpoints": [
       {
