@@ -8922,49 +8922,49 @@ export type BuildTrigger = {
  */
 export type BuildTriggerAttributes = {
   /**
-   * Name of the environment
+   * Name of the build trigger
    */
   name: string;
   /**
-   * The deploy adapter
+   * The type of build trigger
    */
-  adapter: string;
+  adapter: 'custom' | 'netlify' | 'vercel' | 'circle_ci' | 'gitlab' | 'travis';
   /**
-   * Additional configuration for deploy
+   * Additional settings for the build trigger. The value depends on the `adapter`.
    */
   adapter_settings: {
     [k: string]: unknown;
   };
   /**
-   * Timestamp of the last deploy
+   * Timestamp of the last build
    */
   last_build_completed_at: string | null;
   /**
-   * Status of last deploy
+   * Status of last build
    */
   build_status: string;
   /**
-   * Unique token of the webhook
+   * Unique token for the webhook (it's the same token present in `webhook_url`)
    */
   webhook_token?: string;
   /**
-   * Notification webhook URL
+   * The URL of the webhook your service has to call when the build completes to report it's status (success or error)
    */
   webhook_url: string;
   /**
-   * Status of site scraper
+   * Status of Site Search for the frontend
    */
   indexing_status: string;
   /**
-   * Public url of the site
+   * The public URL of the frontend. If Site Search is enabled (indicated by `indexing_enabled`), this is the starting point from which the website's spidering will start
    */
   frontend_url: string | null;
   /**
-   * Deploy on scheduled publication
+   * Wheter an automatic build request to `webhook_url` should be made on scheduled publications/unpublishings
    */
   autotrigger_on_scheduled_publications: boolean;
   /**
-   * Enable scraper on the site
+   * Wether Site Search is enabled or not. With Site Search, everytime the website is built, DatoCMS will respider it to get updated content
    */
   indexing_enabled: boolean;
 };
@@ -8994,31 +8994,37 @@ export type BuildTriggerCreateSchema = {
     type: BuildTriggerType;
     attributes: {
       /**
-       * Name of the environment
+       * Name of the build trigger
        */
       name: string;
       /**
-       * Unique token of the webhook
+       * Unique token for the webhook (it's the same token present in `webhook_url`)
        */
       webhook_token?: string;
       /**
-       * The deploy adapter
+       * The type of build trigger
        */
-      adapter: string;
+      adapter:
+        | 'custom'
+        | 'netlify'
+        | 'vercel'
+        | 'circle_ci'
+        | 'gitlab'
+        | 'travis';
       /**
-       * Enable scraper on the site
+       * Wether Site Search is enabled or not. With Site Search, everytime the website is built, DatoCMS will respider it to get updated content
        */
       indexing_enabled: boolean;
       /**
-       * Public url of the site
+       * The public URL of the frontend. If Site Search is enabled (indicated by `indexing_enabled`), this is the starting point from which the website's spidering will start
        */
       frontend_url: string | null;
       /**
-       * Deploy on scheduled publication
+       * Wheter an automatic build request to `webhook_url` should be made on scheduled publications/unpublishings
        */
       autotrigger_on_scheduled_publications: boolean;
       /**
-       * Additional configuration for deploy
+       * Additional settings for the build trigger. The value depends on the `adapter`.
        */
       adapter_settings: {
         [k: string]: unknown;
@@ -9045,27 +9051,33 @@ export type BuildTriggerUpdateSchema = {
     id: BuildTriggerIdentity;
     attributes: {
       /**
-       * Name of the environment
+       * Name of the build trigger
        */
       name?: string;
       /**
-       * The deploy adapter
+       * The type of build trigger
        */
-      adapter?: string;
+      adapter?:
+        | 'custom'
+        | 'netlify'
+        | 'vercel'
+        | 'circle_ci'
+        | 'gitlab'
+        | 'travis';
       /**
-       * Enable scraper on the site
+       * Wether Site Search is enabled or not. With Site Search, everytime the website is built, DatoCMS will respider it to get updated content
        */
       indexing_enabled?: boolean;
       /**
-       * Public url of the site
+       * The public URL of the frontend. If Site Search is enabled (indicated by `indexing_enabled`), this is the starting point from which the website's spidering will start
        */
       frontend_url?: string | null;
       /**
-       * Deploy on scheduled publication
+       * Wheter an automatic build request to `webhook_url` should be made on scheduled publications/unpublishings
        */
       autotrigger_on_scheduled_publications?: boolean;
       /**
-       * Additional configuration for deploy
+       * Additional settings for the build trigger. The value depends on the `adapter`.
        */
       adapter_settings?: {
         [k: string]: unknown;
