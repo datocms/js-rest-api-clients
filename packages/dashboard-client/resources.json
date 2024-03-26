@@ -835,6 +835,7 @@
         "method": "GET",
         "comment": "Retrieve daily usage info for either an account or an organization",
         "optionalRequestBody": false,
+        "queryParamsType": "DailyUsageInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "DailyUsageInstancesTargetSchema",
         "name": "list",

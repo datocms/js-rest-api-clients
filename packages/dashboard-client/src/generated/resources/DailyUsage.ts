@@ -12,8 +12,8 @@ export default class DailyUsage extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list() {
-    return this.rawList().then((body) =>
+  list(queryParams?: SimpleSchemaTypes.DailyUsageInstancesHrefSchema) {
+    return this.rawList(queryParams).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.DailyUsageInstancesTargetSchema>(
         body,
       ),
@@ -26,10 +26,13 @@ export default class DailyUsage extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.DailyUsageInstancesTargetSchema> {
+  rawList(
+    queryParams?: SchemaTypes.DailyUsageInstancesHrefSchema,
+  ): Promise<SchemaTypes.DailyUsageInstancesTargetSchema> {
     return this.client.request<SchemaTypes.DailyUsageInstancesTargetSchema>({
       method: 'GET',
       url: '/daily-site-usages',
+      queryParams,
     });
   }
 }
