@@ -767,6 +767,28 @@ export type OrganizationMandateGivenInstancesHrefSchema = {
   include?: string;
   [k: string]: unknown;
 };
+/**
+ * ID of reset request
+ *
+ * This interface was referenced by `TwoFactorAuthenticationResetRequest`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `TwoFactorAuthenticationResetRequest`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type TwoFactorAuthenticationResetRequestIdentity = string;
+/**
+ * This interface was referenced by `TwoFactorAuthenticationResetRequest`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type TwoFactorAuthenticationResetRequestType =
+  'two_factor_authentication_reset_request';
+/**
+ * This interface was referenced by `TwoFactorAuthenticationResetRequest`'s JSON-Schema
+ * via the `requested_instances.targetSchema` link.
+ */
+export type TwoFactorAuthenticationResetRequestRequestedInstancesTargetSchema =
+  TwoFactorAuthenticationResetRequest[];
 
 export type DatoApi = {
   session?: Session;
@@ -797,6 +819,7 @@ export type DatoApi = {
   organization_membership?: OrganizationMembership;
   organization_mandate_request?: OrganizationMandateRequest;
   organization_mandate?: OrganizationMandate;
+  two_factor_authentication_reset_request?: TwoFactorAuthenticationResetRequest;
   [k: string]: unknown;
 };
 
@@ -4028,4 +4051,58 @@ export type OrganizationMandateUpdateSchema = {
   type?: OrganizationMandateType;
   additional_enabled_plans?: PerOwnerPricingPlanData[];
   [k: string]: unknown;
+};
+
+/**
+ * Accounts that belong to a single organization can ask owners to reset their two-factor authentication
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "two_factor_authentication_reset_request".
+ */
+export type TwoFactorAuthenticationResetRequest = {
+  id: TwoFactorAuthenticationResetRequestIdentity;
+  type: TwoFactorAuthenticationResetRequestType;
+  organization: OrganizationData;
+  account: AccountData;
+};
+export type TwoFactorAuthenticationResetRequestCreateTargetSchema =
+  TwoFactorAuthenticationResetRequest;
+export type TwoFactorAuthenticationResetRequestDestroyTargetSchema =
+  TwoFactorAuthenticationResetRequest;
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `TwoFactorAuthenticationResetRequest`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type TwoFactorAuthenticationResetRequestData = {
+  type: TwoFactorAuthenticationResetRequestType;
+  id: TwoFactorAuthenticationResetRequestIdentity;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `TwoFactorAuthenticationResetRequest`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type TwoFactorAuthenticationResetRequestRelationships = {
+  organization: OrganizationData;
+  account: AccountData;
+};
+
+/**
+ * This interface was referenced by `TwoFactorAuthenticationResetRequest`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type TwoFactorAuthenticationResetRequestCreateSchema = {
+  type?: 'two_factor_authentication_reset_request';
+  /**
+   * Email
+   */
+  email: string;
+  /**
+   * Current password
+   */
+  password: string;
 };

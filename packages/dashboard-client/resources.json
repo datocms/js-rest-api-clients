@@ -1717,5 +1717,92 @@
     ],
     "namespace": "organizationMandates",
     "resourceClassName": "OrganizationMandate"
+  },
+  {
+    "jsonApiType": "two_factor_authentication_reset_request",
+    "endpoints": [
+      {
+        "returnsCollection": false,
+        "rel": "create",
+        "urlTemplate": "/tfa-reset-requests",
+        "method": "POST",
+        "comment": "Request a two-factor reset to the belonging organization",
+        "requestBodyType": "TwoFactorAuthenticationResetRequestCreateSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "two_factor_authentication_reset_request",
+          "attributes": ["email", "password"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "TwoFactorAuthenticationResetRequestCreateTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "returnsCollection": true,
+        "rel": "requested_instances",
+        "urlTemplate": "/tfa-reset-requests",
+        "method": "GET",
+        "comment": "List all two-factor authentication reset requests",
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "TwoFactorAuthenticationResetRequestRequestedInstancesTargetSchema",
+        "name": "requestedList",
+        "rawName": "rawRequestedList"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "destroy",
+        "urlTemplate": "/tfa-reset-requests/${twoFactorAuthenticationResetRequestId}",
+        "method": "DELETE",
+        "comment": "Delete a two-factor authentication reset",
+        "urlPlaceholder": {
+          "variableName": "twoFactorAuthenticationResetRequestId",
+          "isEntityId": true,
+          "relType": "TwoFactorAuthenticationResetRequestData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "TwoFactorAuthenticationResetRequestDestroyTargetSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "approve",
+        "urlTemplate": "/tfa-reset-requests/${twoFactorAuthenticationResetRequestId}/approve",
+        "method": "PUT",
+        "comment": "Approve a two-factor authentication reset request",
+        "urlPlaceholder": {
+          "variableName": "twoFactorAuthenticationResetRequestId",
+          "isEntityId": true,
+          "relType": "TwoFactorAuthenticationResetRequestData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "name": "approve",
+        "rawName": "rawApprove"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "reject",
+        "urlTemplate": "/tfa-reset-requests/${twoFactorAuthenticationResetRequestId}/reject",
+        "method": "PUT",
+        "comment": "Reject a two-factor authentication reset request",
+        "urlPlaceholder": {
+          "variableName": "twoFactorAuthenticationResetRequestId",
+          "isEntityId": true,
+          "relType": "TwoFactorAuthenticationResetRequestData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "name": "reject",
+        "rawName": "rawReject"
+      }
+    ],
+    "namespace": "twoFactorAuthenticationResetRequests",
+    "resourceClassName": "TwoFactorAuthenticationResetRequest"
   }
 ]
