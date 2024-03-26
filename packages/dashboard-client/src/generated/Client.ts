@@ -58,6 +58,7 @@ export class Client {
   organizationMemberships: Resources.OrganizationMembership;
   organizationMandateRequests: Resources.OrganizationMandateRequest;
   organizationMandates: Resources.OrganizationMandate;
+  twoFactorAuthenticationResetRequests: Resources.TwoFactorAuthenticationResetRequest;
 
   config: ClientConfigOptions;
   jobResultsFetcher?: (jobId: string) => Promise<JobResult>;
@@ -95,6 +96,8 @@ export class Client {
       this,
     );
     this.organizationMandates = new Resources.OrganizationMandate(this);
+    this.twoFactorAuthenticationResetRequests =
+      new Resources.TwoFactorAuthenticationResetRequest(this);
   }
 
   get baseUrl() {
