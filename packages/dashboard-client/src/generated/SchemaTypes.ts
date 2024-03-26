@@ -358,6 +358,21 @@ export type DailyUsageType = 'daily_usage';
  */
 export type DailyUsageIdentity = string;
 /**
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type DailyUsageInstancesHrefSchema = {
+  /**
+   * Year of the daily usages to retrieve. Defaults to current year.
+   */
+  year?: string;
+  /**
+   * Monthof the daily usages to retrieve. Defaults to current month.
+   */
+  month?: string;
+  [k: string]: unknown;
+};
+/**
  * This interface was referenced by `JobResult`'s JSON-Schema
  * via the `definition` "type".
  */
