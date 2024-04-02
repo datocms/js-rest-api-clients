@@ -3045,6 +3045,7 @@ export type ResourceUsage = {
         site_name: string;
         current_usage: number;
       }[];
+  usage_status: null | string;
 };
 
 /**
@@ -3076,6 +3077,7 @@ export type ResourceUsageAttributes = {
         site_name: string;
         current_usage: number;
       }[];
+  usage_status: null | string;
 };
 
 /**
