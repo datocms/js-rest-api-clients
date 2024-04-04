@@ -1,8 +1,11 @@
 {
   "name": "@datocms/cma-client",
-  "version": "3.1.6",
+  "version": "3.1.7",
   "description": "JS client for DatoCMS REST Content Management API",
-  "keywords": ["datocms", "client"],
+  "keywords": [
+    "datocms",
+    "client"
+  ],
   "author": "Stefano Verna <s.verna@datocms.com>",
   "homepage": "https://github.com/datocms/js-rest-api-clients/tree/main/packages/cma-client#readme",
   "license": "MIT",
@@ -14,7 +17,11 @@
     "lib": "dist",
     "test": "__tests__"
   },
-  "files": ["dist", "src", "resources.json"],
+  "files": [
+    "dist",
+    "src",
+    "resources.json"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -30,11 +37,11 @@
     "url": "https://github.com/datocms/js-rest-api-clients/issues"
   },
   "dependencies": {
-    "@datocms/rest-client-utils": "^3.1.5",
+    "@datocms/rest-client-utils": "^3.1.7",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@datocms/dashboard-client": "^3.1.5",
+    "@datocms/dashboard-client": "^3.1.7",
     "@types/uuid": "^9.0.7"
   },
   "gitHead": "504a80c1a8c628acf6defc5c7ce9c58e777f9ecd"
