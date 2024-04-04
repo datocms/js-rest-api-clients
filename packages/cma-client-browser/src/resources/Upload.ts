@@ -1,11 +1,11 @@
-import { Resources, SimpleSchemaTypes } from '@datocms/cma-client';
+import { Resources, type SimpleSchemaTypes } from '@datocms/cma-client';
 import {
-  CancelablePromise,
+  type CancelablePromise,
   CanceledPromiseError,
   makeCancelablePromise,
 } from '@datocms/rest-client-utils';
 import {
-  OnProgressInfo,
+  type OnProgressInfo,
   uploadFileOrBlobAndReturnPath,
 } from '../utils/uploadFileOrBlobAndReturnPath';
 

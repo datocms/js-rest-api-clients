@@ -10,8 +10,5 @@
       "src/typings"
     ]
   },
-  "include": [
-    "../../reset.d.ts",
-    "src"
-  ]
+  "include": ["../../reset.d.ts", "src"]
 }

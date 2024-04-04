@@ -1,8 +1,8 @@
-import { basename } from 'path';
-import { Client } from '@datocms/cma-client';
+import { basename } from 'node:path';
+import type { Client } from '@datocms/cma-client';
 import { makeCancelablePromise } from '@datocms/rest-client-utils';
 import {
-  CancelablePromise,
+  type CancelablePromise,
   CanceledPromiseError,
 } from '@datocms/rest-client-utils';
 import { uploadLocalFileToS3 } from './uploadLocalFileToS3';

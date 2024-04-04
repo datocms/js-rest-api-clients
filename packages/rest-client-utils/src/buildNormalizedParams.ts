@@ -6,8 +6,8 @@ function buildKey(path: string[]) {
       index === 0
         ? chunk
         : chunk === ARRAY_INDEX
-        ? `${result}[]`
-        : `${result}[${chunk}]`,
+          ? `${result}[]`
+          : `${result}[${chunk}]`,
     '',
   );
 }

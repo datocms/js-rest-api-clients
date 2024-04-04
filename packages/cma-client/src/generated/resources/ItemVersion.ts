@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import * as SchemaTypes from '../SchemaTypes';
-import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as SchemaTypes from '../SchemaTypes';
+import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 
 export default class ItemVersion extends BaseResource {
   static readonly TYPE = 'item_version' as const;
@@ -87,7 +87,7 @@ export default class ItemVersion extends BaseResource {
    */
   async *listPagedIterator(
     itemId: string | SimpleSchemaTypes.ItemData,
-    queryParams?: Omit<
+    queryParams?: Utils.OmitFromKnownKeys<
       SimpleSchemaTypes.ItemVersionInstancesHrefSchema,
       'page'
     >,
@@ -114,9 +114,14 @@ export default class ItemVersion extends BaseResource {
    */
   rawListPagedIterator(
     itemId: string,
-    queryParams?: Omit<SchemaTypes.ItemVersionInstancesHrefSchema, 'page'>,
+    queryParams?: Utils.OmitFromKnownKeys<
+      SchemaTypes.ItemVersionInstancesHrefSchema,
+      'page'
+    >,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
+    Utils.warnOnPageQueryParam(queryParams);
+
     return Utils.rawPageIterator<
       SchemaTypes.ItemVersionInstancesTargetSchema['data'][0]
     >(

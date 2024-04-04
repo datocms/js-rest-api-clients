@@ -13,9 +13,8 @@ describe('menu item', () => {
 
     expect(schemaMenuItem.label).toEqual('Editorial content');
 
-    const foundschemaMenuItems = await client.schemaMenuItems.find(
-      schemaMenuItem,
-    );
+    const foundschemaMenuItems =
+      await client.schemaMenuItems.find(schemaMenuItem);
     expect(foundschemaMenuItems.id).toEqual(schemaMenuItem.id);
 
     const allSchemaMenuItems = await client.schemaMenuItems.list();

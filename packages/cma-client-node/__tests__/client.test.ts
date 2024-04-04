@@ -1,5 +1,5 @@
 import { baseConfigOptions } from '../../../jest-helpers/generateNewCmaClient';
-import { ApiError, SimpleSchemaTypes, buildClient } from '../src';
+import { ApiError, type SimpleSchemaTypes, buildClient } from '../src';
 
 describe('@datocms/client', () => {
   it.concurrent('first test', async () => {
@@ -29,6 +29,7 @@ describe('@datocms/client', () => {
     for await (const item of client.items.listPagedIterator(
       {
         filter: { type: 'blog_post' },
+        page: { offset: 4 },
       },
       { perPage: 5 },
     )) {

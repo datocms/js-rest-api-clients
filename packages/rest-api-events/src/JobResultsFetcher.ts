@@ -1,7 +1,7 @@
-import { GenericClient, JobResult } from './internalTypes';
+import type { GenericClient, JobResult } from './internalTypes';
 import {
-  EventsSubscription,
-  SubscriptionConfig,
+  type EventsSubscription,
+  type SubscriptionConfig,
   subscribeToEvents,
 } from './subscribeToEvents';
 

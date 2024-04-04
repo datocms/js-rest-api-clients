@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import * as SchemaTypes from '../SchemaTypes';
-import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as SchemaTypes from '../SchemaTypes';
+import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 
 export default class UploadSmartTag extends BaseResource {
   static readonly TYPE = 'upload_smart_tag' as const;
@@ -51,7 +51,7 @@ export default class UploadSmartTag extends BaseResource {
    * @throws {TimeoutError}
    */
   async *listPagedIterator(
-    queryParams?: Omit<
+    queryParams?: Utils.OmitFromKnownKeys<
       SimpleSchemaTypes.UploadSmartTagInstancesHrefSchema,
       'page'
     >,
@@ -76,9 +76,14 @@ export default class UploadSmartTag extends BaseResource {
    * @throws {TimeoutError}
    */
   rawListPagedIterator(
-    queryParams?: Omit<SchemaTypes.UploadSmartTagInstancesHrefSchema, 'page'>,
+    queryParams?: Utils.OmitFromKnownKeys<
+      SchemaTypes.UploadSmartTagInstancesHrefSchema,
+      'page'
+    >,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
+    Utils.warnOnPageQueryParam(queryParams);
+
     return Utils.rawPageIterator<
       SchemaTypes.UploadSmartTagInstancesTargetSchema['data'][0]
     >(

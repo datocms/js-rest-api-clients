@@ -1,13 +1,13 @@
-import { Resources, SimpleSchemaTypes } from '@datocms/cma-client';
+import { Resources, type SimpleSchemaTypes } from '@datocms/cma-client';
 import {
-  CancelablePromise,
+  type CancelablePromise,
   CanceledPromiseError,
   makeCancelablePromise,
 } from '@datocms/rest-client-utils';
-import { DownloadResult, downloadFile } from '../utils/downloadFile';
+import { type DownloadResult, downloadFile } from '../utils/downloadFile';
 import md5 from '../utils/md5';
 import {
-  OnProgressInfo,
+  type OnProgressInfo,
   uploadLocalFileAndReturnPath,
 } from '../utils/uploadLocalFileAndReturnPath';
 

@@ -63,3 +63,13 @@ export async function* rawPageIterator<T>(
     }
   }
 }
+
+export function warnOnPageQueryParam(
+  queryParams: Record<string, unknown> | undefined,
+) {
+  if (queryParams && 'page' in queryParams) {
+    console.warn(
+      'Passing a `page` query param on paged iterators has no effect: use the `perPage` option instead.',
+    );
+  }
+}

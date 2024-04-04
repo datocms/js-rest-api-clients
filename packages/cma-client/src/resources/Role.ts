@@ -1,4 +1,4 @@
-import * as SimpleSchemaTypes from '../generated/SimpleSchemaTypes';
+import type * as SimpleSchemaTypes from '../generated/SimpleSchemaTypes';
 import BaseRole from '../generated/resources/Role';
 
 export type UpdateRoleDiff<T> = {

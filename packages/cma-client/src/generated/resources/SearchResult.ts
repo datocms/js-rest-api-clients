@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import * as SchemaTypes from '../SchemaTypes';
-import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as SchemaTypes from '../SchemaTypes';
+import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 
 export default class SearchResult extends BaseResource {
   static readonly TYPE = 'search_result' as const;
@@ -49,7 +49,7 @@ export default class SearchResult extends BaseResource {
    * @throws {TimeoutError}
    */
   async *listPagedIterator(
-    queryParams: Omit<
+    queryParams: Utils.OmitFromKnownKeys<
       SimpleSchemaTypes.SearchResultInstancesHrefSchema,
       'page'
     >,
@@ -74,9 +74,14 @@ export default class SearchResult extends BaseResource {
    * @throws {TimeoutError}
    */
   rawListPagedIterator(
-    queryParams: Omit<SchemaTypes.SearchResultInstancesHrefSchema, 'page'>,
+    queryParams: Utils.OmitFromKnownKeys<
+      SchemaTypes.SearchResultInstancesHrefSchema,
+      'page'
+    >,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
+    Utils.warnOnPageQueryParam(queryParams);
+
     return Utils.rawPageIterator<
       SchemaTypes.SearchResultInstancesTargetSchema['data'][0]
     >(

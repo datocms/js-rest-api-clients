@@ -1,5 +1,9 @@
-import { LogLevel, pollJobResult, request } from '@datocms/rest-client-utils';
-import { JobResult } from './SimpleSchemaTypes';
+import {
+  type LogLevel,
+  pollJobResult,
+  request,
+} from '@datocms/rest-client-utils';
+import type { JobResult } from './SimpleSchemaTypes';
 import * as Resources from './resources';
 
 export type RequestOptions = {

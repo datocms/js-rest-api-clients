@@ -55,9 +55,8 @@ describe('scheduledPublication', () => {
       '2056-02-10T11:03:42.208Z',
     );
 
-    const itemNotToBeUnpublished = await client.scheduledUnpublishing.destroy(
-      item,
-    );
+    const itemNotToBeUnpublished =
+      await client.scheduledUnpublishing.destroy(item);
     expect(itemNotToBeUnpublished.unpublishing_scheduled_at).toEqual(undefined);
   });
 });

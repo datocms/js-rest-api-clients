@@ -1,4 +1,4 @@
-import { Client } from './generated/Client';
+import type { Client } from './generated/Client';
 
 export default class BaseResource {
   protected client: Client;

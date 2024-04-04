@@ -1,14 +1,14 @@
-import { promises } from 'fs';
-import { basename, join } from 'path';
-import { URL } from 'url';
+import { promises } from 'node:fs';
+import { basename, join } from 'node:path';
+import { URL } from 'node:url';
 import {
-  CancelablePromise,
+  type CancelablePromise,
   CanceledPromiseError,
   makeCancelablePromise,
 } from '@datocms/rest-client-utils';
-import got, { CancelError, CancelableRequest, Response } from 'got';
+import got, { CancelError, type CancelableRequest, type Response } from 'got';
 import { dir } from 'tmp-promise';
-import { OnProgressInfo } from './uploadLocalFileAndReturnPath';
+import type { OnProgressInfo } from './uploadLocalFileAndReturnPath';
 
 type Options = {
   onProgress?: (info: OnProgressInfo) => void;
@@ -64,9 +64,8 @@ export function downloadFile(
         } catch (e) {
           if (e instanceof CancelError) {
             throw new CanceledPromiseError();
-          } else {
-            throw e;
           }
+          throw e;
         }
 
         if (isCancelled) {

@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import * as SchemaTypes from '../SchemaTypes';
-import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as SchemaTypes from '../SchemaTypes';
+import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 
 export default class Upload extends BaseResource {
   static readonly TYPE = 'upload' as const;
@@ -96,7 +96,10 @@ export default class Upload extends BaseResource {
    * @throws {TimeoutError}
    */
   async *listPagedIterator(
-    queryParams?: Omit<SimpleSchemaTypes.UploadInstancesHrefSchema, 'page'>,
+    queryParams?: Utils.OmitFromKnownKeys<
+      SimpleSchemaTypes.UploadInstancesHrefSchema,
+      'page'
+    >,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
     for await (const element of this.rawListPagedIterator(
@@ -118,9 +121,14 @@ export default class Upload extends BaseResource {
    * @throws {TimeoutError}
    */
   rawListPagedIterator(
-    queryParams?: Omit<SchemaTypes.UploadInstancesHrefSchema, 'page'>,
+    queryParams?: Utils.OmitFromKnownKeys<
+      SchemaTypes.UploadInstancesHrefSchema,
+      'page'
+    >,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
+    Utils.warnOnPageQueryParam(queryParams);
+
     return Utils.rawPageIterator<
       SchemaTypes.UploadInstancesTargetSchema['data'][0]
     >(

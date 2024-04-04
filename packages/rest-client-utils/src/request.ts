@@ -3,11 +3,11 @@
 import { buildNormalizedParams } from './buildNormalizedParams';
 import {
   ApiError,
-  ApiErrorInitObject,
+  type ApiErrorInitObject,
   TimeoutError,
-  TimeoutErrorInitObject,
+  type TimeoutErrorInitObject,
 } from './errors';
-import { JobResult } from './internalTypes';
+import type { JobResult } from './internalTypes';
 import {
   CanceledPromiseError,
   makeCancelablePromise,
@@ -246,7 +246,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       }
 
       const waitTimeInSecs = response.headers.has('X-RateLimit-Reset')
-        ? parseInt(response.headers.get('X-RateLimit-Reset')!, 10)
+        ? Number.parseInt(response.headers.get('X-RateLimit-Reset')!, 10)
         : retryCount;
 
       if (logLevel >= LogLevel.BASIC) {

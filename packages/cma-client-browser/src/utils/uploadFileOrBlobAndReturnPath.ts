@@ -1,6 +1,6 @@
-import { Client } from '@datocms/cma-client';
+import type { Client } from '@datocms/cma-client';
 import {
-  CancelablePromise,
+  type CancelablePromise,
   CanceledPromiseError,
   makeCancelablePromise,
 } from '@datocms/rest-client-utils';

@@ -1,4 +1,7 @@
-import { Client as BaseClient, ClientConfigOptions } from '@datocms/cma-client';
+import {
+  Client as BaseClient,
+  type ClientConfigOptions,
+} from '@datocms/cma-client';
 import * as Resources from './generated/resources';
 
 export class Client extends BaseClient {

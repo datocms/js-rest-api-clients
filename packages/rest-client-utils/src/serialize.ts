@@ -44,7 +44,7 @@ export function serializeRequestBody<T>(body: unknown, options: Options): T {
   const relationships: Record<string, unknown> = {};
 
   if (options.attributes === '*') {
-    Object.entries(otherProperties).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(otherProperties)) {
       if (options.relationships.includes(key)) {
         if (isRel(value)) {
           const { id, type } = value;
@@ -61,9 +61,9 @@ export function serializeRequestBody<T>(body: unknown, options: Options): T {
       } else {
         attributes[key] = value;
       }
-    });
+    }
   } else if (options.relationships === '*') {
-    Object.entries(otherProperties).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(otherProperties)) {
       if (options.attributes.includes(key)) {
         attributes[key] = value;
       } else {
@@ -80,9 +80,9 @@ export function serializeRequestBody<T>(body: unknown, options: Options): T {
           };
         }
       }
-    });
+    }
   } else {
-    Object.entries(otherProperties).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(otherProperties)) {
       if (options.attributes.includes(key)) {
         attributes[key] = value;
       } else if (options.relationships.includes(key)) {
@@ -99,7 +99,7 @@ export function serializeRequestBody<T>(body: unknown, options: Options): T {
           };
         }
       }
-    });
+    }
   }
 
   return {

@@ -1,5 +1,10 @@
-import { SchemaTypes, buildBlockRecord } from '@datocms/cma-client';
-import { Block, Document, Node, isBlock } from 'datocms-structured-text-utils';
+import { type SchemaTypes, buildBlockRecord } from '@datocms/cma-client';
+import {
+  type Block,
+  type Document,
+  type Node,
+  isBlock,
+} from 'datocms-structured-text-utils';
 import u from 'unist-builder';
 import map from 'unist-util-map';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';

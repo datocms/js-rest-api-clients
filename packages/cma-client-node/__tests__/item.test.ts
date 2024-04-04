@@ -1,6 +1,6 @@
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 import { generateId } from '../../cma-client/src';
-import { ApiError, SchemaTypes, buildBlockRecord } from '../src';
+import { ApiError, type SchemaTypes, buildBlockRecord } from '../src';
 
 describe('item', () => {
   it.concurrent('bulk publish/unpublish/destroy works', async () => {
@@ -259,7 +259,8 @@ describe('item', () => {
 
     await client.items.update(item.id, {
       content: (itemWithNestedBlocks.content as SchemaTypes.Item[]).map(
-        (block) => buildBlockRecord({
+        (block) =>
+          buildBlockRecord({
             id: block.id,
             text: `Updated ${block.attributes.text}`,
             item_type: block.relationships.item_type.data,

@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
-import * as SchemaTypes from '../SchemaTypes';
-import * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 import BaseResource from '../../BaseResource';
+import type * as SchemaTypes from '../SchemaTypes';
+import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
 
 export default class {{{resourceClassName}}} extends BaseResource {
   static readonly TYPE = '{{jsonApiType}}' as const;
@@ -130,7 +130,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
         {{#if urlPlaceholder}}
           {{{urlPlaceholder.variableName}}}: string | SimpleSchemaTypes.{{{urlPlaceholder.relType}}},
         {{/if}}
-        queryParams{{#unless queryParamsRequired}}?{{/unless}}: Omit<SimpleSchemaTypes.{{{queryParamsType}}}, 'page'>,
+        queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<SimpleSchemaTypes.{{{queryParamsType}}}, 'page'>,
         iteratorOptions?: Utils.IteratorOptions,
       ) {
         for await (const element of this.{{{rawName}}}PagedIterator(
@@ -161,9 +161,11 @@ export default class {{{resourceClassName}}} extends BaseResource {
       {{#if urlPlaceholder}}
         {{{urlPlaceholder.variableName}}}: string,
       {{/if}}
-      queryParams{{#unless queryParamsRequired}}?{{/unless}}: Omit<SchemaTypes.{{{queryParamsType}}}, 'page'>,
+      queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<SchemaTypes.{{{queryParamsType}}}, 'page'>,
       iteratorOptions?: Utils.IteratorOptions,
     ) {
+      Utils.warnOnPageQueryParam(queryParams);
+
       return Utils.rawPageIterator<
         SchemaTypes.{{{responseType}}}['data'][0]
       >(

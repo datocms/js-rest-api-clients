@@ -1,5 +1,5 @@
 import { ApiError } from './errors';
-import { JobResult } from './internalTypes';
+import type { JobResult } from './internalTypes';
 import { wait } from './wait';
 
 export async function pollJobResult(

@@ -1,4 +1,4 @@
-import { SchemaTypes, buildBlockRecord } from '@datocms/cma-client';
+import { type SchemaTypes, buildBlockRecord } from '@datocms/cma-client';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 
 describe('single block', () => {
