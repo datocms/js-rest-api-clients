@@ -49,7 +49,7 @@ export default class Item extends BaseResource {
    * @throws {TimeoutError}
    */
   async *listPagedIterator(
-    queryParams?: SimpleSchemaTypes.ItemInstancesHrefSchema,
+    queryParams?: Omit<SimpleSchemaTypes.ItemInstancesHrefSchema, 'page'>,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
     for await (const element of this.rawListPagedIterator(
@@ -71,7 +71,7 @@ export default class Item extends BaseResource {
    * @throws {TimeoutError}
    */
   rawListPagedIterator(
-    queryParams?: SchemaTypes.ItemInstancesHrefSchema,
+    queryParams?: Omit<SchemaTypes.ItemInstancesHrefSchema, 'page'>,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
     return Utils.rawPageIterator<

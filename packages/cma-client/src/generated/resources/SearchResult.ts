@@ -49,7 +49,10 @@ export default class SearchResult extends BaseResource {
    * @throws {TimeoutError}
    */
   async *listPagedIterator(
-    queryParams: SimpleSchemaTypes.SearchResultInstancesHrefSchema,
+    queryParams: Omit<
+      SimpleSchemaTypes.SearchResultInstancesHrefSchema,
+      'page'
+    >,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
     for await (const element of this.rawListPagedIterator(
@@ -71,7 +74,7 @@ export default class SearchResult extends BaseResource {
    * @throws {TimeoutError}
    */
   rawListPagedIterator(
-    queryParams: SchemaTypes.SearchResultInstancesHrefSchema,
+    queryParams: Omit<SchemaTypes.SearchResultInstancesHrefSchema, 'page'>,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
     return Utils.rawPageIterator<

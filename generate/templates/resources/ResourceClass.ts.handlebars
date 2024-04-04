@@ -130,7 +130,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
         {{#if urlPlaceholder}}
           {{{urlPlaceholder.variableName}}}: string | SimpleSchemaTypes.{{{urlPlaceholder.relType}}},
         {{/if}}
-        queryParams{{#unless queryParamsRequired}}?{{/unless}}: SimpleSchemaTypes.{{{queryParamsType}}},
+        queryParams{{#unless queryParamsRequired}}?{{/unless}}: Omit<SimpleSchemaTypes.{{{queryParamsType}}}, 'page'>,
         iteratorOptions?: Utils.IteratorOptions,
       ) {
         for await (const element of this.{{{rawName}}}PagedIterator(
@@ -161,7 +161,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
       {{#if urlPlaceholder}}
         {{{urlPlaceholder.variableName}}}: string,
       {{/if}}
-      queryParams{{#unless queryParamsRequired}}?{{/unless}}: SchemaTypes.{{{queryParamsType}}},
+      queryParams{{#unless queryParamsRequired}}?{{/unless}}: Omit<SchemaTypes.{{{queryParamsType}}}, 'page'>,
       iteratorOptions?: Utils.IteratorOptions,
     ) {
       return Utils.rawPageIterator<

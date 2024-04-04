@@ -49,7 +49,7 @@ export default class UploadTag extends BaseResource {
    * @throws {TimeoutError}
    */
   async *listPagedIterator(
-    queryParams?: SimpleSchemaTypes.UploadTagInstancesHrefSchema,
+    queryParams?: Omit<SimpleSchemaTypes.UploadTagInstancesHrefSchema, 'page'>,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
     for await (const element of this.rawListPagedIterator(
@@ -71,7 +71,7 @@ export default class UploadTag extends BaseResource {
    * @throws {TimeoutError}
    */
   rawListPagedIterator(
-    queryParams?: SchemaTypes.UploadTagInstancesHrefSchema,
+    queryParams?: Omit<SchemaTypes.UploadTagInstancesHrefSchema, 'page'>,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
     return Utils.rawPageIterator<

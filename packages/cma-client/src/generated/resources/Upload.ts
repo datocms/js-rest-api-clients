@@ -96,7 +96,7 @@ export default class Upload extends BaseResource {
    * @throws {TimeoutError}
    */
   async *listPagedIterator(
-    queryParams?: SimpleSchemaTypes.UploadInstancesHrefSchema,
+    queryParams?: Omit<SimpleSchemaTypes.UploadInstancesHrefSchema, 'page'>,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
     for await (const element of this.rawListPagedIterator(
@@ -118,7 +118,7 @@ export default class Upload extends BaseResource {
    * @throws {TimeoutError}
    */
   rawListPagedIterator(
-    queryParams?: SchemaTypes.UploadInstancesHrefSchema,
+    queryParams?: Omit<SchemaTypes.UploadInstancesHrefSchema, 'page'>,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
     return Utils.rawPageIterator<

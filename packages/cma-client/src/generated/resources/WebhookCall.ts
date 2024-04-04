@@ -49,7 +49,10 @@ export default class WebhookCall extends BaseResource {
    * @throws {TimeoutError}
    */
   async *listPagedIterator(
-    queryParams?: SimpleSchemaTypes.WebhookCallInstancesHrefSchema,
+    queryParams?: Omit<
+      SimpleSchemaTypes.WebhookCallInstancesHrefSchema,
+      'page'
+    >,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
     for await (const element of this.rawListPagedIterator(
@@ -71,7 +74,7 @@ export default class WebhookCall extends BaseResource {
    * @throws {TimeoutError}
    */
   rawListPagedIterator(
-    queryParams?: SchemaTypes.WebhookCallInstancesHrefSchema,
+    queryParams?: Omit<SchemaTypes.WebhookCallInstancesHrefSchema, 'page'>,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
     return Utils.rawPageIterator<
