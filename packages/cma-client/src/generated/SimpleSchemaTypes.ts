@@ -653,15 +653,15 @@ export type ItemInstancesHrefSchema = {
    */
   locale?: string;
   /**
-   * Attributes to manage results pagination
+   * Parameters to control offset-based pagination
    */
   page?: {
     /**
-     * Index of first record to fetch (defaults to 0)
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of records to fetch (defaults to 30, maximum is 500)
+     * The maximum number of entities to return (defaults to 30, maximum is 500)
      */
     limit?: number;
     [k: string]: unknown;
@@ -907,15 +907,15 @@ export type ItemVersionInstancesHrefSchema = {
    */
   nested?: boolean;
   /**
-   * Attributes to manage results pagination
+   * Parameters to control offset-based pagination
    */
   page?: {
     /**
-     * Index of first element to fetch (defaults to 0)
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of elements to fetch  (defaults to 15, maximum is 50)
+     * The maximum number of entities to return (defaults to 15, maximum is 50)
      */
     limit?: number;
     [k: string]: unknown;
@@ -976,15 +976,15 @@ export type UploadInstancesHrefSchema = {
    */
   order_by?: string;
   /**
-   * Attributes to manage results pagination
+   * Parameters to control offset-based pagination
    */
   page?: {
     /**
-     * Index of first upload to fetch (defaults to 0)
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of uplads to fetch (defaults to 30, maximum is 500)
+     * The maximum number of entities to return (defaults to 30, maximum is 500)
      */
     limit?: number;
     [k: string]: unknown;
@@ -1094,15 +1094,15 @@ export type SearchResultInstancesTargetSchema = SearchResult[];
  */
 export type SearchResultInstancesHrefSchema = {
   /**
-   * Attributes to manage results pagination
+   * Parameters to control offset-based pagination
    */
   page?: {
     /**
-     * Index of first element to fetch (defaults to 0)
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of elements to fetch (defaults to 20, maximum is 100)
+     * The maximum number of entities to return (defaults to 20, maximum is 100)
      */
     limit?: number;
     [k: string]: unknown;
@@ -1242,15 +1242,15 @@ export type WebhookCallInstancesTargetSchema = WebhookCall[];
  */
 export type WebhookCallInstancesHrefSchema = {
   /**
-   * Params to manage results pagination
+   * Parameters to control offset-based pagination
    */
   page?: {
     /**
-     * Index of first element to fetch (defaults to 0)
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of elements to fetch (defaults to 30, maximum is 500)
+     * The maximum number of entities to return (defaults to 30, maximum is 500)
      */
     limit?: number;
     [k: string]: unknown;
@@ -1561,15 +1561,15 @@ export type UploadTagInstancesHrefSchema = {
     [k: string]: unknown;
   };
   /**
-   * Attributes to manage results pagination
+   * Parameters to control offset-based pagination
    */
   page?: {
     /**
-     * Index of first tag to fetch (defaults to 0)
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of tags to fetch (defaults to 50, maximum is 500)
+     * The maximum number of entities to return (defaults to 50, maximum is 500)
      */
     limit?: number;
     [k: string]: unknown;
@@ -1612,15 +1612,15 @@ export type UploadSmartTagInstancesHrefSchema = {
     [k: string]: unknown;
   };
   /**
-   * Attributes to manage results pagination
+   * Parameters to control offset-based pagination
    */
   page?: {
     /**
-     * Index of first tag to fetch (defaults to 0)
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of tags to fetch (defaults to 50, maximum is 500)
+     * The maximum number of entities to return (defaults to 50, maximum is 500)
      */
     limit?: number;
     [k: string]: unknown;

@@ -203,15 +203,15 @@ export type SiteInstancesHrefSchema = {
     [k: string]: unknown;
   };
   /**
-   * Attributes to manage results pagination
+   * Parameters to control offset-based pagination
    */
   page?: {
     /**
-     * Index of first element to fetch (defaults to 0)
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
      */
     offset?: number;
     /**
-     * Number of elements to fetch (defaults to 20, maximum is 50)
+     * The maximum number of entities to return (defaults to 20, maximum is 50)
      */
     limit?: number;
     [k: string]: unknown;
