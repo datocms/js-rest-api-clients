@@ -150,9 +150,8 @@ export default class Upload extends Resources.Upload {
           }
 
           return result;
-        } catch (e) {
+        } finally {
           await deleteFile();
-          throw e;
         }
       },
       () => {
