@@ -8687,7 +8687,7 @@ export type WebhookCall = {
     [k: string]: unknown;
   };
   /**
-   * The body of the request
+   * The webhook's request payload is encoded as a string. Use `JSON.parse()` to parse it.
    */
   request_payload: string;
   /**
@@ -8748,7 +8748,7 @@ export type WebhookCallAttributes = {
     [k: string]: unknown;
   };
   /**
-   * The body of the request
+   * The webhook's request payload is encoded as a string. Use `JSON.parse()` to parse it.
    */
   request_payload: string;
   /**
