@@ -3046,6 +3046,7 @@ export type ResourceUsage = {
         current_usage: number;
       }[];
   usage_status: null | string;
+  forecast_message: null | string;
 };
 
 /**
@@ -3078,6 +3079,7 @@ export type ResourceUsageAttributes = {
         current_usage: number;
       }[];
   usage_status: null | string;
+  forecast_message: null | string;
 };
 
 /**
