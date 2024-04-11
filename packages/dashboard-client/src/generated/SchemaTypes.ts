@@ -3041,6 +3041,7 @@ export type ResourceUsageAttributes = {
         current_usage: number;
       }[];
   usage_status: null | string;
+  forecast_message: null | string;
 };
 
 /**
@@ -3072,7 +3073,7 @@ export type DailyUsage = {
   type: DailyUsageType;
   id: DailyUsageIdentity;
   attributes: DailyUsageAttributes;
-  relationships?: DailyUsageRelationships;
+  relationships: DailyUsageRelationships;
 };
 
 /**
