@@ -1,11 +1,11 @@
 #!/usr/bin/env node --stack_size=800 -r ts-node/register
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import Handlebars from 'handlebars';
 import rimraf from 'rimraf';
 import extractInfoFromSchema, {
-  ResourceInfo,
-  SchemaInfo,
+  type ResourceInfo,
+  type SchemaInfo,
 } from './extractInfoFromSchema';
 import toSafeName from './toSafeName';
 
@@ -49,7 +49,7 @@ async function generate(prefix: string, hyperschemaUrl: string) {
 
   writeFileSync(
     `./packages/${prefix}-client/resources.json`,
-    JSON.stringify(
+    `${JSON.stringify(
       other.resources.map((r) => ({
         ...r,
         endpoints: r.endpoints.map(
@@ -61,7 +61,7 @@ async function generate(prefix: string, hyperschemaUrl: string) {
       })),
       null,
       2,
-    ) + '\n',
+    )}\n`,
     { encoding: 'utf-8' },
   );
 

@@ -12,11 +12,15 @@ describe('environments', () => {
       },
     );
 
-    await client.environments.promote(forkedEnvironment.id);
+    const renamedSandbox = await client.environments.rename(forkedEnvironment, {
+      id: 'renamed-sandbox',
+    });
+
+    await client.environments.promote(renamedSandbox);
 
     await client.environments.promote(primaryEnvironment.id);
 
-    await client.environments.destroy(forkedEnvironment.id);
+    await client.environments.destroy(renamedSandbox);
 
     const environments = await client.environments.list();
     expect(environments.length).toEqual(1);

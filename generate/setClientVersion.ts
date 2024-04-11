@@ -1,8 +1,8 @@
 #!/usr/bin/env node -r ts-node/register
 
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
-['cma-client', 'dashboard-client'].forEach((dir) => {
+for (const dir of ['cma-client', 'dashboard-client']) {
   const version: string = JSON.parse(
     readFileSync(`./packages/${dir}/package.json`, 'utf8'),
   ).version;
@@ -16,4 +16,4 @@ import { readFileSync, writeFileSync } from 'fs';
     sourceFile.replace(`@datocms/${dir}`, `@datocms/${dir} v${version}`),
     'utf-8',
   );
-});
+}

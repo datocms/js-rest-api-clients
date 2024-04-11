@@ -1,12 +1,10 @@
-import JsonRefParser from '@apidevtools/json-schema-ref-parser';
-
 function simplifySchema(objectSchema: any) {
   const { attributes, relationships, meta, id, type } =
     objectSchema.properties as any;
 
   return {
     ...objectSchema,
-    additionalProperties: attributes && !attributes.properties,
+    additionalProperties: Boolean(attributes && !attributes.properties),
     required: [
       ...(objectSchema.required?.includes('attributes')
         ? attributes?.required || []
@@ -15,6 +13,9 @@ function simplifySchema(objectSchema: any) {
         ? relationships?.required || []
         : []),
       ...(objectSchema.required?.includes('meta') ? ['meta'] : []),
+      ...(!attributes && !relationships && !meta
+        ? objectSchema.required.filter((attr: string) => attr !== 'type')
+        : []),
     ],
     properties: {
       ...(id ? { id } : {}),
@@ -62,25 +63,23 @@ function simplifyEntity(objectSchema: any) {
     ...(id ? { id } : {}),
     ...(type ? { type } : {}),
     ...(attributes?.properties
-      ? Object.keys(attributes.properties).reduce(
-          (acc, key) => ({
-            ...acc,
-            [key]: {
+      ? Object.fromEntries(
+          Object.keys(attributes.properties).map((key) => [
+            key,
+            {
               $ref: `${objectSchema.properties.attributes.$ref}/properties/${key}`,
             },
-          }),
-          {},
+          ]),
         )
       : {}),
     ...(relationships?.properties
-      ? Object.keys(relationships.properties).reduce(
-          (acc, key) => ({
-            ...acc,
-            [key]: {
+      ? Object.fromEntries(
+          Object.keys(relationships.properties).map((key) => [
+            key,
+            {
               $ref: `${objectSchema.properties.relationships.$ref}/properties/${key}`,
             },
-          }),
-          {},
+          ]),
         )
       : {}),
     ...(meta ? { meta } : {}),
@@ -97,12 +96,12 @@ function simplifyEntityRelationships(schema: any) {
   }
 
   if (schema.definitions.relationships) {
-    Object.entries(schema.definitions.relationships.properties).forEach(
-      ([rel, relSchema]) => {
-        schema.definitions.relationships.properties[rel] =
-          schema.definitions.relationships.properties[rel].properties.data;
-      },
-    );
+    for (const rel of Object.keys(
+      schema.definitions.relationships.properties,
+    )) {
+      schema.definitions.relationships.properties[rel] =
+        schema.definitions.relationships.properties[rel].properties.data;
+    }
   }
 }
 
@@ -150,10 +149,13 @@ function simplifyTargetSchema(schema: any) {
 }
 
 export default function simplifyLinks(schema: any) {
-  Object.entries<any>(schema.definitions).forEach(([jsonApiType, schema]) => {
-    simplifyEntityRelationships(schema);
-    if (schema.links) {
-      schema.links.forEach((link: any) => {
+  for (const [jsonApiType, subschema] of Object.entries<any>(
+    schema.definitions,
+  )) {
+    simplifyEntityRelationships(subschema);
+
+    if (subschema.links) {
+      for (const link of subschema.links) {
         const originalSchema = link.schema;
 
         link.schema = applyToInnerObject(
@@ -180,7 +182,7 @@ export default function simplifyLinks(schema: any) {
           link.targetSchema?.properties?.data,
         );
         link.jobSchema = simplifyTargetSchema(link.jobSchema?.properties?.data);
-      });
+      }
     }
-  });
+  }
 }

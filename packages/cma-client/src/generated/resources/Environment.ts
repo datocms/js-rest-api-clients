@@ -90,6 +90,52 @@ export default class Environment extends BaseResource {
   }
 
   /**
+   * Rename an environment
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/environment/rename
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rename(
+    environmentId: string | SimpleSchemaTypes.EnvironmentData,
+    body: SimpleSchemaTypes.EnvironmentRenameSchema,
+  ) {
+    return this.rawRename(
+      Utils.toId(environmentId),
+      Utils.serializeRequestBody<SchemaTypes.EnvironmentRenameSchema>(body, {
+        id: Utils.toId(environmentId),
+        type: 'environment',
+        attributes: [],
+        relationships: [],
+      }),
+    ).then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.EnvironmentRenameTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Rename an environment
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/environment/rename
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawRename(
+    environmentId: string,
+    body: SchemaTypes.EnvironmentRenameSchema,
+  ): Promise<SchemaTypes.EnvironmentRenameTargetSchema> {
+    return this.client.request<SchemaTypes.EnvironmentRenameTargetSchema>({
+      method: 'PUT',
+      url: `/environments/${environmentId}/rename`,
+      body,
+    });
+  }
+
+  /**
    * List all environments
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/environment/instances

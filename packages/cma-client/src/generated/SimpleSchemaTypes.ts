@@ -1338,7 +1338,6 @@ export type EditingSessionUpdateSchema =
        */
       type?: 'editing_session_enter_item';
       item: ItemData;
-      [k: string]: unknown;
     }
   | {
       /**
@@ -1346,7 +1345,6 @@ export type EditingSessionUpdateSchema =
        */
       type?: 'editing_session_take_over_item';
       item: ItemData;
-      [k: string]: unknown;
     }
   | {
       /**
@@ -1354,14 +1352,12 @@ export type EditingSessionUpdateSchema =
        */
       type?: 'editing_session_lock_item';
       item: ItemData;
-      [k: string]: unknown;
     }
   | {
       /**
        * JSON API type
        */
       type?: 'editing_session_unlock_item';
-      [k: string]: unknown;
     };
 /**
  * This interface was referenced by `EditingSession`'s JSON-Schema
@@ -7359,7 +7355,6 @@ export type ItemBulkPublishSchema = {
   type?: 'item_bulk_publish_operation';
   items: ItemData[];
   minItems?: unknown;
-  [k: string]: unknown;
 };
 
 /**
@@ -7370,7 +7365,6 @@ export type ItemBulkUnpublishSchema = {
   type?: 'item_bulk_unpublish_operation';
   items: ItemData[];
   minItems?: unknown;
-  [k: string]: unknown;
 };
 
 /**
@@ -7381,7 +7375,6 @@ export type ItemBulkDestroySchema = {
   type?: 'item_bulk_destroy_operation';
   items: ItemData[];
   minItems?: unknown;
-  [k: string]: unknown;
 };
 
 /**
@@ -8024,7 +8017,6 @@ export type UploadBulkTagSchema = {
 export type UploadBulkDestroySchema = {
   type?: 'upload_bulk_destroy_operation';
   uploads: UploadData[];
-  [k: string]: unknown;
 };
 
 /**
@@ -8334,6 +8326,7 @@ export type Environment = {
 };
 export type EnvironmentForkJobSchema = Environment;
 export type EnvironmentPromoteTargetSchema = Environment;
+export type EnvironmentRenameTargetSchema = Environment;
 export type EnvironmentSelfTargetSchema = Environment;
 export type EnvironmentDestroyJobSchema = Environment;
 /**
@@ -8392,9 +8385,20 @@ export type EnvironmentForkSchema = {
   /**
    * The ID of the forked environment
    */
-  id?: string;
+  id: string;
   type?: EnvironmentType;
-  [k: string]: unknown;
+};
+
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `rename.schema` link.
+ */
+export type EnvironmentRenameSchema = {
+  /**
+   * The new ID for the environment
+   */
+  id: string;
+  type?: EnvironmentType;
 };
 
 /**
@@ -9398,7 +9402,6 @@ export type SiteInvitationUpdateSchema = {
   id?: SiteInvitationIdentity;
   type?: SiteInvitationType;
   role?: RoleData;
-  [k: string]: unknown;
 };
 
 /**

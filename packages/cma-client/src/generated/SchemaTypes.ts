@@ -8492,6 +8492,28 @@ export type EnvironmentPromoteTargetSchema = {
 
 /**
  * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `rename.schema` link.
+ */
+export type EnvironmentRenameSchema = {
+  data: {
+    type: EnvironmentType;
+    /**
+     * The new ID for the environment
+     */
+    id: string;
+  };
+};
+
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `rename.targetSchema` link.
+ */
+export type EnvironmentRenameTargetSchema = {
+  data: Environment;
+};
+
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
 export type EnvironmentInstancesTargetSchema = {

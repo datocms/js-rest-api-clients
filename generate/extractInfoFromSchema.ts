@@ -1,4 +1,6 @@
-import JsonRefParser, { JSONSchema } from '@apidevtools/json-schema-ref-parser';
+import JsonRefParser, {
+  type JSONSchema,
+} from '@apidevtools/json-schema-ref-parser';
 import fetch from 'cross-fetch';
 import { compile as hyperschemaToTypings } from 'hyperschema-to-ts';
 import simplifySchema from './generateSimplifiedSchema';

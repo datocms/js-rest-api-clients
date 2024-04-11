@@ -2296,6 +2296,31 @@
         "rawName": "rawPromote"
       },
       {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/environment/rename",
+        "rel": "rename",
+        "urlTemplate": "/environments/${environmentId}/rename",
+        "method": "PUT",
+        "comment": "Rename an environment",
+        "urlPlaceholder": {
+          "variableName": "environmentId",
+          "isEntityId": true,
+          "relType": "EnvironmentData"
+        },
+        "requestBodyType": "EnvironmentRenameSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "environment",
+          "idRequired": true,
+          "attributes": [],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "EnvironmentRenameTargetSchema",
+        "name": "rename",
+        "rawName": "rawRename"
+      },
+      {
         "returnsCollection": true,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/environment/instances",
         "rel": "instances",

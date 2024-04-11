@@ -2036,7 +2036,6 @@ export type PerOwnerPricingSubscriptionSimulateSchema = {
 export type PerOwnerPricingSubscriptionValidateSchema = {
   type?: PerOwnerPricingSubscriptionType;
   plan: PerOwnerPricingPlanData;
-  [k: string]: unknown;
 };
 
 /**
@@ -3823,7 +3822,6 @@ export type OrganizationInvitationUpdateSchema = {
   id?: OrganizationInvitationIdentity;
   type?: OrganizationInvitationType;
   role?: OrganizationRoleData;
-  [k: string]: unknown;
 };
 
 /**
@@ -3892,7 +3890,6 @@ export type OrganizationMembershipUpdateSchema = {
   id?: OrganizationMembershipIdentity;
   type?: OrganizationMembershipType;
   role?: OrganizationRoleData;
-  [k: string]: unknown;
 };
 
 /**
@@ -3958,7 +3955,6 @@ export type OrganizationMandateRequestRelationships = {
 export type OrganizationMandateRequestCreateSchema = {
   type?: OrganizationMandateRequestType;
   approver_organization: OrganizationData;
-  [k: string]: unknown;
 };
 
 /**
@@ -4027,5 +4023,4 @@ export type OrganizationMandateUpdateSchema = {
   id?: OrganizationMandateIdentity;
   type?: OrganizationMandateType;
   additional_enabled_plans?: PerOwnerPricingPlanData[];
-  [k: string]: unknown;
 };
