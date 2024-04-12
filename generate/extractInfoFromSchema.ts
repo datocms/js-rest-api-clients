@@ -391,7 +391,9 @@ function generateResourceInfo(
           )))
     ) {
       endpointInfo.simpleMethodAvailable = false;
-      console.log(`Too much ambiguity! ${jsonApiType}.${link.rel}`);
+      console.log(
+        `Too much ambiguity to generate the simple version: ${jsonApiType}.${link.rel}`,
+      );
     }
 
     return endpointInfo;
