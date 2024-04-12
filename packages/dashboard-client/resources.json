@@ -82,7 +82,7 @@
             "current_password",
             "otp_code"
           ],
-          "relationships": []
+          "relationships": ["default_organization"]
         },
         "queryParamsRequired": false,
         "responseType": "AccountUpdateTargetSchema",

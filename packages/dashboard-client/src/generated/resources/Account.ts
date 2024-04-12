@@ -71,7 +71,7 @@ export default class Account extends BaseResource {
           'current_password',
           'otp_code',
         ],
-        relationships: [],
+        relationships: ['default_organization'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.AccountUpdateTargetSchema>(

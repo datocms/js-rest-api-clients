@@ -65,6 +65,21 @@ export type PerOwnerPricingBillingProfileType =
  */
 export type PerOwnerPricingBillingProfileIdentity = string;
 /**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationType = 'organization';
+/**
+ * ID of organization
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationIdentity = string;
+/**
  * This interface was referenced by `Job`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -264,21 +279,6 @@ export type OtpBackupCodesType = 'otp_backup_codes';
  * via the `definition` "id".
  */
 export type OtpBackupCodesIdentity = string;
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "type".
- */
-export type OrganizationType = 'organization';
-/**
- * ID of organization
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "id".
- */
-export type OrganizationIdentity = string;
 /**
  * This interface was referenced by `Organization`'s JSON-Schema
  * via the `instances.hrefSchema` link.
@@ -790,6 +790,9 @@ export type AccountRelationships = {
   billing_profile: {
     data: null | PerOwnerPricingBillingProfileData;
   };
+  default_organization: {
+    data: null | OrganizationData;
+  };
 };
 
 /**
@@ -812,6 +815,17 @@ export type PerOwnerPricingSubscriptionData = {
 export type PerOwnerPricingBillingProfileData = {
   type: PerOwnerPricingBillingProfileType;
   id: PerOwnerPricingBillingProfileIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationData = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
 };
 
 /**
@@ -888,7 +902,7 @@ export type AccountUpdateSchema = {
   data: {
     type: AccountType;
     id: AccountIdentity;
-    attributes: {
+    attributes?: {
       /**
        * Email
        */
@@ -917,6 +931,11 @@ export type AccountUpdateSchema = {
        * Two-factor authentication one-time password (required if new_password or email is set)
        */
       otp_code?: string;
+    };
+    relationships?: {
+      default_organization: {
+        data: null | OrganizationData;
+      };
     };
   };
 };
@@ -2085,17 +2104,6 @@ export type OrganizationMeta = {
       )[];
     };
   };
-};
-
-/**
- * JSON API data
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "data".
- */
-export type OrganizationData = {
-  type: OrganizationType;
-  id: OrganizationIdentity;
 };
 
 /**

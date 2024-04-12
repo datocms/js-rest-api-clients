@@ -104,6 +104,21 @@ export type PerOwnerPricingBillingProfileType =
  */
 export type PerOwnerPricingBillingProfileIdentity = string;
 /**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationType = 'organization';
+/**
+ * ID of organization
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationIdentity = string;
+/**
  * ID of job
  *
  * This interface was referenced by `Job`'s JSON-Schema
@@ -129,21 +144,6 @@ export type AccountSelfHrefSchema = {
   include?: string;
   [k: string]: unknown;
 };
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "type".
- */
-export type OrganizationType = 'organization';
-/**
- * ID of organization
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "id".
- */
-export type OrganizationIdentity = string;
 /**
  * This interface was referenced by `Organization`'s JSON-Schema
  * via the `instances.targetSchema` link.
@@ -891,6 +891,7 @@ export type Account = {
   is_2fa_active: boolean;
   active_subscription: null | PerOwnerPricingSubscriptionData;
   billing_profile: null | PerOwnerPricingBillingProfileData;
+  default_organization: null | OrganizationData;
 };
 export type AccountDestroyJobSchema = Account;
 export type AccountSelfTargetSchema = Account;
@@ -915,6 +916,17 @@ export type PerOwnerPricingSubscriptionData = {
 export type PerOwnerPricingBillingProfileData = {
   type: PerOwnerPricingBillingProfileType;
   id: PerOwnerPricingBillingProfileIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationData = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
 };
 
 /**
@@ -959,6 +971,7 @@ export type AccountAttributes = {
 export type AccountRelationships = {
   active_subscription: null | PerOwnerPricingSubscriptionData;
   billing_profile: null | PerOwnerPricingBillingProfileData;
+  default_organization: null | OrganizationData;
 };
 
 /**
@@ -1049,6 +1062,7 @@ export type AccountUpdateSchema = {
    * Two-factor authentication one-time password (required if new_password or email is set)
    */
   otp_code?: string;
+  default_organization?: null | OrganizationData;
 };
 
 /**
@@ -1224,17 +1238,6 @@ export type OrganizationMeta = {
       )[];
     };
   };
-};
-
-/**
- * JSON API data
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "data".
- */
-export type OrganizationData = {
-  type: OrganizationType;
-  id: OrganizationIdentity;
 };
 
 /**
