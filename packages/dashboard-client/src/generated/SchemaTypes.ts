@@ -1529,6 +1529,10 @@ export type SiteMeta = {
    * Site status
    */
   status: string;
+  /**
+   * True if the site requires 2FA to enter
+   */
+  require_2fa: boolean;
   owner:
     | {
         /**
