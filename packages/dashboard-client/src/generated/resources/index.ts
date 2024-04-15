@@ -22,3 +22,4 @@ export { default as OrganizationInvitation } from './OrganizationInvitation';
 export { default as OrganizationMembership } from './OrganizationMembership';
 export { default as OrganizationMandateRequest } from './OrganizationMandateRequest';
 export { default as OrganizationMandate } from './OrganizationMandate';
+export { default as TfaDeactivateRequest } from './TfaDeactivateRequest';
