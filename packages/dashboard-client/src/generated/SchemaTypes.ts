@@ -3125,9 +3125,9 @@ export type DailyUsageAttributes = {
  */
 export type DailyUsageRelationships = {
   /**
-   * Site that generate the usage
+   * Site that generated the usage
    */
-  site?: {
+  site: {
     data: SiteData;
   };
 };

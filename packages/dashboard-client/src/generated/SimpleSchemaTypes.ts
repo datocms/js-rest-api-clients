@@ -3129,7 +3129,7 @@ export type DailyUsage = {
    * Video encoding seconds
    */
   mux_encoded_seconds: number;
-  site?: SiteData;
+  site: SiteData;
 };
 
 /**
@@ -3191,7 +3191,7 @@ export type DailyUsageAttributes = {
  * via the `definition` "relationships".
  */
 export type DailyUsageRelationships = {
-  site?: SiteData;
+  site: SiteData;
 };
 
 /**
