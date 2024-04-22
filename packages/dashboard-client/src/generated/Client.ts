@@ -62,6 +62,7 @@ export class Client {
   organizationMemberships: Resources.OrganizationMembership;
   organizationMandateRequests: Resources.OrganizationMandateRequest;
   organizationMandates: Resources.OrganizationMandate;
+  tfaDeactivateRequests: Resources.TfaDeactivateRequest;
 
   config: ClientConfigOptions;
   jobResultsFetcher?: (jobId: string) => Promise<JobResult>;
@@ -99,6 +100,7 @@ export class Client {
       this,
     );
     this.organizationMandates = new Resources.OrganizationMandate(this);
+    this.tfaDeactivateRequests = new Resources.TfaDeactivateRequest(this);
   }
 
   get baseUrl() {

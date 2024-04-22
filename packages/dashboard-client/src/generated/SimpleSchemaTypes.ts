@@ -767,6 +767,26 @@ export type OrganizationMandateGivenInstancesHrefSchema = {
   include?: string;
   [k: string]: unknown;
 };
+/**
+ * ID of 2FA deactivate request
+ *
+ * This interface was referenced by `TfaDeactivateRequest`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `TfaDeactivateRequest`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type TfaDeactivateRequestIdentity = string;
+/**
+ * This interface was referenced by `TfaDeactivateRequest`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type TfaDeactivateRequestType = 'tfa_deactivate_request';
+/**
+ * This interface was referenced by `TfaDeactivateRequest`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type TfaDeactivateRequestInstancesTargetSchema = TfaDeactivateRequest[];
 
 export type DatoApi = {
   session?: Session;
@@ -797,6 +817,7 @@ export type DatoApi = {
   organization_membership?: OrganizationMembership;
   organization_mandate_request?: OrganizationMandateRequest;
   organization_mandate?: OrganizationMandate;
+  tfa_deactivate_request?: TfaDeactivateRequest;
   [k: string]: unknown;
 };
 
@@ -4030,4 +4051,69 @@ export type OrganizationMandateUpdateSchema = {
   id?: OrganizationMandateIdentity;
   type?: OrganizationMandateType;
   additional_enabled_plans?: PerOwnerPricingPlanData[];
+};
+
+/**
+ * Accounts that belong to a single organization can ask owners to deactivate their two-factor authentication
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "tfa_deactivate_request".
+ */
+export type TfaDeactivateRequest = {
+  id: TfaDeactivateRequestIdentity;
+  type: TfaDeactivateRequestType;
+  organization: OrganizationData;
+  account: AccountData;
+  meta: TfaDeactivateRequestMeta;
+};
+export type TfaDeactivateRequestCreateTargetSchema = TfaDeactivateRequest;
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `TfaDeactivateRequest`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type TfaDeactivateRequestMeta = {
+  /**
+   * Email
+   */
+  email: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `TfaDeactivateRequest`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type TfaDeactivateRequestData = {
+  type: TfaDeactivateRequestType;
+  id: TfaDeactivateRequestIdentity;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `TfaDeactivateRequest`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type TfaDeactivateRequestRelationships = {
+  organization: OrganizationData;
+  account: AccountData;
+};
+
+/**
+ * This interface was referenced by `TfaDeactivateRequest`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type TfaDeactivateRequestCreateSchema = {
+  type?: 'tfa_deactivate_request';
+  /**
+   * Email
+   */
+  email: string;
+  /**
+   * Current password
+   */
+  password: string;
 };

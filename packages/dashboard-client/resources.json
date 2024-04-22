@@ -1717,5 +1717,78 @@
     ],
     "namespace": "organizationMandates",
     "resourceClassName": "OrganizationMandate"
+  },
+  {
+    "jsonApiType": "tfa_deactivate_request",
+    "endpoints": [
+      {
+        "returnsCollection": false,
+        "rel": "create",
+        "urlTemplate": "/tfa-deactivate-requests",
+        "method": "POST",
+        "comment": "Request the belonging organization to deactivate two-factor authentication",
+        "requestBodyType": "TfaDeactivateRequestCreateSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "tfa_deactivate_request",
+          "attributes": ["email", "password"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "TfaDeactivateRequestCreateTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "returnsCollection": true,
+        "rel": "instances",
+        "urlTemplate": "/tfa-deactivate-requests",
+        "method": "GET",
+        "comment": "List all two-factor authentication deactivate requests",
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "TfaDeactivateRequestInstancesTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "approve",
+        "urlTemplate": "/tfa-deactivate-requests/${tfaDeactivateRequestId}/approve",
+        "method": "PUT",
+        "comment": "Approve a two-factor authentication deactivate request",
+        "urlPlaceholder": {
+          "variableName": "tfaDeactivateRequestId",
+          "isEntityId": true,
+          "relType": "TfaDeactivateRequestData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "approve",
+        "rawName": "rawApprove"
+      },
+      {
+        "returnsCollection": false,
+        "rel": "reject",
+        "urlTemplate": "/tfa-deactivate-requests/${tfaDeactivateRequestId}/reject",
+        "method": "PUT",
+        "comment": "Reject a two-factor authentication deactivate request",
+        "urlPlaceholder": {
+          "variableName": "tfaDeactivateRequestId",
+          "isEntityId": true,
+          "relType": "TfaDeactivateRequestData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "reject",
+        "rawName": "rawReject"
+      }
+    ],
+    "namespace": "tfaDeactivateRequests",
+    "resourceClassName": "TfaDeactivateRequest"
   }
 ]
