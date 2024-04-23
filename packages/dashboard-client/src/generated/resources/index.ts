@@ -9,6 +9,7 @@ export { default as PerSitePricingBillingProfile } from './PerSitePricingBilling
 export { default as PerOwnerPricingBillingProfile } from './PerOwnerPricingBillingProfile';
 export { default as Invoice } from './Invoice';
 export { default as ResourceUsage } from './ResourceUsage';
+export { default as DailyUsage } from './DailyUsage';
 export { default as JobResult } from './JobResult';
 export { default as SiteTransfer } from './SiteTransfer';
 export { default as SiteInvitation } from './SiteInvitation';

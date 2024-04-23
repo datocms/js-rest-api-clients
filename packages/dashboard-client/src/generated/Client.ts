@@ -49,6 +49,7 @@ export class Client {
   perOwnerPricingBillingProfile: Resources.PerOwnerPricingBillingProfile;
   invoices: Resources.Invoice;
   resourceUsages: Resources.ResourceUsage;
+  dailyUsages: Resources.DailyUsage;
   jobResults: Resources.JobResult;
   siteTransfers: Resources.SiteTransfer;
   siteInvitation: Resources.SiteInvitation;
@@ -85,6 +86,7 @@ export class Client {
       new Resources.PerOwnerPricingBillingProfile(this);
     this.invoices = new Resources.Invoice(this);
     this.resourceUsages = new Resources.ResourceUsage(this);
+    this.dailyUsages = new Resources.DailyUsage(this);
     this.jobResults = new Resources.JobResult(this);
     this.siteTransfers = new Resources.SiteTransfer(this);
     this.siteInvitation = new Resources.SiteInvitation(this);
