@@ -10385,6 +10385,10 @@ export type DailyUsageAttributes = {
    */
   cda_traffic_bytes: number;
   /**
+   * Content management API traffic
+   */
+  cma_traffic_bytes: number;
+  /**
    * Uploads requests traffic
    */
   assets_traffic_bytes: number;
@@ -10392,6 +10396,10 @@ export type DailyUsageAttributes = {
    * Video streaming seconds
    */
   mux_delivered_seconds: number;
+  /**
+   * Video encoding seconds
+   */
+  mux_encoded_seconds: number;
 };
 
 /**
