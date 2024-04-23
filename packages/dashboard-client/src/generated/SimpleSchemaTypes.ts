@@ -719,16 +719,11 @@ export type OrganizationMandateRequestIdentity = string;
 export type OrganizationMandateRequestType = 'organization_mandate_request';
 /**
  * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
- * via the `pending_instances.targetSchema` link.
+ * via the `create.targetSchema` link.
  */
-export type OrganizationMandateRequestPendingInstancesTargetSchema =
-  OrganizationMandateRequest[];
-/**
- * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
- * via the `requested_instances.targetSchema` link.
- */
-export type OrganizationMandateRequestRequestedInstancesTargetSchema =
-  OrganizationMandateRequest[];
+export type OrganizationMandateRequestCreateTargetSchema =
+  | OrganizationMandateRequest
+  | OrganizationMandate;
 /**
  * ID of mandate
  *
@@ -767,6 +762,29 @@ export type OrganizationMandateGivenInstancesHrefSchema = {
   include?: string;
   [k: string]: unknown;
 };
+/**
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `create.hrefSchema` link.
+ */
+export type OrganizationMandateRequestCreateHrefSchema = {
+  /**
+   * If the account is also part of the target organization, the request can be automatically approved
+   */
+  auto_approve?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `pending_instances.targetSchema` link.
+ */
+export type OrganizationMandateRequestPendingInstancesTargetSchema =
+  OrganizationMandateRequest[];
+/**
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `requested_instances.targetSchema` link.
+ */
+export type OrganizationMandateRequestRequestedInstancesTargetSchema =
+  OrganizationMandateRequest[];
 /**
  * ID of 2FA deactivate request
  *
@@ -3933,8 +3951,6 @@ export type OrganizationMandateRequest = {
   requester_organization: OrganizationData;
   meta: OrganizationMandateRequestMeta;
 };
-export type OrganizationMandateRequestCreateTargetSchema =
-  OrganizationMandateRequest;
 export type OrganizationMandateRequestDestroyTargetSchema =
   OrganizationMandateRequest;
 /**

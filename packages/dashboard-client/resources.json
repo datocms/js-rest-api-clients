@@ -1563,6 +1563,7 @@
           "attributes": [],
           "relationships": ["approver_organization"]
         },
+        "queryParamsType": "OrganizationMandateRequestCreateHrefSchema",
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateRequestCreateTargetSchema",
         "name": "create",

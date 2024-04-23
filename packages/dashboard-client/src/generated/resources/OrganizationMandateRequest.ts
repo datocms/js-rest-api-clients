@@ -12,7 +12,10 @@ export default class OrganizationMandateRequest extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.OrganizationMandateRequestCreateSchema) {
+  create(
+    body: SimpleSchemaTypes.OrganizationMandateRequestCreateSchema,
+    queryParams?: SimpleSchemaTypes.OrganizationMandateRequestCreateHrefSchema,
+  ) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.OrganizationMandateRequestCreateSchema>(
         body,
@@ -22,6 +25,7 @@ export default class OrganizationMandateRequest extends BaseResource {
           relationships: ['approver_organization'],
         },
       ),
+      queryParams,
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMandateRequestCreateTargetSchema>(
         body,
@@ -37,12 +41,14 @@ export default class OrganizationMandateRequest extends BaseResource {
    */
   rawCreate(
     body: SchemaTypes.OrganizationMandateRequestCreateSchema,
+    queryParams?: SchemaTypes.OrganizationMandateRequestCreateHrefSchema,
   ): Promise<SchemaTypes.OrganizationMandateRequestCreateTargetSchema> {
     return this.client.request<SchemaTypes.OrganizationMandateRequestCreateTargetSchema>(
       {
         method: 'POST',
         url: '/organization-mandate-requests',
         body,
+        queryParams,
       },
     );
   }

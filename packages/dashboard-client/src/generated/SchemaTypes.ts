@@ -589,6 +589,17 @@ export type OrganizationMandateGivenInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `create.hrefSchema` link.
+ */
+export type OrganizationMandateRequestCreateHrefSchema = {
+  /**
+   * If the account is also part of the target organization, the request can be automatically approved
+   */
+  auto_approve?: string;
+  [k: string]: unknown;
+};
+/**
  * This interface was referenced by `TfaDeactivateRequest`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -4130,31 +4141,7 @@ export type OrganizationMandateRequestCreateSchema = {
  * via the `create.targetSchema` link.
  */
 export type OrganizationMandateRequestCreateTargetSchema = {
-  data: OrganizationMandateRequest;
-};
-
-/**
- * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
- * via the `pending_instances.targetSchema` link.
- */
-export type OrganizationMandateRequestPendingInstancesTargetSchema = {
-  data: OrganizationMandateRequest[];
-};
-
-/**
- * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
- * via the `requested_instances.targetSchema` link.
- */
-export type OrganizationMandateRequestRequestedInstancesTargetSchema = {
-  data: OrganizationMandateRequest[];
-};
-
-/**
- * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
- * via the `destroy.targetSchema` link.
- */
-export type OrganizationMandateRequestDestroyTargetSchema = {
-  data: OrganizationMandateRequest;
+  data: OrganizationMandateRequest | OrganizationMandate;
 };
 
 /**
@@ -4280,6 +4267,30 @@ export type OrganizationMandateGivenInstancesTargetSchema = {
  */
 export type OrganizationMandateDestroyTargetSchema = {
   data: OrganizationMandate;
+};
+
+/**
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `pending_instances.targetSchema` link.
+ */
+export type OrganizationMandateRequestPendingInstancesTargetSchema = {
+  data: OrganizationMandateRequest[];
+};
+
+/**
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `requested_instances.targetSchema` link.
+ */
+export type OrganizationMandateRequestRequestedInstancesTargetSchema = {
+  data: OrganizationMandateRequest[];
+};
+
+/**
+ * This interface was referenced by `OrganizationMandateRequest`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type OrganizationMandateRequestDestroyTargetSchema = {
+  data: OrganizationMandateRequest;
 };
 
 /**
