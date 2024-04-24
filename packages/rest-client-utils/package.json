@@ -2,10 +2,7 @@
   "name": "@datocms/rest-client-utils",
   "version": "3.2.1",
   "description": "Utilities for DatoCMS REST API clients",
-  "keywords": [
-    "datocms",
-    "client"
-  ],
+  "keywords": ["datocms", "client"],
   "author": "Stefano Verna <s.verna@datocms.com>",
   "homepage": "https://github.com/datocms/js-rest-api-clients/tree/main/packages/rest-client-utils#readme",
   "license": "MIT",
@@ -17,10 +14,7 @@
     "lib": "dist",
     "test": "__tests__"
   },
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "publishConfig": {
     "access": "public"
   },
