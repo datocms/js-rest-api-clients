@@ -897,6 +897,21 @@ export type UploadRequestType = 'upload_request';
  */
 export type UploadRequestIdentity = string;
 /**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type UploadTrackType = 'upload_track';
+/**
+ * ID of the upload track
+ *
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type UploadTrackIdentity = string;
+/**
  * This interface was referenced by `SearchResult`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1390,6 +1405,7 @@ export type DatoApi = {
   item_version?: ItemVersion;
   upload?: Upload;
   upload_request?: UploadRequest;
+  upload_track?: UploadTrack;
   scheduled_publication?: ScheduledPublication;
   scheduled_unpublishing?: ScheduledUnpublishing;
   search_result?: SearchResult;
@@ -8310,6 +8326,186 @@ export type UploadRequestCreateSchema = {
  */
 export type UploadRequestCreateTargetSchema = {
   data: UploadRequest;
+};
+
+/**
+ * If the asset linked to an Upload entity is a video file, you have the option to include additional audio tracks and subtitle tracks to it.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "upload_track".
+ */
+export type UploadTrack = {
+  type: UploadTrackType;
+  id: UploadTrackIdentity;
+  attributes: UploadTrackAttributes;
+  relationships: UploadTrackRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type UploadTrackAttributes = {
+  /**
+   * The type of track (audio or subtitles)
+   */
+  type: 'subtitles' | 'audio';
+  /**
+   * The human-readable name of the track
+   */
+  name: string;
+  /**
+   * A valid BCP 47 specification compliant language code
+   */
+  language_code: string;
+  /**
+   * When status is `errored`, explains the reason for the error
+   */
+  error: null | string;
+  /**
+   * The status of the asset
+   */
+  status: 'preparing' | 'ready' | 'errored';
+  /**
+   * Indicates if the track provides subtitles for the Deaf or Hard-of-hearing (SDH)
+   */
+  closed_captions: null | boolean;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type UploadTrackRelationships = {
+  /**
+   * The upload containing the track
+   */
+  upload: {
+    data: UploadData;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type UploadTrackData = {
+  type: UploadTrackType;
+  id: UploadTrackIdentity;
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type UploadTrackCreateSchema = {
+  data: {
+    type: UploadTrackType;
+    attributes: {
+      /**
+       * Either an URL to download, or the ID of an upload request
+       */
+      url_or_upload_request_id: string;
+      /**
+       * The type of track (audio or subtitles)
+       */
+      type: 'subtitles' | 'audio';
+      /**
+       * The human-readable name of the track
+       */
+      name?: string;
+      /**
+       * A valid BCP 47 specification compliant language code
+       */
+      language_code: string;
+      /**
+       * Indicates if the track provides subtitles for the Deaf or Hard-of-hearing (SDH)
+       */
+      closed_captions?: null | boolean;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type UploadTrackCreateTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `create.jobSchema` link.
+ */
+export type UploadTrackCreateJobSchema = {
+  data: UploadTrack;
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type UploadTrackInstancesTargetSchema = {
+  data: UploadTrack[];
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type UploadTrackDestroyTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `destroy.jobSchema` link.
+ */
+export type UploadTrackDestroyJobSchema = {
+  data: UploadTrack;
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `generate_subtitles.schema` link.
+ */
+export type UploadTrackGenerateSubtitlesSchema = {
+  data: {
+    type: UploadTrackType;
+    attributes: {
+      /**
+       * The human-readable name of the track
+       */
+      name?: string;
+      /**
+       * A valid BCP 47 specification compliant language code
+       */
+      language_code: string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `generate_subtitles.targetSchema` link.
+ */
+export type UploadTrackGenerateSubtitlesTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `generate_subtitles.jobSchema` link.
+ */
+export type UploadTrackGenerateSubtitlesJobSchema = {
+  data: UploadTrack;
 };
 
 /**

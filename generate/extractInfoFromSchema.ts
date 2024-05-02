@@ -18,7 +18,12 @@ export type EndpointInfo = {
   method: string;
   comment: string;
   docUrl?: string;
-  urlPlaceholder?: {
+  urlPlaceholders: Array<{
+    variableName: string;
+    isEntityId: boolean;
+    relType: string;
+  }>;
+  entityIdPlaceholder?: {
     variableName: string;
     isEntityId: boolean;
     relType: string;
@@ -263,7 +268,7 @@ function generateResourceInfo(
   }
 
   const endpoints = schema.links.map<EndpointInfo>((link) => {
-    const urlPlaceholders: EndpointInfo['urlPlaceholder'][] = [];
+    const urlPlaceholders: EndpointInfo['urlPlaceholders'] = [];
 
     const urlTemplate = link.href.replace(
       identityRegexp,
@@ -277,12 +282,6 @@ function generateResourceInfo(
         return `\${${variableName}}`;
       },
     );
-
-    if (urlPlaceholders.length > 1) {
-      throw new Error(
-        `More than one placeholder in ${jsonApiType}#${link.rel}`,
-      );
-    }
 
     const baseTypeName = jsonApiType;
 
@@ -348,7 +347,9 @@ function generateResourceInfo(
       urlTemplate,
       method: link.method,
       comment: link.title,
-      urlPlaceholder: urlPlaceholders[0] || undefined,
+      urlPlaceholders,
+      entityIdPlaceholder:
+        urlPlaceholders.find((p) => p.isEntityId) || undefined,
       requestBodyType: link.schema
         ? `${toSafeName(baseTypeName, true)}${toSafeName(link.rel, true)}Schema`
         : undefined,
@@ -404,7 +405,9 @@ function generateResourceInfo(
     endpoints,
     namespace: toSafeName(
       endpoints.some(
-        (e) => e.returnsCollection || (e.name === 'find' && e.urlPlaceholder),
+        (e) =>
+          e.returnsCollection ||
+          (e.name === 'find' && e.urlPlaceholders.length === 1),
       )
         ? `${jsonApiType}s`
         : jsonApiType,

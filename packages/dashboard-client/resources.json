@@ -8,6 +8,7 @@
         "urlTemplate": "/sessions",
         "method": "POST",
         "comment": "Create a new session",
+        "urlPlaceholders": [],
         "requestBodyType": "SessionCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -40,6 +41,7 @@
         "urlTemplate": "/account",
         "method": "POST",
         "comment": "Create a new account",
+        "urlPlaceholders": [],
         "requestBodyType": "AccountCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -68,6 +70,7 @@
         "urlTemplate": "/account",
         "method": "PUT",
         "comment": "Update a account",
+        "urlPlaceholders": [],
         "requestBodyType": "AccountUpdateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -95,6 +98,7 @@
         "urlTemplate": "/account/destroy",
         "method": "POST",
         "comment": "Delete a account",
+        "urlPlaceholders": [],
         "requestBodyType": "AccountDestroySchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -113,6 +117,7 @@
         "urlTemplate": "/account",
         "method": "GET",
         "comment": "Retrieve a account",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "AccountSelfHrefSchema",
         "queryParamsRequired": false,
@@ -126,6 +131,7 @@
         "urlTemplate": "/account/reset_password",
         "method": "POST",
         "comment": "Request a password reset",
+        "urlPlaceholders": [],
         "requestBodyType": "AccountResetPasswordSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -143,6 +149,7 @@
         "urlTemplate": "/account/activate-2fa",
         "method": "PUT",
         "comment": "Activates 2-factor authorization",
+        "urlPlaceholders": [],
         "requestBodyType": "AccountActivate_2FaSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -161,6 +168,7 @@
         "urlTemplate": "/account/reset-2fa",
         "method": "PUT",
         "comment": "Generates 2-factor authorization secrets",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "AccountReset_2FaTargetSchema",
@@ -173,6 +181,7 @@
         "urlTemplate": "/account/deactivate-2fa",
         "method": "PUT",
         "comment": "De-activates 2-factor authorization",
+        "urlPlaceholders": [],
         "requestBodyType": "AccountDeactivate_2FaSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -191,6 +200,7 @@
         "urlTemplate": "/account/convert-to-organization",
         "method": "POST",
         "comment": "Convert to organization",
+        "urlPlaceholders": [],
         "requestBodyType": "AccountConvertToOrganizationSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -216,7 +226,14 @@
         "urlTemplate": "/sites/${siteId}",
         "method": "GET",
         "comment": "Retrieve a project",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "siteId",
+            "isEntityId": true,
+            "relType": "SiteData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "siteId",
           "isEntityId": true,
           "relType": "SiteData"
@@ -234,6 +251,7 @@
         "urlTemplate": "/sites",
         "method": "GET",
         "comment": "List all projects",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "SiteInstancesHrefSchema",
         "queryParamsRequired": false,
@@ -251,6 +269,7 @@
         "urlTemplate": "/sites",
         "method": "POST",
         "comment": "Create a new project",
+        "urlPlaceholders": [],
         "requestBodyType": "SiteCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -275,7 +294,14 @@
         "urlTemplate": "/sites/${siteId}",
         "method": "PUT",
         "comment": "Update project",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "siteId",
+            "isEntityId": true,
+            "relType": "SiteData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "siteId",
           "isEntityId": true,
           "relType": "SiteData"
@@ -304,7 +330,14 @@
         "urlTemplate": "/sites/${siteId}",
         "method": "DELETE",
         "comment": "Delete a project",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "siteId",
+            "isEntityId": true,
+            "relType": "SiteData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "siteId",
           "isEntityId": true,
           "relType": "SiteData"
@@ -321,7 +354,14 @@
         "urlTemplate": "/sites/${siteId}/duplicate",
         "method": "POST",
         "comment": "Duplicate an existing project",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "siteId",
+            "isEntityId": true,
+            "relType": "SiteData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "siteId",
           "isEntityId": true,
           "relType": "SiteData"
@@ -357,11 +397,13 @@
         "urlTemplate": "/sites/${siteId}/subscriptions",
         "method": "POST",
         "comment": "Create a new subscription",
-        "urlPlaceholder": {
-          "variableName": "siteId",
-          "isEntityId": false,
-          "relType": "SiteData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "siteId",
+            "isEntityId": false,
+            "relType": "SiteData"
+          }
+        ],
         "requestBodyType": "SiteSubscriptionCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -384,11 +426,13 @@
         "urlTemplate": "/sites/${siteId}/subscriptions/simulate",
         "method": "POST",
         "comment": "Simulate",
-        "urlPlaceholder": {
-          "variableName": "siteId",
-          "isEntityId": false,
-          "relType": "SiteData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "siteId",
+            "isEntityId": false,
+            "relType": "SiteData"
+          }
+        ],
         "requestBodyType": "SiteSubscriptionSimulateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -412,11 +456,13 @@
         "urlTemplate": "/sites/${siteId}/subscriptions/validate",
         "method": "POST",
         "comment": "Validate a new subscription",
-        "urlPlaceholder": {
-          "variableName": "siteId",
-          "isEntityId": false,
-          "relType": "SiteData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "siteId",
+            "isEntityId": false,
+            "relType": "SiteData"
+          }
+        ],
         "requestBodyType": "SiteSubscriptionValidateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -442,6 +488,7 @@
         "urlTemplate": "/per-owner-pricing-subscriptions",
         "method": "POST",
         "comment": "Create a new subscription",
+        "urlPlaceholders": [],
         "requestBodyType": "PerOwnerPricingSubscriptionCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -465,6 +512,7 @@
         "urlTemplate": "/per-owner-pricing-subscriptions/simulate",
         "method": "POST",
         "comment": "Simulate",
+        "urlPlaceholders": [],
         "requestBodyType": "PerOwnerPricingSubscriptionSimulateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -483,6 +531,7 @@
         "urlTemplate": "/per-owner-pricing-subscriptions/validate",
         "method": "POST",
         "comment": "Validate a new subscription",
+        "urlPlaceholders": [],
         "requestBodyType": "PerOwnerPricingSubscriptionValidateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -508,6 +557,7 @@
         "urlTemplate": "/site-plans",
         "method": "GET",
         "comment": "Retrieve enabled plans for account",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SitePlanInstancesTargetSchema",
@@ -527,6 +577,7 @@
         "urlTemplate": "/per-owner-pricing-plans",
         "method": "GET",
         "comment": "Retrieve enabled plans for account",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PerOwnerPricingPlanInstancesTargetSchema",
@@ -539,6 +590,7 @@
         "urlTemplate": "/per-owner-pricing-plans/activable-as-appointed-organization",
         "method": "GET",
         "comment": "Retrieve plans that the organization can enable on other organizations given a mandate",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PerOwnerPricingPlanActivableAsAppointedOrganizationInstancesTargetSchema",
@@ -558,6 +610,7 @@
         "urlTemplate": "/per-site-pricing-billing-profiles",
         "method": "GET",
         "comment": "Retrieve all account's billing profiles",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PerSitePricingBillingProfileInstancesTargetSchema",
@@ -570,7 +623,14 @@
         "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}",
         "method": "GET",
         "comment": "Retrieve a billing profile",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "perSitePricingBillingProfileId",
+            "isEntityId": true,
+            "relType": "PerSitePricingBillingProfileData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "perSitePricingBillingProfileId",
           "isEntityId": true,
           "relType": "PerSitePricingBillingProfileData"
@@ -588,7 +648,14 @@
         "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/credit-card",
         "method": "PUT",
         "comment": "Update a billing profile's credit card",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "perSitePricingBillingProfileId",
+            "isEntityId": true,
+            "relType": "PerSitePricingBillingProfileData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "perSitePricingBillingProfileId",
           "isEntityId": true,
           "relType": "PerSitePricingBillingProfileData"
@@ -611,7 +678,14 @@
         "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/info",
         "method": "PUT",
         "comment": "Update a billing profile's billing information",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "perSitePricingBillingProfileId",
+            "isEntityId": true,
+            "relType": "PerSitePricingBillingProfileData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "perSitePricingBillingProfileId",
           "isEntityId": true,
           "relType": "PerSitePricingBillingProfileData"
@@ -646,7 +720,14 @@
         "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}",
         "method": "DELETE",
         "comment": "Delete a billing profile",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "perSitePricingBillingProfileId",
+            "isEntityId": true,
+            "relType": "PerSitePricingBillingProfileData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "perSitePricingBillingProfileId",
           "isEntityId": true,
           "relType": "PerSitePricingBillingProfileData"
@@ -670,6 +751,7 @@
         "urlTemplate": "/per-owner-pricing-billing-profile",
         "method": "GET",
         "comment": "Retrieve a billing profile",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PerOwnerPricingBillingProfileSelfTargetSchema",
@@ -682,6 +764,7 @@
         "urlTemplate": "/per-owner-pricing-billing-profile/credit-card",
         "method": "PUT",
         "comment": "Update a billing profile's credit card",
+        "urlPlaceholders": [],
         "requestBodyType": "PerOwnerPricingBillingProfileUpdateCreditCardSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -700,6 +783,7 @@
         "urlTemplate": "/per-owner-pricing-billing-profile/info",
         "method": "PUT",
         "comment": "Update a billing profile's billing information",
+        "urlPlaceholders": [],
         "requestBodyType": "PerOwnerPricingBillingProfileUpdateInfoSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -738,6 +822,7 @@
         "urlTemplate": "/per-owner-pricing-billing-profile/invoices",
         "method": "GET",
         "comment": "Retrieve all invoices",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "InvoicePerOwnerPricingBillingProfileInstancesTargetSchema",
@@ -750,11 +835,13 @@
         "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/invoices",
         "method": "GET",
         "comment": "Retrieve all invoices",
-        "urlPlaceholder": {
-          "variableName": "perSitePricingBillingProfileId",
-          "isEntityId": false,
-          "relType": "PerSitePricingBillingProfileData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "perSitePricingBillingProfileId",
+            "isEntityId": false,
+            "relType": "PerSitePricingBillingProfileData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "InvoicePerSitePricingBillingProfileInstancesTargetSchema",
@@ -767,6 +854,7 @@
         "urlTemplate": "/per-owner-pricing-billing-profile/invoices/collect-unpaid",
         "method": "POST",
         "comment": "Collect all unpaid invoices",
+        "urlPlaceholders": [],
         "requestBodyType": "InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -785,11 +873,13 @@
         "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/invoices/collect-unpaid",
         "method": "POST",
         "comment": "Collect all unpaid invoices",
-        "urlPlaceholder": {
-          "variableName": "perSitePricingBillingProfileId",
-          "isEntityId": false,
-          "relType": "PerSitePricingBillingProfileData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "perSitePricingBillingProfileId",
+            "isEntityId": false,
+            "relType": "PerSitePricingBillingProfileData"
+          }
+        ],
         "requestBodyType": "InvoicePerSitePricingBillingProfileCollectUnpaidSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -815,6 +905,7 @@
         "urlTemplate": "/resource-usages",
         "method": "GET",
         "comment": "Retrieve all resource usages",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ResourceUsageInstancesTargetSchema",
@@ -834,6 +925,7 @@
         "urlTemplate": "/daily-site-usages",
         "method": "GET",
         "comment": "Retrieve daily usage info for either an account or an organization",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "DailyUsageInstancesHrefSchema",
         "queryParamsRequired": false,
@@ -854,7 +946,14 @@
         "urlTemplate": "/job-results/${jobResultId}",
         "method": "GET",
         "comment": "Retrieve a job result",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "jobResultId",
+            "isEntityId": true,
+            "relType": "JobResultData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "jobResultId",
           "isEntityId": true,
           "relType": "JobResultData"
@@ -878,6 +977,7 @@
         "urlTemplate": "/site-transfers",
         "method": "GET",
         "comment": "List all pending transfer requests",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteTransferInstancesTargetSchema",
@@ -890,7 +990,14 @@
         "urlTemplate": "/site-transfers/${siteTransferId}",
         "method": "GET",
         "comment": "Retrieve a transfer",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "siteTransferId",
+            "isEntityId": true,
+            "relType": "SiteTransferData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "siteTransferId",
           "isEntityId": true,
           "relType": "SiteTransferData"
@@ -907,11 +1014,13 @@
         "urlTemplate": "/sites/${siteId}/transfer",
         "method": "POST",
         "comment": "Create a new site transfer request",
-        "urlPlaceholder": {
-          "variableName": "siteId",
-          "isEntityId": false,
-          "relType": "SiteData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "siteId",
+            "isEntityId": false,
+            "relType": "SiteData"
+          }
+        ],
         "requestBodyType": "SiteTransferCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -930,11 +1039,13 @@
         "urlTemplate": "/sites/${siteId}/transfer",
         "method": "DELETE",
         "comment": "Destroy a site transfer request",
-        "urlPlaceholder": {
-          "variableName": "siteId",
-          "isEntityId": false,
-          "relType": "SiteData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "siteId",
+            "isEntityId": false,
+            "relType": "SiteData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteTransferDestroyTargetSchema",
@@ -947,7 +1058,14 @@
         "urlTemplate": "/site-transfers/${siteTransferId}/simulate-accept",
         "method": "PUT",
         "comment": "Simulate accept",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "siteTransferId",
+            "isEntityId": true,
+            "relType": "SiteTransferData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "siteTransferId",
           "isEntityId": true,
           "relType": "SiteTransferData"
@@ -970,7 +1088,14 @@
         "urlTemplate": "/site-transfers/${siteTransferId}/accept",
         "method": "PUT",
         "comment": "Accept a site transfer request",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "siteTransferId",
+            "isEntityId": true,
+            "relType": "SiteTransferData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "siteTransferId",
           "isEntityId": true,
           "relType": "SiteTransferData"
@@ -993,7 +1118,14 @@
         "urlTemplate": "/site-transfers/${siteTransferId}/decline",
         "method": "PUT",
         "comment": "Decline a site transfer request",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "siteTransferId",
+            "isEntityId": true,
+            "relType": "SiteTransferData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "siteTransferId",
           "isEntityId": true,
           "relType": "SiteTransferData"
@@ -1016,7 +1148,14 @@
         "urlTemplate": "/site-invitations/${siteInvitationId}/redeem",
         "method": "PUT",
         "comment": "Redeem token",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "siteInvitationId",
+            "isEntityId": true,
+            "relType": "SiteInvitationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "siteInvitationId",
           "isEntityId": true,
           "relType": "SiteInvitationData"
@@ -1041,11 +1180,13 @@
         "urlTemplate": "/sites/${siteId}/subscription-limits",
         "method": "GET",
         "comment": "Get all the subscription limits",
-        "urlPlaceholder": {
-          "variableName": "siteId",
-          "isEntityId": false,
-          "relType": "SiteData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "siteId",
+            "isEntityId": false,
+            "relType": "SiteData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SubscriptionLimitInstancesTargetSchema",
@@ -1065,11 +1206,13 @@
         "urlTemplate": "/sites/${siteId}/subscription-features",
         "method": "GET",
         "comment": "Get all the subscription features",
-        "urlPlaceholder": {
-          "variableName": "siteId",
-          "isEntityId": false,
-          "relType": "SiteData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "siteId",
+            "isEntityId": false,
+            "relType": "SiteData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SubscriptionFeatureInstancesTargetSchema",
@@ -1089,6 +1232,7 @@
         "urlTemplate": "/oauth_applications",
         "method": "GET",
         "comment": "List all authorized applications",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OauthApplicationInstancesTargetSchema",
@@ -1101,7 +1245,14 @@
         "urlTemplate": "/oauth_applications/${oauthApplicationId}",
         "method": "DELETE",
         "comment": "Delete an authorized application",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "oauthApplicationId",
+            "isEntityId": true,
+            "relType": "OauthApplicationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "oauthApplicationId",
           "isEntityId": true,
           "relType": "OauthApplicationData"
@@ -1124,11 +1275,13 @@
         "urlTemplate": "/payment-methods/${paymentMethodId}/payment-intents",
         "method": "POST",
         "comment": "Create a payment intent starting from a payment method",
-        "urlPlaceholder": {
-          "variableName": "paymentMethodId",
-          "isEntityId": false,
-          "relType": "PaymentMethodData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "paymentMethodId",
+            "isEntityId": false,
+            "relType": "PaymentMethodData"
+          }
+        ],
         "requestBodyType": "PaymentIntentCreateFromPaymentMethodSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1148,11 +1301,13 @@
         "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/payment-intents",
         "method": "POST",
         "comment": "Create a payment intent starting from an existing per-site billing profile",
-        "urlPlaceholder": {
-          "variableName": "perSitePricingBillingProfileId",
-          "isEntityId": false,
-          "relType": "PerSitePricingBillingProfileData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "perSitePricingBillingProfileId",
+            "isEntityId": false,
+            "relType": "PerSitePricingBillingProfileData"
+          }
+        ],
         "requestBodyType": "PaymentIntentCreateForPerSitePricingBillingProfileSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1172,6 +1327,7 @@
         "urlTemplate": "/per-owner-pricing-billing-profile/payment-intents",
         "method": "POST",
         "comment": "Create a payment intent starting from an existing per-owner billing profile",
+        "urlPlaceholders": [],
         "requestBodyType": "PaymentIntentCreateForPerOwnerPricingBillingProfileSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1191,7 +1347,14 @@
         "urlTemplate": "/payment-intents/${paymentIntentId}/confirm",
         "method": "PUT",
         "comment": "Confirm a payment intent",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "paymentIntentId",
+            "isEntityId": true,
+            "relType": "PaymentIntentData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "paymentIntentId",
           "isEntityId": true,
           "relType": "PaymentIntentData"
@@ -1216,6 +1379,7 @@
         "urlTemplate": "/organizations",
         "method": "GET",
         "comment": "List organizations",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "OrganizationInstancesHrefSchema",
         "queryParamsRequired": false,
@@ -1229,7 +1393,14 @@
         "urlTemplate": "/organizations/${organizationId}",
         "method": "GET",
         "comment": "Retrieve an organization",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationId",
+            "isEntityId": true,
+            "relType": "OrganizationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationId",
           "isEntityId": true,
           "relType": "OrganizationData"
@@ -1247,6 +1418,7 @@
         "urlTemplate": "/organizations",
         "method": "POST",
         "comment": "Create a new organization",
+        "urlPlaceholders": [],
         "requestBodyType": "OrganizationCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1265,7 +1437,14 @@
         "urlTemplate": "/organizations/${organizationId}",
         "method": "PUT",
         "comment": "Update an organization",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationId",
+            "isEntityId": true,
+            "relType": "OrganizationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationId",
           "isEntityId": true,
           "relType": "OrganizationData"
@@ -1289,7 +1468,14 @@
         "urlTemplate": "/organizations/${organizationId}/destroy",
         "method": "POST",
         "comment": "Destroy an organization",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationId",
+            "isEntityId": true,
+            "relType": "OrganizationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationId",
           "isEntityId": true,
           "relType": "OrganizationData"
@@ -1319,6 +1505,7 @@
         "urlTemplate": "/organization-roles",
         "method": "GET",
         "comment": "List organization roles",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationRoleInstancesTargetSchema",
@@ -1331,7 +1518,14 @@
         "urlTemplate": "/organization-roles/${organizationRoleId}",
         "method": "GET",
         "comment": "Retrieve an organization role",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationRoleId",
+            "isEntityId": true,
+            "relType": "OrganizationRoleData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationRoleId",
           "isEntityId": true,
           "relType": "OrganizationRoleData"
@@ -1355,6 +1549,7 @@
         "urlTemplate": "/organization-invitations",
         "method": "POST",
         "comment": "Invite a new member",
+        "urlPlaceholders": [],
         "requestBodyType": "OrganizationInvitationCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1373,7 +1568,14 @@
         "urlTemplate": "/organization-invitations/${organizationInvitationId}",
         "method": "PUT",
         "comment": "Update an invitation",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationInvitationId",
+            "isEntityId": true,
+            "relType": "OrganizationInvitationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationInvitationId",
           "isEntityId": true,
           "relType": "OrganizationInvitationData"
@@ -1397,6 +1599,7 @@
         "urlTemplate": "/organization-invitations",
         "method": "GET",
         "comment": "List all invitations",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationInvitationInstancesTargetSchema",
@@ -1409,7 +1612,14 @@
         "urlTemplate": "/organization-invitations/${organizationInvitationId}",
         "method": "GET",
         "comment": "Retrieve an invitation",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationInvitationId",
+            "isEntityId": true,
+            "relType": "OrganizationInvitationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationInvitationId",
           "isEntityId": true,
           "relType": "OrganizationInvitationData"
@@ -1426,7 +1636,14 @@
         "urlTemplate": "/organization-invitations/${organizationInvitationId}",
         "method": "DELETE",
         "comment": "Delete an invitation",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationInvitationId",
+            "isEntityId": true,
+            "relType": "OrganizationInvitationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationInvitationId",
           "isEntityId": true,
           "relType": "OrganizationInvitationData"
@@ -1443,7 +1660,14 @@
         "urlTemplate": "/organization-invitations/${organizationInvitationId}/resend",
         "method": "POST",
         "comment": "Resend an invitation",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationInvitationId",
+            "isEntityId": true,
+            "relType": "OrganizationInvitationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationInvitationId",
           "isEntityId": true,
           "relType": "OrganizationInvitationData"
@@ -1459,7 +1683,14 @@
         "urlTemplate": "/organization-invitations/${organizationInvitationId}/redeem",
         "method": "PUT",
         "comment": "Redeem token",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationInvitationId",
+            "isEntityId": true,
+            "relType": "OrganizationInvitationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationInvitationId",
           "isEntityId": true,
           "relType": "OrganizationInvitationData"
@@ -1484,7 +1715,14 @@
         "urlTemplate": "/organization-memberships/${organizationMembershipId}",
         "method": "PUT",
         "comment": "Update an organization membership",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationMembershipId",
+            "isEntityId": true,
+            "relType": "OrganizationMembershipData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationMembershipId",
           "isEntityId": true,
           "relType": "OrganizationMembershipData"
@@ -1508,6 +1746,7 @@
         "urlTemplate": "/organization-memberships",
         "method": "GET",
         "comment": "List all organization memberships",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "OrganizationMembershipInstancesHrefSchema",
         "queryParamsRequired": false,
@@ -1521,7 +1760,14 @@
         "urlTemplate": "/organization-memberships/${organizationMembershipId}",
         "method": "GET",
         "comment": "Retrieve an organization membership",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationMembershipId",
+            "isEntityId": true,
+            "relType": "OrganizationMembershipData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationMembershipId",
           "isEntityId": true,
           "relType": "OrganizationMembershipData"
@@ -1539,6 +1785,7 @@
         "urlTemplate": "/organization-memberships/me",
         "method": "GET",
         "comment": "Retrieve currently signed-in account organization membership",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "OrganizationMembershipMeHrefSchema",
         "queryParamsRequired": false,
@@ -1552,7 +1799,14 @@
         "urlTemplate": "/organization-memberships/${organizationMembershipId}",
         "method": "DELETE",
         "comment": "Delete an organization membership",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationMembershipId",
+            "isEntityId": true,
+            "relType": "OrganizationMembershipData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationMembershipId",
           "isEntityId": true,
           "relType": "OrganizationMembershipData"
@@ -1576,6 +1830,7 @@
         "urlTemplate": "/organization-mandate-requests",
         "method": "POST",
         "comment": "Request a new mandate",
+        "urlPlaceholders": [],
         "requestBodyType": "OrganizationMandateRequestCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1595,6 +1850,7 @@
         "urlTemplate": "/organization-mandate-requests/pending",
         "method": "GET",
         "comment": "List all pending mandate requests",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateRequestPendingInstancesTargetSchema",
@@ -1607,6 +1863,7 @@
         "urlTemplate": "/organization-mandate-requests/requested",
         "method": "GET",
         "comment": "List all requested mandates",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateRequestRequestedInstancesTargetSchema",
@@ -1619,7 +1876,14 @@
         "urlTemplate": "/organization-mandate-requests/${organizationMandateRequestId}",
         "method": "DELETE",
         "comment": "Delete a mandate request",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationMandateRequestId",
+            "isEntityId": true,
+            "relType": "OrganizationMandateRequestData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationMandateRequestId",
           "isEntityId": true,
           "relType": "OrganizationMandateRequestData"
@@ -1636,7 +1900,14 @@
         "urlTemplate": "/organization-mandate-requests/${organizationMandateRequestId}/approve",
         "method": "PUT",
         "comment": "Approve a mandate request",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationMandateRequestId",
+            "isEntityId": true,
+            "relType": "OrganizationMandateRequestData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationMandateRequestId",
           "isEntityId": true,
           "relType": "OrganizationMandateRequestData"
@@ -1652,7 +1923,14 @@
         "urlTemplate": "/organization-mandate-requests/${organizationMandateRequestId}/reject",
         "method": "PUT",
         "comment": "Reject a mandate request",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationMandateRequestId",
+            "isEntityId": true,
+            "relType": "OrganizationMandateRequestData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationMandateRequestId",
           "isEntityId": true,
           "relType": "OrganizationMandateRequestData"
@@ -1675,7 +1953,14 @@
         "urlTemplate": "/organization-mandates/${organizationMandateId}",
         "method": "PUT",
         "comment": "Update an organization mandate",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationMandateId",
+            "isEntityId": true,
+            "relType": "OrganizationMandateData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationMandateId",
           "isEntityId": true,
           "relType": "OrganizationMandateData"
@@ -1699,6 +1984,7 @@
         "urlTemplate": "/organization-mandates/approved",
         "method": "GET",
         "comment": "List all mandates that the organization has approved",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "OrganizationMandateApprovedInstancesTargetSchema",
@@ -1711,6 +1997,7 @@
         "urlTemplate": "/organization-mandates/given",
         "method": "GET",
         "comment": "List all mandates that the organization has been given",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "OrganizationMandateGivenInstancesHrefSchema",
         "queryParamsRequired": false,
@@ -1724,7 +2011,14 @@
         "urlTemplate": "/organization-mandates/${organizationMandateId}",
         "method": "DELETE",
         "comment": "Cancel an organization mandate",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "organizationMandateId",
+            "isEntityId": true,
+            "relType": "OrganizationMandateData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "organizationMandateId",
           "isEntityId": true,
           "relType": "OrganizationMandateData"
@@ -1748,6 +2042,7 @@
         "urlTemplate": "/tfa-deactivate-requests",
         "method": "POST",
         "comment": "Request the belonging organization to deactivate two-factor authentication",
+        "urlPlaceholders": [],
         "requestBodyType": "TfaDeactivateRequestCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1767,6 +2062,7 @@
         "urlTemplate": "/tfa-deactivate-requests",
         "method": "GET",
         "comment": "List all two-factor authentication deactivate requests",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "TfaDeactivateRequestInstancesTargetSchema",
@@ -1780,7 +2076,14 @@
         "urlTemplate": "/tfa-deactivate-requests/${tfaDeactivateRequestId}/approve",
         "method": "PUT",
         "comment": "Approve a two-factor authentication deactivate request",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "tfaDeactivateRequestId",
+            "isEntityId": true,
+            "relType": "TfaDeactivateRequestData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "tfaDeactivateRequestId",
           "isEntityId": true,
           "relType": "TfaDeactivateRequestData"
@@ -1797,7 +2100,14 @@
         "urlTemplate": "/tfa-deactivate-requests/${tfaDeactivateRequestId}/reject",
         "method": "PUT",
         "comment": "Reject a two-factor authentication deactivate request",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "tfaDeactivateRequestId",
+            "isEntityId": true,
+            "relType": "TfaDeactivateRequestData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "tfaDeactivateRequestId",
           "isEntityId": true,
           "relType": "TfaDeactivateRequestData"

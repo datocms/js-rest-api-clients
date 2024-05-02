@@ -18,6 +18,7 @@ export { default as Item } from './Item';
 export { default as ItemVersion } from './ItemVersion';
 export { default as Upload } from './Upload';
 export { default as UploadRequest } from './UploadRequest';
+export { default as UploadTrack } from './UploadTrack';
 export { default as ScheduledPublication } from './ScheduledPublication';
 export { default as ScheduledUnpublishing } from './ScheduledUnpublishing';
 export { default as SearchResult } from './SearchResult';

@@ -9,6 +9,7 @@
         "urlTemplate": "/roles",
         "method": "POST",
         "comment": "Create a new role",
+        "urlPlaceholders": [],
         "requestBodyType": "RoleCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -54,7 +55,14 @@
         "urlTemplate": "/roles/${roleId}",
         "method": "PUT",
         "comment": "Update a role",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "roleId",
+            "isEntityId": true,
+            "relType": "RoleData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "roleId",
           "isEntityId": true,
           "relType": "RoleData"
@@ -105,6 +113,7 @@
         "urlTemplate": "/roles",
         "method": "GET",
         "comment": "List all roles",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "RoleInstancesTargetSchema",
@@ -118,7 +127,14 @@
         "urlTemplate": "/roles/${roleId}",
         "method": "GET",
         "comment": "Retrieve a role",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "roleId",
+            "isEntityId": true,
+            "relType": "RoleData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "roleId",
           "isEntityId": true,
           "relType": "RoleData"
@@ -136,7 +152,14 @@
         "urlTemplate": "/roles/${roleId}",
         "method": "DELETE",
         "comment": "Delete a role",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "roleId",
+            "isEntityId": true,
+            "relType": "RoleData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "roleId",
           "isEntityId": true,
           "relType": "RoleData"
@@ -161,7 +184,14 @@
         "urlTemplate": "/users/${userId}",
         "method": "PUT",
         "comment": "Update a collaborator",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "userId",
+            "isEntityId": true,
+            "relType": "UserData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "userId",
           "isEntityId": true,
           "relType": "UserData"
@@ -186,6 +216,7 @@
         "urlTemplate": "/users",
         "method": "GET",
         "comment": "List all collaborators",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "UserInstancesTargetSchema",
@@ -199,7 +230,14 @@
         "urlTemplate": "/users/${userId}",
         "method": "GET",
         "comment": "Retrieve a collaborator",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "userId",
+            "isEntityId": true,
+            "relType": "UserData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "userId",
           "isEntityId": true,
           "relType": "UserData"
@@ -218,6 +256,7 @@
         "urlTemplate": "/users/me",
         "method": "GET",
         "comment": "Retrieve current signed-in user",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "UserMeHrefSchema",
         "queryParamsRequired": false,
@@ -232,7 +271,14 @@
         "urlTemplate": "/users/${userId}",
         "method": "DELETE",
         "comment": "Delete a collaborator",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "userId",
+            "isEntityId": true,
+            "relType": "UserData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "userId",
           "isEntityId": true,
           "relType": "UserData"
@@ -258,6 +304,7 @@
         "urlTemplate": "/sso-users",
         "method": "GET",
         "comment": "List all users",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoUserInstancesTargetSchema",
@@ -271,11 +318,13 @@
         "urlTemplate": "/sso-users/${userId}",
         "method": "GET",
         "comment": "Returns a SSO user",
-        "urlPlaceholder": {
-          "variableName": "userId",
-          "isEntityId": false,
-          "relType": "UserData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "userId",
+            "isEntityId": false,
+            "relType": "UserData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoUserSelfTargetSchema",
@@ -289,6 +338,7 @@
         "urlTemplate": "/sso-users/copy-users",
         "method": "POST",
         "comment": "Copy editors as SSO users",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoUserCopyUsersTargetSchema",
@@ -302,11 +352,13 @@
         "urlTemplate": "/sso-users/${userId}",
         "method": "DELETE",
         "comment": "Delete a SSO user",
-        "urlPlaceholder": {
-          "variableName": "userId",
-          "isEntityId": false,
-          "relType": "UserData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "userId",
+            "isEntityId": false,
+            "relType": "UserData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsType": "SsoUserDestroyHrefSchema",
         "queryParamsRequired": false,
@@ -328,6 +380,7 @@
         "urlTemplate": "/audit-log-events/query",
         "method": "POST",
         "comment": "List Audit Log events",
+        "urlPlaceholders": [],
         "requestBodyType": "AuditLogEventQuerySchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -354,6 +407,7 @@
         "urlTemplate": "/menu-items",
         "method": "POST",
         "comment": "Create a new menu item",
+        "urlPlaceholders": [],
         "requestBodyType": "MenuItemCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -378,7 +432,14 @@
         "urlTemplate": "/menu-items/${menuItemId}",
         "method": "PUT",
         "comment": "Update a menu item",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "menuItemId",
+            "isEntityId": true,
+            "relType": "MenuItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "menuItemId",
           "isEntityId": true,
           "relType": "MenuItemData"
@@ -408,6 +469,7 @@
         "urlTemplate": "/menu-items",
         "method": "GET",
         "comment": "List all menu items",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "MenuItemInstancesHrefSchema",
         "queryParamsRequired": false,
@@ -422,7 +484,14 @@
         "urlTemplate": "/menu-items/${menuItemId}",
         "method": "GET",
         "comment": "Retrieve a menu item",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "menuItemId",
+            "isEntityId": true,
+            "relType": "MenuItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "menuItemId",
           "isEntityId": true,
           "relType": "MenuItemData"
@@ -440,7 +509,14 @@
         "urlTemplate": "/menu-items/${menuItemId}",
         "method": "DELETE",
         "comment": "Delete a menu item",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "menuItemId",
+            "isEntityId": true,
+            "relType": "MenuItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "menuItemId",
           "isEntityId": true,
           "relType": "MenuItemData"
@@ -465,6 +541,7 @@
         "urlTemplate": "/schema-menu-items",
         "method": "POST",
         "comment": "Create a new schema menu item",
+        "urlPlaceholders": [],
         "requestBodyType": "SchemaMenuItemCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -484,7 +561,14 @@
         "urlTemplate": "/schema-menu-items/${schemaMenuItemId}",
         "method": "PUT",
         "comment": "Update a schema menu item",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "schemaMenuItemId",
+            "isEntityId": true,
+            "relType": "SchemaMenuItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "schemaMenuItemId",
           "isEntityId": true,
           "relType": "SchemaMenuItemData"
@@ -509,6 +593,7 @@
         "urlTemplate": "/schema-menu-items",
         "method": "GET",
         "comment": "List all schema menu items",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "SchemaMenuItemInstancesHrefSchema",
         "queryParamsRequired": false,
@@ -523,7 +608,14 @@
         "urlTemplate": "/schema-menu-items/${schemaMenuItemId}",
         "method": "GET",
         "comment": "Retrieve a schema menu item",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "schemaMenuItemId",
+            "isEntityId": true,
+            "relType": "SchemaMenuItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "schemaMenuItemId",
           "isEntityId": true,
           "relType": "SchemaMenuItemData"
@@ -541,7 +633,14 @@
         "urlTemplate": "/schema-menu-items/${schemaMenuItemId}",
         "method": "DELETE",
         "comment": "Delete a schema menu item",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "schemaMenuItemId",
+            "isEntityId": true,
+            "relType": "SchemaMenuItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "schemaMenuItemId",
           "isEntityId": true,
           "relType": "SchemaMenuItemData"
@@ -566,6 +665,7 @@
         "urlTemplate": "/item-types",
         "method": "POST",
         "comment": "Create a new model",
+        "urlPlaceholders": [],
         "requestBodyType": "ItemTypeCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -607,7 +707,14 @@
         "urlTemplate": "/item-types/${itemTypeId}",
         "method": "PUT",
         "comment": "Update a model",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeId",
+            "isEntityId": true,
+            "relType": "ItemTypeData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemTypeId",
           "isEntityId": true,
           "relType": "ItemTypeData"
@@ -654,6 +761,7 @@
         "urlTemplate": "/item-types",
         "method": "GET",
         "comment": "List all models",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ItemTypeInstancesTargetSchema",
@@ -667,7 +775,14 @@
         "urlTemplate": "/item-types/${itemTypeId}",
         "method": "GET",
         "comment": "Retrieve a model",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeId",
+            "isEntityId": true,
+            "relType": "ItemTypeData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemTypeId",
           "isEntityId": true,
           "relType": "ItemTypeData"
@@ -685,7 +800,14 @@
         "urlTemplate": "/item-types/${itemTypeId}/duplicate",
         "method": "POST",
         "comment": "Duplicate model",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeId",
+            "isEntityId": true,
+            "relType": "ItemTypeData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemTypeId",
           "isEntityId": true,
           "relType": "ItemTypeData"
@@ -703,7 +825,14 @@
         "urlTemplate": "/item-types/${itemTypeId}",
         "method": "DELETE",
         "comment": "Delete a model",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeId",
+            "isEntityId": true,
+            "relType": "ItemTypeData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemTypeId",
           "isEntityId": true,
           "relType": "ItemTypeData"
@@ -729,11 +858,13 @@
         "urlTemplate": "/item-types/${itemTypeId}/fields",
         "method": "POST",
         "comment": "Create a new field",
-        "urlPlaceholder": {
-          "variableName": "itemTypeId",
-          "isEntityId": false,
-          "relType": "ItemTypeData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeId",
+            "isEntityId": false,
+            "relType": "ItemTypeData"
+          }
+        ],
         "requestBodyType": "FieldCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -765,7 +896,14 @@
         "urlTemplate": "/fields/${fieldId}",
         "method": "PUT",
         "comment": "Update a field",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "fieldId",
+            "isEntityId": true,
+            "relType": "FieldData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "fieldId",
           "isEntityId": true,
           "relType": "FieldData"
@@ -802,11 +940,13 @@
         "urlTemplate": "/item-types/${itemTypeId}/fields",
         "method": "GET",
         "comment": "List all fields",
-        "urlPlaceholder": {
-          "variableName": "itemTypeId",
-          "isEntityId": false,
-          "relType": "ItemTypeData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeId",
+            "isEntityId": false,
+            "relType": "ItemTypeData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldInstancesTargetSchema",
@@ -820,11 +960,13 @@
         "urlTemplate": "/item-types/${itemTypeId}/fields/referencing",
         "method": "GET",
         "comment": "List referenced fields",
-        "urlPlaceholder": {
-          "variableName": "itemTypeId",
-          "isEntityId": false,
-          "relType": "ItemTypeData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeId",
+            "isEntityId": false,
+            "relType": "ItemTypeData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldReferencingTargetSchema",
@@ -839,11 +981,13 @@
         "urlTemplate": "/item-types/${itemTypeId}/fields/related",
         "method": "GET",
         "comment": "List related fields",
-        "urlPlaceholder": {
-          "variableName": "itemTypeId",
-          "isEntityId": false,
-          "relType": "ItemTypeData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeId",
+            "isEntityId": false,
+            "relType": "ItemTypeData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldRelatedTargetSchema",
@@ -858,7 +1002,14 @@
         "urlTemplate": "/fields/${fieldId}",
         "method": "GET",
         "comment": "Retrieve a field",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "fieldId",
+            "isEntityId": true,
+            "relType": "FieldData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "fieldId",
           "isEntityId": true,
           "relType": "FieldData"
@@ -876,7 +1027,14 @@
         "urlTemplate": "/fields/${fieldId}",
         "method": "DELETE",
         "comment": "Delete a field",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "fieldId",
+            "isEntityId": true,
+            "relType": "FieldData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "fieldId",
           "isEntityId": true,
           "relType": "FieldData"
@@ -894,7 +1052,14 @@
         "urlTemplate": "/fields/${fieldId}/duplicate",
         "method": "POST",
         "comment": "Duplicate a field",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "fieldId",
+            "isEntityId": true,
+            "relType": "FieldData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "fieldId",
           "isEntityId": true,
           "relType": "FieldData"
@@ -919,11 +1084,13 @@
         "urlTemplate": "/item-types/${itemTypeId}/fieldsets",
         "method": "POST",
         "comment": "Create a new fieldset",
-        "urlPlaceholder": {
-          "variableName": "itemTypeId",
-          "isEntityId": false,
-          "relType": "ItemTypeData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeId",
+            "isEntityId": false,
+            "relType": "ItemTypeData"
+          }
+        ],
         "requestBodyType": "FieldsetCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -949,7 +1116,14 @@
         "urlTemplate": "/fieldsets/${fieldsetId}",
         "method": "PUT",
         "comment": "Update a fieldset",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "fieldsetId",
+            "isEntityId": true,
+            "relType": "FieldsetData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "fieldsetId",
           "isEntityId": true,
           "relType": "FieldsetData"
@@ -980,11 +1154,13 @@
         "urlTemplate": "/item-types/${itemTypeId}/fieldsets",
         "method": "GET",
         "comment": "List all fieldsets",
-        "urlPlaceholder": {
-          "variableName": "itemTypeId",
-          "isEntityId": false,
-          "relType": "ItemTypeData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeId",
+            "isEntityId": false,
+            "relType": "ItemTypeData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldsetInstancesTargetSchema",
@@ -998,7 +1174,14 @@
         "urlTemplate": "/fieldsets/${fieldsetId}",
         "method": "GET",
         "comment": "Retrieve a fieldset",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "fieldsetId",
+            "isEntityId": true,
+            "relType": "FieldsetData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "fieldsetId",
           "isEntityId": true,
           "relType": "FieldsetData"
@@ -1016,7 +1199,14 @@
         "urlTemplate": "/fieldsets/${fieldsetId}",
         "method": "DELETE",
         "comment": "Delete a fieldset",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "fieldsetId",
+            "isEntityId": true,
+            "relType": "FieldsetData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "fieldsetId",
           "isEntityId": true,
           "relType": "FieldsetData"
@@ -1041,6 +1231,7 @@
         "urlTemplate": "/sessions",
         "method": "POST",
         "comment": "Create a new session",
+        "urlPlaceholders": [],
         "requestBodyType": "SessionCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1068,6 +1259,7 @@
         "urlTemplate": "/access_tokens",
         "method": "POST",
         "comment": "Create a new API token",
+        "urlPlaceholders": [],
         "requestBodyType": "AccessTokenCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1092,7 +1284,14 @@
         "urlTemplate": "/access_tokens/${accessTokenId}",
         "method": "PUT",
         "comment": "Update an API token",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "accessTokenId",
+            "isEntityId": true,
+            "relType": "AccessTokenData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "accessTokenId",
           "isEntityId": true,
           "relType": "AccessTokenData"
@@ -1122,6 +1321,7 @@
         "urlTemplate": "/access_tokens",
         "method": "GET",
         "comment": "List all API tokens",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "AccessTokenInstancesTargetSchema",
@@ -1135,7 +1335,14 @@
         "urlTemplate": "/access_tokens/${accessTokenId}",
         "method": "GET",
         "comment": "Retrieve an API token",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "accessTokenId",
+            "isEntityId": true,
+            "relType": "AccessTokenData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "accessTokenId",
           "isEntityId": true,
           "relType": "AccessTokenData"
@@ -1153,7 +1360,14 @@
         "urlTemplate": "/access_tokens/${accessTokenId}/regenerate_token",
         "method": "POST",
         "comment": "Rotate API token",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "accessTokenId",
+            "isEntityId": true,
+            "relType": "AccessTokenData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "accessTokenId",
           "isEntityId": true,
           "relType": "AccessTokenData"
@@ -1171,7 +1385,14 @@
         "urlTemplate": "/access_tokens/${accessTokenId}",
         "method": "DELETE",
         "comment": "Delete an API token",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "accessTokenId",
+            "isEntityId": true,
+            "relType": "AccessTokenData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "accessTokenId",
           "isEntityId": true,
           "relType": "AccessTokenData"
@@ -1197,6 +1418,7 @@
         "urlTemplate": "/plugins",
         "method": "POST",
         "comment": "Create a new plugin",
+        "urlPlaceholders": [],
         "requestBodyType": "PluginCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1226,7 +1448,14 @@
         "urlTemplate": "/plugins/${pluginId}",
         "method": "PUT",
         "comment": "Update a plugin",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "pluginId",
+            "isEntityId": true,
+            "relType": "PluginData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "pluginId",
           "isEntityId": true,
           "relType": "PluginData"
@@ -1258,6 +1487,7 @@
         "urlTemplate": "/plugins",
         "method": "GET",
         "comment": "List all plugins",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PluginInstancesTargetSchema",
@@ -1271,7 +1501,14 @@
         "urlTemplate": "/plugins/${pluginId}",
         "method": "GET",
         "comment": "Retrieve a plugin",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "pluginId",
+            "isEntityId": true,
+            "relType": "PluginData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "pluginId",
           "isEntityId": true,
           "relType": "PluginData"
@@ -1289,7 +1526,14 @@
         "urlTemplate": "/plugins/${pluginId}",
         "method": "DELETE",
         "comment": "Delete a plugin",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "pluginId",
+            "isEntityId": true,
+            "relType": "PluginData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "pluginId",
           "isEntityId": true,
           "relType": "PluginData"
@@ -1307,7 +1551,14 @@
         "urlTemplate": "/plugins/${pluginId}/fields",
         "method": "GET",
         "comment": "Retrieve all fields using the plugin",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "pluginId",
+            "isEntityId": true,
+            "relType": "PluginData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "pluginId",
           "isEntityId": true,
           "relType": "PluginData"
@@ -1332,7 +1583,14 @@
         "urlTemplate": "/job-results/${jobResultId}",
         "method": "GET",
         "comment": "Retrieve a job result",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "jobResultId",
+            "isEntityId": true,
+            "relType": "JobResultData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "jobResultId",
           "isEntityId": true,
           "relType": "JobResultData"
@@ -1357,6 +1615,7 @@
         "urlTemplate": "/subscription-limits",
         "method": "GET",
         "comment": "Get all the subscription limits",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SubscriptionLimitInstancesTargetSchema",
@@ -1370,7 +1629,14 @@
         "urlTemplate": "/subscription-limits/${subscriptionLimitId}",
         "method": "GET",
         "comment": "Get a single subscription limit",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "subscriptionLimitId",
+            "isEntityId": true,
+            "relType": "SubscriptionLimitData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "subscriptionLimitId",
           "isEntityId": true,
           "relType": "SubscriptionLimitData"
@@ -1395,6 +1661,7 @@
         "urlTemplate": "/subscription-features",
         "method": "GET",
         "comment": "Get all the subscription features",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SubscriptionFeatureInstancesTargetSchema",
@@ -1415,6 +1682,7 @@
         "urlTemplate": "/build-events",
         "method": "GET",
         "comment": "List all deploy events",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "BuildEventInstancesTargetSchema",
@@ -1428,7 +1696,14 @@
         "urlTemplate": "/build-events/${buildEventId}",
         "method": "GET",
         "comment": "Retrieve a deploy event",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "buildEventId",
+            "isEntityId": true,
+            "relType": "BuildEventData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "buildEventId",
           "isEntityId": true,
           "relType": "BuildEventData"
@@ -1453,6 +1728,7 @@
         "urlTemplate": "/items",
         "method": "GET",
         "comment": "List all records",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "ItemInstancesHrefSchema",
         "queryParamsRequired": false,
@@ -1471,7 +1747,14 @@
         "urlTemplate": "/items/${itemId}/validate",
         "method": "POST",
         "comment": "Validates an existing record field",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": true,
+            "relType": "ItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemId",
           "isEntityId": true,
           "relType": "ItemData"
@@ -1496,6 +1779,7 @@
         "urlTemplate": "/items/validate",
         "method": "POST",
         "comment": "Validates a record field",
+        "urlPlaceholders": [],
         "requestBodyType": "ItemValidateNewSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1515,6 +1799,7 @@
         "urlTemplate": "/items",
         "method": "POST",
         "comment": "Create a new record",
+        "urlPlaceholders": [],
         "requestBodyType": "ItemCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1534,7 +1819,14 @@
         "urlTemplate": "/items/${itemId}/duplicate",
         "method": "POST",
         "comment": "Duplicate a record",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": true,
+            "relType": "ItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemId",
           "isEntityId": true,
           "relType": "ItemData"
@@ -1552,7 +1844,14 @@
         "urlTemplate": "/items/${itemId}",
         "method": "PUT",
         "comment": "Update a record",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": true,
+            "relType": "ItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemId",
           "isEntityId": true,
           "relType": "ItemData"
@@ -1577,7 +1876,14 @@
         "urlTemplate": "/items/${itemId}/references",
         "method": "GET",
         "comment": "Referenced records",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": true,
+            "relType": "ItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemId",
           "isEntityId": true,
           "relType": "ItemData"
@@ -1596,7 +1902,14 @@
         "urlTemplate": "/items/${itemId}",
         "method": "GET",
         "comment": "Retrieve a record",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": true,
+            "relType": "ItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemId",
           "isEntityId": true,
           "relType": "ItemData"
@@ -1615,7 +1928,14 @@
         "urlTemplate": "/items/${itemId}/current-vs-published-state",
         "method": "GET",
         "comment": "Retrieve information regarding changes between current and published versions of the record",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": true,
+            "relType": "ItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemId",
           "isEntityId": true,
           "relType": "ItemData"
@@ -1634,7 +1954,14 @@
         "urlTemplate": "/items/${itemId}",
         "method": "DELETE",
         "comment": "Delete a record",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": true,
+            "relType": "ItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemId",
           "isEntityId": true,
           "relType": "ItemData"
@@ -1652,6 +1979,7 @@
         "urlTemplate": "/items",
         "method": "DELETE",
         "comment": "Delete multiple records",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "ItemBatchDestroyHrefSchema",
         "queryParamsRequired": true,
@@ -1667,6 +1995,7 @@
         "urlTemplate": "/items/publish",
         "method": "PUT",
         "comment": "Publish multiple records",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "ItemBatchPublishHrefSchema",
         "queryParamsRequired": true,
@@ -1682,6 +2011,7 @@
         "urlTemplate": "/items/unpublish",
         "method": "PUT",
         "comment": "Unpublish multiple records",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "ItemBatchUnpublishHrefSchema",
         "queryParamsRequired": true,
@@ -1697,7 +2027,14 @@
         "urlTemplate": "/items/${itemId}/publish",
         "method": "PUT",
         "comment": "Publish a record",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": true,
+            "relType": "ItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemId",
           "isEntityId": true,
           "relType": "ItemData"
@@ -1722,7 +2059,14 @@
         "urlTemplate": "/items/${itemId}/unpublish",
         "method": "PUT",
         "comment": "Unpublish a record",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": true,
+            "relType": "ItemData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemId",
           "isEntityId": true,
           "relType": "ItemData"
@@ -1747,6 +2091,7 @@
         "urlTemplate": "/items/bulk/publish",
         "method": "POST",
         "comment": "Publish items in bulk",
+        "urlPlaceholders": [],
         "requestBodyType": "ItemBulkPublishSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1766,6 +2111,7 @@
         "urlTemplate": "/items/bulk/unpublish",
         "method": "POST",
         "comment": "Unpublish items in bulk",
+        "urlPlaceholders": [],
         "requestBodyType": "ItemBulkUnpublishSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1785,6 +2131,7 @@
         "urlTemplate": "/items/bulk/destroy",
         "method": "POST",
         "comment": "Destroy items in bulk",
+        "urlPlaceholders": [],
         "requestBodyType": "ItemBulkDestroySchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1804,6 +2151,7 @@
         "urlTemplate": "/items/bulk/move-to-stage",
         "method": "POST",
         "comment": "Move items to stage in bulk",
+        "urlPlaceholders": [],
         "requestBodyType": "ItemBulkMoveToStageSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1830,7 +2178,14 @@
         "urlTemplate": "/versions/${itemVersionId}/restore",
         "method": "POST",
         "comment": "Restore an old record version",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemVersionId",
+            "isEntityId": true,
+            "relType": "ItemVersionData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemVersionId",
           "isEntityId": true,
           "relType": "ItemVersionData"
@@ -1848,11 +2203,13 @@
         "urlTemplate": "/items/${itemId}/versions",
         "method": "GET",
         "comment": "List all record versions",
-        "urlPlaceholder": {
-          "variableName": "itemId",
-          "isEntityId": false,
-          "relType": "ItemData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": false,
+            "relType": "ItemData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsType": "ItemVersionInstancesHrefSchema",
         "queryParamsRequired": false,
@@ -1871,7 +2228,14 @@
         "urlTemplate": "/versions/${itemVersionId}",
         "method": "GET",
         "comment": "Retrieve a record version",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemVersionId",
+            "isEntityId": true,
+            "relType": "ItemVersionData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemVersionId",
           "isEntityId": true,
           "relType": "ItemVersionData"
@@ -1896,6 +2260,7 @@
         "urlTemplate": "/uploads",
         "method": "POST",
         "comment": "Create a new upload",
+        "urlPlaceholders": [],
         "requestBodyType": "UploadCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -1922,6 +2287,7 @@
         "urlTemplate": "/uploads",
         "method": "GET",
         "comment": "List all uploads",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "UploadInstancesHrefSchema",
         "queryParamsRequired": false,
@@ -1940,7 +2306,14 @@
         "urlTemplate": "/uploads/${uploadId}",
         "method": "GET",
         "comment": "Retrieve an upload",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadId",
+            "isEntityId": true,
+            "relType": "UploadData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "uploadId",
           "isEntityId": true,
           "relType": "UploadData"
@@ -1958,7 +2331,14 @@
         "urlTemplate": "/uploads/${uploadId}",
         "method": "DELETE",
         "comment": "Delete an upload",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadId",
+            "isEntityId": true,
+            "relType": "UploadData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "uploadId",
           "isEntityId": true,
           "relType": "UploadData"
@@ -1976,7 +2356,14 @@
         "urlTemplate": "/uploads/${uploadId}",
         "method": "PUT",
         "comment": "Update an upload",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadId",
+            "isEntityId": true,
+            "relType": "UploadData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "uploadId",
           "isEntityId": true,
           "relType": "UploadData"
@@ -2009,6 +2396,7 @@
         "urlTemplate": "/uploads/batch-add-tags",
         "method": "PUT",
         "comment": "Batch add tags to uploads",
+        "urlPlaceholders": [],
         "requestBodyType": "UploadBatchAddTagsSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -2030,6 +2418,7 @@
         "urlTemplate": "/uploads/batch-destroy",
         "method": "DELETE",
         "comment": "Delete multiple uploads",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "UploadBatchDestroyHrefSchema",
         "queryParamsRequired": false,
@@ -2045,7 +2434,14 @@
         "urlTemplate": "/uploads/${uploadId}/references",
         "method": "GET",
         "comment": "Referenced records",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadId",
+            "isEntityId": true,
+            "relType": "UploadData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "uploadId",
           "isEntityId": true,
           "relType": "UploadData"
@@ -2064,6 +2460,7 @@
         "urlTemplate": "/uploads/bulk/tag",
         "method": "POST",
         "comment": "Add tags to assets in bulk",
+        "urlPlaceholders": [],
         "requestBodyType": "UploadBulkTagSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -2083,6 +2480,7 @@
         "urlTemplate": "/uploads/bulk/destroy",
         "method": "POST",
         "comment": "Destroy uploads",
+        "urlPlaceholders": [],
         "requestBodyType": "UploadBulkDestroySchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -2109,6 +2507,7 @@
         "urlTemplate": "/upload-requests",
         "method": "POST",
         "comment": "Request a new upload",
+        "urlPlaceholders": [],
         "requestBodyType": "UploadRequestCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -2126,6 +2525,122 @@
     "resourceClassName": "UploadRequest"
   },
   {
+    "jsonApiType": "upload_track",
+    "endpoints": [
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-track/create",
+        "rel": "create",
+        "urlTemplate": "/uploads/${uploadId}/tracks",
+        "method": "POST",
+        "comment": "Create a new upload track",
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadId",
+            "isEntityId": false,
+            "relType": "UploadData"
+          }
+        ],
+        "requestBodyType": "UploadTrackCreateSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "upload_track",
+          "attributes": [
+            "url_or_upload_request_id",
+            "type",
+            "name",
+            "language_code",
+            "closed_captions"
+          ],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadTrackCreateJobSchema",
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-track/instances",
+        "rel": "instances",
+        "urlTemplate": "/uploads/${uploadId}/tracks",
+        "method": "GET",
+        "comment": "List upload tracks",
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadId",
+            "isEntityId": false,
+            "relType": "UploadData"
+          }
+        ],
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "UploadTrackInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-track/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/uploads/${uploadId}/tracks/${uploadTrackId}",
+        "method": "DELETE",
+        "comment": "Delete an upload track",
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadId",
+            "isEntityId": false,
+            "relType": "UploadData"
+          },
+          {
+            "variableName": "uploadTrackId",
+            "isEntityId": true,
+            "relType": "UploadTrackData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "uploadTrackId",
+          "isEntityId": true,
+          "relType": "UploadTrackData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "UploadTrackDestroyJobSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-track/generate_subtitles",
+        "rel": "generate_subtitles",
+        "urlTemplate": "/uploads/${uploadId}/tracks/generate-subtitles",
+        "method": "POST",
+        "comment": "Automatically generate a subtitles track",
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadId",
+            "isEntityId": false,
+            "relType": "UploadData"
+          }
+        ],
+        "requestBodyType": "UploadTrackGenerateSubtitlesSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "upload_track",
+          "attributes": ["name", "language_code"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadTrackGenerateSubtitlesJobSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "generateSubtitles",
+        "rawName": "rawGenerateSubtitles"
+      }
+    ],
+    "namespace": "uploadTracks",
+    "resourceClassName": "UploadTrack"
+  },
+  {
     "jsonApiType": "scheduled_publication",
     "endpoints": [
       {
@@ -2135,11 +2650,13 @@
         "urlTemplate": "/items/${itemId}/scheduled-publication",
         "method": "POST",
         "comment": "Create a new scheduled publication",
-        "urlPlaceholder": {
-          "variableName": "itemId",
-          "isEntityId": false,
-          "relType": "ItemData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": false,
+            "relType": "ItemData"
+          }
+        ],
         "requestBodyType": "ScheduledPublicationCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -2159,11 +2676,13 @@
         "urlTemplate": "/items/${itemId}/scheduled-publication",
         "method": "DELETE",
         "comment": "Delete a scheduled publication",
-        "urlPlaceholder": {
-          "variableName": "itemId",
-          "isEntityId": false,
-          "relType": "ItemData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": false,
+            "relType": "ItemData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ScheduledPublicationDestroyTargetSchema",
@@ -2184,11 +2703,13 @@
         "urlTemplate": "/items/${itemId}/scheduled-unpublishing",
         "method": "POST",
         "comment": "Create a new scheduled unpublishing",
-        "urlPlaceholder": {
-          "variableName": "itemId",
-          "isEntityId": false,
-          "relType": "ItemData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": false,
+            "relType": "ItemData"
+          }
+        ],
         "requestBodyType": "ScheduledUnpublishingCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -2208,11 +2729,13 @@
         "urlTemplate": "/items/${itemId}/scheduled-unpublishing",
         "method": "DELETE",
         "comment": "Delete a scheduled unpublishing",
-        "urlPlaceholder": {
-          "variableName": "itemId",
-          "isEntityId": false,
-          "relType": "ItemData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "itemId",
+            "isEntityId": false,
+            "relType": "ItemData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ScheduledUnpublishingDestroyTargetSchema",
@@ -2233,6 +2756,7 @@
         "urlTemplate": "/search-results",
         "method": "GET",
         "comment": "Search for results",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "SearchResultInstancesHrefSchema",
         "queryParamsRequired": true,
@@ -2258,7 +2782,14 @@
         "urlTemplate": "/environments/${environmentId}/fork",
         "method": "POST",
         "comment": "Fork an existing environment",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "environmentId",
+            "isEntityId": true,
+            "relType": "EnvironmentData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "environmentId",
           "isEntityId": true,
           "relType": "EnvironmentData"
@@ -2284,7 +2815,14 @@
         "urlTemplate": "/environments/${environmentId}/promote",
         "method": "PUT",
         "comment": "Promote an environment to primary",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "environmentId",
+            "isEntityId": true,
+            "relType": "EnvironmentData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "environmentId",
           "isEntityId": true,
           "relType": "EnvironmentData"
@@ -2302,7 +2840,14 @@
         "urlTemplate": "/environments/${environmentId}/rename",
         "method": "PUT",
         "comment": "Rename an environment",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "environmentId",
+            "isEntityId": true,
+            "relType": "EnvironmentData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "environmentId",
           "isEntityId": true,
           "relType": "EnvironmentData"
@@ -2327,6 +2872,7 @@
         "urlTemplate": "/environments",
         "method": "GET",
         "comment": "List all environments",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "EnvironmentInstancesTargetSchema",
@@ -2340,7 +2886,14 @@
         "urlTemplate": "/environments/${environmentId}",
         "method": "GET",
         "comment": "Retrieve a environment",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "environmentId",
+            "isEntityId": true,
+            "relType": "EnvironmentData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "environmentId",
           "isEntityId": true,
           "relType": "EnvironmentData"
@@ -2358,7 +2911,14 @@
         "urlTemplate": "/environments/${environmentId}",
         "method": "DELETE",
         "comment": "Delete a environment",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "environmentId",
+            "isEntityId": true,
+            "relType": "EnvironmentData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "environmentId",
           "isEntityId": true,
           "relType": "EnvironmentData"
@@ -2383,6 +2943,7 @@
         "urlTemplate": "/maintenance-mode",
         "method": "GET",
         "comment": "Retrieve maintenence mode",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "MaintenanceModeSelfTargetSchema",
@@ -2396,6 +2957,7 @@
         "urlTemplate": "/maintenance-mode/activate",
         "method": "PUT",
         "comment": "Activate maintenance mode: this means that the primary environment will be read-only",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "MaintenanceModeActivateHrefSchema",
         "queryParamsRequired": false,
@@ -2410,6 +2972,7 @@
         "urlTemplate": "/maintenance-mode/deactivate",
         "method": "PUT",
         "comment": "De-activate maintenance mode",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "MaintenanceModeDeactivateTargetSchema",
@@ -2430,6 +2993,7 @@
         "urlTemplate": "/webhooks",
         "method": "POST",
         "comment": "Create a new webhook",
+        "urlPlaceholders": [],
         "requestBodyType": "WebhookCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -2460,7 +3024,14 @@
         "urlTemplate": "/webhooks/${webhookId}",
         "method": "PUT",
         "comment": "Update a webhook",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "webhookId",
+            "isEntityId": true,
+            "relType": "WebhookData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "webhookId",
           "isEntityId": true,
           "relType": "WebhookData"
@@ -2496,6 +3067,7 @@
         "urlTemplate": "/webhooks",
         "method": "GET",
         "comment": "List all webhooks",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "WebhookInstancesTargetSchema",
@@ -2509,7 +3081,14 @@
         "urlTemplate": "/webhooks/${webhookId}",
         "method": "GET",
         "comment": "Retrieve a webhook",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "webhookId",
+            "isEntityId": true,
+            "relType": "WebhookData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "webhookId",
           "isEntityId": true,
           "relType": "WebhookData"
@@ -2527,7 +3106,14 @@
         "urlTemplate": "/webhooks/${webhookId}",
         "method": "DELETE",
         "comment": "Delete a webhook",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "webhookId",
+            "isEntityId": true,
+            "relType": "WebhookData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "webhookId",
           "isEntityId": true,
           "relType": "WebhookData"
@@ -2552,6 +3138,7 @@
         "urlTemplate": "/webhook_calls",
         "method": "GET",
         "comment": "List all webhooks calls",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "WebhookCallInstancesHrefSchema",
         "queryParamsRequired": false,
@@ -2570,11 +3157,13 @@
         "urlTemplate": "/webhook_calls/${userId}/resend_webhook",
         "method": "POST",
         "comment": "Re-send the webhook call",
-        "urlPlaceholder": {
-          "variableName": "userId",
-          "isEntityId": false,
-          "relType": "UserData"
-        },
+        "urlPlaceholders": [
+          {
+            "variableName": "userId",
+            "isEntityId": false,
+            "relType": "UserData"
+          }
+        ],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "resendWebhook",
@@ -2594,6 +3183,7 @@
         "urlTemplate": "/build-triggers",
         "method": "GET",
         "comment": "List all build triggers for a site",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "BuildTriggerInstancesTargetSchema",
@@ -2607,7 +3197,14 @@
         "urlTemplate": "/build-triggers/${buildTriggerId}",
         "method": "GET",
         "comment": "Retrieve a build trigger",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "buildTriggerId",
+            "isEntityId": true,
+            "relType": "BuildTriggerData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "buildTriggerId",
           "isEntityId": true,
           "relType": "BuildTriggerData"
@@ -2625,6 +3222,7 @@
         "urlTemplate": "/build-triggers",
         "method": "POST",
         "comment": "Create build trigger",
+        "urlPlaceholders": [],
         "requestBodyType": "BuildTriggerCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -2652,7 +3250,14 @@
         "urlTemplate": "/build-triggers/${buildTriggerId}",
         "method": "PUT",
         "comment": "Update build trigger",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "buildTriggerId",
+            "isEntityId": true,
+            "relType": "BuildTriggerData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "buildTriggerId",
           "isEntityId": true,
           "relType": "BuildTriggerData"
@@ -2684,7 +3289,14 @@
         "urlTemplate": "/build-triggers/${buildTriggerId}/trigger",
         "method": "POST",
         "comment": "Trigger a deploy",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "buildTriggerId",
+            "isEntityId": true,
+            "relType": "BuildTriggerData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "buildTriggerId",
           "isEntityId": true,
           "relType": "BuildTriggerData"
@@ -2701,7 +3313,14 @@
         "urlTemplate": "/build-triggers/${buildTriggerId}/abort",
         "method": "DELETE",
         "comment": "Abort a deploy and mark it as failed",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "buildTriggerId",
+            "isEntityId": true,
+            "relType": "BuildTriggerData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "buildTriggerId",
           "isEntityId": true,
           "relType": "BuildTriggerData"
@@ -2718,7 +3337,14 @@
         "urlTemplate": "/build-triggers/${buildTriggerId}/abort_indexing",
         "method": "DELETE",
         "comment": "Abort a site search spidering and mark it as failed",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "buildTriggerId",
+            "isEntityId": true,
+            "relType": "BuildTriggerData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "buildTriggerId",
           "isEntityId": true,
           "relType": "BuildTriggerData"
@@ -2735,7 +3361,14 @@
         "urlTemplate": "/build-triggers/${buildTriggerId}/reindex",
         "method": "PUT",
         "comment": "Trigger a new site search spidering of the website",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "buildTriggerId",
+            "isEntityId": true,
+            "relType": "BuildTriggerData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "buildTriggerId",
           "isEntityId": true,
           "relType": "BuildTriggerData"
@@ -2752,7 +3385,14 @@
         "urlTemplate": "/build-triggers/${buildTriggerId}",
         "method": "DELETE",
         "comment": "Delete a build trigger",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "buildTriggerId",
+            "isEntityId": true,
+            "relType": "BuildTriggerData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "buildTriggerId",
           "isEntityId": true,
           "relType": "BuildTriggerData"
@@ -2777,6 +3417,7 @@
         "urlTemplate": "/item-type-filters",
         "method": "POST",
         "comment": "Create a new filter",
+        "urlPlaceholders": [],
         "requestBodyType": "ItemTypeFilterCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -2796,7 +3437,14 @@
         "urlTemplate": "/item-type-filters/${itemTypeFilterId}",
         "method": "PUT",
         "comment": "Update a filter",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeFilterId",
+            "isEntityId": true,
+            "relType": "ItemTypeFilterData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemTypeFilterId",
           "isEntityId": true,
           "relType": "ItemTypeFilterData"
@@ -2821,6 +3469,7 @@
         "urlTemplate": "/item-type-filters",
         "method": "GET",
         "comment": "List all filters",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "ItemTypeFilterInstancesTargetSchema",
@@ -2834,7 +3483,14 @@
         "urlTemplate": "/item-type-filters/${itemTypeFilterId}",
         "method": "GET",
         "comment": "Retrieve a filter",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeFilterId",
+            "isEntityId": true,
+            "relType": "ItemTypeFilterData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemTypeFilterId",
           "isEntityId": true,
           "relType": "ItemTypeFilterData"
@@ -2852,7 +3508,14 @@
         "urlTemplate": "/item-type-filters/${itemTypeFilterId}",
         "method": "DELETE",
         "comment": "Delete a filter",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeFilterId",
+            "isEntityId": true,
+            "relType": "ItemTypeFilterData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "itemTypeFilterId",
           "isEntityId": true,
           "relType": "ItemTypeFilterData"
@@ -2877,6 +3540,7 @@
         "urlTemplate": "/upload-filters",
         "method": "POST",
         "comment": "Create a new filter",
+        "urlPlaceholders": [],
         "requestBodyType": "UploadFilterCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -2896,7 +3560,14 @@
         "urlTemplate": "/upload-filters/${uploadFilterId}",
         "method": "PUT",
         "comment": "Update a filter",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadFilterId",
+            "isEntityId": true,
+            "relType": "UploadFilterData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "uploadFilterId",
           "isEntityId": true,
           "relType": "UploadFilterData"
@@ -2921,6 +3592,7 @@
         "urlTemplate": "/upload-filters",
         "method": "GET",
         "comment": "List all filters",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "UploadFilterInstancesTargetSchema",
@@ -2934,7 +3606,14 @@
         "urlTemplate": "/upload-filters/${uploadFilterId}",
         "method": "GET",
         "comment": "Retrieve a filter",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadFilterId",
+            "isEntityId": true,
+            "relType": "UploadFilterData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "uploadFilterId",
           "isEntityId": true,
           "relType": "UploadFilterData"
@@ -2952,7 +3631,14 @@
         "urlTemplate": "/upload-filters/${uploadFilterId}",
         "method": "DELETE",
         "comment": "Delete a filter",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadFilterId",
+            "isEntityId": true,
+            "relType": "UploadFilterData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "uploadFilterId",
           "isEntityId": true,
           "relType": "UploadFilterData"
@@ -2977,6 +3663,7 @@
         "urlTemplate": "/site-invitations",
         "method": "POST",
         "comment": "Invite a new user",
+        "urlPlaceholders": [],
         "requestBodyType": "SiteInvitationCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -2996,7 +3683,14 @@
         "urlTemplate": "/site-invitations/${siteInvitationId}",
         "method": "PUT",
         "comment": "Update an invitation",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "siteInvitationId",
+            "isEntityId": true,
+            "relType": "SiteInvitationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "siteInvitationId",
           "isEntityId": true,
           "relType": "SiteInvitationData"
@@ -3021,6 +3715,7 @@
         "urlTemplate": "/site-invitations",
         "method": "GET",
         "comment": "List all invitations",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteInvitationInstancesTargetSchema",
@@ -3034,7 +3729,14 @@
         "urlTemplate": "/site-invitations/${siteInvitationId}",
         "method": "GET",
         "comment": "Retrieve an invitation",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "siteInvitationId",
+            "isEntityId": true,
+            "relType": "SiteInvitationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "siteInvitationId",
           "isEntityId": true,
           "relType": "SiteInvitationData"
@@ -3052,7 +3754,14 @@
         "urlTemplate": "/site-invitations/${siteInvitationId}",
         "method": "DELETE",
         "comment": "Delete an invitation",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "siteInvitationId",
+            "isEntityId": true,
+            "relType": "SiteInvitationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "siteInvitationId",
           "isEntityId": true,
           "relType": "SiteInvitationData"
@@ -3070,7 +3779,14 @@
         "urlTemplate": "/site-invitations/${siteInvitationId}/resend",
         "method": "POST",
         "comment": "Resend an invitation",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "siteInvitationId",
+            "isEntityId": true,
+            "relType": "SiteInvitationData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "siteInvitationId",
           "isEntityId": true,
           "relType": "SiteInvitationData"
@@ -3095,6 +3811,7 @@
         "urlTemplate": "/editing-sessions",
         "method": "GET",
         "comment": "List all editing sessions",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "EditingSessionInstancesTargetSchema",
@@ -3109,7 +3826,14 @@
         "urlTemplate": "/editing-sessions/${editingSessionId}",
         "method": "PUT",
         "comment": "Allows all actions on editing sessions",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "editingSessionId",
+            "isEntityId": true,
+            "relType": "EditingSessionData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "editingSessionId",
           "isEntityId": true,
           "relType": "EditingSessionData"
@@ -3133,7 +3857,14 @@
         "urlTemplate": "/editing-sessions/${editingSessionId}",
         "method": "DELETE",
         "comment": "Delete an editing session",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "editingSessionId",
+            "isEntityId": true,
+            "relType": "EditingSessionData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "editingSessionId",
           "isEntityId": true,
           "relType": "EditingSessionData"
@@ -3159,6 +3890,7 @@
         "urlTemplate": "/sso-groups",
         "method": "GET",
         "comment": "List all SSO groups",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoGroupInstancesTargetSchema",
@@ -3172,7 +3904,14 @@
         "urlTemplate": "/sso-groups/${ssoGroupId}/copy-roles",
         "method": "POST",
         "comment": "Sync SSO provider groups to DatoCMS roles",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "ssoGroupId",
+            "isEntityId": true,
+            "relType": "SsoGroupData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "ssoGroupId",
           "isEntityId": true,
           "relType": "SsoGroupData"
@@ -3190,7 +3929,14 @@
         "urlTemplate": "/sso-groups/${ssoGroupId}",
         "method": "PUT",
         "comment": "Update a SSO group",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "ssoGroupId",
+            "isEntityId": true,
+            "relType": "SsoGroupData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "ssoGroupId",
           "isEntityId": true,
           "relType": "SsoGroupData"
@@ -3215,7 +3961,14 @@
         "urlTemplate": "/sso-groups/${ssoGroupId}",
         "method": "DELETE",
         "comment": "Delete a group",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "ssoGroupId",
+            "isEntityId": true,
+            "relType": "SsoGroupData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "ssoGroupId",
           "isEntityId": true,
           "relType": "SsoGroupData"
@@ -3240,6 +3993,7 @@
         "urlTemplate": "/sso-settings",
         "method": "GET",
         "comment": "Retrieve SSO Settings",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoSettingsSelfTargetSchema",
@@ -3253,6 +4007,7 @@
         "urlTemplate": "/sso-settings/generate-token",
         "method": "PUT",
         "comment": "Generate SSO token",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SsoSettingsGenerateTokenTargetSchema",
@@ -3266,6 +4021,7 @@
         "urlTemplate": "/sso-settings",
         "method": "PUT",
         "comment": "Update SSO Settings",
+        "urlPlaceholders": [],
         "requestBodyType": "SsoSettingsUpdateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -3292,6 +4048,7 @@
         "urlTemplate": "/emoji-suggestions",
         "method": "GET",
         "comment": "Retrieve emoji suggestions",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "EmojiSuggestionsSelfHrefSchema",
         "queryParamsRequired": false,
@@ -3314,6 +4071,7 @@
         "urlTemplate": "/white-label-settings",
         "method": "GET",
         "comment": "Retrieve white-label settings",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "WhiteLabelSettingsSelfTargetSchema",
@@ -3327,6 +4085,7 @@
         "urlTemplate": "/white-label-settings",
         "method": "PUT",
         "comment": "Update white-label settings",
+        "urlPlaceholders": [],
         "requestBodyType": "WhiteLabelSettingsUpdateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -3353,6 +4112,7 @@
         "urlTemplate": "/public-info",
         "method": "GET",
         "comment": "Retrieve public site info",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "PublicInfoSelfTargetSchema",
@@ -3373,6 +4133,7 @@
         "urlTemplate": "/daily-site-usages",
         "method": "GET",
         "comment": "Retrieve project's daily usage info",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "DailyUsageInstancesTargetSchema",
@@ -3393,7 +4154,14 @@
         "urlTemplate": "/usage-log-counters/${usageCounterId}",
         "method": "GET",
         "comment": "Retrieve a project's usage counter",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "usageCounterId",
+            "isEntityId": true,
+            "relType": "UsageCounterData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "usageCounterId",
           "isEntityId": true,
           "relType": "UsageCounterData"
@@ -3419,6 +4187,7 @@
         "urlTemplate": "/upload-tags",
         "method": "GET",
         "comment": "List all manually created upload tags",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "UploadTagInstancesHrefSchema",
         "queryParamsRequired": false,
@@ -3437,6 +4206,7 @@
         "urlTemplate": "/upload-tags",
         "method": "POST",
         "comment": "Create a new upload tag",
+        "urlPlaceholders": [],
         "requestBodyType": "UploadTagCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -3463,6 +4233,7 @@
         "urlTemplate": "/upload-smart-tags",
         "method": "GET",
         "comment": "List all automatically created upload tags",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "UploadSmartTagInstancesHrefSchema",
         "queryParamsRequired": false,
@@ -3488,6 +4259,7 @@
         "urlTemplate": "/site",
         "method": "GET",
         "comment": "Retrieve the site",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsType": "SiteSelfHrefSchema",
         "queryParamsRequired": false,
@@ -3502,6 +4274,7 @@
         "urlTemplate": "/site",
         "method": "PUT",
         "comment": "Update the site's settings",
+        "urlPlaceholders": [],
         "requestBodyType": "SiteUpdateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -3532,6 +4305,7 @@
         "urlTemplate": "/site/activate-improved-timezone-management",
         "method": "PUT",
         "comment": "Activate improved timezone management",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteActivateImprovedTimezoneManagementJobSchema",
@@ -3546,6 +4320,7 @@
         "urlTemplate": "/site/activate-improved-hex-management",
         "method": "PUT",
         "comment": "Activate improved hex management",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteActivateImprovedHexManagementTargetSchema",
@@ -3560,6 +4335,7 @@
         "urlTemplate": "/site/activate-improved-gql-multilocale-fields",
         "method": "PUT",
         "comment": "Activate improved GraphQL multi-locale fields option",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteActivateImprovedGqlMultilocaleFieldsTargetSchema",
@@ -3574,6 +4350,7 @@
         "urlTemplate": "/site/activate-improved-gql-visibility-control",
         "method": "PUT",
         "comment": "Activate improved GraphQL visibility control option",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteActivateImprovedGqlVisibilityControlTargetSchema",
@@ -3588,6 +4365,7 @@
         "urlTemplate": "/site/activate-improved-boolean-fields",
         "method": "PUT",
         "comment": "Activate improved Boolean fields option",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "SiteActivateImprovedBooleanFieldsTargetSchema",
@@ -3602,6 +4380,7 @@
         "urlTemplate": "/site/assets-cdn-default-settings",
         "method": "PUT",
         "comment": "Update CDN settings default assets",
+        "urlPlaceholders": [],
         "requestBodyType": "SiteUpdateAssetsCdnDefaultSettingsSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -3629,6 +4408,7 @@
         "urlTemplate": "/workflows",
         "method": "POST",
         "comment": "Create a new workflow",
+        "urlPlaceholders": [],
         "requestBodyType": "WorkflowCreateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
@@ -3648,7 +4428,14 @@
         "urlTemplate": "/workflows/${workflowId}",
         "method": "PUT",
         "comment": "Update a workflow",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "workflowId",
+            "isEntityId": true,
+            "relType": "WorkflowData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "workflowId",
           "isEntityId": true,
           "relType": "WorkflowData"
@@ -3673,6 +4460,7 @@
         "urlTemplate": "/workflows",
         "method": "GET",
         "comment": "List all workflows",
+        "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "WorkflowInstancesTargetSchema",
@@ -3686,7 +4474,14 @@
         "urlTemplate": "/workflows/${workflowId}",
         "method": "GET",
         "comment": "Retrieve a workflow",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "workflowId",
+            "isEntityId": true,
+            "relType": "WorkflowData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "workflowId",
           "isEntityId": true,
           "relType": "WorkflowData"
@@ -3704,7 +4499,14 @@
         "urlTemplate": "/workflows/${workflowId}",
         "method": "DELETE",
         "comment": "Delete a workflow",
-        "urlPlaceholder": {
+        "urlPlaceholders": [
+          {
+            "variableName": "workflowId",
+            "isEntityId": true,
+            "relType": "WorkflowData"
+          }
+        ],
+        "entityIdPlaceholder": {
           "variableName": "workflowId",
           "isEntityId": true,
           "relType": "WorkflowData"

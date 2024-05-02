@@ -23,9 +23,9 @@ export default class {{{resourceClassName}}} extends BaseResource {
       {{/if}}
       */
       {{{name}}}(
-        {{#if urlPlaceholder}}
-          {{{urlPlaceholder.variableName}}}: string | SimpleSchemaTypes.{{{urlPlaceholder.relType}}},
-        {{/if}}
+        {{#each urlPlaceholders}}
+          {{{variableName}}}: string | SimpleSchemaTypes.{{{relType}}},
+        {{/each}}
         {{#if requestBodyType}}
           body{{#if optionalRequestBody}}?{{/if}}: SimpleSchemaTypes.{{{requestBodyType}}},
         {{/if}}
@@ -34,16 +34,16 @@ export default class {{{resourceClassName}}} extends BaseResource {
         {{/if}}
       ) {
         return this.{{{rawName}}}(
-            {{#if urlPlaceholder}}
-              Utils.toId({{{urlPlaceholder.variableName}}}),
-            {{/if}}
+            {{#each urlPlaceholders}}
+              Utils.toId({{{variableName}}}),
+            {{/each}}
             {{#if requestBodyType}}
               {{#if optionalRequestBody}}body ? {{/if}}Utils.serializeRequestBody<SchemaTypes.{{{requestBodyType}}}>(
                 body,
                 {
-                  {{#if urlPlaceholder.isEntityId}}
+                  {{#if entityIdPlaceholder}}
                     {{#if requestStructure.idRequired}}
-                      id: Utils.toId({{{urlPlaceholder.variableName}}}),
+                      id: Utils.toId({{{entityIdPlaceholder.variableName}}}),
                     {{/if}}
                   {{/if}}
                   type: {{{stringify requestStructure.type}}},
@@ -79,9 +79,9 @@ export default class {{{resourceClassName}}} extends BaseResource {
   {{/if}}
    */
   {{{rawName}}}(
-    {{#if urlPlaceholder}}
-      {{{urlPlaceholder.variableName}}}: string,
-    {{/if}}
+    {{#each urlPlaceholders}}
+      {{{variableName}}}: string,
+    {{/each}}
     {{#if requestBodyType}}
       body{{#if optionalRequestBody}}?{{/if}}: SchemaTypes.{{{requestBodyType}}},
     {{/if}}
@@ -127,16 +127,16 @@ export default class {{{resourceClassName}}} extends BaseResource {
     * @throws {TimeoutError}
     */
       async *{{{name}}}PagedIterator(
-        {{#if urlPlaceholder}}
-          {{{urlPlaceholder.variableName}}}: string | SimpleSchemaTypes.{{{urlPlaceholder.relType}}},
-        {{/if}}
+        {{#each urlPlaceholders}}
+          {{{variableName}}}: string | SimpleSchemaTypes.{{{relType}}},
+        {{/each}}
         queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<SimpleSchemaTypes.{{{queryParamsType}}}, 'page'>,
         iteratorOptions?: Utils.IteratorOptions,
       ) {
         for await (const element of this.{{{rawName}}}PagedIterator(
-          {{#if urlPlaceholder}}
-            Utils.toId({{{urlPlaceholder.variableName}}}),
-          {{/if}}
+          {{#each urlPlaceholders}}
+            Utils.toId({{{variableName}}}),
+          {{/each}}
           queryParams,
           iteratorOptions,
         )) {
@@ -158,9 +158,9 @@ export default class {{{resourceClassName}}} extends BaseResource {
    * @throws {TimeoutError}
    */
     {{{rawName}}}PagedIterator(
-      {{#if urlPlaceholder}}
-        {{{urlPlaceholder.variableName}}}: string,
-      {{/if}}
+      {{#each urlPlaceholders}}
+        {{{variableName}}}: string,
+      {{/each}}
       queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<SchemaTypes.{{{queryParamsType}}}, 'page'>,
       iteratorOptions?: Utils.IteratorOptions,
     ) {
@@ -174,9 +174,9 @@ export default class {{{resourceClassName}}} extends BaseResource {
           maxLimit: {{{paginatedResponse.maxLimit}}},
         },
         (page: SchemaTypes.{{{queryParamsType}}}['page']) => this.{{{rawName}}}(
-          {{#if urlPlaceholder}}
-            {{{urlPlaceholder.variableName}}},
-          {{/if}}
+          {{#each urlPlaceholders}}
+            {{{variableName}}},
+          {{/each}}
           { ...queryParams, page },
         ),
         iteratorOptions,

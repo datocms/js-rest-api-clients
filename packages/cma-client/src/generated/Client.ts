@@ -58,6 +58,7 @@ export class Client {
   itemVersions: Resources.ItemVersion;
   uploads: Resources.Upload;
   uploadRequest: Resources.UploadRequest;
+  uploadTracks: Resources.UploadTrack;
   scheduledPublication: Resources.ScheduledPublication;
   scheduledUnpublishing: Resources.ScheduledUnpublishing;
   searchResults: Resources.SearchResult;
@@ -109,6 +110,7 @@ export class Client {
     this.itemVersions = new Resources.ItemVersion(this);
     this.uploads = new Resources.Upload(this);
     this.uploadRequest = new Resources.UploadRequest(this);
+    this.uploadTracks = new Resources.UploadTrack(this);
     this.scheduledPublication = new Resources.ScheduledPublication(this);
     this.scheduledUnpublishing = new Resources.ScheduledUnpublishing(this);
     this.searchResults = new Resources.SearchResult(this);
