@@ -3161,9 +3161,13 @@ export type DailyUsage = {
    */
   assets_traffic_bytes: number;
   /**
-   * Video streaming seconds
+   * Regular video streaming (max 1080p), in seconds
    */
   mux_delivered_seconds: number;
+  /**
+   * High-res video streaming (> 1080p), in seconds
+   */
+  mux_high_resolution_delivered_seconds: number;
   /**
    * Video encoding seconds
    */
@@ -3214,9 +3218,13 @@ export type DailyUsageAttributes = {
    */
   assets_traffic_bytes: number;
   /**
-   * Video streaming seconds
+   * Regular video streaming (max 1080p), in seconds
    */
   mux_delivered_seconds: number;
+  /**
+   * High-res video streaming (> 1080p), in seconds
+   */
+  mux_high_resolution_delivered_seconds: number;
   /**
    * Video encoding seconds
    */
