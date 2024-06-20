@@ -3758,7 +3758,7 @@ export type SitePlan = {
   /**
    * Maximum size (in bytes) for a record, including its block records
    */
-  item_byte_size: number;
+  item_size_bytes: number;
   /**
    * Available extra packets
    */
@@ -3996,7 +3996,7 @@ export type SitePlanAttributes = {
   /**
    * Maximum size (in bytes) for a record, including its block records
    */
-  item_byte_size: number;
+  item_size_bytes: number;
   /**
    * Available extra packets
    */
@@ -10566,6 +10566,10 @@ export type SiteUpdateAssetsCdnDefaultSettingsTargetSchema = Site;
  * via the `definition` "meta".
  */
 export type SiteMeta = {
+  /**
+   * Date of project creation
+   */
+  created_at: string;
   /**
    * Whether the Improved API Timezone Management option is active or not
    */

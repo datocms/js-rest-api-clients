@@ -939,6 +939,11 @@ export type AccountCreateSchema = {
         medium: string;
         campaign?: string;
       };
+      latest_acquisition_method?: {
+        source: string;
+        medium: string;
+        campaign?: string;
+      };
     };
   };
 };
@@ -2718,7 +2723,7 @@ export type SitePlanAttributes = {
   /**
    * Maximum size (in bytes) for a record, including its block records
    */
-  item_byte_size: number;
+  item_size_bytes: number;
   /**
    * Available extra packets
    */

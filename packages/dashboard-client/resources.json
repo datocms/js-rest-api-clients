@@ -55,7 +55,8 @@
             "signup_to_newsletter",
             "role_description",
             "role_context",
-            "acquisition_method"
+            "acquisition_method",
+            "latest_acquisition_method"
           ],
           "relationships": []
         },

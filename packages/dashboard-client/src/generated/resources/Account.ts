@@ -26,6 +26,7 @@ export default class Account extends BaseResource {
           'role_description',
           'role_context',
           'acquisition_method',
+          'latest_acquisition_method',
         ],
         relationships: [],
       }),
