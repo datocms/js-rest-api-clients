@@ -34,6 +34,13 @@ function fromUrlSafeBase64toUint8Array(urlSafeBase64: string): Uint8Array {
 }
 
 export function isValidId(id: string) {
+  // For backward compatibility, first check to see if this is an older-style integer ID formerly used by Dato
+  if (/^\d+$/.test(id)) {
+    const intId = BigInt(id);
+    const maxDatoIntegerId = 281474976710655; // Max 6-byte/48-bit unsigned int
+    return intId <= maxDatoIntegerId;
+  }
+
   const bytes = fromUrlSafeBase64toUint8Array(id);
 
   // UUIDs are 16 bytes
