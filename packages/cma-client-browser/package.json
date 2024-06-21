@@ -2,10 +2,7 @@
   "name": "@datocms/cma-client-browser",
   "version": "3.3.3",
   "description": "Browser client for DatoCMS REST Content Management API",
-  "keywords": [
-    "datocms",
-    "client"
-  ],
+  "keywords": ["datocms", "client"],
   "author": "Stefano Verna <s.verna@datocms.com>",
   "homepage": "https://github.com/datocms/js-rest-api-clients/tree/main/packages/cma-client-browser#readme",
   "license": "MIT",
@@ -16,10 +13,7 @@
     "lib": "dist",
     "test": "__tests__"
   },
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "publishConfig": {
     "access": "public"
   },
