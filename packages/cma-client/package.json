@@ -1,6 +1,6 @@
 {
   "name": "@datocms/cma-client",
-  "version": "3.3.3",
+  "version": "3.3.4",
   "description": "JS client for DatoCMS REST Content Management API",
   "keywords": ["datocms", "client"],
   "author": "Stefano Verna <s.verna@datocms.com>",
