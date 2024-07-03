@@ -284,6 +284,7 @@
           ],
           "relationships": []
         },
+        "queryParamsType": "SiteCreateHrefSchema",
         "queryParamsRequired": false,
         "responseType": "SiteCreateJobSchema",
         "name": "create",
@@ -381,6 +382,7 @@
           ],
           "relationships": ["plan", "billing_profile"]
         },
+        "queryParamsType": "SiteDuplicateHrefSchema",
         "queryParamsRequired": false,
         "responseType": "SiteDuplicateJobSchema",
         "rawName": "rawDuplicate"

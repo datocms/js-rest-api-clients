@@ -238,6 +238,17 @@ export type SiteInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `create.hrefSchema` link.
+ */
+export type SiteCreateHrefSchema = {
+  /**
+   * Confirm the creation of the project starting from a public template project, even if the copy of videos require significant use of Video Encoding resources
+   */
+  confirm_mux_encoding_consumption?: string;
+  [k: string]: unknown;
+};
+/**
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -253,6 +264,17 @@ export type PerSitePricingBillingProfileType =
  * via the `definition` "id".
  */
 export type PerSitePricingBillingProfileIdentity = string;
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `duplicate.hrefSchema` link.
+ */
+export type SiteDuplicateHrefSchema = {
+  /**
+   * Confirm the operation, even if the copy of videos contained in the project requires significant use of Video Encoding resources
+   */
+  confirm_mux_encoding_consumption?: string;
+  [k: string]: unknown;
+};
 /**
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `self.hrefSchema` link.

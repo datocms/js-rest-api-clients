@@ -4904,7 +4904,7 @@ export type JobData = {
  *     // single_line is a DatoCMS built-in editor that you can use with single-line string fields
  *     "editor": "single_line",
  *     // each built-in editor has specific settings
- *     "parameters": { "heading": true },
+ *     "parameters": { "heading": true, "placeholder": "My blog post title" },
  *     "addons": []
  *   },
  * }
@@ -4944,7 +4944,7 @@ export type JobData = {
  * {
  *   "appearance": {
  *     "editor": "single_line",
- *     "parameters": { "heading": true },
+ *     "parameters": { "heading": true, "placeholder": "My blog post title" },
  *     "addons": [
  *       {
  *         // "2138" is a the ID of a plugin exposing a manual addon editor
@@ -5645,9 +5645,10 @@ export type JobData = {
  *
  * Simple textual input for _Single-line string_ fields.
  *
- * | Parameter | Type      | Required | Description                                                                      |
- * | --------- | --------- | -------- | -------------------------------------------------------------------------------- |
- * | `heading` | `Boolean` | ✅        | Indicates if the field should be shown bigger, as a field representing a heading |
+ * | Parameter | Type      | Required | Description                                                                                    |
+ * | ------------- | --------- | -------- | ------------------------------------------------------------------------------------------ |
+ * | `heading`     | `Boolean` | ✅       | Indicates if the field should be shown bigger, as a field representing a heading           |
+ * | `placeholder` | `String`  |          | A placeholder that will be shown in the editor's input to provide editors with an example. |
  *
  * </details>
  *
@@ -5678,6 +5679,10 @@ export type JobData = {
  *
  * Basic textarea editor for _Multiple-paragraph text_ fields.
  *
+ * | Parameter     | Type     | Required | Description                                                                                |
+ * | ------------- | -------- | -------- | ------------------------------------------------------------------------------------------ |
+ * | `placeholder` | `String` |          | A placeholder that will be shown in the editor's input to provide editors with an example. |
+ *
  * </details>
  *
  * <details>
@@ -5697,9 +5702,10 @@ export type JobData = {
  *
  * Built-in editor for _Slug_ fields.
  *
- * | Parameter    | Type     | Required | Description                                                                            |
- * | ------------ | -------- | -------- | -------------------------------------------------------------------------------------- |
- * | `url_prefix` | `String` |          | A prefix that will be shown in the editor's form to give some context to your editors. |
+ * | Parameter     | Type     | Required | Description                                                                                |
+ * | ------------- | -------- | -------- | ------------------------------------------------------------------------------------------ |
+ * | `url_prefix`  | `String` |          | A prefix that will be shown in the editor's form to give some context to your editors.     |
+ * | `placeholder` | `String` |          | A placeholder that will be shown in the editor's input to provide editors with an example. |
  *
  * </details>
  *
@@ -5764,6 +5770,28 @@ export type JobData = {
  * <summary><code>link_embed</code> and <code>links_embed</code></summary>
  *
  * Use an expanded view with records' image preview to pick the records to reference inside the field.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>integer</code></summary>
+ *
+ * Built-in editor for _Integer_ fields.
+ *
+ * | Parameter     | Type     | Required | Description                                                                                |
+ * | ------------- | -------- | -------- | ------------------------------------------------------------------------------------------ |
+ * | `placeholder` | `String` |          | A placeholder that will be shown in the editor's input to provide editors with an example. |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>float</code></summary>
+ *
+ * Built-in editor for _Float_ fields.
+ *
+ * | Parameter     | Type     | Required | Description                                                                                |
+ * | ------------- | -------- | -------- | ------------------------------------------------------------------------------------------ |
+ * | `placeholder` | `String` |          | A placeholder that will be shown in the editor's input to provide editors with an example. |
  *
  * </details>
  *

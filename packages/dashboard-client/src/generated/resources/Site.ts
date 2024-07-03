@@ -127,7 +127,10 @@ export default class Site extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.SiteCreateSchema) {
+  create(
+    body: SimpleSchemaTypes.SiteCreateSchema,
+    queryParams?: SimpleSchemaTypes.SiteCreateHrefSchema,
+  ) {
     return this.rawCreate(
       Utils.serializeRequestBody<SchemaTypes.SiteCreateSchema>(body, {
         type: 'site',
@@ -140,6 +143,7 @@ export default class Site extends BaseResource {
         ],
         relationships: [],
       }),
+      queryParams,
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.SiteCreateJobSchema>(
         body,
@@ -155,11 +159,13 @@ export default class Site extends BaseResource {
    */
   rawCreate(
     body: SchemaTypes.SiteCreateSchema,
+    queryParams?: SchemaTypes.SiteCreateHrefSchema,
   ): Promise<SchemaTypes.SiteCreateJobSchema> {
     return this.client.request<SchemaTypes.SiteCreateJobSchema>({
       method: 'POST',
       url: '/sites',
       body,
+      queryParams,
     });
   }
 
@@ -246,11 +252,13 @@ export default class Site extends BaseResource {
   rawDuplicate(
     siteId: string,
     body: SchemaTypes.SiteDuplicateSchema,
+    queryParams?: SchemaTypes.SiteDuplicateHrefSchema,
   ): Promise<SchemaTypes.SiteDuplicateJobSchema> {
     return this.client.request<SchemaTypes.SiteDuplicateJobSchema>({
       method: 'POST',
       url: `/sites/${siteId}/duplicate`,
       body,
+      queryParams,
     });
   }
 }
