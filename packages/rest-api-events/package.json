@@ -1,8 +1,11 @@
 {
   "name": "@datocms/rest-api-events",
-  "version": "3.3.4",
+  "version": "3.3.5",
   "description": "Utilities to receive real-time events from DatoCMS REST APIs",
-  "keywords": ["datocms", "client"],
+  "keywords": [
+    "datocms",
+    "client"
+  ],
   "author": "Stefano Verna <s.verna@datocms.com>",
   "homepage": "https://github.com/datocms/js-rest-api-clients/tree/main/packages/rest-api-events#readme",
   "license": "MIT",
@@ -14,7 +17,10 @@
     "lib": "dist",
     "test": "__tests__"
   },
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -33,8 +39,8 @@
     "pusher-js": "^7.0.6"
   },
   "devDependencies": {
-    "@datocms/cma-client": "^3.3.4",
-    "@datocms/dashboard-client": "^3.3.4"
+    "@datocms/cma-client": "^3.3.5",
+    "@datocms/dashboard-client": "^3.3.5"
   },
   "gitHead": "504a80c1a8c628acf6defc5c7ce9c58e777f9ecd"
 }
