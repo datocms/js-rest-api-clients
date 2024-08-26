@@ -1,6 +1,4 @@
-import JsonRefParser, {
-  type JSONSchema,
-} from '@apidevtools/json-schema-ref-parser';
+import * as JsonRefParser from '@apidevtools/json-schema-ref-parser';
 import fetch from 'cross-fetch';
 import { compile as hyperschemaToTypings } from 'hyperschema-to-ts';
 import simplifySchema from './generateSimplifiedSchema';
@@ -67,13 +65,15 @@ type JSONHyperschemaLink = {
   title: string;
   href: string;
   private?: boolean;
-  hrefSchema?: JSONSchema;
-  schema?: JSONSchema;
-  targetSchema?: JSONSchema;
-  jobSchema?: JSONSchema;
+  hrefSchema?: JsonRefParser.JSONSchema;
+  schema?: JsonRefParser.JSONSchema;
+  targetSchema?: JsonRefParser.JSONSchema;
+  jobSchema?: JsonRefParser.JSONSchema;
 };
 
-type JSONSchemaWithLinks = JSONSchema & { links: JSONHyperschemaLink[] };
+type JSONSchemaWithLinks = JsonRefParser.JSONSchema & {
+  links: JSONHyperschemaLink[];
+};
 
 const relToMethodName: Record<string, string> = {
   instances: 'list',
@@ -81,7 +81,9 @@ const relToMethodName: Record<string, string> = {
   me: 'findMe',
 };
 
-function hasLinks(schema: JSONSchema): schema is JSONSchemaWithLinks {
+function hasLinks(
+  schema: JsonRefParser.JSONSchema,
+): schema is JSONSchemaWithLinks {
   return 'links' in schema;
 }
 
@@ -261,7 +263,7 @@ function findPropertiesInDataProperty(
 function generateResourceInfo(
   isCma: boolean,
   jsonApiType: string,
-  schema: JSONSchema,
+  schema: JsonRefParser.JSONSchema,
 ): ResourceInfo {
   if (!hasLinks(schema)) {
     throw new Error('Missing links!');

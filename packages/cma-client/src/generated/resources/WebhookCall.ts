@@ -96,6 +96,39 @@ export default class WebhookCall extends BaseResource {
   }
 
   /**
+   * Retrieve a webhook call
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  find(webhookCallId: string | SimpleSchemaTypes.WebhookCallData) {
+    return this.rawFind(Utils.toId(webhookCallId)).then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.WebhookCallSelfTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Retrieve a webhook call
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawFind(
+    webhookCallId: string,
+  ): Promise<SchemaTypes.WebhookCallSelfTargetSchema> {
+    return this.client.request<SchemaTypes.WebhookCallSelfTargetSchema>({
+      method: 'GET',
+      url: `/webhook_calls/${webhookCallId}`,
+    });
+  }
+
+  /**
    * Re-send the webhook call
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/webhook-call/resend_webhook

@@ -17,7 +17,7 @@
   "author": "Stefano Verna <s.verna@datocms.com>",
   "license": "MIT",
   "devDependencies": {
-    "@apidevtools/json-schema-ref-parser": "^9.0.9",
+    "@apidevtools/json-schema-ref-parser": "^11.7.0",
     "@biomejs/biome": "1.8.3",
     "@total-typescript/ts-reset": "^0.5.1",
     "@types/jest": "^29.5.6",

@@ -281,7 +281,6 @@ export type SiteInstancesHrefSchema = {
      * The maximum number of entities to return (defaults to 20, maximum is 50)
      */
     limit?: number;
-    [k: string]: unknown;
   };
   /**
    * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.

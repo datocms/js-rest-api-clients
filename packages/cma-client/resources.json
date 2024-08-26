@@ -3008,7 +3008,8 @@
             "http_basic_password",
             "enabled",
             "payload_api_version",
-            "nested_items_in_payload"
+            "nested_items_in_payload",
+            "auto_retry"
           ],
           "relationships": []
         },
@@ -3051,7 +3052,8 @@
             "http_basic_password",
             "enabled",
             "payload_api_version",
-            "nested_items_in_payload"
+            "nested_items_in_payload",
+            "auto_retry"
           ],
           "relationships": []
         },
@@ -3149,6 +3151,31 @@
         },
         "name": "list",
         "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook-call/self",
+        "rel": "self",
+        "urlTemplate": "/webhook_calls/${webhookCallId}",
+        "method": "GET",
+        "comment": "Retrieve a webhook call",
+        "urlPlaceholders": [
+          {
+            "variableName": "webhookCallId",
+            "isEntityId": true,
+            "relType": "WebhookCallData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "webhookCallId",
+          "isEntityId": true,
+          "relType": "WebhookCallData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "WebhookCallSelfTargetSchema",
+        "name": "find",
+        "rawName": "rawFind"
       },
       {
         "returnsCollection": false,

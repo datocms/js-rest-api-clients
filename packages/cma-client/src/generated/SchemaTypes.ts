@@ -564,7 +564,6 @@ export type ItemInstancesHrefSchema = {
      * The maximum number of entities to return (defaults to 30, maximum is 500)
      */
     limit?: number;
-    [k: string]: unknown;
   };
   /**
    * Fields used to order results. You **must** specify also `filter[type]` with one element only to be able use this option. Format: `<field_name>_(ASC|DESC)`, where `<field_name>` can be either the API key of a model's field, or one of the following meta columns: `id`, `_updated_at`, `_created_at`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `_is_valid`, `position` (only for sortable models). You can pass multiple comma separated rules.
@@ -687,7 +686,6 @@ export type ItemVersionInstancesHrefSchema = {
      * The maximum number of entities to return (defaults to 15, maximum is 50)
      */
     limit?: number;
-    [k: string]: unknown;
   };
   [k: string]: unknown;
 };
@@ -840,7 +838,6 @@ export type UploadInstancesHrefSchema = {
      * The maximum number of entities to return (defaults to 30, maximum is 500)
      */
     limit?: number;
-    [k: string]: unknown;
   };
   [k: string]: unknown;
 };
@@ -943,7 +940,6 @@ export type SearchResultInstancesHrefSchema = {
      * The maximum number of entities to return (defaults to 20, maximum is 100)
      */
     limit?: number;
-    [k: string]: unknown;
   };
   /**
    * Attributes to filter search results
@@ -1066,8 +1062,82 @@ export type WebhookCallInstancesHrefSchema = {
      * The maximum number of entities to return (defaults to 30, maximum is 500)
      */
     limit?: number;
-    [k: string]: unknown;
   };
+  /**
+   * Attributes to filter
+   */
+  filter?: {
+    /**
+     * IDs to fetch, comma separated
+     */
+    ids?: string;
+    fields?: {
+      webhook_id?: {
+        eq?: string;
+      };
+      entity_type?: {
+        /**
+         * The subject of webhook triggering
+         */
+        eq?:
+          | 'item_type'
+          | 'item'
+          | 'upload'
+          | 'build_trigger'
+          | 'environment'
+          | 'maintenance_mode'
+          | 'sso_user'
+          | 'cda_cache_tags';
+      };
+      event_type?: {
+        /**
+         * The event that triggers the webhook call
+         */
+        eq?:
+          | 'create'
+          | 'update'
+          | 'delete'
+          | 'publish'
+          | 'unpublish'
+          | 'promote'
+          | 'deploy_started'
+          | 'deploy_succeeded'
+          | 'deploy_failed'
+          | 'change'
+          | 'invalidate';
+      };
+      status?: {
+        /**
+         * The current status
+         */
+        eq?: 'pending' | 'success' | 'failed' | 'rescheduled';
+      };
+      last_sent_at?: {
+        gt?: string;
+        lt?: string;
+      };
+      next_retry_at?: {
+        gt?: string;
+        lt?: string;
+      };
+      created_at?: {
+        gt?: string;
+        lt?: string;
+      };
+    };
+  };
+  /**
+   * Fields used to order results
+   */
+  order_by?:
+    | 'webhook_id_asc'
+    | 'webhook_id_desc'
+    | 'created_at_asc'
+    | 'created_at_desc'
+    | 'last_sent_at_asc'
+    | 'last_sent_at_desc'
+    | 'next_retry_at_asc'
+    | 'next_retry_at_desc';
   [k: string]: unknown;
 };
 /**
@@ -1302,7 +1372,6 @@ export type UploadTagInstancesHrefSchema = {
      * The maximum number of entities to return (defaults to 50, maximum is 500)
      */
     limit?: number;
-    [k: string]: unknown;
   };
   [k: string]: unknown;
 };
@@ -1348,7 +1417,6 @@ export type UploadSmartTagInstancesHrefSchema = {
      * The maximum number of entities to return (defaults to 50, maximum is 500)
      */
     limit?: number;
-    [k: string]: unknown;
   };
   [k: string]: unknown;
 };
@@ -8873,12 +8941,46 @@ export type WebhookAttributes = {
    * Additional headers that will be sent
    */
   headers: {
-    [k: string]: unknown;
+    [k: string]: string;
   };
-  /**
-   * All the events you will be notified for
-   */
-  events: unknown[];
+  events: {
+    /**
+     * The subject of webhook triggering
+     */
+    entity_type:
+      | 'item_type'
+      | 'item'
+      | 'upload'
+      | 'build_trigger'
+      | 'environment'
+      | 'maintenance_mode'
+      | 'sso_user'
+      | 'cda_cache_tags';
+    event_types: (
+      | 'create'
+      | 'update'
+      | 'delete'
+      | 'publish'
+      | 'unpublish'
+      | 'promote'
+      | 'deploy_started'
+      | 'deploy_succeeded'
+      | 'deploy_failed'
+      | 'change'
+      | 'invalidate'
+    )[];
+    filters?:
+      | {
+          entity_type:
+            | 'item_type'
+            | 'item'
+            | 'build_trigger'
+            | 'environment'
+            | 'environment_type';
+          entity_ids: [string, ...string[]];
+        }[]
+      | null;
+  }[];
   /**
    * Specifies which API version to use when serializing entities in the webhook payload
    */
@@ -8887,6 +8989,10 @@ export type WebhookAttributes = {
    * Whether the you want records present in the payload to show blocks expanded or not
    */
   nested_items_in_payload: boolean;
+  /**
+   * If enabled, the system will attempt to retry the call several times when the webhook operation fails due to timeouts or errors.
+   */
+  auto_retry: boolean;
 };
 
 /**
@@ -8924,12 +9030,46 @@ export type WebhookCreateSchema = {
        * Additional headers that will be sent
        */
       headers: {
-        [k: string]: unknown;
+        [k: string]: string;
       };
-      /**
-       * All the events you will be notified for
-       */
-      events: unknown[];
+      events: {
+        /**
+         * The subject of webhook triggering
+         */
+        entity_type:
+          | 'item_type'
+          | 'item'
+          | 'upload'
+          | 'build_trigger'
+          | 'environment'
+          | 'maintenance_mode'
+          | 'sso_user'
+          | 'cda_cache_tags';
+        event_types: (
+          | 'create'
+          | 'update'
+          | 'delete'
+          | 'publish'
+          | 'unpublish'
+          | 'promote'
+          | 'deploy_started'
+          | 'deploy_succeeded'
+          | 'deploy_failed'
+          | 'change'
+          | 'invalidate'
+        )[];
+        filters?:
+          | {
+              entity_type:
+                | 'item_type'
+                | 'item'
+                | 'build_trigger'
+                | 'environment'
+                | 'environment_type';
+              entity_ids: [string, ...string[]];
+            }[]
+          | null;
+      }[];
       /**
        * HTTP Basic Authorization username
        */
@@ -8950,6 +9090,10 @@ export type WebhookCreateSchema = {
        * Whether the you want records present in the payload to show blocks expanded or not
        */
       nested_items_in_payload?: boolean;
+      /**
+       * If enabled, the system will attempt to retry the call several times when the webhook operation fails due to timeouts or errors.
+       */
+      auto_retry?: boolean;
     };
   };
 };
@@ -8987,12 +9131,46 @@ export type WebhookUpdateSchema = {
        * Additional headers that will be sent
        */
       headers?: {
-        [k: string]: unknown;
+        [k: string]: string;
       };
-      /**
-       * All the events you will be notified for
-       */
-      events?: unknown[];
+      events?: {
+        /**
+         * The subject of webhook triggering
+         */
+        entity_type:
+          | 'item_type'
+          | 'item'
+          | 'upload'
+          | 'build_trigger'
+          | 'environment'
+          | 'maintenance_mode'
+          | 'sso_user'
+          | 'cda_cache_tags';
+        event_types: (
+          | 'create'
+          | 'update'
+          | 'delete'
+          | 'publish'
+          | 'unpublish'
+          | 'promote'
+          | 'deploy_started'
+          | 'deploy_succeeded'
+          | 'deploy_failed'
+          | 'change'
+          | 'invalidate'
+        )[];
+        filters?:
+          | {
+              entity_type:
+                | 'item_type'
+                | 'item'
+                | 'build_trigger'
+                | 'environment'
+                | 'environment_type';
+              entity_ids: [string, ...string[]];
+            }[]
+          | null;
+      }[];
       /**
        * HTTP Basic Authorization username
        */
@@ -9013,6 +9191,10 @@ export type WebhookUpdateSchema = {
        * Whether the you want records present in the payload to show blocks expanded or not
        */
       nested_items_in_payload?: boolean;
+      /**
+       * If enabled, the system will attempt to retry the call several times when the webhook operation fails due to timeouts or errors.
+       */
+      auto_retry?: boolean;
     };
   };
 };
@@ -9072,13 +9254,32 @@ export type WebhookCallAttributes = {
   /**
    * The subject of webhook triggering
    */
-  entity_type: 'item' | 'item_type' | 'upload';
+  entity_type:
+    | 'item_type'
+    | 'item'
+    | 'upload'
+    | 'build_trigger'
+    | 'environment'
+    | 'maintenance_mode'
+    | 'sso_user'
+    | 'cda_cache_tags';
   /**
    * The event that triggers the webhook call
    */
-  event_type: 'create' | 'update' | 'delete' | 'publish' | 'unpublish';
+  event_type:
+    | 'create'
+    | 'update'
+    | 'delete'
+    | 'publish'
+    | 'unpublish'
+    | 'promote'
+    | 'deploy_started'
+    | 'deploy_succeeded'
+    | 'deploy_failed'
+    | 'change'
+    | 'invalidate';
   /**
-   * The moment the call occurred
+   * The moment the event was created
    */
   created_at: string;
   /**
@@ -9104,11 +9305,27 @@ export type WebhookCallAttributes = {
    */
   response_headers: {
     [k: string]: unknown;
-  };
+  } | null;
   /**
    * The body of the response
    */
   response_payload: string | null;
+  /**
+   * The number of retries attempted so far
+   */
+  attempted_auto_retries_count: number;
+  /**
+   * The last moment the call occurred
+   */
+  last_sent_at: string;
+  /**
+   * The date when the next retry attempt is scheduled to run. If no retry attempt is scheduled, it is set to null
+   */
+  next_retry_at: string | null;
+  /**
+   * The current status
+   */
+  status: 'pending' | 'success' | 'failed' | 'rescheduled';
 };
 
 /**
@@ -9146,6 +9363,16 @@ export type WebhookCallInstancesTargetSchema = {
   meta: {
     total_count: number;
   };
+  included: Webhook[];
+};
+
+/**
+ * This interface was referenced by `WebhookCall`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type WebhookCallSelfTargetSchema = {
+  data: WebhookCall;
+  included: Webhook[];
 };
 
 /**
