@@ -115,6 +115,10 @@ function findPropertiesInProperty(
   schema: JsonRefParser.JSONSchema,
   property: string,
 ): string[] {
+  if (schema.type === 'array') {
+    return [];
+  }
+
   if (schema.type === 'object') {
     if (!schema.properties || typeof schema.properties !== 'object') {
       throw new Error('Ouch');
@@ -142,55 +146,51 @@ function findPropertiesInProperty(
   throw new Error("Don't know how to handle!");
 }
 
-function findTypeInDataObject(dataSchema: JsonRefParser.JSONSchema) {
-  if (dataSchema.type !== 'object') {
-    throw new Error('Data not an object?');
-  }
+function findTypeInDataObjects(
+  dataSchemas: JsonRefParser.JSONSchema[],
+): string {
+  const types = dataSchemas.map(
+    (dataSchema) => (dataSchema.properties!.type as any).example as string,
+  );
 
-  if (typeof dataSchema.properties !== 'object') {
-    throw new Error('Missing data?');
-  }
+  const uniqueTypes = [...new Set(types)];
 
-  if (
-    !dataSchema.properties.type ||
-    typeof dataSchema.properties.type !== 'object'
-  ) {
-    throw new Error('Missing type?');
-  }
-
-  return (dataSchema.properties.type as any).example as string;
+  return uniqueTypes.length === 1 ? uniqueTypes[0]! : '*';
 }
 
-function findTypeInDataProperty(schema: JsonRefParser.JSONSchema) {
+function findDataObjects(schema: JsonRefParser.JSONSchema) {
   if (typeof schema.properties?.data !== 'object') {
     throw new Error('Missing data!');
   }
 
-  let dataSchema = schema.properties.data;
-
-  if (schema.type === 'array') {
-    if (typeof schema.items !== 'object') {
-      throw new Error('No items?');
-    }
-    dataSchema = schema.items!;
-  }
-
-  if (dataSchema.anyOf) {
-    const types = [
-      ...new Set(
-        dataSchema.anyOf.map((s) =>
-          findTypeInDataObject(s as JsonRefParser.JSONSchema),
-        ),
-      ),
-    ];
-    if (types.length !== 1) {
-      return '*';
+  function find(
+    maybeDataSchema: JsonRefParser.JSONSchema,
+  ): JsonRefParser.JSONSchema[] {
+    if (maybeDataSchema.type === 'array') {
+      if (typeof maybeDataSchema.items !== 'object') {
+        throw new Error('No items?');
+      }
+      return find(maybeDataSchema.items);
     }
 
-    return types[0]!;
+    if (maybeDataSchema.anyOf) {
+      return maybeDataSchema.anyOf.flatMap((s) =>
+        find(s as JsonRefParser.JSONSchema),
+      );
+    }
+
+    if (maybeDataSchema.type !== 'object') {
+      throw new Error('Data not an object?');
+    }
+
+    return [maybeDataSchema];
   }
 
-  return findTypeInDataObject(dataSchema);
+  return find(schema.properties.data);
+}
+
+function findTypeInDataProperty(schema: JsonRefParser.JSONSchema) {
+  return findTypeInDataObjects(findDataObjects(schema));
 }
 
 function findRequiredIdInDataObject(dataSchema: JsonRefParser.JSONSchema) {
@@ -216,13 +216,10 @@ function findIdInDataProperty(schema: JsonRefParser.JSONSchema) {
     throw new Error('Missing data!');
   }
 
-  let dataSchema = schema.properties.data;
+  const dataSchema = schema.properties.data;
 
-  if (schema.type === 'array') {
-    if (typeof schema.items !== 'object') {
-      throw new Error('No items?');
-    }
-    dataSchema = schema.items!;
+  if (dataSchema.type === 'array') {
+    return undefined;
   }
 
   if (dataSchema.anyOf) {

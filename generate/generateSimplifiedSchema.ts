@@ -1,4 +1,4 @@
-function simplifySchema(objectSchema: any) {
+function simplifySchema(objectSchema: any, dropIdRequired: boolean) {
   const { attributes, relationships, meta, id, type } =
     objectSchema.properties as any;
 
@@ -6,6 +6,9 @@ function simplifySchema(objectSchema: any) {
     ...objectSchema,
     additionalProperties: Boolean(attributes && !attributes.properties),
     required: [
+      ...(objectSchema.required?.includes('id') && !dropIdRequired
+        ? ['id']
+        : []),
       ...(objectSchema.required?.includes('attributes')
         ? attributes?.required || []
         : []),
@@ -108,7 +111,7 @@ function simplifyEntityRelationships(schema: any) {
 function applyToInnerObject(
   name: string,
   schema: any,
-  apply: (schema: any) => any,
+  apply: (schema: any, dropIdRequired: boolean) => any,
 ) {
   if (!schema) {
     return schema;
@@ -119,7 +122,7 @@ function applyToInnerObject(
   }
 
   if (schema.type === 'object') {
-    return apply(schema);
+    return apply(schema, true);
   }
 
   if (schema.anyOf) {
@@ -132,10 +135,12 @@ function applyToInnerObject(
   if (schema.type === 'array') {
     if (schema.items && Array.isArray(schema.items)) {
       schema.items = schema.items.map((i: any) =>
-        applyToInnerObject(name, i, apply),
+        applyToInnerObject(name, i, (x) => apply(x, false)),
       );
     } else if (schema.items) {
-      schema.items = applyToInnerObject(name, schema.items, apply);
+      schema.items = applyToInnerObject(name, schema.items, (x) =>
+        apply(x, false),
+      );
     }
 
     return schema;
