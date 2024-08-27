@@ -25,6 +25,7 @@
             "environments_access",
             "can_manage_users",
             "can_manage_shared_filters",
+            "can_manage_upload_collections",
             "can_manage_build_triggers",
             "can_manage_webhooks",
             "can_manage_environments",
@@ -83,6 +84,7 @@
             "environments_access",
             "can_manage_users",
             "can_manage_shared_filters",
+            "can_manage_upload_collections",
             "can_manage_build_triggers",
             "can_manage_webhooks",
             "can_manage_environments",
@@ -654,6 +656,130 @@
     ],
     "namespace": "schemaMenuItems",
     "resourceClassName": "SchemaMenuItem"
+  },
+  {
+    "jsonApiType": "upload_collection",
+    "endpoints": [
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-collection/create",
+        "rel": "create",
+        "urlTemplate": "/upload-collections",
+        "method": "POST",
+        "comment": "Create a new upload collection",
+        "urlPlaceholders": [],
+        "requestBodyType": "UploadCollectionCreateSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "upload_collection",
+          "attributes": ["label", "position"],
+          "relationships": ["parent"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadCollectionCreateTargetSchema",
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-collection/update",
+        "rel": "update",
+        "urlTemplate": "/upload-collections/${uploadCollectionId}",
+        "method": "PUT",
+        "comment": "Update a upload collection",
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadCollectionId",
+            "isEntityId": true,
+            "relType": "UploadCollectionData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "uploadCollectionId",
+          "isEntityId": true,
+          "relType": "UploadCollectionData"
+        },
+        "requestBodyType": "UploadCollectionUpdateSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "upload_collection",
+          "idRequired": true,
+          "attributes": ["label", "position"],
+          "relationships": ["parent", "children"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadCollectionUpdateTargetSchema",
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "returnsCollection": true,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-collection/instances",
+        "rel": "instances",
+        "urlTemplate": "/upload-collections",
+        "method": "GET",
+        "comment": "List all upload collections",
+        "urlPlaceholders": [],
+        "optionalRequestBody": false,
+        "queryParamsType": "UploadCollectionInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "UploadCollectionInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-collection/self",
+        "rel": "self",
+        "urlTemplate": "/upload-collections/${uploadCollectionId}",
+        "method": "GET",
+        "comment": "Retrieve a upload collection",
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadCollectionId",
+            "isEntityId": true,
+            "relType": "UploadCollectionData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "uploadCollectionId",
+          "isEntityId": true,
+          "relType": "UploadCollectionData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "UploadCollectionSelfTargetSchema",
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-collection/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/upload-collections/${uploadCollectionId}",
+        "method": "DELETE",
+        "comment": "Delete a upload collection",
+        "urlPlaceholders": [
+          {
+            "variableName": "uploadCollectionId",
+            "isEntityId": true,
+            "relType": "UploadCollectionData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "uploadCollectionId",
+          "isEntityId": true,
+          "relType": "UploadCollectionData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "UploadCollectionDestroyTargetSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "uploadCollections",
+    "resourceClassName": "UploadCollection"
   },
   {
     "jsonApiType": "item_type",
@@ -2273,7 +2399,7 @@
             "default_field_metadata",
             "tags"
           ],
-          "relationships": []
+          "relationships": ["upload_collection"]
         },
         "queryParamsRequired": false,
         "responseType": "UploadCreateJobSchema",
@@ -2382,7 +2508,7 @@
             "tags",
             "default_field_metadata"
           ],
-          "relationships": ["creator"]
+          "relationships": ["creator", "upload_collection"]
         },
         "queryParamsRequired": false,
         "responseType": "UploadUpdateJobSchema",
@@ -2472,6 +2598,26 @@
         "responseType": "UploadBulkTagJobSchema",
         "name": "bulkTag",
         "rawName": "rawBulkTag"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/bulk_set_upload_collection",
+        "rel": "bulk_set_upload_collection",
+        "urlTemplate": "/uploads/bulk/set-upload-collection",
+        "method": "POST",
+        "comment": "Put assets into a collection in bulk",
+        "urlPlaceholders": [],
+        "requestBodyType": "UploadBulkSetUploadCollectionSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "upload_bulk_set_upload_collection_operation",
+          "attributes": [],
+          "relationships": ["upload_collection", "uploads"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadBulkSetUploadCollectionJobSchema",
+        "name": "bulkSetUploadCollection",
+        "rawName": "rawBulkSetUploadCollection"
       },
       {
         "returnsCollection": false,

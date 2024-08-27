@@ -26,7 +26,7 @@ export default class Upload extends BaseResource {
           'default_field_metadata',
           'tags',
         ],
-        relationships: [],
+        relationships: ['upload_collection'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.UploadCreateJobSchema>(
@@ -230,7 +230,7 @@ export default class Upload extends BaseResource {
           'tags',
           'default_field_metadata',
         ],
-        relationships: ['creator'],
+        relationships: ['creator', 'upload_collection'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.UploadUpdateJobSchema>(
@@ -422,6 +422,53 @@ export default class Upload extends BaseResource {
       url: '/uploads/bulk/tag',
       body,
     });
+  }
+
+  /**
+   * Put assets into a collection in bulk
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/bulk_set_upload_collection
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  bulkSetUploadCollection(
+    body: SimpleSchemaTypes.UploadBulkSetUploadCollectionSchema,
+  ) {
+    return this.rawBulkSetUploadCollection(
+      Utils.serializeRequestBody<SchemaTypes.UploadBulkSetUploadCollectionSchema>(
+        body,
+        {
+          type: 'upload_bulk_set_upload_collection_operation',
+          attributes: [],
+          relationships: ['upload_collection', 'uploads'],
+        },
+      ),
+    ).then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadBulkSetUploadCollectionJobSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Put assets into a collection in bulk
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/bulk_set_upload_collection
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawBulkSetUploadCollection(
+    body: SchemaTypes.UploadBulkSetUploadCollectionSchema,
+  ): Promise<SchemaTypes.UploadBulkSetUploadCollectionJobSchema> {
+    return this.client.request<SchemaTypes.UploadBulkSetUploadCollectionJobSchema>(
+      {
+        method: 'POST',
+        url: '/uploads/bulk/set-upload-collection',
+        body,
+      },
+    );
   }
 
   /**

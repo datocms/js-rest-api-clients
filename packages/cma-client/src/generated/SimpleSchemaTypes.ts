@@ -367,6 +367,40 @@ export type SchemaMenuItemInstancesHrefSchema = {
   };
 };
 /**
+ * RFC 4122 UUID of upload collection expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type UploadCollectionIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type UploadCollectionType = 'upload_collection';
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type UploadCollectionInstancesTargetSchema = UploadCollection[];
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type UploadCollectionInstancesHrefSchema = {
+  filter?: {
+    /**
+     * IDs to fetch, comma separated
+     */
+    ids: string;
+  };
+};
+/**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -1045,6 +1079,11 @@ export type UploadReferencesHrefSchema = {
  * via the `bulk_tag.jobSchema` link.
  */
 export type UploadBulkTagJobSchema = unknown[];
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_set_upload_collection.jobSchema` link.
+ */
+export type UploadBulkSetUploadCollectionJobSchema = unknown[];
 /**
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `bulk_destroy.jobSchema` link.
@@ -1753,6 +1792,7 @@ export type DatoApi = {
   site_plan?: SitePlan;
   menu_item?: MenuItem;
   schema_menu_item?: SchemaMenuItem;
+  upload_collection?: UploadCollection;
   item_type?: ItemType;
   field?: Field;
   fieldset?: Fieldset;
@@ -1845,7 +1885,11 @@ export type Role = {
   /**
    * Can create/edit shared filters (both for models and the media area)
    */
-  can_manage_shared_filters?: boolean;
+  can_manage_shared_filters: boolean;
+  /**
+   * Can create/edit upload collections
+   */
+  can_manage_upload_collections: boolean;
   /**
    * Can create/edit Build triggers
    */
@@ -2088,7 +2132,11 @@ export type RoleMeta = {
     /**
      * Can create/edit shared filters (both for models and the media area)
      */
-    can_manage_shared_filters?: boolean;
+    can_manage_shared_filters: boolean;
+    /**
+     * Can create/edit upload collections
+     */
+    can_manage_upload_collections: boolean;
     /**
      * Can create/edit Build triggers
      */
@@ -2316,7 +2364,11 @@ export type RoleAttributes = {
   /**
    * Can create/edit shared filters (both for models and the media area)
    */
-  can_manage_shared_filters?: boolean;
+  can_manage_shared_filters: boolean;
+  /**
+   * Can create/edit upload collections
+   */
+  can_manage_upload_collections: boolean;
   /**
    * Can create/edit Build triggers
    */
@@ -2554,6 +2606,10 @@ export type RoleCreateSchema = {
    */
   can_manage_shared_filters?: boolean;
   /**
+   * Can create/edit upload collections
+   */
+  can_manage_upload_collections?: boolean;
+  /**
    * Can create/edit Build triggers
    */
   can_manage_build_triggers?: boolean;
@@ -2782,6 +2838,10 @@ export type RoleUpdateSchema = {
    * Can create/edit shared filters (both for models and the media area)
    */
   can_manage_shared_filters?: boolean;
+  /**
+   * Can create/edit upload collections
+   */
+  can_manage_upload_collections?: boolean;
   /**
    * Can create/edit Build triggers
    */
@@ -4403,6 +4463,106 @@ export type SchemaMenuItemUpdateSchema = {
 };
 
 /**
+ * In DatoCMS you can organize the uploads present in your administrative area in collection, so that the final editors can easily navigate uploads.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "upload_collection".
+ */
+export type UploadCollection = {
+  id: UploadCollectionIdentity;
+  type: UploadCollectionType;
+  /**
+   * The label of the upload collection
+   */
+  label: string;
+  /**
+   * Ordering index
+   */
+  position: number;
+  parent: null | UploadCollectionData;
+  children: UploadCollectionData[];
+};
+export type UploadCollectionCreateTargetSchema = UploadCollection;
+export type UploadCollectionUpdateTargetSchema = UploadCollection;
+export type UploadCollectionSelfTargetSchema = UploadCollection;
+export type UploadCollectionDestroyTargetSchema = UploadCollection;
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type UploadCollectionData = {
+  type: UploadCollectionType;
+  id: UploadCollectionIdentity;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type UploadCollectionAttributes = {
+  /**
+   * The label of the upload collection
+   */
+  label: string;
+  /**
+   * Ordering index
+   */
+  position: number;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type UploadCollectionRelationships = {
+  parent: null | UploadCollectionData;
+  children: UploadCollectionData[];
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type UploadCollectionCreateSchema = {
+  id?: UploadCollectionIdentity;
+  type?: UploadCollectionType;
+  /**
+   * The label of the upload collection
+   */
+  label: string;
+  /**
+   * Ordering index
+   */
+  position?: number;
+  parent?: null | UploadCollectionData;
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type UploadCollectionUpdateSchema = {
+  id?: UploadCollectionIdentity;
+  type?: UploadCollectionType;
+  /**
+   * The label of the upload collection
+   */
+  label?: string;
+  /**
+   * Ordering index
+   */
+  position?: number;
+  parent?: null | UploadCollectionData;
+  children?: UploadCollectionData[];
+};
+
+/**
  * The way you define the kind of content you can edit inside your administrative area passes through the concept of Models, which are much like database tables. For backward-compatibility reasons, the API refers to models as "item types".
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -4864,6 +5024,9 @@ export type ItemTypeUpdateSchema = {
  * via the `bulk_tag.targetSchema` link.
  *
  * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_set_upload_collection.targetSchema` link.
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
  * via the `bulk_destroy.targetSchema` link.
  *
  * This interface was referenced by `UploadTrack`'s JSON-Schema
@@ -4909,6 +5072,7 @@ export type UploadUpdateTargetSchema = Job;
 export type UploadBatchAddTagsTargetSchema = Job;
 export type UploadBatchDestroyTargetSchema = Job;
 export type UploadBulkTagTargetSchema = Job;
+export type UploadBulkSetUploadCollectionTargetSchema = Job;
 export type UploadBulkDestroyTargetSchema = Job;
 export type UploadTrackCreateTargetSchema = Job;
 export type UploadTrackDestroyTargetSchema = Job;
@@ -7763,6 +7927,7 @@ export type Upload = {
      */
     alpha: number;
   }[];
+  upload_collection: UploadCollectionData | null;
   creator:
     | AccountData
     | AccessTokenData
@@ -7962,6 +8127,7 @@ export type UploadAttributes = {
  * via the `definition` "relationships".
  */
 export type UploadRelationships = {
+  upload_collection: UploadCollectionData | null;
   creator:
     | AccountData
     | AccessTokenData
@@ -8035,6 +8201,7 @@ export type UploadCreateSchema = {
    * Tags
    */
   tags?: string[];
+  upload_collection?: UploadCollectionData | null;
 };
 
 /**
@@ -8112,6 +8279,7 @@ export type UploadUpdateSchema = {
     | UserData
     | SsoUserData
     | OrganizationData;
+  upload_collection?: UploadCollectionData | null;
 };
 
 /**
@@ -8136,6 +8304,16 @@ export type UploadBulkTagSchema = {
    * The tags to add to the assets
    */
   tags: string[];
+  uploads: UploadData[];
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_set_upload_collection.schema` link.
+ */
+export type UploadBulkSetUploadCollectionSchema = {
+  type?: 'upload_bulk_set_upload_collection_operation';
+  upload_collection: null | UploadCollectionData;
   uploads: UploadData[];
 };
 
@@ -9078,7 +9256,7 @@ export type WebhookUpdateSchema = {
 };
 
 /**
- * Represents a log entry in the webhooks activity list.
+ * This represents a log entry in the webhooks activity list, detailing a specific webhook event along with its delivery attempt information.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "webhook_call".

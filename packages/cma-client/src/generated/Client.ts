@@ -44,6 +44,7 @@ export class Client {
   auditLogEvents: Resources.AuditLogEvent;
   menuItems: Resources.MenuItem;
   schemaMenuItems: Resources.SchemaMenuItem;
+  uploadCollections: Resources.UploadCollection;
   itemTypes: Resources.ItemType;
   fields: Resources.Field;
   fieldsets: Resources.Fieldset;
@@ -96,6 +97,7 @@ export class Client {
     this.auditLogEvents = new Resources.AuditLogEvent(this);
     this.menuItems = new Resources.MenuItem(this);
     this.schemaMenuItems = new Resources.SchemaMenuItem(this);
+    this.uploadCollections = new Resources.UploadCollection(this);
     this.itemTypes = new Resources.ItemType(this);
     this.fields = new Resources.Field(this);
     this.fieldsets = new Resources.Fieldset(this);
