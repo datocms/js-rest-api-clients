@@ -33,9 +33,20 @@ function isRelArray(object: unknown): object is Rel[] {
   return Array.isArray(object) && object.every(isRel);
 }
 
-export function serializeRequestBody<T>(body: unknown, options: Options): T {
+export function serializeRequestBody<T extends { data: unknown } | null>(
+  body: unknown,
+  options: Options,
+): T {
   if (typeof body !== 'object' || !body) {
     throw new Error('Invalid body!');
+  }
+
+  if (Array.isArray(body)) {
+    return {
+      data: body.map(
+        (entity) => serializeRequestBody<T>(entity, options)?.data,
+      ),
+    } as unknown as T;
   }
 
   const { id, type, meta, ...otherProperties } = body as any;
