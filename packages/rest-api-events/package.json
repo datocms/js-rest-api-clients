@@ -1,6 +1,6 @@
 {
   "name": "@datocms/rest-api-events",
-  "version": "3.3.8",
+  "version": "3.3.9",
   "description": "Utilities to receive real-time events from DatoCMS REST APIs",
   "keywords": [
     "datocms",
@@ -39,7 +39,7 @@
     "pusher-js": "^7.0.6"
   },
   "devDependencies": {
-    "@datocms/cma-client": "^3.3.8",
+    "@datocms/cma-client": "^3.3.9",
     "@datocms/dashboard-client": "^3.3.7"
   },
   "gitHead": "504a80c1a8c628acf6defc5c7ce9c58e777f9ecd"
