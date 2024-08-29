@@ -204,8 +204,8 @@ export default class MenuItem extends BaseResource {
     return this.rawReorder(
       Utils.serializeRequestBody<SchemaTypes.MenuItemReorderSchema>(body, {
         type: 'menu_item',
-        attributes: [],
-        relationships: [],
+        attributes: ['position'],
+        relationships: ['parent'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<SimpleSchemaTypes.MenuItemReorderJobSchema>(

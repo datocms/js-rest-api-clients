@@ -541,8 +541,9 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "menu_item",
-          "attributes": [],
-          "relationships": []
+          "idRequired": true,
+          "attributes": ["position"],
+          "relationships": ["parent"]
         },
         "queryParamsRequired": false,
         "responseType": "MenuItemReorderJobSchema",
@@ -686,8 +687,9 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "schema_menu_item",
-          "attributes": [],
-          "relationships": []
+          "idRequired": true,
+          "attributes": ["position"],
+          "relationships": ["parent"]
         },
         "queryParamsRequired": false,
         "responseType": "SchemaMenuItemReorderJobSchema",
@@ -831,8 +833,9 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "upload_collection",
-          "attributes": [],
-          "relationships": []
+          "idRequired": true,
+          "attributes": ["position"],
+          "relationships": ["parent"]
         },
         "queryParamsRequired": false,
         "responseType": "UploadCollectionReorderJobSchema",
@@ -1045,8 +1048,9 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "*",
-          "attributes": [],
-          "relationships": []
+          "idRequired": true,
+          "attributes": "*",
+          "relationships": "*"
         },
         "queryParamsRequired": false,
         "responseType": "ItemTypeReorderFieldsAndFieldsetsJobSchema",
@@ -4103,8 +4107,8 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "*",
-          "attributes": [],
-          "relationships": ["item", "item", "item"]
+          "attributes": "*",
+          "relationships": "*"
         },
         "queryParamsRequired": false,
         "responseType": "EditingSessionUpdateTargetSchema",

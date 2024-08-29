@@ -1,6 +1,5 @@
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 import { generateId } from '../../cma-client/src';
-import { LogLevel } from '../src';
 
 describe('menu item', () => {
   it.concurrent('create, find, list, update, destroy', async () => {
@@ -27,6 +26,16 @@ describe('menu item', () => {
 
     await client.menuItems.destroy(menuItem);
     expect(await client.menuItems.list()).toHaveLength(0);
+
+    const menuItem2 = await client.menuItems.create({
+      label: 'Other',
+      position: 2,
+    });
+
+    await client.menuItems.reorder([
+      { id: menuItem2.id, position: 2, parent: null },
+      { id: menuItem2.id, position: 1, parent: null },
+    ]);
   });
 
   it.concurrent('create with explicit ID', async () => {

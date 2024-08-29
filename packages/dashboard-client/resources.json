@@ -13,16 +13,8 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "*",
-          "attributes": [
-            "email",
-            "password",
-            "otp_code",
-            "token",
-            "account_id",
-            "password",
-            "otp_code"
-          ],
-          "relationships": []
+          "attributes": "*",
+          "relationships": "*"
         },
         "queryParamsRequired": false,
         "responseType": "SessionCreateTargetSchema",

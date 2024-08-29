@@ -210,8 +210,8 @@ export default class SchemaMenuItem extends BaseResource {
         body,
         {
           type: 'schema_menu_item',
-          attributes: [],
-          relationships: [],
+          attributes: ['position'],
+          relationships: ['parent'],
         },
       ),
     ).then((body) =>

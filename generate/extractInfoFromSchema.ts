@@ -193,7 +193,7 @@ function findTypeInDataProperty(schema: JsonRefParser.JSONSchema) {
   return findTypeInDataObjects(findDataObjects(schema));
 }
 
-function findRequiredIdInDataObject(dataSchema: JsonRefParser.JSONSchema) {
+function findIdIsRequiredInDataObject(dataSchema: JsonRefParser.JSONSchema) {
   if (dataSchema.type !== 'object') {
     throw new Error('Data not an object?');
   }
@@ -211,7 +211,7 @@ function findRequiredIdInDataObject(dataSchema: JsonRefParser.JSONSchema) {
   return idIsRequired || undefined;
 }
 
-function findIdInDataProperty(schema: JsonRefParser.JSONSchema) {
+function findIdIsRequired(schema: JsonRefParser.JSONSchema) {
   if (typeof schema.properties?.data !== 'object') {
     throw new Error('Missing data!');
   }
@@ -219,14 +219,14 @@ function findIdInDataProperty(schema: JsonRefParser.JSONSchema) {
   const dataSchema = schema.properties.data;
 
   if (dataSchema.type === 'array') {
-    return undefined;
+    return true;
   }
 
   if (dataSchema.anyOf) {
     const types = [
       ...new Set(
         dataSchema.anyOf.map((s) =>
-          findRequiredIdInDataObject(s as JsonRefParser.JSONSchema),
+          findIdIsRequiredInDataObject(s as JsonRefParser.JSONSchema),
         ),
       ),
     ];
@@ -236,7 +236,7 @@ function findIdInDataProperty(schema: JsonRefParser.JSONSchema) {
     return types[0];
   }
 
-  return findRequiredIdInDataObject(dataSchema);
+  return findIdIsRequiredInDataObject(dataSchema);
 }
 
 function findPropertiesInDataProperty(
@@ -247,8 +247,16 @@ function findPropertiesInDataProperty(
     return [];
   }
 
+  const datas = findDataObjects(schema);
+
+  if (datas.length > 1) {
+    return '*';
+  }
+
+  const data = datas[0]!;
+
   try {
-    return findPropertiesInProperty(schema.properties.data, property);
+    return findPropertiesInProperty(data, property);
   } catch (e) {
     if (e instanceof NoPropertiesDefinedError) {
       return '*';
@@ -357,7 +365,7 @@ function generateResourceInfo(
       requestStructure: link.schema
         ? {
             type: findTypeInDataProperty(link.schema),
-            idRequired: findIdInDataProperty(link.schema),
+            idRequired: findIdIsRequired(link.schema),
             attributes: findPropertiesInDataProperty(link.schema, 'attributes'),
             relationships: findPropertiesInDataProperty(
               link.schema,

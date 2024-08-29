@@ -218,8 +218,8 @@ export default class UploadCollection extends BaseResource {
         body,
         {
           type: 'upload_collection',
-          attributes: [],
-          relationships: [],
+          attributes: ['position'],
+          relationships: ['parent'],
         },
       ),
     ).then((body) =>
