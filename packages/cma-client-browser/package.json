@@ -1,6 +1,6 @@
 {
   "name": "@datocms/cma-client-browser",
-  "version": "3.3.11",
+  "version": "3.3.12",
   "description": "Browser client for DatoCMS REST Content Management API",
   "keywords": [
     "datocms",
@@ -28,7 +28,7 @@
     "url": "git+https://github.com/datocms/js-rest-api-clients.git"
   },
   "dependencies": {
-    "@datocms/cma-client": "^3.3.11",
+    "@datocms/cma-client": "^3.3.12",
     "@datocms/rest-client-utils": "^3.3.10"
   },
   "scripts": {
