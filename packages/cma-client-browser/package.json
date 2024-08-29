@@ -1,6 +1,6 @@
 {
   "name": "@datocms/cma-client-browser",
-  "version": "3.3.9",
+  "version": "3.3.10",
   "description": "Browser client for DatoCMS REST Content Management API",
   "keywords": [
     "datocms",
@@ -28,8 +28,8 @@
     "url": "git+https://github.com/datocms/js-rest-api-clients.git"
   },
   "dependencies": {
-    "@datocms/cma-client": "^3.3.9",
-    "@datocms/rest-client-utils": "^3.3.5"
+    "@datocms/cma-client": "^3.3.10",
+    "@datocms/rest-client-utils": "^3.3.10"
   },
   "scripts": {
     "build": "tsc && tsc --project ./tsconfig.esnext.json && ts-node ./esbuild.ts",
