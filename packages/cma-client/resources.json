@@ -1040,10 +1040,21 @@
         "returnsCollection": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/reorder_fields_and_fieldsets",
         "rel": "reorder_fields_and_fieldsets",
-        "urlTemplate": "/item-types/reorder-fields-and-fieldsets",
+        "urlTemplate": "/item-types/${itemTypeId}/reorder-fields-and-fieldsets",
         "method": "POST",
         "comment": "Reorders a set of fields and fieldsets within the model",
-        "urlPlaceholders": [],
+        "urlPlaceholders": [
+          {
+            "variableName": "itemTypeId",
+            "isEntityId": true,
+            "relType": "ItemTypeData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "itemTypeId",
+          "isEntityId": true,
+          "relType": "ItemTypeData"
+        },
         "requestBodyType": "ItemTypeReorderFieldsAndFieldsetsSchema",
         "optionalRequestBody": false,
         "requestStructure": {

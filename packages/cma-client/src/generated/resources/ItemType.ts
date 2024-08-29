@@ -285,12 +285,13 @@ export default class ItemType extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawReorderFieldsAndFieldsets(
+    itemTypeId: string,
     body: SchemaTypes.ItemTypeReorderFieldsAndFieldsetsSchema,
   ): Promise<SchemaTypes.ItemTypeReorderFieldsAndFieldsetsJobSchema> {
     return this.client.request<SchemaTypes.ItemTypeReorderFieldsAndFieldsetsJobSchema>(
       {
         method: 'POST',
-        url: '/item-types/reorder-fields-and-fieldsets',
+        url: `/item-types/${itemTypeId}/reorder-fields-and-fieldsets`,
         body,
       },
     );
