@@ -293,6 +293,21 @@ export type MenuItemInstancesHrefSchema = {
   };
 };
 /**
+ * This interface was referenced by `Job`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type JobType = 'job';
+/**
+ * ID of job
+ *
+ * This interface was referenced by `Job`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Job`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type JobIdentity = string;
+/**
  * JSON API type field
  *
  * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
@@ -419,21 +434,6 @@ export type ItemTypeCreateHrefSchema = {
   schema_menu_item_id?: string;
   [k: string]: unknown;
 };
-/**
- * This interface was referenced by `Job`'s JSON-Schema
- * via the `definition` "type".
- */
-export type JobType = 'job';
-/**
- * ID of job
- *
- * This interface was referenced by `Job`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `Job`'s JSON-Schema
- * via the `definition` "id".
- */
-export type JobIdentity = string;
 /**
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `destroy.hrefSchema` link.
@@ -3791,6 +3791,70 @@ export type MenuItemDestroyTargetSchema = {
 };
 
 /**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `reorder.schema` link.
+ */
+export type MenuItemReorderSchema = {
+  data: {
+    id: MenuItemIdentity;
+    type: MenuItemType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * Ordering index
+       */
+      position: number;
+    };
+    relationships: {
+      /**
+       * Parent menu item
+       */
+      parent: {
+        data: null | MenuItemData;
+      };
+    };
+  }[];
+};
+
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `reorder.targetSchema` link.
+ */
+export type MenuItemReorderTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "job".
+ */
+export type Job = {
+  type: JobType;
+  id: JobIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Job`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type JobData = {
+  type: JobType;
+  id: JobIdentity;
+};
+
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `reorder.jobSchema` link.
+ */
+export type MenuItemReorderJobSchema = {
+  data: MenuItem[];
+};
+
+/**
  * In DatoCMS you can organize the different models and blocks present in your administrative area reordering and grouping them, so that their purpose will be more clear to the final editor.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -3993,6 +4057,50 @@ export type SchemaMenuItemDestroyTargetSchema = {
 };
 
 /**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `reorder.schema` link.
+ */
+export type SchemaMenuItemReorderSchema = {
+  data: {
+    id: SchemaMenuItemIdentity;
+    type: SchemaMenuItemType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * Ordering index
+       */
+      position: number;
+    };
+    relationships: {
+      /**
+       * Parent schema menu item
+       */
+      parent: {
+        data: null | SchemaMenuItemData;
+      };
+    };
+  }[];
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `reorder.targetSchema` link.
+ */
+export type SchemaMenuItemReorderTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `reorder.jobSchema` link.
+ */
+export type SchemaMenuItemReorderJobSchema = {
+  data: SchemaMenuItem[];
+};
+
+/**
  * In DatoCMS you can organize the uploads present in your administrative area in collection, so that the final editors can easily navigate uploads.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -4162,6 +4270,50 @@ export type UploadCollectionSelfTargetSchema = {
  */
 export type UploadCollectionDestroyTargetSchema = {
   data: UploadCollection;
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `reorder.schema` link.
+ */
+export type UploadCollectionReorderSchema = {
+  data: {
+    id: UploadCollectionIdentity;
+    type: UploadCollectionType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * Ordering index
+       */
+      position: number;
+    };
+    relationships: {
+      /**
+       * Parent upload collection
+       */
+      parent: {
+        data: null | UploadCollectionData;
+      };
+    };
+  }[];
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `reorder.targetSchema` link.
+ */
+export type UploadCollectionReorderTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `reorder.jobSchema` link.
+ */
+export type UploadCollectionReorderJobSchema = {
+  data: UploadCollection[];
 };
 
 /**
@@ -4612,26 +4764,6 @@ export type ItemTypeUpdateTargetSchema = {
 };
 
 /**
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "job".
- */
-export type Job = {
-  type: JobType;
-  id: JobIdentity;
-};
-
-/**
- * JSON API data
- *
- * This interface was referenced by `Job`'s JSON-Schema
- * via the `definition` "data".
- */
-export type JobData = {
-  type: JobType;
-  id: JobIdentity;
-};
-
-/**
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `update.jobSchema` link.
  */
@@ -4677,6 +4809,65 @@ export type ItemTypeDestroyTargetSchema = {
  */
 export type ItemTypeDestroyJobSchema = {
   data: ItemType;
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `reorder_fields_and_fieldsets.schema` link.
+ */
+export type ItemTypeReorderFieldsAndFieldsetsSchema = {
+  data: (
+    | {
+        id: FieldIdentity;
+        type: FieldType;
+        /**
+         * JSON API attributes
+         */
+        attributes: {
+          /**
+           * Ordering index
+           */
+          position: number;
+        };
+        relationships: {
+          /**
+           * Fieldset linkage
+           */
+          fieldset: {
+            data: null | FieldsetData;
+          };
+        };
+      }
+    | {
+        id: FieldsetIdentity;
+        type: FieldsetType;
+        /**
+         * JSON API attributes
+         */
+        attributes: {
+          /**
+           * Ordering index
+           */
+          position: number;
+        };
+      }
+  )[];
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `reorder_fields_and_fieldsets.targetSchema` link.
+ */
+export type ItemTypeReorderFieldsAndFieldsetsTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `reorder_fields_and_fieldsets.jobSchema` link.
+ */
+export type ItemTypeReorderFieldsAndFieldsetsJobSchema = {
+  data: (Field | Fieldset)[];
 };
 
 /**
@@ -4735,12 +4926,12 @@ export type ItemTypeDestroyJobSchema = {
  *
  * #### Setting the appearance to a field editor provided by a plugin
  *
- * If the project contains a plugin that exposes [manual field editors](/docs/plugin-sdk/manual-field-extensions), you can also configure the field to be presented with it instead of using one of the build-in editors.
+ * If the project contains a plugin that exposes [manual field editors](/docs/plugin-sdk/manual-field-extensions), you can also configure the field to be presented with it instead of using one of the built-in editors.
  *
  * In this case:
  *
- * - the `editor` property must be the ID of the plugin;
- * - the `field_extension` property must be the ID of the specific manual field editor that the plugin exposes;
+ * - the `editor` property is the plugin's project-specific autogenerated UUID. You can get it from the last part of the plugin's URL within your project's Configuration screen (e.g. `https://your-project.admin.datocms.com/configuration/plugins/PLUGIN_UUID/`), or via API with a [List all plugins](/docs/content-management-api/resources/plugin/instances) call.
+ * - the `field_extension` property must be the ID of the specific manual field editor that the plugin exposes. This is set in the plugin's own source code, within a `manualFieldExtension()` call in its entry point (usually something like `index.tsx`).
  * - the `parameters` property must provide a configuration object compatible with the [config screen of the manual field extension](/docs/plugin-sdk/manual-field-extensions#add-per-field-config-screens-to-manual-field-extensions), or an empty object if it doesn't require any configuration.
  *
  * ```js

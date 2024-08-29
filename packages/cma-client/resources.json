@@ -528,6 +528,27 @@
         "responseType": "MenuItemDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/menu-item/reorder",
+        "rel": "reorder",
+        "urlTemplate": "/menu-items/reorder",
+        "method": "POST",
+        "comment": "Reorders a set of menu items",
+        "urlPlaceholders": [],
+        "requestBodyType": "MenuItemReorderSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "menu_item",
+          "attributes": [],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "MenuItemReorderJobSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "reorder",
+        "rawName": "rawReorder"
       }
     ],
     "namespace": "menuItems",
@@ -652,6 +673,27 @@
         "responseType": "SchemaMenuItemDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/schema-menu_item/reorder",
+        "rel": "reorder",
+        "urlTemplate": "/schema-menu-items/reorder",
+        "method": "POST",
+        "comment": "Reorders a set of schema menu items",
+        "urlPlaceholders": [],
+        "requestBodyType": "SchemaMenuItemReorderSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "schema_menu_item",
+          "attributes": [],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "SchemaMenuItemReorderJobSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "reorder",
+        "rawName": "rawReorder"
       }
     ],
     "namespace": "schemaMenuItems",
@@ -776,6 +818,27 @@
         "responseType": "UploadCollectionDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-collection/reorder",
+        "rel": "reorder",
+        "urlTemplate": "/upload-collections/reorder",
+        "method": "POST",
+        "comment": "Reorders a set of upload collections",
+        "urlPlaceholders": [],
+        "requestBodyType": "UploadCollectionReorderSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "upload_collection",
+          "attributes": [],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "UploadCollectionReorderJobSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "reorder",
+        "rawName": "rawReorder"
       }
     ],
     "namespace": "uploadCollections",
@@ -969,6 +1032,26 @@
         "responseType": "ItemTypeDestroyJobSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/reorder_fields_and_fieldsets",
+        "rel": "reorder_fields_and_fieldsets",
+        "urlTemplate": "/item-types/reorder-fields-and-fieldsets",
+        "method": "POST",
+        "comment": "Reorders a set of fields and fieldsets within the model",
+        "urlPlaceholders": [],
+        "requestBodyType": "ItemTypeReorderFieldsAndFieldsetsSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "*",
+          "attributes": [],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "ItemTypeReorderFieldsAndFieldsetsJobSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "rawName": "rawReorderFieldsAndFieldsets"
       }
     ],
     "namespace": "itemTypes",
@@ -3327,16 +3410,21 @@
         "returnsCollection": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook-call/resend_webhook",
         "rel": "resend_webhook",
-        "urlTemplate": "/webhook_calls/${userId}/resend_webhook",
+        "urlTemplate": "/webhook_calls/${webhookCallId}/resend_webhook",
         "method": "POST",
         "comment": "Re-send the webhook call",
         "urlPlaceholders": [
           {
-            "variableName": "userId",
-            "isEntityId": false,
-            "relType": "UserData"
+            "variableName": "webhookCallId",
+            "isEntityId": true,
+            "relType": "WebhookCallData"
           }
         ],
+        "entityIdPlaceholder": {
+          "variableName": "webhookCallId",
+          "isEntityId": true,
+          "relType": "WebhookCallData"
+        },
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "name": "resendWebhook",

@@ -189,4 +189,48 @@ export default class MenuItem extends BaseResource {
       url: `/menu-items/${menuItemId}`,
     });
   }
+
+  /**
+   * Reorders a set of menu items
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/menu-item/reorder
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  reorder(body: SimpleSchemaTypes.MenuItemReorderSchema) {
+    return this.rawReorder(
+      Utils.serializeRequestBody<SchemaTypes.MenuItemReorderSchema>(body, {
+        type: 'menu_item',
+        attributes: [],
+        relationships: [],
+      }),
+    ).then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.MenuItemReorderJobSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Reorders a set of menu items
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/menu-item/reorder
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawReorder(
+    body: SchemaTypes.MenuItemReorderSchema,
+  ): Promise<SchemaTypes.MenuItemReorderJobSchema> {
+    return this.client.request<SchemaTypes.MenuItemReorderJobSchema>({
+      method: 'POST',
+      url: '/menu-items/reorder',
+      body,
+    });
+  }
 }

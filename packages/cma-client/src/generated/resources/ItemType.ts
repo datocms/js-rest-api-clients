@@ -273,4 +273,26 @@ export default class ItemType extends BaseResource {
       queryParams,
     });
   }
+
+  /**
+   * Reorders a set of fields and fieldsets within the model
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/reorder_fields_and_fieldsets
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawReorderFieldsAndFieldsets(
+    body: SchemaTypes.ItemTypeReorderFieldsAndFieldsetsSchema,
+  ): Promise<SchemaTypes.ItemTypeReorderFieldsAndFieldsetsJobSchema> {
+    return this.client.request<SchemaTypes.ItemTypeReorderFieldsAndFieldsetsJobSchema>(
+      {
+        method: 'POST',
+        url: '/item-types/reorder-fields-and-fieldsets',
+        body,
+      },
+    );
+  }
 }

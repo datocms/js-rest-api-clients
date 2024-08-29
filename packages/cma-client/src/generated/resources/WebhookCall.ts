@@ -136,8 +136,8 @@ export default class WebhookCall extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  resendWebhook(userId: string | SimpleSchemaTypes.UserData) {
-    return this.rawResendWebhook(Utils.toId(userId));
+  resendWebhook(webhookCallId: string | SimpleSchemaTypes.WebhookCallData) {
+    return this.rawResendWebhook(Utils.toId(webhookCallId));
   }
 
   /**
@@ -148,10 +148,10 @@ export default class WebhookCall extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawResendWebhook(userId: string): Promise<void> {
+  rawResendWebhook(webhookCallId: string): Promise<void> {
     return this.client.request<void>({
       method: 'POST',
-      url: `/webhook_calls/${userId}/resend_webhook`,
+      url: `/webhook_calls/${webhookCallId}/resend_webhook`,
     });
   }
 }

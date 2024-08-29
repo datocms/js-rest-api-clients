@@ -201,4 +201,51 @@ export default class UploadCollection extends BaseResource {
       },
     );
   }
+
+  /**
+   * Reorders a set of upload collections
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-collection/reorder
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  reorder(body: SimpleSchemaTypes.UploadCollectionReorderSchema) {
+    return this.rawReorder(
+      Utils.serializeRequestBody<SchemaTypes.UploadCollectionReorderSchema>(
+        body,
+        {
+          type: 'upload_collection',
+          attributes: [],
+          relationships: [],
+        },
+      ),
+    ).then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadCollectionReorderJobSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Reorders a set of upload collections
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-collection/reorder
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawReorder(
+    body: SchemaTypes.UploadCollectionReorderSchema,
+  ): Promise<SchemaTypes.UploadCollectionReorderJobSchema> {
+    return this.client.request<SchemaTypes.UploadCollectionReorderJobSchema>({
+      method: 'POST',
+      url: '/upload-collections/reorder',
+      body,
+    });
+  }
 }

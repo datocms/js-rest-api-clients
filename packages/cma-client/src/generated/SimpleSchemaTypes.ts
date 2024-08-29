@@ -333,6 +333,39 @@ export type MenuItemInstancesHrefSchema = {
   };
 };
 /**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `reorder.schema` link.
+ */
+export type MenuItemReorderSchema = {
+  id: MenuItemIdentity;
+  type?: MenuItemType;
+  /**
+   * Ordering index
+   */
+  position: number;
+  parent: null | MenuItemData;
+}[];
+/**
+ * ID of job
+ *
+ * This interface was referenced by `Job`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Job`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type JobIdentity = string;
+/**
+ * This interface was referenced by `Job`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type JobType = 'job';
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `reorder.jobSchema` link.
+ */
+export type MenuItemReorderJobSchema = MenuItem[];
+/**
  * RFC 4122 UUID of schema menu item expressed in URL-safe base64 format
  *
  * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
@@ -367,6 +400,24 @@ export type SchemaMenuItemInstancesHrefSchema = {
   };
 };
 /**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `reorder.schema` link.
+ */
+export type SchemaMenuItemReorderSchema = {
+  id: SchemaMenuItemIdentity;
+  type?: SchemaMenuItemType;
+  /**
+   * Ordering index
+   */
+  position: number;
+  parent: null | SchemaMenuItemData;
+}[];
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `reorder.jobSchema` link.
+ */
+export type SchemaMenuItemReorderJobSchema = SchemaMenuItem[];
+/**
  * RFC 4122 UUID of upload collection expressed in URL-safe base64 format
  *
  * This interface was referenced by `UploadCollection`'s JSON-Schema
@@ -400,6 +451,24 @@ export type UploadCollectionInstancesHrefSchema = {
     ids: string;
   };
 };
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `reorder.schema` link.
+ */
+export type UploadCollectionReorderSchema = {
+  id: UploadCollectionIdentity;
+  type?: UploadCollectionType;
+  /**
+   * Ordering index
+   */
+  position: number;
+  parent: null | UploadCollectionData;
+}[];
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `reorder.jobSchema` link.
+ */
+export type UploadCollectionReorderJobSchema = UploadCollection[];
 /**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "type".
@@ -470,21 +539,6 @@ export type ItemTypeCreateHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * ID of job
- *
- * This interface was referenced by `Job`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `Job`'s JSON-Schema
- * via the `definition` "id".
- */
-export type JobIdentity = string;
-/**
- * This interface was referenced by `Job`'s JSON-Schema
- * via the `definition` "type".
- */
-export type JobType = 'job';
-/**
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
@@ -500,6 +554,29 @@ export type ItemTypeDestroyHrefSchema = {
   skip_menu_items_deletion?: boolean;
   [k: string]: unknown;
 };
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `reorder_fields_and_fieldsets.schema` link.
+ */
+export type ItemTypeReorderFieldsAndFieldsetsSchema = (
+  | {
+      id: FieldIdentity;
+      type?: FieldType;
+      /**
+       * Ordering index
+       */
+      position: number;
+      fieldset: null | FieldsetData;
+    }
+  | {
+      id: FieldsetIdentity;
+      type?: FieldsetType;
+      /**
+       * Ordering index
+       */
+      position: number;
+    }
+)[];
 /**
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `instances.targetSchema` link.
@@ -520,6 +597,11 @@ export type FieldRelatedTargetSchema = Field[];
  * via the `instances.targetSchema` link.
  */
 export type FieldsetInstancesTargetSchema = Fieldset[];
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `reorder_fields_and_fieldsets.jobSchema` link.
+ */
+export type ItemTypeReorderFieldsAndFieldsetsJobSchema = (Field | Fieldset)[];
 /**
  * JSON web token for the session
  *
@@ -4343,6 +4425,153 @@ export type MenuItemUpdateSchema = {
 };
 
 /**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `reorder.targetSchema` link.
+ *
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `reorder.targetSchema` link.
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `reorder.targetSchema` link.
+ *
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ *
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ *
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `reorder_fields_and_fieldsets.targetSchema` link.
+ *
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ *
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ *
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ *
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `duplicate.targetSchema` link.
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `duplicate.targetSchema` link.
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `batch_destroy.targetSchema` link.
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `batch_publish.targetSchema` link.
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `batch_unpublish.targetSchema` link.
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_publish.targetSchema` link.
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_unpublish.targetSchema` link.
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_destroy.targetSchema` link.
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_move_to_stage.targetSchema` link.
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `restore.targetSchema` link.
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `batch_add_tags.targetSchema` link.
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `batch_destroy.targetSchema` link.
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_tag.targetSchema` link.
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_set_upload_collection.targetSchema` link.
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_destroy.targetSchema` link.
+ *
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ *
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ *
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `generate_subtitles.targetSchema` link.
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_timezone_management.targetSchema` link.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "job".
+ */
+export type Job = {
+  id: JobIdentity;
+  type: JobType;
+};
+export type MenuItemReorderTargetSchema = Job;
+export type SchemaMenuItemReorderTargetSchema = Job;
+export type UploadCollectionReorderTargetSchema = Job;
+export type ItemTypeUpdateTargetSchema = Job;
+export type ItemTypeDestroyTargetSchema = Job;
+export type ItemTypeReorderFieldsAndFieldsetsTargetSchema = Job;
+export type FieldCreateTargetSchema = Job;
+export type FieldUpdateTargetSchema = Job;
+export type FieldDestroyTargetSchema = Job;
+export type FieldDuplicateTargetSchema = Job;
+export type ItemDuplicateTargetSchema = Job;
+export type ItemDestroyTargetSchema = Job;
+export type ItemBatchDestroyTargetSchema = Job;
+export type ItemBatchPublishTargetSchema = Job;
+export type ItemBatchUnpublishTargetSchema = Job;
+export type ItemBulkPublishTargetSchema = Job;
+export type ItemBulkUnpublishTargetSchema = Job;
+export type ItemBulkDestroyTargetSchema = Job;
+export type ItemBulkMoveToStageTargetSchema = Job;
+export type ItemVersionRestoreTargetSchema = Job;
+export type UploadCreateTargetSchema = Job;
+export type UploadUpdateTargetSchema = Job;
+export type UploadBatchAddTagsTargetSchema = Job;
+export type UploadBatchDestroyTargetSchema = Job;
+export type UploadBulkTagTargetSchema = Job;
+export type UploadBulkSetUploadCollectionTargetSchema = Job;
+export type UploadBulkDestroyTargetSchema = Job;
+export type UploadTrackCreateTargetSchema = Job;
+export type UploadTrackDestroyTargetSchema = Job;
+export type UploadTrackGenerateSubtitlesTargetSchema = Job;
+export type SiteUpdateTargetSchema = Job;
+export type SiteActivateImprovedTimezoneManagementTargetSchema = Job;
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Job`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type JobData = {
+  type: JobType;
+  id: JobIdentity;
+};
+
+/**
  * In DatoCMS you can organize the different models and blocks present in your administrative area reordering and grouping them, so that their purpose will be more clear to the final editor.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -4960,137 +5189,6 @@ export type ItemTypeUpdateSchema = {
 };
 
 /**
- * This interface was referenced by `ItemType`'s JSON-Schema
- * via the `update.targetSchema` link.
- *
- * This interface was referenced by `ItemType`'s JSON-Schema
- * via the `destroy.targetSchema` link.
- *
- * This interface was referenced by `Field`'s JSON-Schema
- * via the `create.targetSchema` link.
- *
- * This interface was referenced by `Field`'s JSON-Schema
- * via the `update.targetSchema` link.
- *
- * This interface was referenced by `Field`'s JSON-Schema
- * via the `destroy.targetSchema` link.
- *
- * This interface was referenced by `Field`'s JSON-Schema
- * via the `duplicate.targetSchema` link.
- *
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `duplicate.targetSchema` link.
- *
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `destroy.targetSchema` link.
- *
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_destroy.targetSchema` link.
- *
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_publish.targetSchema` link.
- *
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_unpublish.targetSchema` link.
- *
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `bulk_publish.targetSchema` link.
- *
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `bulk_unpublish.targetSchema` link.
- *
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `bulk_destroy.targetSchema` link.
- *
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `bulk_move_to_stage.targetSchema` link.
- *
- * This interface was referenced by `ItemVersion`'s JSON-Schema
- * via the `restore.targetSchema` link.
- *
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `create.targetSchema` link.
- *
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `update.targetSchema` link.
- *
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_add_tags.targetSchema` link.
- *
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_destroy.targetSchema` link.
- *
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `bulk_tag.targetSchema` link.
- *
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `bulk_set_upload_collection.targetSchema` link.
- *
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `bulk_destroy.targetSchema` link.
- *
- * This interface was referenced by `UploadTrack`'s JSON-Schema
- * via the `create.targetSchema` link.
- *
- * This interface was referenced by `UploadTrack`'s JSON-Schema
- * via the `destroy.targetSchema` link.
- *
- * This interface was referenced by `UploadTrack`'s JSON-Schema
- * via the `generate_subtitles.targetSchema` link.
- *
- * This interface was referenced by `Site`'s JSON-Schema
- * via the `update.targetSchema` link.
- *
- * This interface was referenced by `Site`'s JSON-Schema
- * via the `activate_improved_timezone_management.targetSchema` link.
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "job".
- */
-export type Job = {
-  id: JobIdentity;
-  type: JobType;
-};
-export type ItemTypeUpdateTargetSchema = Job;
-export type ItemTypeDestroyTargetSchema = Job;
-export type FieldCreateTargetSchema = Job;
-export type FieldUpdateTargetSchema = Job;
-export type FieldDestroyTargetSchema = Job;
-export type FieldDuplicateTargetSchema = Job;
-export type ItemDuplicateTargetSchema = Job;
-export type ItemDestroyTargetSchema = Job;
-export type ItemBatchDestroyTargetSchema = Job;
-export type ItemBatchPublishTargetSchema = Job;
-export type ItemBatchUnpublishTargetSchema = Job;
-export type ItemBulkPublishTargetSchema = Job;
-export type ItemBulkUnpublishTargetSchema = Job;
-export type ItemBulkDestroyTargetSchema = Job;
-export type ItemBulkMoveToStageTargetSchema = Job;
-export type ItemVersionRestoreTargetSchema = Job;
-export type UploadCreateTargetSchema = Job;
-export type UploadUpdateTargetSchema = Job;
-export type UploadBatchAddTagsTargetSchema = Job;
-export type UploadBatchDestroyTargetSchema = Job;
-export type UploadBulkTagTargetSchema = Job;
-export type UploadBulkSetUploadCollectionTargetSchema = Job;
-export type UploadBulkDestroyTargetSchema = Job;
-export type UploadTrackCreateTargetSchema = Job;
-export type UploadTrackDestroyTargetSchema = Job;
-export type UploadTrackGenerateSubtitlesTargetSchema = Job;
-export type SiteUpdateTargetSchema = Job;
-export type SiteActivateImprovedTimezoneManagementTargetSchema = Job;
-/**
- * JSON API data
- *
- * This interface was referenced by `Job`'s JSON-Schema
- * via the `definition` "data".
- */
-export type JobData = {
-  type: JobType;
-  id: JobIdentity;
-};
-
-/**
  * DatoCMS offers a number of different fields that you can combine together to create a [Model](/docs/content-management-api/resources/item-type). Using the database metaphore, fields are like table columns, and when creating them you need to specify their type (`string`, `float`, etc.) and any required validation.
  *
  * ### Different field types require different settings
@@ -5146,12 +5244,12 @@ export type JobData = {
  *
  * #### Setting the appearance to a field editor provided by a plugin
  *
- * If the project contains a plugin that exposes [manual field editors](/docs/plugin-sdk/manual-field-extensions), you can also configure the field to be presented with it instead of using one of the build-in editors.
+ * If the project contains a plugin that exposes [manual field editors](/docs/plugin-sdk/manual-field-extensions), you can also configure the field to be presented with it instead of using one of the built-in editors.
  *
  * In this case:
  *
- * - the `editor` property must be the ID of the plugin;
- * - the `field_extension` property must be the ID of the specific manual field editor that the plugin exposes;
+ * - the `editor` property is the plugin's project-specific autogenerated UUID. You can get it from the last part of the plugin's URL within your project's Configuration screen (e.g. `https://your-project.admin.datocms.com/configuration/plugins/PLUGIN_UUID/`), or via API with a [List all plugins](/docs/content-management-api/resources/plugin/instances) call.
+ * - the `field_extension` property must be the ID of the specific manual field editor that the plugin exposes. This is set in the plugin's own source code, within a `manualFieldExtension()` call in its entry point (usually something like `index.tsx`).
  * - the `parameters` property must provide a configuration object compatible with the [config screen of the manual field extension](/docs/plugin-sdk/manual-field-extensions#add-per-field-config-screens-to-manual-field-extensions), or an empty object if it doesn't require any configuration.
  *
  * ```js
