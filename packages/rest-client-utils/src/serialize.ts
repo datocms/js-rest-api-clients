@@ -49,7 +49,7 @@ export function serializeRequestBody<T extends { data: unknown } | null>(
     } as unknown as T;
   }
 
-  const { id, type, meta, ...otherProperties } = body as any;
+  const { id, meta, ...otherProperties } = body as any;
 
   const attributes: Record<string, unknown> = {};
   const relationships: Record<string, unknown> = {};
