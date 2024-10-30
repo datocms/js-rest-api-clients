@@ -49,7 +49,7 @@ export function serializeRequestBody<T extends { data: unknown } | null>(
     } as unknown as T;
   }
 
-  const { id, type, meta, ...otherProperties } = body as any;
+  const { id, meta, ...otherProperties } = body as any;
 
   const attributes: Record<string, unknown> = {};
   const relationships: Record<string, unknown> = {};
@@ -116,7 +116,7 @@ export function serializeRequestBody<T extends { data: unknown } | null>(
   return {
     data: {
       ...(id || options.id ? { id: id || options.id } : {}),
-      type: type || options.type,
+      type: options.type, // If a body.type is passed in, it should go in data.attributes. Only options.type should be here at the root.
       ...(Object.keys(attributes).length > 0 ? { attributes } : {}),
       ...(Object.keys(relationships).length > 0 ? { relationships } : {}),
       ...(meta ? { meta } : {}),
