@@ -49,7 +49,7 @@ export function serializeRequestBody<T extends { data: unknown } | null>(
     } as unknown as T;
   }
 
-  const { id, meta, ...otherProperties } = body as any;
+  const { id, type: typeInBody, meta, ...otherProperties } = body as any;
 
   const attributes: Record<string, unknown> = {};
   const relationships: Record<string, unknown> = {};
@@ -111,12 +111,18 @@ export function serializeRequestBody<T extends { data: unknown } | null>(
         }
       }
     }
+
+    // 'type' key present in data is always ignored..
+    // UNLESS the entity has a `type` attribute
+    if (options.attributes.includes('type')) {
+      attributes.type = typeInBody;
+    }
   }
 
   return {
     data: {
       ...(id || options.id ? { id: id || options.id } : {}),
-      type: options.type, // If a body.type is passed in, it should go in data.attributes. Only options.type should be here at the root.
+      type: options.type,
       ...(Object.keys(attributes).length > 0 ? { attributes } : {}),
       ...(Object.keys(relationships).length > 0 ? { relationships } : {}),
       ...(meta ? { meta } : {}),

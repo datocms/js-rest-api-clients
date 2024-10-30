@@ -1,5 +1,5 @@
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
-import { generateId } from '../../cma-client/src';
+import { ApiError, generateId } from '../../cma-client/src';
 
 describe('upload', () => {
   it.concurrent('upload local file', async () => {
@@ -10,6 +10,22 @@ describe('upload', () => {
     });
 
     expect(upload.path.endsWith('text.txt')).toBeTruthy();
+
+    try {
+      await client.uploadTracks.create(upload, {
+        url_or_upload_request_id: upload.url,
+        type: 'subtitles',
+        language_code: 'it-IT',
+      });
+    } catch (e) {
+      if (!(e instanceof ApiError)) {
+        throw e;
+      }
+
+      if (!e.findError('NOT_A_VIDEO')) {
+        throw e;
+      }
+    }
   });
 
   it.concurrent('upload remote file', async () => {

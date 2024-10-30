@@ -7150,7 +7150,7 @@ export type ItemRelationships = {
     data: ItemTypeData;
   };
   /**
-   * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
+   * The entity (account/collaborator/access token/sso user) who created the record
    */
   creator?: {
     data:
@@ -7252,7 +7252,7 @@ export type ItemValidateExistingSchema = {
         data: ItemTypeData;
       };
       /**
-       * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
+       * The entity (account/collaborator/access token/sso user) who created the record
        */
       creator?: {
         data:
@@ -7287,7 +7287,7 @@ export type ItemValidateNewSchema = {
         data: ItemTypeData;
       };
       /**
-       * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
+       * The entity (account/collaborator/access token/sso user) who created the record
        */
       creator?: {
         data:
@@ -7368,7 +7368,7 @@ export type ItemCreateSchema = {
         data: ItemTypeData;
       };
       /**
-       * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
+       * The entity (account/collaborator/access token/sso user) who created the record
        */
       creator?: {
         data:
@@ -7483,7 +7483,7 @@ export type ItemUpdateSchema = {
         data: ItemTypeData;
       };
       /**
-       * The entity (account/collaborator/access token/sso user) who created the record. It must be an object with `type` (e.g. 'account') and `id` properties.
+       * The entity (account/collaborator/access token/sso user) who created the record
        */
       creator?: {
         data:
@@ -7862,7 +7862,7 @@ export type ItemVersionRelationships = {
     data: ItemData;
   };
   /**
-   * The entity (account/collaborator/access token/sso user) who made this change to the record. It must be an object with `type` (e.g. 'account') and `id` properties.
+   * The entity (account/collaborator/access token/sso user) who made this change to the record
    */
   editor: {
     data:
@@ -8387,7 +8387,7 @@ export type UploadRelationships = {
     data: UploadCollectionData | null;
   };
   /**
-   * The entity (account/collaborator/access token) who created the asset. It must be an object with `type` (e.g. 'account') and `id` properties.
+   * The entity (account/collaborator/access token) who created the asset
    */
   creator: {
     data:
@@ -8608,7 +8608,7 @@ export type UploadUpdateSchema = {
     };
     relationships?: {
       /**
-       * The entity (account/collaborator/access token) who created the asset. It must be an object with `type` (e.g. 'account') and `id` properties.
+       * The entity (account/collaborator/access token) who created the asset
        */
       creator?: {
         data:

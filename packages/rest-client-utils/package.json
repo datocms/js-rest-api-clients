@@ -1,6 +1,6 @@
 {
   "name": "@datocms/rest-client-utils",
-  "version": "3.3.10",
+  "version": "3.3.14",
   "description": "Utilities for DatoCMS REST API clients",
   "keywords": [
     "datocms",
@@ -38,7 +38,7 @@
   "dependencies": {
     "async-scheduler": "^1.4.4"
   },
-  "gitHead": "e802f075911ad9d1c6b861b084edb8f44499a40f",
+  "gitHead": "ac4164968026ba62a2841d31d2b60c31eadb2cc8",
   "devDependencies": {
     "@types/qs": "^6.9.7"
   }
