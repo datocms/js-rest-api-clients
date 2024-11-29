@@ -4837,6 +4837,10 @@ export type ItemType = {
    */
   draft_mode_active: boolean;
   /**
+   * Whether draft records can be saved without satisfying the validations or not
+   */
+  draft_saving_active: boolean;
+  /**
    * Whether editors can organize records in a tree or not
    */
   tree: boolean;
@@ -4981,6 +4985,10 @@ export type ItemTypeAttributes = {
    */
   draft_mode_active: boolean;
   /**
+   * Whether draft records can be saved without satisfying the validations or not
+   */
+  draft_saving_active: boolean;
+  /**
    * Whether editors can organize records in a tree or not
    */
   tree: boolean;
@@ -5064,6 +5072,10 @@ export type ItemTypeCreateSchema = {
    */
   draft_mode_active?: boolean;
   /**
+   * Whether draft records can be saved without satisfying the validations or not
+   */
+  draft_saving_active?: boolean;
+  /**
    * Whether editors can organize records in a tree or not
    */
   tree?: boolean;
@@ -5146,6 +5158,10 @@ export type ItemTypeUpdateSchema = {
    * Whether draft/published mode is active or not
    */
   draft_mode_active?: boolean;
+  /**
+   * Whether draft records can be saved without satisfying the validations or not
+   */
+  draft_saving_active?: boolean;
   /**
    * Whether editors can organize records in a tree or not
    */
@@ -5592,14 +5608,16 @@ export type ItemTypeUpdateSchema = {
  * <details>
  * <summary><code>format</code></summary>
  *
- * Only accept strings having a specific format.
+ * Accepts only strings that match a specified format.
  *
- * | Parameter            | Type                      | Required | Description                        |
- * | -------------------- | ------------------------- | -------- | ---------------------------------- |
- * | `custom_pattern`     | `Regexp`                  |          | Regular expression to be validated |
- * | `predefined_pattern` | one of `"email"`, `"url"` |          | Allowed format                     |
+ * | Parameter            | Type                      | Required | Description                                     |
+ * | -------------------- | ------------------------- | -------- | ----------------------------------------------- |
+ * | `custom_pattern`     | `Regexp`                  | Optional | Custom regular expression for validation        |
+ * | `predefined_pattern` | `"email"` or `"url"`      | Optional | Specifies a pre-defined format (email or URL)   |
  *
- * Only one of the parameters must be specified.
+ * **Note:** Only one of `custom_pattern` or `predefined_pattern` should be specified.
+ *
+ * If `custom_pattern` is used, an additional `description` parameter can be provided to serve as a hint for the user. This hint offers a simple explanation of the expected pattern, such as `"The field must end with an 's'"`, instead of the default message like `"Field must match the pattern: /s$/"`.
  *
  * </details>
  *
