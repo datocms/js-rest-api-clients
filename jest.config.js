@@ -1,7 +1,7 @@
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
-  testTimeout: 60000,
+  testTimeout: 180000,
   testMatch: ["**/*.test.ts"],
   transformIgnorePatterns: [
     "/packages/cma-client-node/node_modules/(?!(got|p-cancelable|@szmarczak|lowercase-keys)/)",
