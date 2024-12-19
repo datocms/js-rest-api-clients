@@ -1,7 +1,7 @@
-import { buildNormalizedParams } from '../buildNormalizedParams';
+import { buildNormalizedParams } from "../buildNormalizedParams";
 
-describe('buildNormalizedParams', () => {
-  it('encodes complex params', async () => {
+describe("buildNormalizedParams", () => {
+  it("encodes complex params", async () => {
     expect(buildNormalizedParams({ foo: 0 })).toMatchInlineSnapshot(`
       [
         [
@@ -26,7 +26,7 @@ describe('buildNormalizedParams', () => {
         ],
       ]
     `);
-    expect(buildNormalizedParams({ foo: '' })).toMatchInlineSnapshot(`
+    expect(buildNormalizedParams({ foo: "" })).toMatchInlineSnapshot(`
       [
         [
           "foo",
@@ -34,12 +34,12 @@ describe('buildNormalizedParams', () => {
         ],
       ]
     `);
-    expect(buildNormalizedParams({ foo: null })).toMatchInlineSnapshot('[]');
+    expect(buildNormalizedParams({ foo: null })).toMatchInlineSnapshot("[]");
     expect(buildNormalizedParams({ foo: undefined })).toMatchInlineSnapshot(
-      '[]',
+      "[]"
     );
 
-    expect(buildNormalizedParams({ foo: 'bàr' })).toMatchInlineSnapshot(`
+    expect(buildNormalizedParams({ foo: "bàr" })).toMatchInlineSnapshot(`
       [
         [
           "foo",
@@ -54,7 +54,7 @@ describe('buildNormalizedParams', () => {
           offset: 0,
           limit: 10,
         },
-      }),
+      })
     ).toMatchInlineSnapshot(`
       [
         [
@@ -70,8 +70,8 @@ describe('buildNormalizedParams', () => {
 
     expect(
       buildNormalizedParams({
-        filter: { fields: { md5: { eq: 'foo' } } },
-      }),
+        filter: { fields: { md5: { eq: "foo" } } },
+      })
     ).toMatchInlineSnapshot(`
       [
         [
@@ -83,21 +83,66 @@ describe('buildNormalizedParams', () => {
 
     expect(
       buildNormalizedParams({
-        foo: { bar: ['a', 'b', 10] },
-      }),
+        filter: {
+          type: "product",
+          fields: {
+            id: { anyIn: ["a", "b", "c"] },
+          },
+        },
+      })
     ).toMatchInlineSnapshot(`
       [
         [
-          "foo[bar][]",
+          "filter[type]",
+          "product",
+        ],
+        [
+          "filter[fields][id][anyIn][0]",
           "a",
         ],
         [
-          "foo[bar][]",
+          "filter[fields][id][anyIn][1]",
           "b",
         ],
         [
-          "foo[bar][]",
-          "10",
+          "filter[fields][id][anyIn][2]",
+          "c",
+        ],
+      ]
+    `);
+
+    expect(
+      buildNormalizedParams({
+        filter: {
+          type: "product",
+          fields: {
+            OR: [
+              {
+                name: { matches: { pattern: "sistrall" } },
+                id: { eq: "123456" },
+              },
+              { productNumber: { matches: { pattern: "AmOYpJwZ3h" } } },
+            ],
+          },
+        },
+      })
+    ).toMatchInlineSnapshot(`
+      [
+        [
+          "filter[type]",
+          "product",
+        ],
+        [
+          "filter[fields][OR][0][name][matches][pattern]",
+          "sistrall",
+        ],
+        [
+          "filter[fields][OR][0][id][eq]",
+          "123456",
+        ],
+        [
+          "filter[fields][OR][1][productNumber][matches][pattern]",
+          "AmOYpJwZ3h",
         ],
       ]
     `);

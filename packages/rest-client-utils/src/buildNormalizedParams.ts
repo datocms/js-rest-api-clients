@@ -40,21 +40,10 @@ export function buildNormalizedParams(
     typeof value === 'boolean'
   ) {
     result.push([buildKey(path), serializeValue(value)]);
-  } else if (typeof value === 'object') {
-    if (Array.isArray(value)) {
-      for (const innerValue of value as unknown[]) {
-        for (const param of buildNormalizedParams(innerValue, [
-          ...path,
-          ARRAY_INDEX,
-        ])) {
-          result.push(param);
-        }
-      }
-    } else if (value) {
-      for (const [key, innerValue] of Object.entries(value)) {
-        for (const param of buildNormalizedParams(innerValue, [...path, key])) {
-          result.push(param);
-        }
+  } else if (typeof value === 'object' && value) {
+    for (const [key, innerValue] of Object.entries(value)) {
+      for (const param of buildNormalizedParams(innerValue, [...path, key])) {
+        result.push(param);
       }
     }
   }
