@@ -1,6 +1,6 @@
 {
   "name": "@datocms/cma-client-node",
-  "version": "3.3.15",
+  "version": "3.4.0",
   "description": "NodeJS client for DatoCMS REST Content Management API",
   "keywords": [
     "datocms",
@@ -28,7 +28,7 @@
     "url": "git+https://github.com/datocms/js-rest-api-clients.git"
   },
   "dependencies": {
-    "@datocms/cma-client": "^3.3.15",
+    "@datocms/cma-client": "^3.4.0",
     "@datocms/rest-client-utils": "^3.3.15",
     "got": "^11.8.5",
     "mime-types": "^2.1.35",
