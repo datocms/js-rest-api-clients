@@ -132,7 +132,7 @@ describe('item', () => {
     const duplicated = await client.items.duplicate(item.id);
     expect(duplicated.title).toEqual('Updated 2 (duplicate)');
 
-    const list = await client.items.list();
+    const list = await client.items.list({ version: 'current' });
 
     expect(list[0]!.title).toEqual('Updated 2 (duplicate)');
 
