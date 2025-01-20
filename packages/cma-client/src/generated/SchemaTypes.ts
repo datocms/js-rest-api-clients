@@ -1583,7 +1583,7 @@ export type RoleAttributes = {
   /**
    * Specifies the environments the user can access
    */
-  environments_access: 'all' | 'primary_only' | 'sandbox_only';
+  environments_access: 'all' | 'primary_only' | 'sandbox_only' | 'none';
   /**
    * Can create/edit roles and invite/remove collaborators
    */
@@ -1840,7 +1840,7 @@ export type RoleMeta = {
     /**
      * Specifies the environments the user can access
      */
-    environments_access: 'all' | 'primary_only' | 'sandbox_only';
+    environments_access: 'all' | 'primary_only' | 'sandbox_only' | 'none';
     /**
      * Can create/edit roles and invite/remove collaborators
      */
@@ -2076,7 +2076,7 @@ export type RoleCreateSchema = {
       /**
        * Specifies the environments the user can access
        */
-      environments_access?: 'all' | 'primary_only' | 'sandbox_only';
+      environments_access?: 'all' | 'primary_only' | 'sandbox_only' | 'none';
       /**
        * Can create/edit roles and invite/remove collaborators
        */
@@ -2334,7 +2334,7 @@ export type RoleUpdateSchema = {
       /**
        * Specifies the environments the user can access
        */
-      environments_access?: 'all' | 'primary_only' | 'sandbox_only';
+      environments_access?: 'all' | 'primary_only' | 'sandbox_only' | 'none';
       /**
        * Can create/edit roles and invite/remove collaborators
        */
@@ -2570,6 +2570,14 @@ export type RoleSelfTargetSchema = {
  * via the `destroy.targetSchema` link.
  */
 export type RoleDestroyTargetSchema = {
+  data: Role;
+};
+
+/**
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `duplicate.targetSchema` link.
+ */
+export type RoleDuplicateTargetSchema = {
   data: Role;
 };
 
@@ -4999,11 +5007,11 @@ export type ItemTypeReorderFieldsAndFieldsetsJobSchema = {
  * <details>
  * <summary>Multi-line text (<code>text</code>)</summary>
  *
- * | Property                       | Value                             |
- * | ------------------------------ | --------------------------------- |
- * | Code                           | `text`                            |
- * | Built-in editors for the field | `markdown`, `wysiwyg`, `textarea` |
- * | Available validators           | `required`, `length`, `format`    |
+ * | Property                       | Value                                          |
+ * | ------------------------------ | ---------------------------------------------- |
+ * | Code                           | `text`                                         |
+ * | Built-in editors for the field | `markdown`, `wysiwyg`, `textarea`              |
+ * | Available validators           | `required`, `length`, `format`, `sanitization` |
  *
  * </details>
  *
@@ -5288,10 +5296,10 @@ export type ItemTypeReorderFieldsAndFieldsetsJobSchema = {
  *
  * Accepts only strings that match a specified format.
  *
- * | Parameter            | Type                      | Required | Description                                     |
- * | -------------------- | ------------------------- | -------- | ----------------------------------------------- |
- * | `custom_pattern`     | `Regexp`                  | Optional | Custom regular expression for validation        |
- * | `predefined_pattern` | `"email"` or `"url"`      | Optional | Specifies a pre-defined format (email or URL)   |
+ * | Parameter            | Type                 | Required | Description                                   |
+ * | -------------------- | -------------------- | -------- | --------------------------------------------- |
+ * | `custom_pattern`     | `Regexp`             | Optional | Custom regular expression for validation      |
+ * | `predefined_pattern` | `"email"` or `"url"` | Optional | Specifies a pre-defined format (email or URL) |
  *
  * **Note:** Only one of `custom_pattern` or `predefined_pattern` should be specified.
  *
@@ -5504,7 +5512,7 @@ export type ItemTypeReorderFieldsAndFieldsetsJobSchema = {
  *
  * Only accept references to block records of the specified block models.
  *
- * | Parameter    | Type                    | Required | Description                     |
+ * | Parameter    | Type                    | Required | Description                    |
  * | ------------ | ----------------------- | -------- | ------------------------------ |
  * | `item_types` | `Array<Block Model ID>` | ✅        | Set of allowed Block Model IDs |
  *
@@ -5671,9 +5679,9 @@ export type ItemTypeReorderFieldsAndFieldsetsJobSchema = {
  *
  * Simple textual input for _Single-line string_ fields.
  *
- * | Parameter | Type      | Required | Description                                                                                    |
+ * | Parameter     | Type      | Required | Description                                                                                |
  * | ------------- | --------- | -------- | ------------------------------------------------------------------------------------------ |
- * | `heading`     | `Boolean` | ✅       | Indicates if the field should be shown bigger, as a field representing a heading           |
+ * | `heading`     | `Boolean` | ✅        | Indicates if the field should be shown bigger, as a field representing a heading           |
  * | `placeholder` | `String`  |          | A placeholder that will be shown in the editor's input to provide editors with an example. |
  *
  * </details>
@@ -5763,8 +5771,8 @@ export type ItemTypeReorderFieldsAndFieldsetsJobSchema = {
  *
  * Built-in editor for _Single block_ fields.
  *
- * | Parameter         | Type      | Required | Description                                                |
- * | ----------------- | --------- | -------- | ---------------------------------------------------------- |
+ * | Parameter         | Type      | Required | Description                                               |
+ * | ----------------- | --------- | -------- | --------------------------------------------------------- |
  * | `start_collapsed` | `Boolean` |          | Whether you want block record collapsed by default or not |
  *
  * </details>
@@ -11766,6 +11774,14 @@ export type SiteMeta = {
    */
   improved_boolean_fields: boolean;
   /**
+   * The default value for the draft mode option in all the environment's models
+   */
+  draft_mode_default: boolean;
+  /**
+   * Whether the Improved validation at publishing option is active or not
+   */
+  improved_validation_at_publishing: boolean;
+  /**
    * Whether the site has custom upload storage settings
    */
   custom_upload_storage_settings?: boolean;
@@ -11941,6 +11957,14 @@ export type SiteUpdateSchema = {
        */
       improved_boolean_fields?: boolean;
       /**
+       * The default value for the draft mode option in all the environment's models
+       */
+      draft_mode_default?: boolean;
+      /**
+       * Whether the Improved validation at publishing option is active or not
+       */
+      improved_validation_at_publishing?: boolean;
+      /**
        * Whether the site has custom upload storage settings
        */
       custom_upload_storage_settings?: boolean;
@@ -12014,6 +12038,22 @@ export type SiteActivateImprovedGqlVisibilityControlTargetSchema = {
  * via the `activate_improved_boolean_fields.targetSchema` link.
  */
 export type SiteActivateImprovedBooleanFieldsTargetSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_draft_mode_as_default.targetSchema` link.
+ */
+export type SiteActivateDraftModeAsDefaultTargetSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_validation_at_publishing.targetSchema` link.
+ */
+export type SiteActivateImprovedValidationAtPublishingTargetSchema = {
   data: Site;
 };
 

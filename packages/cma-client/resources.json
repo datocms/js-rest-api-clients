@@ -171,6 +171,31 @@
         "responseType": "RoleDestroyTargetSchema",
         "name": "destroy",
         "rawName": "rawDestroy"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/role/duplicate",
+        "rel": "duplicate",
+        "urlTemplate": "/roles/${roleId}/duplicate",
+        "method": "POST",
+        "comment": "Duplicate a role",
+        "urlPlaceholders": [
+          {
+            "variableName": "roleId",
+            "isEntityId": true,
+            "relType": "RoleData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "roleId",
+          "isEntityId": true,
+          "relType": "RoleData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "RoleDuplicateTargetSchema",
+        "name": "duplicate",
+        "rawName": "rawDuplicate"
       }
     ],
     "namespace": "roles",
@@ -4650,6 +4675,36 @@
         "deprecated": "This API call is to be considered private and might change without notice",
         "name": "activateImprovedBooleanFields",
         "rawName": "rawActivateImprovedBooleanFields"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_draft_mode_as_default",
+        "rel": "activate_draft_mode_as_default",
+        "urlTemplate": "/site/activate-draft-mode-as-default",
+        "method": "PUT",
+        "comment": "Set draft mode default to true for all environment's models",
+        "urlPlaceholders": [],
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "SiteActivateDraftModeAsDefaultTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "activateDraftModeAsDefault",
+        "rawName": "rawActivateDraftModeAsDefault"
+      },
+      {
+        "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_validation_at_publishing",
+        "rel": "activate_improved_validation_at_publishing",
+        "urlTemplate": "/site/activate-improved-validation-at-publishing",
+        "method": "PUT",
+        "comment": "Activate improved validation at publishing option",
+        "urlPlaceholders": [],
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "SiteActivateImprovedValidationAtPublishingTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "activateImprovedValidationAtPublishing",
+        "rawName": "rawActivateImprovedValidationAtPublishing"
       },
       {
         "returnsCollection": false,

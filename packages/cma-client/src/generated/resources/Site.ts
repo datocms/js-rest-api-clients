@@ -277,6 +277,80 @@ export default class Site extends BaseResource {
   }
 
   /**
+   * Set draft mode default to true for all environment's models
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_draft_mode_as_default
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  activateDraftModeAsDefault() {
+    return this.rawActivateDraftModeAsDefault().then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateDraftModeAsDefaultTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Set draft mode default to true for all environment's models
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_draft_mode_as_default
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawActivateDraftModeAsDefault(): Promise<SchemaTypes.SiteActivateDraftModeAsDefaultTargetSchema> {
+    return this.client.request<SchemaTypes.SiteActivateDraftModeAsDefaultTargetSchema>(
+      {
+        method: 'PUT',
+        url: '/site/activate-draft-mode-as-default',
+      },
+    );
+  }
+
+  /**
+   * Activate improved validation at publishing option
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_validation_at_publishing
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  activateImprovedValidationAtPublishing() {
+    return this.rawActivateImprovedValidationAtPublishing().then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedValidationAtPublishingTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Activate improved validation at publishing option
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_validation_at_publishing
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawActivateImprovedValidationAtPublishing(): Promise<SchemaTypes.SiteActivateImprovedValidationAtPublishingTargetSchema> {
+    return this.client.request<SchemaTypes.SiteActivateImprovedValidationAtPublishingTargetSchema>(
+      {
+        method: 'PUT',
+        url: '/site/activate-improved-validation-at-publishing',
+      },
+    );
+  }
+
+  /**
    * Update CDN settings default assets
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site/update_assets_cdn_default_settings

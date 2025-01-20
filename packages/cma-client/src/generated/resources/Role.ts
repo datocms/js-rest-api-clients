@@ -238,4 +238,35 @@ export default class Role extends BaseResource {
       url: `/roles/${roleId}`,
     });
   }
+
+  /**
+   * Duplicate a role
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/role/duplicate
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  duplicate(roleId: string | SimpleSchemaTypes.RoleData) {
+    return this.rawDuplicate(Utils.toId(roleId)).then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.RoleDuplicateTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Duplicate a role
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/role/duplicate
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawDuplicate(roleId: string): Promise<SchemaTypes.RoleDuplicateTargetSchema> {
+    return this.client.request<SchemaTypes.RoleDuplicateTargetSchema>({
+      method: 'POST',
+      url: `/roles/${roleId}/duplicate`,
+    });
+  }
 }
