@@ -330,10 +330,13 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       ),
     );
 
-    if (autoRetry && error.findError('BATCH_DATA_VALIDATION_IN_PROGRESS')) {
+    const transientErrorCode = error.errors.find((e) => e.attributes.transient)
+      ?.attributes.code;
+
+    if (autoRetry && transientErrorCode) {
       if (logLevel >= LogLevel.BASIC) {
         log(
-          `[${requestId}] Data validation in progress, wait ${retryCount} seconds then retry...`,
+          `[${requestId}] ${transientErrorCode}, wait ${retryCount} seconds then retry...`,
         );
       }
 
