@@ -21,6 +21,8 @@ This monorepo contains API clients to interact with DatoCMS:
 
 You can read more on how to use these clients on the [official documentation page](https://www.datocms.com/docs/content-management-api/using-the-nodejs-clients).
 
+Looking for a client for the GraphQL [Content Delivery API](https://www.datocms.com/docs/content-delivery-api)? It's here: [@datocms/cda-client](https://github.com/datocms/cda-client)
+
 ## Development
 
 After checking out the repo, run the following:
