@@ -1,11 +1,9 @@
 import { v4 } from 'uuid';
 
-const decoder = new TextDecoder('utf8');
-
 function fromUint8ArrayToUrlSafeBase64(bytes: Uint8Array) {
   const base64 =
     typeof Buffer === 'undefined'
-      ? btoa(decoder.decode(bytes))
+      ? btoa(Array.from(bytes, (byte) => String.fromCharCode(byte)).join(''))
       : Buffer.from(bytes).toString('base64');
 
   // Convert to URL-safe format (see RFC 4648, sec. 5)
