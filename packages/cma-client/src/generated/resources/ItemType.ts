@@ -40,6 +40,8 @@ export default class ItemType extends BaseResource {
         ],
         relationships: [
           'ordering_field',
+          'presentation_title_field',
+          'presentation_image_field',
           'title_field',
           'image_preview_field',
           'excerpt_field',
@@ -111,6 +113,8 @@ export default class ItemType extends BaseResource {
         ],
         relationships: [
           'ordering_field',
+          'presentation_title_field',
+          'presentation_image_field',
           'title_field',
           'image_preview_field',
           'excerpt_field',

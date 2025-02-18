@@ -4873,6 +4873,8 @@ export type ItemType = {
   singleton_item: ItemData | null;
   fields: FieldData[];
   fieldsets: FieldsetData[];
+  presentation_title_field: FieldData | null;
+  presentation_image_field: FieldData | null;
   title_field: FieldData | null;
   image_preview_field: FieldData | null;
   excerpt_field: FieldData | null;
@@ -5030,6 +5032,8 @@ export type ItemTypeRelationships = {
   singleton_item: ItemData | null;
   fields: FieldData[];
   fieldsets: FieldsetData[];
+  presentation_title_field: FieldData | null;
+  presentation_image_field: FieldData | null;
   title_field: FieldData | null;
   image_preview_field: FieldData | null;
   excerpt_field: FieldData | null;
@@ -5110,6 +5114,8 @@ export type ItemTypeCreateSchema = {
    */
   inverse_relationships_enabled?: boolean;
   ordering_field?: FieldData | null;
+  presentation_title_field?: FieldData | null;
+  presentation_image_field?: FieldData | null;
   title_field?: FieldData | null;
   image_preview_field?: FieldData | null;
   excerpt_field?: FieldData | null;
@@ -5193,6 +5199,8 @@ export type ItemTypeUpdateSchema = {
    */
   inverse_relationships_enabled?: boolean;
   ordering_field?: FieldData | null;
+  presentation_title_field?: FieldData | null;
+  presentation_image_field?: FieldData | null;
   title_field?: FieldData | null;
   image_preview_field?: FieldData | null;
   excerpt_field?: FieldData | null;

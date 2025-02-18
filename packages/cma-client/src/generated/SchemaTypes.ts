@@ -4442,13 +4442,25 @@ export type ItemTypeRelationships = {
     data: FieldsetData[];
   };
   /**
-   * The field to use as display title
+   * The field to use as presentation title
+   */
+  presentation_title_field: {
+    data: FieldData | null;
+  };
+  /**
+   * The field to use as presentation image
+   */
+  presentation_image_field: {
+    data: FieldData | null;
+  };
+  /**
+   * The field to use as fallback title for SEO purposes
    */
   title_field: {
     data: FieldData | null;
   };
   /**
-   * The field to use as preview image
+   * The field to use as fallback image for SEO purposes
    */
   image_preview_field: {
     data: FieldData | null;
@@ -4616,13 +4628,25 @@ export type ItemTypeCreateSchema = {
         data: FieldData | null;
       };
       /**
-       * The field to use as display title
+       * The field to use as presentation title
+       */
+      presentation_title_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as presentation image
+       */
+      presentation_image_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as fallback title for SEO purposes
        */
       title_field?: {
         data: FieldData | null;
       };
       /**
-       * The field to use as preview image
+       * The field to use as fallback image for SEO purposes
        */
       image_preview_field?: {
         data: FieldData | null;
@@ -4742,13 +4766,25 @@ export type ItemTypeUpdateSchema = {
         data: FieldData | null;
       };
       /**
-       * The field to use as display title
+       * The field to use as presentation title
+       */
+      presentation_title_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as presentation image
+       */
+      presentation_image_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as fallback title for SEO purposes
        */
       title_field?: {
         data: FieldData | null;
       };
       /**
-       * The field to use as preview image
+       * The field to use as fallback image for SEO purposes
        */
       image_preview_field?: {
         data: FieldData | null;
