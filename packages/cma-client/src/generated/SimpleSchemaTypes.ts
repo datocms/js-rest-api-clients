@@ -6788,7 +6788,12 @@ export type FieldsetUpdateSchema = {
 export type Session = {
   id: SessionIdentity;
   type: SessionType;
-  user: UserData;
+  user:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 export type SessionCreateTargetSchema = Session;
 /**
@@ -6809,7 +6814,12 @@ export type SessionData = {
  * via the `definition` "relationships".
  */
 export type SessionRelationships = {
-  user: UserData;
+  user:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 
 /**
@@ -10206,7 +10216,12 @@ export type EditingSession = {
   locked_at: string | null;
   active_item: ItemData;
   active_item_type: ItemTypeData;
-  editor: AccountData | AccessTokenData | UserData;
+  editor:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 export type EditingSessionDestroyTargetSchema = EditingSession;
 /**
@@ -10246,7 +10261,12 @@ export type EditingSessionAttributes = {
 export type EditingSessionRelationships = {
   active_item: ItemData;
   active_item_type: ItemTypeData;
-  editor: AccountData | AccessTokenData | UserData;
+  editor:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
 };
 
 /**
@@ -11068,7 +11088,7 @@ export type Site = {
       /**
        * Specifies the color space of the output image
        */
-      cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip';
+      cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip' | 'origin';
     };
     /**
      * Allows setting default parameters for optimizing videos served by the CDN
@@ -11308,7 +11328,7 @@ export type SiteAttributes = {
       /**
        * Specifies the color space of the output image
        */
-      cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip';
+      cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip' | 'origin';
     };
     /**
      * Allows setting default parameters for optimizing videos served by the CDN
@@ -11600,7 +11620,7 @@ export type SiteUpdateAssetsCdnDefaultSettingsSchema = {
       /**
        * Specifies the color space of the output image
        */
-      cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip';
+      cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip' | 'origin';
     };
     /**
      * Allows setting default parameters for optimizing videos served by the CDN

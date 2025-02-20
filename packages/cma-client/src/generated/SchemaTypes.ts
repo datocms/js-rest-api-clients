@@ -6547,7 +6547,12 @@ export type SessionRelationships = {
    * The user associated with the session
    */
   user: {
-    data: UserData;
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
   };
 };
 
@@ -10677,7 +10682,12 @@ export type EditingSessionRelationships = {
    * The entity (account/editor/access token) who has accessed the record
    */
   editor: {
-    data: AccountData | AccessTokenData | UserData;
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
   };
 };
 
@@ -11631,7 +11641,7 @@ export type SiteAttributes = {
       /**
        * Specifies the color space of the output image
        */
-      cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip';
+      cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip' | 'origin';
     };
     /**
      * Allows setting default parameters for optimizing videos served by the CDN
@@ -12084,7 +12094,7 @@ export type SiteUpdateAssetsCdnDefaultSettingsSchema = {
           /**
            * Specifies the color space of the output image
            */
-          cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip';
+          cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip' | 'origin';
         };
         /**
          * Allows setting default parameters for optimizing videos served by the CDN
