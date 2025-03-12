@@ -128,7 +128,10 @@ export default class Upload extends Resources.Upload {
 
         const { url, onProgress, ...other } = body;
 
-        downloadPromise = downloadFile(url, { onProgress });
+        downloadPromise = downloadFile(url, {
+          onProgress,
+          fetchFn: this.client.config.fetchFn,
+        });
 
         const { filePath, deleteFile } = await downloadPromise;
 

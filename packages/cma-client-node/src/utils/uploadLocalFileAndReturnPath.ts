@@ -1,9 +1,9 @@
 import { basename } from 'node:path';
 import type { Client } from '@datocms/cma-client';
-import { makeCancelablePromise } from '@datocms/rest-client-utils';
 import {
   type CancelablePromise,
   CanceledPromiseError,
+  makeCancelablePromise,
 } from '@datocms/rest-client-utils';
 import { uploadLocalFileToS3 } from './uploadLocalFileToS3';
 
@@ -78,6 +78,7 @@ export function uploadLocalFileAndReturnPath(
       uploadPromise = uploadLocalFileToS3(localPath, url, {
         ...options,
         additionalHeaders: request_headers as Record<string, string>,
+        fetchFn: client.config.fetchFn,
       });
 
       await uploadPromise;
