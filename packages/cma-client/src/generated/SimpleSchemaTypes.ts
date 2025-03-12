@@ -723,6 +723,69 @@ export type BuildTriggerType = 'build_trigger';
  */
 export type BuildEventInstancesTargetSchema = BuildEvent[];
 /**
+ * This interface was referenced by `BuildEvent`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type BuildEventInstancesHrefSchema = {
+  /**
+   * Parameters to control offset-based pagination
+   */
+  page?: {
+    /**
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
+     */
+    offset?: number;
+    /**
+     * The maximum number of entities to return (defaults to 30, maximum is 500)
+     */
+    limit?: number;
+  };
+  /**
+   * Attributes to filter
+   */
+  filter?: {
+    /**
+     * IDs to fetch, comma separated
+     */
+    ids?: string;
+    fields?: {
+      build_trigger_id?: {
+        eq?: string;
+      };
+      event_type?: {
+        /**
+         * The type of activity
+         */
+        eq?:
+          | 'request_success'
+          | 'request_failure'
+          | 'response_success'
+          | 'response_failure'
+          | 'request_aborted'
+          | 'response_unprocessable'
+          | 'indexing_started'
+          | 'indexing_success'
+          | 'indexing_failure';
+      };
+      created_at?: {
+        gt?: string;
+        lt?: string;
+      };
+    };
+  };
+  /**
+   * Fields used to order results
+   */
+  order_by?:
+    | 'build_trigger_id_asc'
+    | 'build_trigger_id_desc'
+    | 'created_at_asc'
+    | 'created_at_desc'
+    | 'event_type_asc'
+    | 'event_type_desc';
+  [k: string]: unknown;
+};
+/**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */

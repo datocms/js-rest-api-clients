@@ -1939,8 +1939,13 @@
         "comment": "List all deploy events",
         "urlPlaceholders": [],
         "optionalRequestBody": false,
+        "queryParamsType": "BuildEventInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "BuildEventInstancesTargetSchema",
+        "paginatedResponse": {
+          "defaultLimit": 30,
+          "maxLimit": 500
+        },
         "name": "list",
         "rawName": "rawList"
       },
