@@ -6,20 +6,18 @@ describe('upload', () => {
   it.concurrent('upload local file', async () => {
     const client = await generateNewCmaClient();
 
-    const progressInfos: OnUploadProgressInfo[] = [];
+    const createEvents = new Set<OnUploadProgressInfo['type']>();
 
     const upload = await client.uploads.createFromLocalFile({
       localPath: `${__dirname}/fixtures/text.txt`,
       onProgress(info) {
-        progressInfos.push(info);
+        createEvents.add(info.type);
       },
     });
 
-    const infoTypes = new Set(progressInfos.map((info) => info.type));
-
-    expect(infoTypes.has('REQUESTING_UPLOAD_URL')).toBeTruthy();
-    expect(infoTypes.has('UPLOADING_FILE')).toBeTruthy();
-    expect(infoTypes.has('CREATING_UPLOAD_OBJECT')).toBeTruthy();
+    expect(createEvents.has('REQUESTING_UPLOAD_URL')).toBeTruthy();
+    expect(createEvents.has('UPLOADING_FILE')).toBeTruthy();
+    expect(createEvents.has('CREATING_UPLOAD_OBJECT')).toBeTruthy();
 
     expect(upload.path.endsWith('text.txt')).toBeTruthy();
 
@@ -38,28 +36,42 @@ describe('upload', () => {
         throw e;
       }
     }
+
+    const updateEvents = new Set<OnUploadProgressInfo['type']>();
+
+    const updatedUpload = await client.uploads.updateFromLocalFile(upload, {
+      localPath: `${__dirname}/fixtures/image.png`,
+      onProgress(info) {
+        updateEvents.add(info.type);
+      },
+    });
+
+    expect(updateEvents.has('REQUESTING_UPLOAD_URL')).toBeTruthy();
+    expect(updateEvents.has('UPLOADING_FILE')).toBeTruthy();
+    expect(updateEvents.has('CREATING_UPLOAD_OBJECT')).toBeTruthy();
+
+    expect(updatedUpload.path.endsWith('image.png')).toBeTruthy();
   });
 
   it.concurrent('upload remote file', async () => {
     const client = await generateNewCmaClient();
 
-    const progressInfos: OnUploadProgressInfo[] = [];
+    const createEvents = new Set<OnUploadProgressInfo['type']>();
 
     const upload = await client.uploads.createFromUrl({
       url: 'https://www.datocms-assets.com/205/1525789775-dato.png',
       onProgress(info) {
-        progressInfos.push(info);
+        createEvents.add(info.type);
       },
     });
 
-    const infoTypes = new Set(progressInfos.map((info) => info.type));
-
-    expect(infoTypes.has('DOWNLOADING_FILE')).toBeTruthy();
-    expect(infoTypes.has('REQUESTING_UPLOAD_URL')).toBeTruthy();
-    expect(infoTypes.has('UPLOADING_FILE')).toBeTruthy();
-    expect(infoTypes.has('CREATING_UPLOAD_OBJECT')).toBeTruthy();
+    expect(createEvents.has('DOWNLOADING_FILE')).toBeTruthy();
+    expect(createEvents.has('REQUESTING_UPLOAD_URL')).toBeTruthy();
+    expect(createEvents.has('UPLOADING_FILE')).toBeTruthy();
+    expect(createEvents.has('CREATING_UPLOAD_OBJECT')).toBeTruthy();
 
     expect(upload.path.endsWith('dato.png')).toBeTruthy();
+    expect(upload.width).toEqual(480);
 
     const secondUpload = await client.uploads.createFromUrl({
       url: 'https://www.datocms-assets.com/205/1525789775-dato.png',
@@ -67,6 +79,23 @@ describe('upload', () => {
     });
 
     expect(secondUpload.id).toEqual(upload.id);
+
+    const updateEvents = new Set<OnUploadProgressInfo['type']>();
+
+    const updatedUpload = await client.uploads.updateFromUrl(upload, {
+      url: 'https://www.datocms-assets.com/205/1525789775-dato.png?w=32',
+      onProgress(info) {
+        updateEvents.add(info.type);
+      },
+    });
+
+    expect(updateEvents.has('DOWNLOADING_FILE')).toBeTruthy();
+    expect(updateEvents.has('REQUESTING_UPLOAD_URL')).toBeTruthy();
+    expect(updateEvents.has('UPLOADING_FILE')).toBeTruthy();
+    expect(updateEvents.has('CREATING_UPLOAD_OBJECT')).toBeTruthy();
+
+    expect(updatedUpload.path.endsWith('dato.png')).toBeTruthy();
+    expect(updatedUpload.width).toEqual(32);
   });
 
   it.concurrent('references', async () => {
