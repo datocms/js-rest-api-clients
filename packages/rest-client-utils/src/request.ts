@@ -150,12 +150,9 @@ function lowercaseKeys(obj: Record<string, string>): Record<string, string> {
 
 let requestCount = 1;
 
-export async function request<T>(options: RequestOptions): Promise<T> {
-  const requestId = requestCount;
-  requestCount += 1;
-
+export function getFetchFn(customFetchFn?: typeof fetch) {
   const fetchFn =
-    options.fetchFn ||
+    customFetchFn ||
     (typeof fetch === 'undefined' ? undefined : fetch) ||
     (typeof globalThis === 'undefined' ? undefined : globalThis.fetch);
 
@@ -164,6 +161,15 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       'fetch() is not available: either polyfill it globally, or provide it as fetchFn option.',
     );
   }
+
+  return fetchFn;
+}
+
+export async function request<T>(options: RequestOptions): Promise<T> {
+  const requestId = requestCount;
+  requestCount += 1;
+
+  const fetchFn = getFetchFn(options.fetchFn);
 
   const preCallStack = options.preCallStack;
   const userAgent = options.userAgent || '@datocms/rest-client-utils';

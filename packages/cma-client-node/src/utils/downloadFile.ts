@@ -4,6 +4,7 @@ import { URL } from 'node:url';
 import {
   type CancelablePromise,
   CanceledPromiseError,
+  getFetchFn,
   makeCancelablePromise,
   type request,
 } from '@datocms/rest-client-utils';
@@ -24,33 +25,27 @@ export function downloadFile(
   url: string,
   { onProgress, fetchFn: customFetchFn }: Options = {},
 ): CancelablePromise<DownloadResult> {
-  const fetchFn =
-    customFetchFn ||
-    (typeof fetch === 'undefined' ? undefined : fetch) ||
-    (typeof globalThis === 'undefined' ? undefined : globalThis.fetch);
-
-  if (typeof fetchFn === 'undefined') {
-    throw new Error(
-      'fetch() is not available: either polyfill it globally, or provide it as fetchFn option.',
-    );
-  }
-
-  let isCancelled = false;
+  const fetchFn = getFetchFn(customFetchFn);
   const controller = new AbortController();
 
   return makeCancelablePromise<DownloadResult>(
     async () => {
-      if (isCancelled) throw new CanceledPromiseError();
+      if (controller.signal.aborted) throw new CanceledPromiseError();
 
       const { path: tmpDir, cleanup: deleteTmpDir } = await dir({
         unsafeCleanup: true,
       });
-      if (isCancelled) {
+
+      if (controller.signal.aborted) {
         await deleteTmpDir();
         throw new CanceledPromiseError();
       }
 
-      const res = await fetchFn(url, { signal: controller.signal });
+      const res = await fetchFn(url, {
+        signal: controller.signal,
+        redirect: 'follow',
+      });
+
       if (!res.ok) {
         throw new Error(
           `Failed to download ${url}: ${res.status} ${res.statusText}`,
@@ -100,7 +95,7 @@ export function downloadFile(
         await promises.writeFile(filePath, Buffer.from(arrayBuffer));
       }
 
-      if (isCancelled) throw new CanceledPromiseError();
+      if (controller.signal.aborted) throw new CanceledPromiseError();
 
       return {
         filePath,
@@ -108,7 +103,6 @@ export function downloadFile(
       };
     },
     () => {
-      isCancelled = true;
       controller.abort();
     },
   );

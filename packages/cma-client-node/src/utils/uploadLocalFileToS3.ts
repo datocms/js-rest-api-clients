@@ -3,6 +3,7 @@ import { Readable } from 'node:stream';
 import {
   type CancelablePromise,
   CanceledPromiseError,
+  getFetchFn,
   makeCancelablePromise,
   type request,
 } from '@datocms/rest-client-utils';
@@ -20,37 +21,20 @@ export function uploadLocalFileToS3(
   url: string,
   { onProgress, additionalHeaders, fetchFn: customFetchFn }: Options = {},
 ): CancelablePromise<void> {
-  const fetchFn =
-    customFetchFn ||
-    (typeof fetch === 'undefined' ? undefined : fetch) ||
-    (typeof globalThis === 'undefined' ? undefined : globalThis.fetch);
-
-  if (typeof fetchFn === 'undefined') {
-    throw new Error(
-      'fetch() is not available: either polyfill it globally, or provide it as fetchFn option.',
-    );
-  }
-
-  let isCanceled = false;
+  const fetchFn = getFetchFn(customFetchFn);
   const controller = new AbortController();
 
   return makeCancelablePromise<void>(
     async () => {
-      if (isCanceled) {
+      if (controller.signal.aborted) {
         throw new CanceledPromiseError();
       }
 
       const { size: totalLength } = await promises.stat(filePath);
 
-      if (isCanceled) {
+      if (controller.signal.aborted) {
         throw new CanceledPromiseError();
       }
-
-      const headers = {
-        ...(additionalHeaders || {}),
-        'Content-Type': mime.lookup(filePath) || 'application/octet-stream',
-        'Content-Length': `${totalLength}`,
-      };
 
       // Create a readable stream from file
       let body = Readable.toWeb(
@@ -64,7 +48,11 @@ export function uploadLocalFileToS3(
 
       const response = await fetchFn(url, {
         method: 'PUT',
-        headers,
+        headers: {
+          ...(additionalHeaders || {}),
+          'Content-Type': mime.lookup(filePath) || 'application/octet-stream',
+          'Content-Length': `${totalLength}`,
+        },
         body,
         // @ts-expect-error - Types are outdated
         duplex: 'half',
@@ -75,12 +63,11 @@ export function uploadLocalFileToS3(
       // Check for non-2xx responses.
       if (!response.ok) {
         throw new Error(
-          `Upload failed with status ${response.status}: ${response.statusText}`,
+          `Upload of ${filePath} failed with status ${response.status}: ${response.statusText}`,
         );
       }
     },
     () => {
-      isCanceled = true;
       controller.abort();
     },
   );
