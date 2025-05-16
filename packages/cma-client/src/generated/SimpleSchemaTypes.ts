@@ -7675,6 +7675,8 @@ export type ItemCurrentVsPublishedState = {
   added_locales: string[];
   removed_locales: string[];
   non_localized_fields_changed: boolean;
+  current_version_invalid_locales: string[];
+  current_version_non_localized_fields_invalid: boolean;
   scheduled_publication: ScheduledPublicationData | null;
   scheduled_unpublishing: ScheduledUnpublishingData | null;
   published_version: ItemVersionData | null;
@@ -7738,6 +7740,8 @@ export type ItemCurrentVsPublishedStateAttributes = {
   added_locales: string[];
   removed_locales: string[];
   non_localized_fields_changed: boolean;
+  current_version_invalid_locales: string[];
+  current_version_non_localized_fields_invalid: boolean;
 };
 
 /**
