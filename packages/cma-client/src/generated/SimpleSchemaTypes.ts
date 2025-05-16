@@ -951,51 +951,6 @@ export type ItemVersionType = 'item_version';
 export type ItemVersionIdentity = string;
 /**
  * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_destroy.jobSchema` link.
- */
-export type ItemBatchDestroyJobSchema = unknown[];
-/**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_destroy.hrefSchema` link.
- */
-export type ItemBatchDestroyHrefSchema = {
-  /**
-   * IDs of records to delete, comma separated (a maximum of 200 IDs are allowed per request)
-   */
-  'filter[ids]': string;
-};
-/**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_publish.jobSchema` link.
- */
-export type ItemBatchPublishJobSchema = unknown[];
-/**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_publish.hrefSchema` link.
- */
-export type ItemBatchPublishHrefSchema = {
-  /**
-   * IDs of records to publish, comma separated (a maximum of 200 IDs are allowed per request)
-   */
-  'filter[ids]': string;
-};
-/**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_unpublish.jobSchema` link.
- */
-export type ItemBatchUnpublishJobSchema = unknown[];
-/**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_unpublish.hrefSchema` link.
- */
-export type ItemBatchUnpublishHrefSchema = {
-  /**
-   * IDs of records to unpublish, comma separated (a maximum of 200 IDs are allowed per request)
-   */
-  'filter[ids]': string;
-};
-/**
- * This interface was referenced by `Item`'s JSON-Schema
  * via the `publish.schema` link.
  */
 export type ItemPublishSchema = {
@@ -1165,38 +1120,6 @@ export type UploadInstancesHrefSchema = {
      */
     limit?: number;
   };
-  [k: string]: unknown;
-};
-/**
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_add_tags.jobSchema` link.
- */
-export type UploadBatchAddTagsJobSchema = unknown[];
-/**
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_add_tags.hrefSchema` link.
- */
-export type UploadBatchAddTagsHrefSchema = {
-  /**
-   * IDs to tag, comma separated
-   */
-  'filter[ids]'?: string;
-  [k: string]: unknown;
-};
-/**
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_destroy.jobSchema` link.
- */
-export type UploadBatchDestroyJobSchema = unknown[];
-/**
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_destroy.hrefSchema` link.
- */
-export type UploadBatchDestroyHrefSchema = {
-  /**
-   * IDs to destroy, comma separated
-   */
-  'filter[ids]'?: string;
   [k: string]: unknown;
 };
 /**
@@ -4526,15 +4449,6 @@ export type MenuItemUpdateSchema = {
  * via the `destroy.targetSchema` link.
  *
  * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_destroy.targetSchema` link.
- *
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_publish.targetSchema` link.
- *
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_unpublish.targetSchema` link.
- *
- * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_publish.targetSchema` link.
  *
  * This interface was referenced by `Item`'s JSON-Schema
@@ -4554,12 +4468,6 @@ export type MenuItemUpdateSchema = {
  *
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `update.targetSchema` link.
- *
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_add_tags.targetSchema` link.
- *
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_destroy.targetSchema` link.
  *
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `bulk_tag.targetSchema` link.
@@ -4604,9 +4512,6 @@ export type FieldDestroyTargetSchema = Job;
 export type FieldDuplicateTargetSchema = Job;
 export type ItemDuplicateTargetSchema = Job;
 export type ItemDestroyTargetSchema = Job;
-export type ItemBatchDestroyTargetSchema = Job;
-export type ItemBatchPublishTargetSchema = Job;
-export type ItemBatchUnpublishTargetSchema = Job;
 export type ItemBulkPublishTargetSchema = Job;
 export type ItemBulkUnpublishTargetSchema = Job;
 export type ItemBulkDestroyTargetSchema = Job;
@@ -4614,8 +4519,6 @@ export type ItemBulkMoveToStageTargetSchema = Job;
 export type ItemVersionRestoreTargetSchema = Job;
 export type UploadCreateTargetSchema = Job;
 export type UploadUpdateTargetSchema = Job;
-export type UploadBatchAddTagsTargetSchema = Job;
-export type UploadBatchDestroyTargetSchema = Job;
 export type UploadBulkTagTargetSchema = Job;
 export type UploadBulkSetUploadCollectionTargetSchema = Job;
 export type UploadBulkDestroyTargetSchema = Job;
@@ -8478,18 +8381,6 @@ export type UploadUpdateSchema = {
     | SsoUserData
     | OrganizationData;
   upload_collection?: UploadCollectionData | null;
-};
-
-/**
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_add_tags.schema` link.
- */
-export type UploadBatchAddTagsSchema = {
-  type?: UploadType;
-  /**
-   * Tags
-   */
-  tags: string[];
 };
 
 /**

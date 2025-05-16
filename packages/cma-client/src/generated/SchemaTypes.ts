@@ -783,36 +783,6 @@ export type ItemVersionInstancesHrefSchema = {
 };
 /**
  * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_destroy.hrefSchema` link.
- */
-export type ItemBatchDestroyHrefSchema = {
-  /**
-   * IDs of records to delete, comma separated (a maximum of 200 IDs are allowed per request)
-   */
-  'filter[ids]': string;
-};
-/**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_publish.hrefSchema` link.
- */
-export type ItemBatchPublishHrefSchema = {
-  /**
-   * IDs of records to publish, comma separated (a maximum of 200 IDs are allowed per request)
-   */
-  'filter[ids]': string;
-};
-/**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_unpublish.hrefSchema` link.
- */
-export type ItemBatchUnpublishHrefSchema = {
-  /**
-   * IDs of records to unpublish, comma separated (a maximum of 200 IDs are allowed per request)
-   */
-  'filter[ids]': string;
-};
-/**
- * This interface was referenced by `Item`'s JSON-Schema
  * via the `publish.schema` link.
  */
 export type ItemPublishSchema = {
@@ -931,28 +901,6 @@ export type UploadInstancesHrefSchema = {
      */
     limit?: number;
   };
-  [k: string]: unknown;
-};
-/**
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_add_tags.hrefSchema` link.
- */
-export type UploadBatchAddTagsHrefSchema = {
-  /**
-   * IDs to tag, comma separated
-   */
-  'filter[ids]'?: string;
-  [k: string]: unknown;
-};
-/**
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_destroy.hrefSchema` link.
- */
-export type UploadBatchDestroyHrefSchema = {
-  /**
-   * IDs to destroy, comma separated
-   */
-  'filter[ids]'?: string;
   [k: string]: unknown;
 };
 /**
@@ -8081,66 +8029,6 @@ export type ItemDestroyJobSchema = {
 
 /**
  * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_destroy.targetSchema` link.
- */
-export type ItemBatchDestroyTargetSchema = {
-  data: Job;
-};
-
-/**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_destroy.jobSchema` link.
- */
-export type ItemBatchDestroyJobSchema = {
-  data: unknown[];
-  meta: {
-    successful: number;
-    failed: number;
-  };
-};
-
-/**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_publish.targetSchema` link.
- */
-export type ItemBatchPublishTargetSchema = {
-  data: Job;
-};
-
-/**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_publish.jobSchema` link.
- */
-export type ItemBatchPublishJobSchema = {
-  data: unknown[];
-  meta: {
-    successful: number;
-    failed: number;
-  };
-};
-
-/**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_unpublish.targetSchema` link.
- */
-export type ItemBatchUnpublishTargetSchema = {
-  data: Job;
-};
-
-/**
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `batch_unpublish.jobSchema` link.
- */
-export type ItemBatchUnpublishJobSchema = {
-  data: unknown[];
-  meta: {
-    successful: number;
-    failed: number;
-  };
-};
-
-/**
- * This interface was referenced by `Item`'s JSON-Schema
  * via the `publish.targetSchema` link.
  */
 export type ItemPublishTargetSchema = {
@@ -8771,62 +8659,6 @@ export type UploadUpdateTargetSchema = {
  */
 export type UploadUpdateJobSchema = {
   data: Upload;
-};
-
-/**
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_add_tags.schema` link.
- */
-export type UploadBatchAddTagsSchema = {
-  data: {
-    type: UploadType;
-    attributes: {
-      /**
-       * Tags
-       */
-      tags: string[];
-    };
-  };
-};
-
-/**
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_add_tags.targetSchema` link.
- */
-export type UploadBatchAddTagsTargetSchema = {
-  data: Job;
-};
-
-/**
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_add_tags.jobSchema` link.
- */
-export type UploadBatchAddTagsJobSchema = {
-  data: unknown[];
-  meta: {
-    successful: number;
-    failed: number;
-  };
-};
-
-/**
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_destroy.targetSchema` link.
- */
-export type UploadBatchDestroyTargetSchema = {
-  data: Job;
-};
-
-/**
- * This interface was referenced by `Upload`'s JSON-Schema
- * via the `batch_destroy.jobSchema` link.
- */
-export type UploadBatchDestroyJobSchema = {
-  data: unknown[];
-  meta: {
-    successful: number;
-    failed: number;
-  };
 };
 
 /**
