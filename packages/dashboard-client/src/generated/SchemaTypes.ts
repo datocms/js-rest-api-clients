@@ -1883,34 +1883,36 @@ export type PerOwnerPricingBillingProfile = {
 };
 
 /**
- * JSON API attributes
+ * Billing profile info
  *
  * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
  * via the `definition` "attributes".
  */
 export type PerOwnerPricingBillingProfileAttributes = {
-  first_name: string;
-  last_name: string;
-  company: null | string;
-  card_last_4: string;
-  next_billing_at: string;
-  card_type: string;
-  card_expiry_month: number;
-  card_expiry_year: number;
-  address_line: string;
-  city: string;
-  email: string;
-  country: string;
-  state: string;
-  zip: string;
-  vat_number: null | string;
-  defaulting: boolean;
-  credits: number;
-  total_dues: number;
-  cf_cod_fiscale: null | string;
-  po_number: null | string;
-  unbilled_charges: number;
-  discount_percentage: number;
+  billing_profile: {
+    first_name: string;
+    last_name: string;
+    company: null | string;
+    card_last_4: string;
+    next_billing_at: string;
+    card_type: string;
+    card_expiry_month: number;
+    card_expiry_year: number;
+    address_line: string;
+    city: string;
+    email: string;
+    country: string;
+    state: string;
+    zip: string;
+    vat_number: null | string;
+    defaulting: boolean;
+    credits: number;
+    total_dues: number;
+    cf_cod_fiscale: null | string;
+    po_number: null | string;
+    unbilled_charges: number;
+    discount_percentage: number;
+  };
 };
 
 /**
@@ -1951,18 +1953,20 @@ export type PerOwnerPricingBillingProfileUpdateInfoSchema = {
     id?: PerOwnerPricingBillingProfileIdentity;
     type: PerOwnerPricingBillingProfileType;
     attributes: {
-      first_name: string;
-      last_name: string;
-      company: null | string;
-      address_line: string;
-      city: string;
-      email: string;
-      country: string;
-      state: string;
-      zip: string;
-      vat_number?: null | string;
-      cf_cod_fiscale?: null | string;
-      po_number?: null | string;
+      billing_profile: {
+        first_name: string;
+        last_name: string;
+        company: null | string;
+        address_line: string;
+        city: string;
+        email: string;
+        country: string;
+        state: string;
+        zip: string;
+        vat_number?: null | string;
+        cf_cod_fiscale?: null | string;
+        po_number?: null | string;
+      };
     };
   };
 };
@@ -2823,35 +2827,37 @@ export type PerSitePricingBillingProfile = {
 };
 
 /**
- * JSON API attributes
+ * Billing profile info
  *
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
  * via the `definition` "attributes".
  */
 export type PerSitePricingBillingProfileAttributes = {
-  first_name: string;
-  last_name: string;
-  company: null | string;
-  card_last_4: string;
-  next_billing_at: string;
-  card_type: string;
-  card_expiry_month: number;
-  card_expiry_year: number;
-  address_line: string;
-  city: string;
-  email: string;
-  country: string;
-  state: string;
-  zip: string;
-  vat_number: null | string;
-  defaulting: boolean;
-  credits: number;
-  total_dues: number;
-  cf_cod_fiscale: null | string;
-  coupons: string[];
-  is_active: boolean;
-  next_monthly_billing_at: null | string;
-  next_yearly_billing_at: null | string;
+  billing_profile: {
+    first_name: string;
+    last_name: string;
+    company: null | string;
+    card_last_4: string;
+    next_billing_at: string;
+    card_type: string;
+    card_expiry_month: number;
+    card_expiry_year: number;
+    address_line: string;
+    city: string;
+    email: string;
+    country: string;
+    state: string;
+    zip: string;
+    vat_number: null | string;
+    defaulting: boolean;
+    credits: number;
+    total_dues: number;
+    cf_cod_fiscale: null | string;
+    coupons: string[];
+    is_active: boolean;
+    next_monthly_billing_at: null | string;
+    next_yearly_billing_at: null | string;
+  };
 };
 
 /**
@@ -2915,17 +2921,19 @@ export type PerSitePricingBillingProfileUpdateInfoSchema = {
     id?: PerSitePricingBillingProfileIdentity;
     type: PerSitePricingBillingProfileType;
     attributes: {
-      first_name: string;
-      last_name: string;
-      company: null | string;
-      address_line: string;
-      city: string;
-      email: string;
-      country: string;
-      state: string;
-      zip: string;
-      vat_number?: null | string;
-      cf_cod_fiscale?: null | string;
+      billing_profile: {
+        first_name: string;
+        last_name: string;
+        company: null | string;
+        address_line: string;
+        city: string;
+        email: string;
+        country: string;
+        state: string;
+        zip: string;
+        vat_number?: null | string;
+        cf_cod_fiscale?: null | string;
+      };
     };
   };
 };
