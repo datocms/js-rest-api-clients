@@ -11166,6 +11166,7 @@ export type SiteActivateImprovedGqlVisibilityControlTargetSchema = Site;
 export type SiteActivateImprovedBooleanFieldsTargetSchema = Site;
 export type SiteActivateDraftModeAsDefaultTargetSchema = Site;
 export type SiteActivateImprovedValidationAtPublishingTargetSchema = Site;
+export type SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema = Site;
 export type SiteUpdateAssetsCdnDefaultSettingsTargetSchema = Site;
 /**
  * Meta attributes
@@ -11179,37 +11180,41 @@ export type SiteMeta = {
    */
   created_at: string;
   /**
-   * Whether the Improved API Timezone Management option is active or not
-   */
-  improved_timezone_management: boolean;
-  /**
-   * Whether the Improved API Hex Management option is active or not
-   */
-  improved_hex_management: boolean;
-  /**
-   * Whether the Improved GraphQL multi-locale fields option is active or not
-   */
-  improved_gql_multilocale_fields: boolean;
-  /**
-   * Whether the Improved GraphQL visibility control option is active or not
-   */
-  improved_gql_visibility_control: boolean;
-  /**
-   * Whether the Improved boolean fields option is active or not
-   */
-  improved_boolean_fields: boolean;
-  /**
    * The default value for the draft mode option in all the environment's models
    */
   draft_mode_default: boolean;
   /**
-   * Whether the Improved validation at publishing option is active or not
-   */
-  improved_validation_at_publishing: boolean;
-  /**
    * Whether the site has custom upload storage settings
    */
   custom_upload_storage_settings?: boolean;
+  /**
+   * Whether the [Improved API Timezone Management](https://www.datocms.com/product-updates/improved-timezone-management) opt-in product update is active or not
+   */
+  improved_timezone_management: boolean;
+  /**
+   * Whether the [Improved API Hex Management](https://www.datocms.com/product-updates/improved-hex-management) opt-in product update is active or not
+   */
+  improved_hex_management: boolean;
+  /**
+   * Whether the [Improved GraphQL multi-locale fields](https://www.datocms.com/product-updates/improved-gql-multilocale-fields) opt-in product update is active or not
+   */
+  improved_gql_multilocale_fields: boolean;
+  /**
+   * Whether the [Improved GraphQL visibility control](https://www.datocms.com/product-updates/improved-gql-visibility-control) opt-in product update is active or not
+   */
+  improved_gql_visibility_control: boolean;
+  /**
+   * Whether the [Improved boolean fields](https://www.datocms.com/product-updates/improved-boolean-fields) opt-in product update is active or not
+   */
+  improved_boolean_fields: boolean;
+  /**
+   * Whether the [Improved validation at publishing](https://www.datocms.com/product-updates/force-validations-on-records-when-publishing) opt-in product update is active or not
+   */
+  improved_validation_at_publishing: boolean;
+  /**
+   * Whether the [Improved exposure of inline blocks in the Content Delivery API](https://www.datocms.com/product-updates/improved-exposure-of-inline-blocks-in-cda) opt-in product update is active or not
+   */
+  improved_exposure_of_inline_blocks_in_cda: boolean;
 };
 
 /**
@@ -11534,23 +11539,23 @@ export type SiteUpdateSchema = {
   sso_default_role?: RoleData;
   meta?: {
     /**
-     * Whether the Improved API Timezone Management option is active or not
+     * Whether the [Improved API Timezone Management](https://www.datocms.com/product-updates/improved-timezone-management) opt-in product update is active or not
      */
     improved_timezone_management?: boolean;
     /**
-     * Whether the Improved API Hex Management option is active or not
+     * Whether the [Improved API Hex Management](https://www.datocms.com/product-updates/improved-hex-management) opt-in product update is active or not
      */
     improved_hex_management?: boolean;
     /**
-     * Whether the Improved GraphQL multi-locale fields option is active or not
+     * Whether the [Improved GraphQL multi-locale fields](https://www.datocms.com/product-updates/improved-gql-multilocale-fields) opt-in product update is active or not
      */
     improved_gql_multilocale_fields?: boolean;
     /**
-     * Whether the Improved GraphQL visibility control option is active or not
+     * Whether the [Improved GraphQL visibility control](https://www.datocms.com/product-updates/improved-gql-visibility-control) opt-in product update is active or not
      */
     improved_gql_visibility_control?: boolean;
     /**
-     * Whether the Improved boolean fields option is active or not
+     * Whether the [Improved boolean fields](https://www.datocms.com/product-updates/improved-boolean-fields) opt-in product update is active or not
      */
     improved_boolean_fields?: boolean;
     /**
@@ -11558,13 +11563,17 @@ export type SiteUpdateSchema = {
      */
     draft_mode_default?: boolean;
     /**
-     * Whether the Improved validation at publishing option is active or not
+     * Whether the [Improved validation at publishing](https://www.datocms.com/product-updates/force-validations-on-records-when-publishing) opt-in product update is active or not
      */
     improved_validation_at_publishing?: boolean;
     /**
      * Whether the site has custom upload storage settings
      */
     custom_upload_storage_settings?: boolean;
+    /**
+     * Whether the [Improved exposure of inline blocks in the Content Delivery API](https://www.datocms.com/product-updates/improved-exposure-of-inline-blocks-in-cda) opt-in product update is active or not
+     */
+    improved_exposure_of_inline_blocks_in_cda?: boolean;
   };
 };
 

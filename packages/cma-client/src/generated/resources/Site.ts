@@ -351,6 +351,43 @@ export default class Site extends BaseResource {
   }
 
   /**
+   * Activate having two different GraphQL fields for regular blocks and inline blocks
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_exposure_of_inline_blocks_in_cda
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  activateImprovedExposureOfInlineBlocksInCda() {
+    return this.rawActivateImprovedExposureOfInlineBlocksInCda().then((body) =>
+      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Activate having two different GraphQL fields for regular blocks and inline blocks
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_exposure_of_inline_blocks_in_cda
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawActivateImprovedExposureOfInlineBlocksInCda(): Promise<SchemaTypes.SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema> {
+    return this.client.request<SchemaTypes.SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema>(
+      {
+        method: 'PUT',
+        url: '/site/activate-improved-exposure-of-inline-blocks-in-cda',
+      },
+    );
+  }
+
+  /**
    * Update CDN settings default assets
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site/update_assets_cdn_default_settings

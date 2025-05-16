@@ -4631,6 +4631,21 @@
       },
       {
         "returnsCollection": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_exposure_of_inline_blocks_in_cda",
+        "rel": "activate_improved_exposure_of_inline_blocks_in_cda",
+        "urlTemplate": "/site/activate-improved-exposure-of-inline-blocks-in-cda",
+        "method": "PUT",
+        "comment": "Activate having two different GraphQL fields for regular blocks and inline blocks",
+        "urlPlaceholders": [],
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema",
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "activateImprovedExposureOfInlineBlocksInCda",
+        "rawName": "rawActivateImprovedExposureOfInlineBlocksInCda"
+      },
+      {
+        "returnsCollection": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/update_assets_cdn_default_settings",
         "rel": "update_assets_cdn_default_settings",
         "urlTemplate": "/site/assets-cdn-default-settings",
