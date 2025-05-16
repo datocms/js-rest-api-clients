@@ -5263,7 +5263,7 @@ export type ItemTypeReorderFieldsAndFieldsetsJobSchema = {
  * | Code                           | `structured_text`                                 |
  * | Built-in editors for the field | `structured_text`                                 |
  * | Required validators            | `structured_text_blocks`, `structured_text_links` |
- * | Other validators available     | `length`                                          |
+ * | Other validators available     | `length`, `structured_text_inline_blocks`         |
  *
  * </details>
  *
@@ -5589,6 +5589,17 @@ export type ItemTypeReorderFieldsAndFieldsetsJobSchema = {
  *
  * <details>
  * <summary><code>structured_text_blocks</code></summary>
+ *
+ * Only accept references to block records of the specified block models.
+ *
+ * | Parameter    | Type                    | Required | Description                    |
+ * | ------------ | ----------------------- | -------- | ------------------------------ |
+ * | `item_types` | `Array<Block Model ID>` | ✅        | Set of allowed Block Model IDs |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>structured_text_inline_blocks</code></summary>
  *
  * Only accept references to block records of the specified block models.
  *
