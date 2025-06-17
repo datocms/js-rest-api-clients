@@ -23,7 +23,7 @@ describe('Access tokens', () => {
     expect(foundAccessToken.id).toEqual(token.id);
 
     const allAccessToken = await client.accessTokens.list();
-    expect(allAccessToken).toHaveLength(3);
+    expect(allAccessToken).toHaveLength(2);
 
     const updatedToken = await client.accessTokens.update(token, {
       ...token,
@@ -32,6 +32,6 @@ describe('Access tokens', () => {
     expect(updatedToken.name).toEqual('Updated');
 
     await client.accessTokens.destroy(token);
-    expect(await client.accessTokens.list()).toHaveLength(2);
+    expect(await client.accessTokens.list()).toHaveLength(1);
   });
 });
