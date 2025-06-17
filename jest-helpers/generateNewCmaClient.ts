@@ -23,7 +23,7 @@ export async function generateNewCmaClient(
 
   return buildClient({
     ...extraConfig,
-    apiToken: site.readwrite_token!,
+    apiToken: site.access_token!,
     ...baseConfigOptions,
   });
 }
