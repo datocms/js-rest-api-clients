@@ -689,19 +689,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "per_site_pricing_billing_profile",
-          "attributes": [
-            "first_name",
-            "last_name",
-            "company",
-            "address_line",
-            "city",
-            "email",
-            "country",
-            "state",
-            "zip",
-            "vat_number",
-            "cf_cod_fiscale"
-          ],
+          "attributes": ["billing_profile"],
           "relationships": []
         },
         "queryParamsRequired": false,
@@ -783,20 +771,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "per_owner_pricing_billing_profile",
-          "attributes": [
-            "first_name",
-            "last_name",
-            "company",
-            "address_line",
-            "city",
-            "email",
-            "country",
-            "state",
-            "zip",
-            "vat_number",
-            "cf_cod_fiscale",
-            "po_number"
-          ],
+          "attributes": ["billing_profile"],
           "relationships": []
         },
         "queryParamsRequired": false,
