@@ -7305,6 +7305,10 @@ export type ItemMeta = {
    * Workflow stage in which the item is
    */
   stage: null | string;
+  /**
+   * When the records can be organized in a tree, indicates whether the record has children
+   */
+  has_children: null | boolean;
 };
 
 /**
@@ -7562,6 +7566,10 @@ export type ItemUpdateSchema = {
        * The new stage to move the record to
        */
       stage?: string | null;
+      /**
+       * Whether the record has children or not
+       */
+      has_children?: null | boolean;
     };
     relationships?: {
       /**
