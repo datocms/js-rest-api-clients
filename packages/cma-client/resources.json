@@ -2700,7 +2700,7 @@
         "rel": "create",
         "urlTemplate": "/upload-requests",
         "method": "POST",
-        "comment": "Request a new upload",
+        "comment": "Request a new permission to upload a file",
         "urlPlaceholders": [],
         "requestBodyType": "UploadRequestCreateSchema",
         "optionalRequestBody": false,

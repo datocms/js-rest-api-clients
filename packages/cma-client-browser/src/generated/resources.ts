@@ -21,7 +21,7 @@ export const Item = Resources.Item;
 export const ItemVersion = Resources.ItemVersion;
 export { default as Upload } from '../resources/Upload';
 export const UploadRequest = Resources.UploadRequest;
-export const UploadTrack = Resources.UploadTrack;
+export { default as UploadTrack } from '../resources/UploadTrack';
 export const ScheduledPublication = Resources.ScheduledPublication;
 export const ScheduledUnpublishing = Resources.ScheduledUnpublishing;
 export const SearchResult = Resources.SearchResult;

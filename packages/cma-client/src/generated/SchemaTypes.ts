@@ -8229,7 +8229,7 @@ export type ItemBulkMoveToStageJobSchema = {
 };
 
 /**
- * Every file you upload to DatoCMS will be retrievable from this endpoint.
+ * Each media object you upload to the Media Area of your DatoCMS project is represented as an `upload` entity.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "upload".
@@ -8820,7 +8820,7 @@ export type UploadBulkDestroyJobSchema = {
 };
 
 /**
- * To upload a file in DatoCMS, first you need to obtain an upload permission through this API endpoint. The response will contain the S3 URL where you will be able to upload the file with a direct PUT request.
+ * To upload a file with the Content Management API, first you need to obtain an upload permission. The `upload_request` entity contains the S3-like URL where you will be able to upload the file with a raw/binary PUT request.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "upload_request".
@@ -8839,7 +8839,7 @@ export type UploadRequest = {
  */
 export type UploadRequestAttributes = {
   /**
-   * The URL to use to upload the file with a direct PUT request
+   * The URL to use to upload the file with a raw/binary PUT request
    */
   url: string;
   /**

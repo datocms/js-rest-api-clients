@@ -7,7 +7,7 @@ export default class UploadRequest extends BaseResource {
   static readonly TYPE = 'upload_request' as const;
 
   /**
-   * Request a new upload
+   * Request a new permission to upload a file
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-request/create
    *
@@ -29,7 +29,7 @@ export default class UploadRequest extends BaseResource {
   }
 
   /**
-   * Request a new upload
+   * Request a new permission to upload a file
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-request/create
    *
