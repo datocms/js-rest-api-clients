@@ -1194,7 +1194,7 @@
         "rel": "instances",
         "urlTemplate": "/item-types/${itemTypeId}/fields",
         "method": "GET",
-        "comment": "List all fields",
+        "comment": "List all fields of a model/block",
         "urlPlaceholders": [
           {
             "variableName": "itemTypeId",
@@ -1408,7 +1408,7 @@
         "rel": "instances",
         "urlTemplate": "/item-types/${itemTypeId}/fieldsets",
         "method": "GET",
-        "comment": "List all fieldsets",
+        "comment": "List all fieldsets of a model/block",
         "urlPlaceholders": [
           {
             "variableName": "itemTypeId",

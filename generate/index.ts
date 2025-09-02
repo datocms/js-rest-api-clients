@@ -75,13 +75,21 @@ async function generate(prefix: string, hyperschemaUrl: string) {
 
   await writeTemplate(
     'SchemaTypes.ts',
-    { typings: schemaInfo.typings },
+    {
+      typings: schemaInfo.typings,
+      simpleVariant: false,
+      isCma: prefix === 'cma',
+    },
     `./packages/${prefix}-client/src/generated/SchemaTypes.ts`,
   );
 
   await writeTemplate(
     'SchemaTypes.ts',
-    { typings: schemaInfo.simpleTypings },
+    {
+      typings: schemaInfo.simpleTypings,
+      simpleVariant: true,
+      isCma: prefix === 'cma',
+    },
     `./packages/${prefix}-client/src/generated/SimpleSchemaTypes.ts`,
   );
 

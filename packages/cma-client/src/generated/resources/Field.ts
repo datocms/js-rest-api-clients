@@ -122,7 +122,7 @@ export default class Field extends BaseResource {
   }
 
   /**
-   * List all fields
+   * List all fields of a model/block
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/instances
    *
@@ -138,7 +138,7 @@ export default class Field extends BaseResource {
   }
 
   /**
-   * List all fields
+   * List all fields of a model/block
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/instances
    *

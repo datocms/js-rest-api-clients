@@ -1,9 +1,15 @@
 export { ApiError, LogLevel, TimeoutError } from '@datocms/rest-client-utils';
-export * from './buildBlockRecord';
 export * from './buildClient';
 export { Client } from './generated/Client';
 export type { ClientConfigOptions } from './generated/Client';
 export * as Resources from './generated/resources';
 export * as SchemaTypes from './generated/SchemaTypes';
 export * as SimpleSchemaTypes from './generated/SimpleSchemaTypes';
-export * from './idUtils';
+export * from './utilities/blocks';
+export * from './utilities/buildBlockRecord';
+export * from './utilities/fieldsContainingReferences';
+export * from './utilities/fieldValueLocalization';
+export * from './utilities/id';
+export * from './utilities/recursiveBlocks';
+export * from './utilities/schemaRepository';
+export * from './utilities/structuredText';

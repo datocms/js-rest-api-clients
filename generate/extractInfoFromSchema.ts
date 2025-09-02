@@ -429,6 +429,20 @@ async function schemaToTs(schema: any) {
   return result.replace(/export interface ([^ ]+) {/g, 'export type $1 = {');
 }
 
+function convertFieldTypesToRaw(typings: string) {
+  return typings
+    .replace('export type Field ', 'export type RawField ')
+    .replace('export type FieldAttributes ', 'export type RawFieldAttributes ')
+    .replace(
+      'export type FieldCreateSchema ',
+      'export type RawFieldCreateSchema ',
+    )
+    .replace(
+      'export type FieldUpdateSchema ',
+      'export type RawFieldUpdateSchema ',
+    );
+}
+
 export default async function extractInfoFromSchema(
   hyperschemaUrl: string,
   isCma: boolean,
@@ -452,7 +466,9 @@ export default async function extractInfoFromSchema(
         generateResourceInfo(isCma, resource, schema),
       )
       .filter((resourceInfo) => resourceInfo.endpoints.length > 0),
-    simpleTypings: await schemaToTs(simplifiedRawSchema),
-    typings: typings,
+    simpleTypings: convertFieldTypesToRaw(
+      await schemaToTs(simplifiedRawSchema),
+    ),
+    typings: convertFieldTypesToRaw(typings),
   };
 }

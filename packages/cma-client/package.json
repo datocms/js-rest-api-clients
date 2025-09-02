@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "@datocms/rest-client-utils": "^5.0.0",
+    "datocms-structured-text-utils": "^5.0.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

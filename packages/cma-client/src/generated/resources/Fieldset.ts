@@ -110,7 +110,7 @@ export default class Fieldset extends BaseResource {
   }
 
   /**
-   * List all fieldsets
+   * List all fieldsets of a model/block
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/instances
    *
@@ -126,7 +126,7 @@ export default class Fieldset extends BaseResource {
   }
 
   /**
-   * List all fieldsets
+   * List all fieldsets of a model/block
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/instances
    *
