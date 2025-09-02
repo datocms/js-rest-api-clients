@@ -278,12 +278,7 @@ export type FieldAttributes = GenericFieldAttributes<RawFieldAttributes>;
 
 export type Field = RawField;
 
-/**
- * Helper type to conditionally handle default values based on localization for field creation
- */
-type FieldCreateDefaultValue<T> = T | Record<string, T> | undefined;
-
-type FieldCreateConfigForFieldType<
+type LocalizedFieldCreateConfigForFieldType<
   SourceType,
   FieldType extends RawFieldAttributes['field_type'],
   FieldValue,
@@ -291,13 +286,53 @@ type FieldCreateConfigForFieldType<
   FieldAppearance,
 > = Omit<
   SourceType,
-  'field_type' | 'default_value' | 'validators' | 'appearance'
+  'field_type' | 'default_value' | 'validators' | 'appearance' | 'localized'
 > & {
   field_type: FieldType;
-  default_value?: FieldCreateDefaultValue<FieldValue>;
+  localized: true;
+  default_value?: Record<string, FieldValue>;
   validators?: FieldValidators;
   appearance?: FieldAppearanceConfig<FieldAppearance>;
 };
+
+type NonLocalizedFieldCreateConfigForFieldType<
+  SourceType,
+  FieldType extends RawFieldAttributes['field_type'],
+  FieldValue,
+  FieldValidators,
+  FieldAppearance,
+> = Omit<
+  SourceType,
+  'field_type' | 'default_value' | 'validators' | 'appearance' | 'localized'
+> & {
+  field_type: FieldType;
+  localized?: false;
+  default_value?: FieldValue;
+  validators?: FieldValidators;
+  appearance?: FieldAppearanceConfig<FieldAppearance>;
+};
+
+type FieldCreateConfigForFieldType<
+  SourceType,
+  FieldType extends RawFieldAttributes['field_type'],
+  FieldValue,
+  FieldValidators,
+  FieldAppearance,
+> =
+  | LocalizedFieldCreateConfigForFieldType<
+      SourceType,
+      FieldType,
+      FieldValue,
+      FieldValidators,
+      FieldAppearance
+    >
+  | NonLocalizedFieldCreateConfigForFieldType<
+      SourceType,
+      FieldType,
+      FieldValue,
+      FieldValidators,
+      FieldAppearance
+    >;
 
 type FieldCreateConfig<SourceType> =
   | FieldCreateConfigForFieldType<
