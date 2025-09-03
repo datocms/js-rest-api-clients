@@ -38,16 +38,89 @@ import type * as SimpleSchemaTypes from '../generated/SimpleSchemaTypes';
  */
 
 /**
- * In DatoCMS, fields can be localized. In this scenario, their value contains values 
+ * Represents a localized field value in DatoCMS.
+ *
+ * In DatoCMS, fields can be localized. In this scenario, their value contains values
  * for various locales structured as an object, such as
- `{ "en": "Hello", "it": "Ciao" }`)
+ * `{ "en": "Hello", "it": "Ciao" }`
  */
 export type LocalizedFieldValue = Record<string, unknown>;
 
+/**
+ * Determines whether a DatoCMS field is localized or not.
+ *
+ * This function handles both full Schema field objects and simplified Schema field objects
+ * by checking the appropriate property based on the object structure.
+ *
+ * @param field - The DatoCMS field definition (either full or simple schema)
+ * @returns true if the field is localized, false otherwise
+ */
 export function isLocalized(
   field: SchemaTypes.Field | SimpleSchemaTypes.Field,
 ): boolean {
   return 'attributes' in field ? field.attributes.localized : field.localized;
+}
+
+/**
+ * A normalized entry that represents a single value from either a localized or non-localized field.
+ *
+ * For localized fields, each locale produces one entry with `locale` set to the locale code (e.g., "en", "it").
+ * For non-localized fields, there's one entry with `locale` set to `undefined`.
+ *
+ * This uniform structure allows the same processing logic to work with both field types.
+ */
+export type PossiblyLocalizedEntry = {
+  locale: string | undefined;
+  value: unknown;
+};
+
+/**
+ * Converts a field value (localized or non-localized) into a uniform array of entries.
+ *
+ * This function normalizes the handling of field values by converting them into a consistent
+ * array format, regardless of whether the field is localized or not.
+ *
+ * @param field - The DatoCMS field definition that determines localization behavior
+ * @param value - The field value to convert (either a localized object or direct value)
+ * @returns Array of entries where each entry contains a locale (string for localized, undefined for non-localized) and the corresponding value
+ */
+export function fieldValueToPossiblyLocalizedEntries(
+  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  value: unknown,
+) {
+  if (isLocalized(field)) {
+    const localizedValue = value as LocalizedFieldValue;
+
+    return Object.entries(localizedValue).map<PossiblyLocalizedEntry>(
+      ([locale, value]) => ({ locale, value }),
+    );
+  }
+
+  return [{ locale: undefined, value }];
+}
+
+/**
+ * Converts an array of possibly localized entries back into the appropriate field value format.
+ *
+ * This function is the inverse of `fieldValueToPossiblyLocalizedEntries`. It takes a uniform
+ * array of entries and converts them back to either a localized object or a direct value,
+ * depending on the field's localization setting.
+ *
+ * @param field - The DatoCMS field definition that determines the output format
+ * @param possiblyLocalizedEntries - Array of entries to convert back to field value format
+ * @returns Either a localized object (for localized fields) or the direct value (for non-localized fields)
+ */
+export function possiblyLocalizedEntriesToFieldValue(
+  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  possiblyLocalizedEntries: PossiblyLocalizedEntry[],
+) {
+  if (isLocalized(field)) {
+    return Object.fromEntries(
+      possiblyLocalizedEntries.map(({ locale, value }) => [locale, value]),
+    );
+  }
+
+  return possiblyLocalizedEntries[0]?.value;
 }
 
 /**
@@ -66,18 +139,12 @@ export function mapLocalizedFieldValues<T>(
   value: unknown,
   mapFn: (locale: string | undefined, localeValue: unknown) => T,
 ) {
-  if (isLocalized(field)) {
-    const localizedValue = value as LocalizedFieldValue;
-
-    return Object.fromEntries(
-      Object.entries(localizedValue).map(([locale, value]) => [
-        locale,
-        mapFn(locale, value),
-      ]),
-    );
-  }
-
-  return mapFn(undefined, value);
+  const entries = fieldValueToPossiblyLocalizedEntries(field, value);
+  const mappedEntries = entries.map(({ locale, value }) => ({
+    locale,
+    value: mapFn(locale, value),
+  }));
+  return possiblyLocalizedEntriesToFieldValue(field, mappedEntries);
 }
 
 /**
@@ -96,19 +163,14 @@ export async function mapLocalizedFieldValuesAsync<T>(
   value: unknown,
   mapFn: (locale: string | undefined, localeValue: unknown) => Promise<T>,
 ) {
-  if (isLocalized(field)) {
-    const localizedValue = value as LocalizedFieldValue;
-
-    return Object.fromEntries(
-      await Promise.all(
-        Object.entries(localizedValue).map<Promise<[string, unknown]>>(
-          async ([locale, value]) => [locale, await mapFn(locale, value)],
-        ),
-      ),
-    );
-  }
-
-  return await mapFn(undefined, value);
+  const entries = fieldValueToPossiblyLocalizedEntries(field, value);
+  const mappedEntries = await Promise.all(
+    entries.map(async ({ locale, value }) => ({
+      locale,
+      value: await mapFn(locale, value),
+    })),
+  );
+  return possiblyLocalizedEntriesToFieldValue(field, mappedEntries);
 }
 
 /**
@@ -126,17 +188,16 @@ export function filterLocalizedFieldValues(
   value: unknown,
   filterFn: (locale: string | undefined, localeValue: unknown) => boolean,
 ) {
-  if (isLocalized(field)) {
-    const localizedValue = value as LocalizedFieldValue;
+  const entries = fieldValueToPossiblyLocalizedEntries(field, value);
+  const filteredEntries = entries.filter(({ locale, value }) =>
+    filterFn(locale, value),
+  );
 
-    return Object.fromEntries(
-      Object.entries(localizedValue).filter(([locale, value]) =>
-        filterFn(locale, value),
-      ),
-    );
+  if (isLocalized(field)) {
+    return possiblyLocalizedEntriesToFieldValue(field, filteredEntries);
   }
 
-  return filterFn(undefined, value) ? value : undefined;
+  return filteredEntries.length > 0 ? filteredEntries[0]?.value : undefined;
 }
 
 /**
@@ -157,27 +218,24 @@ export async function filterLocalizedFieldValuesAsync(
     localeValue: unknown,
   ) => Promise<boolean>,
 ) {
+  const entries = fieldValueToPossiblyLocalizedEntries(field, value);
+  const results = await Promise.all(
+    entries.map(async ({ locale, value }) => ({
+      locale,
+      value,
+      passed: await filterFn(locale, value),
+    })),
+  );
+
+  const filteredEntries = results
+    .filter(({ passed }) => passed)
+    .map(({ locale, value }) => ({ locale, value }));
+
   if (isLocalized(field)) {
-    const localizedValue = value as LocalizedFieldValue;
-
-    const results = await Promise.all(
-      Object.entries(localizedValue).map<Promise<[string, unknown, boolean]>>(
-        async ([locale, value]) => [
-          locale,
-          value,
-          await filterFn(locale, value),
-        ],
-      ),
-    );
-
-    return Object.fromEntries(
-      results
-        .filter(([, , passed]) => passed)
-        .map(([locale, value]) => [locale, value]),
-    );
+    return possiblyLocalizedEntriesToFieldValue(field, filteredEntries);
   }
 
-  return (await filterFn(undefined, value)) ? value : undefined;
+  return filteredEntries.length > 0 ? filteredEntries[0]?.value : undefined;
 }
 
 /**
@@ -195,15 +253,8 @@ export function someLocalizedFieldValues(
   value: unknown,
   testFn: (locale: string | undefined, localeValue: unknown) => boolean,
 ): boolean {
-  if (isLocalized(field)) {
-    const localizedValue = value as LocalizedFieldValue;
-
-    return Object.entries(localizedValue).some(([locale, value]) =>
-      testFn(locale, value),
-    );
-  }
-
-  return testFn(undefined, value);
+  const entries = fieldValueToPossiblyLocalizedEntries(field, value);
+  return entries.some(({ locale, value }) => testFn(locale, value));
 }
 
 /**
@@ -224,19 +275,11 @@ export async function someLocalizedFieldValuesAsync(
     localeValue: unknown,
   ) => Promise<boolean>,
 ): Promise<boolean> {
-  if (isLocalized(field)) {
-    const localizedValue = value as LocalizedFieldValue;
-
-    const results = await Promise.all(
-      Object.entries(localizedValue).map(
-        async ([locale, value]) => await testFn(locale, value),
-      ),
-    );
-
-    return results.some((result) => result);
-  }
-
-  return await testFn(undefined, value);
+  const entries = fieldValueToPossiblyLocalizedEntries(field, value);
+  const results = await Promise.all(
+    entries.map(({ locale, value }) => testFn(locale, value)),
+  );
+  return results.some((result) => result);
 }
 
 /**
@@ -300,14 +343,9 @@ export function visitLocalizedFieldValues(
   value: unknown,
   visitFn: (locale: string | undefined, localeValue: unknown) => void,
 ): void {
-  if (isLocalized(field)) {
-    const localizedValue = value as LocalizedFieldValue;
-
-    for (const [locale, value] of Object.entries(localizedValue)) {
-      visitFn(locale, value);
-    }
-  } else {
-    visitFn(undefined, value);
+  const entries = fieldValueToPossiblyLocalizedEntries(field, value);
+  for (const { locale, value } of entries) {
+    visitFn(locale, value);
   }
 }
 
@@ -325,15 +363,6 @@ export async function visitLocalizedFieldValuesAsync(
   value: unknown,
   visitFn: (locale: string | undefined, localeValue: unknown) => Promise<void>,
 ): Promise<void> {
-  if (isLocalized(field)) {
-    const localizedValue = value as LocalizedFieldValue;
-
-    await Promise.all(
-      Object.entries(localizedValue).map(
-        async ([locale, value]) => await visitFn(locale, value),
-      ),
-    );
-  } else {
-    await visitFn(undefined, value);
-  }
+  const entries = fieldValueToPossiblyLocalizedEntries(field, value);
+  await Promise.all(entries.map(({ locale, value }) => visitFn(locale, value)));
 }

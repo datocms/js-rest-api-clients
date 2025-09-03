@@ -76,7 +76,7 @@ function hasChildren(node: unknown): node is { children: readonly unknown[] } {
  * @param node - The root node to start visiting from
  * @param visitor - Synchronous function called for each node. Receives the node, its parent, and path through the Structured Text tree
  */
-export function visitNodes<T>(
+export function forEachNode<T>(
   node: T,
   visitor: NodePredicate<T, void>,
   parent: AllNodesInTree<T> | null = null,
@@ -89,7 +89,7 @@ export function visitNodes<T>(
   if (hasChildren(node)) {
     for (let index = 0; index < node.children.length; index++) {
       const child = node.children[index];
-      visitNodes(child as T, visitor, node as AllNodesInTree<T>, [
+      forEachNode(child as T, visitor, node as AllNodesInTree<T>, [
         ...path,
         'children',
         index,
@@ -107,7 +107,7 @@ export function visitNodes<T>(
  * @param visitor - Asynchronous function called for each node. Receives the node, its parent, and path through the Structured Text tree
  * @returns Promise that resolves when all nodes have been visited
  */
-export async function visitNodesAsync<T>(
+export async function forEachNodeAsync<T>(
   node: T,
   visitor: NodePredicate<T, Promise<void>>,
   parent: AllNodesInTree<T> | null = null,
@@ -120,7 +120,7 @@ export async function visitNodesAsync<T>(
   if (hasChildren(node)) {
     for (let index = 0; index < node.children.length; index++) {
       const child = node.children[index];
-      await visitNodesAsync(child as T, visitor, node as AllNodesInTree<T>, [
+      await forEachNodeAsync(child as T, visitor, node as AllNodesInTree<T>, [
         ...path,
         'children',
         index,
@@ -232,7 +232,7 @@ export function findAllNodes<T>(
 ): Array<{ node: AllNodesInTree<T>; path: TreePath }> {
   const results: Array<{ node: AllNodesInTree<T>; path: TreePath }> = [];
 
-  visitNodes(
+  forEachNode(
     node,
     (currentNode, currentParent, currentPath) => {
       if (predicate(currentNode, currentParent, currentPath)) {
@@ -263,7 +263,7 @@ export async function findAllNodesAsync<T>(
 ): Promise<Array<{ node: AllNodesInTree<T>; path: TreePath }>> {
   const results: Array<{ node: AllNodesInTree<T>; path: TreePath }> = [];
 
-  await visitNodesAsync(
+  await forEachNodeAsync(
     node,
     async (currentNode, currentParent, currentPath) => {
       if (await predicate(currentNode, currentParent, currentPath)) {
@@ -393,7 +393,7 @@ export function reduceNodes<T, R>(
 ): R {
   let accumulator = initialValue;
 
-  visitNodes(
+  forEachNode(
     node,
     (currentNode, currentParent, currentPath) => {
       accumulator = reducer(
@@ -436,7 +436,7 @@ export async function reduceNodesAsync<T, R>(
 ): Promise<R> {
   let accumulator = initialValue;
 
-  await visitNodesAsync(
+  await forEachNodeAsync(
     node,
     async (currentNode, currentParent, currentPath) => {
       accumulator = await reducer(

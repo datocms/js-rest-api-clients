@@ -71,7 +71,7 @@ export type RichTextFieldValueAsRequest = BlockItemInARequest[] | null;
 /**
  * Modular Content field value with nested blocks - array of fully populated block objects
  */
-export type RichTextFieldValueWithResolvedBlocks = SchemaTypes.Item[] | null;
+export type RichTextFieldValueWithNestedBlocks = SchemaTypes.Item[] | null;
 
 /**
  * =============================================================================
@@ -117,9 +117,9 @@ export function isRichTextFieldValueAsRequest(
  * Type guard for Modular Content field values with nested blocks (?nested=true format).
  * Ensures all blocks are full SchemaTypes.Item objects with complete data.
  */
-export function isRichTextFieldValueWithResolvedBlocks(
+export function isRichTextFieldValueWithNestedBlocks(
   value: unknown,
-): value is RichTextFieldValueWithResolvedBlocks {
+): value is RichTextFieldValueWithNestedBlocks {
   if (value === null) return true;
 
   if (!Array.isArray(value)) return false;

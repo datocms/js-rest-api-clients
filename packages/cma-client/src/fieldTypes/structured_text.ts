@@ -94,35 +94,35 @@ export type DocumentAsRequest = {
 /**
  * Variant of 'block' structured text node for ?nested=true API responses
  */
-export type BlockWithResolvedBlocks = Omit<Block, 'item'> & {
+export type BlockWithNestedBlocks = Omit<Block, 'item'> & {
   item: SchemaTypes.Item;
 };
 
 /**
  * Variant of 'inlineBlock' structured text node for ?nested=true API responses
  */
-export type InlineBlockWithResolvedBlocks = Omit<InlineBlock, 'item'> & {
+export type InlineBlockWithNestedBlocks = Omit<InlineBlock, 'item'> & {
   item: SchemaTypes.Item;
 };
 
 /**
  * Generic type to transform a node that might be containing a 'block' or 'inlineBlock' as a (deeply nested) children to it's variant for ?nested=true API responses
  */
-export type NodeWithResolvedBlocks<T> = WithMappedChildren<
+export type NodeWithNestedBlocks<T> = WithMappedChildren<
   T,
   DeepMapVariants<
     T extends { children: infer C } ? C : never,
-    BlockWithResolvedBlocks,
-    InlineBlockWithResolvedBlocks
+    BlockWithNestedBlocks,
+    InlineBlockWithNestedBlocks
   >
 >;
 
 /**
  * Variant of Structured Text document for ?nested=true API responses
  */
-export type DocumentWithResolvedBlocks = {
+export type DocumentWithNestedBlocks = {
   schema: 'dast';
-  document: NodeWithResolvedBlocks<Root>;
+  document: NodeWithNestedBlocks<Root>;
 };
 
 /**
@@ -137,8 +137,8 @@ export type DocumentWithResolvedBlocks = {
  */
 export type StructuredTextFieldValue = Document | null;
 export type StructuredTextFieldValueAsRequest = DocumentAsRequest | null;
-export type StructuredTextFieldValueWithResolvedBlocks =
-  DocumentWithResolvedBlocks | null;
+export type StructuredTextFieldValueWithNestedBlocks =
+  DocumentWithNestedBlocks | null;
 
 /**
  * Helper function to validate if a value has the expected structured text document structure.
@@ -165,10 +165,10 @@ function validateAllBlockNodes(
     node:
       | Block
       | BlockAsRequest
-      | BlockWithResolvedBlocks
+      | BlockWithNestedBlocks
       | InlineBlock
       | InlineBlockAsRequest
-      | InlineBlockWithResolvedBlocks,
+      | InlineBlockWithNestedBlocks,
   ) => boolean,
 ): boolean {
   return everyNode(node, (currentNode) => {
@@ -232,9 +232,9 @@ export function isStructuredTextFieldValueAsRequest(
  * Type guard for structured text field values with nested blocks (?nested=true format).
  * Ensures all block/inlineBlock nodes have full SchemaTypes.Item objects.
  */
-export function isStructuredTextFieldValueWithResolvedBlocks(
+export function isStructuredTextFieldValueWithNestedBlocks(
   value: unknown,
-): value is StructuredTextFieldValueWithResolvedBlocks {
+): value is StructuredTextFieldValueWithNestedBlocks {
   if (value === null) return true;
 
   if (!isValidDocumentStructure(value)) {

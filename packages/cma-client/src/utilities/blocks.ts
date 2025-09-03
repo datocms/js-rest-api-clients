@@ -26,13 +26,13 @@ import type {
   BlockItemInARequest,
   RichTextFieldValue,
   RichTextFieldValueAsRequest,
-  RichTextFieldValueWithResolvedBlocks,
+  RichTextFieldValueWithNestedBlocks,
   SingleBlockFieldValue,
   SingleBlockFieldValueAsRequest,
-  SingleBlockFieldValueWithResolvedBlocks,
+  SingleBlockFieldValueWithNestedBlocks,
   StructuredTextFieldValue,
   StructuredTextFieldValueAsRequest,
-  StructuredTextFieldValueWithResolvedBlocks,
+  StructuredTextFieldValueWithNestedBlocks,
 } from '../fieldTypes';
 import type * as SchemaTypes from '../generated/SchemaTypes';
 import type * as SimpleSchemaTypes from '../generated/SimpleSchemaTypes';
@@ -49,15 +49,15 @@ import {
 type PossibleRichTextValue =
   | RichTextFieldValue
   | RichTextFieldValueAsRequest
-  | RichTextFieldValueWithResolvedBlocks;
+  | RichTextFieldValueWithNestedBlocks;
 type PossibleSingleBlockValue =
   | SingleBlockFieldValue
   | SingleBlockFieldValueAsRequest
-  | SingleBlockFieldValueWithResolvedBlocks;
+  | SingleBlockFieldValueWithNestedBlocks;
 type PossibleStructuredTextValue =
   | StructuredTextFieldValue
   | StructuredTextFieldValueAsRequest
-  | StructuredTextFieldValueWithResolvedBlocks;
+  | StructuredTextFieldValueWithNestedBlocks;
 
 function getFieldType(field: SchemaTypes.Field | SimpleSchemaTypes.Field) {
   return 'attributes' in field ? field.attributes.field_type : field.field_type;

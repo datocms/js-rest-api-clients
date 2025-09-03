@@ -77,7 +77,7 @@ export type SingleBlockFieldValueAsRequest = BlockItemInARequest | null;
 /**
  * Single Block field value with nested block - fully populated block object
  */
-export type SingleBlockFieldValueWithResolvedBlocks = SchemaTypes.Item | null;
+export type SingleBlockFieldValueWithNestedBlocks = SchemaTypes.Item | null;
 
 /**
  * =============================================================================
@@ -159,9 +159,9 @@ export function isSingleBlockFieldValueAsRequest(
  * Type guard for Single Block field values with nested blocks (?nested=true format).
  * Ensures block is a full SchemaTypes.Item object with complete data.
  */
-export function isSingleBlockFieldValueWithResolvedBlocks(
+export function isSingleBlockFieldValueWithNestedBlocks(
   value: unknown,
-): value is SingleBlockFieldValueWithResolvedBlocks {
+): value is SingleBlockFieldValueWithNestedBlocks {
   if (value === null) return true;
 
   // Must be a full object with ID (nested format always includes complete block objects)
