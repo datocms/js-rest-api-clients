@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class ItemType extends BaseResource {
   static readonly TYPE = 'item_type' as const;
@@ -15,11 +15,11 @@ export default class ItemType extends BaseResource {
    * @throws {TimeoutError}
    */
   create(
-    body: SimpleSchemaTypes.ItemTypeCreateSchema,
-    queryParams?: SimpleSchemaTypes.ItemTypeCreateHrefSchema,
+    body: ApiTypes.ItemTypeCreateSchema,
+    queryParams?: ApiTypes.ItemTypeCreateHrefSchema,
   ) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.ItemTypeCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.ItemTypeCreateSchema>(body, {
         type: 'item_type',
         attributes: [
           'name',
@@ -50,9 +50,7 @@ export default class ItemType extends BaseResource {
       }),
       queryParams,
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeCreateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.ItemTypeCreateTargetSchema>(body),
     );
   }
 
@@ -65,10 +63,10 @@ export default class ItemType extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.ItemTypeCreateSchema,
-    queryParams?: SchemaTypes.ItemTypeCreateHrefSchema,
-  ): Promise<SchemaTypes.ItemTypeCreateTargetSchema> {
-    return this.client.request<SchemaTypes.ItemTypeCreateTargetSchema>({
+    body: RawApiTypes.ItemTypeCreateSchema,
+    queryParams?: RawApiTypes.ItemTypeCreateHrefSchema,
+  ): Promise<RawApiTypes.ItemTypeCreateTargetSchema> {
+    return this.client.request<RawApiTypes.ItemTypeCreateTargetSchema>({
       method: 'POST',
       url: '/item-types',
       body,
@@ -85,12 +83,12 @@ export default class ItemType extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    itemTypeId: string | SimpleSchemaTypes.ItemTypeData,
-    body: SimpleSchemaTypes.ItemTypeUpdateSchema,
+    itemTypeId: string | ApiTypes.ItemTypeData,
+    body: ApiTypes.ItemTypeUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(itemTypeId),
-      Utils.serializeRequestBody<SchemaTypes.ItemTypeUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.ItemTypeUpdateSchema>(body, {
         id: Utils.toId(itemTypeId),
         type: 'item_type',
         attributes: [
@@ -122,9 +120,7 @@ export default class ItemType extends BaseResource {
         ],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeUpdateJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.ItemTypeUpdateJobSchema>(body),
     );
   }
 
@@ -138,9 +134,9 @@ export default class ItemType extends BaseResource {
    */
   rawUpdate(
     itemTypeId: string,
-    body: SchemaTypes.ItemTypeUpdateSchema,
-  ): Promise<SchemaTypes.ItemTypeUpdateJobSchema> {
-    return this.client.request<SchemaTypes.ItemTypeUpdateJobSchema>({
+    body: RawApiTypes.ItemTypeUpdateSchema,
+  ): Promise<RawApiTypes.ItemTypeUpdateJobSchema> {
+    return this.client.request<RawApiTypes.ItemTypeUpdateJobSchema>({
       method: 'PUT',
       url: `/item-types/${itemTypeId}`,
       body,
@@ -157,7 +153,7 @@ export default class ItemType extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ItemTypeInstancesTargetSchema>(
         body,
       ),
     );
@@ -171,8 +167,8 @@ export default class ItemType extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.ItemTypeInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.ItemTypeInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.ItemTypeInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.ItemTypeInstancesTargetSchema>({
       method: 'GET',
       url: '/item-types',
     });
@@ -186,11 +182,9 @@ export default class ItemType extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
+  find(itemTypeId: string | ApiTypes.ItemTypeData) {
     return this.rawFind(Utils.toId(itemTypeId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.ItemTypeSelfTargetSchema>(body),
     );
   }
 
@@ -202,8 +196,8 @@ export default class ItemType extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(itemTypeId: string): Promise<SchemaTypes.ItemTypeSelfTargetSchema> {
-    return this.client.request<SchemaTypes.ItemTypeSelfTargetSchema>({
+  rawFind(itemTypeId: string): Promise<RawApiTypes.ItemTypeSelfTargetSchema> {
+    return this.client.request<RawApiTypes.ItemTypeSelfTargetSchema>({
       method: 'GET',
       url: `/item-types/${itemTypeId}`,
     });
@@ -217,9 +211,9 @@ export default class ItemType extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  duplicate(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
+  duplicate(itemTypeId: string | ApiTypes.ItemTypeData) {
     return this.rawDuplicate(Utils.toId(itemTypeId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeDuplicateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ItemTypeDuplicateTargetSchema>(
         body,
       ),
     );
@@ -235,8 +229,8 @@ export default class ItemType extends BaseResource {
    */
   rawDuplicate(
     itemTypeId: string,
-  ): Promise<SchemaTypes.ItemTypeDuplicateTargetSchema> {
-    return this.client.request<SchemaTypes.ItemTypeDuplicateTargetSchema>({
+  ): Promise<RawApiTypes.ItemTypeDuplicateTargetSchema> {
+    return this.client.request<RawApiTypes.ItemTypeDuplicateTargetSchema>({
       method: 'POST',
       url: `/item-types/${itemTypeId}/duplicate`,
     });
@@ -251,13 +245,11 @@ export default class ItemType extends BaseResource {
    * @throws {TimeoutError}
    */
   destroy(
-    itemTypeId: string | SimpleSchemaTypes.ItemTypeData,
-    queryParams?: SimpleSchemaTypes.ItemTypeDestroyHrefSchema,
+    itemTypeId: string | ApiTypes.ItemTypeData,
+    queryParams?: ApiTypes.ItemTypeDestroyHrefSchema,
   ) {
     return this.rawDestroy(Utils.toId(itemTypeId), queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeDestroyJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.ItemTypeDestroyJobSchema>(body),
     );
   }
 
@@ -271,9 +263,9 @@ export default class ItemType extends BaseResource {
    */
   rawDestroy(
     itemTypeId: string,
-    queryParams?: SchemaTypes.ItemTypeDestroyHrefSchema,
-  ): Promise<SchemaTypes.ItemTypeDestroyJobSchema> {
-    return this.client.request<SchemaTypes.ItemTypeDestroyJobSchema>({
+    queryParams?: RawApiTypes.ItemTypeDestroyHrefSchema,
+  ): Promise<RawApiTypes.ItemTypeDestroyJobSchema> {
+    return this.client.request<RawApiTypes.ItemTypeDestroyJobSchema>({
       method: 'DELETE',
       url: `/item-types/${itemTypeId}`,
       queryParams,
@@ -292,9 +284,9 @@ export default class ItemType extends BaseResource {
    */
   rawReorderFieldsAndFieldsets(
     itemTypeId: string,
-    body: SchemaTypes.ItemTypeReorderFieldsAndFieldsetsSchema,
-  ): Promise<SchemaTypes.ItemTypeReorderFieldsAndFieldsetsJobSchema> {
-    return this.client.request<SchemaTypes.ItemTypeReorderFieldsAndFieldsetsJobSchema>(
+    body: RawApiTypes.ItemTypeReorderFieldsAndFieldsetsSchema,
+  ): Promise<RawApiTypes.ItemTypeReorderFieldsAndFieldsetsJobSchema> {
+    return this.client.request<RawApiTypes.ItemTypeReorderFieldsAndFieldsetsJobSchema>(
       {
         method: 'POST',
         url: `/item-types/${itemTypeId}/reorder-fields-and-fieldsets`,

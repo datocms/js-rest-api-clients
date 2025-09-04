@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class PerOwnerPricingBillingProfile extends BaseResource {
   static readonly TYPE = 'per_owner_pricing_billing_profile' as const;
@@ -14,7 +14,7 @@ export default class PerOwnerPricingBillingProfile extends BaseResource {
    */
   find() {
     return this.rawFind().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PerOwnerPricingBillingProfileSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PerOwnerPricingBillingProfileSelfTargetSchema>(
         body,
       ),
     );
@@ -26,8 +26,8 @@ export default class PerOwnerPricingBillingProfile extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(): Promise<SchemaTypes.PerOwnerPricingBillingProfileSelfTargetSchema> {
-    return this.client.request<SchemaTypes.PerOwnerPricingBillingProfileSelfTargetSchema>(
+  rawFind(): Promise<RawApiTypes.PerOwnerPricingBillingProfileSelfTargetSchema> {
+    return this.client.request<RawApiTypes.PerOwnerPricingBillingProfileSelfTargetSchema>(
       {
         method: 'GET',
         url: '/per-owner-pricing-billing-profile',
@@ -42,10 +42,10 @@ export default class PerOwnerPricingBillingProfile extends BaseResource {
    * @throws {TimeoutError}
    */
   updateCreditCard(
-    body: SimpleSchemaTypes.PerOwnerPricingBillingProfileUpdateCreditCardSchema,
+    body: ApiTypes.PerOwnerPricingBillingProfileUpdateCreditCardSchema,
   ) {
     return this.rawUpdateCreditCard(
-      Utils.serializeRequestBody<SchemaTypes.PerOwnerPricingBillingProfileUpdateCreditCardSchema>(
+      Utils.serializeRequestBody<RawApiTypes.PerOwnerPricingBillingProfileUpdateCreditCardSchema>(
         body,
         {
           type: 'card',
@@ -54,7 +54,7 @@ export default class PerOwnerPricingBillingProfile extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PerOwnerPricingBillingProfileUpdateCreditCardTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PerOwnerPricingBillingProfileUpdateCreditCardTargetSchema>(
         body,
       ),
     );
@@ -67,9 +67,9 @@ export default class PerOwnerPricingBillingProfile extends BaseResource {
    * @throws {TimeoutError}
    */
   rawUpdateCreditCard(
-    body: SchemaTypes.PerOwnerPricingBillingProfileUpdateCreditCardSchema,
-  ): Promise<SchemaTypes.PerOwnerPricingBillingProfileUpdateCreditCardTargetSchema> {
-    return this.client.request<SchemaTypes.PerOwnerPricingBillingProfileUpdateCreditCardTargetSchema>(
+    body: RawApiTypes.PerOwnerPricingBillingProfileUpdateCreditCardSchema,
+  ): Promise<RawApiTypes.PerOwnerPricingBillingProfileUpdateCreditCardTargetSchema> {
+    return this.client.request<RawApiTypes.PerOwnerPricingBillingProfileUpdateCreditCardTargetSchema>(
       {
         method: 'PUT',
         url: '/per-owner-pricing-billing-profile/credit-card',
@@ -84,11 +84,9 @@ export default class PerOwnerPricingBillingProfile extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  updateInfo(
-    body: SimpleSchemaTypes.PerOwnerPricingBillingProfileUpdateInfoSchema,
-  ) {
+  updateInfo(body: ApiTypes.PerOwnerPricingBillingProfileUpdateInfoSchema) {
     return this.rawUpdateInfo(
-      Utils.serializeRequestBody<SchemaTypes.PerOwnerPricingBillingProfileUpdateInfoSchema>(
+      Utils.serializeRequestBody<RawApiTypes.PerOwnerPricingBillingProfileUpdateInfoSchema>(
         body,
         {
           type: 'per_owner_pricing_billing_profile',
@@ -97,7 +95,7 @@ export default class PerOwnerPricingBillingProfile extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PerOwnerPricingBillingProfileUpdateInfoTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PerOwnerPricingBillingProfileUpdateInfoTargetSchema>(
         body,
       ),
     );
@@ -110,9 +108,9 @@ export default class PerOwnerPricingBillingProfile extends BaseResource {
    * @throws {TimeoutError}
    */
   rawUpdateInfo(
-    body: SchemaTypes.PerOwnerPricingBillingProfileUpdateInfoSchema,
-  ): Promise<SchemaTypes.PerOwnerPricingBillingProfileUpdateInfoTargetSchema> {
-    return this.client.request<SchemaTypes.PerOwnerPricingBillingProfileUpdateInfoTargetSchema>(
+    body: RawApiTypes.PerOwnerPricingBillingProfileUpdateInfoSchema,
+  ): Promise<RawApiTypes.PerOwnerPricingBillingProfileUpdateInfoTargetSchema> {
+    return this.client.request<RawApiTypes.PerOwnerPricingBillingProfileUpdateInfoTargetSchema>(
       {
         method: 'PUT',
         url: '/per-owner-pricing-billing-profile/info',

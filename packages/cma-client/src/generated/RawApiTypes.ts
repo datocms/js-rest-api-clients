@@ -1,0 +1,12995 @@
+import type {
+  BooleanFieldAppearance,
+  BooleanFieldValidators,
+  BooleanFieldValue,
+  ColorFieldAppearance,
+  ColorFieldValidators,
+  ColorFieldValue,
+  DateFieldAppearance,
+  DateFieldValidators,
+  DateFieldValue,
+  DateTimeFieldAppearance,
+  DateTimeFieldValidators,
+  DateTimeFieldValue,
+  FileFieldAppearance,
+  FileFieldValidators,
+  FloatFieldAppearance,
+  FloatFieldValidators,
+  FloatFieldValue,
+  GalleryFieldAppearance,
+  GalleryFieldValidators,
+  IntegerFieldAppearance,
+  IntegerFieldValidators,
+  IntegerFieldValue,
+  JsonFieldAppearance,
+  JsonFieldValidators,
+  JsonFieldValue,
+  LinkFieldAppearance,
+  LinkFieldValidators,
+  LinksFieldAppearance,
+  LinksFieldValidators,
+  LocationFieldAppearance,
+  LocationFieldValidators,
+  LocationFieldValue,
+  RichTextFieldAppearance,
+  RichTextFieldValidators,
+  SeoFieldAppearance,
+  SeoFieldValidators,
+  SingleBlockFieldAppearance,
+  SingleBlockFieldValidators,
+  SlugFieldAppearance,
+  SlugFieldValidators,
+  StringFieldAppearance,
+  StringFieldValidators,
+  StringFieldValue,
+  StructuredTextFieldAppearance,
+  StructuredTextFieldValidators,
+  TextFieldAppearance,
+  TextFieldValidators,
+  TextFieldValue,
+  VideoFieldAppearance,
+  VideoFieldValidators,
+} from '../fieldTypes';
+
+/**
+ * Enhanced appearance configuration with field-specific types and addon support
+ */
+type FieldAppearanceConfig<TAppearance> = TAppearance &
+  Omit<RawFieldAttributes['appearance'], keyof TAppearance>;
+
+/**
+ * Base field configuration for attributes (non-localized), extending the original RawApiTypes
+ */
+type NonLocalizedFieldAttributesForFieldType<
+  SourceType,
+  FieldType extends RawFieldAttributes['field_type'],
+  FieldValue,
+  FieldValidators,
+  FieldAppearance,
+> = Omit<
+  SourceType,
+  'field_type' | 'default_value' | 'validators' | 'appearance' | 'localized'
+> & {
+  field_type: FieldType;
+  localized: false;
+  default_value: FieldValue;
+  validators: FieldValidators;
+  appearance: FieldAppearanceConfig<FieldAppearance>;
+};
+
+/**
+ * Base field configuration for attributes (localized), extending the original RawApiTypes
+ */
+type LocalizedFieldAttributesForFieldType<
+  SourceType,
+  FieldType extends RawFieldAttributes['field_type'],
+  FieldValue,
+  FieldValidators,
+  FieldAppearance,
+> = Omit<
+  SourceType,
+  'field_type' | 'default_value' | 'validators' | 'appearance' | 'localized'
+> & {
+  field_type: FieldType;
+  localized: true;
+  default_value: FieldValue | Record<string, FieldValue>;
+  validators: FieldValidators;
+  appearance: FieldAppearanceConfig<FieldAppearance>;
+};
+
+/**
+ * Union of localized and non-localized field configurations for attributes
+ */
+type FieldAttributesForFieldType<
+  SourceType,
+  FieldType extends RawFieldAttributes['field_type'],
+  FieldValue,
+  FieldValidators,
+  FieldAppearance,
+> =
+  | NonLocalizedFieldAttributesForFieldType<
+      SourceType,
+      FieldType,
+      FieldValue,
+      FieldValidators,
+      FieldAppearance
+    >
+  | LocalizedFieldAttributesForFieldType<
+      SourceType,
+      FieldType,
+      FieldValue,
+      FieldValidators,
+      FieldAppearance
+    >;
+
+type GenericFieldAttributes<SourceType> =
+  | FieldAttributesForFieldType<
+      SourceType,
+      'boolean',
+      BooleanFieldValue,
+      BooleanFieldValidators,
+      BooleanFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'color',
+      ColorFieldValue,
+      ColorFieldValidators,
+      ColorFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'date',
+      DateFieldValue,
+      DateFieldValidators,
+      DateFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'date_time',
+      DateTimeFieldValue,
+      DateTimeFieldValidators,
+      DateTimeFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'file',
+      // this field type does not support default values
+      null,
+      FileFieldValidators,
+      FileFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'float',
+      FloatFieldValue,
+      FloatFieldValidators,
+      FloatFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'gallery',
+      // this field type does not support default values
+      null,
+      GalleryFieldValidators,
+      GalleryFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'integer',
+      IntegerFieldValue,
+      IntegerFieldValidators,
+      IntegerFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'json',
+      JsonFieldValue,
+      JsonFieldValidators,
+      JsonFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'lat_lon',
+      LocationFieldValue,
+      LocationFieldValidators,
+      LocationFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'link',
+      // this field type does not support default values
+      null,
+      LinkFieldValidators,
+      LinkFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'links',
+      // this field type does not support default values
+      null,
+      LinksFieldValidators,
+      LinksFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'rich_text',
+      // this field type does not support default values
+      null,
+      RichTextFieldValidators,
+      RichTextFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'seo',
+      // this field type does not support default values
+      null,
+      SeoFieldValidators,
+      SeoFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'single_block',
+      // this field type does not support default values
+      null,
+      SingleBlockFieldValidators,
+      SingleBlockFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'slug',
+      // this field type does not support default values
+      null,
+      SlugFieldValidators,
+      SlugFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'string',
+      StringFieldValue,
+      StringFieldValidators,
+      StringFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'structured_text',
+      // this field type does not support default values
+      null,
+      StructuredTextFieldValidators,
+      StructuredTextFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'text',
+      TextFieldValue,
+      TextFieldValidators,
+      TextFieldAppearance
+    >
+  | FieldAttributesForFieldType<
+      SourceType,
+      'video',
+      // this field type does not support default values
+      null,
+      VideoFieldValidators,
+      VideoFieldAppearance
+    >;
+
+export type FieldAttributes = GenericFieldAttributes<RawFieldAttributes>;
+
+export type Field = RawField;
+
+type LocalizedFieldCreateConfigForFieldType<
+  SourceType,
+  FieldType extends RawFieldAttributes['field_type'],
+  FieldValue,
+  FieldValidators,
+  FieldAppearance,
+> = Omit<
+  SourceType,
+  'field_type' | 'default_value' | 'validators' | 'appearance' | 'localized'
+> & {
+  field_type: FieldType;
+  localized: true;
+  default_value?: Record<string, FieldValue>;
+  validators?: FieldValidators;
+  appearance?: FieldAppearanceConfig<FieldAppearance>;
+};
+
+type NonLocalizedFieldCreateConfigForFieldType<
+  SourceType,
+  FieldType extends RawFieldAttributes['field_type'],
+  FieldValue,
+  FieldValidators,
+  FieldAppearance,
+> = Omit<
+  SourceType,
+  'field_type' | 'default_value' | 'validators' | 'appearance' | 'localized'
+> & {
+  field_type: FieldType;
+  localized?: false;
+  default_value?: FieldValue;
+  validators?: FieldValidators;
+  appearance?: FieldAppearanceConfig<FieldAppearance>;
+};
+
+type FieldCreateConfigForFieldType<
+  SourceType,
+  FieldType extends RawFieldAttributes['field_type'],
+  FieldValue,
+  FieldValidators,
+  FieldAppearance,
+> =
+  | LocalizedFieldCreateConfigForFieldType<
+      SourceType,
+      FieldType,
+      FieldValue,
+      FieldValidators,
+      FieldAppearance
+    >
+  | NonLocalizedFieldCreateConfigForFieldType<
+      SourceType,
+      FieldType,
+      FieldValue,
+      FieldValidators,
+      FieldAppearance
+    >;
+
+type FieldCreateConfig<SourceType> =
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'boolean',
+      BooleanFieldValue,
+      BooleanFieldValidators,
+      BooleanFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'color',
+      ColorFieldValue,
+      ColorFieldValidators,
+      ColorFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'date',
+      DateFieldValue,
+      DateFieldValidators,
+      DateFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'date_time',
+      DateTimeFieldValue,
+      DateTimeFieldValidators,
+      DateTimeFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'file',
+      // this field type does not support default values
+      null,
+      FileFieldValidators,
+      FileFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'float',
+      FloatFieldValue,
+      FloatFieldValidators,
+      FloatFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'gallery',
+      // this field type does not support default values
+      null,
+      GalleryFieldValidators,
+      GalleryFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'integer',
+      IntegerFieldValue,
+      IntegerFieldValidators,
+      IntegerFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'json',
+      JsonFieldValue,
+      JsonFieldValidators,
+      JsonFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'lat_lon',
+      LocationFieldValue,
+      LocationFieldValidators,
+      LocationFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'link',
+      // this field type does not support default values
+      null,
+      LinkFieldValidators,
+      LinkFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'links',
+      // this field type does not support default values
+      null,
+      LinksFieldValidators,
+      LinksFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'rich_text',
+      // this field type does not support default values
+      null,
+      RichTextFieldValidators,
+      RichTextFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'seo',
+      // this field type does not support default values
+      null,
+      SeoFieldValidators,
+      SeoFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'single_block',
+      // this field type does not support default values
+      null,
+      SingleBlockFieldValidators,
+      SingleBlockFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'slug',
+      // this field type does not support default values
+      null,
+      SlugFieldValidators,
+      SlugFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'string',
+      StringFieldValue,
+      StringFieldValidators,
+      StringFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'structured_text',
+      // this field type does not support default values
+      null,
+      StructuredTextFieldValidators,
+      StructuredTextFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'text',
+      TextFieldValue,
+      TextFieldValidators,
+      TextFieldAppearance
+    >
+  | FieldCreateConfigForFieldType<
+      SourceType,
+      'video',
+      // this field type does not support default values
+      null,
+      VideoFieldValidators,
+      VideoFieldAppearance
+    >;
+
+export type FieldCreateSchema = Omit<RawFieldCreateSchema, 'data'> & {
+  data: Omit<RawFieldCreateSchema['data'], 'attributes'> & {
+    attributes: FieldCreateConfig<RawFieldCreateSchema['data']['attributes']>;
+  };
+};
+
+/**
+ * Helper type to conditionally handle default values based on localization for field updates
+ */
+type FieldUpdateDefaultValue<T> = T | Record<string, T> | undefined;
+
+type FieldUpdateConfigForFieldType<
+  SourceType,
+  FieldType extends RawFieldAttributes['field_type'],
+  FieldValue,
+  FieldValidators,
+  FieldAppearance,
+> = Omit<
+  SourceType,
+  'field_type' | 'default_value' | 'validators' | 'appearance'
+> & {
+  field_type?: FieldType;
+  default_value?: FieldUpdateDefaultValue<FieldValue>;
+  validators?: FieldValidators;
+  appearance?: FieldAppearanceConfig<FieldAppearance>;
+};
+
+type FieldUpdateConfig<SourceType> =
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'boolean',
+      BooleanFieldValue,
+      BooleanFieldValidators,
+      BooleanFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'color',
+      ColorFieldValue,
+      ColorFieldValidators,
+      ColorFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'date',
+      DateFieldValue,
+      DateFieldValidators,
+      DateFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'date_time',
+      DateTimeFieldValue,
+      DateTimeFieldValidators,
+      DateTimeFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'file',
+      // this field type does not support default values
+      null,
+      FileFieldValidators,
+      FileFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'float',
+      FloatFieldValue,
+      FloatFieldValidators,
+      FloatFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'gallery',
+      // this field type does not support default values
+      null,
+      GalleryFieldValidators,
+      GalleryFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'integer',
+      IntegerFieldValue,
+      IntegerFieldValidators,
+      IntegerFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'json',
+      JsonFieldValue,
+      JsonFieldValidators,
+      JsonFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'lat_lon',
+      LocationFieldValue,
+      LocationFieldValidators,
+      LocationFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'link',
+      // this field type does not support default values
+      null,
+      LinkFieldValidators,
+      LinkFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'links',
+      // this field type does not support default values
+      null,
+      LinksFieldValidators,
+      LinksFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'rich_text',
+      // this field type does not support default values
+      null,
+      RichTextFieldValidators,
+      RichTextFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'seo',
+      // this field type does not support default values
+      null,
+      SeoFieldValidators,
+      SeoFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'single_block',
+      // this field type does not support default values
+      null,
+      SingleBlockFieldValidators,
+      SingleBlockFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'slug',
+      // this field type does not support default values
+      null,
+      SlugFieldValidators,
+      SlugFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'string',
+      StringFieldValue,
+      StringFieldValidators,
+      StringFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'structured_text',
+      // this field type does not support default values
+      null,
+      StructuredTextFieldValidators,
+      StructuredTextFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'text',
+      TextFieldValue,
+      TextFieldValidators,
+      TextFieldAppearance
+    >
+  | FieldUpdateConfigForFieldType<
+      SourceType,
+      'video',
+      // this field type does not support default values
+      null,
+      VideoFieldValidators,
+      VideoFieldAppearance
+    >;
+
+export type FieldUpdateSchema = Omit<RawFieldUpdateSchema, 'data'> & {
+  data: Omit<RawFieldUpdateSchema['data'], 'attributes'> & {
+    attributes: FieldUpdateConfig<RawFieldUpdateSchema['data']['attributes']>;
+  };
+};
+
+/* tslint:disable */
+/**
+ * This file was automatically generated by hyperschema-to-ts: DO NOT MODIFY IT BY HAND.
+ */
+
+/**
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type RoleType = 'role';
+/**
+ * ID of role
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type RoleIdentity = string;
+/**
+ * RFC 4122 UUID of item type expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type ItemTypeIdentity = string;
+/**
+ * RFC 4122 UUID of workflow expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `Workflow`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Workflow`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type WorkflowIdentity = string;
+/**
+ * ID of environment. Can only contain lowercase letters, numbers and dashes
+ *
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type EnvironmentIdentity = string;
+/**
+ * ID of build_trigger
+ *
+ * This interface was referenced by `BuildTrigger`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `BuildTrigger`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type BuildTriggerIdentity = string;
+/**
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type UserType = 'user';
+/**
+ * ID of collaborator
+ *
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type UserIdentity = string;
+/**
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type UserSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `role`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `SsoUser`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SsoUserType = 'sso_user';
+/**
+ * ID of user
+ *
+ * This interface was referenced by `SsoUser`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `SsoUser`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SsoUserIdentity = string;
+/**
+ * This interface was referenced by `SsoGroup`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SsoGroupType = 'sso_group';
+/**
+ * ID of group
+ *
+ * This interface was referenced by `SsoGroup`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `SsoGroup`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SsoGroupIdentity = string;
+/**
+ * This interface was referenced by `SsoUser`'s JSON-Schema
+ * via the `destroy.hrefSchema` link.
+ */
+export type SsoUserDestroyHrefSchema = {
+  /**
+   * New owner for resources previously owned by the deleted SSO user. This argument specifies the new owner type.
+   */
+  destination_user_type?: 'account' | 'user' | 'access_token' | 'sso_user';
+  /**
+   * New owner for resources previously owned by the deleted SSO user. This argument specifies the new owner ID.
+   */
+  destination_user_id?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type AccessTokenType = 'access_token';
+/**
+ * ID of access_token
+ *
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type AccessTokenIdentity = string;
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `destroy.hrefSchema` link.
+ */
+export type AccessTokenDestroyHrefSchema = {
+  /**
+   * New owner for resources previously owned by the deleted access token. This argument specifies the new owner type.
+   */
+  destination_user_type?: 'account' | 'user' | 'access_token' | 'sso_user';
+  /**
+   * New owner for resources previously owned by the deleted access token. This argument specifies the new owner ID.
+   */
+  destination_user_id?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type AccountType = 'account';
+/**
+ * ID of account
+ *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type AccountIdentity = string;
+/**
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `me.hrefSchema` link.
+ */
+export type UserMeHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `role`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `destroy.hrefSchema` link.
+ */
+export type UserDestroyHrefSchema = {
+  /**
+   * New owner for resources previously owned by the deleted user. This argument specifies the new owner type.
+   */
+  destination_user_type?: 'account' | 'user' | 'access_token' | 'sso_user';
+  /**
+   * New owner for resources previously owned by the deleted user. This argument specifies the new owner ID.
+   */
+  destination_user_id?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `AuditLogEvent`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type AuditLogEventType = 'audit_log_event';
+/**
+ * ULID of event (https://github.com/ulid/spec)
+ *
+ * This interface was referenced by `AuditLogEvent`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `AuditLogEvent`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type AuditLogEventIdentity = string;
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationType = 'organization';
+/**
+ * ID of organization
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationIdentity = string;
+/**
+ * This interface was referenced by `SitePlan`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SitePlanType = 'site_plan';
+/**
+ * ID of plan
+ *
+ * This interface was referenced by `SitePlan`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `SitePlan`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SitePlanIdentity = string;
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type MenuItemType = 'menu_item';
+/**
+ * RFC 4122 UUID of menu item expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type MenuItemIdentity = string;
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type ItemTypeType = 'item_type';
+/**
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type ItemTypeFilterType = 'item_type_filter';
+/**
+ * RFC 4122 UUID of filter expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type ItemTypeFilterIdentity = string;
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type MenuItemInstancesHrefSchema = {
+  filter?: {
+    /**
+     * IDs to fetch, comma separated
+     */
+    ids: string;
+  };
+};
+/**
+ * This interface was referenced by `Job`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type JobType = 'job';
+/**
+ * ID of job
+ *
+ * This interface was referenced by `Job`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Job`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type JobIdentity = string;
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SchemaMenuItemType = 'schema_menu_item';
+/**
+ * RFC 4122 UUID of schema menu item expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SchemaMenuItemIdentity = string;
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type SchemaMenuItemInstancesHrefSchema = {
+  filter?: {
+    /**
+     * IDs to fetch, comma separated
+     */
+    ids: string;
+  };
+};
+/**
+ * JSON API type field
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type UploadCollectionType = 'upload_collection';
+/**
+ * RFC 4122 UUID of upload collection expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type UploadCollectionIdentity = string;
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type UploadCollectionInstancesHrefSchema = {
+  filter?: {
+    /**
+     * IDs to fetch, comma separated
+     */
+    ids: string;
+  };
+};
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type ItemType1 = 'item';
+/**
+ * RFC 4122 UUID of record expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type ItemIdentity = string;
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type FieldType = 'field';
+/**
+ * RFC 4122 UUID of field expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type FieldIdentity = string;
+/**
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type FieldsetType = 'fieldset';
+/**
+ * RFC 4122 UUID of fieldset expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type FieldsetIdentity = string;
+/**
+ * This interface was referenced by `Workflow`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type WorkflowType = 'workflow';
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `create.hrefSchema` link.
+ */
+export type ItemTypeCreateHrefSchema = {
+  /**
+   * Skip the creation of a menu item linked to the model
+   */
+  skip_menu_item_creation?: boolean;
+  /**
+   * Explicitely specify the ID of the menu item that will be linked to the model
+   */
+  menu_item_id?: string;
+  /**
+   * Explicitely specify the ID of the schema menu item that will be linked to the model
+   */
+  schema_menu_item_id?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `destroy.hrefSchema` link.
+ */
+export type ItemTypeDestroyHrefSchema = {
+  /**
+   * Skip the deletion of the menu items linked to the model
+   */
+  skip_menu_items_deletion?: boolean;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Session`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SessionType = 'session';
+/**
+ * JSON web token for the session
+ *
+ * This interface was referenced by `Session`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Session`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SessionIdentity = string;
+/**
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type PluginType = 'plugin';
+/**
+ * RFC 4122 UUID of plugin expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type PluginIdentity = string;
+/**
+ * This interface was referenced by `JobResult`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type JobResultType = 'job_result';
+/**
+ * ID of job result
+ *
+ * This interface was referenced by `JobResult`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `JobResult`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type JobResultIdentity = string;
+/**
+ * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SubscriptionLimitType = 'subscription_limit';
+/**
+ * ID of limit
+ *
+ * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SubscriptionLimitIdentity = string;
+/**
+ * This interface was referenced by `SubscriptionFeature`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SubscriptionFeatureType = 'subscription_feature';
+/**
+ * ID of feature
+ *
+ * This interface was referenced by `SubscriptionFeature`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `SubscriptionFeature`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SubscriptionFeatureIdentity = string;
+/**
+ * This interface was referenced by `BuildEvent`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type BuildEventType = 'build_event';
+/**
+ * ID of menu item
+ *
+ * This interface was referenced by `BuildEvent`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `BuildEvent`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type BuildEventIdentity = string;
+/**
+ * This interface was referenced by `BuildTrigger`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type BuildTriggerType = 'build_trigger';
+/**
+ * This interface was referenced by `BuildEvent`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type BuildEventInstancesHrefSchema = {
+  /**
+   * Parameters to control offset-based pagination
+   */
+  page?: {
+    /**
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
+     */
+    offset?: number;
+    /**
+     * The maximum number of entities to return (defaults to 30, maximum is 500)
+     */
+    limit?: number;
+  };
+  /**
+   * Attributes to filter
+   */
+  filter?: {
+    /**
+     * IDs to fetch, comma separated
+     */
+    ids?: string;
+    fields?: {
+      build_trigger_id?: {
+        eq?: string;
+      };
+      event_type?: {
+        /**
+         * The type of activity
+         */
+        eq?:
+          | 'request_success'
+          | 'request_failure'
+          | 'response_success'
+          | 'response_failure'
+          | 'request_aborted'
+          | 'response_unprocessable'
+          | 'indexing_started'
+          | 'indexing_success'
+          | 'indexing_failure';
+      };
+      created_at?: {
+        gt?: string;
+        lt?: string;
+      };
+    };
+  };
+  /**
+   * Fields used to order results
+   */
+  order_by?:
+    | 'build_trigger_id_asc'
+    | 'build_trigger_id_desc'
+    | 'created_at_asc'
+    | 'created_at_desc'
+    | 'event_type_asc'
+    | 'event_type_desc';
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type ItemInstancesHrefSchema = {
+  /**
+   * For Modular Content, Structured Text and Single Block fields. If set, returns full payload for nested blocks instead of IDs
+   */
+  nested?: boolean;
+  /**
+   * Attributes to filter records
+   */
+  filter?: {
+    /**
+     * Record (or block record) IDs to fetch, comma separated. If you use this filter, you _must not_ use `filter[type]` or `filter[fields]`
+     */
+    ids?: string;
+    /**
+     * Model ID or `api_key` to filter. If you use this filter, you _must not_ use `filter[ids]`. Comma separated values are accepted, but you _must not_ use `filter[fields]` in this case
+     */
+    type?: string;
+    /**
+     * Textual query to match. You _must not_ use `filter[ids]`. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
+     */
+    query?: string;
+    /**
+     * Same as [GraphQL API records filters](/docs/content-delivery-api/filtering-records): you must use square brackets to indicate nesting levels. E.g. if you wanna [filter by parent record](/docs/content-delivery-api/filtering-records#parent) in a tree of records, you must use `filter[fields][parent][eq]=<ID_VALUE>`. Use snake_case for fields names. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
+     */
+    fields?: {
+      [k: string]: unknown;
+    };
+    /**
+     * When set, only valid records are included in the results.
+     */
+    only_valid?: string;
+    [k: string]: unknown;
+  };
+  /**
+   * When `filter[query]` or `field[fields]` is defined, filter by this locale. Default: environment's main locale
+   */
+  locale?: string;
+  /**
+   * Parameters to control offset-based pagination
+   */
+  page?: {
+    /**
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
+     */
+    offset?: number;
+    /**
+     * The maximum number of entities to return (defaults to 30, maximum is 500)
+     */
+    limit?: number;
+  };
+  /**
+   * Fields used to order results. You **must** specify also `filter[type]` with one element only to be able use this option. Format: `<field_name>_(ASC|DESC)`, where `<field_name>` can be either the API key of a model's field, or one of the following meta columns: `id`, `_updated_at`, `_created_at`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `_is_valid`, `position` (only for sortable models). You can pass multiple comma separated rules.
+   */
+  order_by?: string;
+  /**
+   * Whether you want the currently published versions (`published`, default) of your records, or the latest available (`current`)
+   */
+  version?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `references.hrefSchema` link.
+ */
+export type ItemReferencesHrefSchema = {
+  /**
+   * For Modular Content, Structured Text and Single Block fields, return full payload for nested blocks instead of IDs
+   */
+  nested?: boolean;
+  /**
+   * Retrieve only the selected type of version that is linked to the record; current, published or both
+   */
+  version?: null | ('current' | 'published' | 'published-or-current');
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type ItemSelfHrefSchema = {
+  /**
+   * For Modular Content, Structured Text and Single Block fields. If set, returns full payload for nested blocks instead of IDs
+   */
+  nested?: boolean;
+  /**
+   * Whether you want the currently published versions (`published`, default) of your records, or the latest available (`current`)
+   */
+  version?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type ItemCurrentVsPublishedStateType = 'item_current_vs_published_state';
+/**
+ * RFC 4122 UUID of record expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type ItemCurrentVsPublishedStateIdentity = string;
+/**
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type ScheduledPublicationType = 'scheduled_publication';
+/**
+ * ID of scheduled_publication
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type ScheduledPublicationIdentity = string;
+/**
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type ScheduledUnpublishingType = 'scheduled_unpublishing';
+/**
+ * ID of scheduled_unpublishing
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type ScheduledUnpublishingIdentity = string;
+/**
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type ItemVersionType = 'item_version';
+/**
+ * RFC 4122 UUID of redord version expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type ItemVersionIdentity = string;
+/**
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type ItemVersionInstancesHrefSchema = {
+  /**
+   * For Modular Content, Structured Text and Single Block fields. If set, returns full payload for nested blocks instead of IDs
+   */
+  nested?: boolean;
+  /**
+   * Parameters to control offset-based pagination
+   */
+  page?: {
+    /**
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
+     */
+    offset?: number;
+    /**
+     * The maximum number of entities to return (defaults to 15, maximum is 50)
+     */
+    limit?: number;
+  };
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `publish.schema` link.
+ */
+export type ItemPublishSchema = {
+  data: {
+    /**
+     * Publish only the specified locales & non-localized content (see following attributes). To publish the entire record, simply avoid passing a request body to the endpoint.
+     */
+    type: 'selective_publish_operation';
+    attributes: {
+      /**
+       * Array of [valid locale codes in this project](/product-updates/get-locales-list-from-graphql) to publish.
+       */
+      content_in_locales: string[];
+      /**
+       * Whether non-localized content will be published
+       */
+      non_localized_content: boolean;
+    };
+  };
+} | null;
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `publish.hrefSchema` link.
+ */
+export type ItemPublishHrefSchema = {
+  /**
+   * When `recursive` is `true`, if the record belongs to a [tree-like collection](https://www.datocms.com/docs/content-modelling/trees), and any of the parent records aren't published, those parent records will published as well. When `recursive` is `false` or not specified, an `UNPUBLISHED_PARENT` error will occur in such cases.
+   */
+  recursive?: boolean;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `unpublish.schema` link.
+ */
+export type ItemUnpublishSchema = {
+  data: {
+    type: 'selective_unpublish_operation';
+    attributes: {
+      /**
+       * Array of locales to publish. They must be currently published in this record. To unpublish all locales, do NOT use this parameter, but instead unpublish the entire record by leaving the body blank (see example above).
+       */
+      content_in_locales: string[];
+    };
+  };
+} | null;
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `unpublish.hrefSchema` link.
+ */
+export type ItemUnpublishHrefSchema = {
+  /**
+   * When `recursive` is `true`, if the record belongs to a [tree-like collection](https://www.datocms.com/docs/content-modelling/trees), and any of the children records are published, those children records will unpublished as well. When `recursive` is `false` or not specified, a `PUBLISHED_CHILDREN` error will occur in such cases.
+   */
+  recursive?: boolean;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type UploadType = 'upload';
+/**
+ * RFC 4122 UUID of upload expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type UploadIdentity = string;
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type UploadInstancesHrefSchema = {
+  /**
+   * Attributes to filter uploads
+   */
+  filter?: {
+    /**
+     * IDs to fetch, comma separated
+     */
+    ids?: string;
+    /**
+     * Textual query to match. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
+     */
+    query?: string;
+    /**
+     * Same as [GraphQL API uploads filters](/docs/content-delivery-api/filtering-uploads). Use snake_case for fields names. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
+     */
+    fields?: {
+      [k: string]: unknown;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * When `filter[query]` or `field[fields]` is defined, filter by this locale. Default: environment's main locale
+   */
+  locale?: string;
+  /**
+   * Fields used to order results. Format: `<field_name>_<DIRECTION(ASC|DESC)>`. You can pass multiple comma separated rules.
+   */
+  order_by?: string;
+  /**
+   * Parameters to control offset-based pagination
+   */
+  page?: {
+    /**
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
+     */
+    offset?: number;
+    /**
+     * The maximum number of entities to return (defaults to 30, maximum is 500)
+     */
+    limit?: number;
+  };
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `references.hrefSchema` link.
+ */
+export type UploadReferencesHrefSchema = {
+  /**
+   * For Modular Content, Structured Text and Single Block fields, return full payload for nested blocks instead of IDs
+   */
+  nested?: boolean;
+  /**
+   * Retrieve only the selected type of version that is linked to the upload; current, published or both
+   */
+  version?: null | ('current' | 'published' | 'published-or-current');
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `UploadRequest`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type UploadRequestType = 'upload_request';
+/**
+ * The S3 path where the file will be stored
+ *
+ * This interface was referenced by `UploadRequest`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `UploadRequest`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type UploadRequestIdentity = string;
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type UploadTrackType = 'upload_track';
+/**
+ * ID of the upload track
+ *
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type UploadTrackIdentity = string;
+/**
+ * This interface was referenced by `SearchResult`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SearchResultType = 'search_result';
+/**
+ * ID of result
+ *
+ * This interface was referenced by `SearchResult`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `SearchResult`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SearchResultIdentity = string;
+/**
+ * This interface was referenced by `SearchResult`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type SearchResultInstancesHrefSchema = {
+  /**
+   * Parameters to control offset-based pagination
+   */
+  page?: {
+    /**
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
+     */
+    offset?: number;
+    /**
+     * The maximum number of entities to return (defaults to 20, maximum is 100)
+     */
+    limit?: number;
+  };
+  /**
+   * Attributes to filter search results
+   */
+  filter: {
+    /**
+     * When any value is passed, it enables the fuzzy search: the Levenshtein Edit Distance is used to match more results.
+     */
+    fuzzy?: boolean;
+    /**
+     * Text to search
+     */
+    query: string;
+    /**
+     * The build trigger ID on which the search will be performed. Required if more than one build trigger is present in a project
+     */
+    build_trigger_id?: string;
+    /**
+     * Restrict the search on pages in a specific locale
+     */
+    locale?: string;
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type EnvironmentType = 'environment';
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `fork.hrefSchema` link.
+ */
+export type EnvironmentForkHrefSchema = {
+  /**
+   * Whether the call should immediately return a pending environment, or wait for the completion of the fork
+   */
+  immediate_return?: boolean;
+  /**
+   * Performing a fast fork reduces processing time, but it also prevents writing to the source environment during the process
+   */
+  fast?: boolean;
+  /**
+   * Force the start of fast fork, even if there are collaborators editing some records
+   */
+  force?: boolean;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `MaintenanceMode`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type MaintenanceModeType = 'maintenance_mode';
+/**
+ * ID of maintenance_mode
+ *
+ * This interface was referenced by `MaintenanceMode`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `MaintenanceMode`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type MaintenanceModeIdentity = string;
+/**
+ * This interface was referenced by `MaintenanceMode`'s JSON-Schema
+ * via the `activate.hrefSchema` link.
+ */
+export type MaintenanceModeActivateHrefSchema = {
+  /**
+   * Force the activation, even if there are collaborators editing some records.
+   */
+  force?: boolean;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Webhook`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type WebhookType = 'webhook';
+/**
+ * ID of webhook
+ *
+ * This interface was referenced by `Webhook`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Webhook`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type WebhookIdentity = string;
+/**
+ * This interface was referenced by `WebhookCall`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type WebhookCallType = 'webhook_call';
+/**
+ * ID of webhook call
+ *
+ * This interface was referenced by `WebhookCall`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `WebhookCall`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type WebhookCallIdentity = string;
+/**
+ * This interface was referenced by `WebhookCall`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type WebhookCallInstancesHrefSchema = {
+  /**
+   * Parameters to control offset-based pagination
+   */
+  page?: {
+    /**
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
+     */
+    offset?: number;
+    /**
+     * The maximum number of entities to return (defaults to 30, maximum is 500)
+     */
+    limit?: number;
+  };
+  /**
+   * Attributes to filter
+   */
+  filter?: {
+    /**
+     * IDs to fetch, comma separated
+     */
+    ids?: string;
+    fields?: {
+      webhook_id?: {
+        eq?: string;
+      };
+      entity_type?: {
+        /**
+         * The subject of webhook triggering
+         */
+        eq?:
+          | 'item_type'
+          | 'item'
+          | 'upload'
+          | 'build_trigger'
+          | 'environment'
+          | 'maintenance_mode'
+          | 'sso_user'
+          | 'cda_cache_tags';
+      };
+      event_type?: {
+        /**
+         * The event that triggers the webhook call
+         */
+        eq?:
+          | 'create'
+          | 'update'
+          | 'delete'
+          | 'publish'
+          | 'unpublish'
+          | 'promote'
+          | 'deploy_started'
+          | 'deploy_succeeded'
+          | 'deploy_failed'
+          | 'change'
+          | 'invalidate';
+      };
+      status?: {
+        /**
+         * The current status
+         */
+        eq?: 'pending' | 'success' | 'failed' | 'rescheduled';
+      };
+      last_sent_at?: {
+        gt?: string;
+        lt?: string;
+      };
+      next_retry_at?: {
+        gt?: string;
+        lt?: string;
+      };
+      created_at?: {
+        gt?: string;
+        lt?: string;
+      };
+    };
+  };
+  /**
+   * Fields used to order results
+   */
+  order_by?:
+    | 'webhook_id_asc'
+    | 'webhook_id_desc'
+    | 'created_at_asc'
+    | 'created_at_desc'
+    | 'last_sent_at_asc'
+    | 'last_sent_at_desc'
+    | 'next_retry_at_asc'
+    | 'next_retry_at_desc';
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `UploadFilter`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type UploadFilterType = 'upload_filter';
+/**
+ * RFC 4122 UUID of upload filter expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `UploadFilter`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `UploadFilter`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type UploadFilterIdentity = string;
+/**
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SiteInvitationType = 'site_invitation';
+/**
+ * ID of invitation
+ *
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SiteInvitationIdentity = string;
+/**
+ * This interface was referenced by `EditingSession`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type EditingSessionType = 'editing_session';
+/**
+ * UUID of presence
+ *
+ * This interface was referenced by `EditingSession`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `EditingSession`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type EditingSessionIdentity = string;
+/**
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type FormDataType = 'form_data';
+/**
+ * ID of form data
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type FormDataIdentity = 'form_data';
+/**
+ * This interface was referenced by `SsoSettings`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SsoSettingsType = 'sso_settings';
+/**
+ * ID
+ *
+ * This interface was referenced by `SsoSettings`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `SsoSettings`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SsoSettingsIdentity = string;
+/**
+ * This interface was referenced by `EmojiSuggestions`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type EmojiSuggestionsType = 'emoji_suggestions';
+/**
+ * ID
+ *
+ * This interface was referenced by `EmojiSuggestions`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `EmojiSuggestions`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type EmojiSuggestionsIdentity = string;
+/**
+ * This interface was referenced by `EmojiSuggestions`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type EmojiSuggestionsSelfHrefSchema = {
+  /**
+   * The term for which we are seeking suggestions for emojis
+   */
+  term?: string;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type WhiteLabelSettingsType = 'white_label_settings';
+/**
+ * ID
+ *
+ * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type WhiteLabelSettingsIdentity = string;
+/**
+ * This interface was referenced by `PublicInfo`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type PublicInfoType = 'public_info';
+/**
+ * ID of site
+ *
+ * This interface was referenced by `PublicInfo`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `PublicInfo`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type PublicInfoIdentity = string;
+/**
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type DailyUsageType = 'daily_usage';
+/**
+ * ID of site
+ *
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type DailyUsageIdentity = string;
+/**
+ * This interface was referenced by `UsageCounter`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type UsageCounterType = 'usage_counter';
+/**
+ * Name of the counter
+ *
+ * This interface was referenced by `UsageCounter`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `UsageCounter`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type UsageCounterIdentity =
+  | 'assets_path_bytes'
+  | 'assets_referrer_bytes'
+  | 'assets_ip_bytes'
+  | 'assets_full_path_bytes'
+  | 'assets_path_requests'
+  | 'assets_full_path_requests'
+  | 'cda_access_token_id_bytes'
+  | 'cda_access_token_id_requests'
+  | 'cda_referrer_bytes'
+  | 'cda_referrer_requests'
+  | 'cda_ip_bytes'
+  | 'cda_ip_requests'
+  | 'cma_endpoint_bytes'
+  | 'cma_endpoint_requests'
+  | 'cma_user_bytes'
+  | 'cma_user_requests'
+  | 'cma_ip_bytes'
+  | 'cma_ip_requests'
+  | 'video_path_seconds';
+/**
+ * This interface was referenced by `UsageCounter`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type UsageCounterSelfHrefSchema = {
+  /**
+   * The time period upon which counters will be returned
+   */
+  period?: 'today' | 'current_month' | 'last_month';
+};
+/**
+ * This interface was referenced by `UploadTag`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type UploadTagType = 'upload_tag';
+/**
+ * ID of upload tag
+ *
+ * This interface was referenced by `UploadTag`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `UploadTag`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type UploadTagIdentity = string;
+/**
+ * This interface was referenced by `UploadTag`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type UploadTagInstancesHrefSchema = {
+  /**
+   * Attributes to filter tags
+   */
+  filter?: {
+    /**
+     * Textual query to match.
+     */
+    query?: string;
+    [k: string]: unknown;
+  };
+  /**
+   * Parameters to control offset-based pagination
+   */
+  page?: {
+    /**
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
+     */
+    offset?: number;
+    /**
+     * The maximum number of entities to return (defaults to 50, maximum is 500)
+     */
+    limit?: number;
+  };
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `UploadSmartTag`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type UploadSmartTagType = 'upload_smart_tag';
+/**
+ * ID of upload tag
+ *
+ * This interface was referenced by `UploadSmartTag`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `UploadSmartTag`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type UploadSmartTagIdentity = string;
+/**
+ * This interface was referenced by `UploadSmartTag`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type UploadSmartTagInstancesHrefSchema = {
+  /**
+   * Attributes to filter tags
+   */
+  filter?: {
+    /**
+     * Textual query to match.
+     */
+    query?: string;
+    [k: string]: unknown;
+  };
+  /**
+   * Parameters to control offset-based pagination
+   */
+  page?: {
+    /**
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
+     */
+    offset?: number;
+    /**
+     * The maximum number of entities to return (defaults to 50, maximum is 500)
+     */
+    limit?: number;
+  };
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SiteType = 'site';
+/**
+ * ID of site
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SiteIdentity = string;
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type SiteSelfHrefSchema = {
+  /**
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   */
+  include?: string;
+  [k: string]: unknown;
+};
+
+export type DatoApi = {
+  role?: Role;
+  user?: User;
+  sso_user?: SsoUser;
+  audit_log_event?: AuditLogEvent;
+  account?: Account;
+  organization?: Organization;
+  site_plan?: SitePlan;
+  menu_item?: MenuItem;
+  schema_menu_item?: SchemaMenuItem;
+  upload_collection?: UploadCollection;
+  item_type?: ItemType;
+  field?: Field;
+  fieldset?: Fieldset;
+  job?: Job;
+  session?: Session;
+  access_token?: AccessToken;
+  plugin?: Plugin;
+  job_result?: JobResult;
+  subscription_limit?: SubscriptionLimit;
+  subscription_feature?: SubscriptionFeature;
+  build_event?: BuildEvent;
+  item?: Item;
+  item_current_vs_published_state?: ItemCurrentVsPublishedState;
+  item_version?: ItemVersion;
+  upload?: Upload;
+  upload_request?: UploadRequest;
+  upload_track?: UploadTrack;
+  scheduled_publication?: ScheduledPublication;
+  scheduled_unpublishing?: ScheduledUnpublishing;
+  search_result?: SearchResult;
+  environment?: Environment;
+  maintenance_mode?: MaintenanceMode;
+  webhook?: Webhook;
+  webhook_call?: WebhookCall;
+  build_trigger?: BuildTrigger;
+  item_type_filter?: ItemTypeFilter;
+  upload_filter?: UploadFilter;
+  site_invitation?: SiteInvitation;
+  editing_session?: EditingSession;
+  form_data?: FormData;
+  sso_group?: SsoGroup;
+  sso_settings?: SsoSettings;
+  emoji_suggestions?: EmojiSuggestions;
+  white_label_settings?: WhiteLabelSettings;
+  public_info?: PublicInfo;
+  daily_usage?: DailyUsage;
+  usage_counter?: UsageCounter;
+  upload_tag?: UploadTag;
+  upload_smart_tag?: UploadSmartTag;
+  site?: Site;
+  workflow?: Workflow;
+  [k: string]: unknown;
+};
+
+/**
+ * A Role represents a specific set of actions an editor (or an API token) can perform on your administrative area.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "role".
+ */
+export type Role = {
+  type: RoleType;
+  id: RoleIdentity;
+  attributes: RoleAttributes;
+  relationships: RoleRelationships;
+  meta: RoleMeta;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type RoleAttributes = {
+  /**
+   * The name of the role
+   */
+  name: string;
+  /**
+   * Can edit favicon, global SEO settings and no-index policy
+   */
+  can_edit_favicon: boolean;
+  /**
+   * Can change project global properties
+   */
+  can_edit_site: boolean;
+  /**
+   * Can create/edit models and plugins
+   */
+  can_edit_schema: boolean;
+  /**
+   * Can customize content navigation bar
+   */
+  can_manage_menu: boolean;
+  /**
+   * Can change locales, timezone and UI theme
+   */
+  can_edit_environment: boolean;
+  /**
+   * Can promote environments to primary and manage maintenance mode
+   */
+  can_promote_environments: boolean;
+  /**
+   * Specifies the environments the user can access
+   */
+  environments_access: 'all' | 'primary_only' | 'sandbox_only' | 'none';
+  /**
+   * Can create/edit roles and invite/remove collaborators
+   */
+  can_manage_users: boolean;
+  /**
+   * Can create/edit shared filters (both for models and the media area)
+   */
+  can_manage_shared_filters: boolean;
+  /**
+   * Can create/edit upload collections
+   */
+  can_manage_upload_collections: boolean;
+  /**
+   * Can create/edit Build triggers
+   */
+  can_manage_build_triggers: boolean;
+  /**
+   * Can create/edit webhooks
+   */
+  can_manage_webhooks: boolean;
+  /**
+   * Can create/delete sandbox environments and promote them to primary environment
+   */
+  can_manage_environments: boolean;
+  /**
+   * Can manage Single Sign-On settings
+   */
+  can_manage_sso: boolean;
+  /**
+   * Can access Audit Log
+   */
+  can_access_audit_log: boolean;
+  /**
+   * Can create/edit workflows
+   */
+  can_manage_workflows: boolean;
+  /**
+   * Can manage API tokens
+   */
+  can_manage_access_tokens: boolean;
+  /**
+   * Can perform Site Search API calls
+   */
+  can_perform_site_search: boolean;
+  /**
+   * Can access the build events log
+   */
+  can_access_build_events_log: boolean;
+  /**
+   * Allowed actions on a model (or all) for a role
+   */
+  positive_item_type_permissions: {
+    item_type?: ItemTypeIdentity | null;
+    workflow?: WorkflowIdentity | null;
+    on_stage?: null | string;
+    to_stage?: null | string;
+    environment: EnvironmentIdentity;
+    /**
+     * Permitted action
+     */
+    action:
+      | 'all'
+      | 'read'
+      | 'update'
+      | 'create'
+      | 'duplicate'
+      | 'delete'
+      | 'publish'
+      | 'edit_creator'
+      | 'take_over'
+      | 'move_to_stage';
+    /**
+     * Permitted creator
+     */
+    on_creator?: 'anyone' | 'self' | 'role' | null;
+    /**
+     * Permitted content scope
+     */
+    localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+    /**
+     * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+     */
+    locale?: string | null;
+  }[];
+  /**
+   * Prohibited actions on a model (or all) for a role
+   */
+  negative_item_type_permissions: {
+    item_type?: ItemTypeIdentity | null;
+    workflow?: WorkflowIdentity | null;
+    on_stage?: null | string;
+    to_stage?: null | string;
+    environment: EnvironmentIdentity;
+    /**
+     * Permitted action
+     */
+    action:
+      | 'all'
+      | 'read'
+      | 'update'
+      | 'create'
+      | 'duplicate'
+      | 'delete'
+      | 'publish'
+      | 'edit_creator'
+      | 'take_over'
+      | 'move_to_stage';
+    /**
+     * Permitted creator
+     */
+    on_creator?: 'anyone' | 'self' | 'role' | null;
+    /**
+     * Permitted content scope
+     */
+    localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+    /**
+     * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+     */
+    locale?: string | null;
+  }[];
+  /**
+   * Allowed actions on a model (or all) for a role
+   */
+  positive_upload_permissions: {
+    environment: EnvironmentIdentity;
+    /**
+     * Permitted action
+     */
+    action:
+      | 'all'
+      | 'read'
+      | 'update'
+      | 'create'
+      | 'delete'
+      | 'edit_creator'
+      | 'replace_asset';
+    /**
+     * Permitted creator
+     */
+    on_creator?: 'anyone' | 'self' | 'role' | null;
+    /**
+     * Permitted content scope
+     */
+    localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+    /**
+     * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+     */
+    locale?: string | null;
+  }[];
+  /**
+   * Prohibited actions on a model (or all) for a role
+   */
+  negative_upload_permissions: {
+    environment: EnvironmentIdentity;
+    /**
+     * Permitted action
+     */
+    action:
+      | 'all'
+      | 'read'
+      | 'update'
+      | 'create'
+      | 'delete'
+      | 'edit_creator'
+      | 'replace_asset';
+    /**
+     * Permitted creator
+     */
+    on_creator?: 'anyone' | 'self' | 'role' | null;
+    /**
+     * Permitted content scope
+     */
+    localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+    /**
+     * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+     */
+    locale?: string | null;
+  }[];
+  /**
+   * Allowed build triggers for a role
+   */
+  positive_build_trigger_permissions: {
+    build_trigger?: BuildTriggerIdentity | null;
+  }[];
+  /**
+   * Prohibited build triggers for a role
+   */
+  negative_build_trigger_permissions: {
+    build_trigger?: BuildTriggerIdentity | null;
+  }[];
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type RoleRelationships = {
+  /**
+   * The roles from which this role inherits permissions
+   */
+  inherits_permissions_from: {
+    data: RoleData[];
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type RoleData = {
+  type: RoleType;
+  id: RoleIdentity;
+};
+
+/**
+ * Meta information regarding the record
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type RoleMeta = {
+  /**
+   * The final set of permissions considering also inherited roles
+   */
+  final_permissions: {
+    /**
+     * Can edit favicon, global SEO settings and no-index policy
+     */
+    can_edit_favicon: boolean;
+    /**
+     * Can change project global properties
+     */
+    can_edit_site: boolean;
+    /**
+     * Can create/edit models and plugins
+     */
+    can_edit_schema: boolean;
+    /**
+     * Can customize content navigation bar
+     */
+    can_manage_menu: boolean;
+    /**
+     * Can change locales, timezone and UI theme
+     */
+    can_edit_environment: boolean;
+    /**
+     * Can promote environments to primary and manage maintenance mode
+     */
+    can_promote_environments: boolean;
+    /**
+     * Specifies the environments the user can access
+     */
+    environments_access: 'all' | 'primary_only' | 'sandbox_only' | 'none';
+    /**
+     * Can create/edit roles and invite/remove collaborators
+     */
+    can_manage_users: boolean;
+    /**
+     * Can create/edit shared filters (both for models and the media area)
+     */
+    can_manage_shared_filters: boolean;
+    /**
+     * Can create/edit upload collections
+     */
+    can_manage_upload_collections: boolean;
+    /**
+     * Can create/edit Build triggers
+     */
+    can_manage_build_triggers: boolean;
+    /**
+     * Can create/edit webhooks
+     */
+    can_manage_webhooks: boolean;
+    /**
+     * Can create/delete sandbox environments and promote them to primary environment
+     */
+    can_manage_environments: boolean;
+    /**
+     * Can manage Single Sign-On settings
+     */
+    can_manage_sso: boolean;
+    /**
+     * Can access Audit Log
+     */
+    can_access_audit_log: boolean;
+    /**
+     * Can create/edit workflows
+     */
+    can_manage_workflows: boolean;
+    /**
+     * Can manage API tokens
+     */
+    can_manage_access_tokens: boolean;
+    /**
+     * Can perform Site Search API calls
+     */
+    can_perform_site_search: boolean;
+    /**
+     * Can access the build events log
+     */
+    can_access_build_events_log: boolean;
+    /**
+     * Allowed actions on a model (or all) for a role
+     */
+    positive_item_type_permissions: {
+      item_type?: ItemTypeIdentity | null;
+      workflow?: WorkflowIdentity | null;
+      on_stage?: null | string;
+      to_stage?: null | string;
+      environment: EnvironmentIdentity;
+      /**
+       * Permitted action
+       */
+      action:
+        | 'all'
+        | 'read'
+        | 'update'
+        | 'create'
+        | 'duplicate'
+        | 'delete'
+        | 'publish'
+        | 'edit_creator'
+        | 'take_over'
+        | 'move_to_stage';
+      /**
+       * Permitted creator
+       */
+      on_creator?: 'anyone' | 'self' | 'role' | null;
+      /**
+       * Permitted content scope
+       */
+      localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+      /**
+       * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+       */
+      locale?: string | null;
+    }[];
+    /**
+     * Prohibited actions on a model (or all) for a role
+     */
+    negative_item_type_permissions: {
+      item_type?: ItemTypeIdentity | null;
+      workflow?: WorkflowIdentity | null;
+      on_stage?: null | string;
+      to_stage?: null | string;
+      environment: EnvironmentIdentity;
+      /**
+       * Permitted action
+       */
+      action:
+        | 'all'
+        | 'read'
+        | 'update'
+        | 'create'
+        | 'duplicate'
+        | 'delete'
+        | 'publish'
+        | 'edit_creator'
+        | 'take_over'
+        | 'move_to_stage';
+      /**
+       * Permitted creator
+       */
+      on_creator?: 'anyone' | 'self' | 'role' | null;
+      /**
+       * Permitted content scope
+       */
+      localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+      /**
+       * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+       */
+      locale?: string | null;
+    }[];
+    /**
+     * Allowed actions on a model (or all) for a role
+     */
+    positive_upload_permissions: {
+      environment: EnvironmentIdentity;
+      /**
+       * Permitted action
+       */
+      action:
+        | 'all'
+        | 'read'
+        | 'update'
+        | 'create'
+        | 'delete'
+        | 'edit_creator'
+        | 'replace_asset';
+      /**
+       * Permitted creator
+       */
+      on_creator?: 'anyone' | 'self' | 'role' | null;
+      /**
+       * Permitted content scope
+       */
+      localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+      /**
+       * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+       */
+      locale?: string | null;
+    }[];
+    /**
+     * Prohibited actions on a model (or all) for a role
+     */
+    negative_upload_permissions: {
+      environment: EnvironmentIdentity;
+      /**
+       * Permitted action
+       */
+      action:
+        | 'all'
+        | 'read'
+        | 'update'
+        | 'create'
+        | 'delete'
+        | 'edit_creator'
+        | 'replace_asset';
+      /**
+       * Permitted creator
+       */
+      on_creator?: 'anyone' | 'self' | 'role' | null;
+      /**
+       * Permitted content scope
+       */
+      localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+      /**
+       * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+       */
+      locale?: string | null;
+    }[];
+    /**
+     * Allowed build triggers for a role
+     */
+    positive_build_trigger_permissions: {
+      build_trigger?: BuildTriggerIdentity | null;
+    }[];
+    /**
+     * Prohibited build triggers for a role
+     */
+    negative_build_trigger_permissions: {
+      build_trigger?: BuildTriggerIdentity | null;
+    }[];
+  };
+};
+
+/**
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type RoleCreateSchema = {
+  data: {
+    type: RoleType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The name of the role
+       */
+      name: string;
+      /**
+       * Can edit favicon, global SEO settings and no-index policy
+       */
+      can_edit_favicon?: boolean;
+      /**
+       * Can change project global properties
+       */
+      can_edit_site?: boolean;
+      /**
+       * Can create/edit models and plugins
+       */
+      can_edit_schema?: boolean;
+      /**
+       * Can customize content navigation bar
+       */
+      can_manage_menu?: boolean;
+      /**
+       * Can change locales, timezone and UI theme
+       */
+      can_edit_environment?: boolean;
+      /**
+       * Can promote environments to primary and manage maintenance mode
+       */
+      can_promote_environments?: boolean;
+      /**
+       * Specifies the environments the user can access
+       */
+      environments_access?: 'all' | 'primary_only' | 'sandbox_only' | 'none';
+      /**
+       * Can create/edit roles and invite/remove collaborators
+       */
+      can_manage_users?: boolean;
+      /**
+       * Can create/edit shared filters (both for models and the media area)
+       */
+      can_manage_shared_filters?: boolean;
+      /**
+       * Can create/edit upload collections
+       */
+      can_manage_upload_collections?: boolean;
+      /**
+       * Can create/edit Build triggers
+       */
+      can_manage_build_triggers?: boolean;
+      /**
+       * Can create/edit webhooks
+       */
+      can_manage_webhooks?: boolean;
+      /**
+       * Can create/delete sandbox environments and promote them to primary environment
+       */
+      can_manage_environments?: boolean;
+      /**
+       * Can manage Single Sign-On settings
+       */
+      can_manage_sso?: boolean;
+      /**
+       * Can access Audit Log
+       */
+      can_access_audit_log?: boolean;
+      /**
+       * Can create/edit workflows
+       */
+      can_manage_workflows?: boolean;
+      /**
+       * Can manage API tokens
+       */
+      can_manage_access_tokens?: boolean;
+      /**
+       * Can perform Site Search API calls
+       */
+      can_perform_site_search?: boolean;
+      /**
+       * Can access the build events log
+       */
+      can_access_build_events_log?: boolean;
+      /**
+       * Allowed actions on a model (or all) for a role
+       */
+      positive_item_type_permissions?: {
+        item_type?: ItemTypeIdentity | null;
+        workflow?: WorkflowIdentity | null;
+        on_stage?: null | string;
+        to_stage?: null | string;
+        environment: EnvironmentIdentity;
+        /**
+         * Permitted action
+         */
+        action:
+          | 'all'
+          | 'read'
+          | 'update'
+          | 'create'
+          | 'duplicate'
+          | 'delete'
+          | 'publish'
+          | 'edit_creator'
+          | 'take_over'
+          | 'move_to_stage';
+        /**
+         * Permitted creator
+         */
+        on_creator?: 'anyone' | 'self' | 'role' | null;
+        /**
+         * Permitted content scope
+         */
+        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+        /**
+         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+         */
+        locale?: string | null;
+      }[];
+      /**
+       * Prohibited actions on a model (or all) for a role
+       */
+      negative_item_type_permissions?: {
+        item_type?: ItemTypeIdentity | null;
+        workflow?: WorkflowIdentity | null;
+        on_stage?: null | string;
+        to_stage?: null | string;
+        environment: EnvironmentIdentity;
+        /**
+         * Permitted action
+         */
+        action:
+          | 'all'
+          | 'read'
+          | 'update'
+          | 'create'
+          | 'duplicate'
+          | 'delete'
+          | 'publish'
+          | 'edit_creator'
+          | 'take_over'
+          | 'move_to_stage';
+        /**
+         * Permitted creator
+         */
+        on_creator?: 'anyone' | 'self' | 'role' | null;
+        /**
+         * Permitted content scope
+         */
+        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+        /**
+         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+         */
+        locale?: string | null;
+      }[];
+      /**
+       * Allowed actions on a model (or all) for a role
+       */
+      positive_upload_permissions?: {
+        environment: EnvironmentIdentity;
+        /**
+         * Permitted action
+         */
+        action:
+          | 'all'
+          | 'read'
+          | 'update'
+          | 'create'
+          | 'delete'
+          | 'edit_creator'
+          | 'replace_asset';
+        /**
+         * Permitted creator
+         */
+        on_creator?: 'anyone' | 'self' | 'role' | null;
+        /**
+         * Permitted content scope
+         */
+        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+        /**
+         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+         */
+        locale?: string | null;
+      }[];
+      /**
+       * Prohibited actions on a model (or all) for a role
+       */
+      negative_upload_permissions?: {
+        environment: EnvironmentIdentity;
+        /**
+         * Permitted action
+         */
+        action:
+          | 'all'
+          | 'read'
+          | 'update'
+          | 'create'
+          | 'delete'
+          | 'edit_creator'
+          | 'replace_asset';
+        /**
+         * Permitted creator
+         */
+        on_creator?: 'anyone' | 'self' | 'role' | null;
+        /**
+         * Permitted content scope
+         */
+        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+        /**
+         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+         */
+        locale?: string | null;
+      }[];
+      /**
+       * Allowed build triggers for a role
+       */
+      positive_build_trigger_permissions?: {
+        build_trigger?: BuildTriggerIdentity | null;
+      }[];
+      /**
+       * Prohibited build triggers for a role
+       */
+      negative_build_trigger_permissions?: {
+        build_trigger?: BuildTriggerIdentity | null;
+      }[];
+    };
+    /**
+     * JSON API links
+     */
+    relationships?: {
+      /**
+       * The roles from which this role inherits permissions
+       */
+      inherits_permissions_from?: {
+        data: RoleData[];
+      };
+    };
+    meta?: RoleMeta;
+  };
+};
+
+/**
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type RoleCreateTargetSchema = {
+  data: Role;
+};
+
+/**
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type RoleUpdateSchema = {
+  data: {
+    type: RoleType;
+    id: RoleIdentity;
+    /**
+     * JSON API attributes
+     */
+    attributes?: {
+      /**
+       * The name of the role
+       */
+      name?: string;
+      /**
+       * Can edit favicon, global SEO settings and no-index policy
+       */
+      can_edit_favicon?: boolean;
+      /**
+       * Can change project global properties
+       */
+      can_edit_site?: boolean;
+      /**
+       * Can create/edit models and plugins
+       */
+      can_edit_schema?: boolean;
+      /**
+       * Can customize content navigation bar
+       */
+      can_manage_menu?: boolean;
+      /**
+       * Can change locales, timezone and UI theme
+       */
+      can_edit_environment?: boolean;
+      /**
+       * Can promote environments to primary and manage maintenance mode
+       */
+      can_promote_environments?: boolean;
+      /**
+       * Specifies the environments the user can access
+       */
+      environments_access?: 'all' | 'primary_only' | 'sandbox_only' | 'none';
+      /**
+       * Can create/edit roles and invite/remove collaborators
+       */
+      can_manage_users?: boolean;
+      /**
+       * Can create/edit shared filters (both for models and the media area)
+       */
+      can_manage_shared_filters?: boolean;
+      /**
+       * Can create/edit upload collections
+       */
+      can_manage_upload_collections?: boolean;
+      /**
+       * Can create/edit Build triggers
+       */
+      can_manage_build_triggers?: boolean;
+      /**
+       * Can create/edit webhooks
+       */
+      can_manage_webhooks?: boolean;
+      /**
+       * Can create/delete sandbox environments and promote them to primary environment
+       */
+      can_manage_environments?: boolean;
+      /**
+       * Can manage Single Sign-On settings
+       */
+      can_manage_sso?: boolean;
+      /**
+       * Can access Audit Log
+       */
+      can_access_audit_log?: boolean;
+      /**
+       * Can create/edit workflows
+       */
+      can_manage_workflows?: boolean;
+      /**
+       * Can manage API tokens
+       */
+      can_manage_access_tokens?: boolean;
+      /**
+       * Can perform Site Search API calls
+       */
+      can_perform_site_search?: boolean;
+      /**
+       * Can access the build events log
+       */
+      can_access_build_events_log?: boolean;
+      /**
+       * Allowed actions on a model (or all) for a role
+       */
+      positive_item_type_permissions?: {
+        item_type?: ItemTypeIdentity | null;
+        workflow?: WorkflowIdentity | null;
+        on_stage?: null | string;
+        to_stage?: null | string;
+        environment: EnvironmentIdentity;
+        /**
+         * Permitted action
+         */
+        action:
+          | 'all'
+          | 'read'
+          | 'update'
+          | 'create'
+          | 'duplicate'
+          | 'delete'
+          | 'publish'
+          | 'edit_creator'
+          | 'take_over'
+          | 'move_to_stage';
+        /**
+         * Permitted creator
+         */
+        on_creator?: 'anyone' | 'self' | 'role' | null;
+        /**
+         * Permitted content scope
+         */
+        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+        /**
+         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+         */
+        locale?: string | null;
+      }[];
+      /**
+       * Prohibited actions on a model (or all) for a role
+       */
+      negative_item_type_permissions?: {
+        item_type?: ItemTypeIdentity | null;
+        workflow?: WorkflowIdentity | null;
+        on_stage?: null | string;
+        to_stage?: null | string;
+        environment: EnvironmentIdentity;
+        /**
+         * Permitted action
+         */
+        action:
+          | 'all'
+          | 'read'
+          | 'update'
+          | 'create'
+          | 'duplicate'
+          | 'delete'
+          | 'publish'
+          | 'edit_creator'
+          | 'take_over'
+          | 'move_to_stage';
+        /**
+         * Permitted creator
+         */
+        on_creator?: 'anyone' | 'self' | 'role' | null;
+        /**
+         * Permitted content scope
+         */
+        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+        /**
+         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+         */
+        locale?: string | null;
+      }[];
+      /**
+       * Allowed actions on a model (or all) for a role
+       */
+      positive_upload_permissions?: {
+        environment: EnvironmentIdentity;
+        /**
+         * Permitted action
+         */
+        action:
+          | 'all'
+          | 'read'
+          | 'update'
+          | 'create'
+          | 'delete'
+          | 'edit_creator'
+          | 'replace_asset';
+        /**
+         * Permitted creator
+         */
+        on_creator?: 'anyone' | 'self' | 'role' | null;
+        /**
+         * Permitted content scope
+         */
+        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+        /**
+         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+         */
+        locale?: string | null;
+      }[];
+      /**
+       * Prohibited actions on a model (or all) for a role
+       */
+      negative_upload_permissions?: {
+        environment: EnvironmentIdentity;
+        /**
+         * Permitted action
+         */
+        action:
+          | 'all'
+          | 'read'
+          | 'update'
+          | 'create'
+          | 'delete'
+          | 'edit_creator'
+          | 'replace_asset';
+        /**
+         * Permitted creator
+         */
+        on_creator?: 'anyone' | 'self' | 'role' | null;
+        /**
+         * Permitted content scope
+         */
+        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
+        /**
+         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
+         */
+        locale?: string | null;
+      }[];
+      /**
+       * Allowed build triggers for a role
+       */
+      positive_build_trigger_permissions?: {
+        build_trigger?: BuildTriggerIdentity | null;
+      }[];
+      /**
+       * Prohibited build triggers for a role
+       */
+      negative_build_trigger_permissions?: {
+        build_trigger?: BuildTriggerIdentity | null;
+      }[];
+    };
+    /**
+     * JSON API links
+     */
+    relationships?: {
+      /**
+       * The roles from which this role inherits permissions
+       */
+      inherits_permissions_from?: {
+        data: RoleData[];
+      };
+    };
+    meta?: RoleMeta;
+  };
+};
+
+/**
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type RoleUpdateTargetSchema = {
+  data: Role;
+};
+
+/**
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type RoleInstancesTargetSchema = {
+  data: Role[];
+};
+
+/**
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type RoleSelfTargetSchema = {
+  data: Role;
+};
+
+/**
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type RoleDestroyTargetSchema = {
+  data: Role;
+};
+
+/**
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `duplicate.targetSchema` link.
+ */
+export type RoleDuplicateTargetSchema = {
+  data: Role;
+};
+
+/**
+ * A DatoCMS administrative area can be accessed by multiple people. Every collaborator is linked to a specific Role, which describes what actions it will be able to perform once logged in.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "user".
+ */
+export type User = {
+  type: UserType;
+  id: UserIdentity;
+  attributes: UserAttributes;
+  relationships: UserRelationships;
+  meta?: UserMeta;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type UserAttributes = {
+  /**
+   * Email
+   */
+  email: string;
+  /**
+   * Whether 2-factor authentication is active for this account or not
+   */
+  is_2fa_active: boolean;
+  /**
+   * Full name
+   */
+  full_name: string;
+  /**
+   * Whether the user is active or not
+   */
+  is_active: boolean;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type UserRelationships = {
+  /**
+   * Role
+   */
+  role: {
+    data: RoleData;
+  };
+};
+
+/**
+ * Meta information on the user
+ *
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type UserMeta = {
+  /**
+   * Date of last reading/interaction
+   */
+  last_access: string | null;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type UserData = {
+  type: UserType;
+  id: UserIdentity;
+};
+
+/**
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type UserUpdateSchema = {
+  data: {
+    type: UserType;
+    id: UserIdentity;
+    attributes?: {
+      /**
+       * Whether the user is active or not
+       */
+      is_active: boolean;
+    };
+    relationships?: {
+      /**
+       * Role
+       */
+      role: {
+        data: RoleData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type UserUpdateTargetSchema = {
+  data: User;
+};
+
+/**
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type UserInstancesTargetSchema = {
+  data: User[];
+};
+
+/**
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type UserSelfTargetSchema = {
+  data: User;
+  included?: Role[];
+};
+
+/**
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `me.targetSchema` link.
+ */
+export type UserMeTargetSchema = {
+  data: User | SsoUser | AccessToken | Account;
+  included?: Role[];
+};
+
+/**
+ * A Single Sign-On user exists when a DatoCMS project is connected to an external Identity Provider. An SSO user will not use the standard login procedure but has to go through SAML authentication. It can also be linked to one or more IdP groups.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "sso_user".
+ */
+export type SsoUser = {
+  type: SsoUserType;
+  id: SsoUserIdentity;
+  attributes: SsoUserAttributes;
+  relationships: SsoUserRelationships;
+  meta: SsoUserMeta;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SsoUser`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SsoUserAttributes = {
+  /**
+   * Email
+   */
+  username: string;
+  /**
+   * Identity provider ID
+   */
+  external_id: string | null;
+  /**
+   * Whether this user is active on the identity provider. De-activated users won't be able to login.
+   */
+  is_active: boolean;
+  /**
+   * First name
+   */
+  first_name: string | null;
+  /**
+   * Last name
+   */
+  last_name: string | null;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `SsoUser`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type SsoUserRelationships = {
+  /**
+   * All the users's groups
+   */
+  groups: {
+    data: SsoGroupData[];
+  };
+  /**
+   * The user role
+   */
+  role: {
+    data: RoleData | null;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `SsoGroup`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SsoGroupData = {
+  type: SsoGroupType;
+  id: SsoGroupIdentity;
+};
+
+/**
+ * Meta information on the user
+ *
+ * This interface was referenced by `SsoUser`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type SsoUserMeta = {
+  /**
+   * Date of last reading/interaction
+   */
+  last_access: string | null;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `SsoUser`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SsoUserData = {
+  type: SsoUserType;
+  id: SsoUserIdentity;
+};
+
+/**
+ * This interface was referenced by `SsoUser`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type SsoUserInstancesTargetSchema = {
+  data: SsoUser[];
+};
+
+/**
+ * This interface was referenced by `SsoUser`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type SsoUserSelfTargetSchema = {
+  data: SsoUser;
+};
+
+/**
+ * This interface was referenced by `SsoUser`'s JSON-Schema
+ * via the `copy_users.targetSchema` link.
+ */
+export type SsoUserCopyUsersTargetSchema = {
+  data: SsoUser[];
+};
+
+/**
+ * This interface was referenced by `SsoUser`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type SsoUserDestroyTargetSchema = {
+  data: SsoUser;
+};
+
+/**
+ * An API token allows access to our API. It is linked to a Role, which describes what actions can be performed.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "access_token".
+ */
+export type AccessToken = {
+  type: AccessTokenType;
+  id: AccessTokenIdentity;
+  attributes: AccessTokenAttributes;
+  relationships: AccessTokenRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type AccessTokenAttributes = {
+  /**
+   * Name of API token
+   */
+  name: string;
+  /**
+   * The actual API token (or null if the current user has no permission to read the token)
+   */
+  token?: null | string;
+  /**
+   * Whether this API token can access the Content Delivery API published content endpoint
+   */
+  can_access_cda: boolean;
+  /**
+   * Whether this API token can access the Content Delivery API draft content endpoint
+   */
+  can_access_cda_preview: boolean;
+  /**
+   * Whether this API token can access the Content Management API
+   */
+  can_access_cma: boolean;
+  hardcoded_type: null | string;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type AccessTokenRelationships = {
+  /**
+   * Role
+   */
+  role: {
+    data: RoleData | null;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type AccessTokenData = {
+  type: AccessTokenType;
+  id: AccessTokenIdentity;
+};
+
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type AccessTokenCreateSchema = {
+  data: {
+    type: AccessTokenType;
+    attributes: {
+      /**
+       * Name of API token
+       */
+      name: string;
+      /**
+       * Whether this API token can access the Content Delivery API published content endpoint
+       */
+      can_access_cda: boolean;
+      /**
+       * Whether this API token can access the Content Delivery API draft content endpoint
+       */
+      can_access_cda_preview: boolean;
+      /**
+       * Whether this API token can access the Content Management API
+       */
+      can_access_cma: boolean;
+    };
+    relationships: {
+      /**
+       * Role
+       */
+      role: {
+        data: RoleData | null;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type AccessTokenCreateTargetSchema = {
+  data: AccessToken;
+};
+
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type AccessTokenUpdateSchema = {
+  data: {
+    type: AccessTokenType;
+    id: AccessTokenIdentity;
+    attributes: {
+      /**
+       * Name of API token
+       */
+      name: string;
+      /**
+       * Whether this API token can access the Content Delivery API published content endpoint
+       */
+      can_access_cda: boolean;
+      /**
+       * Whether this API token can access the Content Delivery API draft content endpoint
+       */
+      can_access_cda_preview: boolean;
+      /**
+       * Whether this API token can access the Content Management API
+       */
+      can_access_cma: boolean;
+    };
+    relationships: {
+      /**
+       * Role
+       */
+      role: {
+        data: RoleData | null;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type AccessTokenUpdateTargetSchema = {
+  data: AccessToken;
+};
+
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type AccessTokenInstancesTargetSchema = {
+  data: AccessToken[];
+};
+
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type AccessTokenSelfTargetSchema = {
+  data: AccessToken;
+};
+
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `regenerate_token.targetSchema` link.
+ */
+export type AccessTokenRegenerateTokenTargetSchema = {
+  data: AccessToken;
+};
+
+/**
+ * This interface was referenced by `AccessToken`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type AccessTokenDestroyTargetSchema = {
+  data: AccessToken;
+};
+
+/**
+ * DatoCMS account
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "account".
+ */
+export type Account = {
+  type: AccountType;
+  id: AccountIdentity;
+  attributes: AccountAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type AccountAttributes = {
+  /**
+   * Email
+   */
+  email: string;
+  /**
+   * First name
+   */
+  first_name: string | null;
+  /**
+   * Last name
+   */
+  last_name: string | null;
+  /**
+   * Company name
+   */
+  company: string | null;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type AccountData = {
+  type: AccountType;
+  id: AccountIdentity;
+};
+
+/**
+ * This interface was referenced by `User`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type UserDestroyTargetSchema = {
+  data: User;
+};
+
+/**
+ * If the Audit log functionality is enabled in a project, logged events can be queried using SQL-like language and fetched in full detail so that they can be exported or analyzed.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "audit_log_event".
+ */
+export type AuditLogEvent = {
+  type: AuditLogEventType;
+  id: AuditLogEventIdentity;
+  attributes: AuditLogEventAttributes;
+  meta: AuditLogEventMeta;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `AuditLogEvent`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type AuditLogEventAttributes = {
+  /**
+   * The actual action performed
+   */
+  action_name: string;
+  /**
+   * The actor who performed the action
+   */
+  actor: {
+    /**
+     * The type of actor (can be `account`, `user`, `sso_user` or `access_token`)
+     */
+    type: string;
+    /**
+     * The ID of the actor
+     */
+    id: string;
+    /**
+     * An human representation of the actor (name/email/username depending on the type of actor)
+     */
+    name: string;
+  };
+  /**
+   * The role of the actor at the time the action was performed
+   */
+  role: null | {
+    /**
+     * The name of the role
+     */
+    name: string;
+    /**
+     * The ID of the role
+     */
+    id: string;
+  };
+  /**
+   * The environment inside of which the action was performed
+   */
+  environment: {
+    /**
+     * The ID of the environment
+     */
+    id: string;
+    /**
+     * Whether the environment was the primary one at the time the action was performed
+     */
+    primary: boolean;
+  };
+  /**
+   * The actual request being performed
+   */
+  request: {
+    /**
+     * The full path of the request
+     */
+    path: string;
+    /**
+     * The HTTP method of the request
+     */
+    method: string;
+    /**
+     * The X-Request-ID header of the request
+     */
+    id?: string;
+    /**
+     * The full HTTP body of the request
+     */
+    payload?: null | {
+      [k: string]: unknown;
+    };
+  };
+  /**
+   * The actual response being returned by DatoCMS
+   */
+  response: null | {
+    /**
+     * The HTTP status code of the response
+     */
+    status: number;
+    /**
+     * The full HTTP body of the response
+     */
+    payload: {
+      [k: string]: unknown;
+    };
+  };
+};
+
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `AuditLogEvent`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type AuditLogEventMeta = {
+  /**
+   * The date of the event
+   */
+  occurred_at: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `AuditLogEvent`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type AuditLogEventData = {
+  type: AuditLogEventType;
+  id: AuditLogEventIdentity;
+};
+
+/**
+ * This interface was referenced by `AuditLogEvent`'s JSON-Schema
+ * via the `query.schema` link.
+ */
+export type AuditLogEventQuerySchema = {
+  data: {
+    type: 'audit_log_query';
+    attributes: {
+      /**
+       * An SQL-like expression to filter the events
+       */
+      filter?: string;
+      /**
+       * Set this value to get remaining results, if a meta.next_token was returned in the previous query response
+       */
+      next_token?: string;
+      /**
+       * Whether a detailed log complete with full request and response payload must be returned or not
+       */
+      detailed_log?: boolean;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `AuditLogEvent`'s JSON-Schema
+ * via the `query.targetSchema` link.
+ */
+export type AuditLogEventQueryTargetSchema = {
+  data: AuditLogEvent[];
+  meta: {
+    /**
+     * If the response request exceeds the response payload limit DatoCMS will set this value in the response. If set, you can use that this value in the subsequent request to get the remaining results
+     */
+    next_token: null | string;
+  };
+};
+
+/**
+ * DatoCMS organization
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization".
+ */
+export type Organization = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+  attributes: OrganizationAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationAttributes = {
+  /**
+   * Name of the organization
+   */
+  name: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationData = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+};
+
+/**
+ * Stores the information regarding the current plan for the project.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "site_plan".
+ */
+export type SitePlan = {
+  type: SitePlanType;
+  id: SitePlanIdentity;
+  attributes: SitePlanAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SitePlan`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SitePlanAttributes = {
+  /**
+   * The name of the plan
+   */
+  name: string;
+  /**
+   * Whether this plan is active or legacy
+   */
+  active: boolean;
+  /**
+   * Whether custom domain can be enabled or not
+   */
+  custom_domain: boolean;
+  /**
+   * Number of users that can be invited
+   */
+  users: null | number;
+  /**
+   * Number of indexable pages
+   */
+  indexable_pages: null | number;
+  /**
+   * Number of build triggers
+   */
+  build_triggers: null | number;
+  /**
+   * Number of plugins
+   */
+  plugins: null | number;
+  /**
+   * Number of webhooks
+   */
+  webhooks: null | number;
+  /**
+   * Number of records allowed
+   */
+  items: null | number;
+  /**
+   * Monthly price
+   */
+  monthly_price: number;
+  /**
+   * Yearly price
+   */
+  yearly_price: number;
+  /**
+   * Uploadable bytes
+   */
+  uploadable_bytes: null | number;
+  /**
+   * Amount of asset data transferred between our Asset CDN and GraphQL Content Delivery API and content consumers
+   */
+  traffic_bytes: null | number;
+  /**
+   * The number of requests made to both our Content Management and Content Delivery APIs
+   */
+  api_calls: null | number;
+  /**
+   * The number of streaming seconds delivered by Mux.com
+   */
+  mux_streaming_seconds: null | number;
+  /**
+   * The number of available encoding seconds to Mux.com
+   */
+  mux_encoding_seconds: null | number;
+  /**
+   * The number of different API tokens you can generate, each which different permissions
+   */
+  access_tokens: null | number;
+  /**
+   * Number of roles allowed
+   */
+  roles: null | number;
+  /**
+   * Number of locales allowed
+   */
+  locales: null | number;
+  /**
+   * Number of sandbox environments allowed
+   */
+  sandbox_environments: null | number;
+  /**
+   * Number of models allowed
+   */
+  item_types: null | number;
+  /**
+   * Whether collaboration features are enabled or not
+   */
+  item_locking: boolean;
+  /**
+   * Whether project is in white-label mode or not
+   */
+  white_label: boolean;
+  /**
+   * Whether Single Sign-On feature is enabled or not
+   */
+  sso: boolean;
+  /**
+   * Whether built-in image editor and smart-tagging is enabled or not
+   */
+  advanced_media_area: boolean;
+  /**
+   * Maximum number of blocks a record can contain
+   */
+  blocks_per_item: number;
+  /**
+   * Maximum level of block nesting for a record
+   */
+  blocks_depth: number;
+  /**
+   * Whether video streaming with Mux.com is enabled or not
+   */
+  video: boolean;
+  /**
+   * Days of version history retention
+   */
+  history_retention_days: number | null;
+  /**
+   * Maximum number of clients connected at the same time to the Realtime Updates API. The limit is per-project
+   */
+  concurrent_realtime_connections: number;
+  /**
+   * The maximum GraphQL query complexity a client can perform on our CDA.
+   */
+  gql_complexity: number;
+  /**
+   * Period (in minutes) in which bursts of changes made to the same record by the same user (or API token) will be grouped into a single one
+   */
+  history_resolution_minutes: number;
+  /**
+   * Whether two-factor authentication can be enabled or not
+   */
+  otp: boolean;
+  /**
+   * Whether workflows are enabled or not
+   */
+  workflows: boolean;
+  /**
+   * Whether visual editing is enabled or not
+   */
+  visual_editing: boolean;
+  /**
+   * Number of workflows allowed
+   */
+  workflows_count: number;
+  /**
+   * Whether audit logs are enabled or not
+   */
+  audit_log: boolean;
+  /**
+   * Whether translator roles are enabled or not
+   */
+  translator_roles: boolean;
+  /**
+   * Whether or not use a static IP when sending webhooks
+   */
+  static_webhooks_ip: boolean;
+  /**
+   * Maximum size in bytes for a single file upload
+   */
+  maximum_single_upload_bytes: number;
+  /**
+   * Maximum size (in bytes) for a record, including its block records
+   */
+  item_size_bytes: number;
+  /**
+   * Available extra packets
+   */
+  extra_packets: {
+    users?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    locales?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    item_types?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    roles?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    build_triggers?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    access_tokens?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    mux_encoding_seconds?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    sandbox_environments?: {
+      amount_per_packet: number;
+      price: number;
+    };
+  };
+  /**
+   * Automatic packets
+   */
+  auto_packets: {
+    traffic_bytes?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    api_calls?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    mux_streaming_seconds?: {
+      amount_per_packet: number;
+      price: number;
+    };
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `SitePlan`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SitePlanData = {
+  type: SitePlanType;
+  id: SitePlanIdentity;
+};
+
+/**
+ * In DatoCMS you can organize the different Models present in your administrative area reordering and grouping them, so that their purpose will be more clear to the final editor.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "menu_item".
+ */
+export type MenuItem = {
+  type: MenuItemType;
+  id: MenuItemIdentity;
+  attributes: MenuItemAttributes;
+  relationships: MenuItemRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type MenuItemAttributes = {
+  /**
+   * The label of the menu item
+   */
+  label: string;
+  /**
+   * The URL to which the menu item points to
+   */
+  external_url: null | string;
+  /**
+   * Ordering index
+   */
+  position: number;
+  /**
+   * Opens link in new tab (to be used together with `external_url`)
+   */
+  open_in_new_tab: boolean;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type MenuItemRelationships = {
+  /**
+   * Item type associated with the menu item
+   */
+  item_type: {
+    data: ItemTypeData | null;
+  };
+  /**
+   * Item type filter associated with the menu item (to be used together with `item_type` relationship)
+   */
+  item_type_filter: {
+    data: ItemTypeFilterData | null;
+  };
+  /**
+   * Parent menu item
+   */
+  parent: {
+    data: null | MenuItemData;
+  };
+  /**
+   * Underlying menu items
+   */
+  children: {
+    data: MenuItemData[];
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ItemTypeData = {
+  type: ItemTypeType;
+  id: ItemTypeIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ItemTypeFilterData = {
+  type: ItemTypeFilterType;
+  id: ItemTypeFilterIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type MenuItemData = {
+  type: MenuItemType;
+  id: MenuItemIdentity;
+};
+
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type MenuItemCreateSchema = {
+  data: {
+    id?: MenuItemIdentity;
+    type: MenuItemType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The label of the menu item
+       */
+      label: string;
+      /**
+       * The URL to which the menu item points to
+       */
+      external_url?: null | string;
+      /**
+       * Ordering index
+       */
+      position?: number;
+      /**
+       * Opens link in new tab (to be used together with `external_url`)
+       */
+      open_in_new_tab?: boolean;
+    };
+    relationships?: {
+      /**
+       * Item type associated with the menu item
+       */
+      item_type?: {
+        data: ItemTypeData | null;
+      };
+      /**
+       * Item type filter associated with the menu item (to be used together with `item_type` relationship)
+       */
+      item_type_filter?: {
+        data: ItemTypeFilterData | null;
+      };
+      /**
+       * Parent menu item
+       */
+      parent?: {
+        data: null | MenuItemData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type MenuItemCreateTargetSchema = {
+  data: MenuItem;
+};
+
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type MenuItemUpdateSchema = {
+  data: {
+    type: MenuItemType;
+    id: MenuItemIdentity;
+    /**
+     * JSON API attributes
+     */
+    attributes?: {
+      /**
+       * The label of the menu item
+       */
+      label?: string;
+      /**
+       * The URL to which the menu item points to
+       */
+      external_url?: null | string;
+      /**
+       * Ordering index
+       */
+      position?: number;
+      /**
+       * Opens link in new tab (to be used together with `external_url`)
+       */
+      open_in_new_tab?: boolean;
+    };
+    relationships?: {
+      /**
+       * Item type associated with the menu item
+       */
+      item_type?: {
+        data: ItemTypeData | null;
+      };
+      /**
+       * Item type filter associated with the menu item (to be used together with `item_type` relationship)
+       */
+      item_type_filter?: {
+        data: ItemTypeFilterData | null;
+      };
+      /**
+       * Parent menu item
+       */
+      parent?: {
+        data: null | MenuItemData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type MenuItemUpdateTargetSchema = {
+  data: MenuItem;
+};
+
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type MenuItemInstancesTargetSchema = {
+  data: MenuItem[];
+};
+
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type MenuItemSelfTargetSchema = {
+  data: MenuItem;
+};
+
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type MenuItemDestroyTargetSchema = {
+  data: MenuItem;
+};
+
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `reorder.schema` link.
+ */
+export type MenuItemReorderSchema = {
+  data: {
+    id: MenuItemIdentity;
+    type: MenuItemType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * Ordering index
+       */
+      position: number;
+    };
+    relationships: {
+      /**
+       * Parent menu item
+       */
+      parent: {
+        data: null | MenuItemData;
+      };
+    };
+  }[];
+};
+
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `reorder.targetSchema` link.
+ */
+export type MenuItemReorderTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "job".
+ */
+export type Job = {
+  type: JobType;
+  id: JobIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Job`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type JobData = {
+  type: JobType;
+  id: JobIdentity;
+};
+
+/**
+ * This interface was referenced by `MenuItem`'s JSON-Schema
+ * via the `reorder.jobSchema` link.
+ */
+export type MenuItemReorderJobSchema = {
+  data: MenuItem[];
+};
+
+/**
+ * In DatoCMS you can organize the different models and blocks present in your administrative area reordering and grouping them, so that their purpose will be more clear to the final editor.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "schema_menu_item".
+ */
+export type SchemaMenuItem = {
+  type: SchemaMenuItemType;
+  id: SchemaMenuItemIdentity;
+  attributes: SchemaMenuItemAttributes;
+  relationships: SchemaMenuItemRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SchemaMenuItemAttributes = {
+  /**
+   * The label of the schema menu item (only present when the schema menu item is not linked to an item type)
+   */
+  label: null | string;
+  /**
+   * Ordering index
+   */
+  position: number;
+  /**
+   * Indicates if the schema menu item refers to an item type or a modular block
+   */
+  kind: 'item_type' | 'modular_block';
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type SchemaMenuItemRelationships = {
+  /**
+   * Item type associated with the schema menu item
+   */
+  item_type: {
+    data: ItemTypeData | null;
+  };
+  /**
+   * Parent schema menu item
+   */
+  parent: {
+    data: null | SchemaMenuItemData;
+  };
+  /**
+   * Underlying schema menu items
+   */
+  children: {
+    data: SchemaMenuItemData[];
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SchemaMenuItemData = {
+  type: SchemaMenuItemType;
+  id: SchemaMenuItemIdentity;
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type SchemaMenuItemCreateSchema = {
+  data: {
+    id?: SchemaMenuItemIdentity;
+    type: SchemaMenuItemType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The label of the schema menu item (only present when the schema menu item is not linked to an item type)
+       */
+      label: null | string;
+      /**
+       * Ordering index
+       */
+      position?: number;
+      /**
+       * Indicates if the schema menu item refers to an item type or a modular block
+       */
+      kind: 'item_type' | 'modular_block';
+    };
+    relationships?: {
+      /**
+       * Item type associated with the menu item
+       */
+      item_type?: {
+        data: ItemTypeData | null;
+      };
+      /**
+       * Parent schema menu item
+       */
+      parent?: {
+        data: null | SchemaMenuItemData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type SchemaMenuItemCreateTargetSchema = {
+  data: SchemaMenuItem;
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type SchemaMenuItemUpdateSchema = {
+  data: {
+    type: SchemaMenuItemType;
+    id: SchemaMenuItemIdentity;
+    /**
+     * JSON API attributes
+     */
+    attributes?: {
+      /**
+       * The label of the schema menu item (only present when the schema menu item is not linked to an item type)
+       */
+      label?: null | string;
+      /**
+       * Ordering index
+       */
+      position?: number;
+      /**
+       * Indicates if the schema menu item refers to an item type or a modular block
+       */
+      kind?: 'item_type' | 'modular_block';
+    };
+    relationships?: {
+      /**
+       * Item type associated with the menu item
+       */
+      item_type?: {
+        data: ItemTypeData | null;
+      };
+      /**
+       * Parent schema menu item
+       */
+      parent?: {
+        data: null | SchemaMenuItemData;
+      };
+      /**
+       * Underlying schema menu items
+       */
+      children?: {
+        data: SchemaMenuItemData[];
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type SchemaMenuItemUpdateTargetSchema = {
+  data: SchemaMenuItem;
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type SchemaMenuItemInstancesTargetSchema = {
+  data: SchemaMenuItem[];
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type SchemaMenuItemSelfTargetSchema = {
+  data: SchemaMenuItem;
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type SchemaMenuItemDestroyTargetSchema = {
+  data: SchemaMenuItem;
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `reorder.schema` link.
+ */
+export type SchemaMenuItemReorderSchema = {
+  data: {
+    id: SchemaMenuItemIdentity;
+    type: SchemaMenuItemType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * Ordering index
+       */
+      position: number;
+    };
+    relationships: {
+      /**
+       * Parent schema menu item
+       */
+      parent: {
+        data: null | SchemaMenuItemData;
+      };
+    };
+  }[];
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `reorder.targetSchema` link.
+ */
+export type SchemaMenuItemReorderTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
+ * via the `reorder.jobSchema` link.
+ */
+export type SchemaMenuItemReorderJobSchema = {
+  data: SchemaMenuItem[];
+};
+
+/**
+ * In DatoCMS you can organize the uploads present in your administrative area in collection, so that the final editors can easily navigate uploads.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "upload_collection".
+ */
+export type UploadCollection = {
+  type: UploadCollectionType;
+  id: UploadCollectionIdentity;
+  attributes: UploadCollectionAttributes;
+  relationships: UploadCollectionRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type UploadCollectionAttributes = {
+  /**
+   * The label of the upload collection
+   */
+  label: string;
+  /**
+   * Ordering index
+   */
+  position: number;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type UploadCollectionRelationships = {
+  /**
+   * Parent upload collection
+   */
+  parent: {
+    data: null | UploadCollectionData;
+  };
+  /**
+   * Underlying upload collections
+   */
+  children: {
+    data: UploadCollectionData[];
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type UploadCollectionData = {
+  type: UploadCollectionType;
+  id: UploadCollectionIdentity;
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type UploadCollectionCreateSchema = {
+  data: {
+    id?: UploadCollectionIdentity;
+    type: UploadCollectionType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The label of the upload collection
+       */
+      label: string;
+      /**
+       * Ordering index
+       */
+      position?: number;
+    };
+    relationships?: {
+      /**
+       * Parent upload collection
+       */
+      parent?: {
+        data: null | UploadCollectionData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type UploadCollectionCreateTargetSchema = {
+  data: UploadCollection;
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type UploadCollectionUpdateSchema = {
+  data: {
+    type: UploadCollectionType;
+    id: UploadCollectionIdentity;
+    /**
+     * JSON API attributes
+     */
+    attributes?: {
+      /**
+       * The label of the upload collection
+       */
+      label?: string;
+      /**
+       * Ordering index
+       */
+      position?: number;
+    };
+    relationships?: {
+      /**
+       * Parent upload collection
+       */
+      parent?: {
+        data: null | UploadCollectionData;
+      };
+      /**
+       * Underlying upload collections
+       */
+      children?: {
+        data: UploadCollectionData[];
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type UploadCollectionUpdateTargetSchema = {
+  data: UploadCollection;
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type UploadCollectionInstancesTargetSchema = {
+  data: UploadCollection[];
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type UploadCollectionSelfTargetSchema = {
+  data: UploadCollection;
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type UploadCollectionDestroyTargetSchema = {
+  data: UploadCollection;
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `reorder.schema` link.
+ */
+export type UploadCollectionReorderSchema = {
+  data: {
+    id: UploadCollectionIdentity;
+    type: UploadCollectionType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * Ordering index
+       */
+      position: number;
+    };
+    relationships: {
+      /**
+       * Parent upload collection
+       */
+      parent: {
+        data: null | UploadCollectionData;
+      };
+    };
+  }[];
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `reorder.targetSchema` link.
+ */
+export type UploadCollectionReorderTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `reorder.jobSchema` link.
+ */
+export type UploadCollectionReorderJobSchema = {
+  data: UploadCollection[];
+};
+
+/**
+ * The way you define the kind of content you can edit inside your administrative area passes through the concept of Models, which are much like database tables. For backward-compatibility reasons, the API refers to models as "item types".
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "item_type".
+ */
+export type ItemType = {
+  type: ItemTypeType;
+  id: ItemTypeIdentity;
+  attributes: ItemTypeAttributes;
+  relationships: ItemTypeRelationships;
+  meta: ItemTypeMeta;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type ItemTypeAttributes = {
+  /**
+   * Name of the model
+   */
+  name: string;
+  /**
+   * API key of the model
+   */
+  api_key: string;
+  /**
+   * The way the model collection should be presented to the editors
+   */
+  collection_appeareance?: 'compact' | 'table';
+  /**
+   * The way the model collection should be presented to the editors
+   */
+  collection_appearance: 'compact' | 'table';
+  /**
+   * Whether the model is single-instance or not
+   */
+  singleton: boolean;
+  /**
+   * Whether we require all the project locales to be present for each localized field or not
+   */
+  all_locales_required: boolean;
+  /**
+   * Whether editors can sort records via drag & drop or not
+   */
+  sortable: boolean;
+  /**
+   * Whether this model is a modular content block or not
+   */
+  modular_block: boolean;
+  /**
+   * Whether draft/published mode is active or not
+   */
+  draft_mode_active: boolean;
+  /**
+   * Whether draft records can be saved without satisfying the validations or not
+   */
+  draft_saving_active: boolean;
+  /**
+   * Whether editors can organize records in a tree or not
+   */
+  tree: boolean;
+  /**
+   * If an ordering field is set, this fields specify the sorting direction
+   */
+  ordering_direction: null | 'asc' | 'desc';
+  /**
+   * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field
+   */
+  ordering_meta:
+    | null
+    | 'created_at'
+    | 'updated_at'
+    | 'first_published_at'
+    | 'published_at';
+  /**
+   * If this model is single-instance, this tells the single-instance record has already been created or not
+   */
+  has_singleton_item: boolean;
+  /**
+   * A hint shown to editors to help them understand the purpose of this model/block
+   */
+  hint: string | null;
+  /**
+   * Whether inverse relationships fields are expressed in GraphQL or not
+   */
+  inverse_relationships_enabled: boolean;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type ItemTypeRelationships = {
+  /**
+   * The item instance related to this item type
+   */
+  singleton_item: {
+    data: ItemData | null;
+  };
+  /**
+   * The list of item type fields
+   */
+  fields: {
+    data: FieldData[];
+  };
+  /**
+   * The list of item type fieldsets
+   */
+  fieldsets: {
+    data: FieldsetData[];
+  };
+  /**
+   * The field to use as presentation title
+   */
+  presentation_title_field: {
+    data: FieldData | null;
+  };
+  /**
+   * The field to use as presentation image
+   */
+  presentation_image_field: {
+    data: FieldData | null;
+  };
+  /**
+   * The field to use as fallback title for SEO purposes
+   */
+  title_field: {
+    data: FieldData | null;
+  };
+  /**
+   * The field to use as fallback image for SEO purposes
+   */
+  image_preview_field: {
+    data: FieldData | null;
+  };
+  /**
+   * The field to use as fallback description for SEO purposes
+   */
+  excerpt_field: {
+    data: FieldData | null;
+  };
+  /**
+   * The field upon which the collection is sorted
+   */
+  ordering_field: {
+    data: FieldData | null;
+  };
+  /**
+   * The workflow to enforce on records
+   */
+  workflow: {
+    data: WorkflowData | null;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ItemData = {
+  type: ItemType1;
+  id: ItemIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type FieldData = {
+  type: FieldType;
+  id: FieldIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type FieldsetData = {
+  type: FieldsetType;
+  id: FieldsetIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Workflow`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type WorkflowData = {
+  type: WorkflowType;
+  id: WorkflowIdentity;
+};
+
+/**
+ * Meta information regarding the item type
+ *
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type ItemTypeMeta = {
+  /**
+   * If this model is single-instance, this tells the single-instance record has already been created or not
+   */
+  has_singleton_item: boolean;
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type ItemTypeCreateSchema = {
+  data: {
+    id?: ItemTypeIdentity;
+    type: ItemTypeType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * Name of the model
+       */
+      name: string;
+      /**
+       * API key of the model
+       */
+      api_key: string;
+      /**
+       * Whether the model is single-instance or not
+       */
+      singleton?: boolean;
+      /**
+       * Whether we require all the project locales to be present for each localized field or not
+       */
+      all_locales_required?: boolean;
+      /**
+       * Whether editors can sort records via drag & drop or not
+       */
+      sortable?: boolean;
+      /**
+       * Whether this model is a modular content block or not
+       */
+      modular_block?: boolean;
+      /**
+       * Whether draft/published mode is active or not
+       */
+      draft_mode_active?: boolean;
+      /**
+       * Whether draft records can be saved without satisfying the validations or not
+       */
+      draft_saving_active?: boolean;
+      /**
+       * Whether editors can organize records in a tree or not
+       */
+      tree?: boolean;
+      /**
+       * If an ordering field is set, this fields specify the sorting direction
+       */
+      ordering_direction?: null | 'asc' | 'desc';
+      /**
+       * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field
+       */
+      ordering_meta?:
+        | null
+        | 'created_at'
+        | 'updated_at'
+        | 'first_published_at'
+        | 'published_at';
+      /**
+       * The way the model collection should be presented to the editors
+       */
+      collection_appeareance?: 'compact' | 'table';
+      /**
+       * The way the model collection should be presented to the editors
+       */
+      collection_appearance?: 'compact' | 'table';
+      /**
+       * A hint shown to editors to help them understand the purpose of this model/block
+       */
+      hint?: string | null;
+      /**
+       * Whether inverse relationships fields are expressed in GraphQL or not
+       */
+      inverse_relationships_enabled?: boolean;
+    };
+    relationships?: {
+      /**
+       * The field upon which the collection is sorted
+       */
+      ordering_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as presentation title
+       */
+      presentation_title_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as presentation image
+       */
+      presentation_image_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as fallback title for SEO purposes
+       */
+      title_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as fallback image for SEO purposes
+       */
+      image_preview_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as fallback description for SEO purposes
+       */
+      excerpt_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The workflow to enforce on records
+       */
+      workflow?: {
+        data: WorkflowData | null;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type ItemTypeCreateTargetSchema = {
+  data: ItemType;
+  included?: MenuItem[];
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type ItemTypeUpdateSchema = {
+  data: {
+    type: ItemTypeType;
+    id: ItemTypeIdentity;
+    /**
+     * JSON API attributes
+     */
+    attributes?: {
+      /**
+       * Name of the model
+       */
+      name?: string;
+      /**
+       * API key of the model
+       */
+      api_key?: string;
+      /**
+       * The way the model collection should be presented to the editors
+       */
+      collection_appeareance?: 'compact' | 'table';
+      /**
+       * The way the model collection should be presented to the editors
+       */
+      collection_appearance?: 'compact' | 'table';
+      /**
+       * Whether the model is single-instance or not
+       */
+      singleton?: boolean;
+      /**
+       * Whether we require all the project locales to be present for each localized field or not
+       */
+      all_locales_required?: boolean;
+      /**
+       * Whether editors can sort records via drag & drop or not
+       */
+      sortable?: boolean;
+      /**
+       * Whether this model is a modular content block or not
+       */
+      modular_block?: boolean;
+      /**
+       * Whether draft/published mode is active or not
+       */
+      draft_mode_active?: boolean;
+      /**
+       * Whether draft records can be saved without satisfying the validations or not
+       */
+      draft_saving_active?: boolean;
+      /**
+       * Whether editors can organize records in a tree or not
+       */
+      tree?: boolean;
+      /**
+       * If an ordering field is set, this fields specify the sorting direction
+       */
+      ordering_direction?: null | 'asc' | 'desc';
+      /**
+       * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field
+       */
+      ordering_meta?:
+        | null
+        | 'created_at'
+        | 'updated_at'
+        | 'first_published_at'
+        | 'published_at';
+      /**
+       * If this model is single-instance, this tells the single-instance record has already been created or not
+       */
+      has_singleton_item?: boolean;
+      /**
+       * A hint shown to editors to help them understand the purpose of this model/block
+       */
+      hint?: string | null;
+      /**
+       * Whether inverse relationships fields are expressed in GraphQL or not
+       */
+      inverse_relationships_enabled?: boolean;
+    };
+    relationships?: {
+      /**
+       * The field upon which the collection is sorted
+       */
+      ordering_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as presentation title
+       */
+      presentation_title_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as presentation image
+       */
+      presentation_image_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as fallback title for SEO purposes
+       */
+      title_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as fallback image for SEO purposes
+       */
+      image_preview_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The field to use as fallback description for SEO purposes
+       */
+      excerpt_field?: {
+        data: FieldData | null;
+      };
+      /**
+       * The workflow to enforce on records
+       */
+      workflow?: {
+        data: WorkflowData | null;
+      };
+    };
+    meta?: {
+      /**
+       * If this model is single-instance, this tells the single-instance record has already been created or not
+       */
+      has_singleton_item?: boolean;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type ItemTypeUpdateTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `update.jobSchema` link.
+ */
+export type ItemTypeUpdateJobSchema = {
+  data: ItemType;
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type ItemTypeInstancesTargetSchema = {
+  data: ItemType[];
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type ItemTypeSelfTargetSchema = {
+  data: ItemType;
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `duplicate.targetSchema` link.
+ */
+export type ItemTypeDuplicateTargetSchema = {
+  data: ItemType;
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type ItemTypeDestroyTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `destroy.jobSchema` link.
+ */
+export type ItemTypeDestroyJobSchema = {
+  data: ItemType;
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `reorder_fields_and_fieldsets.schema` link.
+ */
+export type ItemTypeReorderFieldsAndFieldsetsSchema = {
+  data: (
+    | {
+        id: FieldIdentity;
+        type: FieldType;
+        /**
+         * JSON API attributes
+         */
+        attributes: {
+          /**
+           * Ordering index
+           */
+          position: number;
+        };
+        relationships: {
+          /**
+           * Fieldset linkage
+           */
+          fieldset: {
+            data: null | FieldsetData;
+          };
+        };
+      }
+    | {
+        id: FieldsetIdentity;
+        type: FieldsetType;
+        /**
+         * JSON API attributes
+         */
+        attributes: {
+          /**
+           * Ordering index
+           */
+          position: number;
+        };
+      }
+  )[];
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `reorder_fields_and_fieldsets.targetSchema` link.
+ */
+export type ItemTypeReorderFieldsAndFieldsetsTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `reorder_fields_and_fieldsets.jobSchema` link.
+ */
+export type ItemTypeReorderFieldsAndFieldsetsJobSchema = {
+  data: (Field | Fieldset)[];
+};
+
+/**
+ * DatoCMS offers a number of different fields that you can combine together to create a [Model](/docs/content-management-api/resources/item-type). Using the database metaphore, fields are like table columns, and when creating them you need to specify their type (`string`, `float`, etc.) and any required validation.
+ *
+ * ### Different field types require different settings
+ *
+ * When looking at a field resource, you have to pay attention to two particular properties, `validators` and `appearance`.
+ *
+ * The `validators` property expresses the set of validations to be performed server-side on a specific field value for it to be considered valid, while the `appearance` property lets you specify _how_ the field itself will be presented inside the form to the final editor.
+ *
+ * For both properties, the value to specify depends on the type of field itself. For example, you can add a "Limit character count" validation to a _Single-line string_ field, or set its appearence to "Show it as heading", but they won't be accepted for a ie. _Color_ field, as it supports different validations and appearance settings.
+ *
+ * ### Specifying validations
+ *
+ * The `validators` property requires an object whose keys are the validations that you want to be enforced, and the values are objects representing any settings that the validation itself requires. If the validation doesn't have additional settings, you just pass down an empty object.
+ *
+ * This is a valid example for a _Single-line string_ field:
+ *
+ * ```js
+ * {
+ *   "validators": {
+ *     // "required" validator has no settings
+ *     "required": {},
+ *     // "length" validator requires "min" and/or "max" properties
+ *     "length": { "min": 80 }
+ *   }
+ * }
+ * ```
+ *
+ * Below you'll find a summary of all the validators available for each field type with their settings.
+ *
+ * Some validators are required for a specific type of field. For example, the _Modular Content_ field needs to have a `rich_text_blocks` validator, specifying which types of blocks it can contain.
+ *
+ * ### Specifying the appearance
+ *
+ * The `appearance` property requires an object with three specific properties: `editor`, `parameters` and `addons`.
+ *
+ * The `editor` represents the type of editor that the users will see inside the form to change the value of this specific field. Depending on the type of field, DatoCMS offers a number of different editors for you to choose from. The `parameters` property is an object representing any additional settings that the editor itself might require.
+ *
+ * This is a valid example for a _Single-line string_ field:
+ *
+ * ```js
+ * {
+ *   "appearance": {
+ *     // single_line is a DatoCMS built-in editor that you can use with single-line string fields
+ *     "editor": "single_line",
+ *     // each built-in editor has specific settings
+ *     "parameters": { "heading": true, "placeholder": "My blog post title" },
+ *     "addons": []
+ *   },
+ * }
+ * ```
+ *
+ * Following you'll find a summary of all the editors available for each field type with their settings.
+ *
+ * #### Setting the appearance to a field editor provided by a plugin
+ *
+ * If the project contains a plugin that exposes [manual field editors](/docs/plugin-sdk/manual-field-extensions), you can also configure the field to be presented with it instead of using one of the built-in editors.
+ *
+ * In this case:
+ *
+ * - the `editor` property is the plugin's project-specific autogenerated UUID. You can get it from the last part of the plugin's URL within your project's Configuration screen (e.g. `https://your-project.admin.datocms.com/configuration/plugins/PLUGIN_UUID/`), or via API with a [List all plugins](/docs/content-management-api/resources/plugin/instances) call.
+ * - the `field_extension` property must be the ID of the specific manual field editor that the plugin exposes. This is set in the plugin's own source code, within a `manualFieldExtension()` call in its entry point (usually something like `index.tsx`).
+ * - the `parameters` property must provide a configuration object compatible with the [config screen of the manual field extension](/docs/plugin-sdk/manual-field-extensions#add-per-field-config-screens-to-manual-field-extensions), or an empty object if it doesn't require any configuration.
+ *
+ * ```js
+ * {
+ *   "appearance": {
+ *     // "2132" is a the ID of a plugin exposing a manual field editor
+ *     "editor": "2134",
+ *     // "starRating" is a manual field editor exposed by the plugin
+ *     "field_extension": "starRating",
+ *     // this is a valid configuration for the "starRating" field editor
+ *     "parameters": { "maxRating": 5, "starsColor": "#ff0000" },
+ *     "addons": []
+ *   },
+ * }
+ * ```
+ *
+ * #### Configuring manual field addons
+ *
+ * If the project contains plugins that expose [manual field addons](/docs/plugin-sdk/manual-field-extensions), you can also add them to the field via the `addons` property.
+ *
+ * ```js
+ * {
+ *   "appearance": {
+ *     "editor": "single_line",
+ *     "parameters": { "heading": true, "placeholder": "My blog post title" },
+ *     "addons": [
+ *       {
+ *         // "2138" is a the ID of a plugin exposing a manual addon editor
+ *         "id": "2138",
+ *         // "loremIpsumGenerator" is a manual field addon exposed by the plugin
+ *         "field_extension": "loremIpsumGenerator",
+ *         // this is a valid configuration for the "loremIpsumGenerator" field addon
+ *         "parameters": { "sentences": 2 },
+ *       }
+ *     ]
+ *   },
+ * }
+ * ```
+ *
+ * ### Available field types
+ *
+ * <details>
+ * <summary>Single-line string (<code>string</code>)</summary>
+ *
+ * | Property                       | Value                                                |
+ * | ------------------------------ | ---------------------------------------------------- |
+ * | Code                           | `string`                                             |
+ * | Built-in editors for the field | `single_line`, `string_radio_group`, `string_select` |
+ * | Available validators           | `required`, `unique`, `length`, `format`, `enum`     |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Multi-line text (<code>text</code>)</summary>
+ *
+ * | Property                       | Value                                          |
+ * | ------------------------------ | ---------------------------------------------- |
+ * | Code                           | `text`                                         |
+ * | Built-in editors for the field | `markdown`, `wysiwyg`, `textarea`              |
+ * | Available validators           | `required`, `length`, `format`, `sanitization` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Boolean (<code>boolean</code>)</summary>
+ *
+ * | Property                       | Value                            |
+ * | ------------------------------ | -------------------------------- |
+ * | Code                           | `boolean`                        |
+ * | Built-in editors for the field | `boolean`, `boolean_radio_group` |
+ * | Available validators           | no validators available          |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Integer (<code>integer</code>)</summary>
+ *
+ * | Property                       | Value                      |
+ * | ------------------------------ | -------------------------- |
+ * | Code                           | `integer`                  |
+ * | Built-in editors for the field | `integer`                  |
+ * | Available validators           | `required`, `number_range` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Float (<code>float</code>)</summary>
+ *
+ * | Property                       | Value                      |
+ * | ------------------------------ | -------------------------- |
+ * | Code                           | `float`                    |
+ * | Built-in editors for the field | `float`                    |
+ * | Available validators           | `required`, `number_range` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Date (<code>date</code>)</summary>
+ *
+ * | Property                       | Value                    |
+ * | ------------------------------ | ------------------------ |
+ * | Code                           | `date`                   |
+ * | Built-in editors for the field | `date_picker`            |
+ * | Available validators           | `required`, `date_range` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Date time (<code>date_time</code>)</summary>
+ *
+ * | Property                       | Value                         |
+ * | ------------------------------ | ----------------------------- |
+ * | Code                           | `date_time`                   |
+ * | Built-in editors for the field | `date_time_picker`            |
+ * | Available validators           | `required`, `date_time_range` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Color (<code>color</code>)</summary>
+ *
+ * | Property                       | Value          |
+ * | ------------------------------ | -------------- |
+ * | Code                           | `color`        |
+ * | Built-in editors for the field | `color_picker` |
+ * | Available validators           | `required`     |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>JSON (<code>json</code>)</summary>
+ *
+ * | Property                       | Value                                                  |
+ * | ------------------------------ | ------------------------------------------------------ |
+ * | Code                           | `json`                                                 |
+ * | Built-in editors for the field | `json`, `string_multi_select`, `string_checkbox_group` |
+ * | Available validators           | `required`                                             |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Location (<code>lat_lon</code>)</summary>
+ *
+ * | Property                       | Value      |
+ * | ------------------------------ | ---------- |
+ * | Code                           | `lat_lon`  |
+ * | Built-in editors for the field | `map`      |
+ * | Available validators           | `required` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>SEO and Social (<code>seo</code>)</summary>
+ *
+ * | Property                       | Value                                                                                                              |
+ * | ------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+ * | Code                           | `seo`                                                                                                              |
+ * | Built-in editors for the field | `seo`                                                                                                              |
+ * | Available validators           | `required_seo_fields`, `file_size`, `image_dimensions`, `image_aspect_ratio`, `title_length`, `description_length` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Slug (<code>slug</code>)</summary>
+ *
+ * | Property                       | Value                                                   |
+ * | ------------------------------ | ------------------------------------------------------- |
+ * | Code                           | `slug`                                                  |
+ * | Built-in editors for the field | `slug`                                                  |
+ * | Available validators           | `required`, `length`, `slug_format`, `slug_title_field` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>External video (<code>video</code>)</summary>
+ *
+ * | Property                       | Value      |
+ * | ------------------------------ | ---------- |
+ * | Code                           | `video`    |
+ * | Built-in editors for the field | `video`    |
+ * | Available validators           | `required` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Single-asset (<code>file</code>)</summary>
+ *
+ * | Property                       | Value                                                                                                |
+ * | ------------------------------ | ---------------------------------------------------------------------------------------------------- |
+ * | Code                           | `file`                                                                                               |
+ * | Built-in editors for the field | `file`                                                                                               |
+ * | Available validators           | `required`, `file_size`, `image_dimensions`, `image_aspect_ratio`, `extension`, `required_alt_title` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Asset gallery (<code>gallery</code>)</summary>
+ *
+ * | Property                       | Value                                                                                            |
+ * | ------------------------------ | ------------------------------------------------------------------------------------------------ |
+ * | Code                           | `gallery`                                                                                        |
+ * | Built-in editors for the field | `gallery`                                                                                        |
+ * | Available validators           | `size`, `file_size`, `image_dimensions`, `image_aspect_ratio`, `extension`, `required_alt_title` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Single link (<code>link</code>)</summary>
+ *
+ * | Property                       | Value                       |
+ * | ------------------------------ | --------------------------- |
+ * | Code                           | `link`                      |
+ * | Built-in editors for the field | `link_select`, `link_embed` |
+ * | Default `editor`               | `link_select`               |
+ * | Required validators            | `item_item_type`            |
+ * | Other validators available     | `required`, `unique`        |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Multiple links (<code>links</code>)</summary>
+ *
+ * | Property                       | Value                         |
+ * | ------------------------------ | ----------------------------- |
+ * | Code                           | `links`                       |
+ * | Built-in editors for the field | `links_select`, `links_embed` |
+ * | Default `editor`               | `links_select`                |
+ * | Required validators            | `items_item_type`             |
+ * | Other validators available     | `size`                        |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Modular content (<code>rich_text</code>)</summary>
+ *
+ * | Property                       | Value              |
+ * | ------------------------------ | ------------------ |
+ * | Code                           | `rich_text`        |
+ * | Built-in editors for the field | `rich_text`        |
+ * | Required validators            | `rich_text_blocks` |
+ * | Other validators available     | `size`             |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Single Block (<code>single_block</code>)</summary>
+ *
+ * | Property                       | Value                                           |
+ * | ------------------------------ | ----------------------------------------------- |
+ * | Code                           | `single_block`                                  |
+ * | Built-in editors for the field | `framed_single_block`, `frameless_single_block` |
+ * | Required validators            | `single_block_blocks`                           |
+ * | Other validators available     | `required`                                      |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Structured text (<code>structured_text</code>)</summary>
+ *
+ * | Property                       | Value                                             |
+ * | ------------------------------ | ------------------------------------------------- |
+ * | Code                           | `structured_text`                                 |
+ * | Built-in editors for the field | `structured_text`                                 |
+ * | Required validators            | `structured_text_blocks`, `structured_text_links` |
+ * | Other validators available     | `length`, `structured_text_inline_blocks`         |
+ *
+ * </details>
+ *
+ * ### Validators
+ *
+ * <details>
+ * <summary><code>date_range</code></summary>
+ *
+ * Accept dates only inside a specified date range.
+ *
+ * | Parameter | Type          | Required | Description  |
+ * | --------- | ------------- | -------- | ------------ |
+ * | `min`     | ISO 8601 date |          | Minimum date |
+ * | `max`     | ISO 8601 date |          | Maximum date |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>date_time_range</code></summary>
+ *
+ * Accept date times only inside a specified date range.
+ *
+ * | Parameter | Type              | Required | Description      |
+ * | --------- | ----------------- | -------- | ---------------- |
+ * | `min`     | ISO 8601 datetime |          | Minimum datetime |
+ * | `max`     | ISO 8601 datetime |          | Maximum datetime |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>enum</code></summary>
+ *
+ * Only accept a specific set of values
+ *
+ * | Parameter | Type            | Required | Description           |
+ * | --------- | --------------- | -------- | --------------------- |
+ * | `values`  | `Array<String>` | ✅        | Set of allowed values |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>extension</code></summary>
+ *
+ * Only accept assets with specific file extensions.
+ *
+ * | Parameter         | Type                                                               | Required | Description                    |
+ * | ----------------- | ------------------------------------------------------------------ | -------- | ------------------------------ |
+ * | `extensions`      | `Array<String>`                                                    |          | Set of allowed file extensions |
+ * | `predefined_list` | one of `"image"`, `"transformable_image"`, `"video"`, `"document"` |          | Allowed file type              |
+ *
+ * Only one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>file_size</code></summary>
+ *
+ * Accept assets only inside a specified date range.
+ *
+ * | Parameter   | Type                         | Required | Description                        |
+ * | ----------- | ---------------------------- | -------- | ---------------------------------- |
+ * | `min_value` | `Integer`                    |          | Numeric value for minimum filesize |
+ * | `min_unit`  | one of `"B"`, `"KB"`, `"MB"` |          | Unit for minimum filesize          |
+ * | `max_value` | `Integer`                    |          | Numeric value for maximum filesize |
+ * | `max_unit`  | one of `"B"`, `"KB"`, `"MB"` |          | Unit for maximum filesize          |
+ *
+ * At least one couple of value/unit must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>format</code></summary>
+ *
+ * Accepts only strings that match a specified format.
+ *
+ * | Parameter            | Type                 | Required | Description                                   |
+ * | -------------------- | -------------------- | -------- | --------------------------------------------- |
+ * | `custom_pattern`     | `Regexp`             | Optional | Custom regular expression for validation      |
+ * | `predefined_pattern` | `"email"` or `"url"` | Optional | Specifies a pre-defined format (email or URL) |
+ *
+ * **Note:** Only one of `custom_pattern` or `predefined_pattern` should be specified.
+ *
+ * If `custom_pattern` is used, an additional `description` parameter can be provided to serve as a hint for the user. This hint offers a simple explanation of the expected pattern, such as `"The field must end with an 's'"`, instead of the default message like `"Field must match the pattern: /s$/"`.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>slug_format</code></summary>
+ *
+ * Only accept slugs having a specific format.
+ *
+ * | Parameter            | Type             | Required | Description                        |
+ * | -------------------- | ---------------- | -------- | ---------------------------------- |
+ * | `custom_pattern`     | `Regexp`         |          | Regular expression to be validated |
+ * | `predefined_pattern` | `"webpage_slug"` |          | Allowed format                     |
+ *
+ * Only one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>image_dimensions</code></summary>
+ *
+ * Accept assets only within a specified height and width range.
+ *
+ * | Parameter          | Type      | Required | Description                      |
+ * | ------------------ | --------- | -------- | -------------------------------- |
+ * | `width_min_value`  | `Integer` |          | Numeric value for minimum width  |
+ * | `width_max_value`  | `Integer` |          | Numeric value for maximum height |
+ * | `height_min_value` | `Integer` |          | Numeric value for minimum width  |
+ * | `height_max_value` | `Integer` |          | Numeric value for maximum height |
+ *
+ * At least one pair of height/width parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>image_aspect_ratio</code></summary>
+ *
+ * Accept assets only within a specified aspect ratio range.
+ *
+ * | Parameter            | Type      | Required | Description                                    |
+ * | -------------------- | --------- | -------- | ---------------------------------------------- |
+ * | `min_ar_numerator`   | `Integer` |          | Numerator part of the minimum aspect ratio     |
+ * | `min_ar_denominator` | `Integer` |          | Denominator part of the minimum aspect ratio   |
+ * | `eq_ar_numerator`    | `Integer` |          | Numerator part for the required aspect ratio   |
+ * | `eq_ar_denominator`  | `Integer` |          | Denominator part for the required aspect ratio |
+ * | `max_ar_numerator`   | `Integer` |          | Numerator part of the maximum aspect ratio     |
+ * | `max_ar_denominator` | `Integer` |          | Denominator part of the maximum aspect ratio   |
+ *
+ * At least one pair of numerator/denominator must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>item_item_type</code></summary>
+ *
+ * Only accept references to records of the specified models.
+ *
+ * | Parameter                                         | Type                                                                     | Required | Description                                                                                         |
+ * | ------------------------------------------------- | ------------------------------------------------------------------------ | -------- | --------------------------------------------------------------------------------------------------- |
+ * | `item_types`                                      | `Array<Model ID>`                                                        | ✅        | Set of allowed model IDs                                                                            |
+ * | `on_publish_with_unpublished_references_strategy` | `"fail"`, `"publish_references"` (default value: `"fail"`)               |          | Strategy to apply when a publishing is requested and this field references some unpublished records |
+ * | `on_reference_unpublish_strategy`                 | `"fail"`, `"unpublish"`, `"delete_references"` (default value: `"fail"`) |          | Strategy to apply when unpublishing is requested for a record referenced by this field              |
+ * | `on_reference_delete_strategy`                    | `"fail"`, `"delete_references"` (default value: `"delete_references"`)   |          | Strategy to apply when deletion is requested for a record referenced by this field                  |
+ *
+ * Possible values for `on_publish_with_unpublished_references_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"publish_references"`: Publish also the referenced records
+ *
+ * Possible values for `on_reference_unpublish_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"unpublish"`: Unpublish also this record
+ * - `"delete_references"`: Try to remove the reference to the unpublished record (if the field has a `required` validation it will fail)
+ *
+ * Possible values for `on_reference_delete_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"delete_references"`: Try to remove the reference to the deleted record (if the field has a `required` validation it will fail)
+ * </details>
+ *
+ * <details>
+ * <summary><code>items_item_type</code></summary>
+ *
+ * Only accept references to records of the specified models.
+ *
+ * | Parameter                                         | Type                                                                     | Required | Description                                                                                         |
+ * | ------------------------------------------------- | ------------------------------------------------------------------------ | -------- | --------------------------------------------------------------------------------------------------- |
+ * | `item_types`                                      | `Array<Model ID>`                                                        | ✅        | Set of allowed model IDs                                                                            |
+ * | `on_publish_with_unpublished_references_strategy` | `"fail"`, `"publish_references"` (default value: `"fail"`)               |          | Strategy to apply when a publishing is requested and this field references some unpublished records |
+ * | `on_reference_unpublish_strategy`                 | `"fail"`, `"unpublish"`, `"delete_references"` (default value: `"fail"`) |          | Strategy to apply when unpublishing is requested for a record referenced by this field              |
+ * | `on_reference_delete_strategy`                    | `"fail"`, `"delete_references"` (default value: `"delete_references"`)   |          | Strategy to apply when deletion is requested for a record referenced by this field                  |
+ *
+ * Possible values for `on_publish_with_unpublished_references_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"publish_references"`: Publish also the referenced records
+ *
+ * Possible values for `on_reference_unpublish_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"unpublish"`: Unpublish also this record
+ * - `"delete_references"`: Try to remove the reference to the unpublished record (if the field has a `required` validation it will fail)
+ *
+ * Possible values for `on_reference_delete_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"delete_references"`: Try to remove the reference to the deleted record (if the field has a `required` validation it will fail)
+ * </details>
+ *
+ * <details>
+ * <summary><code>length</code></summary>
+ *
+ * Accept strings only with a specified number of characters.
+ *
+ * | Parameter | Type      | Required | Description     |
+ * | --------- | --------- | -------- | --------------- |
+ * | `min`     | `Integer` |          | Minimum length  |
+ * | `eq`      | `Integer` |          | Expected length |
+ * | `max`     | `Integer` |          | Maximum length  |
+ *
+ * At least one parameter must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>number_range</code></summary>
+ *
+ * Accept numbers only inside a specified range.
+ *
+ * | Parameter | Type    | Required | Description   |
+ * | --------- | ------- | -------- | ------------- |
+ * | `min`     | `Float` |          | Minimum value |
+ * | `max`     | `Float` |          | Maximum value |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>required</code></summary>
+ *
+ * Value must be specified or it won't be valid.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>required_alt_title</code></summary>
+ *
+ * Assets contained in the field are required to specify custom title or alternate text, or they won't be valid.
+ *
+ * | Parameter | Type      | Required | Description                                                |
+ * | --------- | --------- | -------- | ---------------------------------------------------------- |
+ * | `title`   | `Boolean` |          | Whether the title for the asset must be specified          |
+ * | `alt`     | `Boolean` |          | Whether the alternate text for the asset must be specified |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>required_seo_fields</code></summary>
+ *
+ * SEO field has to specify one or more properties, or it won't be valid.
+ *
+ * | Parameter      | Type      | Required | Description                                        |
+ * | -------------- | --------- | -------- | -------------------------------------------------- |
+ * | `title`        | `Boolean` |          | Whether the meta title must be specified           |
+ * | `description`  | `Boolean` |          | Whether the meta description must be specified     |
+ * | `image`        | `Boolean` |          | Whether the social sharing image must be specified |
+ * | `twitter_card` | `Boolean` |          | Whether the type of Twitter card must be specified |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>title_length</code></summary>
+ *
+ * Limits the length of the title for a SEO field. Search engines usually truncate title tags to 60 character so it is a good practice to keep the title around this length.
+ *
+ * | Parameter | Type      | Required | Description   |
+ * | --------- | --------- | -------- | ------------- |
+ * | `min`     | `Integer` |          | Minimum value |
+ * | `max`     | `Integer` |          | Maximum value |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>description_length</code></summary>
+ *
+ * Limits the length of the description for a SEO field. Search engines usually truncate description tags to 160 character so it is a good practice to keep the description around this length.
+ *
+ * | Parameter | Type      | Required | Description   |
+ * | --------- | --------- | -------- | ------------- |
+ * | `min`     | `Integer` |          | Minimum value |
+ * | `max`     | `Integer` |          | Maximum value |
+ *
+ * At least one of the parameters must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>rich_text_blocks</code></summary>
+ *
+ * Only accept references to block records of the specified block models.
+ *
+ * | Parameter    | Type                    | Required | Description                    |
+ * | ------------ | ----------------------- | -------- | ------------------------------ |
+ * | `item_types` | `Array<Block Model ID>` | ✅        | Set of allowed Block Model IDs |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>single_block_blocks</code></summary>
+ *
+ * Only accept references to block records of the specified block models.
+ *
+ * | Parameter    | Type                    | Required | Description                    |
+ * | ------------ | ----------------------- | -------- | ------------------------------ |
+ * | `item_types` | `Array<Block Model ID>` | ✅        | Set of allowed Block Model IDs |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>sanitization</code></summary>
+ *
+ * Checks for the presence of malicious cose in HTML fields: content is valid if no dangerous code is present.
+ *
+ * | Parameter                    | Type      | Required | Description                                                  |
+ * | ---------------------------- | --------- | -------- | ------------------------------------------------------------ |
+ * | `sanitize_before_validation` | `Boolean` | ✅        | Content is actively sanitized before applying the validation |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>structured_text_blocks</code></summary>
+ *
+ * Only accept references to block records of the specified block models.
+ *
+ * | Parameter    | Type                    | Required | Description                    |
+ * | ------------ | ----------------------- | -------- | ------------------------------ |
+ * | `item_types` | `Array<Block Model ID>` | ✅        | Set of allowed Block Model IDs |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>structured_text_inline_blocks</code></summary>
+ *
+ * Only accept references to block records of the specified block models.
+ *
+ * | Parameter    | Type                    | Required | Description                    |
+ * | ------------ | ----------------------- | -------- | ------------------------------ |
+ * | `item_types` | `Array<Block Model ID>` | ✅        | Set of allowed Block Model IDs |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>structured_text_links</code></summary>
+ *
+ * Only accept `itemLink` to `inlineItem` nodes for records of the specified models.
+ *
+ * | Parameter                                         | Type                                                                                  | Required | Description                                                                                         |
+ * | ------------------------------------------------- | ------------------------------------------------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------- |
+ * | `item_types`                                      | `Array<Model ID>`                                                                     | ✅        | Set of allowed model IDs                                                                            |
+ * | `on_publish_with_unpublished_references_strategy` | `"fail"`, `"publish_references"` (default value: `"fail"`)                            |          | Strategy to apply when a publishing is requested and this field references some unpublished records |
+ * | `on_reference_unpublish_strategy`                 | `"fail"`, `"unpublish"`, `"delete_references"` (default value: `"delete_references"`) |          | Strategy to apply when unpublishing is requested for a record referenced by this field              |
+ * | `on_reference_delete_strategy`                    | `"fail"`, `"delete_references"` (default value: `"delete_references"`)                |          | Strategy to apply when deletion is requested for a record referenced by this field                  |
+ *
+ * Possible values for `on_publish_with_unpublished_references_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"publish_references"`: Publish also the referenced records
+ *
+ * Possible values for `on_reference_unpublish_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"unpublish"`: Unpublish also this record
+ * - `"delete_references"`: Try to remove the reference to the unpublished record (if the field has a `required` validation it will fail)
+ *
+ * Possible values for `on_reference_delete_strategy`:
+ *
+ * - `"fail"`: Fail the operation and notify the user
+ * - `"delete_references"`: Try to remove the reference to the deleted record (if the field has a `required` validation it will fail)
+ * </details>
+ *
+ * <details>
+ * <summary><code>size</code></summary>
+ *
+ * Only accept a number of items within the specified range.
+ *
+ * | Parameter     | Type      | Required | Description                                        |
+ * | ------------- | --------- | -------- | -------------------------------------------------- |
+ * | `min`         | `Integer` |          | Minimum length                                     |
+ * | `eq`          | `Integer` |          | Expected length                                    |
+ * | `max`         | `Integer` |          | Maximum length                                     |
+ * | `multiple_of` | `Integer` |          | The number of items must be multiple of this value |
+ *
+ * At least one parameter must be specified.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>slug_title_field</code></summary>
+ *
+ * Specifies the ID of the _Single-line string_ field that will be used to generate the slug
+ *
+ * | Parameter        | Type       | Required | Description                                      |
+ * | ---------------- | ---------- | -------- | ------------------------------------------------ |
+ * | `title_field_id` | `Field ID` | ✅        | The field that will be used to generate the slug |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>unique</code></summary>
+ *
+ * The value must be unique across the whole collection of records.
+ *
+ * </details>
+ *
+ * ### Configuration parameters for DatoCMS built-in field editors
+ *
+ * If a field editor is not specified in this table, just pass an empty object `{}` as its configuration parameters.
+ *
+ * <details>
+ * <summary><code>boolean_radio_group</code></summary>
+ *
+ * Radio group input for _boolean_ fields.
+ *
+ * | Parameter        | Type                               | Required | Description                               |
+ * | ---------------- | ---------------------------------- | -------- | ----------------------------------------- |
+ * | `positive_radio` | `{ label: string, hint?: string }` | ✅        | Radio input for positive choice (`true`)  |
+ * | `negative_radio` | `{ label: string, hint?: string }` | ✅        | Radio input for negative choice (`false`) |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>string_radio_group</code></summary>
+ *
+ * Radio group input for _string_ fields.
+ *
+ * | Parameter | Type                                                     | Required | Description                 |
+ * | --------- | -------------------------------------------------------- | -------- | --------------------------- |
+ * | `radios`  | `Array<{ label: string, value: string, hint?: string }>` | ✅        | The different radio options |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>string_select</code></summary>
+ *
+ * Select input for _string_ fields.
+ *
+ * | Parameter | Type                                                     | Required | Description                  |
+ * | --------- | -------------------------------------------------------- | -------- | ---------------------------- |
+ * | `options` | `Array<{ label: string, value: string, hint?: string }>` | ✅        | The different select options |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>string_multi_select</code></summary>
+ *
+ * Select input for _JSON_ fields, to edit an array of strings.
+ *
+ * | Parameter | Type                                                     | Required | Description                  |
+ * | --------- | -------------------------------------------------------- | -------- | ---------------------------- |
+ * | `options` | `Array<{ label: string, value: string, hint?: string }>` | ✅        | The different select options |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>string_checkbox_group</code></summary>
+ *
+ * Multiple chechboxes input for _JSON_ fields, to edit an array of strings.
+ *
+ * | Parameter | Type                                                     | Required | Description                  |
+ * | --------- | -------------------------------------------------------- | -------- | ---------------------------- |
+ * | `options` | `Array<{ label: string, value: string, hint?: string }>` | ✅        | The different select options |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>single_line</code></summary>
+ *
+ * Simple textual input for _Single-line string_ fields.
+ *
+ * | Parameter     | Type      | Required | Description                                                                                |
+ * | ------------- | --------- | -------- | ------------------------------------------------------------------------------------------ |
+ * | `heading`     | `Boolean` | ✅        | Indicates if the field should be shown bigger, as a field representing a heading           |
+ * | `placeholder` | `String`  |          | A placeholder that will be shown in the editor's input to provide editors with an example. |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>markdown</code></summary>
+ *
+ * Markdown editor for _Multiple-paragraph text_ fields.
+ *
+ * | Parameter | Type            | Required | Description                                                                                                                                                                                                       |
+ * | --------- | --------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+ * | `toolbar` | `Array<String>` | ✅        | Specify which buttons the toolbar should have. Valid values: `"heading"`, `"bold"`, `"italic"`, `"strikethrough"`, `"code"`, `"unordered_list"`, `"ordered_list"`, `"quote"`, `"link"`, `"image"`, `"fullscreen"` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>wysiwyg</code></summary>
+ *
+ * HTML editor for _Multiple-paragraph text_ fields.
+ *
+ * | Parameter | Type            | Required | Description                                                                                                                                                                                                                                                                                                                                                     |
+ * | --------- | --------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+ * | `toolbar` | `Array<String>` | ✅        | Specify which buttons the toolbar should have. Valid values: `"format"`, `"bold"`, `"italic"`, `"strikethrough"`, `"code"`, `"ordered_list"`, `"unordered_list"`, `"quote"`, `"table"`, `"link"`, `"image"`, `"show_source"`, `"undo"`, `"redo"`, `"align_left"`, `"align_center"`, `"align_right"`, `"align_justify"`, `"outdent"`, `"indent"`, `"fullscreen"` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>textarea</code></summary>
+ *
+ * Basic textarea editor for _Multiple-paragraph text_ fields.
+ *
+ * | Parameter     | Type     | Required | Description                                                                                |
+ * | ------------- | -------- | -------- | ------------------------------------------------------------------------------------------ |
+ * | `placeholder` | `String` |          | A placeholder that will be shown in the editor's input to provide editors with an example. |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>color_picker</code></summary>
+ *
+ * Built-in editor for _Color_ fields.
+ *
+ * | Parameter       | Type                      | Required | Description                                               |
+ * | --------------- | ------------------------- | -------- | --------------------------------------------------------- |
+ * | `enable_alpha`  | `Boolean`                 | ✅        | Should the color picker allow to specify the alpha value? |
+ * | `preset_colors` | `Array<Hex color string>` | ✅        | List of preset colors to offer to the user                |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>slug</code></summary>
+ *
+ * Built-in editor for _Slug_ fields.
+ *
+ * | Parameter     | Type     | Required | Description                                                                                |
+ * | ------------- | -------- | -------- | ------------------------------------------------------------------------------------------ |
+ * | `url_prefix`  | `String` |          | A prefix that will be shown in the editor's form to give some context to your editors.     |
+ * | `placeholder` | `String` |          | A placeholder that will be shown in the editor's input to provide editors with an example. |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>seo</code></summary>
+ *
+ * Built-in editor for _seo_ fields.
+ *
+ * | Parameter  | Type            | Required | Description                                                                                                                                                          |
+ * | ---------- | --------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+ * | `fields`   | `Array<String>` | ✅        | Specify which fields of the SEO input should be visible to editors. Valid values: `"title"`, `"description"`, `"image"`, `"no_index"`, `"twitter_card"`              |
+ * | `previews` | `Array<String>` | ✅        | Specify which previews should be visible to editors. Valid values: `"google_search"`, `"twitter"`, `"slack"`, `"whatsapp"`, `"telegram"`, `"facebook"`, `"linkedin"` |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>rich_text</code></summary>
+ *
+ * Built-in editor for _Modular content_ fields.
+ *
+ * | Parameter         | Type      | Required | Description                                                |
+ * | ----------------- | --------- | -------- | ---------------------------------------------------------- |
+ * | `start_collapsed` | `Boolean` |          | Whether you want block records collapsed by default or not |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>framed_single_block</code></summary>
+ *
+ * Built-in editor for _Single block_ fields.
+ *
+ * | Parameter         | Type      | Required | Description                                               |
+ * | ----------------- | --------- | -------- | --------------------------------------------------------- |
+ * | `start_collapsed` | `Boolean` |          | Whether you want block record collapsed by default or not |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>structured_text</code></summary>
+ *
+ * Built-in editor for _Structured text_ fields.
+ *
+ * | Parameter                 | Type             | Required | Description                                                                                                                                   |
+ * | ------------------------- | ---------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+ * | `nodes`                   | `Array<String>`  | ✅        | Specify which nodes the field should allow. Valid values: `"blockquote"`, `"code"`, `"heading"`, `"link"`, `"list"`, `"thematicBreak"`        |
+ * | `marks`                   | `Array<String>`  | ✅        | Specify which marks the field should allow. Valid values: `"strong"`, `"emphasis"`, `"underline"`, `"strikethrough"`, `"code"`, `"highlight"` |
+ * | `heading_levels`          | `Array<Integer>` | ✅        | If `nodes` includes `"heading"`, specify which heading levels the field should allow. Valid values: numbers between 1 and 6                   |
+ * | `blocks_start_collapsed`  | `Boolean`        |          | Whether you want block nodes collapsed by default or not                                                                                      |
+ * | `show_links_target_blank` | `Boolean`        |          | Whether you want to show the "Open this link in a new tab?" checkbox, that fills in the `target: "_blank"` meta attribute for links           |
+ * | `show_links_meta_editor`  | `Boolean`        |          | Whether you want to show the complete meta editor for links                                                                                   |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>link_select</code> and <code>links_select</code></summary>
+ *
+ * Use a select input with auto-completion to pick the records to reference inside the field.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>link_embed</code> and <code>links_embed</code></summary>
+ *
+ * Use an expanded view with records' image preview to pick the records to reference inside the field.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>integer</code></summary>
+ *
+ * Built-in editor for _Integer_ fields.
+ *
+ * | Parameter     | Type     | Required | Description                                                                                |
+ * | ------------- | -------- | -------- | ------------------------------------------------------------------------------------------ |
+ * | `placeholder` | `String` |          | A placeholder that will be shown in the editor's input to provide editors with an example. |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary><code>float</code></summary>
+ *
+ * Built-in editor for _Float_ fields.
+ *
+ * | Parameter     | Type     | Required | Description                                                                                |
+ * | ------------- | -------- | -------- | ------------------------------------------------------------------------------------------ |
+ * | `placeholder` | `String` |          | A placeholder that will be shown in the editor's input to provide editors with an example. |
+ *
+ * </details>
+ *
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "field".
+ */
+export type RawField = {
+  type: FieldType;
+  id: FieldIdentity;
+  attributes: FieldAttributes;
+  relationships: FieldRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type RawFieldAttributes = {
+  /**
+   * The label of the field
+   */
+  label: string;
+  /**
+   * Type of input
+   */
+  field_type:
+    | 'boolean'
+    | 'color'
+    | 'date'
+    | 'date_time'
+    | 'file'
+    | 'float'
+    | 'gallery'
+    | 'integer'
+    | 'json'
+    | 'lat_lon'
+    | 'link'
+    | 'links'
+    | 'rich_text'
+    | 'seo'
+    | 'single_block'
+    | 'slug'
+    | 'string'
+    | 'structured_text'
+    | 'text'
+    | 'video';
+  /**
+   * Whether the field needs to be multilanguage or not
+   */
+  localized: boolean;
+  /**
+   * Default value for Field. When field is localized accepts an object of default values with site locales as keys
+   */
+  default_value:
+    | boolean
+    | null
+    | string
+    | number
+    | {
+        [k: string]: unknown;
+      };
+  /**
+   * Field API key
+   */
+  api_key: string;
+  /**
+   * Field hint
+   */
+  hint: string | null;
+  /**
+   * Optional field validations
+   */
+  validators: {
+    [k: string]: unknown;
+  };
+  /**
+   * Field appearance
+   */
+  appeareance?: {
+    editor: string;
+    parameters: {
+      [k: string]: unknown;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Field appearance details, plugin configuration and field add-ons
+   */
+  appearance: {
+    /**
+     * A valid editor can be a DatoCMS default field editor type (ie. `"single_line"`), or a plugin ID offering a custom field editor
+     */
+    editor: string;
+    /**
+     * The specific field extension to use for the field (only if the editor is a modern plugin)
+     */
+    field_extension?: string;
+    /**
+     * The editor plugin's parameters
+     */
+    parameters: {
+      [k: string]: unknown;
+    };
+    /**
+     * An array of add-on plugins with id and parameters
+     */
+    addons: {
+      /**
+       * The ID of a plugin offering a field addon
+       */
+      id: string;
+      /**
+       * The specific field extension to use for the field (only if the editor is a modern plugin)
+       */
+      field_extension?: string;
+      parameters: {
+        [k: string]: unknown;
+      };
+      [k: string]: unknown;
+    }[];
+    [k: string]: unknown;
+  };
+  /**
+   * Ordering index
+   */
+  position: number;
+  /**
+   * Whether deep filtering for block models is enabled in GraphQL or not
+   */
+  deep_filtering_enabled: boolean;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type FieldRelationships = {
+  /**
+   * Field item type
+   */
+  item_type: {
+    data: ItemTypeData;
+  };
+  /**
+   * Fieldset linkage
+   */
+  fieldset: {
+    data: null | FieldsetData;
+  };
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type RawFieldCreateSchema = {
+  data: {
+    id?: FieldIdentity;
+    type: FieldType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The label of the field
+       */
+      label: string;
+      /**
+       * Type of input
+       */
+      field_type:
+        | 'boolean'
+        | 'color'
+        | 'date'
+        | 'date_time'
+        | 'file'
+        | 'float'
+        | 'gallery'
+        | 'integer'
+        | 'json'
+        | 'lat_lon'
+        | 'link'
+        | 'links'
+        | 'rich_text'
+        | 'seo'
+        | 'single_block'
+        | 'slug'
+        | 'string'
+        | 'structured_text'
+        | 'text'
+        | 'video';
+      /**
+       * Field API key
+       */
+      api_key: string;
+      /**
+       * Whether the field needs to be multilanguage or not
+       */
+      localized?: boolean;
+      /**
+       * Optional field validations
+       */
+      validators?: {
+        [k: string]: unknown;
+      };
+      /**
+       * Field appearance
+       */
+      appeareance?: {
+        editor: string;
+        parameters: {
+          [k: string]: unknown;
+        };
+        [k: string]: unknown;
+      };
+      /**
+       * Field appearance details, plugin configuration and field add-ons
+       */
+      appearance?: {
+        /**
+         * A valid editor can be a DatoCMS default field editor type (ie. `"single_line"`), or a plugin ID offering a custom field editor
+         */
+        editor: string;
+        /**
+         * The specific field extension to use for the field (only if the editor is a modern plugin)
+         */
+        field_extension?: string;
+        /**
+         * The editor plugin's parameters
+         */
+        parameters: {
+          [k: string]: unknown;
+        };
+        /**
+         * An array of add-on plugins with id and parameters
+         */
+        addons: {
+          /**
+           * The ID of a plugin offering a field addon
+           */
+          id: string;
+          /**
+           * The specific field extension to use for the field (only if the editor is a modern plugin)
+           */
+          field_extension?: string;
+          parameters: {
+            [k: string]: unknown;
+          };
+          [k: string]: unknown;
+        }[];
+        [k: string]: unknown;
+      };
+      /**
+       * Ordering index
+       */
+      position?: number;
+      /**
+       * Field hint
+       */
+      hint?: string | null;
+      /**
+       * Default value for Field. When field is localized accepts an object of default values with site locales as keys
+       */
+      default_value?:
+        | boolean
+        | null
+        | string
+        | number
+        | {
+            [k: string]: unknown;
+          };
+      /**
+       * Whether deep filtering for block models is enabled in GraphQL or not
+       */
+      deep_filtering_enabled?: boolean;
+    };
+    /**
+     * JSON API links
+     */
+    relationships?: {
+      /**
+       * Fieldset linkage
+       */
+      fieldset: {
+        data: null | FieldsetData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type FieldCreateTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `create.jobSchema` link.
+ */
+export type FieldCreateJobSchema = {
+  data: Field;
+  included?: ItemType[];
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type RawFieldUpdateSchema = {
+  data: {
+    type: FieldType;
+    id: FieldIdentity;
+    attributes: {
+      /**
+       * Default value for Field. When field is localized accepts an object of default values with site locales as keys
+       */
+      default_value?:
+        | boolean
+        | null
+        | string
+        | number
+        | {
+            [k: string]: unknown;
+          };
+      /**
+       * The label of the field
+       */
+      label?: string;
+      /**
+       * Field API key
+       */
+      api_key?: string;
+      /**
+       * Whether the field needs to be multilanguage or not
+       */
+      localized?: boolean;
+      /**
+       * Optional field validations
+       */
+      validators?: {
+        [k: string]: unknown;
+      };
+      /**
+       * Field appearance
+       */
+      appeareance?: {
+        editor: string;
+        parameters: {
+          [k: string]: unknown;
+        };
+        [k: string]: unknown;
+      };
+      /**
+       * Field appearance details, plugin configuration and field add-ons
+       */
+      appearance?: {
+        /**
+         * A valid editor can be a DatoCMS default field editor type (ie. `"single_line"`), or a plugin ID offering a custom field editor
+         */
+        editor: string;
+        /**
+         * The specific field extension to use for the field (only if the editor is a modern plugin)
+         */
+        field_extension?: string;
+        /**
+         * The editor plugin's parameters
+         */
+        parameters: {
+          [k: string]: unknown;
+        };
+        /**
+         * An array of add-on plugins with id and parameters
+         */
+        addons: {
+          /**
+           * The ID of a plugin offering a field addon
+           */
+          id: string;
+          /**
+           * The specific field extension to use for the field (only if the editor is a modern plugin)
+           */
+          field_extension?: string;
+          parameters: {
+            [k: string]: unknown;
+          };
+          [k: string]: unknown;
+        }[];
+        [k: string]: unknown;
+      };
+      /**
+       * Ordering index
+       */
+      position?: number;
+      /**
+       * Type of input
+       */
+      field_type?:
+        | 'boolean'
+        | 'color'
+        | 'date'
+        | 'date_time'
+        | 'file'
+        | 'float'
+        | 'gallery'
+        | 'integer'
+        | 'json'
+        | 'lat_lon'
+        | 'link'
+        | 'links'
+        | 'rich_text'
+        | 'seo'
+        | 'single_block'
+        | 'slug'
+        | 'string'
+        | 'structured_text'
+        | 'text'
+        | 'video';
+      /**
+       * Field hint
+       */
+      hint?: string | null;
+      /**
+       * Whether deep filtering for block models is enabled in GraphQL or not
+       */
+      deep_filtering_enabled?: boolean;
+    };
+    /**
+     * JSON API links
+     */
+    relationships?: {
+      /**
+       * Fieldset linkage
+       */
+      fieldset: {
+        data: null | FieldsetData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type FieldUpdateTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `update.jobSchema` link.
+ */
+export type FieldUpdateJobSchema = {
+  data: Field;
+  included?: (ItemType | Field)[];
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type FieldInstancesTargetSchema = {
+  data: Field[];
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `referencing.targetSchema` link.
+ */
+export type FieldReferencingTargetSchema = {
+  data: Field[];
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `related.targetSchema` link.
+ */
+export type FieldRelatedTargetSchema = {
+  data: Field[];
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type FieldSelfTargetSchema = {
+  data: Field;
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type FieldDestroyTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `destroy.jobSchema` link.
+ */
+export type FieldDestroyJobSchema = {
+  data: Field;
+  included?: ItemType[];
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `duplicate.targetSchema` link.
+ */
+export type FieldDuplicateTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `duplicate.jobSchema` link.
+ */
+export type FieldDuplicateJobSchema = {
+  data: Field;
+  included: ItemType[];
+};
+
+/**
+ * Fields can be organized and grouped into fieldset to better present them to editors.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "fieldset".
+ */
+export type Fieldset = {
+  type: FieldsetType;
+  id: FieldsetIdentity;
+  attributes: FieldsetAttributes;
+  relationships: FieldsetRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type FieldsetAttributes = {
+  /**
+   * The title of the fieldset
+   */
+  title: string;
+  /**
+   * Description/contextual hint for the fieldset
+   */
+  hint: string | null;
+  /**
+   * Whether the fieldset can be collapsed or not
+   */
+  collapsible: boolean;
+  /**
+   * When fieldset is collapsible, determines if the default is to start collapsed or not
+   */
+  start_collapsed: boolean;
+  /**
+   * Ordering index
+   */
+  position: number;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type FieldsetRelationships = {
+  /**
+   * Fieldset item type
+   */
+  item_type: {
+    data: ItemTypeData;
+  };
+};
+
+/**
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type FieldsetCreateSchema = {
+  data: {
+    id?: FieldsetIdentity;
+    type: FieldsetType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The title of the fieldset
+       */
+      title: string;
+      /**
+       * Description/contextual hint for the fieldset
+       */
+      hint?: string | null;
+      /**
+       * Ordering index
+       */
+      position?: number;
+      /**
+       * Whether the fieldset can be collapsed or not
+       */
+      collapsible?: boolean;
+      /**
+       * When fieldset is collapsible, determines if the default is to start collapsed or not
+       */
+      start_collapsed?: boolean;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type FieldsetCreateTargetSchema = {
+  data: Fieldset;
+  included?: ItemType[];
+};
+
+/**
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type FieldsetUpdateSchema = {
+  data: {
+    type: FieldsetType;
+    id: FieldsetIdentity;
+    attributes: {
+      /**
+       * The title of the fieldset
+       */
+      title?: string;
+      /**
+       * Description/contextual hint for the fieldset
+       */
+      hint?: string | null;
+      /**
+       * Ordering index
+       */
+      position?: number;
+      /**
+       * Whether the fieldset can be collapsed or not
+       */
+      collapsible?: boolean;
+      /**
+       * When fieldset is collapsible, determines if the default is to start collapsed or not
+       */
+      start_collapsed?: boolean;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type FieldsetUpdateTargetSchema = {
+  data: Fieldset;
+};
+
+/**
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type FieldsetInstancesTargetSchema = {
+  data: Fieldset[];
+};
+
+/**
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type FieldsetSelfTargetSchema = {
+  data: Fieldset;
+};
+
+/**
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type FieldsetDestroyTargetSchema = {
+  data: Fieldset;
+};
+
+/**
+ * A session is required to access to read-and-write API endpoints
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "session".
+ */
+export type Session = {
+  type: SessionType;
+  id: SessionIdentity;
+  relationships: SessionRelationships;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `Session`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type SessionRelationships = {
+  /**
+   * The user associated with the session
+   */
+  user: {
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Session`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SessionData = {
+  type: SessionType;
+  id: SessionIdentity;
+};
+
+/**
+ * This interface was referenced by `Session`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type SessionCreateSchema = {
+  data: {
+    type: 'email_credentials';
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * Email
+       */
+      email: string;
+      /**
+       * Password
+       */
+      password: string;
+      /**
+       * Two-factor authentication one-time password
+       */
+      otp_code?: string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Session`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type SessionCreateTargetSchema = {
+  data: Session;
+  included: User[];
+};
+
+/**
+ * Plugins enable developers to replace DatoCMS field components with HTML5 applications so the editing experiences of the DatoCMS web app can be customized.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "plugin".
+ */
+export type Plugin = {
+  type: PluginType;
+  id: PluginIdentity;
+  attributes: PluginAttributes;
+  meta: PluginMeta;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type PluginAttributes = {
+  /**
+   * The name of the plugin
+   */
+  name: string;
+  /**
+   * A description of the plugin
+   */
+  description: null | string;
+  /**
+   * NPM package name of the plugin (or null if it's a private plugin)
+   */
+  package_name: null | string;
+  /**
+   * The installed version of the plugin (or null if it's a private plugin)
+   */
+  package_version: null | string;
+  /**
+   * The entry point URL of the plugin
+   */
+  url: string;
+  /**
+   * Global plugin configuration. Plugins can persist whatever information they want in this object to reuse it later.
+   */
+  parameters: {
+    [k: string]: unknown;
+  };
+  /**
+   * Permissions granted to this plugin
+   */
+  permissions: 'currentUserAccessToken'[];
+  /**
+   * The type of field extension a legacy plugin implements
+   */
+  plugin_type: 'field_editor' | 'sidebar' | 'field_addon' | null;
+  /**
+   * On which types of field in which a legacy plugin can be used
+   */
+  field_types:
+    | null
+    | (
+        | 'boolean'
+        | 'date'
+        | 'date_time'
+        | 'float'
+        | 'integer'
+        | 'string'
+        | 'text'
+        | 'lat_lon'
+        | 'json'
+        | 'seo'
+        | 'link'
+        | 'links'
+        | 'video'
+        | 'color'
+        | 'slug'
+        | 'rich_text'
+        | 'file'
+        | 'gallery'
+      )[];
+  /**
+   * The schema for the parameters a legacy plugin can persist
+   */
+  parameter_definitions: null | {
+    global: unknown[];
+    instance: unknown[];
+  };
+};
+
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type PluginMeta = {
+  /**
+   * Version of the plugin. Legacy plugins are v1, new plugins are v2
+   */
+  version: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type PluginData = {
+  type: PluginType;
+  id: PluginIdentity;
+};
+
+/**
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type PluginCreateSchema = {
+  data: {
+    id?: PluginIdentity;
+    type: PluginType;
+    attributes: {
+      /**
+       * NPM package name of the public plugin you want to install. For public plugins, that's the only attribute you need to pass.
+       */
+      package_name?: null | string;
+      /**
+       * The name of the plugin. Only to be passed if package name key is not specified.
+       */
+      name?: string;
+      /**
+       * A description of the plugin. Only to be passed if package name key is not specified.
+       */
+      description?: null | string;
+      /**
+       * The entry point URL of the plugin. Only to be passed if package name key is not specified.
+       */
+      url?: string;
+      /**
+       * Permissions granted to this plugin. Only to be passed if package name key is not specified.
+       */
+      permissions?: 'currentUserAccessToken'[];
+      /**
+       * The type of field extension this legacy plugin implements. Only to be passed if package name key is not specified.
+       */
+      plugin_type?: 'field_editor' | 'sidebar' | 'field_addon';
+      /**
+       * On which types of field in which this legacy plugin can be used. Only to be passed if package name key is not specified.
+       */
+      field_types?: (
+        | 'boolean'
+        | 'date'
+        | 'date_time'
+        | 'float'
+        | 'integer'
+        | 'string'
+        | 'text'
+        | 'lat_lon'
+        | 'json'
+        | 'seo'
+        | 'link'
+        | 'links'
+        | 'video'
+        | 'color'
+        | 'slug'
+        | 'rich_text'
+        | 'file'
+        | 'gallery'
+      )[];
+      /**
+       * The schema for the parameters this legacy plugin can persist
+       */
+      parameter_definitions?: {
+        global: unknown[];
+        instance: unknown[];
+      };
+      /**
+       * NPM version of the plugin
+       */
+      package_version?: null | string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type PluginCreateTargetSchema = {
+  data: Plugin;
+};
+
+/**
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type PluginUpdateSchema = {
+  data: {
+    type: PluginType;
+    id: PluginIdentity;
+    attributes: {
+      /**
+       * The name of the plugin
+       */
+      name?: string;
+      /**
+       * A description of the plugin
+       */
+      description?: null | string;
+      /**
+       * The entry point URL of the plugin
+       */
+      url?: string;
+      /**
+       * Global plugin configuration. Plugins can persist whatever information they want in this object to reuse it later.
+       */
+      parameters?: {
+        [k: string]: unknown;
+      };
+      /**
+       * The installed version of the plugin (or null if it's a private plugin)
+       */
+      package_version?: null | string;
+      /**
+       * Permissions granted to this plugin
+       */
+      permissions?: 'currentUserAccessToken'[];
+    };
+    meta?: {
+      [k: string]: unknown;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type PluginUpdateTargetSchema = {
+  data: Plugin;
+};
+
+/**
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type PluginInstancesTargetSchema = {
+  data: Plugin[];
+};
+
+/**
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type PluginSelfTargetSchema = {
+  data: Plugin;
+};
+
+/**
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type PluginDestroyTargetSchema = {
+  data: Plugin;
+};
+
+/**
+ * This interface was referenced by `Plugin`'s JSON-Schema
+ * via the `fields.targetSchema` link.
+ */
+export type PluginFieldsTargetSchema = {
+  data: Field[];
+};
+
+/**
+ * Some API endpoint give results asynchronously, returning the ID of a job.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "job_result".
+ */
+export type JobResult = {
+  type: JobResultType;
+  id: JobResultIdentity;
+  attributes: JobResultAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `JobResult`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type JobResultAttributes = {
+  /**
+   * Status of delayed HTTP response
+   */
+  status: number;
+  /**
+   * JSON API response of the HTTP request
+   */
+  payload: null | {
+    [k: string]: unknown;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `JobResult`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type JobResultData = {
+  type: JobResultType;
+  id: JobResultIdentity;
+};
+
+/**
+ * This interface was referenced by `JobResult`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type JobResultSelfTargetSchema = {
+  data: JobResult;
+};
+
+/**
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "subscription_limit".
+ */
+export type SubscriptionLimit = {
+  type: SubscriptionLimitType;
+  id: SubscriptionLimitIdentity;
+  attributes: SubscriptionLimitAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SubscriptionLimitAttributes = {
+  /**
+   * The codename for the limit
+   */
+  code: string;
+  /**
+   * Current usage
+   */
+  usage: number;
+  /**
+   * The actual limit
+   */
+  limit: number | null;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SubscriptionLimitData = {
+  type: SubscriptionLimitType;
+  id: SubscriptionLimitIdentity;
+};
+
+/**
+ * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type SubscriptionLimitInstancesTargetSchema = {
+  data: SubscriptionLimit[];
+};
+
+/**
+ * This interface was referenced by `SubscriptionLimit`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type SubscriptionLimitSelfTargetSchema = {
+  data: SubscriptionLimit;
+};
+
+/**
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "subscription_feature".
+ */
+export type SubscriptionFeature = {
+  type: SubscriptionFeatureType;
+  id: SubscriptionFeatureIdentity;
+  attributes: SubscriptionFeatureAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SubscriptionFeature`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SubscriptionFeatureAttributes = {
+  /**
+   * The codename for the feature
+   */
+  code: string;
+  /**
+   * Whether the project is currently using the feature
+   */
+  in_use?: boolean;
+  /**
+   * Whether the feature is available on the current project
+   */
+  enabled: boolean;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `SubscriptionFeature`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SubscriptionFeatureData = {
+  type: SubscriptionFeatureType;
+  id: SubscriptionFeatureIdentity;
+};
+
+/**
+ * This interface was referenced by `SubscriptionFeature`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type SubscriptionFeatureInstancesTargetSchema = {
+  data: SubscriptionFeature[];
+};
+
+/**
+ * Represents an event occurred during the deploy process of your administrative area.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "build_event".
+ */
+export type BuildEvent = {
+  type: BuildEventType;
+  id: BuildEventIdentity;
+  attributes: BuildEventAttributes;
+  relationships: BuildEventRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `BuildEvent`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type BuildEventAttributes = {
+  /**
+   * The type of activity
+   */
+  event_type:
+    | 'request_success'
+    | 'request_failure'
+    | 'response_success'
+    | 'response_failure'
+    | 'request_aborted'
+    | 'response_unprocessable'
+    | 'indexing_started'
+    | 'indexing_success'
+    | 'indexing_failure';
+  /**
+   * The moment the activity occurred
+   */
+  created_at: string;
+  /**
+   * Any details regarding the event
+   */
+  data: {
+    [k: string]: unknown;
+  };
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `BuildEvent`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type BuildEventRelationships = {
+  /**
+   * Source build trigger
+   */
+  build_trigger: {
+    data: BuildTriggerData;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `BuildTrigger`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type BuildTriggerData = {
+  type: BuildTriggerType;
+  id: BuildTriggerIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `BuildEvent`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type BuildEventData = {
+  type: BuildEventType;
+  id: BuildEventIdentity;
+};
+
+/**
+ * This interface was referenced by `BuildEvent`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type BuildEventInstancesTargetSchema = {
+  data: BuildEvent[];
+  meta: {
+    total_count: number;
+  };
+};
+
+/**
+ * This interface was referenced by `BuildEvent`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type BuildEventSelfTargetSchema = {
+  data: BuildEvent;
+};
+
+/**
+ * DatoCMS stores the individual pieces of content you create from a model as records, which are much like table rows in a database. For backward-compatibility reasons, the API refers to records as "items".
+ *
+ * You can learn how the records are structured at the API level, and everything that is necessary to interact with the records through CMA in the following detail sections:
+ *
+ * * [List/filter records](https://www.datocms.com/docs/content-management-api/resources/item/instances)
+ * * [Create new records](https://www.datocms.com/docs/content-management-api/resources/item/create)
+ * * [Update existing records](https://www.datocms.com/docs/content-management-api/resources/item/update)
+ *
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "item".
+ */
+export type Item = {
+  type: ItemType1;
+  id: ItemIdentity;
+  attributes: ItemAttributes;
+  relationships: ItemRelationships;
+  meta: ItemMeta;
+};
+
+/**
+ * The JSON data associated to the record
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type ItemAttributes = {
+  [k: string]: unknown;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type ItemRelationships = {
+  /**
+   * The record's model
+   */
+  item_type: {
+    data: ItemTypeData;
+  };
+  /**
+   * The entity (account/collaborator/access token/sso user) who created the record
+   */
+  creator?: {
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
+  };
+};
+
+/**
+ * Meta information regarding the record
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type ItemMeta = {
+  /**
+   * Date of creation
+   */
+  created_at: string;
+  /**
+   * Last update time
+   */
+  updated_at: string;
+  /**
+   * Date of last publication
+   */
+  published_at: null | string;
+  /**
+   * Date of first publication
+   */
+  first_published_at: null | string;
+  /**
+   * Date of future publication
+   */
+  publication_scheduled_at: null | string;
+  /**
+   * Date of future unpublishing
+   */
+  unpublishing_scheduled_at: null | string;
+  /**
+   * Status
+   */
+  status: null | ('draft' | 'updated' | 'published');
+  /**
+   * Whether the current record is valid or not
+   */
+  is_valid: boolean;
+  /**
+   * Whether the current version of the record is valid or not
+   */
+  is_current_version_valid: null | boolean;
+  /**
+   * Whether the published version of record is valid or not
+   */
+  is_published_version_valid: null | boolean;
+  /**
+   * The ID of the current record version
+   */
+  current_version: string;
+  /**
+   * Workflow stage in which the item is
+   */
+  stage: null | string;
+  /**
+   * When the records can be organized in a tree, indicates whether the record has children
+   */
+  has_children: null | boolean;
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type ItemInstancesTargetSchema = {
+  data: Item[];
+  meta: {
+    total_count: number;
+  };
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `validate_existing.schema` link.
+ */
+export type ItemValidateExistingSchema = {
+  data: {
+    id: ItemIdentity;
+    type: ItemType1;
+    /**
+     * The JSON data associated to the record
+     */
+    attributes: {
+      [k: string]: unknown;
+    };
+    relationships: {
+      /**
+       * The record's model
+       */
+      item_type: {
+        data: ItemTypeData;
+      };
+      /**
+       * The entity (account/collaborator/access token/sso user) who created the record
+       */
+      creator?: {
+        data:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `validate_new.schema` link.
+ */
+export type ItemValidateNewSchema = {
+  data: {
+    type: ItemType1;
+    /**
+     * The JSON data associated to the record
+     */
+    attributes: {
+      [k: string]: unknown;
+    };
+    relationships: {
+      /**
+       * The record's model
+       */
+      item_type: {
+        data: ItemTypeData;
+      };
+      /**
+       * The entity (account/collaborator/access token/sso user) who created the record
+       */
+      creator?: {
+        data:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type ItemCreateSchema = {
+  data: {
+    id?: ItemIdentity;
+    type: ItemType1;
+    /**
+     * The JSON data associated to the record
+     */
+    attributes: {
+      [k: string]: unknown;
+    };
+    /**
+     * Meta information regarding the record
+     */
+    meta?: {
+      /**
+       * Date of creation
+       */
+      created_at?: string;
+      /**
+       * Last update time
+       */
+      updated_at?: string;
+      /**
+       * Date of last publication
+       */
+      published_at?: null | string;
+      /**
+       * Date of first publication
+       */
+      first_published_at?: null | string;
+      /**
+       * Date of future publication
+       */
+      publication_scheduled_at?: null | string;
+      /**
+       * Status
+       */
+      status?: null | ('draft' | 'updated' | 'published');
+      /**
+       * Whether the current record is valid or not
+       */
+      is_valid?: boolean;
+      /**
+       * Whether the current version of the record is valid or not
+       */
+      is_current_version_valid?: null | boolean;
+      /**
+       * Whether the published version of the record is valid or not
+       */
+      is_published_version_valid?: null | boolean;
+      /**
+       * The ID of the current record version
+       */
+      current_version?: string;
+    };
+    relationships: {
+      /**
+       * The record's model
+       */
+      item_type: {
+        data: ItemTypeData;
+      };
+      /**
+       * The entity (account/collaborator/access token/sso user) who created the record
+       */
+      creator?: {
+        data:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type ItemCreateTargetSchema = {
+  data: Item;
+  included: (ItemType | Item)[];
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `duplicate.targetSchema` link.
+ */
+export type ItemDuplicateTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `duplicate.jobSchema` link.
+ */
+export type ItemDuplicateJobSchema = {
+  data: Item;
+  included: ItemType[];
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type ItemUpdateSchema = {
+  data: {
+    type: ItemType1;
+    id: ItemIdentity;
+    /**
+     * The JSON data associated to the record
+     */
+    attributes?: {
+      [k: string]: unknown;
+    };
+    /**
+     * Meta information regarding the record
+     */
+    meta?: {
+      /**
+       * Date of creation
+       */
+      created_at?: string;
+      /**
+       * Last update time
+       */
+      updated_at?: string;
+      /**
+       * Date of last publication
+       */
+      published_at?: null | string;
+      /**
+       * Date of first publication
+       */
+      first_published_at?: null | string;
+      /**
+       * Date of future publication
+       */
+      publication_scheduled_at?: null | string;
+      /**
+       * Date of future unpublishing
+       */
+      unpublishing_scheduled_at?: null | string;
+      /**
+       * Status
+       */
+      status?: null | ('draft' | 'updated' | 'published');
+      /**
+       * Whether the current record is valid or not
+       */
+      is_valid?: boolean;
+      /**
+       * The ID of the current record version (for optimistic locking, see the example)
+       */
+      current_version?: string;
+      /**
+       * Whether the current version of the record is valid or not
+       */
+      is_current_version_valid?: null | boolean;
+      /**
+       * Whether the published version of record is valid or not
+       */
+      is_published_version_valid?: null | boolean;
+      /**
+       * The new stage to move the record to
+       */
+      stage?: string | null;
+      /**
+       * Whether the record has children or not
+       */
+      has_children?: null | boolean;
+    };
+    relationships?: {
+      /**
+       * The record's model
+       */
+      item_type?: {
+        data: ItemTypeData;
+      };
+      /**
+       * The entity (account/collaborator/access token/sso user) who created the record
+       */
+      creator?: {
+        data:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type ItemUpdateTargetSchema = {
+  data: Item;
+  included?: (ItemType | Item)[];
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `references.targetSchema` link.
+ */
+export type ItemReferencesTargetSchema = {
+  data: Item[];
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type ItemSelfTargetSchema = {
+  data: Item;
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `current_vs_published_state.targetSchema` link.
+ */
+export type ItemCurrentVsPublishedStateTargetSchema = {
+  data: ItemCurrentVsPublishedState;
+  included: (ScheduledPublication | ScheduledUnpublishing | ItemVersion)[];
+};
+
+/**
+ * Information about the record
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "item_current_vs_published_state".
+ */
+export type ItemCurrentVsPublishedState = {
+  type: ItemCurrentVsPublishedStateType;
+  id: ItemCurrentVsPublishedStateIdentity;
+  attributes: ItemCurrentVsPublishedStateAttributes;
+  relationships: ItemCurrentVsPublishedStateRelationships;
+};
+
+/**
+ * The JSON data associated to the record
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type ItemCurrentVsPublishedStateAttributes = {
+  current_version_locales: string[];
+  published_version_locales: string[];
+  changed_locales: string[];
+  added_locales: string[];
+  removed_locales: string[];
+  non_localized_fields_changed: boolean;
+  current_version_invalid_locales: string[];
+  current_version_non_localized_fields_invalid: boolean;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type ItemCurrentVsPublishedStateRelationships = {
+  /**
+   * The scheduled publication entity, if available
+   */
+  scheduled_publication: {
+    data: ScheduledPublicationData | null;
+  };
+  /**
+   * The scheduled unpublishing entity, if available
+   */
+  scheduled_unpublishing: {
+    data: ScheduledUnpublishingData | null;
+  };
+  /**
+   * The currently published version for the record, if available
+   */
+  published_version: {
+    data: ItemVersionData | null;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ScheduledPublicationData = {
+  type: ScheduledPublicationType;
+  id: ScheduledPublicationIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ScheduledUnpublishingData = {
+  type: ScheduledUnpublishingType;
+  id: ScheduledUnpublishingIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ItemVersionData = {
+  type: ItemVersionType;
+  id: ItemVersionIdentity;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `ItemCurrentVsPublishedState`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type ItemCurrentVsPublishedStateData = {
+  type: ItemCurrentVsPublishedStateType;
+  id: ItemCurrentVsPublishedStateIdentity;
+};
+
+/**
+ * You can create scheduled publication to publish records in the future
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "scheduled_publication".
+ */
+export type ScheduledPublication = {
+  type: ScheduledPublicationType;
+  id: ScheduledPublicationIdentity;
+  attributes: ScheduledPublicationAttributes;
+  relationships: ScheduledPublicationRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type ScheduledPublicationAttributes = {
+  /**
+   * The future date for the publication
+   */
+  publication_scheduled_at: string;
+  /**
+   * Specifies which content should be published. If null, the whole record will be published.
+   */
+  selective_publication: null | {
+    /**
+     * List of locales whose content will be published
+     */
+    content_in_locales: string[];
+    /**
+     * Whether the non-localized content has to be published or not
+     */
+    non_localized_content: boolean;
+  };
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type ScheduledPublicationRelationships = {
+  /**
+   * Item
+   */
+  item: {
+    data: ItemData;
+  };
+};
+
+/**
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type ScheduledPublicationCreateSchema = {
+  data: {
+    type: ScheduledPublicationType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The future date for the publication
+       */
+      publication_scheduled_at: string;
+      /**
+       * Specifies which content should be published. If null, the whole record will be published.
+       */
+      selective_publication?: null | {
+        /**
+         * List of locales whose content will be published
+         */
+        content_in_locales: string[];
+        /**
+         * Whether the non-localized content has to be published or not
+         */
+        non_localized_content: boolean;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type ScheduledPublicationCreateTargetSchema = {
+  data: ScheduledPublication;
+  included: Item[];
+};
+
+/**
+ * This interface was referenced by `ScheduledPublication`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type ScheduledPublicationDestroyTargetSchema = {
+  data: Item;
+};
+
+/**
+ * You can create a scheduled unpublishing to unpublish records in the future
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "scheduled_unpublishing".
+ */
+export type ScheduledUnpublishing = {
+  type: ScheduledUnpublishingType;
+  id: ScheduledUnpublishingIdentity;
+  attributes: ScheduledUnpublishingAttributes;
+  relationships: ScheduledUnpublishingRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type ScheduledUnpublishingAttributes = {
+  /**
+   * The future date for the unpublishing
+   */
+  unpublishing_scheduled_at: string;
+  /**
+   * List of locales whose content will be unpublished, or nil if the whole record needs to be unpublished
+   */
+  content_in_locales: null | string[];
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type ScheduledUnpublishingRelationships = {
+  /**
+   * Item
+   */
+  item: {
+    data: ItemData;
+  };
+};
+
+/**
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type ScheduledUnpublishingCreateSchema = {
+  data: {
+    type: ScheduledUnpublishingType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The future date for the unpublishing
+       */
+      unpublishing_scheduled_at: string;
+      /**
+       * List of locales whose content will be unpublished, or nil if the whole record needs to be unpublished
+       */
+      content_in_locales?: null | string[];
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type ScheduledUnpublishingCreateTargetSchema = {
+  data: ScheduledUnpublishing;
+  included: Item[];
+};
+
+/**
+ * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type ScheduledUnpublishingDestroyTargetSchema = {
+  data: Item;
+};
+
+/**
+ * Every change to a record is stored as a separate record version in DatoCMS.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "item_version".
+ */
+export type ItemVersion = {
+  type: ItemVersionType;
+  id: ItemVersionIdentity;
+  attributes: ItemVersionAttributes;
+  relationships: ItemVersionRelationships;
+  meta: ItemVersionMeta;
+};
+
+/**
+ * The JSON data associated to the record version
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type ItemVersionAttributes = {
+  [k: string]: unknown;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type ItemVersionRelationships = {
+  /**
+   * The record version's model
+   */
+  item_type: {
+    data: ItemTypeData;
+  };
+  /**
+   * The record this version belongs to
+   */
+  item: {
+    data: ItemData;
+  };
+  /**
+   * The entity (account/collaborator/access token/sso user) who made this change to the record
+   */
+  editor: {
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
+  };
+};
+
+/**
+ * Meta information regarding the record version
+ *
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type ItemVersionMeta = {
+  /**
+   * Date of record version creation
+   */
+  created_at: string;
+  /**
+   * Whether the record version is valid or not
+   */
+  is_valid: boolean;
+  /**
+   * Whether the record version is the published version or not
+   */
+  is_published: boolean;
+  /**
+   * Whether the record version is the most recent version or not
+   */
+  is_current: boolean;
+};
+
+/**
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `restore.targetSchema` link.
+ */
+export type ItemVersionRestoreTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `restore.jobSchema` link.
+ */
+export type ItemVersionRestoreJobSchema = {
+  data: [Item, ItemVersion];
+};
+
+/**
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type ItemVersionInstancesTargetSchema = {
+  data: ItemVersion[];
+  meta: {
+    total_count: number;
+  };
+};
+
+/**
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type ItemVersionSelfTargetSchema = {
+  data: ItemVersion;
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type ItemDestroyTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `destroy.jobSchema` link.
+ */
+export type ItemDestroyJobSchema = {
+  data: Item;
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `publish.targetSchema` link.
+ */
+export type ItemPublishTargetSchema = {
+  data: Item;
+  included?: ItemType[];
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `unpublish.targetSchema` link.
+ */
+export type ItemUnpublishTargetSchema = {
+  data: Item;
+  included?: ItemType[];
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_publish.schema` link.
+ */
+export type ItemBulkPublishSchema = {
+  data: {
+    type: 'item_bulk_publish_operation';
+    relationships: {
+      /**
+       * Records to publish (a maximum of 200 records are allowed per request)
+       */
+      items: {
+        data: ItemData[];
+      };
+      minItems?: unknown;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_publish.targetSchema` link.
+ */
+export type ItemBulkPublishTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_publish.jobSchema` link.
+ */
+export type ItemBulkPublishJobSchema = {
+  data: unknown[];
+  meta: {
+    successful: number;
+    failed: number;
+  };
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_unpublish.schema` link.
+ */
+export type ItemBulkUnpublishSchema = {
+  data: {
+    type: 'item_bulk_unpublish_operation';
+    relationships: {
+      /**
+       * Records to unpublish (a maximum of 200 records are allowed per request)
+       */
+      items: {
+        data: ItemData[];
+      };
+      minItems?: unknown;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_unpublish.targetSchema` link.
+ */
+export type ItemBulkUnpublishTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_unpublish.jobSchema` link.
+ */
+export type ItemBulkUnpublishJobSchema = {
+  data: unknown[];
+  meta: {
+    successful: number;
+    failed: number;
+  };
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_destroy.schema` link.
+ */
+export type ItemBulkDestroySchema = {
+  data: {
+    type: 'item_bulk_destroy_operation';
+    relationships: {
+      /**
+       * Records to delete (a maximum of 200 records are allowed per request)
+       */
+      items: {
+        data: ItemData[];
+      };
+      minItems?: unknown;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_destroy.targetSchema` link.
+ */
+export type ItemBulkDestroyTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_destroy.jobSchema` link.
+ */
+export type ItemBulkDestroyJobSchema = {
+  data: unknown[];
+  meta: {
+    successful: number;
+    failed: number;
+  };
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_move_to_stage.schema` link.
+ */
+export type ItemBulkMoveToStageSchema = {
+  data: {
+    type: 'item_bulk_move_to_stage_operation';
+    attributes: {
+      /**
+       * Stage to be moved to
+       */
+      stage: string;
+    };
+    relationships: {
+      /**
+       * Records to move (a maximum of 200 records are allowed per request)
+       */
+      items: {
+        data: ItemData[];
+      };
+      minItems?: unknown;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_move_to_stage.targetSchema` link.
+ */
+export type ItemBulkMoveToStageTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `bulk_move_to_stage.jobSchema` link.
+ */
+export type ItemBulkMoveToStageJobSchema = {
+  data: unknown[];
+  meta: {
+    successful: number;
+    failed: number;
+  };
+};
+
+/**
+ * Each media object you upload to the Media Area of your DatoCMS project is represented as an `upload` entity.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "upload".
+ */
+export type Upload = {
+  type: UploadType;
+  id: UploadIdentity;
+  attributes: UploadAttributes;
+  relationships: UploadRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type UploadAttributes = {
+  /**
+   * size of the upload
+   */
+  size: number;
+  /**
+   * Width of image
+   */
+  width: null | number;
+  /**
+   * Height of image
+   */
+  height: null | number;
+  /**
+   * Upload path
+   */
+  path: string;
+  /**
+   * Upload basename
+   */
+  basename: string;
+  /**
+   * Upload filename
+   */
+  filename: string;
+  /**
+   * Upload URL
+   */
+  url: string;
+  /**
+   * Format
+   */
+  format: string | null;
+  /**
+   * Author
+   */
+  author: string | null;
+  /**
+   * Copyright
+   */
+  copyright: string | null;
+  /**
+   * Notes
+   */
+  notes: string | null;
+  /**
+   * The MD5 hash of the asset
+   */
+  md5: string;
+  /**
+   * Seconds of duration for the video
+   */
+  duration: number | null;
+  /**
+   * Frame rate (FPS) for the video
+   */
+  frame_rate: number | null;
+  /**
+   * Blurhash for the asset
+   */
+  blurhash: string | null;
+  /**
+   * Base64 encoded ThumbHash for the asset
+   */
+  thumbhash: string | null;
+  /**
+   * Public Mux playback ID. Used with stream.mux.com to create the source URL for a video player.
+   */
+  mux_playback_id: string | null;
+  /**
+   * Maximum quality of MP4 rendition available
+   */
+  mux_mp4_highest_res: null | 'high' | 'medium' | 'low';
+  /**
+   * For each of the project's locales, the default metadata to apply if nothing is specified at record's level.
+   */
+  default_field_metadata: {
+    /**
+     * This interface was referenced by `undefined`'s JSON-Schema definition
+     * via the `patternProperty` "^(?<languagecode>[a-z]{0,3}(-[A-Za-z]+)?(-[A-Z]{0,3})?)$".
+     */
+    [k: string]: {
+      /**
+       * Alternate text for the asset
+       */
+      alt: string | null;
+      /**
+       * Title for the asset
+       */
+      title: string | null;
+      /**
+       * Object with arbitrary metadata
+       */
+      custom_data: {
+        [k: string]: unknown;
+      };
+      /**
+       * Focal point (only for image assets)
+       */
+      focal_point: {
+        /**
+         * Horizontal position expressed as float between 0 and 1
+         */
+        x: number;
+        /**
+         * Vertical position expressed as float between 0 and 1
+         */
+        y: number;
+      } | null;
+    };
+  };
+  /**
+   * Is this upload an image?
+   */
+  is_image: boolean;
+  /**
+   * Date of upload
+   */
+  created_at: null | string;
+  /**
+   * Date of last update
+   */
+  updated_at: null | string;
+  /**
+   * Mime type of upload
+   */
+  mime_type: null | string;
+  /**
+   * Tags
+   */
+  tags: string[];
+  /**
+   * Smart tags
+   */
+  smart_tags: string[];
+  /**
+   * Exif information
+   */
+  exif_info: {
+    [k: string]: unknown;
+  };
+  /**
+   * Dominant colors of the image
+   */
+  colors: {
+    /**
+     * Red value (from 0 to 255)
+     */
+    red: number;
+    /**
+     * Green value (from 0 to 255)
+     */
+    green: number;
+    /**
+     * Blue value (from 0 to 255)
+     */
+    blue: number;
+    /**
+     * Alpha value (from 0 to 255)
+     */
+    alpha: number;
+  }[];
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type UploadRelationships = {
+  /**
+   * Upload collection to which the asset belongs
+   */
+  upload_collection: {
+    data: UploadCollectionData | null;
+  };
+  /**
+   * The entity (account/collaborator/access token) who created the asset
+   */
+  creator: {
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type UploadData = {
+  type: UploadType;
+  id: UploadIdentity;
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type UploadCreateSchema = {
+  data: {
+    id?: UploadIdentity;
+    type: UploadType;
+    attributes: {
+      /**
+       * Upload path
+       */
+      path: string;
+      /**
+       * Copyright
+       */
+      copyright?: string | null;
+      /**
+       * Author
+       */
+      author?: string | null;
+      /**
+       * Notes
+       */
+      notes?: string | null;
+      /**
+       * For each of the project's locales, the default metadata to apply if nothing is specified at record's level.
+       */
+      default_field_metadata?: {
+        /**
+         * This interface was referenced by `undefined`'s JSON-Schema definition
+         * via the `patternProperty` "^(?<languagecode>[a-z]{0,3}(-[A-Za-z]+)?(-[A-Z]{0,3})?)$".
+         */
+        [k: string]: {
+          /**
+           * Alternate text for the asset
+           */
+          alt?: string | null;
+          /**
+           * Title for the asset
+           */
+          title?: string | null;
+          /**
+           * Object with arbitrary metadata
+           */
+          custom_data?: {
+            [k: string]: unknown;
+          };
+          /**
+           * Focal point (only for image assets)
+           */
+          focal_point?: {
+            /**
+             * Horizontal position expressed as float between 0 and 1
+             */
+            x: number;
+            /**
+             * Vertical position expressed as float between 0 and 1
+             */
+            y: number;
+          } | null;
+        };
+      };
+      /**
+       * Tags
+       */
+      tags?: string[];
+      [k: string]: unknown;
+    };
+    relationships?: {
+      /**
+       * Upload collection to which the asset belongs
+       */
+      upload_collection?: {
+        data: UploadCollectionData | null;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type UploadCreateTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `create.jobSchema` link.
+ */
+export type UploadCreateJobSchema = {
+  data: Upload;
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type UploadInstancesTargetSchema = {
+  data: Upload[];
+  meta: {
+    total_count: number;
+  };
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type UploadSelfTargetSchema = {
+  data: Upload;
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type UploadDestroyTargetSchema = {
+  data: Upload;
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type UploadUpdateSchema = {
+  data: {
+    type: UploadType;
+    id: UploadIdentity;
+    attributes?: {
+      /**
+       * Upload path
+       */
+      path?: string;
+      /**
+       * Upload basename
+       */
+      basename?: string;
+      /**
+       * Copyright
+       */
+      copyright?: string | null;
+      /**
+       * Author
+       */
+      author?: string | null;
+      /**
+       * Notes
+       */
+      notes?: string | null;
+      /**
+       * Tags
+       */
+      tags?: string[];
+      /**
+       * For each of the project's locales, the default metadata to apply if nothing is specified at record's level.
+       */
+      default_field_metadata?: {
+        /**
+         * This interface was referenced by `undefined`'s JSON-Schema definition
+         * via the `patternProperty` "^(?<languagecode>[a-z]{0,3}(-[A-Za-z]+)?(-[A-Z]{0,3})?)$".
+         */
+        [k: string]: {
+          /**
+           * Alternate text for the asset
+           */
+          alt?: string | null;
+          /**
+           * Title for the asset
+           */
+          title?: string | null;
+          /**
+           * Object with arbitrary metadata
+           */
+          custom_data?: {
+            [k: string]: unknown;
+          };
+          /**
+           * Focal point (only for image assets)
+           */
+          focal_point?: {
+            /**
+             * Horizontal position expressed as float between 0 and 1
+             */
+            x: number;
+            /**
+             * Vertical position expressed as float between 0 and 1
+             */
+            y: number;
+          } | null;
+        };
+      };
+      [k: string]: unknown;
+    };
+    relationships?: {
+      /**
+       * The entity (account/collaborator/access token) who created the asset
+       */
+      creator?: {
+        data:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
+      };
+      /**
+       * Upload collection to which the asset belongs
+       */
+      upload_collection?: {
+        data: UploadCollectionData | null;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type UploadUpdateTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `update.jobSchema` link.
+ */
+export type UploadUpdateJobSchema = {
+  data: Upload;
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `references.targetSchema` link.
+ */
+export type UploadReferencesTargetSchema = {
+  data: Item[];
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_tag.schema` link.
+ */
+export type UploadBulkTagSchema = {
+  data: {
+    type: 'upload_bulk_tag_operation';
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The tags to add to the assets
+       */
+      tags: string[];
+    };
+    relationships: {
+      /**
+       * Assets to tag
+       */
+      uploads: {
+        data: UploadData[];
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_tag.targetSchema` link.
+ */
+export type UploadBulkTagTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_tag.jobSchema` link.
+ */
+export type UploadBulkTagJobSchema = {
+  data: unknown[];
+  meta: {
+    successful: number;
+    failed: number;
+  };
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_set_upload_collection.schema` link.
+ */
+export type UploadBulkSetUploadCollectionSchema = {
+  data: {
+    type: 'upload_bulk_set_upload_collection_operation';
+    relationships: {
+      /**
+       * Asset collection to put uploads into
+       */
+      upload_collection: {
+        data: null | UploadCollectionData;
+      };
+      /**
+       * Assets to assign to the collection
+       */
+      uploads: {
+        data: UploadData[];
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_set_upload_collection.targetSchema` link.
+ */
+export type UploadBulkSetUploadCollectionTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_set_upload_collection.jobSchema` link.
+ */
+export type UploadBulkSetUploadCollectionJobSchema = {
+  data: unknown[];
+  meta: {
+    successful: number;
+    failed: number;
+  };
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_destroy.schema` link.
+ */
+export type UploadBulkDestroySchema = {
+  data: {
+    type: 'upload_bulk_destroy_operation';
+    relationships: {
+      /**
+       * Assets to delete
+       */
+      uploads: {
+        data: UploadData[];
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_destroy.targetSchema` link.
+ */
+export type UploadBulkDestroyTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `bulk_destroy.jobSchema` link.
+ */
+export type UploadBulkDestroyJobSchema = {
+  data: unknown[];
+  meta: {
+    successful: number;
+    failed: number;
+  };
+};
+
+/**
+ * To upload a file with the Content Management API, first you need to obtain an upload permission. The `upload_request` entity contains the S3-like URL where you will be able to upload the file with a raw/binary PUT request.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "upload_request".
+ */
+export type UploadRequest = {
+  type: UploadRequestType;
+  id: UploadRequestIdentity;
+  attributes: UploadRequestAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `UploadRequest`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type UploadRequestAttributes = {
+  /**
+   * The URL to use to upload the file with a raw/binary PUT request
+   */
+  url: string;
+  /**
+   * Specifies the additional headers that need to be included in the direct PUT upload request
+   */
+  request_headers: {
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
+};
+
+/**
+ * This interface was referenced by `UploadRequest`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type UploadRequestCreateSchema = {
+  data: {
+    type: UploadRequestType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The original file name
+       */
+      filename?: string;
+      [k: string]: unknown;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `UploadRequest`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type UploadRequestCreateTargetSchema = {
+  data: UploadRequest;
+};
+
+/**
+ * If the asset linked to an Upload entity is a video file, you have the option to include additional audio tracks and subtitle tracks to it.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "upload_track".
+ */
+export type UploadTrack = {
+  type: UploadTrackType;
+  id: UploadTrackIdentity;
+  attributes: UploadTrackAttributes;
+  relationships: UploadTrackRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type UploadTrackAttributes = {
+  /**
+   * The type of track (audio or subtitles)
+   */
+  type: 'subtitles' | 'audio';
+  /**
+   * The human-readable name of the track
+   */
+  name: string;
+  /**
+   * A valid BCP 47 specification compliant language code
+   */
+  language_code: string;
+  /**
+   * When status is `errored`, explains the reason for the error
+   */
+  error: null | string;
+  /**
+   * The status of the asset
+   */
+  status: 'preparing' | 'ready' | 'errored';
+  /**
+   * Indicates if the track provides subtitles for the Deaf or Hard-of-hearing (SDH)
+   */
+  closed_captions: null | boolean;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type UploadTrackRelationships = {
+  /**
+   * The upload containing the track
+   */
+  upload: {
+    data: UploadData;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type UploadTrackData = {
+  type: UploadTrackType;
+  id: UploadTrackIdentity;
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type UploadTrackCreateSchema = {
+  data: {
+    type: UploadTrackType;
+    attributes: {
+      /**
+       * Either an URL to download, or the ID of an upload request
+       */
+      url_or_upload_request_id: string;
+      /**
+       * The type of track (audio or subtitles)
+       */
+      type: 'subtitles' | 'audio';
+      /**
+       * The human-readable name of the track
+       */
+      name?: string;
+      /**
+       * A valid BCP 47 specification compliant language code
+       */
+      language_code: string;
+      /**
+       * Indicates if the track provides subtitles for the Deaf or Hard-of-hearing (SDH)
+       */
+      closed_captions?: null | boolean;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type UploadTrackCreateTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `create.jobSchema` link.
+ */
+export type UploadTrackCreateJobSchema = {
+  data: UploadTrack;
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type UploadTrackInstancesTargetSchema = {
+  data: UploadTrack[];
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type UploadTrackDestroyTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `destroy.jobSchema` link.
+ */
+export type UploadTrackDestroyJobSchema = {
+  data: UploadTrack;
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `generate_subtitles.schema` link.
+ */
+export type UploadTrackGenerateSubtitlesSchema = {
+  data: {
+    type: UploadTrackType;
+    attributes: {
+      /**
+       * The human-readable name of the track
+       */
+      name?: string;
+      /**
+       * A valid BCP 47 specification compliant language code
+       */
+      language_code: string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `generate_subtitles.targetSchema` link.
+ */
+export type UploadTrackGenerateSubtitlesTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `UploadTrack`'s JSON-Schema
+ * via the `generate_subtitles.jobSchema` link.
+ */
+export type UploadTrackGenerateSubtitlesJobSchema = {
+  data: UploadTrack;
+};
+
+/**
+ * DatoCMS Site Search is a way to deliver tailored search results to your site visitors. This is the endpoint you can use to query for results.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "search_result".
+ */
+export type SearchResult = {
+  type: SearchResultType;
+  id: SearchResultIdentity;
+  attributes: SearchResultAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SearchResult`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SearchResultAttributes = {
+  /**
+   * Title of the page
+   */
+  title: string;
+  /**
+   * First 200 characters of page body, unformatted
+   */
+  body_excerpt: string;
+  /**
+   * URL
+   */
+  url: string;
+  /**
+   * Search score
+   */
+  score: number;
+  highlight: {
+    title?: string[] | null;
+    body?: string[] | null;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `SearchResult`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SearchResultData = {
+  type: SearchResultType;
+  id: SearchResultIdentity;
+};
+
+/**
+ * This interface was referenced by `SearchResult`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type SearchResultInstancesTargetSchema = {
+  data: SearchResult[];
+  meta: {
+    total_count: number;
+  };
+};
+
+/**
+ * [Environments](https://www.datocms.com/docs/general-concepts/primary-and-sandbox-environments) make it easier for your development team to **manage and maintain content structure once your content has been published**. You can think of environments like code branches: great for testing, development and pre-production environments.
+ *
+ * By default, every project has one environment, called **primary environment**, which is meant to be used for the regular editorial workflow. Additionally, multiple **sandbox environments** can be created by developers to safely test/experiment new changes in the content.
+ *
+ * Sandbox environments start out as **exact copies of one of the existing environments** (ie. the primary one). The process of creating a new sandbox starting off from an existing environment is called fork.
+ *
+ * Each environment is identified by a name (ie. `master`) and stores the following information:
+ *
+ * - Models
+ * - Records
+ * - Uploads
+ * - Plugins
+ * - Locales and timezone settings
+ * - UI Theme (colors and logo)
+ * - Global SEO settings
+ * - The content navigation bar
+ *
+ * When making changes to any of the aforementioned entities in any environment, including the primary environment, **the data in all other environments isn’t affected** and stays the same.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "environment".
+ */
+export type Environment = {
+  type: EnvironmentType;
+  id: EnvironmentIdentity;
+  meta: EnvironmentMeta;
+};
+
+/**
+ * Meta attributes
+ *
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type EnvironmentMeta = {
+  /**
+   * Status of the environment
+   */
+  status: 'creating' | 'ready' | 'destroying';
+  /**
+   * The completion percentage of the fork operation (only present if the status is `creating`)
+   */
+  fork_completion_percentage?: number;
+  /**
+   * Is this environment the in read-only mode because of a fast-fork?
+   */
+  read_only_mode: boolean;
+  /**
+   * Date of creation
+   */
+  created_at: string;
+  /**
+   * Last data change
+   */
+  last_data_change_at: string;
+  /**
+   * Is this environment the primary for the project?
+   */
+  primary: boolean;
+  /**
+   * ID of the environment that's been forked to generate this one
+   */
+  forked_from: string | null;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type EnvironmentData = {
+  type: EnvironmentType;
+  id: EnvironmentIdentity;
+};
+
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `fork.schema` link.
+ */
+export type EnvironmentForkSchema = {
+  data: {
+    type: EnvironmentType;
+    /**
+     * The ID of the forked environment
+     */
+    id: string;
+  };
+};
+
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `fork.targetSchema` link.
+ */
+export type EnvironmentForkTargetSchema = {
+  data: Job | Environment;
+};
+
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `fork.jobSchema` link.
+ */
+export type EnvironmentForkJobSchema = {
+  data: Environment;
+};
+
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `promote.targetSchema` link.
+ */
+export type EnvironmentPromoteTargetSchema = {
+  data: Environment;
+};
+
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `rename.schema` link.
+ */
+export type EnvironmentRenameSchema = {
+  data: {
+    type: EnvironmentType;
+    /**
+     * The new ID for the environment
+     */
+    id: string;
+  };
+};
+
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `rename.targetSchema` link.
+ */
+export type EnvironmentRenameTargetSchema = {
+  data: Environment;
+};
+
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type EnvironmentInstancesTargetSchema = {
+  data: Environment[];
+};
+
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type EnvironmentSelfTargetSchema = {
+  data: Environment;
+};
+
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type EnvironmentDestroyTargetSchema = {
+  data: Job | Environment;
+};
+
+/**
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `destroy.jobSchema` link.
+ */
+export type EnvironmentDestroyJobSchema = {
+  data: Environment;
+};
+
+/**
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "maintenance_mode".
+ */
+export type MaintenanceMode = {
+  type: MaintenanceModeType;
+  id: MaintenanceModeIdentity;
+  attributes: MaintenanceModeAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `MaintenanceMode`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type MaintenanceModeAttributes = {
+  /**
+   * Whether maintenance mode is currently active or not
+   */
+  active: boolean;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `MaintenanceMode`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type MaintenanceModeData = {
+  type: MaintenanceModeType;
+  id: MaintenanceModeIdentity;
+};
+
+/**
+ * This interface was referenced by `MaintenanceMode`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type MaintenanceModeSelfTargetSchema = {
+  data: MaintenanceMode;
+};
+
+/**
+ * This interface was referenced by `MaintenanceMode`'s JSON-Schema
+ * via the `activate.targetSchema` link.
+ */
+export type MaintenanceModeActivateTargetSchema = {
+  data: MaintenanceMode;
+};
+
+/**
+ * This interface was referenced by `MaintenanceMode`'s JSON-Schema
+ * via the `deactivate.targetSchema` link.
+ */
+export type MaintenanceModeDeactivateTargetSchema = {
+  data: MaintenanceMode;
+};
+
+/**
+ * A webhook allows to make requests following certain Dato events. It is linked to a Role, which describes what actions can be performed.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "webhook".
+ */
+export type Webhook = {
+  type: WebhookType;
+  id: WebhookIdentity;
+  attributes: WebhookAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Webhook`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type WebhookAttributes = {
+  /**
+   * Unique name for the webhook
+   */
+  name: string;
+  /**
+   * Whether the webhook is enabled and sending events or not
+   */
+  enabled: boolean;
+  /**
+   * The URL to be called
+   */
+  url: string;
+  /**
+   * A custom payload
+   */
+  custom_payload: string | null;
+  /**
+   * HTTP Basic Authorization username
+   */
+  http_basic_user: string | null;
+  /**
+   * HTTP Basic Authorization password
+   */
+  http_basic_password: string | null;
+  /**
+   * Additional headers that will be sent
+   */
+  headers: {
+    [k: string]: string;
+  };
+  events: {
+    /**
+     * The subject of webhook triggering
+     */
+    entity_type:
+      | 'item_type'
+      | 'item'
+      | 'upload'
+      | 'build_trigger'
+      | 'environment'
+      | 'maintenance_mode'
+      | 'sso_user'
+      | 'cda_cache_tags';
+    event_types: (
+      | 'create'
+      | 'update'
+      | 'delete'
+      | 'publish'
+      | 'unpublish'
+      | 'promote'
+      | 'deploy_started'
+      | 'deploy_succeeded'
+      | 'deploy_failed'
+      | 'change'
+      | 'invalidate'
+    )[];
+    filters?:
+      | {
+          entity_type:
+            | 'item_type'
+            | 'item'
+            | 'build_trigger'
+            | 'environment'
+            | 'environment_type';
+          entity_ids: [string, ...string[]];
+        }[]
+      | null;
+  }[];
+  /**
+   * Specifies which API version to use when serializing entities in the webhook payload
+   */
+  payload_api_version: string;
+  /**
+   * Whether the you want records present in the payload to show blocks expanded or not
+   */
+  nested_items_in_payload: boolean;
+  /**
+   * If enabled, the system will attempt to retry the call several times when the webhook operation fails due to timeouts or errors.
+   */
+  auto_retry: boolean;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Webhook`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type WebhookData = {
+  type: WebhookType;
+  id: WebhookIdentity;
+};
+
+/**
+ * This interface was referenced by `Webhook`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type WebhookCreateSchema = {
+  data: {
+    type: WebhookType;
+    attributes: {
+      /**
+       * Unique name for the webhook
+       */
+      name: string;
+      /**
+       * The URL to be called
+       */
+      url: string;
+      /**
+       * A custom payload
+       */
+      custom_payload: string | null;
+      /**
+       * Additional headers that will be sent
+       */
+      headers: {
+        [k: string]: string;
+      };
+      events: {
+        /**
+         * The subject of webhook triggering
+         */
+        entity_type:
+          | 'item_type'
+          | 'item'
+          | 'upload'
+          | 'build_trigger'
+          | 'environment'
+          | 'maintenance_mode'
+          | 'sso_user'
+          | 'cda_cache_tags';
+        event_types: (
+          | 'create'
+          | 'update'
+          | 'delete'
+          | 'publish'
+          | 'unpublish'
+          | 'promote'
+          | 'deploy_started'
+          | 'deploy_succeeded'
+          | 'deploy_failed'
+          | 'change'
+          | 'invalidate'
+        )[];
+        filters?:
+          | {
+              entity_type:
+                | 'item_type'
+                | 'item'
+                | 'build_trigger'
+                | 'environment'
+                | 'environment_type';
+              entity_ids: [string, ...string[]];
+            }[]
+          | null;
+      }[];
+      /**
+       * HTTP Basic Authorization username
+       */
+      http_basic_user: string | null;
+      /**
+       * HTTP Basic Authorization password
+       */
+      http_basic_password: string | null;
+      /**
+       * Whether the webhook is enabled and sending events or not
+       */
+      enabled?: boolean;
+      /**
+       * Specifies which API version to use when serializing entities in the webhook payload
+       */
+      payload_api_version?: string;
+      /**
+       * Whether the you want records present in the payload to show blocks expanded or not
+       */
+      nested_items_in_payload?: boolean;
+      /**
+       * If enabled, the system will attempt to retry the call several times when the webhook operation fails due to timeouts or errors.
+       */
+      auto_retry?: boolean;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Webhook`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type WebhookCreateTargetSchema = {
+  data: Webhook;
+};
+
+/**
+ * This interface was referenced by `Webhook`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type WebhookUpdateSchema = {
+  data: {
+    type: WebhookType;
+    id: WebhookIdentity;
+    attributes: {
+      /**
+       * Unique name for the webhook
+       */
+      name?: string;
+      /**
+       * The URL to be called
+       */
+      url?: string;
+      /**
+       * A custom payload
+       */
+      custom_payload?: string | null;
+      /**
+       * Additional headers that will be sent
+       */
+      headers?: {
+        [k: string]: string;
+      };
+      events?: {
+        /**
+         * The subject of webhook triggering
+         */
+        entity_type:
+          | 'item_type'
+          | 'item'
+          | 'upload'
+          | 'build_trigger'
+          | 'environment'
+          | 'maintenance_mode'
+          | 'sso_user'
+          | 'cda_cache_tags';
+        event_types: (
+          | 'create'
+          | 'update'
+          | 'delete'
+          | 'publish'
+          | 'unpublish'
+          | 'promote'
+          | 'deploy_started'
+          | 'deploy_succeeded'
+          | 'deploy_failed'
+          | 'change'
+          | 'invalidate'
+        )[];
+        filters?:
+          | {
+              entity_type:
+                | 'item_type'
+                | 'item'
+                | 'build_trigger'
+                | 'environment'
+                | 'environment_type';
+              entity_ids: [string, ...string[]];
+            }[]
+          | null;
+      }[];
+      /**
+       * HTTP Basic Authorization username
+       */
+      http_basic_user?: string | null;
+      /**
+       * HTTP Basic Authorization password
+       */
+      http_basic_password?: string | null;
+      /**
+       * Whether the webhook is enabled and sending events or not
+       */
+      enabled?: boolean;
+      /**
+       * Specifies which API version to use when serializing entities in the webhook payload
+       */
+      payload_api_version?: string;
+      /**
+       * Whether the you want records present in the payload to show blocks expanded or not
+       */
+      nested_items_in_payload?: boolean;
+      /**
+       * If enabled, the system will attempt to retry the call several times when the webhook operation fails due to timeouts or errors.
+       */
+      auto_retry?: boolean;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Webhook`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type WebhookUpdateTargetSchema = {
+  data: Webhook;
+};
+
+/**
+ * This interface was referenced by `Webhook`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type WebhookInstancesTargetSchema = {
+  data: Webhook[];
+};
+
+/**
+ * This interface was referenced by `Webhook`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type WebhookSelfTargetSchema = {
+  data: Webhook;
+};
+
+/**
+ * This interface was referenced by `Webhook`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type WebhookDestroyTargetSchema = {
+  data: Webhook;
+};
+
+/**
+ * This represents a log entry in the webhooks activity list, detailing a specific webhook event along with its delivery attempt information.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "webhook_call".
+ */
+export type WebhookCall = {
+  type: WebhookCallType;
+  id: WebhookCallIdentity;
+  attributes: WebhookCallAttributes;
+  relationships: WebhookCallRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `WebhookCall`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type WebhookCallAttributes = {
+  /**
+   * The subject of webhook triggering
+   */
+  entity_type:
+    | 'item_type'
+    | 'item'
+    | 'upload'
+    | 'build_trigger'
+    | 'environment'
+    | 'maintenance_mode'
+    | 'sso_user'
+    | 'cda_cache_tags';
+  /**
+   * The event that triggers the webhook call
+   */
+  event_type:
+    | 'create'
+    | 'update'
+    | 'delete'
+    | 'publish'
+    | 'unpublish'
+    | 'promote'
+    | 'deploy_started'
+    | 'deploy_succeeded'
+    | 'deploy_failed'
+    | 'change'
+    | 'invalidate';
+  /**
+   * The moment the event was created
+   */
+  created_at: string;
+  /**
+   * The url that the webhook called
+   */
+  request_url: string;
+  /**
+   * The request's headers
+   */
+  request_headers: {
+    [k: string]: unknown;
+  };
+  /**
+   * The webhook's request payload is encoded as a string. Use `JSON.parse()` to parse it.
+   */
+  request_payload: string;
+  /**
+   * The status of the response
+   */
+  response_status: number | null;
+  /**
+   * The response's headers
+   */
+  response_headers: {
+    [k: string]: unknown;
+  } | null;
+  /**
+   * The body of the response
+   */
+  response_payload: string | null;
+  /**
+   * The number of retries attempted so far
+   */
+  attempted_auto_retries_count: number;
+  /**
+   * The last moment the call occurred
+   */
+  last_sent_at: string;
+  /**
+   * The date when the next retry attempt is scheduled to run. If no retry attempt is scheduled, it is set to null
+   */
+  next_retry_at: string | null;
+  /**
+   * The current status
+   */
+  status: 'pending' | 'success' | 'failed' | 'rescheduled';
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `WebhookCall`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type WebhookCallRelationships = {
+  /**
+   * The webhook which has been called
+   */
+  webhook: {
+    data: WebhookData;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `WebhookCall`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type WebhookCallData = {
+  type: WebhookCallType;
+  id: WebhookCallIdentity;
+};
+
+/**
+ * This interface was referenced by `WebhookCall`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type WebhookCallInstancesTargetSchema = {
+  data: WebhookCall[];
+  meta: {
+    total_count: number;
+  };
+  included: Webhook[];
+};
+
+/**
+ * This interface was referenced by `WebhookCall`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type WebhookCallSelfTargetSchema = {
+  data: WebhookCall;
+  included: Webhook[];
+};
+
+/**
+ * Configuration for different build triggers. You can have different staging and production environments in order to test your site before final deploy
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "build_trigger".
+ */
+export type BuildTrigger = {
+  type: BuildTriggerType;
+  id: BuildTriggerIdentity;
+  attributes: BuildTriggerAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `BuildTrigger`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type BuildTriggerAttributes = {
+  /**
+   * Name of the build trigger
+   */
+  name: string;
+  /**
+   * The type of build trigger
+   */
+  adapter: 'custom' | 'netlify' | 'vercel' | 'circle_ci' | 'gitlab' | 'travis';
+  /**
+   * Additional settings for the build trigger. The value depends on the `adapter`.
+   */
+  adapter_settings: {
+    [k: string]: unknown;
+  };
+  /**
+   * Timestamp of the last build
+   */
+  last_build_completed_at: string | null;
+  /**
+   * Status of last build
+   */
+  build_status: string;
+  /**
+   * Unique token for the webhook (it's the same token present in `webhook_url`)
+   */
+  webhook_token?: string;
+  /**
+   * The URL of the webhook your service has to call when the build completes to report it's status (success or error)
+   */
+  webhook_url: string;
+  /**
+   * Status of Site Search for the frontend
+   */
+  indexing_status: string;
+  /**
+   * The public URL of the frontend. If Site Search is enabled (indicated by `indexing_enabled`), this is the starting point from which the website's spidering will start
+   */
+  frontend_url: string | null;
+  /**
+   * Wheter an automatic build request to `webhook_url` should be made on scheduled publications/unpublishings
+   */
+  autotrigger_on_scheduled_publications: boolean;
+  /**
+   * Wether Site Search is enabled or not. With Site Search, everytime the website is built, DatoCMS will respider it to get updated content
+   */
+  indexing_enabled: boolean;
+};
+
+/**
+ * This interface was referenced by `BuildTrigger`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type BuildTriggerInstancesTargetSchema = {
+  data: BuildTrigger[];
+};
+
+/**
+ * This interface was referenced by `BuildTrigger`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type BuildTriggerSelfTargetSchema = {
+  data: BuildTrigger;
+};
+
+/**
+ * This interface was referenced by `BuildTrigger`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type BuildTriggerCreateSchema = {
+  data: {
+    type: BuildTriggerType;
+    attributes: {
+      /**
+       * Name of the build trigger
+       */
+      name: string;
+      /**
+       * Unique token for the webhook (it's the same token present in `webhook_url`)
+       */
+      webhook_token?: string;
+      /**
+       * The type of build trigger
+       */
+      adapter:
+        | 'custom'
+        | 'netlify'
+        | 'vercel'
+        | 'circle_ci'
+        | 'gitlab'
+        | 'travis';
+      /**
+       * Wether Site Search is enabled or not. With Site Search, everytime the website is built, DatoCMS will respider it to get updated content
+       */
+      indexing_enabled: boolean;
+      /**
+       * The public URL of the frontend. If Site Search is enabled (indicated by `indexing_enabled`), this is the starting point from which the website's spidering will start
+       */
+      frontend_url: string | null;
+      /**
+       * Wheter an automatic build request to `webhook_url` should be made on scheduled publications/unpublishings
+       */
+      autotrigger_on_scheduled_publications: boolean;
+      /**
+       * Additional settings for the build trigger. The value depends on the `adapter`.
+       */
+      adapter_settings: {
+        [k: string]: unknown;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `BuildTrigger`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type BuildTriggerCreateTargetSchema = {
+  data: BuildTrigger;
+};
+
+/**
+ * This interface was referenced by `BuildTrigger`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type BuildTriggerUpdateSchema = {
+  data: {
+    type: BuildTriggerType;
+    id: BuildTriggerIdentity;
+    attributes: {
+      /**
+       * Name of the build trigger
+       */
+      name?: string;
+      /**
+       * The type of build trigger
+       */
+      adapter?:
+        | 'custom'
+        | 'netlify'
+        | 'vercel'
+        | 'circle_ci'
+        | 'gitlab'
+        | 'travis';
+      /**
+       * Wether Site Search is enabled or not. With Site Search, everytime the website is built, DatoCMS will respider it to get updated content
+       */
+      indexing_enabled?: boolean;
+      /**
+       * The public URL of the frontend. If Site Search is enabled (indicated by `indexing_enabled`), this is the starting point from which the website's spidering will start
+       */
+      frontend_url?: string | null;
+      /**
+       * Wheter an automatic build request to `webhook_url` should be made on scheduled publications/unpublishings
+       */
+      autotrigger_on_scheduled_publications?: boolean;
+      /**
+       * Additional settings for the build trigger. The value depends on the `adapter`.
+       */
+      adapter_settings?: {
+        [k: string]: unknown;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `BuildTrigger`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type BuildTriggerUpdateTargetSchema = {
+  data: BuildTrigger;
+};
+
+/**
+ * This interface was referenced by `BuildTrigger`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type BuildTriggerDestroyTargetSchema = {
+  data: BuildTrigger;
+};
+
+/**
+ * In DatoCMS you can create filters to help you (and other editors) quickly search for records
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "item_type_filter".
+ */
+export type ItemTypeFilter = {
+  type: ItemTypeFilterType;
+  id: ItemTypeFilterIdentity;
+  attributes: ItemTypeFilterAttributes;
+  relationships: ItemTypeFilterRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type ItemTypeFilterAttributes = {
+  /**
+   * The name of the filter
+   */
+  name: string;
+  /**
+   * The actual filter. It follows the form of the `filter` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
+   */
+  filter: {
+    [k: string]: unknown;
+  };
+  /**
+   * The columns to show with this filter
+   */
+  columns:
+    | [
+        {
+          /**
+           * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+           */
+          name: string;
+          /**
+           * The percentage width for the column (float, from 0 to 1.0)
+           */
+          width: number;
+        },
+        ...{
+          /**
+           * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+           */
+          name: string;
+          /**
+           * The percentage width for the column (float, from 0 to 1.0)
+           */
+          width: number;
+        }[],
+      ]
+    | null;
+  /**
+   * The ordering to apply with this filter, or `null` for the default model ordering. It follows the form of the `order_by` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
+   */
+  order_by: string | null;
+  /**
+   * Whether it's a shared filter or not
+   */
+  shared: boolean;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type ItemTypeFilterRelationships = {
+  /**
+   * Model associated with the filter
+   */
+  item_type: {
+    data: ItemTypeData;
+  };
+};
+
+/**
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type ItemTypeFilterCreateSchema = {
+  data: {
+    id?: ItemTypeFilterIdentity;
+    type: ItemTypeFilterType;
+    attributes: {
+      /**
+       * The name of the filter
+       */
+      name: string;
+      /**
+       * The actual filter. It follows the form of the `filter` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
+       */
+      filter?: {
+        [k: string]: unknown;
+      };
+      /**
+       * The columns to show with this filter
+       */
+      columns?:
+        | [
+            {
+              /**
+               * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+               */
+              name: string;
+              /**
+               * The percentage width for the column (float, from 0 to 1.0)
+               */
+              width: number;
+            },
+            ...{
+              /**
+               * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+               */
+              name: string;
+              /**
+               * The percentage width for the column (float, from 0 to 1.0)
+               */
+              width: number;
+            }[],
+          ]
+        | null;
+      /**
+       * The ordering to apply with this filter, or `null` for the default model ordering. It follows the form of the `order_by` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
+       */
+      order_by?: string | null;
+      /**
+       * Whether it's a shared filter or not
+       */
+      shared?: boolean;
+    };
+    relationships: {
+      /**
+       * Model associated with the filter
+       */
+      item_type: {
+        data: ItemTypeData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type ItemTypeFilterCreateTargetSchema = {
+  data: ItemTypeFilter;
+};
+
+/**
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type ItemTypeFilterUpdateSchema = {
+  data: {
+    type: ItemTypeFilterType;
+    id: ItemTypeFilterIdentity;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The name of the filter
+       */
+      name?: string;
+      /**
+       * The columns to show with this filter
+       */
+      columns?:
+        | [
+            {
+              /**
+               * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+               */
+              name: string;
+              /**
+               * The percentage width for the column (float, from 0 to 1.0)
+               */
+              width: number;
+            },
+            ...{
+              /**
+               * Can be either the API key of a model's field, or one of the following meta columns: `id`, `_preview`, `_updated_at`, `_created_at`, `_creator`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `position` (only for sortable models), `_stage (only for models associated with a workflow).
+               */
+              name: string;
+              /**
+               * The percentage width for the column (float, from 0 to 1.0)
+               */
+              width: number;
+            }[],
+          ]
+        | null;
+      /**
+       * The ordering to apply with this filter, or `null` for the default model ordering. It follows the form of the `order_by` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
+       */
+      order_by?: string | null;
+      /**
+       * Whether it's a shared filter or not
+       */
+      shared?: boolean;
+      /**
+       * The actual filter. It follows the form of the `filter` query parameter of the [List all records](https://www.datocms.com/docs/content-management-api/resources/item/instances) endpoint.
+       */
+      filter?: {
+        [k: string]: unknown;
+      };
+    };
+    relationships?: {
+      /**
+       * Model associated with the filter
+       */
+      item_type: {
+        data: ItemTypeData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type ItemTypeFilterUpdateTargetSchema = {
+  data: ItemTypeFilter;
+};
+
+/**
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type ItemTypeFilterInstancesTargetSchema = {
+  data: ItemTypeFilter[];
+};
+
+/**
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type ItemTypeFilterSelfTargetSchema = {
+  data: ItemTypeFilter;
+};
+
+/**
+ * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type ItemTypeFilterDestroyTargetSchema = {
+  data: ItemTypeFilter;
+};
+
+/**
+ * In DatoCMS you can create filters to help you (and other editors) quickly search for uploads
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "upload_filter".
+ */
+export type UploadFilter = {
+  type: UploadFilterType;
+  id: UploadFilterIdentity;
+  attributes: UploadFilterAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `UploadFilter`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type UploadFilterAttributes = {
+  /**
+   * The name of the filter
+   */
+  name: string;
+  /**
+   * The actual filter
+   */
+  filter: {
+    [k: string]: unknown;
+  };
+  /**
+   * Whether it's a shared filter or not
+   */
+  shared: boolean;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `UploadFilter`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type UploadFilterData = {
+  type: UploadFilterType;
+  id: UploadFilterIdentity;
+};
+
+/**
+ * This interface was referenced by `UploadFilter`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type UploadFilterCreateSchema = {
+  data: {
+    id?: UploadFilterIdentity;
+    type: UploadFilterType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The name of the filter
+       */
+      name: string;
+      /**
+       * The actual filter
+       */
+      filter: {
+        [k: string]: unknown;
+      };
+      /**
+       * Whether it's a shared filter or not
+       */
+      shared: boolean;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `UploadFilter`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type UploadFilterCreateTargetSchema = {
+  data: UploadFilter;
+};
+
+/**
+ * This interface was referenced by `UploadFilter`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type UploadFilterUpdateSchema = {
+  data: {
+    type: UploadFilterType;
+    id: UploadFilterIdentity;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The name of the filter
+       */
+      name: string;
+      /**
+       * Whether it's a shared filter or not
+       */
+      shared?: boolean;
+      /**
+       * The actual filter
+       */
+      filter: {
+        [k: string]: unknown;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `UploadFilter`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type UploadFilterUpdateTargetSchema = {
+  data: UploadFilter;
+};
+
+/**
+ * This interface was referenced by `UploadFilter`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type UploadFilterInstancesTargetSchema = {
+  data: UploadFilter[];
+};
+
+/**
+ * This interface was referenced by `UploadFilter`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type UploadFilterSelfTargetSchema = {
+  data: UploadFilter;
+};
+
+/**
+ * This interface was referenced by `UploadFilter`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type UploadFilterDestroyTargetSchema = {
+  data: UploadFilter;
+};
+
+/**
+ * A DatoCMS administrative area can be accessed by multiple people. Every invitation is linked to a specific Role, which describes what actions it will be able to perform once the user will register.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "site_invitation".
+ */
+export type SiteInvitation = {
+  type: SiteInvitationType;
+  id: SiteInvitationIdentity;
+  attributes: SiteInvitationAttributes;
+  relationships: SiteInvitationRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SiteInvitationAttributes = {
+  /**
+   * Email
+   */
+  email: string;
+  /**
+   * Whether this invitation has expired
+   */
+  expired: boolean;
+  /**
+   * The link to join a DatoCMS project. Shown only on creation and reset
+   */
+  invitation_link?: null | string;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type SiteInvitationRelationships = {
+  /**
+   * Role
+   */
+  role: {
+    data: RoleData;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SiteInvitationData = {
+  type: SiteInvitationType;
+  id: SiteInvitationIdentity;
+};
+
+/**
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type SiteInvitationCreateSchema = {
+  data: {
+    type: SiteInvitationType;
+    attributes: {
+      /**
+       * Email
+       */
+      email: string;
+    };
+    relationships: {
+      /**
+       * Role
+       */
+      role: {
+        data: RoleData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type SiteInvitationCreateTargetSchema = {
+  data: SiteInvitation;
+};
+
+/**
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type SiteInvitationUpdateSchema = {
+  data: {
+    type: SiteInvitationType;
+    id: SiteInvitationIdentity;
+    relationships: {
+      /**
+       * Role
+       */
+      role?: {
+        data: RoleData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type SiteInvitationUpdateTargetSchema = {
+  data: SiteInvitation;
+};
+
+/**
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type SiteInvitationInstancesTargetSchema = {
+  data: SiteInvitation[];
+};
+
+/**
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type SiteInvitationSelfTargetSchema = {
+  data: SiteInvitation;
+};
+
+/**
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type SiteInvitationDestroyTargetSchema = {
+  data: SiteInvitation;
+};
+
+/**
+ * This interface was referenced by `SiteInvitation`'s JSON-Schema
+ * via the `resend.targetSchema` link.
+ */
+export type SiteInvitationResendTargetSchema = {
+  data: SiteInvitation;
+};
+
+/**
+ * Session track users movements in the administrative area, and allows locking a record when editing it.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "editing_session".
+ */
+export type EditingSession = {
+  type: EditingSessionType;
+  id: EditingSessionIdentity;
+  attributes: EditingSessionAttributes;
+  relationships: EditingSessionRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `EditingSession`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type EditingSessionAttributes = {
+  /**
+   * User entered at
+   */
+  last_activity_at: string | null;
+  /**
+   * User locked record at
+   */
+  locked_at: string | null;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `EditingSession`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type EditingSessionRelationships = {
+  /**
+   * The active item in the session
+   */
+  active_item: {
+    data: ItemData;
+  };
+  /**
+   * The item type of the active item in the session
+   */
+  active_item_type: {
+    data: ItemTypeData;
+  };
+  /**
+   * The entity (account/editor/access token) who has accessed the record
+   */
+  editor: {
+    data:
+      | AccountData
+      | AccessTokenData
+      | UserData
+      | SsoUserData
+      | OrganizationData;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `EditingSession`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type EditingSessionData = {
+  type: EditingSessionType;
+  id: EditingSessionIdentity;
+};
+
+/**
+ * This interface was referenced by `EditingSession`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type EditingSessionInstancesTargetSchema = {
+  data: EditingSession[];
+};
+
+/**
+ * This interface was referenced by `EditingSession`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type EditingSessionUpdateSchema = {
+  data:
+    | {
+        /**
+         * JSON API type
+         */
+        type: 'editing_session_enter_item';
+        /**
+         * JSON API relationships
+         */
+        relationships: {
+          /**
+           * The active item in the session
+           */
+          item: {
+            data: ItemData;
+          };
+        };
+      }
+    | {
+        /**
+         * JSON API type
+         */
+        type: 'editing_session_take_over_item';
+        /**
+         * JSON API relationships
+         */
+        relationships: {
+          /**
+           * The active item in the session
+           */
+          item: {
+            data: ItemData;
+          };
+        };
+      }
+    | {
+        /**
+         * JSON API type
+         */
+        type: 'editing_session_lock_item';
+        /**
+         * JSON API relationships
+         */
+        relationships: {
+          /**
+           * The active item in the session
+           */
+          item: {
+            data: ItemData;
+          };
+        };
+      }
+    | {
+        /**
+         * JSON API type
+         */
+        type: 'editing_session_unlock_item';
+      };
+};
+
+/**
+ * This interface was referenced by `EditingSession`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type EditingSessionUpdateTargetSchema = {
+  data: EditingSession | [EditingSession, FormData];
+};
+
+/**
+ * Form contents for an editing session
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "form_data".
+ */
+export type FormData = {
+  type: FormDataType;
+  id: FormDataIdentity;
+  attributes: FormDataAttributes;
+  relationships: FormDataRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type FormDataAttributes = {
+  form_data: null | {
+    [k: string]: unknown;
+  };
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type FormDataRelationships = {
+  /**
+   * Account that's currently editing an item
+   */
+  editor: {
+    data: AccountData;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `FormData`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type FormDataData = {
+  type: FormDataType;
+  id: FormDataIdentity;
+};
+
+/**
+ * This interface was referenced by `EditingSession`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type EditingSessionDestroyTargetSchema = {
+  data: EditingSession;
+};
+
+/**
+ * A Single Sign-On group exists when a DatoCMS project is connected to an Identity Provider. These groups can be used to link DatoCMS roles to the Identity Provider's groups.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "sso_group".
+ */
+export type SsoGroup = {
+  type: SsoGroupType;
+  id: SsoGroupIdentity;
+  attributes: SsoGroupAttributes;
+  relationships: SsoGroupRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SsoGroup`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SsoGroupAttributes = {
+  /**
+   * Name of the group
+   */
+  name: string;
+  /**
+   * When an user belongs to multiple groups, the role associated to the group with the highest priority will be used
+   */
+  priority: number;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `SsoGroup`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type SsoGroupRelationships = {
+  /**
+   * Sso Group's role
+   */
+  role: {
+    data: RoleData;
+  };
+  /**
+   * Group members
+   */
+  users: {
+    data: SsoUserData[];
+  };
+};
+
+/**
+ * This interface was referenced by `SsoGroup`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type SsoGroupInstancesTargetSchema = {
+  data: SsoGroup[];
+};
+
+/**
+ * This interface was referenced by `SsoGroup`'s JSON-Schema
+ * via the `copy_roles.targetSchema` link.
+ */
+export type SsoGroupCopyRolesTargetSchema = {
+  data: SsoGroup;
+};
+
+/**
+ * This interface was referenced by `SsoGroup`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type SsoGroupUpdateSchema = {
+  data: {
+    type: SsoGroupType;
+    id: SsoGroupIdentity;
+    attributes: {
+      /**
+       * When an user belongs to multiple groups, the role associated to the group with the highest priority will be used
+       */
+      priority: number;
+    };
+    relationships: {
+      /**
+       * Sso Group's role
+       */
+      role: {
+        data: RoleData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `SsoGroup`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type SsoGroupUpdateTargetSchema = {
+  data: SsoGroup;
+};
+
+/**
+ * This interface was referenced by `SsoGroup`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type SsoGroupDestroyTargetSchema = {
+  data: SsoGroup;
+};
+
+/**
+ * Represents the Single Sign-on settings of the current DatoCMS project
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "sso_settings".
+ */
+export type SsoSettings = {
+  type: SsoSettingsType;
+  id: SsoSettingsIdentity;
+  attributes: SsoSettingsAttributes;
+  relationships: SsoSettingsRelationships;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SsoSettings`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SsoSettingsAttributes = {
+  /**
+   * URL of Identity Provider SAML Metadata endpoint
+   */
+  idp_saml_metadata_url: null | string;
+  /**
+   * Identity Provider SAML Metadata
+   */
+  idp_saml_metadata_xml?: null | string;
+  /**
+   * DatoCMS SCIM base URL
+   */
+  scim_base_url: string;
+  /**
+   * DatoCMS SAML ACS URL
+   */
+  saml_acs_url: string;
+  /**
+   * DatoCMS SAML Metadata URL
+   */
+  sp_saml_metadata_url: string;
+  /**
+   * DatoCMS SAML Base URL
+   */
+  sp_saml_base_url: string;
+  /**
+   * DatoCMS SAML Token
+   */
+  saml_token: string;
+  /**
+   * DatoCMS SCIM API Token
+   */
+  scim_api_token?: string;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `SsoSettings`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type SsoSettingsRelationships = {
+  /**
+   * The default role assigned to SSO users that do not belong to any SSO group
+   */
+  default_role: {
+    data: null | RoleData;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `SsoSettings`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SsoSettingsData = {
+  type: SsoSettingsType;
+  id: SsoSettingsIdentity;
+};
+
+/**
+ * This interface was referenced by `SsoSettings`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type SsoSettingsSelfTargetSchema = {
+  data: SsoSettings;
+};
+
+/**
+ * This interface was referenced by `SsoSettings`'s JSON-Schema
+ * via the `generate_token.targetSchema` link.
+ */
+export type SsoSettingsGenerateTokenTargetSchema = {
+  data: {
+    id: SsoSettingsIdentity;
+    type: 'sso_token';
+    attributes: {
+      /**
+       * DatoCMS SCIM API Token
+       */
+      scim_api_token: string;
+    };
+    [k: string]: unknown;
+  };
+};
+
+/**
+ * This interface was referenced by `SsoSettings`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type SsoSettingsUpdateSchema = {
+  data: {
+    type: SsoSettingsType;
+    id?: SsoSettingsIdentity;
+    attributes?: {
+      /**
+       * URL of Identity Provider SAML Metadata endpoint
+       */
+      idp_saml_metadata_url?: null | string;
+      /**
+       * Identity Provider SAML Metadata
+       */
+      idp_saml_metadata_xml?: null | string;
+    };
+    relationships?: {
+      /**
+       * The default role assigned to SSO users that do not belong to any SSO group
+       */
+      default_role: {
+        data: RoleData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `SsoSettings`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type SsoSettingsUpdateTargetSchema = {
+  data: SsoSettings;
+};
+
+/**
+ * The entity suggests several emojis that are connected to a specific term
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "emoji_suggestions".
+ */
+export type EmojiSuggestions = {
+  type: EmojiSuggestionsType;
+  id: EmojiSuggestionsIdentity;
+  attributes: EmojiSuggestionsAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `EmojiSuggestions`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type EmojiSuggestionsAttributes = {
+  /**
+   * Emojis connected to a specific term
+   */
+  emojis: string[];
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `EmojiSuggestions`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type EmojiSuggestionsData = {
+  type: EmojiSuggestionsType;
+  id: EmojiSuggestionsIdentity;
+};
+
+/**
+ * This interface was referenced by `EmojiSuggestions`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type EmojiSuggestionsSelfTargetSchema = {
+  data: EmojiSuggestions;
+};
+
+/**
+ * Represents the white-label settings of the current DatoCMS project
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "white_label_settings".
+ */
+export type WhiteLabelSettings = {
+  type: WhiteLabelSettingsType;
+  id: WhiteLabelSettingsIdentity;
+  attributes: WhiteLabelSettingsAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type WhiteLabelSettingsAttributes = {
+  /**
+   * URL of custom I18n messages. The :locale placeholder represents the current DatoCMS UI locale.
+   */
+  custom_i18n_messages_template_url: null | string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type WhiteLabelSettingsData = {
+  type: WhiteLabelSettingsType;
+  id: WhiteLabelSettingsIdentity;
+};
+
+/**
+ * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type WhiteLabelSettingsSelfTargetSchema = {
+  data: WhiteLabelSettings;
+};
+
+/**
+ * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type WhiteLabelSettingsUpdateSchema = {
+  data: {
+    type: WhiteLabelSettingsType;
+    id?: WhiteLabelSettingsIdentity;
+    attributes?: {
+      /**
+       * URL of custom I18n messages. The :locale placeholder represents the current DatoCMS UI locale.
+       */
+      custom_i18n_messages_template_url: null | string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type WhiteLabelSettingsUpdateTargetSchema = {
+  data: WhiteLabelSettings;
+};
+
+/**
+ * Info that can be accessed by unauthorized users
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "public_info".
+ */
+export type PublicInfo = {
+  type: PublicInfoType;
+  id: PublicInfoIdentity;
+  attributes: PublicInfoAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `PublicInfo`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type PublicInfoAttributes = {
+  /**
+   * Site name
+   */
+  name: string;
+  /**
+   * Specifies the Single Sign-on URL to reach
+   */
+  sso_saml_init_url: null | string;
+  /**
+   * Specifies the logo url if present
+   */
+  logo_url: null | string;
+  /**
+   * Specifies whether the project is in white-label mode
+   */
+  white_label: boolean;
+  /**
+   * Template URL to download specific I18n messages (for white-label projects only)
+   */
+  custom_i18n_messages_template_url: null | string;
+  /**
+   * Specifies the color-scheme for the project
+   */
+  theme: {
+    primary_color: {
+      red: number;
+      green: number;
+      blue: number;
+      alpha: number;
+      [k: string]: unknown;
+    };
+    light_color: {
+      red: number;
+      green: number;
+      blue: number;
+      alpha: number;
+    };
+    accent_color: {
+      red: number;
+      green: number;
+      blue: number;
+      alpha: number;
+    };
+    dark_color: {
+      red: number;
+      green: number;
+      blue: number;
+      alpha: number;
+    };
+  };
+  /**
+   * Additional information (only returned on authenticated requests)
+   */
+  extras: null | {
+    blocks_depth: number;
+    blocks_per_item: number;
+    maximum_single_upload_bytes: number;
+    [k: string]: unknown;
+  };
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `PublicInfo`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type PublicInfoData = {
+  type: PublicInfoType;
+  id: PublicInfoIdentity;
+};
+
+/**
+ * This interface was referenced by `PublicInfo`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type PublicInfoSelfTargetSchema = {
+  data: PublicInfo;
+};
+
+/**
+ * DatoCMS resources usage organized by day
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "daily_usage".
+ */
+export type DailyUsage = {
+  type: DailyUsageType;
+  id: DailyUsageIdentity;
+  attributes: DailyUsageAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type DailyUsageAttributes = {
+  /**
+   * The date the data are referring to
+   */
+  date: string;
+  /**
+   * Number of API calls to content delivery API
+   */
+  cda_api_calls: number;
+  /**
+   * Number of API calls to content management API
+   */
+  cma_api_calls: number;
+  /**
+   * Content delivery API traffic
+   */
+  cda_traffic_bytes: number;
+  /**
+   * Content management API traffic
+   */
+  cma_traffic_bytes: number;
+  /**
+   * Uploads requests traffic
+   */
+  assets_traffic_bytes: number;
+  /**
+   * Regular video streaming (max 1080p), in seconds
+   */
+  mux_delivered_seconds: number;
+  /**
+   * High-res video streaming (> 1080p), in seconds
+   */
+  mux_high_resolution_delivered_seconds: number;
+  /**
+   * Video encoding seconds
+   */
+  mux_encoded_seconds: number;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type DailyUsageData = {
+  type: DailyUsageType;
+  id: DailyUsageIdentity;
+};
+
+/**
+ * This interface was referenced by `DailyUsage`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type DailyUsageInstancesTargetSchema = {
+  data: DailyUsage[];
+};
+
+/**
+ * You can use counters to analyze your project's data consumption over a period of time. Counters are especially useful if your project is exceeding its API calls/traffic quota limits, to better understand where and how requests are originating. Counters are updated every minute, so you can debug in real-time the results of your changes.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "usage_counter".
+ */
+export type UsageCounter = {
+  type: UsageCounterType;
+  id: UsageCounterIdentity;
+  attributes: UsageCounterAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `UsageCounter`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type UsageCounterAttributes = {
+  result: {
+    /**
+     * Occurrence
+     */
+    value: string;
+    /**
+     * Counter for the specified occurrence
+     */
+    counter: number;
+  }[];
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `UsageCounter`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type UsageCounterData = {
+  type: UsageCounterType;
+  id: UsageCounterIdentity;
+};
+
+/**
+ * This interface was referenced by `UsageCounter`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type UsageCounterSelfTargetSchema = {
+  data: UsageCounter;
+};
+
+/**
+ * All the project's upload tags
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "upload_tag".
+ */
+export type UploadTag = {
+  type: UploadTagType;
+  id: UploadTagIdentity;
+  attributes: UploadTagAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `UploadTag`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type UploadTagAttributes = {
+  /**
+   * The tag name
+   */
+  name: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `UploadTag`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type UploadTagData = {
+  type: UploadTagType;
+  id: UploadTagIdentity;
+};
+
+/**
+ * This interface was referenced by `UploadTag`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type UploadTagInstancesTargetSchema = {
+  data: UploadTag[];
+  meta: {
+    total_count: number;
+  };
+};
+
+/**
+ * This interface was referenced by `UploadTag`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type UploadTagCreateSchema = {
+  data: {
+    type: UploadTagType;
+    attributes: {
+      /**
+       * The tag name
+       */
+      name: string;
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `UploadTag`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type UploadTagCreateTargetSchema = {
+  data: UploadTag;
+};
+
+/**
+ * All the site's upload automatically generated tags
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "upload_smart_tag".
+ */
+export type UploadSmartTag = {
+  type: UploadSmartTagType;
+  id: UploadSmartTagIdentity;
+  attributes: UploadSmartTagAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `UploadSmartTag`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type UploadSmartTagAttributes = {
+  /**
+   * The tag name
+   */
+  name: string;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `UploadSmartTag`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type UploadSmartTagData = {
+  type: UploadSmartTagType;
+  id: UploadSmartTagIdentity;
+};
+
+/**
+ * This interface was referenced by `UploadSmartTag`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type UploadSmartTagInstancesTargetSchema = {
+  data: UploadSmartTag[];
+  meta: {
+    total_count: number;
+  };
+};
+
+/**
+ * A site represents a specific DatoCMS administrative area
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "site".
+ */
+export type Site = {
+  type: SiteType;
+  id: SiteIdentity;
+  attributes: SiteAttributes;
+  relationships: SiteRelationships;
+  meta: SiteMeta;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SiteAttributes = {
+  /**
+   * Site name
+   */
+  name: string;
+  /**
+   * Administrative area custom domain
+   */
+  domain: string | null;
+  /**
+   * Google API Key to be used by the LatLon widget
+   */
+  google_maps_api_token: string | null;
+  /**
+   * Imgix host
+   */
+  imgix_host: string | null;
+  /**
+   * DatoCMS internal domain for the administrative area
+   */
+  internal_domain: string | null;
+  /**
+   * Available locales
+   */
+  locales: [string, ...string[]];
+  /**
+   * Site default timezone
+   */
+  timezone: string;
+  /**
+   * Whether the website needs to be indexed by search engines or not
+   */
+  no_index: boolean;
+  /**
+   * The upload id for the favicon
+   */
+  favicon: string | null;
+  /**
+   * Specifies the last time when a change of data occurred
+   */
+  last_data_change_at: null | string;
+  /**
+   * Specifies whether all users of this site need to authenticate using two-factor authentication
+   */
+  require_2fa: boolean;
+  /**
+   * Specifies whether you want IPs to be tracked in the Project usages section
+   */
+  ip_tracking_enabled: boolean;
+  /**
+   * If enabled, blocks schema changes of primary environment
+   */
+  force_use_of_sandbox_environments: boolean;
+  /**
+   * Allows setting default parameters for assets served through the CDN
+   */
+  assets_cdn_default_settings: {
+    /**
+     * Allows setting default parameters for optimizing images served by the CDN
+     */
+    image: {
+      /**
+       * Controls the output quality of lossy file formats (jpg, pjpg, webp, avif, or jxr). Valid values are in the range 0 – 100 and the default is 75.
+       */
+      q?: number;
+      /**
+       * The auto parameter helps automating a baseline level of optimization. Specify one or more settings
+       */
+      auto?: ('compress' | 'format' | 'enhance' | 'true' | 'redeye')[];
+      /**
+       * Specifies the color space of the output image
+       */
+      cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip' | 'origin';
+    };
+    /**
+     * Allows setting default parameters for optimizing videos served by the CDN
+     */
+    video: {
+      /**
+       * When true, attempting to retrieve raw video files directly instead of their optimized counterparts will result in a HTTP 422 status code
+       */
+      disable_serving_raw_videos?: boolean;
+    };
+  };
+  /**
+   * Specifies the theme to use in administrative area
+   */
+  theme: {
+    /**
+     * If type is monochromatic, the hue will determine the color palette. Dark color is a legacy property, and it won't be used on the interface
+     */
+    type: 'custom' | 'monochromatic';
+    /**
+     * If the type is monochromatic, the value will fall between 0 and 359. If it's not, the value will be null.
+     */
+    hue: number | null;
+    primary_color: {
+      red: number;
+      green: number;
+      blue: number;
+      alpha: number;
+    };
+    light_color: {
+      red: number;
+      green: number;
+      blue: number;
+      alpha: number;
+    };
+    accent_color: {
+      red: number;
+      green: number;
+      blue: number;
+      alpha: number;
+    };
+    dark_color: {
+      red: number;
+      green: number;
+      blue: number;
+      alpha: number;
+    };
+    /**
+     * The upload ID that is used as the logo for the project
+     */
+    logo: string | null;
+  };
+  /**
+   * Specifies default global settings
+   */
+  global_seo: {
+    /**
+     * Site name, used in social sharing
+     */
+    site_name?: string;
+    fallback_seo?: {
+      title: string;
+      description: string;
+      /**
+       * The id of the image
+       */
+      image: null | string;
+      /**
+       * Determines how a Twitter link preview is shown
+       */
+      twitter_card?: null | ('summary' | 'summary_large_image');
+      [k: string]: unknown;
+    };
+    /**
+     * Title meta tag suffix
+     */
+    title_suffix?: null | string;
+    /**
+     * URL of facebook page
+     */
+    facebook_page_url?: null | string;
+    /**
+     * Twitter account associated to website
+     */
+    twitter_account?: null | string;
+    [k: string]: unknown;
+  } | null;
+};
+
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type SiteRelationships = {
+  account: {
+    data: null | AccountData;
+  };
+  owner: {
+    data: AccountData | OrganizationData;
+  };
+  item_types: {
+    /**
+     * The list item types for the site
+     */
+    data: ItemTypeData[];
+  };
+};
+
+/**
+ * Meta attributes
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type SiteMeta = {
+  /**
+   * Date of project creation
+   */
+  created_at: string;
+  /**
+   * The default value for the draft mode option in all the environment's models
+   */
+  draft_mode_default: boolean;
+  /**
+   * Whether the site has custom upload storage settings
+   */
+  custom_upload_storage_settings?: boolean;
+  /**
+   * Whether the [Improved API Timezone Management](https://www.datocms.com/product-updates/improved-timezone-management) opt-in product update is active or not
+   */
+  improved_timezone_management: boolean;
+  /**
+   * Whether the [Improved API Hex Management](https://www.datocms.com/product-updates/improved-hex-management) opt-in product update is active or not
+   */
+  improved_hex_management: boolean;
+  /**
+   * Whether the [Improved GraphQL multi-locale fields](https://www.datocms.com/product-updates/improved-gql-multilocale-fields) opt-in product update is active or not
+   */
+  improved_gql_multilocale_fields: boolean;
+  /**
+   * Whether the [Improved GraphQL visibility control](https://www.datocms.com/product-updates/improved-gql-visibility-control) opt-in product update is active or not
+   */
+  improved_gql_visibility_control: boolean;
+  /**
+   * Whether the [Improved boolean fields](https://www.datocms.com/product-updates/improved-boolean-fields) opt-in product update is active or not
+   */
+  improved_boolean_fields: boolean;
+  /**
+   * Whether the [Improved validation at publishing](https://www.datocms.com/product-updates/force-validations-on-records-when-publishing) opt-in product update is active or not
+   */
+  improved_validation_at_publishing: boolean;
+  /**
+   * Whether the [Improved exposure of inline blocks in the Content Delivery API](https://www.datocms.com/product-updates/improved-exposure-of-inline-blocks-in-cda) opt-in product update is active or not
+   */
+  improved_exposure_of_inline_blocks_in_cda: boolean;
+};
+
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SiteData = {
+  type: SiteType;
+  id: SiteIdentity;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type SiteSelfTargetSchema = {
+  data: Site;
+  included?: (ItemType | Field | Upload | Fieldset | Item | Account)[];
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type SiteUpdateSchema = {
+  data: {
+    type: SiteType;
+    id?: SiteIdentity;
+    attributes: {
+      /**
+       * Whether the website needs to be indexed by search engines or not
+       */
+      no_index?: boolean;
+      /**
+       * The upload id for the favicon
+       */
+      favicon?: string | null;
+      /**
+       * Specifies default global settings
+       */
+      global_seo?: {
+        /**
+         * Site name, used in social sharing
+         */
+        site_name?: string;
+        fallback_seo?: {
+          title: string;
+          description: string;
+          /**
+           * The id of the image
+           */
+          image: null | string;
+          /**
+           * Determines how a Twitter link preview is shown
+           */
+          twitter_card?: null | ('summary' | 'summary_large_image');
+          [k: string]: unknown;
+        };
+        /**
+         * Title meta tag suffix
+         */
+        title_suffix?: null | string;
+        /**
+         * URL of facebook page
+         */
+        facebook_page_url?: null | string;
+        /**
+         * Twitter account associated to website
+         */
+        twitter_account?: null | string;
+        [k: string]: unknown;
+      } | null;
+      /**
+       * Site name
+       */
+      name?: string;
+      theme?:
+        | {
+            /**
+             * Type of theme color palette
+             */
+            type: 'monochromatic';
+            /**
+             * If the type is monochromatic, the value will fall between 0 and 359. If it's not, the value will be null.
+             */
+            hue: number | null;
+            /**
+             * The upload ID that is used as the logo for the project
+             */
+            logo: string | null;
+            [k: string]: unknown;
+          }
+        | {
+            /**
+             * Type of theme color palette
+             */
+            type?: 'custom';
+            /**
+             * The upload ID that is used as the logo for the project
+             */
+            logo: string | null;
+            primary_color: {
+              red: number;
+              green: number;
+              blue: number;
+              alpha: number;
+            };
+            light_color: {
+              red: number;
+              green: number;
+              blue: number;
+              alpha: number;
+            };
+            accent_color: {
+              red: number;
+              green: number;
+              blue: number;
+              alpha: number;
+            };
+            dark_color?: {
+              red: number;
+              green: number;
+              blue: number;
+              alpha: number;
+            };
+            [k: string]: unknown;
+          };
+      /**
+       * Available locales
+       */
+      locales?: [string, ...string[]];
+      /**
+       * Site default timezone
+       */
+      timezone?: string;
+      /**
+       * Specifies whether all users of this site need to authenticate using two-factor authentication
+       */
+      require_2fa?: boolean;
+      /**
+       * Specifies whether you want IPs to be tracked in the Project usages section
+       */
+      ip_tracking_enabled?: boolean;
+      /**
+       * If enabled, blocks schema changes of primary environment
+       */
+      force_use_of_sandbox_environments?: boolean;
+    };
+    meta?: {
+      /**
+       * Whether the [Improved API Timezone Management](https://www.datocms.com/product-updates/improved-timezone-management) opt-in product update is active or not
+       */
+      improved_timezone_management?: boolean;
+      /**
+       * Whether the [Improved API Hex Management](https://www.datocms.com/product-updates/improved-hex-management) opt-in product update is active or not
+       */
+      improved_hex_management?: boolean;
+      /**
+       * Whether the [Improved GraphQL multi-locale fields](https://www.datocms.com/product-updates/improved-gql-multilocale-fields) opt-in product update is active or not
+       */
+      improved_gql_multilocale_fields?: boolean;
+      /**
+       * Whether the [Improved GraphQL visibility control](https://www.datocms.com/product-updates/improved-gql-visibility-control) opt-in product update is active or not
+       */
+      improved_gql_visibility_control?: boolean;
+      /**
+       * Whether the [Improved boolean fields](https://www.datocms.com/product-updates/improved-boolean-fields) opt-in product update is active or not
+       */
+      improved_boolean_fields?: boolean;
+      /**
+       * The default value for the draft mode option in all the environment's models
+       */
+      draft_mode_default?: boolean;
+      /**
+       * Whether the [Improved validation at publishing](https://www.datocms.com/product-updates/force-validations-on-records-when-publishing) opt-in product update is active or not
+       */
+      improved_validation_at_publishing?: boolean;
+      /**
+       * Whether the site has custom upload storage settings
+       */
+      custom_upload_storage_settings?: boolean;
+      /**
+       * Whether the [Improved exposure of inline blocks in the Content Delivery API](https://www.datocms.com/product-updates/improved-exposure-of-inline-blocks-in-cda) opt-in product update is active or not
+       */
+      improved_exposure_of_inline_blocks_in_cda?: boolean;
+    };
+    relationships?: {
+      sso_default_role?: {
+        data: RoleData;
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type SiteUpdateTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `update.jobSchema` link.
+ */
+export type SiteUpdateJobSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_timezone_management.targetSchema` link.
+ */
+export type SiteActivateImprovedTimezoneManagementTargetSchema = {
+  data: Job;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_timezone_management.jobSchema` link.
+ */
+export type SiteActivateImprovedTimezoneManagementJobSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_hex_management.targetSchema` link.
+ */
+export type SiteActivateImprovedHexManagementTargetSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_gql_multilocale_fields.targetSchema` link.
+ */
+export type SiteActivateImprovedGqlMultilocaleFieldsTargetSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_gql_visibility_control.targetSchema` link.
+ */
+export type SiteActivateImprovedGqlVisibilityControlTargetSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_boolean_fields.targetSchema` link.
+ */
+export type SiteActivateImprovedBooleanFieldsTargetSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_draft_mode_as_default.targetSchema` link.
+ */
+export type SiteActivateDraftModeAsDefaultTargetSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_validation_at_publishing.targetSchema` link.
+ */
+export type SiteActivateImprovedValidationAtPublishingTargetSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_exposure_of_inline_blocks_in_cda.targetSchema` link.
+ */
+export type SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema = {
+  data: Site;
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `update_assets_cdn_default_settings.schema` link.
+ */
+export type SiteUpdateAssetsCdnDefaultSettingsSchema = {
+  data: {
+    type: string;
+    attributes: {
+      /**
+       * Allows setting default parameters for assets served through the CDN
+       */
+      assets_cdn_default_settings: {
+        /**
+         * Allows setting default parameters for optimizing images served by the CDN
+         */
+        image: {
+          /**
+           * Controls the output quality of lossy file formats (jpg, pjpg, webp, avif, or jxr). Valid values are in the range 0 – 100 and the default is 75.
+           */
+          q?: number;
+          /**
+           * The auto parameter helps automating a baseline level of optimization. Specify one or more settings
+           */
+          auto?: ('compress' | 'format' | 'enhance' | 'true' | 'redeye')[];
+          /**
+           * Specifies the color space of the output image
+           */
+          cs?: 'srgb' | 'adobergb1998' | 'tinysrgb' | 'strip' | 'origin';
+        };
+        /**
+         * Allows setting default parameters for optimizing videos served by the CDN
+         */
+        video: {
+          /**
+           * When true, attempting to retrieve raw video files directly instead of their optimized counterparts will result in a HTTP 422 status code
+           */
+          disable_serving_raw_videos?: boolean;
+        };
+      };
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `update_assets_cdn_default_settings.targetSchema` link.
+ */
+export type SiteUpdateAssetsCdnDefaultSettingsTargetSchema = {
+  data: Site;
+};
+
+/**
+ * Through workflows it is possible to set up a precise state machine able to bring a draft content up to the final publication (and beyond), through a series of intermediate, fully customizable approval steps.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "workflow".
+ */
+export type Workflow = {
+  type: WorkflowType;
+  id: WorkflowIdentity;
+  attributes: WorkflowAttributes;
+};
+
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Workflow`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type WorkflowAttributes = {
+  /**
+   * The name of the workflow
+   */
+  name: string;
+  /**
+   * Workflow API key
+   */
+  api_key: string;
+  /**
+   * The stages of the workflow
+   */
+  stages: [
+    {
+      /**
+       * ID of the stage
+       */
+      id: string;
+      /**
+       * Name of the stage
+       */
+      name: string;
+      /**
+       * Description of the stage
+       */
+      description?: string | null;
+      /**
+       * Whether this is the initial stage or not
+       */
+      initial?: boolean;
+    },
+    ...{
+      /**
+       * ID of the stage
+       */
+      id: string;
+      /**
+       * Name of the stage
+       */
+      name: string;
+      /**
+       * Description of the stage
+       */
+      description?: string | null;
+      /**
+       * Whether this is the initial stage or not
+       */
+      initial?: boolean;
+    }[],
+  ];
+};
+
+/**
+ * This interface was referenced by `Workflow`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type WorkflowCreateSchema = {
+  data: {
+    id?: WorkflowIdentity;
+    type: WorkflowType;
+    /**
+     * JSON API attributes
+     */
+    attributes: {
+      /**
+       * The name of the workflow
+       */
+      name: string;
+      /**
+       * Workflow API key
+       */
+      api_key: string;
+      /**
+       * The stages of the workflow
+       */
+      stages: [
+        {
+          /**
+           * ID of the stage
+           */
+          id: string;
+          /**
+           * Name of the stage
+           */
+          name: string;
+          /**
+           * Description of the stage
+           */
+          description?: string | null;
+          /**
+           * Whether this is the initial stage or not
+           */
+          initial?: boolean;
+        },
+        ...{
+          /**
+           * ID of the stage
+           */
+          id: string;
+          /**
+           * Name of the stage
+           */
+          name: string;
+          /**
+           * Description of the stage
+           */
+          description?: string | null;
+          /**
+           * Whether this is the initial stage or not
+           */
+          initial?: boolean;
+        }[],
+      ];
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Workflow`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type WorkflowCreateTargetSchema = {
+  data: Workflow;
+};
+
+/**
+ * This interface was referenced by `Workflow`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type WorkflowUpdateSchema = {
+  data: {
+    type: WorkflowType;
+    id: WorkflowIdentity;
+    /**
+     * JSON API attributes
+     */
+    attributes?: {
+      /**
+       * The name of the workflow
+       */
+      name?: string;
+      /**
+       * Workflow API key
+       */
+      api_key?: string;
+      /**
+       * The stages of the workflow
+       */
+      stages?: [
+        {
+          /**
+           * ID of the stage
+           */
+          id: string;
+          /**
+           * Name of the stage
+           */
+          name: string;
+          /**
+           * Description of the stage
+           */
+          description?: string | null;
+          /**
+           * Whether this is the initial stage or not
+           */
+          initial?: boolean;
+        },
+        ...{
+          /**
+           * ID of the stage
+           */
+          id: string;
+          /**
+           * Name of the stage
+           */
+          name: string;
+          /**
+           * Description of the stage
+           */
+          description?: string | null;
+          /**
+           * Whether this is the initial stage or not
+           */
+          initial?: boolean;
+        }[],
+      ];
+    };
+  };
+};
+
+/**
+ * This interface was referenced by `Workflow`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type WorkflowUpdateTargetSchema = {
+  data: Workflow;
+};
+
+/**
+ * This interface was referenced by `Workflow`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type WorkflowInstancesTargetSchema = {
+  data: Workflow[];
+};
+
+/**
+ * This interface was referenced by `Workflow`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type WorkflowSelfTargetSchema = {
+  data: Workflow;
+};

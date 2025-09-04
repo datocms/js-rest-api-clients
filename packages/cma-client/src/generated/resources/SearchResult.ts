@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class SearchResult extends BaseResource {
   static readonly TYPE = 'search_result' as const;
@@ -14,9 +14,9 @@ export default class SearchResult extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(queryParams: SimpleSchemaTypes.SearchResultInstancesHrefSchema) {
+  list(queryParams: ApiTypes.SearchResultInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SearchResultInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SearchResultInstancesTargetSchema>(
         body,
       ),
     );
@@ -31,9 +31,9 @@ export default class SearchResult extends BaseResource {
    * @throws {TimeoutError}
    */
   rawList(
-    queryParams: SchemaTypes.SearchResultInstancesHrefSchema,
-  ): Promise<SchemaTypes.SearchResultInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.SearchResultInstancesTargetSchema>({
+    queryParams: RawApiTypes.SearchResultInstancesHrefSchema,
+  ): Promise<RawApiTypes.SearchResultInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.SearchResultInstancesTargetSchema>({
       method: 'GET',
       url: '/search-results',
       queryParams,
@@ -50,7 +50,7 @@ export default class SearchResult extends BaseResource {
    */
   async *listPagedIterator(
     queryParams: Utils.OmitFromKnownKeys<
-      SimpleSchemaTypes.SearchResultInstancesHrefSchema,
+      ApiTypes.SearchResultInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -60,7 +60,7 @@ export default class SearchResult extends BaseResource {
       iteratorOptions,
     )) {
       yield Utils.deserializeJsonEntity<
-        SimpleSchemaTypes.SearchResultInstancesTargetSchema[0]
+        ApiTypes.SearchResultInstancesTargetSchema[0]
       >(element);
     }
   }
@@ -75,7 +75,7 @@ export default class SearchResult extends BaseResource {
    */
   rawListPagedIterator(
     queryParams: Utils.OmitFromKnownKeys<
-      SchemaTypes.SearchResultInstancesHrefSchema,
+      RawApiTypes.SearchResultInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -83,13 +83,13 @@ export default class SearchResult extends BaseResource {
     Utils.warnOnPageQueryParam(queryParams);
 
     return Utils.rawPageIterator<
-      SchemaTypes.SearchResultInstancesTargetSchema['data'][0]
+      RawApiTypes.SearchResultInstancesTargetSchema['data'][0]
     >(
       {
         defaultLimit: 20,
         maxLimit: 100,
       },
-      (page: SchemaTypes.SearchResultInstancesHrefSchema['page']) =>
+      (page: RawApiTypes.SearchResultInstancesHrefSchema['page']) =>
         this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );

@@ -74,23 +74,23 @@ async function generate(prefix: string, hyperschemaUrl: string) {
   );
 
   await writeTemplate(
-    'SchemaTypes.ts',
+    'ApiTypes.ts',
     {
       typings: schemaInfo.typings,
       simpleVariant: false,
       isCma: prefix === 'cma',
     },
-    `./packages/${prefix}-client/src/generated/SchemaTypes.ts`,
+    `./packages/${prefix}-client/src/generated/RawApiTypes.ts`,
   );
 
   await writeTemplate(
-    'SchemaTypes.ts',
+    'ApiTypes.ts',
     {
       typings: schemaInfo.simpleTypings,
       simpleVariant: true,
       isCma: prefix === 'cma',
     },
-    `./packages/${prefix}-client/src/generated/SimpleSchemaTypes.ts`,
+    `./packages/${prefix}-client/src/generated/ApiTypes.ts`,
   );
 
   const resources = schemaInfo.resources.map((resource) => ({

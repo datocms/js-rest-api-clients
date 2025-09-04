@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class OrganizationMandate extends BaseResource {
   static readonly TYPE = 'organization_mandate' as const;
@@ -13,12 +13,12 @@ export default class OrganizationMandate extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    organizationMandateId: string | SimpleSchemaTypes.OrganizationMandateData,
-    body: SimpleSchemaTypes.OrganizationMandateUpdateSchema,
+    organizationMandateId: string | ApiTypes.OrganizationMandateData,
+    body: ApiTypes.OrganizationMandateUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(organizationMandateId),
-      Utils.serializeRequestBody<SchemaTypes.OrganizationMandateUpdateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.OrganizationMandateUpdateSchema>(
         body,
         {
           id: Utils.toId(organizationMandateId),
@@ -28,7 +28,7 @@ export default class OrganizationMandate extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMandateUpdateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationMandateUpdateTargetSchema>(
         body,
       ),
     );
@@ -42,9 +42,9 @@ export default class OrganizationMandate extends BaseResource {
    */
   rawUpdate(
     organizationMandateId: string,
-    body: SchemaTypes.OrganizationMandateUpdateSchema,
-  ): Promise<SchemaTypes.OrganizationMandateUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationMandateUpdateTargetSchema>(
+    body: RawApiTypes.OrganizationMandateUpdateSchema,
+  ): Promise<RawApiTypes.OrganizationMandateUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationMandateUpdateTargetSchema>(
       {
         method: 'PUT',
         url: `/organization-mandates/${organizationMandateId}`,
@@ -61,7 +61,7 @@ export default class OrganizationMandate extends BaseResource {
    */
   approvedList() {
     return this.rawApprovedList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMandateApprovedInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationMandateApprovedInstancesTargetSchema>(
         body,
       ),
     );
@@ -73,8 +73,8 @@ export default class OrganizationMandate extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawApprovedList(): Promise<SchemaTypes.OrganizationMandateApprovedInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationMandateApprovedInstancesTargetSchema>(
+  rawApprovedList(): Promise<RawApiTypes.OrganizationMandateApprovedInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationMandateApprovedInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/organization-mandates/approved',
@@ -89,10 +89,10 @@ export default class OrganizationMandate extends BaseResource {
    * @throws {TimeoutError}
    */
   givenList(
-    queryParams?: SimpleSchemaTypes.OrganizationMandateGivenInstancesHrefSchema,
+    queryParams?: ApiTypes.OrganizationMandateGivenInstancesHrefSchema,
   ) {
     return this.rawGivenList(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMandateGivenInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationMandateGivenInstancesTargetSchema>(
         body,
       ),
     );
@@ -105,9 +105,9 @@ export default class OrganizationMandate extends BaseResource {
    * @throws {TimeoutError}
    */
   rawGivenList(
-    queryParams?: SchemaTypes.OrganizationMandateGivenInstancesHrefSchema,
-  ): Promise<SchemaTypes.OrganizationMandateGivenInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationMandateGivenInstancesTargetSchema>(
+    queryParams?: RawApiTypes.OrganizationMandateGivenInstancesHrefSchema,
+  ): Promise<RawApiTypes.OrganizationMandateGivenInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationMandateGivenInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/organization-mandates/given',
@@ -122,11 +122,9 @@ export default class OrganizationMandate extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(
-    organizationMandateId: string | SimpleSchemaTypes.OrganizationMandateData,
-  ) {
+  destroy(organizationMandateId: string | ApiTypes.OrganizationMandateData) {
     return this.rawDestroy(Utils.toId(organizationMandateId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMandateDestroyTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationMandateDestroyTargetSchema>(
         body,
       ),
     );
@@ -140,8 +138,8 @@ export default class OrganizationMandate extends BaseResource {
    */
   rawDestroy(
     organizationMandateId: string,
-  ): Promise<SchemaTypes.OrganizationMandateDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationMandateDestroyTargetSchema>(
+  ): Promise<RawApiTypes.OrganizationMandateDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationMandateDestroyTargetSchema>(
       {
         method: 'DELETE',
         url: `/organization-mandates/${organizationMandateId}`,

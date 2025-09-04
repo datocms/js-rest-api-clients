@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class UploadSmartTag extends BaseResource {
   static readonly TYPE = 'upload_smart_tag' as const;
@@ -14,9 +14,9 @@ export default class UploadSmartTag extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(queryParams?: SimpleSchemaTypes.UploadSmartTagInstancesHrefSchema) {
+  list(queryParams?: ApiTypes.UploadSmartTagInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadSmartTagInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadSmartTagInstancesTargetSchema>(
         body,
       ),
     );
@@ -31,9 +31,9 @@ export default class UploadSmartTag extends BaseResource {
    * @throws {TimeoutError}
    */
   rawList(
-    queryParams?: SchemaTypes.UploadSmartTagInstancesHrefSchema,
-  ): Promise<SchemaTypes.UploadSmartTagInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.UploadSmartTagInstancesTargetSchema>(
+    queryParams?: RawApiTypes.UploadSmartTagInstancesHrefSchema,
+  ): Promise<RawApiTypes.UploadSmartTagInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.UploadSmartTagInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/upload-smart-tags',
@@ -52,7 +52,7 @@ export default class UploadSmartTag extends BaseResource {
    */
   async *listPagedIterator(
     queryParams?: Utils.OmitFromKnownKeys<
-      SimpleSchemaTypes.UploadSmartTagInstancesHrefSchema,
+      ApiTypes.UploadSmartTagInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -62,7 +62,7 @@ export default class UploadSmartTag extends BaseResource {
       iteratorOptions,
     )) {
       yield Utils.deserializeJsonEntity<
-        SimpleSchemaTypes.UploadSmartTagInstancesTargetSchema[0]
+        ApiTypes.UploadSmartTagInstancesTargetSchema[0]
       >(element);
     }
   }
@@ -77,7 +77,7 @@ export default class UploadSmartTag extends BaseResource {
    */
   rawListPagedIterator(
     queryParams?: Utils.OmitFromKnownKeys<
-      SchemaTypes.UploadSmartTagInstancesHrefSchema,
+      RawApiTypes.UploadSmartTagInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -85,13 +85,13 @@ export default class UploadSmartTag extends BaseResource {
     Utils.warnOnPageQueryParam(queryParams);
 
     return Utils.rawPageIterator<
-      SchemaTypes.UploadSmartTagInstancesTargetSchema['data'][0]
+      RawApiTypes.UploadSmartTagInstancesTargetSchema['data'][0]
     >(
       {
         defaultLimit: 50,
         maxLimit: 500,
       },
-      (page: SchemaTypes.UploadSmartTagInstancesHrefSchema['page']) =>
+      (page: RawApiTypes.UploadSmartTagInstancesHrefSchema['page']) =>
         this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );

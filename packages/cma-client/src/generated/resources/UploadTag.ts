@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class UploadTag extends BaseResource {
   static readonly TYPE = 'upload_tag' as const;
@@ -14,9 +14,9 @@ export default class UploadTag extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(queryParams?: SimpleSchemaTypes.UploadTagInstancesHrefSchema) {
+  list(queryParams?: ApiTypes.UploadTagInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadTagInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadTagInstancesTargetSchema>(
         body,
       ),
     );
@@ -31,9 +31,9 @@ export default class UploadTag extends BaseResource {
    * @throws {TimeoutError}
    */
   rawList(
-    queryParams?: SchemaTypes.UploadTagInstancesHrefSchema,
-  ): Promise<SchemaTypes.UploadTagInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.UploadTagInstancesTargetSchema>({
+    queryParams?: RawApiTypes.UploadTagInstancesHrefSchema,
+  ): Promise<RawApiTypes.UploadTagInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.UploadTagInstancesTargetSchema>({
       method: 'GET',
       url: '/upload-tags',
       queryParams,
@@ -50,7 +50,7 @@ export default class UploadTag extends BaseResource {
    */
   async *listPagedIterator(
     queryParams?: Utils.OmitFromKnownKeys<
-      SimpleSchemaTypes.UploadTagInstancesHrefSchema,
+      ApiTypes.UploadTagInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -60,7 +60,7 @@ export default class UploadTag extends BaseResource {
       iteratorOptions,
     )) {
       yield Utils.deserializeJsonEntity<
-        SimpleSchemaTypes.UploadTagInstancesTargetSchema[0]
+        ApiTypes.UploadTagInstancesTargetSchema[0]
       >(element);
     }
   }
@@ -75,7 +75,7 @@ export default class UploadTag extends BaseResource {
    */
   rawListPagedIterator(
     queryParams?: Utils.OmitFromKnownKeys<
-      SchemaTypes.UploadTagInstancesHrefSchema,
+      RawApiTypes.UploadTagInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -83,13 +83,13 @@ export default class UploadTag extends BaseResource {
     Utils.warnOnPageQueryParam(queryParams);
 
     return Utils.rawPageIterator<
-      SchemaTypes.UploadTagInstancesTargetSchema['data'][0]
+      RawApiTypes.UploadTagInstancesTargetSchema['data'][0]
     >(
       {
         defaultLimit: 50,
         maxLimit: 500,
       },
-      (page: SchemaTypes.UploadTagInstancesHrefSchema['page']) =>
+      (page: RawApiTypes.UploadTagInstancesHrefSchema['page']) =>
         this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );
@@ -103,17 +103,15 @@ export default class UploadTag extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.UploadTagCreateSchema) {
+  create(body: ApiTypes.UploadTagCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.UploadTagCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.UploadTagCreateSchema>(body, {
         type: 'upload_tag',
         attributes: ['name'],
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadTagCreateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UploadTagCreateTargetSchema>(body),
     );
   }
 
@@ -126,9 +124,9 @@ export default class UploadTag extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.UploadTagCreateSchema,
-  ): Promise<SchemaTypes.UploadTagCreateTargetSchema> {
-    return this.client.request<SchemaTypes.UploadTagCreateTargetSchema>({
+    body: RawApiTypes.UploadTagCreateSchema,
+  ): Promise<RawApiTypes.UploadTagCreateTargetSchema> {
+    return this.client.request<RawApiTypes.UploadTagCreateTargetSchema>({
       method: 'POST',
       url: '/upload-tags',
       body,

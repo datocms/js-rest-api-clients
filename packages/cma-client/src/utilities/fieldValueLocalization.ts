@@ -1,5 +1,5 @@
-import type * as SchemaTypes from '../generated/SchemaTypes';
-import type * as SimpleSchemaTypes from '../generated/SimpleSchemaTypes';
+import type * as ApiTypes from '../generated/ApiTypes';
+import type * as RawApiTypes from '../generated/RawApiTypes';
 
 /*
  * Localized Field Value Operations Utilities
@@ -56,7 +56,7 @@ export type LocalizedFieldValue = Record<string, unknown>;
  * @returns true if the field is localized, false otherwise
  */
 export function isLocalized(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
 ): boolean {
   return 'attributes' in field ? field.attributes.localized : field.localized;
 }
@@ -85,7 +85,7 @@ export type PossiblyLocalizedEntry = {
  * @returns Array of entries where each entry contains a locale (string for localized, undefined for non-localized) and the corresponding value
  */
 export function fieldValueToPossiblyLocalizedEntries(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
 ) {
   if (isLocalized(field)) {
@@ -111,7 +111,7 @@ export function fieldValueToPossiblyLocalizedEntries(
  * @returns Either a localized object (for localized fields) or the direct value (for non-localized fields)
  */
 export function possiblyLocalizedEntriesToFieldValue(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   possiblyLocalizedEntries: PossiblyLocalizedEntry[],
 ) {
   if (isLocalized(field)) {
@@ -135,7 +135,7 @@ export function possiblyLocalizedEntriesToFieldValue(
  * @returns The mapped value with the same structure as the input
  */
 export function mapLocalizedFieldValues<T>(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   mapFn: (locale: string | undefined, localeValue: unknown) => T,
 ) {
@@ -159,7 +159,7 @@ export function mapLocalizedFieldValues<T>(
  * @returns The mapped value with the same structure as the input
  */
 export async function mapLocalizedFieldValuesAsync<T>(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   mapFn: (locale: string | undefined, localeValue: unknown) => Promise<T>,
 ) {
@@ -184,7 +184,7 @@ export async function mapLocalizedFieldValuesAsync<T>(
  * @returns The filtered value with the same structure as the input
  */
 export function filterLocalizedFieldValues(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   filterFn: (locale: string | undefined, localeValue: unknown) => boolean,
 ) {
@@ -211,7 +211,7 @@ export function filterLocalizedFieldValues(
  * @returns The filtered value with the same structure as the input
  */
 export async function filterLocalizedFieldValuesAsync(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   filterFn: (
     locale: string | undefined,
@@ -249,7 +249,7 @@ export async function filterLocalizedFieldValuesAsync(
  * @returns true if at least one value passes the test, false otherwise
  */
 export function someLocalizedFieldValues(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   testFn: (locale: string | undefined, localeValue: unknown) => boolean,
 ): boolean {
@@ -268,7 +268,7 @@ export function someLocalizedFieldValues(
  * @returns true if at least one value passes the test, false otherwise
  */
 export async function someLocalizedFieldValuesAsync(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   testFn: (
     locale: string | undefined,
@@ -293,7 +293,7 @@ export async function someLocalizedFieldValuesAsync(
  * @returns true if all values pass the test, false otherwise
  */
 export function everyLocalizedFieldValues(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   testFn: (locale: string | undefined, localeValue: unknown) => boolean,
 ): boolean {
@@ -315,7 +315,7 @@ export function everyLocalizedFieldValues(
  * @returns true if all values pass the test, false otherwise
  */
 export async function everyLocalizedFieldValuesAsync(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   testFn: (
     locale: string | undefined,
@@ -339,7 +339,7 @@ export async function everyLocalizedFieldValuesAsync(
  * @param visitFn - The function to call for each locale value or the direct value
  */
 export function visitLocalizedFieldValues(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   visitFn: (locale: string | undefined, localeValue: unknown) => void,
 ): void {
@@ -359,7 +359,7 @@ export function visitLocalizedFieldValues(
  * @param visitFn - The function to call for each locale value or the direct value
  */
 export async function visitLocalizedFieldValuesAsync(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   visitFn: (locale: string | undefined, localeValue: unknown) => Promise<void>,
 ): Promise<void> {

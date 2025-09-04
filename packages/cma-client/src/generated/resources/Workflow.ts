@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class Workflow extends BaseResource {
   static readonly TYPE = 'workflow' as const;
@@ -14,17 +14,15 @@ export default class Workflow extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.WorkflowCreateSchema) {
+  create(body: ApiTypes.WorkflowCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.WorkflowCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.WorkflowCreateSchema>(body, {
         type: 'workflow',
         attributes: ['name', 'api_key', 'stages'],
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.WorkflowCreateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.WorkflowCreateTargetSchema>(body),
     );
   }
 
@@ -37,9 +35,9 @@ export default class Workflow extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.WorkflowCreateSchema,
-  ): Promise<SchemaTypes.WorkflowCreateTargetSchema> {
-    return this.client.request<SchemaTypes.WorkflowCreateTargetSchema>({
+    body: RawApiTypes.WorkflowCreateSchema,
+  ): Promise<RawApiTypes.WorkflowCreateTargetSchema> {
+    return this.client.request<RawApiTypes.WorkflowCreateTargetSchema>({
       method: 'POST',
       url: '/workflows',
       body,
@@ -55,21 +53,19 @@ export default class Workflow extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    workflowId: string | SimpleSchemaTypes.WorkflowData,
-    body: SimpleSchemaTypes.WorkflowUpdateSchema,
+    workflowId: string | ApiTypes.WorkflowData,
+    body: ApiTypes.WorkflowUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(workflowId),
-      Utils.serializeRequestBody<SchemaTypes.WorkflowUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.WorkflowUpdateSchema>(body, {
         id: Utils.toId(workflowId),
         type: 'workflow',
         attributes: ['name', 'api_key', 'stages'],
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.WorkflowUpdateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.WorkflowUpdateTargetSchema>(body),
     );
   }
 
@@ -83,9 +79,9 @@ export default class Workflow extends BaseResource {
    */
   rawUpdate(
     workflowId: string,
-    body: SchemaTypes.WorkflowUpdateSchema,
-  ): Promise<SchemaTypes.WorkflowUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.WorkflowUpdateTargetSchema>({
+    body: RawApiTypes.WorkflowUpdateSchema,
+  ): Promise<RawApiTypes.WorkflowUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.WorkflowUpdateTargetSchema>({
       method: 'PUT',
       url: `/workflows/${workflowId}`,
       body,
@@ -102,7 +98,7 @@ export default class Workflow extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.WorkflowInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.WorkflowInstancesTargetSchema>(
         body,
       ),
     );
@@ -116,8 +112,8 @@ export default class Workflow extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.WorkflowInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.WorkflowInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.WorkflowInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.WorkflowInstancesTargetSchema>({
       method: 'GET',
       url: '/workflows',
     });
@@ -131,11 +127,9 @@ export default class Workflow extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(workflowId: string | SimpleSchemaTypes.WorkflowData) {
+  find(workflowId: string | ApiTypes.WorkflowData) {
     return this.rawFind(Utils.toId(workflowId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.WorkflowSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.WorkflowSelfTargetSchema>(body),
     );
   }
 
@@ -147,8 +141,8 @@ export default class Workflow extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(workflowId: string): Promise<SchemaTypes.WorkflowSelfTargetSchema> {
-    return this.client.request<SchemaTypes.WorkflowSelfTargetSchema>({
+  rawFind(workflowId: string): Promise<RawApiTypes.WorkflowSelfTargetSchema> {
+    return this.client.request<RawApiTypes.WorkflowSelfTargetSchema>({
       method: 'GET',
       url: `/workflows/${workflowId}`,
     });
@@ -162,7 +156,7 @@ export default class Workflow extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(workflowId: string | SimpleSchemaTypes.WorkflowData) {
+  destroy(workflowId: string | ApiTypes.WorkflowData) {
     return this.rawDestroy(Utils.toId(workflowId));
   }
 

@@ -1,4 +1,4 @@
-import type * as SchemaTypes from '../generated/SchemaTypes';
+import type * as RawApiTypes from '../generated/RawApiTypes';
 
 /**
  * SINGLE BLOCK FIELD TYPE SYSTEM FOR DATOCMS
@@ -54,13 +54,13 @@ export type SingleBlockFieldValue = string | null;
  */
 export type BlockItemInARequest =
   | string
-  | OptionalFields<SchemaTypes.Item, 'id' | 'meta'>;
+  | OptionalFields<RawApiTypes.Item, 'id' | 'meta'>;
 
 /**
  * Single Block field value for API requests - allows flexible block representations:
  * - string: Just the block ID (most common case)
- * - SchemaTypes.Item: Full block object with ID (for updates)
- * - Omit<SchemaTypes.Item, 'id'>: Block object without ID (for creation)
+ * - RawApiTypes.Item: Full block object with ID (for updates)
+ * - Omit<RawApiTypes.Item, 'id'>: Block object without ID (for creation)
  */
 export type SingleBlockFieldValueAsRequest = BlockItemInARequest | null;
 
@@ -70,14 +70,14 @@ export type SingleBlockFieldValueAsRequest = BlockItemInARequest | null;
  * =============================================================================
  *
  * When using the ?nested=true query parameter, the API returns Single Block data
- * with embedded block fully populated as complete SchemaTypes.Item object instead
+ * with embedded block fully populated as complete RawApiTypes.Item object instead
  * of just string ID. This provides type safety for working with fully resolved data.
  */
 
 /**
  * Single Block field value with nested block - fully populated block object
  */
-export type SingleBlockFieldValueWithNestedBlocks = SchemaTypes.Item | null;
+export type SingleBlockFieldValueWithNestedBlocks = RawApiTypes.Item | null;
 
 /**
  * =============================================================================
@@ -94,12 +94,12 @@ export function isBlockStringId(block: unknown): block is string {
 }
 
 export type ItemWithOptionalIdAndMeta = OptionalFields<
-  SchemaTypes.Item,
+  RawApiTypes.Item,
   'id' | 'meta'
 >;
 
 /**
- * Validates if a single block item is a SchemaTypes.Item object (with or without ID)
+ * Validates if a single block item is a RawApiTypes.Item object (with or without ID)
  */
 export function isBlockObject(
   block: unknown,
@@ -112,10 +112,10 @@ export function isBlockObject(
   );
 }
 
-export type ItemWithOptionalMeta = OptionalFields<SchemaTypes.Item, 'meta'>;
+export type ItemWithOptionalMeta = OptionalFields<RawApiTypes.Item, 'meta'>;
 
 /**
- * Validates if a single block item is a complete SchemaTypes.Item object with ID
+ * Validates if a single block item is a complete RawApiTypes.Item object with ID
  */
 export function isBlockObjectWithId(
   block: unknown,
@@ -157,7 +157,7 @@ export function isSingleBlockFieldValueAsRequest(
 
 /**
  * Type guard for Single Block field values with nested blocks (?nested=true format).
- * Ensures block is a full SchemaTypes.Item object with complete data.
+ * Ensures block is a full RawApiTypes.Item object with complete data.
  */
 export function isSingleBlockFieldValueWithNestedBlocks(
   value: unknown,

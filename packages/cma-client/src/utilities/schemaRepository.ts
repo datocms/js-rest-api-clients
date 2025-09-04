@@ -1,19 +1,19 @@
 import { deserializeResponseBody } from '@datocms/rest-client-utils';
-import type * as SchemaTypes from '../generated/SchemaTypes';
-import type * as SimpleSchemaTypes from '../generated/SimpleSchemaTypes';
+import type * as ApiTypes from '../generated/ApiTypes';
+import type * as RawApiTypes from '../generated/RawApiTypes';
 
 interface GenericClient {
   itemTypes: {
-    rawList(): Promise<{ data: SchemaTypes.ItemType[] }>;
+    rawList(): Promise<{ data: RawApiTypes.ItemType[] }>;
   };
   fields: {
-    rawList(itemTypeId: string): Promise<{ data: SchemaTypes.Field[] }>;
+    rawList(itemTypeId: string): Promise<{ data: RawApiTypes.Field[] }>;
   };
   fieldsets: {
-    rawList(itemTypeId: string): Promise<{ data: SchemaTypes.Fieldset[] }>;
+    rawList(itemTypeId: string): Promise<{ data: RawApiTypes.Fieldset[] }>;
   };
   plugins: {
-    rawList(): Promise<{ data: SchemaTypes.Plugin[] }>;
+    rawList(): Promise<{ data: RawApiTypes.Plugin[] }>;
   };
 }
 
@@ -23,14 +23,14 @@ interface GenericClient {
  */
 export class SchemaRepository {
   private client: GenericClient;
-  private itemTypesPromise: Promise<SchemaTypes.ItemType[]> | null = null;
-  private itemTypesByApiKey: Map<string, SchemaTypes.ItemType> = new Map();
-  private itemTypesById: Map<string, SchemaTypes.ItemType> = new Map();
-  private fieldsByItemType: Map<string, SchemaTypes.Field[]> = new Map();
-  private fieldsetsByItemType: Map<string, SchemaTypes.Fieldset[]> = new Map();
-  private pluginsPromise: Promise<SchemaTypes.Plugin[]> | null = null;
-  private pluginsById: Map<string, SchemaTypes.Plugin> = new Map();
-  private pluginsByPackageName: Map<string, SchemaTypes.Plugin> = new Map();
+  private itemTypesPromise: Promise<RawApiTypes.ItemType[]> | null = null;
+  private itemTypesByApiKey: Map<string, RawApiTypes.ItemType> = new Map();
+  private itemTypesById: Map<string, RawApiTypes.ItemType> = new Map();
+  private fieldsByItemType: Map<string, RawApiTypes.Field[]> = new Map();
+  private fieldsetsByItemType: Map<string, RawApiTypes.Fieldset[]> = new Map();
+  private pluginsPromise: Promise<RawApiTypes.Plugin[]> | null = null;
+  private pluginsById: Map<string, RawApiTypes.Plugin> = new Map();
+  private pluginsByPackageName: Map<string, RawApiTypes.Plugin> = new Map();
 
   /**
    * Creates a new SchemaRepository instance.
@@ -45,7 +45,7 @@ export class SchemaRepository {
    * This method is called lazily and caches the result for subsequent calls.
    * @returns Promise that resolves to an array of item types
    */
-  private async loadItemTypes(): Promise<SchemaTypes.ItemType[]> {
+  private async loadItemTypes(): Promise<RawApiTypes.ItemType[]> {
     if (!this.itemTypesPromise) {
       this.itemTypesPromise = (async () => {
         const { data: itemTypes } = await this.client.itemTypes.rawList();
@@ -67,9 +67,9 @@ export class SchemaRepository {
    * Gets all item types from the DatoCMS project.
    * @returns Promise that resolves to an array of all item types
    */
-  async getAllItemTypes(): Promise<SimpleSchemaTypes.ItemType[]> {
+  async getAllItemTypes(): Promise<ApiTypes.ItemType[]> {
     const rawResult = await this.getAllRawItemTypes();
-    return deserializeResponseBody<SimpleSchemaTypes.ItemType[]>({
+    return deserializeResponseBody<ApiTypes.ItemType[]>({
       data: rawResult,
     });
   }
@@ -78,7 +78,7 @@ export class SchemaRepository {
    * Gets all item types from the DatoCMS project.
    * @returns Promise that resolves to an array of all item types
    */
-  async getAllRawItemTypes(): Promise<SchemaTypes.ItemType[]> {
+  async getAllRawItemTypes(): Promise<RawApiTypes.ItemType[]> {
     const itemTypes = await this.loadItemTypes();
     return itemTypes;
   }
@@ -87,9 +87,9 @@ export class SchemaRepository {
    * Gets all item types that are models (not modular blocks).
    * @returns Promise that resolves to an array of model item types
    */
-  async getAllModels(): Promise<SimpleSchemaTypes.ItemType[]> {
+  async getAllModels(): Promise<ApiTypes.ItemType[]> {
     const rawResult = await this.getAllRawModels();
-    return deserializeResponseBody<SimpleSchemaTypes.ItemType[]>({
+    return deserializeResponseBody<ApiTypes.ItemType[]>({
       data: rawResult,
     });
   }
@@ -98,7 +98,7 @@ export class SchemaRepository {
    * Gets all item types that are models (not modular blocks).
    * @returns Promise that resolves to an array of model item types
    */
-  async getAllRawModels(): Promise<SchemaTypes.ItemType[]> {
+  async getAllRawModels(): Promise<RawApiTypes.ItemType[]> {
     const itemTypes = await this.loadItemTypes();
     return itemTypes.filter((it) => !it.attributes.modular_block);
   }
@@ -107,9 +107,9 @@ export class SchemaRepository {
    * Gets all item types that are modular blocks.
    * @returns Promise that resolves to an array of block model item types
    */
-  async getAllBlockModels(): Promise<SimpleSchemaTypes.ItemType[]> {
+  async getAllBlockModels(): Promise<ApiTypes.ItemType[]> {
     const rawResult = await this.getAllRawBlockModels();
-    return deserializeResponseBody<SimpleSchemaTypes.ItemType[]>({
+    return deserializeResponseBody<ApiTypes.ItemType[]>({
       data: rawResult,
     });
   }
@@ -118,7 +118,7 @@ export class SchemaRepository {
    * Gets all item types that are modular blocks.
    * @returns Promise that resolves to an array of block model item types
    */
-  async getAllRawBlockModels(): Promise<SchemaTypes.ItemType[]> {
+  async getAllRawBlockModels(): Promise<RawApiTypes.ItemType[]> {
     const itemTypes = await this.loadItemTypes();
     return itemTypes.filter((it) => it.attributes.modular_block);
   }
@@ -129,11 +129,9 @@ export class SchemaRepository {
    * @returns Promise that resolves to the item type
    * @throws Error if the item type is not found
    */
-  async getItemTypeByApiKey(
-    apiKey: string,
-  ): Promise<SimpleSchemaTypes.ItemType> {
+  async getItemTypeByApiKey(apiKey: string): Promise<ApiTypes.ItemType> {
     const rawResult = await this.getRawItemTypeByApiKey(apiKey);
-    return deserializeResponseBody<SimpleSchemaTypes.ItemType>({
+    return deserializeResponseBody<ApiTypes.ItemType>({
       data: rawResult,
     });
   }
@@ -144,7 +142,7 @@ export class SchemaRepository {
    * @returns Promise that resolves to the item type
    * @throws Error if the item type is not found
    */
-  async getRawItemTypeByApiKey(apiKey: string): Promise<SchemaTypes.ItemType> {
+  async getRawItemTypeByApiKey(apiKey: string): Promise<RawApiTypes.ItemType> {
     await this.loadItemTypes();
 
     const itemType = this.itemTypesByApiKey.get(apiKey);
@@ -161,9 +159,9 @@ export class SchemaRepository {
    * @returns Promise that resolves to the item type
    * @throws Error if the item type is not found
    */
-  async getItemTypeById(id: string): Promise<SimpleSchemaTypes.ItemType> {
+  async getItemTypeById(id: string): Promise<ApiTypes.ItemType> {
     const rawResult = await this.getRawItemTypeById(id);
-    return deserializeResponseBody<SimpleSchemaTypes.ItemType>({
+    return deserializeResponseBody<ApiTypes.ItemType>({
       data: rawResult,
     });
   }
@@ -174,7 +172,7 @@ export class SchemaRepository {
    * @returns Promise that resolves to the item type
    * @throws Error if the item type is not found
    */
-  async getRawItemTypeById(id: string): Promise<SchemaTypes.ItemType> {
+  async getRawItemTypeById(id: string): Promise<RawApiTypes.ItemType> {
     await this.loadItemTypes();
 
     const itemType = this.itemTypesById.get(id);
@@ -192,12 +190,12 @@ export class SchemaRepository {
    * @returns Promise that resolves to an array of fields
    */
   async getItemTypeFields(
-    itemType: SimpleSchemaTypes.ItemType | SchemaTypes.ItemType,
-  ): Promise<SimpleSchemaTypes.Field[]> {
+    itemType: ApiTypes.ItemType | RawApiTypes.ItemType,
+  ): Promise<ApiTypes.Field[]> {
     const rawResult = await this.getRawItemTypeFields(
-      itemType as SchemaTypes.ItemType,
+      itemType as RawApiTypes.ItemType,
     );
-    return deserializeResponseBody<SimpleSchemaTypes.Field[]>({
+    return deserializeResponseBody<ApiTypes.Field[]>({
       data: rawResult,
     });
   }
@@ -209,8 +207,8 @@ export class SchemaRepository {
    * @returns Promise that resolves to an array of fields
    */
   async getRawItemTypeFields(
-    itemType: SchemaTypes.ItemType,
-  ): Promise<SchemaTypes.Field[]> {
+    itemType: RawApiTypes.ItemType,
+  ): Promise<RawApiTypes.Field[]> {
     // Check if we already have the fields cached
     const cachedFields = this.fieldsByItemType.get(itemType.id);
     if (cachedFields) {
@@ -231,12 +229,12 @@ export class SchemaRepository {
    * @returns Promise that resolves to an array of fieldsets
    */
   async getItemTypeFieldsets(
-    itemType: SimpleSchemaTypes.ItemType | SchemaTypes.ItemType,
-  ): Promise<SimpleSchemaTypes.Fieldset[]> {
+    itemType: ApiTypes.ItemType | RawApiTypes.ItemType,
+  ): Promise<ApiTypes.Fieldset[]> {
     const rawResult = await this.getRawItemTypeFieldsets(
-      itemType as SchemaTypes.ItemType,
+      itemType as RawApiTypes.ItemType,
     );
-    return deserializeResponseBody<SimpleSchemaTypes.Fieldset[]>({
+    return deserializeResponseBody<ApiTypes.Fieldset[]>({
       data: rawResult,
     });
   }
@@ -248,8 +246,8 @@ export class SchemaRepository {
    * @returns Promise that resolves to an array of fieldsets
    */
   async getRawItemTypeFieldsets(
-    itemType: SchemaTypes.ItemType,
-  ): Promise<SchemaTypes.Fieldset[]> {
+    itemType: RawApiTypes.ItemType,
+  ): Promise<RawApiTypes.Fieldset[]> {
     // Check if we already have the fieldsets cached
     const cachedFieldsets = this.fieldsetsByItemType.get(itemType.id);
     if (cachedFieldsets) {
@@ -270,7 +268,7 @@ export class SchemaRepository {
    * This method is called lazily and caches the result for subsequent calls.
    * @returns Promise that resolves to an array of plugins
    */
-  private async loadPlugins(): Promise<SchemaTypes.Plugin[]> {
+  private async loadPlugins(): Promise<RawApiTypes.Plugin[]> {
     if (!this.pluginsPromise) {
       this.pluginsPromise = (async () => {
         const { data: plugins } = await this.client.plugins.rawList();
@@ -297,9 +295,9 @@ export class SchemaRepository {
    * Gets all plugins from the DatoCMS project.
    * @returns Promise that resolves to an array of all plugins
    */
-  async getAllPlugins(): Promise<SimpleSchemaTypes.Plugin[]> {
+  async getAllPlugins(): Promise<ApiTypes.Plugin[]> {
     const rawResult = await this.getAllRawPlugins();
-    return deserializeResponseBody<SimpleSchemaTypes.Plugin[]>({
+    return deserializeResponseBody<ApiTypes.Plugin[]>({
       data: rawResult,
     });
   }
@@ -308,7 +306,7 @@ export class SchemaRepository {
    * Gets all plugins from the DatoCMS project.
    * @returns Promise that resolves to an array of all plugins
    */
-  async getAllRawPlugins(): Promise<SchemaTypes.Plugin[]> {
+  async getAllRawPlugins(): Promise<RawApiTypes.Plugin[]> {
     const plugins = await this.loadPlugins();
     return plugins;
   }
@@ -319,9 +317,9 @@ export class SchemaRepository {
    * @returns Promise that resolves to the plugin
    * @throws Error if the plugin is not found
    */
-  async getPluginById(id: string): Promise<SimpleSchemaTypes.Plugin> {
+  async getPluginById(id: string): Promise<ApiTypes.Plugin> {
     const rawResult = await this.getRawPluginById(id);
-    return deserializeResponseBody<SimpleSchemaTypes.Plugin>({
+    return deserializeResponseBody<ApiTypes.Plugin>({
       data: rawResult,
     });
   }
@@ -332,7 +330,7 @@ export class SchemaRepository {
    * @returns Promise that resolves to the plugin
    * @throws Error if the plugin is not found
    */
-  async getRawPluginById(id: string): Promise<SchemaTypes.Plugin> {
+  async getRawPluginById(id: string): Promise<RawApiTypes.Plugin> {
     await this.loadPlugins();
 
     const plugin = this.pluginsById.get(id);
@@ -349,11 +347,9 @@ export class SchemaRepository {
    * @returns Promise that resolves to the plugin
    * @throws Error if the plugin is not found
    */
-  async getPluginByPackageName(
-    packageName: string,
-  ): Promise<SimpleSchemaTypes.Plugin> {
+  async getPluginByPackageName(packageName: string): Promise<ApiTypes.Plugin> {
     const rawResult = await this.getRawPluginByPackageName(packageName);
-    return deserializeResponseBody<SimpleSchemaTypes.Plugin>({
+    return deserializeResponseBody<ApiTypes.Plugin>({
       data: rawResult,
     });
   }
@@ -366,7 +362,7 @@ export class SchemaRepository {
    */
   async getRawPluginByPackageName(
     packageName: string,
-  ): Promise<SchemaTypes.Plugin> {
+  ): Promise<RawApiTypes.Plugin> {
     await this.loadPlugins();
 
     const plugin = this.pluginsByPackageName.get(packageName);

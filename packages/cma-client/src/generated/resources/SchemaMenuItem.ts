@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class SchemaMenuItem extends BaseResource {
   static readonly TYPE = 'schema_menu_item' as const;
@@ -14,15 +14,15 @@ export default class SchemaMenuItem extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.SchemaMenuItemCreateSchema) {
+  create(body: ApiTypes.SchemaMenuItemCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.SchemaMenuItemCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.SchemaMenuItemCreateSchema>(body, {
         type: 'schema_menu_item',
         attributes: ['label', 'position', 'kind'],
         relationships: ['item_type', 'parent'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SchemaMenuItemCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SchemaMenuItemCreateTargetSchema>(
         body,
       ),
     );
@@ -37,9 +37,9 @@ export default class SchemaMenuItem extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.SchemaMenuItemCreateSchema,
-  ): Promise<SchemaTypes.SchemaMenuItemCreateTargetSchema> {
-    return this.client.request<SchemaTypes.SchemaMenuItemCreateTargetSchema>({
+    body: RawApiTypes.SchemaMenuItemCreateSchema,
+  ): Promise<RawApiTypes.SchemaMenuItemCreateTargetSchema> {
+    return this.client.request<RawApiTypes.SchemaMenuItemCreateTargetSchema>({
       method: 'POST',
       url: '/schema-menu-items',
       body,
@@ -55,19 +55,19 @@ export default class SchemaMenuItem extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    schemaMenuItemId: string | SimpleSchemaTypes.SchemaMenuItemData,
-    body: SimpleSchemaTypes.SchemaMenuItemUpdateSchema,
+    schemaMenuItemId: string | ApiTypes.SchemaMenuItemData,
+    body: ApiTypes.SchemaMenuItemUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(schemaMenuItemId),
-      Utils.serializeRequestBody<SchemaTypes.SchemaMenuItemUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.SchemaMenuItemUpdateSchema>(body, {
         id: Utils.toId(schemaMenuItemId),
         type: 'schema_menu_item',
         attributes: ['label', 'position', 'kind'],
         relationships: ['item_type', 'parent', 'children'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SchemaMenuItemUpdateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SchemaMenuItemUpdateTargetSchema>(
         body,
       ),
     );
@@ -83,9 +83,9 @@ export default class SchemaMenuItem extends BaseResource {
    */
   rawUpdate(
     schemaMenuItemId: string,
-    body: SchemaTypes.SchemaMenuItemUpdateSchema,
-  ): Promise<SchemaTypes.SchemaMenuItemUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.SchemaMenuItemUpdateTargetSchema>({
+    body: RawApiTypes.SchemaMenuItemUpdateSchema,
+  ): Promise<RawApiTypes.SchemaMenuItemUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.SchemaMenuItemUpdateTargetSchema>({
       method: 'PUT',
       url: `/schema-menu-items/${schemaMenuItemId}`,
       body,
@@ -100,9 +100,9 @@ export default class SchemaMenuItem extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(queryParams?: SimpleSchemaTypes.SchemaMenuItemInstancesHrefSchema) {
+  list(queryParams?: ApiTypes.SchemaMenuItemInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SchemaMenuItemInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SchemaMenuItemInstancesTargetSchema>(
         body,
       ),
     );
@@ -117,9 +117,9 @@ export default class SchemaMenuItem extends BaseResource {
    * @throws {TimeoutError}
    */
   rawList(
-    queryParams?: SchemaTypes.SchemaMenuItemInstancesHrefSchema,
-  ): Promise<SchemaTypes.SchemaMenuItemInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.SchemaMenuItemInstancesTargetSchema>(
+    queryParams?: RawApiTypes.SchemaMenuItemInstancesHrefSchema,
+  ): Promise<RawApiTypes.SchemaMenuItemInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.SchemaMenuItemInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/schema-menu-items',
@@ -136,9 +136,9 @@ export default class SchemaMenuItem extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(schemaMenuItemId: string | SimpleSchemaTypes.SchemaMenuItemData) {
+  find(schemaMenuItemId: string | ApiTypes.SchemaMenuItemData) {
     return this.rawFind(Utils.toId(schemaMenuItemId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SchemaMenuItemSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SchemaMenuItemSelfTargetSchema>(
         body,
       ),
     );
@@ -154,8 +154,8 @@ export default class SchemaMenuItem extends BaseResource {
    */
   rawFind(
     schemaMenuItemId: string,
-  ): Promise<SchemaTypes.SchemaMenuItemSelfTargetSchema> {
-    return this.client.request<SchemaTypes.SchemaMenuItemSelfTargetSchema>({
+  ): Promise<RawApiTypes.SchemaMenuItemSelfTargetSchema> {
+    return this.client.request<RawApiTypes.SchemaMenuItemSelfTargetSchema>({
       method: 'GET',
       url: `/schema-menu-items/${schemaMenuItemId}`,
     });
@@ -169,9 +169,9 @@ export default class SchemaMenuItem extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(schemaMenuItemId: string | SimpleSchemaTypes.SchemaMenuItemData) {
+  destroy(schemaMenuItemId: string | ApiTypes.SchemaMenuItemData) {
     return this.rawDestroy(Utils.toId(schemaMenuItemId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SchemaMenuItemDestroyTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SchemaMenuItemDestroyTargetSchema>(
         body,
       ),
     );
@@ -187,8 +187,8 @@ export default class SchemaMenuItem extends BaseResource {
    */
   rawDestroy(
     schemaMenuItemId: string,
-  ): Promise<SchemaTypes.SchemaMenuItemDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.SchemaMenuItemDestroyTargetSchema>({
+  ): Promise<RawApiTypes.SchemaMenuItemDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.SchemaMenuItemDestroyTargetSchema>({
       method: 'DELETE',
       url: `/schema-menu-items/${schemaMenuItemId}`,
     });
@@ -204,9 +204,9 @@ export default class SchemaMenuItem extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  reorder(body: SimpleSchemaTypes.SchemaMenuItemReorderSchema) {
+  reorder(body: ApiTypes.SchemaMenuItemReorderSchema) {
     return this.rawReorder(
-      Utils.serializeRequestBody<SchemaTypes.SchemaMenuItemReorderSchema>(
+      Utils.serializeRequestBody<RawApiTypes.SchemaMenuItemReorderSchema>(
         body,
         {
           type: 'schema_menu_item',
@@ -215,7 +215,7 @@ export default class SchemaMenuItem extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SchemaMenuItemReorderJobSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SchemaMenuItemReorderJobSchema>(
         body,
       ),
     );
@@ -232,9 +232,9 @@ export default class SchemaMenuItem extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawReorder(
-    body: SchemaTypes.SchemaMenuItemReorderSchema,
-  ): Promise<SchemaTypes.SchemaMenuItemReorderJobSchema> {
-    return this.client.request<SchemaTypes.SchemaMenuItemReorderJobSchema>({
+    body: RawApiTypes.SchemaMenuItemReorderSchema,
+  ): Promise<RawApiTypes.SchemaMenuItemReorderJobSchema> {
+    return this.client.request<RawApiTypes.SchemaMenuItemReorderJobSchema>({
       method: 'POST',
       url: '/schema-menu-items/reorder',
       body,

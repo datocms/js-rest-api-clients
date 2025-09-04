@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class PublicInfo extends BaseResource {
   static readonly TYPE = 'public_info' as const;
@@ -16,9 +16,7 @@ export default class PublicInfo extends BaseResource {
    */
   find() {
     return this.rawFind().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PublicInfoSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.PublicInfoSelfTargetSchema>(body),
     );
   }
 
@@ -30,8 +28,8 @@ export default class PublicInfo extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(): Promise<SchemaTypes.PublicInfoSelfTargetSchema> {
-    return this.client.request<SchemaTypes.PublicInfoSelfTargetSchema>({
+  rawFind(): Promise<RawApiTypes.PublicInfoSelfTargetSchema> {
+    return this.client.request<RawApiTypes.PublicInfoSelfTargetSchema>({
       method: 'GET',
       url: '/public-info',
     });

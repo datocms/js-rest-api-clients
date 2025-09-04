@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class OrganizationRole extends BaseResource {
   static readonly TYPE = 'organization_role' as const;
@@ -14,7 +14,7 @@ export default class OrganizationRole extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationRoleInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationRoleInstancesTargetSchema>(
         body,
       ),
     );
@@ -26,8 +26,8 @@ export default class OrganizationRole extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.OrganizationRoleInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationRoleInstancesTargetSchema>(
+  rawList(): Promise<RawApiTypes.OrganizationRoleInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationRoleInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/organization-roles',
@@ -41,9 +41,9 @@ export default class OrganizationRole extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(organizationRoleId: string | SimpleSchemaTypes.OrganizationRoleData) {
+  find(organizationRoleId: string | ApiTypes.OrganizationRoleData) {
     return this.rawFind(Utils.toId(organizationRoleId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationRoleSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationRoleSelfTargetSchema>(
         body,
       ),
     );
@@ -57,8 +57,8 @@ export default class OrganizationRole extends BaseResource {
    */
   rawFind(
     organizationRoleId: string,
-  ): Promise<SchemaTypes.OrganizationRoleSelfTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationRoleSelfTargetSchema>({
+  ): Promise<RawApiTypes.OrganizationRoleSelfTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationRoleSelfTargetSchema>({
       method: 'GET',
       url: `/organization-roles/${organizationRoleId}`,
     });

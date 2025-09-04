@@ -425,7 +425,7 @@ function generateResourceInfo(
 }
 
 async function schemaToTs(schema: any) {
-  const result = await hyperschemaToTypings(schema, 'SiteApiSchema', {});
+  const result = await hyperschemaToTypings(schema, 'SiteApiTypes', {});
   return result.replace(/export interface ([^ ]+) {/g, 'export type $1 = {');
 }
 

@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class User extends BaseResource {
   static readonly TYPE = 'user' as const;
@@ -14,22 +14,17 @@ export default class User extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  update(
-    userId: string | SimpleSchemaTypes.UserData,
-    body: SimpleSchemaTypes.UserUpdateSchema,
-  ) {
+  update(userId: string | ApiTypes.UserData, body: ApiTypes.UserUpdateSchema) {
     return this.rawUpdate(
       Utils.toId(userId),
-      Utils.serializeRequestBody<SchemaTypes.UserUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.UserUpdateSchema>(body, {
         id: Utils.toId(userId),
         type: 'user',
         attributes: ['is_active'],
         relationships: ['role'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UserUpdateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UserUpdateTargetSchema>(body),
     );
   }
 
@@ -43,9 +38,9 @@ export default class User extends BaseResource {
    */
   rawUpdate(
     userId: string,
-    body: SchemaTypes.UserUpdateSchema,
-  ): Promise<SchemaTypes.UserUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.UserUpdateTargetSchema>({
+    body: RawApiTypes.UserUpdateSchema,
+  ): Promise<RawApiTypes.UserUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.UserUpdateTargetSchema>({
       method: 'PUT',
       url: `/users/${userId}`,
       body,
@@ -62,9 +57,7 @@ export default class User extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UserInstancesTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UserInstancesTargetSchema>(body),
     );
   }
 
@@ -76,8 +69,8 @@ export default class User extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.UserInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.UserInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.UserInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.UserInstancesTargetSchema>({
       method: 'GET',
       url: '/users',
     });
@@ -92,13 +85,11 @@ export default class User extends BaseResource {
    * @throws {TimeoutError}
    */
   find(
-    userId: string | SimpleSchemaTypes.UserData,
-    queryParams?: SimpleSchemaTypes.UserSelfHrefSchema,
+    userId: string | ApiTypes.UserData,
+    queryParams?: ApiTypes.UserSelfHrefSchema,
   ) {
     return this.rawFind(Utils.toId(userId), queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UserSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UserSelfTargetSchema>(body),
     );
   }
 
@@ -112,9 +103,9 @@ export default class User extends BaseResource {
    */
   rawFind(
     userId: string,
-    queryParams?: SchemaTypes.UserSelfHrefSchema,
-  ): Promise<SchemaTypes.UserSelfTargetSchema> {
-    return this.client.request<SchemaTypes.UserSelfTargetSchema>({
+    queryParams?: RawApiTypes.UserSelfHrefSchema,
+  ): Promise<RawApiTypes.UserSelfTargetSchema> {
+    return this.client.request<RawApiTypes.UserSelfTargetSchema>({
       method: 'GET',
       url: `/users/${userId}`,
       queryParams,
@@ -129,9 +120,9 @@ export default class User extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  findMe(queryParams?: SimpleSchemaTypes.UserMeHrefSchema) {
+  findMe(queryParams?: ApiTypes.UserMeHrefSchema) {
     return this.rawFindMe(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UserMeTargetSchema>(body),
+      Utils.deserializeResponseBody<ApiTypes.UserMeTargetSchema>(body),
     );
   }
 
@@ -144,9 +135,9 @@ export default class User extends BaseResource {
    * @throws {TimeoutError}
    */
   rawFindMe(
-    queryParams?: SchemaTypes.UserMeHrefSchema,
-  ): Promise<SchemaTypes.UserMeTargetSchema> {
-    return this.client.request<SchemaTypes.UserMeTargetSchema>({
+    queryParams?: RawApiTypes.UserMeHrefSchema,
+  ): Promise<RawApiTypes.UserMeTargetSchema> {
+    return this.client.request<RawApiTypes.UserMeTargetSchema>({
       method: 'GET',
       url: '/users/me',
       queryParams,
@@ -162,13 +153,11 @@ export default class User extends BaseResource {
    * @throws {TimeoutError}
    */
   destroy(
-    userId: string | SimpleSchemaTypes.UserData,
-    queryParams?: SimpleSchemaTypes.UserDestroyHrefSchema,
+    userId: string | ApiTypes.UserData,
+    queryParams?: ApiTypes.UserDestroyHrefSchema,
   ) {
     return this.rawDestroy(Utils.toId(userId), queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UserDestroyTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UserDestroyTargetSchema>(body),
     );
   }
 
@@ -182,9 +171,9 @@ export default class User extends BaseResource {
    */
   rawDestroy(
     userId: string,
-    queryParams?: SchemaTypes.UserDestroyHrefSchema,
-  ): Promise<SchemaTypes.UserDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.UserDestroyTargetSchema>({
+    queryParams?: RawApiTypes.UserDestroyHrefSchema,
+  ): Promise<RawApiTypes.UserDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.UserDestroyTargetSchema>({
       method: 'DELETE',
       url: `/users/${userId}`,
       queryParams,

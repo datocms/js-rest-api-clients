@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class SubscriptionLimit extends BaseResource {
   static readonly TYPE = 'subscription_limit' as const;
@@ -16,7 +16,7 @@ export default class SubscriptionLimit extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SubscriptionLimitInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SubscriptionLimitInstancesTargetSchema>(
         body,
       ),
     );
@@ -30,8 +30,8 @@ export default class SubscriptionLimit extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.SubscriptionLimitInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.SubscriptionLimitInstancesTargetSchema>(
+  rawList(): Promise<RawApiTypes.SubscriptionLimitInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.SubscriptionLimitInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/subscription-limits',
@@ -47,9 +47,9 @@ export default class SubscriptionLimit extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(subscriptionLimitId: string | SimpleSchemaTypes.SubscriptionLimitData) {
+  find(subscriptionLimitId: string | ApiTypes.SubscriptionLimitData) {
     return this.rawFind(Utils.toId(subscriptionLimitId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SubscriptionLimitSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SubscriptionLimitSelfTargetSchema>(
         body,
       ),
     );
@@ -65,8 +65,8 @@ export default class SubscriptionLimit extends BaseResource {
    */
   rawFind(
     subscriptionLimitId: string,
-  ): Promise<SchemaTypes.SubscriptionLimitSelfTargetSchema> {
-    return this.client.request<SchemaTypes.SubscriptionLimitSelfTargetSchema>({
+  ): Promise<RawApiTypes.SubscriptionLimitSelfTargetSchema> {
+    return this.client.request<RawApiTypes.SubscriptionLimitSelfTargetSchema>({
       method: 'GET',
       url: `/subscription-limits/${subscriptionLimitId}`,
     });

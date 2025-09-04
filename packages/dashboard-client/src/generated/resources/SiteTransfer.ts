@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class SiteTransfer extends BaseResource {
   static readonly TYPE = 'site_transfer' as const;
@@ -14,7 +14,7 @@ export default class SiteTransfer extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteTransferInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteTransferInstancesTargetSchema>(
         body,
       ),
     );
@@ -26,8 +26,8 @@ export default class SiteTransfer extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.SiteTransferInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.SiteTransferInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.SiteTransferInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.SiteTransferInstancesTargetSchema>({
       method: 'GET',
       url: '/site-transfers',
     });
@@ -39,9 +39,9 @@ export default class SiteTransfer extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(siteTransferId: string | SimpleSchemaTypes.SiteTransferData) {
+  find(siteTransferId: string | ApiTypes.SiteTransferData) {
     return this.rawFind(Utils.toId(siteTransferId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteTransferSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteTransferSelfTargetSchema>(
         body,
       ),
     );
@@ -55,8 +55,8 @@ export default class SiteTransfer extends BaseResource {
    */
   rawFind(
     siteTransferId: string,
-  ): Promise<SchemaTypes.SiteTransferSelfTargetSchema> {
-    return this.client.request<SchemaTypes.SiteTransferSelfTargetSchema>({
+  ): Promise<RawApiTypes.SiteTransferSelfTargetSchema> {
+    return this.client.request<RawApiTypes.SiteTransferSelfTargetSchema>({
       method: 'GET',
       url: `/site-transfers/${siteTransferId}`,
     });
@@ -69,18 +69,18 @@ export default class SiteTransfer extends BaseResource {
    * @throws {TimeoutError}
    */
   create(
-    siteId: string | SimpleSchemaTypes.SiteData,
-    body: SimpleSchemaTypes.SiteTransferCreateSchema,
+    siteId: string | ApiTypes.SiteData,
+    body: ApiTypes.SiteTransferCreateSchema,
   ) {
     return this.rawCreate(
       Utils.toId(siteId),
-      Utils.serializeRequestBody<SchemaTypes.SiteTransferCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.SiteTransferCreateSchema>(body, {
         type: 'site_transfer',
         attributes: ['destination'],
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteTransferCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteTransferCreateTargetSchema>(
         body,
       ),
     );
@@ -94,9 +94,9 @@ export default class SiteTransfer extends BaseResource {
    */
   rawCreate(
     siteId: string,
-    body: SchemaTypes.SiteTransferCreateSchema,
-  ): Promise<SchemaTypes.SiteTransferCreateTargetSchema> {
-    return this.client.request<SchemaTypes.SiteTransferCreateTargetSchema>({
+    body: RawApiTypes.SiteTransferCreateSchema,
+  ): Promise<RawApiTypes.SiteTransferCreateTargetSchema> {
+    return this.client.request<RawApiTypes.SiteTransferCreateTargetSchema>({
       method: 'POST',
       url: `/sites/${siteId}/transfer`,
       body,
@@ -109,9 +109,9 @@ export default class SiteTransfer extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(siteId: string | SimpleSchemaTypes.SiteData) {
+  destroy(siteId: string | ApiTypes.SiteData) {
     return this.rawDestroy(Utils.toId(siteId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteTransferDestroyTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteTransferDestroyTargetSchema>(
         body,
       ),
     );
@@ -125,8 +125,8 @@ export default class SiteTransfer extends BaseResource {
    */
   rawDestroy(
     siteId: string,
-  ): Promise<SchemaTypes.SiteTransferDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.SiteTransferDestroyTargetSchema>({
+  ): Promise<RawApiTypes.SiteTransferDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.SiteTransferDestroyTargetSchema>({
       method: 'DELETE',
       url: `/sites/${siteId}/transfer`,
     });
@@ -140,9 +140,9 @@ export default class SiteTransfer extends BaseResource {
    */
   rawSimulateAccept(
     siteTransferId: string,
-    body: SchemaTypes.SiteTransferSimulateAcceptSchema,
-  ): Promise<SchemaTypes.SiteTransferSimulateAcceptTargetSchema> {
-    return this.client.request<SchemaTypes.SiteTransferSimulateAcceptTargetSchema>(
+    body: RawApiTypes.SiteTransferSimulateAcceptSchema,
+  ): Promise<RawApiTypes.SiteTransferSimulateAcceptTargetSchema> {
+    return this.client.request<RawApiTypes.SiteTransferSimulateAcceptTargetSchema>(
       {
         method: 'PUT',
         url: `/site-transfers/${siteTransferId}/simulate-accept`,
@@ -159,9 +159,9 @@ export default class SiteTransfer extends BaseResource {
    */
   rawAccept(
     siteTransferId: string,
-    body: SchemaTypes.SiteTransferAcceptSchema,
-  ): Promise<SchemaTypes.SiteTransferAcceptTargetSchema> {
-    return this.client.request<SchemaTypes.SiteTransferAcceptTargetSchema>({
+    body: RawApiTypes.SiteTransferAcceptSchema,
+  ): Promise<RawApiTypes.SiteTransferAcceptTargetSchema> {
+    return this.client.request<RawApiTypes.SiteTransferAcceptTargetSchema>({
       method: 'PUT',
       url: `/site-transfers/${siteTransferId}/accept`,
       body,
@@ -174,7 +174,7 @@ export default class SiteTransfer extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  decline(siteTransferId: string | SimpleSchemaTypes.SiteTransferData) {
+  decline(siteTransferId: string | ApiTypes.SiteTransferData) {
     return this.rawDecline(Utils.toId(siteTransferId));
   }
 

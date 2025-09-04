@@ -1,8 +1,8 @@
-import type * as SchemaTypes from '../generated/SchemaTypes';
-import type * as SimpleSchemaTypes from '../generated/SimpleSchemaTypes';
+import type * as ApiTypes from '../generated/ApiTypes';
+import type * as RawApiTypes from '../generated/RawApiTypes';
 
 export function modelIdsReferencedInField(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
 ) {
   const attributes = 'attributes' in field ? field.attributes : field;
 
@@ -23,7 +23,7 @@ export function modelIdsReferencedInField(
 }
 
 export function blockModelIdsReferencedInField(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
 ) {
   const attributes = 'attributes' in field ? field.attributes : field;
 

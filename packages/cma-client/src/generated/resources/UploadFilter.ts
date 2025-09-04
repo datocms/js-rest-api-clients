@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class UploadFilter extends BaseResource {
   static readonly TYPE = 'upload_filter' as const;
@@ -14,15 +14,15 @@ export default class UploadFilter extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.UploadFilterCreateSchema) {
+  create(body: ApiTypes.UploadFilterCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.UploadFilterCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.UploadFilterCreateSchema>(body, {
         type: 'upload_filter',
         attributes: ['name', 'filter', 'shared'],
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadFilterCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadFilterCreateTargetSchema>(
         body,
       ),
     );
@@ -37,9 +37,9 @@ export default class UploadFilter extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.UploadFilterCreateSchema,
-  ): Promise<SchemaTypes.UploadFilterCreateTargetSchema> {
-    return this.client.request<SchemaTypes.UploadFilterCreateTargetSchema>({
+    body: RawApiTypes.UploadFilterCreateSchema,
+  ): Promise<RawApiTypes.UploadFilterCreateTargetSchema> {
+    return this.client.request<RawApiTypes.UploadFilterCreateTargetSchema>({
       method: 'POST',
       url: '/upload-filters',
       body,
@@ -55,19 +55,19 @@ export default class UploadFilter extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    uploadFilterId: string | SimpleSchemaTypes.UploadFilterData,
-    body: SimpleSchemaTypes.UploadFilterUpdateSchema,
+    uploadFilterId: string | ApiTypes.UploadFilterData,
+    body: ApiTypes.UploadFilterUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(uploadFilterId),
-      Utils.serializeRequestBody<SchemaTypes.UploadFilterUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.UploadFilterUpdateSchema>(body, {
         id: Utils.toId(uploadFilterId),
         type: 'upload_filter',
         attributes: ['name', 'shared', 'filter'],
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadFilterUpdateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadFilterUpdateTargetSchema>(
         body,
       ),
     );
@@ -83,9 +83,9 @@ export default class UploadFilter extends BaseResource {
    */
   rawUpdate(
     uploadFilterId: string,
-    body: SchemaTypes.UploadFilterUpdateSchema,
-  ): Promise<SchemaTypes.UploadFilterUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.UploadFilterUpdateTargetSchema>({
+    body: RawApiTypes.UploadFilterUpdateSchema,
+  ): Promise<RawApiTypes.UploadFilterUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.UploadFilterUpdateTargetSchema>({
       method: 'PUT',
       url: `/upload-filters/${uploadFilterId}`,
       body,
@@ -102,7 +102,7 @@ export default class UploadFilter extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadFilterInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadFilterInstancesTargetSchema>(
         body,
       ),
     );
@@ -116,8 +116,8 @@ export default class UploadFilter extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.UploadFilterInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.UploadFilterInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.UploadFilterInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.UploadFilterInstancesTargetSchema>({
       method: 'GET',
       url: '/upload-filters',
     });
@@ -131,9 +131,9 @@ export default class UploadFilter extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(uploadFilterId: string | SimpleSchemaTypes.UploadFilterData) {
+  find(uploadFilterId: string | ApiTypes.UploadFilterData) {
     return this.rawFind(Utils.toId(uploadFilterId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadFilterSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadFilterSelfTargetSchema>(
         body,
       ),
     );
@@ -149,8 +149,8 @@ export default class UploadFilter extends BaseResource {
    */
   rawFind(
     uploadFilterId: string,
-  ): Promise<SchemaTypes.UploadFilterSelfTargetSchema> {
-    return this.client.request<SchemaTypes.UploadFilterSelfTargetSchema>({
+  ): Promise<RawApiTypes.UploadFilterSelfTargetSchema> {
+    return this.client.request<RawApiTypes.UploadFilterSelfTargetSchema>({
       method: 'GET',
       url: `/upload-filters/${uploadFilterId}`,
     });
@@ -164,9 +164,9 @@ export default class UploadFilter extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(uploadFilterId: string | SimpleSchemaTypes.UploadFilterData) {
+  destroy(uploadFilterId: string | ApiTypes.UploadFilterData) {
     return this.rawDestroy(Utils.toId(uploadFilterId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadFilterDestroyTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadFilterDestroyTargetSchema>(
         body,
       ),
     );
@@ -182,8 +182,8 @@ export default class UploadFilter extends BaseResource {
    */
   rawDestroy(
     uploadFilterId: string,
-  ): Promise<SchemaTypes.UploadFilterDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.UploadFilterDestroyTargetSchema>({
+  ): Promise<RawApiTypes.UploadFilterDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.UploadFilterDestroyTargetSchema>({
       method: 'DELETE',
       url: `/upload-filters/${uploadFilterId}`,
     });

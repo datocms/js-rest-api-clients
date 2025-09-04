@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class SubscriptionLimit extends BaseResource {
   static readonly TYPE = 'subscription_limit' as const;
@@ -12,9 +12,9 @@ export default class SubscriptionLimit extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(siteId: string | SimpleSchemaTypes.SiteData) {
+  list(siteId: string | ApiTypes.SiteData) {
     return this.rawList(Utils.toId(siteId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SubscriptionLimitInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SubscriptionLimitInstancesTargetSchema>(
         body,
       ),
     );
@@ -28,8 +28,8 @@ export default class SubscriptionLimit extends BaseResource {
    */
   rawList(
     siteId: string,
-  ): Promise<SchemaTypes.SubscriptionLimitInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.SubscriptionLimitInstancesTargetSchema>(
+  ): Promise<RawApiTypes.SubscriptionLimitInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.SubscriptionLimitInstancesTargetSchema>(
       {
         method: 'GET',
         url: `/sites/${siteId}/subscription-limits`,

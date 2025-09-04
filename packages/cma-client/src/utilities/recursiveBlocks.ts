@@ -1,6 +1,6 @@
 import { type BlockItemInARequest, isBlockObject } from '../fieldTypes';
-import type * as SchemaTypes from '../generated/SchemaTypes';
-import type * as SimpleSchemaTypes from '../generated/SimpleSchemaTypes';
+import type * as ApiTypes from '../generated/ApiTypes';
+import type * as RawApiTypes from '../generated/RawApiTypes';
 import {
   nonRecursiveFilterBlocksInFieldValueAsync,
   nonRecursiveFindAllBlocksInFieldValueAsync,
@@ -18,7 +18,7 @@ import type { TreePath } from './structuredText';
 
 export async function visitBlocksInFieldValues(
   schemaRepository: SchemaRepository,
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   visitor: (item: BlockItemInARequest, path: TreePath) => void | Promise<void>,
   path: TreePath = [],
@@ -65,7 +65,7 @@ export async function visitBlocksInFieldValues(
 
 export async function findAllBlocksInFieldValues(
   schemaRepository: SchemaRepository,
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   predicate: (
     item: BlockItemInARequest,
@@ -132,7 +132,7 @@ export async function findAllBlocksInFieldValues(
 
 export async function filterBlocksInFieldValues(
   schemaRepository: SchemaRepository,
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   predicate: (
     item: BlockItemInARequest,
@@ -189,7 +189,7 @@ export async function filterBlocksInFieldValues(
 
 export async function reduceBlocksInFieldValues<R>(
   schemaRepository: SchemaRepository,
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   reducer: (
     accumulator: R,
@@ -251,7 +251,7 @@ export async function reduceBlocksInFieldValues<R>(
 
 export async function someBlocksInFieldValues(
   schemaRepository: SchemaRepository,
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   predicate: (
     item: BlockItemInARequest,
@@ -321,7 +321,7 @@ export async function someBlocksInFieldValues(
 
 export async function everyBlockInFieldValues(
   schemaRepository: SchemaRepository,
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   predicate: (
     item: BlockItemInARequest,
@@ -340,7 +340,7 @@ export async function everyBlockInFieldValues(
 
 export async function mapBlocksInFieldValues(
   schemaRepository: SchemaRepository,
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   mapper: (
     item: BlockItemInARequest,

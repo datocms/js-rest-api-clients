@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class TfaDeactivateRequest extends BaseResource {
   static readonly TYPE = 'tfa_deactivate_request' as const;
@@ -14,9 +14,9 @@ export default class TfaDeactivateRequest extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  create(body: SimpleSchemaTypes.TfaDeactivateRequestCreateSchema) {
+  create(body: ApiTypes.TfaDeactivateRequestCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.TfaDeactivateRequestCreateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.TfaDeactivateRequestCreateSchema>(
         body,
         {
           type: 'tfa_deactivate_request',
@@ -25,7 +25,7 @@ export default class TfaDeactivateRequest extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.TfaDeactivateRequestCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.TfaDeactivateRequestCreateTargetSchema>(
         body,
       ),
     );
@@ -40,9 +40,9 @@ export default class TfaDeactivateRequest extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawCreate(
-    body: SchemaTypes.TfaDeactivateRequestCreateSchema,
-  ): Promise<SchemaTypes.TfaDeactivateRequestCreateTargetSchema> {
-    return this.client.request<SchemaTypes.TfaDeactivateRequestCreateTargetSchema>(
+    body: RawApiTypes.TfaDeactivateRequestCreateSchema,
+  ): Promise<RawApiTypes.TfaDeactivateRequestCreateTargetSchema> {
+    return this.client.request<RawApiTypes.TfaDeactivateRequestCreateTargetSchema>(
       {
         method: 'POST',
         url: '/tfa-deactivate-requests',
@@ -61,7 +61,7 @@ export default class TfaDeactivateRequest extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.TfaDeactivateRequestInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.TfaDeactivateRequestInstancesTargetSchema>(
         body,
       ),
     );
@@ -75,8 +75,8 @@ export default class TfaDeactivateRequest extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  rawList(): Promise<SchemaTypes.TfaDeactivateRequestInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.TfaDeactivateRequestInstancesTargetSchema>(
+  rawList(): Promise<RawApiTypes.TfaDeactivateRequestInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.TfaDeactivateRequestInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/tfa-deactivate-requests',
@@ -92,9 +92,7 @@ export default class TfaDeactivateRequest extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  approve(
-    tfaDeactivateRequestId: string | SimpleSchemaTypes.TfaDeactivateRequestData,
-  ) {
+  approve(tfaDeactivateRequestId: string | ApiTypes.TfaDeactivateRequestData) {
     return this.rawApprove(Utils.toId(tfaDeactivateRequestId));
   }
 
@@ -121,9 +119,7 @@ export default class TfaDeactivateRequest extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  reject(
-    tfaDeactivateRequestId: string | SimpleSchemaTypes.TfaDeactivateRequestData,
-  ) {
+  reject(tfaDeactivateRequestId: string | ApiTypes.TfaDeactivateRequestData) {
     return this.rawReject(Utils.toId(tfaDeactivateRequestId));
   }
 

@@ -1,6 +1,6 @@
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 import { generateId } from '../../cma-client/src';
-import { ApiError, type SchemaTypes, buildBlockRecord } from '../src';
+import { ApiError, type RawApiTypes, buildBlockRecord } from '../src';
 
 describe('item', () => {
   it.concurrent('bulk publish/unpublish/destroy works', async () => {
@@ -258,7 +258,7 @@ describe('item', () => {
     });
 
     await client.items.update(item.id, {
-      content: (itemWithNestedBlocks.content as SchemaTypes.Item[]).map(
+      content: (itemWithNestedBlocks.content as RawApiTypes.Item[]).map(
         (block) =>
           buildBlockRecord({
             id: block.id,
@@ -273,7 +273,7 @@ describe('item', () => {
     });
 
     const updatedContent =
-      updatedItemWithNestedBlocks.content as SchemaTypes.Item[];
+      updatedItemWithNestedBlocks.content as RawApiTypes.Item[];
 
     expect(updatedContent[0]!.attributes.text).toEqual('Updated Foo');
     expect(updatedContent[1]!.attributes.text).toEqual('Updated Bar');

@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class ItemVersion extends BaseResource {
   static readonly TYPE = 'item_version' as const;
@@ -14,11 +14,9 @@ export default class ItemVersion extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  restore(itemVersionId: string | SimpleSchemaTypes.ItemVersionData) {
+  restore(itemVersionId: string | ApiTypes.ItemVersionData) {
     return this.rawRestore(Utils.toId(itemVersionId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemVersionRestoreJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.ItemVersionRestoreJobSchema>(body),
     );
   }
 
@@ -32,8 +30,8 @@ export default class ItemVersion extends BaseResource {
    */
   rawRestore(
     itemVersionId: string,
-  ): Promise<SchemaTypes.ItemVersionRestoreJobSchema> {
-    return this.client.request<SchemaTypes.ItemVersionRestoreJobSchema>({
+  ): Promise<RawApiTypes.ItemVersionRestoreJobSchema> {
+    return this.client.request<RawApiTypes.ItemVersionRestoreJobSchema>({
       method: 'POST',
       url: `/versions/${itemVersionId}/restore`,
     });
@@ -48,11 +46,11 @@ export default class ItemVersion extends BaseResource {
    * @throws {TimeoutError}
    */
   list(
-    itemId: string | SimpleSchemaTypes.ItemData,
-    queryParams?: SimpleSchemaTypes.ItemVersionInstancesHrefSchema,
+    itemId: string | ApiTypes.ItemData,
+    queryParams?: ApiTypes.ItemVersionInstancesHrefSchema,
   ) {
     return this.rawList(Utils.toId(itemId), queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemVersionInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ItemVersionInstancesTargetSchema>(
         body,
       ),
     );
@@ -68,9 +66,9 @@ export default class ItemVersion extends BaseResource {
    */
   rawList(
     itemId: string,
-    queryParams?: SchemaTypes.ItemVersionInstancesHrefSchema,
-  ): Promise<SchemaTypes.ItemVersionInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.ItemVersionInstancesTargetSchema>({
+    queryParams?: RawApiTypes.ItemVersionInstancesHrefSchema,
+  ): Promise<RawApiTypes.ItemVersionInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.ItemVersionInstancesTargetSchema>({
       method: 'GET',
       url: `/items/${itemId}/versions`,
       queryParams,
@@ -86,9 +84,9 @@ export default class ItemVersion extends BaseResource {
    * @throws {TimeoutError}
    */
   async *listPagedIterator(
-    itemId: string | SimpleSchemaTypes.ItemData,
+    itemId: string | ApiTypes.ItemData,
     queryParams?: Utils.OmitFromKnownKeys<
-      SimpleSchemaTypes.ItemVersionInstancesHrefSchema,
+      ApiTypes.ItemVersionInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -99,7 +97,7 @@ export default class ItemVersion extends BaseResource {
       iteratorOptions,
     )) {
       yield Utils.deserializeJsonEntity<
-        SimpleSchemaTypes.ItemVersionInstancesTargetSchema[0]
+        ApiTypes.ItemVersionInstancesTargetSchema[0]
       >(element);
     }
   }
@@ -115,7 +113,7 @@ export default class ItemVersion extends BaseResource {
   rawListPagedIterator(
     itemId: string,
     queryParams?: Utils.OmitFromKnownKeys<
-      SchemaTypes.ItemVersionInstancesHrefSchema,
+      RawApiTypes.ItemVersionInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -123,13 +121,13 @@ export default class ItemVersion extends BaseResource {
     Utils.warnOnPageQueryParam(queryParams);
 
     return Utils.rawPageIterator<
-      SchemaTypes.ItemVersionInstancesTargetSchema['data'][0]
+      RawApiTypes.ItemVersionInstancesTargetSchema['data'][0]
     >(
       {
         defaultLimit: 15,
         maxLimit: 50,
       },
-      (page: SchemaTypes.ItemVersionInstancesHrefSchema['page']) =>
+      (page: RawApiTypes.ItemVersionInstancesHrefSchema['page']) =>
         this.rawList(itemId, { ...queryParams, page }),
       iteratorOptions,
     );
@@ -143,11 +141,9 @@ export default class ItemVersion extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(itemVersionId: string | SimpleSchemaTypes.ItemVersionData) {
+  find(itemVersionId: string | ApiTypes.ItemVersionData) {
     return this.rawFind(Utils.toId(itemVersionId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemVersionSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.ItemVersionSelfTargetSchema>(body),
     );
   }
 
@@ -161,8 +157,8 @@ export default class ItemVersion extends BaseResource {
    */
   rawFind(
     itemVersionId: string,
-  ): Promise<SchemaTypes.ItemVersionSelfTargetSchema> {
-    return this.client.request<SchemaTypes.ItemVersionSelfTargetSchema>({
+  ): Promise<RawApiTypes.ItemVersionSelfTargetSchema> {
+    return this.client.request<RawApiTypes.ItemVersionSelfTargetSchema>({
       method: 'GET',
       url: `/versions/${itemVersionId}`,
     });

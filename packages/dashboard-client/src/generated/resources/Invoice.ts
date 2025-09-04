@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class Invoice extends BaseResource {
   static readonly TYPE = 'invoice' as const;
@@ -14,7 +14,7 @@ export default class Invoice extends BaseResource {
    */
   perOwnerPricingBillingProfileList() {
     return this.rawPerOwnerPricingBillingProfileList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.InvoicePerOwnerPricingBillingProfileInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.InvoicePerOwnerPricingBillingProfileInstancesTargetSchema>(
         body,
       ),
     );
@@ -26,8 +26,8 @@ export default class Invoice extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawPerOwnerPricingBillingProfileList(): Promise<SchemaTypes.InvoicePerOwnerPricingBillingProfileInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.InvoicePerOwnerPricingBillingProfileInstancesTargetSchema>(
+  rawPerOwnerPricingBillingProfileList(): Promise<RawApiTypes.InvoicePerOwnerPricingBillingProfileInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.InvoicePerOwnerPricingBillingProfileInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/per-owner-pricing-billing-profile/invoices',
@@ -44,12 +44,12 @@ export default class Invoice extends BaseResource {
   perSitePricingBillingProfileList(
     perSitePricingBillingProfileId:
       | string
-      | SimpleSchemaTypes.PerSitePricingBillingProfileData,
+      | ApiTypes.PerSitePricingBillingProfileData,
   ) {
     return this.rawPerSitePricingBillingProfileList(
       Utils.toId(perSitePricingBillingProfileId),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.InvoicePerSitePricingBillingProfileInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.InvoicePerSitePricingBillingProfileInstancesTargetSchema>(
         body,
       ),
     );
@@ -63,8 +63,8 @@ export default class Invoice extends BaseResource {
    */
   rawPerSitePricingBillingProfileList(
     perSitePricingBillingProfileId: string,
-  ): Promise<SchemaTypes.InvoicePerSitePricingBillingProfileInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.InvoicePerSitePricingBillingProfileInstancesTargetSchema>(
+  ): Promise<RawApiTypes.InvoicePerSitePricingBillingProfileInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.InvoicePerSitePricingBillingProfileInstancesTargetSchema>(
       {
         method: 'GET',
         url: `/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/invoices`,
@@ -79,10 +79,10 @@ export default class Invoice extends BaseResource {
    * @throws {TimeoutError}
    */
   perOwnerPricingBillingProfileCollectUnpaid(
-    body: SimpleSchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema,
+    body: ApiTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema,
   ) {
     return this.rawPerOwnerPricingBillingProfileCollectUnpaid(
-      Utils.serializeRequestBody<SchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema>(
+      Utils.serializeRequestBody<RawApiTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema>(
         body,
         {
           type: 'invoice_collection',
@@ -91,7 +91,7 @@ export default class Invoice extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema>(
         body,
       ),
     );
@@ -104,9 +104,9 @@ export default class Invoice extends BaseResource {
    * @throws {TimeoutError}
    */
   rawPerOwnerPricingBillingProfileCollectUnpaid(
-    body: SchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema,
-  ): Promise<SchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema> {
-    return this.client.request<SchemaTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema>(
+    body: RawApiTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidSchema,
+  ): Promise<RawApiTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema> {
+    return this.client.request<RawApiTypes.InvoicePerOwnerPricingBillingProfileCollectUnpaidTargetSchema>(
       {
         method: 'POST',
         url: '/per-owner-pricing-billing-profile/invoices/collect-unpaid',
@@ -124,12 +124,12 @@ export default class Invoice extends BaseResource {
   perSitePricingBillingProfileCollectUnpaid(
     perSitePricingBillingProfileId:
       | string
-      | SimpleSchemaTypes.PerSitePricingBillingProfileData,
-    body: SimpleSchemaTypes.InvoicePerSitePricingBillingProfileCollectUnpaidSchema,
+      | ApiTypes.PerSitePricingBillingProfileData,
+    body: ApiTypes.InvoicePerSitePricingBillingProfileCollectUnpaidSchema,
   ) {
     return this.rawPerSitePricingBillingProfileCollectUnpaid(
       Utils.toId(perSitePricingBillingProfileId),
-      Utils.serializeRequestBody<SchemaTypes.InvoicePerSitePricingBillingProfileCollectUnpaidSchema>(
+      Utils.serializeRequestBody<RawApiTypes.InvoicePerSitePricingBillingProfileCollectUnpaidSchema>(
         body,
         {
           type: 'invoice_collection',
@@ -138,7 +138,7 @@ export default class Invoice extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema>(
         body,
       ),
     );
@@ -152,9 +152,9 @@ export default class Invoice extends BaseResource {
    */
   rawPerSitePricingBillingProfileCollectUnpaid(
     perSitePricingBillingProfileId: string,
-    body: SchemaTypes.InvoicePerSitePricingBillingProfileCollectUnpaidSchema,
-  ): Promise<SchemaTypes.InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema> {
-    return this.client.request<SchemaTypes.InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema>(
+    body: RawApiTypes.InvoicePerSitePricingBillingProfileCollectUnpaidSchema,
+  ): Promise<RawApiTypes.InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema> {
+    return this.client.request<RawApiTypes.InvoicePerSitePricingBillingProfileCollectUnpaidTargetSchema>(
       {
         method: 'POST',
         url: `/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/invoices/collect-unpaid`,

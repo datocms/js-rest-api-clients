@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class BuildTrigger extends BaseResource {
   static readonly TYPE = 'build_trigger' as const;
@@ -16,7 +16,7 @@ export default class BuildTrigger extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.BuildTriggerInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.BuildTriggerInstancesTargetSchema>(
         body,
       ),
     );
@@ -30,8 +30,8 @@ export default class BuildTrigger extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.BuildTriggerInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.BuildTriggerInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.BuildTriggerInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.BuildTriggerInstancesTargetSchema>({
       method: 'GET',
       url: '/build-triggers',
     });
@@ -45,9 +45,9 @@ export default class BuildTrigger extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
+  find(buildTriggerId: string | ApiTypes.BuildTriggerData) {
     return this.rawFind(Utils.toId(buildTriggerId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.BuildTriggerSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.BuildTriggerSelfTargetSchema>(
         body,
       ),
     );
@@ -63,8 +63,8 @@ export default class BuildTrigger extends BaseResource {
    */
   rawFind(
     buildTriggerId: string,
-  ): Promise<SchemaTypes.BuildTriggerSelfTargetSchema> {
-    return this.client.request<SchemaTypes.BuildTriggerSelfTargetSchema>({
+  ): Promise<RawApiTypes.BuildTriggerSelfTargetSchema> {
+    return this.client.request<RawApiTypes.BuildTriggerSelfTargetSchema>({
       method: 'GET',
       url: `/build-triggers/${buildTriggerId}`,
     });
@@ -78,9 +78,9 @@ export default class BuildTrigger extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.BuildTriggerCreateSchema) {
+  create(body: ApiTypes.BuildTriggerCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.BuildTriggerCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.BuildTriggerCreateSchema>(body, {
         type: 'build_trigger',
         attributes: [
           'name',
@@ -94,7 +94,7 @@ export default class BuildTrigger extends BaseResource {
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.BuildTriggerCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.BuildTriggerCreateTargetSchema>(
         body,
       ),
     );
@@ -109,9 +109,9 @@ export default class BuildTrigger extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.BuildTriggerCreateSchema,
-  ): Promise<SchemaTypes.BuildTriggerCreateTargetSchema> {
-    return this.client.request<SchemaTypes.BuildTriggerCreateTargetSchema>({
+    body: RawApiTypes.BuildTriggerCreateSchema,
+  ): Promise<RawApiTypes.BuildTriggerCreateTargetSchema> {
+    return this.client.request<RawApiTypes.BuildTriggerCreateTargetSchema>({
       method: 'POST',
       url: '/build-triggers',
       body,
@@ -127,12 +127,12 @@ export default class BuildTrigger extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData,
-    body: SimpleSchemaTypes.BuildTriggerUpdateSchema,
+    buildTriggerId: string | ApiTypes.BuildTriggerData,
+    body: ApiTypes.BuildTriggerUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(buildTriggerId),
-      Utils.serializeRequestBody<SchemaTypes.BuildTriggerUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.BuildTriggerUpdateSchema>(body, {
         id: Utils.toId(buildTriggerId),
         type: 'build_trigger',
         attributes: [
@@ -146,7 +146,7 @@ export default class BuildTrigger extends BaseResource {
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.BuildTriggerUpdateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.BuildTriggerUpdateTargetSchema>(
         body,
       ),
     );
@@ -162,9 +162,9 @@ export default class BuildTrigger extends BaseResource {
    */
   rawUpdate(
     buildTriggerId: string,
-    body: SchemaTypes.BuildTriggerUpdateSchema,
-  ): Promise<SchemaTypes.BuildTriggerUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.BuildTriggerUpdateTargetSchema>({
+    body: RawApiTypes.BuildTriggerUpdateSchema,
+  ): Promise<RawApiTypes.BuildTriggerUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.BuildTriggerUpdateTargetSchema>({
       method: 'PUT',
       url: `/build-triggers/${buildTriggerId}`,
       body,
@@ -179,7 +179,7 @@ export default class BuildTrigger extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  trigger(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
+  trigger(buildTriggerId: string | ApiTypes.BuildTriggerData) {
     return this.rawTrigger(Utils.toId(buildTriggerId));
   }
 
@@ -206,7 +206,7 @@ export default class BuildTrigger extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  abort(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
+  abort(buildTriggerId: string | ApiTypes.BuildTriggerData) {
     return this.rawAbort(Utils.toId(buildTriggerId));
   }
 
@@ -233,7 +233,7 @@ export default class BuildTrigger extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  abortIndexing(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
+  abortIndexing(buildTriggerId: string | ApiTypes.BuildTriggerData) {
     return this.rawAbortIndexing(Utils.toId(buildTriggerId));
   }
 
@@ -260,7 +260,7 @@ export default class BuildTrigger extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  reindex(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
+  reindex(buildTriggerId: string | ApiTypes.BuildTriggerData) {
     return this.rawReindex(Utils.toId(buildTriggerId));
   }
 
@@ -287,9 +287,9 @@ export default class BuildTrigger extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(buildTriggerId: string | SimpleSchemaTypes.BuildTriggerData) {
+  destroy(buildTriggerId: string | ApiTypes.BuildTriggerData) {
     return this.rawDestroy(Utils.toId(buildTriggerId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.BuildTriggerDestroyTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.BuildTriggerDestroyTargetSchema>(
         body,
       ),
     );
@@ -305,8 +305,8 @@ export default class BuildTrigger extends BaseResource {
    */
   rawDestroy(
     buildTriggerId: string,
-  ): Promise<SchemaTypes.BuildTriggerDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.BuildTriggerDestroyTargetSchema>({
+  ): Promise<RawApiTypes.BuildTriggerDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.BuildTriggerDestroyTargetSchema>({
       method: 'DELETE',
       url: `/build-triggers/${buildTriggerId}`,
     });

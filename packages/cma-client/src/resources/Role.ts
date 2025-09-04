@@ -1,4 +1,4 @@
-import type * as SimpleSchemaTypes from '../generated/SimpleSchemaTypes';
+import type * as ApiTypes from '../generated/ApiTypes';
 import BaseRole from '../generated/resources/Role';
 
 export type UpdateRoleDiff<T> = {
@@ -7,10 +7,10 @@ export type UpdateRoleDiff<T> = {
 };
 
 export type RoleItemTypePermission =
-  SimpleSchemaTypes.RoleAttributes['positive_item_type_permissions'][0];
+  ApiTypes.RoleAttributes['positive_item_type_permissions'][0];
 
 export type RoleUploadPermission =
-  SimpleSchemaTypes.RoleAttributes['positive_upload_permissions'][0];
+  ApiTypes.RoleAttributes['positive_upload_permissions'][0];
 
 type UpdateCurrentEnvironmentPermissionsChanges = {
   positive_item_type_permissions?: UpdateRoleDiff<RoleItemTypePermission>;
@@ -93,9 +93,9 @@ export default class RoleResource extends BaseRole {
    * Applies a set of changes to the permissions of the current environment
    */
   async updateCurrentEnvironmentPermissions(
-    roleId: string | SimpleSchemaTypes.RoleData,
+    roleId: string | ApiTypes.RoleData,
     changes: UpdateCurrentEnvironmentPermissionsChanges,
-  ): Promise<SimpleSchemaTypes.Role> {
+  ): Promise<ApiTypes.Role> {
     const currentEnvironmentId =
       this.client.config.environment ||
       (await this.client.environments.list()).find(
@@ -114,7 +114,7 @@ export default class RoleResource extends BaseRole {
         changes.negative_upload_permissions,
     );
 
-    const body: SimpleSchemaTypes.RoleUpdateSchema = {
+    const body: ApiTypes.RoleUpdateSchema = {
       ...(updateItemTypePermissions
         ? {
             positive_item_type_permissions: applyChanges(

@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class Account extends BaseResource {
   static readonly TYPE = 'account' as const;
@@ -12,9 +12,9 @@ export default class Account extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.AccountCreateSchema) {
+  create(body: ApiTypes.AccountCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.AccountCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.AccountCreateSchema>(body, {
         type: 'account',
         attributes: [
           'email',
@@ -31,9 +31,7 @@ export default class Account extends BaseResource {
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccountCreateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.AccountCreateTargetSchema>(body),
     );
   }
 
@@ -44,9 +42,9 @@ export default class Account extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.AccountCreateSchema,
-  ): Promise<SchemaTypes.AccountCreateTargetSchema> {
-    return this.client.request<SchemaTypes.AccountCreateTargetSchema>({
+    body: RawApiTypes.AccountCreateSchema,
+  ): Promise<RawApiTypes.AccountCreateTargetSchema> {
+    return this.client.request<RawApiTypes.AccountCreateTargetSchema>({
       method: 'POST',
       url: '/account',
       body,
@@ -59,9 +57,9 @@ export default class Account extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  update(body: SimpleSchemaTypes.AccountUpdateSchema) {
+  update(body: ApiTypes.AccountUpdateSchema) {
     return this.rawUpdate(
-      Utils.serializeRequestBody<SchemaTypes.AccountUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.AccountUpdateSchema>(body, {
         type: 'account',
         attributes: [
           'email',
@@ -75,9 +73,7 @@ export default class Account extends BaseResource {
         relationships: ['default_organization'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccountUpdateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.AccountUpdateTargetSchema>(body),
     );
   }
 
@@ -88,9 +84,9 @@ export default class Account extends BaseResource {
    * @throws {TimeoutError}
    */
   rawUpdate(
-    body: SchemaTypes.AccountUpdateSchema,
-  ): Promise<SchemaTypes.AccountUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.AccountUpdateTargetSchema>({
+    body: RawApiTypes.AccountUpdateSchema,
+  ): Promise<RawApiTypes.AccountUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.AccountUpdateTargetSchema>({
       method: 'PUT',
       url: '/account',
       body,
@@ -103,17 +99,15 @@ export default class Account extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(body: SimpleSchemaTypes.AccountDestroySchema) {
+  destroy(body: ApiTypes.AccountDestroySchema) {
     return this.rawDestroy(
-      Utils.serializeRequestBody<SchemaTypes.AccountDestroySchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.AccountDestroySchema>(body, {
         type: 'account_destroy_request',
         attributes: ['otp_code', 'password'],
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccountDestroyJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.AccountDestroyJobSchema>(body),
     );
   }
 
@@ -124,9 +118,9 @@ export default class Account extends BaseResource {
    * @throws {TimeoutError}
    */
   rawDestroy(
-    body: SchemaTypes.AccountDestroySchema,
-  ): Promise<SchemaTypes.AccountDestroyJobSchema> {
-    return this.client.request<SchemaTypes.AccountDestroyJobSchema>({
+    body: RawApiTypes.AccountDestroySchema,
+  ): Promise<RawApiTypes.AccountDestroyJobSchema> {
+    return this.client.request<RawApiTypes.AccountDestroyJobSchema>({
       method: 'POST',
       url: '/account/destroy',
       body,
@@ -139,11 +133,9 @@ export default class Account extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(queryParams?: SimpleSchemaTypes.AccountSelfHrefSchema) {
+  find(queryParams?: ApiTypes.AccountSelfHrefSchema) {
     return this.rawFind(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccountSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.AccountSelfTargetSchema>(body),
     );
   }
 
@@ -154,9 +146,9 @@ export default class Account extends BaseResource {
    * @throws {TimeoutError}
    */
   rawFind(
-    queryParams?: SchemaTypes.AccountSelfHrefSchema,
-  ): Promise<SchemaTypes.AccountSelfTargetSchema> {
-    return this.client.request<SchemaTypes.AccountSelfTargetSchema>({
+    queryParams?: RawApiTypes.AccountSelfHrefSchema,
+  ): Promise<RawApiTypes.AccountSelfTargetSchema> {
+    return this.client.request<RawApiTypes.AccountSelfTargetSchema>({
       method: 'GET',
       url: '/account',
       queryParams,
@@ -169,9 +161,9 @@ export default class Account extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  resetPassword(body: SimpleSchemaTypes.AccountResetPasswordSchema) {
+  resetPassword(body: ApiTypes.AccountResetPasswordSchema) {
     return this.rawResetPassword(
-      Utils.serializeRequestBody<SchemaTypes.AccountResetPasswordSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.AccountResetPasswordSchema>(body, {
         type: 'account',
         attributes: ['email'],
         relationships: [],
@@ -186,7 +178,7 @@ export default class Account extends BaseResource {
    * @throws {TimeoutError}
    */
   rawResetPassword(
-    body: SchemaTypes.AccountResetPasswordSchema,
+    body: RawApiTypes.AccountResetPasswordSchema,
   ): Promise<void> {
     return this.client.request<void>({
       method: 'POST',
@@ -201,15 +193,15 @@ export default class Account extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  activate_2Fa(body: SimpleSchemaTypes.AccountActivate_2FaSchema) {
+  activate_2Fa(body: ApiTypes.AccountActivate_2FaSchema) {
     return this.rawActivate_2Fa(
-      Utils.serializeRequestBody<SchemaTypes.AccountActivate_2FaSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.AccountActivate_2FaSchema>(body, {
         type: '2fa_activation',
         attributes: ['otp_code', 'password'],
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccountActivate_2FaTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.AccountActivate_2FaTargetSchema>(
         body,
       ),
     );
@@ -222,9 +214,9 @@ export default class Account extends BaseResource {
    * @throws {TimeoutError}
    */
   rawActivate_2Fa(
-    body: SchemaTypes.AccountActivate_2FaSchema,
-  ): Promise<SchemaTypes.AccountActivate_2FaTargetSchema> {
-    return this.client.request<SchemaTypes.AccountActivate_2FaTargetSchema>({
+    body: RawApiTypes.AccountActivate_2FaSchema,
+  ): Promise<RawApiTypes.AccountActivate_2FaTargetSchema> {
+    return this.client.request<RawApiTypes.AccountActivate_2FaTargetSchema>({
       method: 'PUT',
       url: '/account/activate-2fa',
       body,
@@ -239,7 +231,7 @@ export default class Account extends BaseResource {
    */
   reset_2Fa() {
     return this.rawReset_2Fa().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccountReset_2FaTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.AccountReset_2FaTargetSchema>(
         body,
       ),
     );
@@ -251,8 +243,8 @@ export default class Account extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawReset_2Fa(): Promise<SchemaTypes.AccountReset_2FaTargetSchema> {
-    return this.client.request<SchemaTypes.AccountReset_2FaTargetSchema>({
+  rawReset_2Fa(): Promise<RawApiTypes.AccountReset_2FaTargetSchema> {
+    return this.client.request<RawApiTypes.AccountReset_2FaTargetSchema>({
       method: 'PUT',
       url: '/account/reset-2fa',
     });
@@ -264,9 +256,9 @@ export default class Account extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  deactivate_2Fa(body: SimpleSchemaTypes.AccountDeactivate_2FaSchema) {
+  deactivate_2Fa(body: ApiTypes.AccountDeactivate_2FaSchema) {
     return this.rawDeactivate_2Fa(
-      Utils.serializeRequestBody<SchemaTypes.AccountDeactivate_2FaSchema>(
+      Utils.serializeRequestBody<RawApiTypes.AccountDeactivate_2FaSchema>(
         body,
         {
           type: '2fa_deactivation',
@@ -275,7 +267,7 @@ export default class Account extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccountDeactivate_2FaTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.AccountDeactivate_2FaTargetSchema>(
         body,
       ),
     );
@@ -288,9 +280,9 @@ export default class Account extends BaseResource {
    * @throws {TimeoutError}
    */
   rawDeactivate_2Fa(
-    body: SchemaTypes.AccountDeactivate_2FaSchema,
-  ): Promise<SchemaTypes.AccountDeactivate_2FaTargetSchema> {
-    return this.client.request<SchemaTypes.AccountDeactivate_2FaTargetSchema>({
+    body: RawApiTypes.AccountDeactivate_2FaSchema,
+  ): Promise<RawApiTypes.AccountDeactivate_2FaTargetSchema> {
+    return this.client.request<RawApiTypes.AccountDeactivate_2FaTargetSchema>({
       method: 'PUT',
       url: '/account/deactivate-2fa',
       body,
@@ -303,11 +295,9 @@ export default class Account extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  convertToOrganization(
-    body: SimpleSchemaTypes.AccountConvertToOrganizationSchema,
-  ) {
+  convertToOrganization(body: ApiTypes.AccountConvertToOrganizationSchema) {
     return this.rawConvertToOrganization(
-      Utils.serializeRequestBody<SchemaTypes.AccountConvertToOrganizationSchema>(
+      Utils.serializeRequestBody<RawApiTypes.AccountConvertToOrganizationSchema>(
         body,
         {
           type: 'organization',
@@ -316,7 +306,7 @@ export default class Account extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccountConvertToOrganizationJobSchema>(
+      Utils.deserializeResponseBody<ApiTypes.AccountConvertToOrganizationJobSchema>(
         body,
       ),
     );
@@ -329,9 +319,9 @@ export default class Account extends BaseResource {
    * @throws {TimeoutError}
    */
   rawConvertToOrganization(
-    body: SchemaTypes.AccountConvertToOrganizationSchema,
-  ): Promise<SchemaTypes.AccountConvertToOrganizationJobSchema> {
-    return this.client.request<SchemaTypes.AccountConvertToOrganizationJobSchema>(
+    body: RawApiTypes.AccountConvertToOrganizationSchema,
+  ): Promise<RawApiTypes.AccountConvertToOrganizationJobSchema> {
+    return this.client.request<RawApiTypes.AccountConvertToOrganizationJobSchema>(
       {
         method: 'POST',
         url: '/account/convert-to-organization',

@@ -7,7 +7,7 @@ import {
   isInlineBlock,
   isNode,
 } from 'datocms-structured-text-utils';
-import type * as SchemaTypes from '../generated/SchemaTypes';
+import type * as RawApiTypes from '../generated/RawApiTypes';
 import { everyNode } from '../utilities/structuredText';
 import {
   type BlockItemInARequest,
@@ -87,7 +87,7 @@ export type DocumentAsRequest = {
  * =============================================================================
  *
  * When using the GET /items?nested=true, the API returns Structured Text documents
- * with embedded blocks fully populated as complete SchemaTypes.Item objects instead
+ * with embedded blocks fully populated as complete RawApiTypes.Item objects instead
  * of just string IDs.
  */
 
@@ -95,14 +95,14 @@ export type DocumentAsRequest = {
  * Variant of 'block' structured text node for ?nested=true API responses
  */
 export type BlockWithNestedBlocks = Omit<Block, 'item'> & {
-  item: SchemaTypes.Item;
+  item: RawApiTypes.Item;
 };
 
 /**
  * Variant of 'inlineBlock' structured text node for ?nested=true API responses
  */
 export type InlineBlockWithNestedBlocks = Omit<InlineBlock, 'item'> & {
-  item: SchemaTypes.Item;
+  item: RawApiTypes.Item;
 };
 
 /**
@@ -230,7 +230,7 @@ export function isStructuredTextFieldValueAsRequest(
 
 /**
  * Type guard for structured text field values with nested blocks (?nested=true format).
- * Ensures all block/inlineBlock nodes have full SchemaTypes.Item objects.
+ * Ensures all block/inlineBlock nodes have full RawApiTypes.Item objects.
  */
 export function isStructuredTextFieldValueWithNestedBlocks(
   value: unknown,

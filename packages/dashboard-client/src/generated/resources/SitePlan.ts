@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class SitePlan extends BaseResource {
   static readonly TYPE = 'site_plan' as const;
@@ -14,7 +14,7 @@ export default class SitePlan extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SitePlanInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SitePlanInstancesTargetSchema>(
         body,
       ),
     );
@@ -26,8 +26,8 @@ export default class SitePlan extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.SitePlanInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.SitePlanInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.SitePlanInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.SitePlanInstancesTargetSchema>({
       method: 'GET',
       url: '/site-plans',
     });

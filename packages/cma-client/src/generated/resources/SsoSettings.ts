@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class SsoSettings extends BaseResource {
   static readonly TYPE = 'sso_settings' as const;
@@ -16,9 +16,7 @@ export default class SsoSettings extends BaseResource {
    */
   find() {
     return this.rawFind().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SsoSettingsSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.SsoSettingsSelfTargetSchema>(body),
     );
   }
 
@@ -30,8 +28,8 @@ export default class SsoSettings extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(): Promise<SchemaTypes.SsoSettingsSelfTargetSchema> {
-    return this.client.request<SchemaTypes.SsoSettingsSelfTargetSchema>({
+  rawFind(): Promise<RawApiTypes.SsoSettingsSelfTargetSchema> {
+    return this.client.request<RawApiTypes.SsoSettingsSelfTargetSchema>({
       method: 'GET',
       url: '/sso-settings',
     });
@@ -47,7 +45,7 @@ export default class SsoSettings extends BaseResource {
    */
   generateToken() {
     return this.rawGenerateToken().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SsoSettingsGenerateTokenTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SsoSettingsGenerateTokenTargetSchema>(
         body,
       ),
     );
@@ -61,8 +59,8 @@ export default class SsoSettings extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawGenerateToken(): Promise<SchemaTypes.SsoSettingsGenerateTokenTargetSchema> {
-    return this.client.request<SchemaTypes.SsoSettingsGenerateTokenTargetSchema>(
+  rawGenerateToken(): Promise<RawApiTypes.SsoSettingsGenerateTokenTargetSchema> {
+    return this.client.request<RawApiTypes.SsoSettingsGenerateTokenTargetSchema>(
       {
         method: 'PUT',
         url: '/sso-settings/generate-token',
@@ -78,15 +76,15 @@ export default class SsoSettings extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  update(body: SimpleSchemaTypes.SsoSettingsUpdateSchema) {
+  update(body: ApiTypes.SsoSettingsUpdateSchema) {
     return this.rawUpdate(
-      Utils.serializeRequestBody<SchemaTypes.SsoSettingsUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.SsoSettingsUpdateSchema>(body, {
         type: 'sso_settings',
         attributes: ['idp_saml_metadata_url', 'idp_saml_metadata_xml'],
         relationships: ['default_role'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SsoSettingsUpdateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SsoSettingsUpdateTargetSchema>(
         body,
       ),
     );
@@ -101,9 +99,9 @@ export default class SsoSettings extends BaseResource {
    * @throws {TimeoutError}
    */
   rawUpdate(
-    body: SchemaTypes.SsoSettingsUpdateSchema,
-  ): Promise<SchemaTypes.SsoSettingsUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.SsoSettingsUpdateTargetSchema>({
+    body: RawApiTypes.SsoSettingsUpdateSchema,
+  ): Promise<RawApiTypes.SsoSettingsUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.SsoSettingsUpdateTargetSchema>({
       method: 'PUT',
       url: '/sso-settings',
       body,

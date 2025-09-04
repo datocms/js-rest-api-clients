@@ -1,4 +1,4 @@
-import { type SchemaTypes, buildBlockRecord } from '@datocms/cma-client';
+import { type RawApiTypes, buildBlockRecord } from '@datocms/cma-client';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 
 describe('single block', () => {
@@ -46,7 +46,7 @@ describe('single block', () => {
       nested: true,
     });
 
-    const block = itemWithNestedBlocks.content as SchemaTypes.Item;
+    const block = itemWithNestedBlocks.content as RawApiTypes.Item;
 
     await client.items.update(item.id, {
       content: buildBlockRecord({
@@ -61,7 +61,7 @@ describe('single block', () => {
     });
 
     const updatedBlock =
-      updatedItemWithNestedBlocks.content as SchemaTypes.Item;
+      updatedItemWithNestedBlocks.content as RawApiTypes.Item;
 
     expect(updatedBlock.attributes.text).toEqual('Updated Foo');
   });

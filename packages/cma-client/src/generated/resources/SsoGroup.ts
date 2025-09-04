@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class SsoGroup extends BaseResource {
   static readonly TYPE = 'sso_group' as const;
@@ -16,7 +16,7 @@ export default class SsoGroup extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SsoGroupInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SsoGroupInstancesTargetSchema>(
         body,
       ),
     );
@@ -30,8 +30,8 @@ export default class SsoGroup extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.SsoGroupInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.SsoGroupInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.SsoGroupInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.SsoGroupInstancesTargetSchema>({
       method: 'GET',
       url: '/sso-groups',
     });
@@ -45,9 +45,9 @@ export default class SsoGroup extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  copyRoles(ssoGroupId: string | SimpleSchemaTypes.SsoGroupData) {
+  copyRoles(ssoGroupId: string | ApiTypes.SsoGroupData) {
     return this.rawCopyRoles(Utils.toId(ssoGroupId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SsoGroupCopyRolesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SsoGroupCopyRolesTargetSchema>(
         body,
       ),
     );
@@ -63,8 +63,8 @@ export default class SsoGroup extends BaseResource {
    */
   rawCopyRoles(
     ssoGroupId: string,
-  ): Promise<SchemaTypes.SsoGroupCopyRolesTargetSchema> {
-    return this.client.request<SchemaTypes.SsoGroupCopyRolesTargetSchema>({
+  ): Promise<RawApiTypes.SsoGroupCopyRolesTargetSchema> {
+    return this.client.request<RawApiTypes.SsoGroupCopyRolesTargetSchema>({
       method: 'POST',
       url: `/sso-groups/${ssoGroupId}/copy-roles`,
     });
@@ -79,21 +79,19 @@ export default class SsoGroup extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    ssoGroupId: string | SimpleSchemaTypes.SsoGroupData,
-    body: SimpleSchemaTypes.SsoGroupUpdateSchema,
+    ssoGroupId: string | ApiTypes.SsoGroupData,
+    body: ApiTypes.SsoGroupUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(ssoGroupId),
-      Utils.serializeRequestBody<SchemaTypes.SsoGroupUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.SsoGroupUpdateSchema>(body, {
         id: Utils.toId(ssoGroupId),
         type: 'sso_group',
         attributes: ['priority'],
         relationships: ['role'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SsoGroupUpdateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.SsoGroupUpdateTargetSchema>(body),
     );
   }
 
@@ -107,9 +105,9 @@ export default class SsoGroup extends BaseResource {
    */
   rawUpdate(
     ssoGroupId: string,
-    body: SchemaTypes.SsoGroupUpdateSchema,
-  ): Promise<SchemaTypes.SsoGroupUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.SsoGroupUpdateTargetSchema>({
+    body: RawApiTypes.SsoGroupUpdateSchema,
+  ): Promise<RawApiTypes.SsoGroupUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.SsoGroupUpdateTargetSchema>({
       method: 'PUT',
       url: `/sso-groups/${ssoGroupId}`,
       body,
@@ -124,11 +122,9 @@ export default class SsoGroup extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(ssoGroupId: string | SimpleSchemaTypes.SsoGroupData) {
+  destroy(ssoGroupId: string | ApiTypes.SsoGroupData) {
     return this.rawDestroy(Utils.toId(ssoGroupId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SsoGroupDestroyTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.SsoGroupDestroyTargetSchema>(body),
     );
   }
 
@@ -142,8 +138,8 @@ export default class SsoGroup extends BaseResource {
    */
   rawDestroy(
     ssoGroupId: string,
-  ): Promise<SchemaTypes.SsoGroupDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.SsoGroupDestroyTargetSchema>({
+  ): Promise<RawApiTypes.SsoGroupDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.SsoGroupDestroyTargetSchema>({
       method: 'DELETE',
       url: `/sso-groups/${ssoGroupId}`,
     });

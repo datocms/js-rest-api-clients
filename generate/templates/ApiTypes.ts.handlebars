@@ -59,7 +59,7 @@
     Omit<RawFieldAttributes['appearance'], keyof TAppearance>;
 
   /**
-  * Base field configuration for attributes (non-localized), extending the original SchemaTypes
+  * Base field configuration for attributes (non-localized), extending the original RawApiTypes
   */
   type NonLocalizedFieldAttributesForFieldType<
     SourceType,
@@ -79,7 +79,7 @@
   };
 
   /**
-  * Base field configuration for attributes (localized), extending the original SchemaTypes
+  * Base field configuration for attributes (localized), extending the original RawApiTypes
   */
   type LocalizedFieldAttributesForFieldType<
     SourceType,

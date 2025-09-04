@@ -3,5 +3,9 @@ export * from './buildClient';
 export { Client } from './generated/Client';
 export type { ClientConfigOptions } from './generated/Client';
 export * as Resources from './generated/resources';
-export * as SchemaTypes from './generated/SchemaTypes';
-export * as SimpleSchemaTypes from './generated/SimpleSchemaTypes';
+export type { ApiTypes, RawApiTypes };
+// Legacy names
+export type { ApiTypes as SchemaTypes, RawApiTypes as SimpleSchemaTypes };
+
+import type * as ApiTypes from './generated/ApiTypes';
+import type * as RawApiTypes from './generated/RawApiTypes';

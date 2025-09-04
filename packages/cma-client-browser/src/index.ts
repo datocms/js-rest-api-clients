@@ -1,25 +1,21 @@
-export * from './Client';
-export * from './buildClient';
-export * from './utils/uploadFileOrBlobAndReturnPath';
-export * from './utils/uploadFileOrBlobToS3';
-
-export { uploadFileOrBlobAndReturnPath } from './utils/uploadFileOrBlobAndReturnPath';
-
 export {
-  SchemaTypes,
-  SimpleSchemaTypes,
-  buildBlockRecord,
-  generateId,
-  buildClient as buildBaseClient,
   ApiError,
-  LogLevel,
+  buildBlockRecord,
+  buildClient as buildBaseClient,
   Client as BaseClient,
+  generateId,
+  LogLevel,
+  type ApiTypes,
+  type RawApiTypes,
+  type SchemaTypes,
+  type SimpleSchemaTypes,
 } from '@datocms/cma-client';
-
-export * as Resources from './generated/resources';
-
 export type { ClientConfigOptions } from '@datocms/cma-client';
-
 export { CanceledPromiseError } from '@datocms/rest-client-utils';
-
 export type { CancelablePromise } from '@datocms/rest-client-utils';
+export * from './buildClient';
+export * from './Client';
+export * as Resources from './generated/resources';
+export * from './utils/uploadFileOrBlobAndReturnPath';
+export { uploadFileOrBlobAndReturnPath } from './utils/uploadFileOrBlobAndReturnPath';
+export * from './utils/uploadFileOrBlobToS3';

@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class OauthApplication extends BaseResource {
   static readonly TYPE = 'oauth_application' as const;
@@ -14,7 +14,7 @@ export default class OauthApplication extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OauthApplicationInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OauthApplicationInstancesTargetSchema>(
         body,
       ),
     );
@@ -26,8 +26,8 @@ export default class OauthApplication extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.OauthApplicationInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.OauthApplicationInstancesTargetSchema>(
+  rawList(): Promise<RawApiTypes.OauthApplicationInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.OauthApplicationInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/oauth_applications',
@@ -41,7 +41,7 @@ export default class OauthApplication extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(oauthApplicationId: string | SimpleSchemaTypes.OauthApplicationData) {
+  destroy(oauthApplicationId: string | ApiTypes.OauthApplicationData) {
     return this.rawDestroy(Utils.toId(oauthApplicationId));
   }
 

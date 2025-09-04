@@ -1,5 +1,5 @@
 import { baseConfigOptions } from '../../../jest-helpers/generateNewCmaClient';
-import { ApiError, type SimpleSchemaTypes, buildClient } from '../src';
+import { ApiError, type ApiTypes, buildClient } from '../src';
 
 describe('@datocms/client', () => {
   it.concurrent('first test', async () => {
@@ -24,7 +24,7 @@ describe('@datocms/client', () => {
       ...baseConfigOptions,
     });
 
-    const allItems: SimpleSchemaTypes.Item[] = [];
+    const allItems: ApiTypes.Item[] = [];
 
     for await (const item of client.items.listPagedIterator(
       {

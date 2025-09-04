@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class PaymentIntent extends BaseResource {
   static readonly TYPE = 'payment_intent' as const;
@@ -15,12 +15,12 @@ export default class PaymentIntent extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   createFromPaymentMethod(
-    paymentMethodId: string | SimpleSchemaTypes.PaymentMethodData,
-    body: SimpleSchemaTypes.PaymentIntentCreateFromPaymentMethodSchema,
+    paymentMethodId: string | ApiTypes.PaymentMethodData,
+    body: ApiTypes.PaymentIntentCreateFromPaymentMethodSchema,
   ) {
     return this.rawCreateFromPaymentMethod(
       Utils.toId(paymentMethodId),
-      Utils.serializeRequestBody<SchemaTypes.PaymentIntentCreateFromPaymentMethodSchema>(
+      Utils.serializeRequestBody<RawApiTypes.PaymentIntentCreateFromPaymentMethodSchema>(
         body,
         {
           type: 'payment_intent',
@@ -29,7 +29,7 @@ export default class PaymentIntent extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PaymentIntentCreateFromPaymentMethodTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PaymentIntentCreateFromPaymentMethodTargetSchema>(
         body,
       ),
     );
@@ -45,9 +45,9 @@ export default class PaymentIntent extends BaseResource {
    */
   rawCreateFromPaymentMethod(
     paymentMethodId: string,
-    body: SchemaTypes.PaymentIntentCreateFromPaymentMethodSchema,
-  ): Promise<SchemaTypes.PaymentIntentCreateFromPaymentMethodTargetSchema> {
-    return this.client.request<SchemaTypes.PaymentIntentCreateFromPaymentMethodTargetSchema>(
+    body: RawApiTypes.PaymentIntentCreateFromPaymentMethodSchema,
+  ): Promise<RawApiTypes.PaymentIntentCreateFromPaymentMethodTargetSchema> {
+    return this.client.request<RawApiTypes.PaymentIntentCreateFromPaymentMethodTargetSchema>(
       {
         method: 'POST',
         url: `/payment-methods/${paymentMethodId}/payment-intents`,
@@ -67,12 +67,12 @@ export default class PaymentIntent extends BaseResource {
   createForPerSitePricingBillingProfile(
     perSitePricingBillingProfileId:
       | string
-      | SimpleSchemaTypes.PerSitePricingBillingProfileData,
-    body: SimpleSchemaTypes.PaymentIntentCreateForPerSitePricingBillingProfileSchema,
+      | ApiTypes.PerSitePricingBillingProfileData,
+    body: ApiTypes.PaymentIntentCreateForPerSitePricingBillingProfileSchema,
   ) {
     return this.rawCreateForPerSitePricingBillingProfile(
       Utils.toId(perSitePricingBillingProfileId),
-      Utils.serializeRequestBody<SchemaTypes.PaymentIntentCreateForPerSitePricingBillingProfileSchema>(
+      Utils.serializeRequestBody<RawApiTypes.PaymentIntentCreateForPerSitePricingBillingProfileSchema>(
         body,
         {
           type: 'payment_intent',
@@ -81,7 +81,7 @@ export default class PaymentIntent extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PaymentIntentCreateForPerSitePricingBillingProfileTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PaymentIntentCreateForPerSitePricingBillingProfileTargetSchema>(
         body,
       ),
     );
@@ -97,9 +97,9 @@ export default class PaymentIntent extends BaseResource {
    */
   rawCreateForPerSitePricingBillingProfile(
     perSitePricingBillingProfileId: string,
-    body: SchemaTypes.PaymentIntentCreateForPerSitePricingBillingProfileSchema,
-  ): Promise<SchemaTypes.PaymentIntentCreateForPerSitePricingBillingProfileTargetSchema> {
-    return this.client.request<SchemaTypes.PaymentIntentCreateForPerSitePricingBillingProfileTargetSchema>(
+    body: RawApiTypes.PaymentIntentCreateForPerSitePricingBillingProfileSchema,
+  ): Promise<RawApiTypes.PaymentIntentCreateForPerSitePricingBillingProfileTargetSchema> {
+    return this.client.request<RawApiTypes.PaymentIntentCreateForPerSitePricingBillingProfileTargetSchema>(
       {
         method: 'POST',
         url: `/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/payment-intents`,
@@ -117,10 +117,10 @@ export default class PaymentIntent extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   createForPerOwnerPricingBillingProfile(
-    body: SimpleSchemaTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileSchema,
+    body: ApiTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileSchema,
   ) {
     return this.rawCreateForPerOwnerPricingBillingProfile(
-      Utils.serializeRequestBody<SchemaTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileSchema>(
+      Utils.serializeRequestBody<RawApiTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileSchema>(
         body,
         {
           type: 'payment_intent',
@@ -129,7 +129,7 @@ export default class PaymentIntent extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileTargetSchema>(
         body,
       ),
     );
@@ -144,9 +144,9 @@ export default class PaymentIntent extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawCreateForPerOwnerPricingBillingProfile(
-    body: SchemaTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileSchema,
-  ): Promise<SchemaTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileTargetSchema> {
-    return this.client.request<SchemaTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileTargetSchema>(
+    body: RawApiTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileSchema,
+  ): Promise<RawApiTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileTargetSchema> {
+    return this.client.request<RawApiTypes.PaymentIntentCreateForPerOwnerPricingBillingProfileTargetSchema>(
       {
         method: 'POST',
         url: '/per-owner-pricing-billing-profile/payment-intents',
@@ -163,9 +163,9 @@ export default class PaymentIntent extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  confirm(paymentIntentId: string | SimpleSchemaTypes.PaymentIntentData) {
+  confirm(paymentIntentId: string | ApiTypes.PaymentIntentData) {
     return this.rawConfirm(Utils.toId(paymentIntentId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PaymentIntentConfirmTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PaymentIntentConfirmTargetSchema>(
         body,
       ),
     );
@@ -181,8 +181,8 @@ export default class PaymentIntent extends BaseResource {
    */
   rawConfirm(
     paymentIntentId: string,
-  ): Promise<SchemaTypes.PaymentIntentConfirmTargetSchema> {
-    return this.client.request<SchemaTypes.PaymentIntentConfirmTargetSchema>({
+  ): Promise<RawApiTypes.PaymentIntentConfirmTargetSchema> {
+    return this.client.request<RawApiTypes.PaymentIntentConfirmTargetSchema>({
       method: 'PUT',
       url: `/payment-intents/${paymentIntentId}/confirm`,
     });

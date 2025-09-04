@@ -3,7 +3,7 @@ import {
   pollJobResult,
   request,
 } from '@datocms/rest-client-utils';
-import type { JobResult } from './SimpleSchemaTypes';
+import type { JobResult } from './ApiTypes';
 import * as Resources from './resources';
 
 export type RequestOptions = {

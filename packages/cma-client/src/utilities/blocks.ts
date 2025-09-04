@@ -34,8 +34,8 @@ import type {
   StructuredTextFieldValueAsRequest,
   StructuredTextFieldValueWithNestedBlocks,
 } from '../fieldTypes';
-import type * as SchemaTypes from '../generated/SchemaTypes';
-import type * as SimpleSchemaTypes from '../generated/SimpleSchemaTypes';
+import type * as ApiTypes from '../generated/ApiTypes';
+import type * as RawApiTypes from '../generated/RawApiTypes';
 import {
   type TreePath,
   filterNodes,
@@ -59,12 +59,12 @@ type PossibleStructuredTextValue =
   | StructuredTextFieldValueAsRequest
   | StructuredTextFieldValueWithNestedBlocks;
 
-function getFieldType(field: SchemaTypes.Field | SimpleSchemaTypes.Field) {
+function getFieldType(field: RawApiTypes.Field | ApiTypes.Field) {
   return 'attributes' in field ? field.attributes.field_type : field.field_type;
 }
 
 function* iterateBlocks(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
 ): Generator<{ item: BlockItemInARequest; path: TreePath }> {
   const fieldType = getFieldType(field);
@@ -107,7 +107,7 @@ function* iterateBlocks(
 }
 
 async function* iterateBlocksAsync(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
 ): AsyncGenerator<{ item: BlockItemInARequest; path: TreePath }> {
   const fieldType = getFieldType(field);
@@ -158,7 +158,7 @@ async function* iterateBlocksAsync(
  * @param visitor - Synchronous function called for each block. Receives the block item and its path
  */
 export function nonRecursiveVisitBlocksInFieldValue(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   visitor: (item: BlockItemInARequest, path: TreePath) => void,
 ): void {
@@ -177,7 +177,7 @@ export function nonRecursiveVisitBlocksInFieldValue(
  * @returns Promise that resolves when all blocks have been visited
  */
 export async function nonRecursiveVisitBlocksInFieldValueAsync(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   visitor: (item: BlockItemInARequest, path: TreePath) => Promise<void>,
 ): Promise<void> {
@@ -197,7 +197,7 @@ export async function nonRecursiveVisitBlocksInFieldValueAsync(
  * @returns The new field value with transformed blocks
  */
 export function nonRecursiveMapBlocksInFieldValue(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   mapper: (item: BlockItemInARequest, path: TreePath) => BlockItemInARequest,
 ): unknown {
@@ -251,7 +251,7 @@ export function nonRecursiveMapBlocksInFieldValue(
  * @returns Promise that resolves to the new field value with transformed blocks
  */
 export async function nonRecursiveMapBlocksInFieldValueAsync(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   mapper: (
     item: BlockItemInARequest,
@@ -309,7 +309,7 @@ export async function nonRecursiveMapBlocksInFieldValueAsync(
  * @returns Array of objects, each containing a matching block and its path
  */
 export function nonRecursiveFindAllBlocksInFieldValue(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   predicate: (item: BlockItemInARequest, path: TreePath) => boolean,
 ): Array<{ item: BlockItemInARequest; path: TreePath }> {
@@ -334,7 +334,7 @@ export function nonRecursiveFindAllBlocksInFieldValue(
  * @returns Promise that resolves to an array of objects, each containing a matching block and its path
  */
 export async function nonRecursiveFindAllBlocksInFieldValueAsync(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   predicate: (item: BlockItemInARequest, path: TreePath) => Promise<boolean>,
 ): Promise<Array<{ item: BlockItemInARequest; path: TreePath }>> {
@@ -360,7 +360,7 @@ export async function nonRecursiveFindAllBlocksInFieldValueAsync(
  * @returns The new field value with filtered blocks
  */
 export function nonRecursiveFilterBlocksInFieldValue(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   predicate: (item: BlockItemInARequest, path: TreePath) => boolean,
 ): unknown {
@@ -426,7 +426,7 @@ export function nonRecursiveFilterBlocksInFieldValue(
  * @returns Promise that resolves to the new field value with filtered blocks
  */
 export async function nonRecursiveFilterBlocksInFieldValueAsync(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   predicate: (item: BlockItemInARequest, path: TreePath) => Promise<boolean>,
 ): Promise<unknown> {
@@ -493,7 +493,7 @@ export async function nonRecursiveFilterBlocksInFieldValueAsync(
  * @returns The final accumulated value
  */
 export function nonRecursiveReduceBlocksInFieldValue<R>(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   reducer: (accumulator: R, item: BlockItemInARequest, path: TreePath) => R,
   initialValue: R,
@@ -519,7 +519,7 @@ export function nonRecursiveReduceBlocksInFieldValue<R>(
  * @returns Promise that resolves to the final accumulated value
  */
 export async function nonRecursiveReduceBlocksInFieldValueAsync<R>(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   reducer: (
     accumulator: R,
@@ -547,7 +547,7 @@ export async function nonRecursiveReduceBlocksInFieldValueAsync<R>(
  * @returns True if any block matches, false otherwise
  */
 export function nonRecursiveSomeBlocksInFieldValue(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   predicate: (item: BlockItemInARequest, path: TreePath) => boolean,
 ): boolean {
@@ -570,7 +570,7 @@ export function nonRecursiveSomeBlocksInFieldValue(
  * @returns Promise that resolves to true if any block matches, false otherwise
  */
 export async function nonRecursiveSomeBlocksInFieldValueAsync(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   predicate: (item: BlockItemInARequest, path: TreePath) => Promise<boolean>,
 ): Promise<boolean> {
@@ -593,7 +593,7 @@ export async function nonRecursiveSomeBlocksInFieldValueAsync(
  * @returns True if all blocks match, false otherwise
  */
 export function nonRecursiveEveryBlockInFieldValue(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   predicate: (item: BlockItemInARequest, path: TreePath) => boolean,
 ): boolean {
@@ -612,7 +612,7 @@ export function nonRecursiveEveryBlockInFieldValue(
  * @returns Promise that resolves to true if all blocks match, false otherwise
  */
 export async function nonRecursiveEveryBlockInFieldValueAsync(
-  field: SchemaTypes.Field | SimpleSchemaTypes.Field,
+  field: RawApiTypes.Field | ApiTypes.Field,
   value: unknown,
   predicate: (item: BlockItemInARequest, path: TreePath) => Promise<boolean>,
 ): Promise<boolean> {

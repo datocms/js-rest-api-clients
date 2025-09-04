@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class SubscriptionFeature extends BaseResource {
   static readonly TYPE = 'subscription_feature' as const;
@@ -16,7 +16,7 @@ export default class SubscriptionFeature extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SubscriptionFeatureInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SubscriptionFeatureInstancesTargetSchema>(
         body,
       ),
     );
@@ -30,8 +30,8 @@ export default class SubscriptionFeature extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.SubscriptionFeatureInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.SubscriptionFeatureInstancesTargetSchema>(
+  rawList(): Promise<RawApiTypes.SubscriptionFeatureInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.SubscriptionFeatureInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/subscription-features',

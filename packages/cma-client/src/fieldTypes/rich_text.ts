@@ -1,4 +1,4 @@
-import type * as SchemaTypes from '../generated/SchemaTypes';
+import type * as RawApiTypes from '../generated/RawApiTypes';
 import {
   type BlockItemInARequest,
   isBlockObject,
@@ -53,8 +53,8 @@ export type RichTextFieldValue = string[] | null;
 /**
  * Modular Content field value for API requests - allows flexible block representations:
  * - string: Just the block ID (most common case)
- * - SchemaTypes.Item: Full block object with ID (for updates)
- * - Omit<SchemaTypes.Item, 'id'>: Block object without ID (for creation)
+ * - RawApiTypes.Item: Full block object with ID (for updates)
+ * - Omit<RawApiTypes.Item, 'id'>: Block object without ID (for creation)
  */
 export type RichTextFieldValueAsRequest = BlockItemInARequest[] | null;
 
@@ -64,14 +64,14 @@ export type RichTextFieldValueAsRequest = BlockItemInARequest[] | null;
  * =============================================================================
  *
  * When using the ?nested=true query parameter, the API returns Modular Content data
- * with embedded blocks fully populated as complete SchemaTypes.Item objects instead
+ * with embedded blocks fully populated as complete RawApiTypes.Item objects instead
  * of just string IDs. This provides type safety for working with fully resolved data.
  */
 
 /**
  * Modular Content field value with nested blocks - array of fully populated block objects
  */
-export type RichTextFieldValueWithNestedBlocks = SchemaTypes.Item[] | null;
+export type RichTextFieldValueWithNestedBlocks = RawApiTypes.Item[] | null;
 
 /**
  * =============================================================================
@@ -115,7 +115,7 @@ export function isRichTextFieldValueAsRequest(
 
 /**
  * Type guard for Modular Content field values with nested blocks (?nested=true format).
- * Ensures all blocks are full SchemaTypes.Item objects with complete data.
+ * Ensures all blocks are full RawApiTypes.Item objects with complete data.
  */
 export function isRichTextFieldValueWithNestedBlocks(
   value: unknown,

@@ -1,5 +1,5 @@
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
-import type { SimpleSchemaTypes } from '../src';
+import type { ApiTypes } from '../src';
 
 describe('uploadTags', () => {
   test('smart tags and tags', async () => {
@@ -14,7 +14,7 @@ describe('uploadTags', () => {
     });
     expect(updated.tags[0]).toEqual(tag.id);
 
-    const allTags: SimpleSchemaTypes.UploadTag[] = [];
+    const allTags: ApiTypes.UploadTag[] = [];
 
     for await (const tag of client.uploadTags.listPagedIterator({
       filter: { query: 'foo' },

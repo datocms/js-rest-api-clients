@@ -1,4 +1,4 @@
-import { type SchemaTypes, buildBlockRecord } from '@datocms/cma-client';
+import { type RawApiTypes, buildBlockRecord } from '@datocms/cma-client';
 import {
   type Block,
   type Document,
@@ -86,7 +86,7 @@ describe('structured text', () => {
         if (!(isDastNode(node) && isBlock(node))) {
           return node;
         }
-        const item = node.item as any as SchemaTypes.Item;
+        const item = node.item as any as RawApiTypes.Item;
         return {
           ...node,
           item: {
@@ -114,7 +114,7 @@ describe('structured text', () => {
     const secondBlock = updatedNestedContent.document.children[2] as Block;
 
     expect(
-      (secondBlock.item as any as SchemaTypes.Item).attributes.text,
+      (secondBlock.item as any as RawApiTypes.Item).attributes.text,
     ).toEqual('Updated Foo');
   });
 });

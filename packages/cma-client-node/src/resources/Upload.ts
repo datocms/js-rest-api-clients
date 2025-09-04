@@ -1,4 +1,4 @@
-import { Resources, type SimpleSchemaTypes } from '@datocms/cma-client';
+import { type ApiTypes, Resources } from '@datocms/cma-client';
 import {
   type CancelablePromise,
   CanceledPromiseError,
@@ -20,7 +20,7 @@ export type OnUploadProgressInfo =
   | OnProgressCreatingUploadObjectInfo;
 
 export type CreateUploadFromLocalFileSchema = Omit<
-  SimpleSchemaTypes.UploadCreateSchema,
+  ApiTypes.UploadCreateSchema,
   'path'
 > & {
   localPath: string;
@@ -30,7 +30,7 @@ export type CreateUploadFromLocalFileSchema = Omit<
 };
 
 export type UpdateUploadFromLocalFileSchema = Omit<
-  SimpleSchemaTypes.UploadUpdateSchema,
+  ApiTypes.UploadUpdateSchema,
   'path'
 > & {
   localPath: string;
@@ -39,7 +39,7 @@ export type UpdateUploadFromLocalFileSchema = Omit<
 };
 
 export type CreateUploadFromUrlSchema = Omit<
-  SimpleSchemaTypes.UploadCreateSchema,
+  ApiTypes.UploadCreateSchema,
   'path'
 > & {
   url: string;
@@ -49,7 +49,7 @@ export type CreateUploadFromUrlSchema = Omit<
 };
 
 export type UpdateUploadFromUrlSchema = Omit<
-  SimpleSchemaTypes.UploadUpdateSchema,
+  ApiTypes.UploadUpdateSchema,
   'path'
 > & {
   url: string;
@@ -65,11 +65,11 @@ export default class Upload extends Resources.Upload {
    */
   createFromLocalFile(
     body: CreateUploadFromLocalFileSchema,
-  ): CancelablePromise<SimpleSchemaTypes.Upload> {
+  ): CancelablePromise<ApiTypes.Upload> {
     let isCanceledBeforeUpload = false;
     let runningPromise: CancelablePromise<string> | undefined;
 
-    return makeCancelablePromise<SimpleSchemaTypes.Upload>(
+    return makeCancelablePromise<ApiTypes.Upload>(
       async () => {
         if (isCanceledBeforeUpload) {
           throw new CanceledPromiseError();
@@ -133,12 +133,12 @@ export default class Upload extends Resources.Upload {
    */
   createFromUrl(
     body: CreateUploadFromUrlSchema,
-  ): CancelablePromise<SimpleSchemaTypes.Upload> {
+  ): CancelablePromise<ApiTypes.Upload> {
     let isCanceled = false;
     let downloadPromise: CancelablePromise<DownloadResult> | undefined;
-    let runningPromise: CancelablePromise<SimpleSchemaTypes.Upload> | undefined;
+    let runningPromise: CancelablePromise<ApiTypes.Upload> | undefined;
 
-    return makeCancelablePromise<SimpleSchemaTypes.Upload>(
+    return makeCancelablePromise<ApiTypes.Upload>(
       async () => {
         if (isCanceled) {
           throw new CanceledPromiseError();
@@ -195,13 +195,13 @@ export default class Upload extends Resources.Upload {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/update
    */
   updateFromLocalFile(
-    uploadId: string | SimpleSchemaTypes.UploadData,
+    uploadId: string | ApiTypes.UploadData,
     body: UpdateUploadFromLocalFileSchema,
-  ): CancelablePromise<SimpleSchemaTypes.Upload> {
+  ): CancelablePromise<ApiTypes.Upload> {
     let isCanceledBeforeUpload = false;
     let runningPromise: CancelablePromise<string> | undefined;
 
-    return makeCancelablePromise<SimpleSchemaTypes.Upload>(
+    return makeCancelablePromise<ApiTypes.Upload>(
       async () => {
         if (isCanceledBeforeUpload) {
           throw new CanceledPromiseError();
@@ -238,14 +238,14 @@ export default class Upload extends Resources.Upload {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/update
    */
   updateFromUrl(
-    uploadId: string | SimpleSchemaTypes.UploadData,
+    uploadId: string | ApiTypes.UploadData,
     body: UpdateUploadFromUrlSchema,
-  ): CancelablePromise<SimpleSchemaTypes.Upload> {
+  ): CancelablePromise<ApiTypes.Upload> {
     let isCanceled = false;
     let downloadPromise: CancelablePromise<DownloadResult> | undefined;
-    let runningPromise: CancelablePromise<SimpleSchemaTypes.Upload> | undefined;
+    let runningPromise: CancelablePromise<ApiTypes.Upload> | undefined;
 
-    return makeCancelablePromise<SimpleSchemaTypes.Upload>(
+    return makeCancelablePromise<ApiTypes.Upload>(
       async () => {
         if (isCanceled) {
           throw new CanceledPromiseError();

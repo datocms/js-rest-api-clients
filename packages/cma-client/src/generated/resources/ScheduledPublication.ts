@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class ScheduledPublication extends BaseResource {
   static readonly TYPE = 'scheduled_publication' as const;
@@ -15,12 +15,12 @@ export default class ScheduledPublication extends BaseResource {
    * @throws {TimeoutError}
    */
   create(
-    itemId: string | SimpleSchemaTypes.ItemData,
-    body: SimpleSchemaTypes.ScheduledPublicationCreateSchema,
+    itemId: string | ApiTypes.ItemData,
+    body: ApiTypes.ScheduledPublicationCreateSchema,
   ) {
     return this.rawCreate(
       Utils.toId(itemId),
-      Utils.serializeRequestBody<SchemaTypes.ScheduledPublicationCreateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.ScheduledPublicationCreateSchema>(
         body,
         {
           type: 'scheduled_publication',
@@ -29,7 +29,7 @@ export default class ScheduledPublication extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ScheduledPublicationCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ScheduledPublicationCreateTargetSchema>(
         body,
       ),
     );
@@ -45,9 +45,9 @@ export default class ScheduledPublication extends BaseResource {
    */
   rawCreate(
     itemId: string,
-    body: SchemaTypes.ScheduledPublicationCreateSchema,
-  ): Promise<SchemaTypes.ScheduledPublicationCreateTargetSchema> {
-    return this.client.request<SchemaTypes.ScheduledPublicationCreateTargetSchema>(
+    body: RawApiTypes.ScheduledPublicationCreateSchema,
+  ): Promise<RawApiTypes.ScheduledPublicationCreateTargetSchema> {
+    return this.client.request<RawApiTypes.ScheduledPublicationCreateTargetSchema>(
       {
         method: 'POST',
         url: `/items/${itemId}/scheduled-publication`,
@@ -64,9 +64,9 @@ export default class ScheduledPublication extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(itemId: string | SimpleSchemaTypes.ItemData) {
+  destroy(itemId: string | ApiTypes.ItemData) {
     return this.rawDestroy(Utils.toId(itemId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ScheduledPublicationDestroyTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ScheduledPublicationDestroyTargetSchema>(
         body,
       ),
     );
@@ -82,8 +82,8 @@ export default class ScheduledPublication extends BaseResource {
    */
   rawDestroy(
     itemId: string,
-  ): Promise<SchemaTypes.ScheduledPublicationDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.ScheduledPublicationDestroyTargetSchema>(
+  ): Promise<RawApiTypes.ScheduledPublicationDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.ScheduledPublicationDestroyTargetSchema>(
       {
         method: 'DELETE',
         url: `/items/${itemId}/scheduled-publication`,

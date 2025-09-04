@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as RawApiTypes from '../RawApiTypes';
+import type * as ApiTypes from '../ApiTypes';
 
 export default class {{{resourceClassName}}} extends BaseResource {
   static readonly TYPE = '{{jsonApiType}}' as const;
@@ -24,13 +24,13 @@ export default class {{{resourceClassName}}} extends BaseResource {
       */
       {{{name}}}(
         {{#each urlPlaceholders}}
-          {{{variableName}}}: string | SimpleSchemaTypes.{{{relType}}},
+          {{{variableName}}}: string | ApiTypes.{{{relType}}},
         {{/each}}
         {{#if requestBodyType}}
-          body{{#if optionalRequestBody}}?{{/if}}: SimpleSchemaTypes.{{{requestBodyType}}},
+          body{{#if optionalRequestBody}}?{{/if}}: ApiTypes.{{{requestBodyType}}},
         {{/if}}
         {{#if queryParamsType}}
-          queryParams{{#unless queryParamsRequired}}?{{/unless}}: SimpleSchemaTypes.{{{queryParamsType}}},
+          queryParams{{#unless queryParamsRequired}}?{{/unless}}: ApiTypes.{{{queryParamsType}}},
         {{/if}}
       ) {
         return this.{{{rawName}}}(
@@ -38,7 +38,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
               Utils.toId({{{variableName}}}),
             {{/each}}
             {{#if requestBodyType}}
-              {{#if optionalRequestBody}}body ? {{/if}}Utils.serializeRequestBody<SchemaTypes.{{{requestBodyType}}}>(
+              {{#if optionalRequestBody}}body ? {{/if}}Utils.serializeRequestBody<RawApiTypes.{{{requestBodyType}}}>(
                 body,
                 {
                   {{#if entityIdPlaceholder}}
@@ -58,7 +58,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
             {{/if}}
           )
           {{#if responseType}}
-          .then(body => Utils.deserializeResponseBody<SimpleSchemaTypes.{{{responseType}}}>(body))
+          .then(body => Utils.deserializeResponseBody<ApiTypes.{{{responseType}}}>(body))
           {{/if}}
         ;
       }
@@ -83,21 +83,21 @@ export default class {{{resourceClassName}}} extends BaseResource {
       {{{variableName}}}: string,
     {{/each}}
     {{#if requestBodyType}}
-      body{{#if optionalRequestBody}}?{{/if}}: SchemaTypes.{{{requestBodyType}}},
+      body{{#if optionalRequestBody}}?{{/if}}: RawApiTypes.{{{requestBodyType}}},
     {{/if}}
     {{#if queryParamsType}}
-      queryParams{{#unless queryParamsRequired}}?{{/unless}}: SchemaTypes.{{{queryParamsType}}},
+      queryParams{{#unless queryParamsRequired}}?{{/unless}}: RawApiTypes.{{{queryParamsType}}},
     {{/if}}
   ): Promise<
     {{#if responseType}}
-      SchemaTypes.{{{responseType}}}
+      RawApiTypes.{{{responseType}}}
     {{else}}
       void
     {{/if}}
   > {
     return this.client.request<
       {{#if responseType}}
-        SchemaTypes.{{{responseType}}}
+        RawApiTypes.{{{responseType}}}
       {{else}}
         void
       {{/if}}
@@ -128,9 +128,9 @@ export default class {{{resourceClassName}}} extends BaseResource {
     */
       async *{{{name}}}PagedIterator(
         {{#each urlPlaceholders}}
-          {{{variableName}}}: string | SimpleSchemaTypes.{{{relType}}},
+          {{{variableName}}}: string | ApiTypes.{{{relType}}},
         {{/each}}
-        queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<SimpleSchemaTypes.{{{queryParamsType}}}, 'page'>,
+        queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<ApiTypes.{{{queryParamsType}}}, 'page'>,
         iteratorOptions?: Utils.IteratorOptions,
       ) {
         for await (const element of this.{{{rawName}}}PagedIterator(
@@ -141,7 +141,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
           iteratorOptions,
         )) {
           yield Utils.deserializeJsonEntity<
-            SimpleSchemaTypes.{{{responseType}}}[0]
+            ApiTypes.{{{responseType}}}[0]
           >(element);
         }
       }
@@ -161,19 +161,19 @@ export default class {{{resourceClassName}}} extends BaseResource {
       {{#each urlPlaceholders}}
         {{{variableName}}}: string,
       {{/each}}
-      queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<SchemaTypes.{{{queryParamsType}}}, 'page'>,
+      queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<RawApiTypes.{{{queryParamsType}}}, 'page'>,
       iteratorOptions?: Utils.IteratorOptions,
     ) {
       Utils.warnOnPageQueryParam(queryParams);
 
       return Utils.rawPageIterator<
-        SchemaTypes.{{{responseType}}}['data'][0]
+        RawApiTypes.{{{responseType}}}['data'][0]
       >(
         {
           defaultLimit: {{{paginatedResponse.defaultLimit}}},
           maxLimit: {{{paginatedResponse.maxLimit}}},
         },
-        (page: SchemaTypes.{{{queryParamsType}}}['page']) => this.{{{rawName}}}(
+        (page: RawApiTypes.{{{queryParamsType}}}['page']) => this.{{{rawName}}}(
           {{#each urlPlaceholders}}
             {{{variableName}}},
           {{/each}}

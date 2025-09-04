@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class ItemTypeFilter extends BaseResource {
   static readonly TYPE = 'item_type_filter' as const;
@@ -14,15 +14,15 @@ export default class ItemTypeFilter extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.ItemTypeFilterCreateSchema) {
+  create(body: ApiTypes.ItemTypeFilterCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.ItemTypeFilterCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.ItemTypeFilterCreateSchema>(body, {
         type: 'item_type_filter',
         attributes: ['name', 'filter', 'columns', 'order_by', 'shared'],
         relationships: ['item_type'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeFilterCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ItemTypeFilterCreateTargetSchema>(
         body,
       ),
     );
@@ -37,9 +37,9 @@ export default class ItemTypeFilter extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.ItemTypeFilterCreateSchema,
-  ): Promise<SchemaTypes.ItemTypeFilterCreateTargetSchema> {
-    return this.client.request<SchemaTypes.ItemTypeFilterCreateTargetSchema>({
+    body: RawApiTypes.ItemTypeFilterCreateSchema,
+  ): Promise<RawApiTypes.ItemTypeFilterCreateTargetSchema> {
+    return this.client.request<RawApiTypes.ItemTypeFilterCreateTargetSchema>({
       method: 'POST',
       url: '/item-type-filters',
       body,
@@ -55,19 +55,19 @@ export default class ItemTypeFilter extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    itemTypeFilterId: string | SimpleSchemaTypes.ItemTypeFilterData,
-    body: SimpleSchemaTypes.ItemTypeFilterUpdateSchema,
+    itemTypeFilterId: string | ApiTypes.ItemTypeFilterData,
+    body: ApiTypes.ItemTypeFilterUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(itemTypeFilterId),
-      Utils.serializeRequestBody<SchemaTypes.ItemTypeFilterUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.ItemTypeFilterUpdateSchema>(body, {
         id: Utils.toId(itemTypeFilterId),
         type: 'item_type_filter',
         attributes: ['name', 'columns', 'order_by', 'shared', 'filter'],
         relationships: ['item_type'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeFilterUpdateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ItemTypeFilterUpdateTargetSchema>(
         body,
       ),
     );
@@ -83,9 +83,9 @@ export default class ItemTypeFilter extends BaseResource {
    */
   rawUpdate(
     itemTypeFilterId: string,
-    body: SchemaTypes.ItemTypeFilterUpdateSchema,
-  ): Promise<SchemaTypes.ItemTypeFilterUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.ItemTypeFilterUpdateTargetSchema>({
+    body: RawApiTypes.ItemTypeFilterUpdateSchema,
+  ): Promise<RawApiTypes.ItemTypeFilterUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.ItemTypeFilterUpdateTargetSchema>({
       method: 'PUT',
       url: `/item-type-filters/${itemTypeFilterId}`,
       body,
@@ -102,7 +102,7 @@ export default class ItemTypeFilter extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeFilterInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ItemTypeFilterInstancesTargetSchema>(
         body,
       ),
     );
@@ -116,8 +116,8 @@ export default class ItemTypeFilter extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.ItemTypeFilterInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.ItemTypeFilterInstancesTargetSchema>(
+  rawList(): Promise<RawApiTypes.ItemTypeFilterInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.ItemTypeFilterInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/item-type-filters',
@@ -133,9 +133,9 @@ export default class ItemTypeFilter extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(itemTypeFilterId: string | SimpleSchemaTypes.ItemTypeFilterData) {
+  find(itemTypeFilterId: string | ApiTypes.ItemTypeFilterData) {
     return this.rawFind(Utils.toId(itemTypeFilterId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeFilterSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ItemTypeFilterSelfTargetSchema>(
         body,
       ),
     );
@@ -151,8 +151,8 @@ export default class ItemTypeFilter extends BaseResource {
    */
   rawFind(
     itemTypeFilterId: string,
-  ): Promise<SchemaTypes.ItemTypeFilterSelfTargetSchema> {
-    return this.client.request<SchemaTypes.ItemTypeFilterSelfTargetSchema>({
+  ): Promise<RawApiTypes.ItemTypeFilterSelfTargetSchema> {
+    return this.client.request<RawApiTypes.ItemTypeFilterSelfTargetSchema>({
       method: 'GET',
       url: `/item-type-filters/${itemTypeFilterId}`,
     });
@@ -166,9 +166,9 @@ export default class ItemTypeFilter extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(itemTypeFilterId: string | SimpleSchemaTypes.ItemTypeFilterData) {
+  destroy(itemTypeFilterId: string | ApiTypes.ItemTypeFilterData) {
     return this.rawDestroy(Utils.toId(itemTypeFilterId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemTypeFilterDestroyTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ItemTypeFilterDestroyTargetSchema>(
         body,
       ),
     );
@@ -184,8 +184,8 @@ export default class ItemTypeFilter extends BaseResource {
    */
   rawDestroy(
     itemTypeFilterId: string,
-  ): Promise<SchemaTypes.ItemTypeFilterDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.ItemTypeFilterDestroyTargetSchema>({
+  ): Promise<RawApiTypes.ItemTypeFilterDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.ItemTypeFilterDestroyTargetSchema>({
       method: 'DELETE',
       url: `/item-type-filters/${itemTypeFilterId}`,
     });

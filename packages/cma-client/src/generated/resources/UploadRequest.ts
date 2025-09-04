@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class UploadRequest extends BaseResource {
   static readonly TYPE = 'upload_request' as const;
@@ -14,15 +14,15 @@ export default class UploadRequest extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.UploadRequestCreateSchema) {
+  create(body: ApiTypes.UploadRequestCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.UploadRequestCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.UploadRequestCreateSchema>(body, {
         type: 'upload_request',
         attributes: ['filename'],
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadRequestCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadRequestCreateTargetSchema>(
         body,
       ),
     );
@@ -37,9 +37,9 @@ export default class UploadRequest extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.UploadRequestCreateSchema,
-  ): Promise<SchemaTypes.UploadRequestCreateTargetSchema> {
-    return this.client.request<SchemaTypes.UploadRequestCreateTargetSchema>({
+    body: RawApiTypes.UploadRequestCreateSchema,
+  ): Promise<RawApiTypes.UploadRequestCreateTargetSchema> {
+    return this.client.request<RawApiTypes.UploadRequestCreateTargetSchema>({
       method: 'POST',
       url: '/upload-requests',
       body,

@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class SiteSubscription extends BaseResource {
   static readonly TYPE = 'site_subscription' as const;
@@ -14,9 +14,9 @@ export default class SiteSubscription extends BaseResource {
    */
   rawCreate(
     siteId: string,
-    body: SchemaTypes.SiteSubscriptionCreateSchema,
-  ): Promise<SchemaTypes.SiteSubscriptionCreateTargetSchema> {
-    return this.client.request<SchemaTypes.SiteSubscriptionCreateTargetSchema>({
+    body: RawApiTypes.SiteSubscriptionCreateSchema,
+  ): Promise<RawApiTypes.SiteSubscriptionCreateTargetSchema> {
+    return this.client.request<RawApiTypes.SiteSubscriptionCreateTargetSchema>({
       method: 'POST',
       url: `/sites/${siteId}/subscriptions`,
       body,
@@ -31,9 +31,9 @@ export default class SiteSubscription extends BaseResource {
    */
   rawSimulate(
     siteId: string,
-    body: SchemaTypes.SiteSubscriptionSimulateSchema,
-  ): Promise<SchemaTypes.SiteSubscriptionSimulateTargetSchema> {
-    return this.client.request<SchemaTypes.SiteSubscriptionSimulateTargetSchema>(
+    body: RawApiTypes.SiteSubscriptionSimulateSchema,
+  ): Promise<RawApiTypes.SiteSubscriptionSimulateTargetSchema> {
+    return this.client.request<RawApiTypes.SiteSubscriptionSimulateTargetSchema>(
       {
         method: 'POST',
         url: `/sites/${siteId}/subscriptions/simulate`,
@@ -49,12 +49,12 @@ export default class SiteSubscription extends BaseResource {
    * @throws {TimeoutError}
    */
   validate(
-    siteId: string | SimpleSchemaTypes.SiteData,
-    body: SimpleSchemaTypes.SiteSubscriptionValidateSchema,
+    siteId: string | ApiTypes.SiteData,
+    body: ApiTypes.SiteSubscriptionValidateSchema,
   ) {
     return this.rawValidate(
       Utils.toId(siteId),
-      Utils.serializeRequestBody<SchemaTypes.SiteSubscriptionValidateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.SiteSubscriptionValidateSchema>(
         body,
         {
           type: 'site_subscription',
@@ -63,7 +63,7 @@ export default class SiteSubscription extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteSubscriptionValidateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteSubscriptionValidateTargetSchema>(
         body,
       ),
     );
@@ -77,9 +77,9 @@ export default class SiteSubscription extends BaseResource {
    */
   rawValidate(
     siteId: string,
-    body: SchemaTypes.SiteSubscriptionValidateSchema,
-  ): Promise<SchemaTypes.SiteSubscriptionValidateTargetSchema> {
-    return this.client.request<SchemaTypes.SiteSubscriptionValidateTargetSchema>(
+    body: RawApiTypes.SiteSubscriptionValidateSchema,
+  ): Promise<RawApiTypes.SiteSubscriptionValidateTargetSchema> {
+    return this.client.request<RawApiTypes.SiteSubscriptionValidateTargetSchema>(
       {
         method: 'POST',
         url: `/sites/${siteId}/subscriptions/validate`,

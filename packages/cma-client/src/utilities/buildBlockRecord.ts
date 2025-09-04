@@ -1,10 +1,10 @@
 import * as Utils from '@datocms/rest-client-utils';
-import type * as SchemaTypes from '../generated/SchemaTypes';
-import type * as SimpleSchemaTypes from '../generated/SimpleSchemaTypes';
+import type * as ApiTypes from '../generated/ApiTypes';
+import type * as RawApiTypes from '../generated/RawApiTypes';
 import { Item } from '../generated/resources';
 
-export function buildBlockRecord(body: SimpleSchemaTypes.ItemUpdateSchema) {
-  return Utils.serializeRequestBody<SchemaTypes.ItemUpdateSchema>(body, {
+export function buildBlockRecord(body: ApiTypes.ItemUpdateSchema) {
+  return Utils.serializeRequestBody<RawApiTypes.ItemUpdateSchema>(body, {
     type: Item.TYPE,
     attributes: '*',
     relationships: ['item_type'],
