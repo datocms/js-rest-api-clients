@@ -1,5 +1,10 @@
 import type * as RawApiTypes from '../generated/RawApiTypes';
 
+import type { FramedSingleBlockEditorConfiguration } from './appearance/framed_single_block';
+import type { FramelessSingleBlockEditorConfiguration } from './appearance/frameless_single_block';
+import type { RequiredValidator } from './validators/required';
+import type { SingleBlockBlocksValidator } from './validators/single_block_blocks';
+
 /**
  * SINGLE BLOCK FIELD TYPE SYSTEM FOR DATOCMS
  *
@@ -44,23 +49,34 @@ export type SingleBlockFieldValue = string | null;
  * - Omit ID for new blocks being created
  */
 
+/** Represents an existing block in a CMA request */
+export type UnchangedBlockInARequest = string;
+/** Represents a block we want to update in a CMA request */
+export type UpdatedBlockInARequest = OptionalFields<RawApiTypes.Item, 'meta'>;
+/** Represents a new block to create in a CMA request */
+export type NewBlockInARequest = OptionalFields<
+  RawApiTypes.Item,
+  'id' | 'meta'
+>;
+
 /**
  * Union type representing the different ways a block can be specified in API requests:
- * - string: Just the block ID (most common case)
- * - Full block object with ID (for updates)
- * - Block object without ID (for creation)
+ * - string: Just the block ID (to keep existing blocks unchanged)
+ * - Full block object with ID (to update an existing block)
+ * - Block object without ID (to create a new block)
  *
  * Also, 'meta' can always be omitted
  */
 export type BlockItemInARequest =
-  | string
-  | OptionalFields<RawApiTypes.Item, 'id' | 'meta'>;
+  | UnchangedBlockInARequest
+  | UpdatedBlockInARequest
+  | NewBlockInARequest;
 
 /**
  * Single Block field value for API requests - allows flexible block representations:
- * - string: Just the block ID (most common case)
- * - RawApiTypes.Item: Full block object with ID (for updates)
- * - Omit<RawApiTypes.Item, 'id'>: Block object without ID (for creation)
+ * - string: Just the block ID (to keep existing blocks unchanged)
+ * - Full block object with ID (to update an existing block)
+ * - Block object without ID (to create a new block)
  */
 export type SingleBlockFieldValueAsRequest = BlockItemInARequest | null;
 
@@ -87,10 +103,10 @@ export type SingleBlockFieldValueWithNestedBlocks = RawApiTypes.Item | null;
  */
 
 /**
- * Validates if a single block item is a string ID
+ * Validates if the input is a valid item (either block or record) ID
  */
-export function isBlockStringId(block: unknown): block is string {
-  return typeof block === 'string';
+export function isItemId(input: unknown): input is string {
+  return typeof input === 'string';
 }
 
 export type ItemWithOptionalIdAndMeta = OptionalFields<
@@ -99,9 +115,9 @@ export type ItemWithOptionalIdAndMeta = OptionalFields<
 >;
 
 /**
- * Validates if a single block item is a RawApiTypes.Item object (with or without ID)
+ * Validates if the input is a RawApiTypes.Item object (with optional `id` and `meta`)
  */
-export function isBlockObject(
+export function isItemWithOptionalIdAndMeta(
   block: unknown,
 ): block is ItemWithOptionalIdAndMeta {
   return (
@@ -115,12 +131,16 @@ export function isBlockObject(
 export type ItemWithOptionalMeta = OptionalFields<RawApiTypes.Item, 'meta'>;
 
 /**
- * Validates if a single block item is a complete RawApiTypes.Item object with ID
+ * Validates if the input is a a complete RawApiTypes.Item object with optional `meta`
  */
-export function isBlockObjectWithId(
+export function isItemWithOptionalMeta(
   block: unknown,
 ): block is ItemWithOptionalMeta {
-  return isBlockObject(block) && 'id' in block && typeof block.id === 'string';
+  return (
+    isItemWithOptionalIdAndMeta(block) &&
+    'id' in block &&
+    typeof block.id === 'string'
+  );
 }
 
 /**
@@ -148,11 +168,11 @@ export function isSingleBlockFieldValueAsRequest(
 ): value is SingleBlockFieldValueAsRequest {
   if (value === null) return true;
 
-  // String ID _ referencing existing block
-  if (isBlockStringId(value)) return true;
+  // String ID - referencing existing block
+  if (isItemId(value)) return true;
 
   // Object (either with or without ID for updates/creation)
-  return isBlockObject(value);
+  return isItemWithOptionalIdAndMeta(value);
 }
 
 /**
@@ -165,13 +185,8 @@ export function isSingleBlockFieldValueWithNestedBlocks(
   if (value === null) return true;
 
   // Must be a full object with ID (nested format always includes complete block objects)
-  return isBlockObjectWithId(value);
+  return isItemWithOptionalMeta(value);
 }
-
-import type { FramedSingleBlockEditorConfiguration } from './appearance/framed_single_block';
-import type { FramelessSingleBlockEditorConfiguration } from './appearance/frameless_single_block';
-import type { RequiredValidator } from './validators/required';
-import type { SingleBlockBlocksValidator } from './validators/single_block_blocks';
 
 export type SingleBlockFieldValidators = {
   /** Only accept references to block records of the specified block models */

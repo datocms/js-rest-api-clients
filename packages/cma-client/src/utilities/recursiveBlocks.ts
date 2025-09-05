@@ -1,4 +1,7 @@
-import { type BlockItemInARequest, isBlockObject } from '../fieldTypes';
+import {
+  type BlockItemInARequest,
+  isItemWithOptionalIdAndMeta,
+} from '../fieldTypes';
 import type * as ApiTypes from '../generated/ApiTypes';
 import type * as RawApiTypes from '../generated/RawApiTypes';
 import {
@@ -9,12 +12,13 @@ import {
   nonRecursiveSomeBlocksInFieldValueAsync,
   nonRecursiveVisitBlocksInFieldValueAsync,
 } from './blocks';
-import {
-  mapLocalizedFieldValuesAsync,
-  visitLocalizedFieldValuesAsync,
-} from './fieldValueLocalization';
+import { mapFieldValueAsync, visitFieldValueAsync } from './fieldValue';
 import type { SchemaRepository } from './schemaRepository';
-import type { TreePath } from './structuredText';
+
+/**
+ * Path through a field value (ie. ['content', 0, 'attributes', 'title'])
+ */
+export type TreePath = readonly (string | number)[];
 
 export async function visitBlocksInFieldValues(
   schemaRepository: SchemaRepository,
@@ -29,7 +33,7 @@ export async function visitBlocksInFieldValues(
     async (block, innerPath) => {
       await visitor(block, [...path, ...innerPath]);
 
-      if (!isBlockObject(block)) {
+      if (!isItemWithOptionalIdAndMeta(block)) {
         return;
       }
 
@@ -40,7 +44,7 @@ export async function visitBlocksInFieldValues(
       const fields = await schemaRepository.getRawItemTypeFields(itemType);
 
       for (const field of fields) {
-        await visitLocalizedFieldValuesAsync(
+        await visitFieldValueAsync(
           field,
           block.attributes[field.attributes.api_key],
           (locale, valueForLocale) =>
@@ -92,7 +96,7 @@ export async function findAllBlocksInFieldValues(
     field,
     value,
     async (block, innerPath) => {
-      if (!isBlockObject(block)) {
+      if (!isItemWithOptionalIdAndMeta(block)) {
         return;
       }
 
@@ -103,7 +107,7 @@ export async function findAllBlocksInFieldValues(
       const fields = await schemaRepository.getRawItemTypeFields(itemType);
 
       for (const field of fields) {
-        await visitLocalizedFieldValuesAsync(
+        await visitFieldValueAsync(
           field,
           block.attributes[field.attributes.api_key],
           async (locale, valueForLocale) => {
@@ -151,7 +155,7 @@ export async function filterBlocksInFieldValues(
         return false;
       }
 
-      if (!isBlockObject(block)) {
+      if (!isItemWithOptionalIdAndMeta(block)) {
         return true;
       }
 
@@ -162,24 +166,23 @@ export async function filterBlocksInFieldValues(
       const fields = await schemaRepository.getRawItemTypeFields(itemType);
 
       for (const field of fields) {
-        block.attributes[field.attributes.api_key] =
-          await mapLocalizedFieldValuesAsync(
-            field,
-            block.attributes[field.attributes.api_key],
-            (locale, valueForLocale) =>
-              filterBlocksInFieldValues(
-                schemaRepository,
-                field,
-                valueForLocale,
-                predicate,
-                [
-                  ...blockPath,
-                  'attributes',
-                  field.attributes.api_key,
-                  ...(locale ? [locale] : []),
-                ],
-              ),
-          );
+        block.attributes[field.attributes.api_key] = await mapFieldValueAsync(
+          field,
+          block.attributes[field.attributes.api_key],
+          (locale, valueForLocale) =>
+            filterBlocksInFieldValues(
+              schemaRepository,
+              field,
+              valueForLocale,
+              predicate,
+              [
+                ...blockPath,
+                'attributes',
+                field.attributes.api_key,
+                ...(locale ? [locale] : []),
+              ],
+            ),
+        );
       }
 
       return true;
@@ -211,7 +214,7 @@ export async function reduceBlocksInFieldValues<R>(
     field,
     value,
     async (block, innerPath) => {
-      if (!isBlockObject(block)) {
+      if (!isItemWithOptionalIdAndMeta(block)) {
         return;
       }
 
@@ -222,7 +225,7 @@ export async function reduceBlocksInFieldValues<R>(
       const fields = await schemaRepository.getRawItemTypeFields(itemType);
 
       for (const field of fields) {
-        await visitLocalizedFieldValuesAsync(
+        await visitFieldValueAsync(
           field,
           block.attributes[field.attributes.api_key],
           async (locale, valueForLocale) => {
@@ -274,7 +277,7 @@ export async function someBlocksInFieldValues(
     field,
     value,
     async (block, innerPath) => {
-      if (found || !isBlockObject(block)) {
+      if (found || !isItemWithOptionalIdAndMeta(block)) {
         return;
       }
 
@@ -287,7 +290,7 @@ export async function someBlocksInFieldValues(
       for (const field of fields) {
         if (found) break;
 
-        await visitLocalizedFieldValuesAsync(
+        await visitFieldValueAsync(
           field,
           block.attributes[field.attributes.api_key],
           async (locale, valueForLocale) => {
@@ -354,7 +357,7 @@ export async function mapBlocksInFieldValues(
     async (block, innerPath) => {
       const newBlock = await mapper(block, [...path, ...innerPath]);
 
-      if (!isBlockObject(newBlock)) {
+      if (!isItemWithOptionalIdAndMeta(newBlock)) {
         return newBlock;
       }
 
@@ -366,7 +369,7 @@ export async function mapBlocksInFieldValues(
 
       for (const field of fields) {
         newBlock.attributes[field.attributes.api_key] =
-          await mapLocalizedFieldValuesAsync(
+          await mapFieldValueAsync(
             field,
             newBlock.attributes[field.attributes.api_key],
             (locale, valueForLocale) =>

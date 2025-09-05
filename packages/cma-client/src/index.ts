@@ -6,11 +6,10 @@ export * as Resources from './generated/resources';
 export * from './utilities/blocks';
 export * from './utilities/buildBlockRecord';
 export * from './utilities/fieldsContainingReferences';
-export * from './utilities/fieldValueLocalization';
+export * from './utilities/fieldValue';
 export * from './utilities/id';
 export * from './utilities/recursiveBlocks';
 export * from './utilities/schemaRepository';
-export * from './utilities/structuredText';
 export type { ApiTypes, RawApiTypes };
 // Legacy names
 export type { ApiTypes as SchemaTypes, RawApiTypes as SimpleSchemaTypes };

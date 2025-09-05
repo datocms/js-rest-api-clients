@@ -1,9 +1,9 @@
 import type * as RawApiTypes from '../generated/RawApiTypes';
 import {
   type BlockItemInARequest,
-  isBlockObject,
-  isBlockObjectWithId,
-  isBlockStringId,
+  isItemId,
+  isItemWithOptionalIdAndMeta,
+  isItemWithOptionalMeta,
 } from './single_block';
 
 /**
@@ -106,10 +106,10 @@ export function isRichTextFieldValueAsRequest(
 
   return value.every((block) => {
     // String ID - referencing existing block
-    if (isBlockStringId(block)) return true;
+    if (isItemId(block)) return true;
 
     // Object (either with or without ID for updates/creation)
-    return isBlockObject(block);
+    return isItemWithOptionalIdAndMeta(block);
   });
 }
 
@@ -126,7 +126,7 @@ export function isRichTextFieldValueWithNestedBlocks(
 
   return value.every((block) => {
     // Must be a full object with ID (nested format always includes complete block objects)
-    return isBlockObjectWithId(block);
+    return isItemWithOptionalMeta(block);
   });
 }
 

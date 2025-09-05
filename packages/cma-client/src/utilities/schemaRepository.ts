@@ -8,6 +8,7 @@ interface GenericClient {
   };
   fields: {
     rawList(itemTypeId: string): Promise<{ data: RawApiTypes.Field[] }>;
+    rawReferencing(itemTypeId: string): Promise<{ data: RawApiTypes.Field[] }>;
   };
   fieldsets: {
     rawList(itemTypeId: string): Promise<{ data: RawApiTypes.Fieldset[] }>;

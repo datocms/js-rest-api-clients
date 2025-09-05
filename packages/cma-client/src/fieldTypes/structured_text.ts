@@ -2,19 +2,24 @@ import {
   type Block,
   type Document,
   type InlineBlock,
-  type Root,
+  type Node,
+  everyNode,
   isBlock,
+  isDocument,
   isInlineBlock,
-  isNode,
 } from 'datocms-structured-text-utils';
 import type * as RawApiTypes from '../generated/RawApiTypes';
-import { everyNode } from '../utilities/structuredText';
+import type { StructuredTextEditorConfiguration } from './appearance/structured_text';
 import {
   type BlockItemInARequest,
-  isBlockObject,
-  isBlockObjectWithId,
-  isBlockStringId,
+  isItemId,
+  isItemWithOptionalIdAndMeta,
+  isItemWithOptionalMeta,
 } from './single_block';
+import type { LengthValidator } from './validators/length';
+import type { StructuredTextBlocksValidator } from './validators/structured_text_blocks';
+import type { StructuredTextInlineBlocksValidator } from './validators/structured_text_inline_blocks';
+import type { StructuredTextLinksValidator } from './validators/structured_text_links';
 
 /**
  * STRUCTURED TEXT TYPE SYSTEM FOR DATOCMS
@@ -25,10 +30,10 @@ import {
  * The challenge we're solving:
  * - DatoCMS structured text can contain "blocks" (embedded content items) in bloth 'block'
  *   and 'inlineBlock' nodes
- * - By default, API responses contain blocks as string IDs (lightweight references)
+ * - By default, CMA responses contain blocks as string IDs (lightweight references)
  * - With ?nested=true parameter though, API responses contain blocks as full item objects
  *   (which in turn can contain other blocks)
- * - For API requests, blocks can be represented as:
+ * - For CMA requests, blocks can be represented as:
  *   1. String IDs (referencing existing items)
  *   2. Full item objects with IDs (for updates)
  *   3. Item objects without IDs (for creation)
@@ -50,43 +55,24 @@ import {
 /**
  * Variant of 'block' structured text node for API requests
  */
-export type BlockAsRequest = Omit<Block, 'item'> & {
-  item: BlockItemInARequest;
-};
+export type BlockAsRequest = Block<BlockItemInARequest>;
 
 /**
  * Variant of 'inlineBlock' structured text node for API requests
  */
-export type InlineBlockAsRequest = Omit<InlineBlock, 'item'> & {
-  item: BlockItemInARequest;
-};
-
-/**
- * Generic type to transform a node that might be containing a 'block' or 'inlineBlock' as a (deeply nested) children to its variant for API requests
- */
-export type NodeAsRequest<T> = WithMappedChildren<
-  T,
-  DeepMapVariants<
-    T extends { children: infer C } ? C : never,
-    BlockAsRequest,
-    InlineBlockAsRequest
-  >
->;
+export type InlineBlockAsRequest = InlineBlock<BlockItemInARequest>;
 
 /**
  * Variant of Structured Text document for API requests
  */
-export type DocumentAsRequest = {
-  schema: 'dast';
-  document: NodeAsRequest<Root>;
-};
+export type DocumentAsRequest = Document<BlockItemInARequest>;
 
 /**
  * =============================================================================
  * NESTED VARIANTS - Types for API responses with ?nested=true parameter
  * =============================================================================
  *
- * When using the GET /items?nested=true, the API returns Structured Text documents
+ * When using the GET /items?nested=true, the CMA returns Structured Text documents
  * with embedded blocks fully populated as complete RawApiTypes.Item objects instead
  * of just string IDs.
  */
@@ -94,36 +80,17 @@ export type DocumentAsRequest = {
 /**
  * Variant of 'block' structured text node for ?nested=true API responses
  */
-export type BlockWithNestedBlocks = Omit<Block, 'item'> & {
-  item: RawApiTypes.Item;
-};
+export type BlockWithNestedBlocks = Block<RawApiTypes.Item>;
 
 /**
  * Variant of 'inlineBlock' structured text node for ?nested=true API responses
  */
-export type InlineBlockWithNestedBlocks = Omit<InlineBlock, 'item'> & {
-  item: RawApiTypes.Item;
-};
-
-/**
- * Generic type to transform a node that might be containing a 'block' or 'inlineBlock' as a (deeply nested) children to it's variant for ?nested=true API responses
- */
-export type NodeWithNestedBlocks<T> = WithMappedChildren<
-  T,
-  DeepMapVariants<
-    T extends { children: infer C } ? C : never,
-    BlockWithNestedBlocks,
-    InlineBlockWithNestedBlocks
-  >
->;
+export type InlineBlockWithNestedBlocks = InlineBlock<RawApiTypes.Item>;
 
 /**
  * Variant of Structured Text document for ?nested=true API responses
  */
-export type DocumentWithNestedBlocks = {
-  schema: 'dast';
-  document: NodeWithNestedBlocks<Root>;
-};
+export type DocumentWithNestedBlocks = Document<RawApiTypes.Item>;
 
 /**
  * =============================================================================
@@ -141,42 +108,16 @@ export type StructuredTextFieldValueWithNestedBlocks =
   DocumentWithNestedBlocks | null;
 
 /**
- * Helper function to validate if a value has the expected structured text document structure.
- * Checks for the presence of 'schema' and 'document' properties on a non-null object.
- */
-function isValidDocumentStructure(
-  value: unknown,
-): value is { schema: unknown; document: unknown } {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'schema' in value &&
-    'document' in value
-  );
-}
-
-/**
  * Utility function to validate all block/inlineBlock nodes in a structured text document tree.
  * Calls the provided callback for each block/inlineBlock node found and returns true only if all pass.
  */
-function validateAllBlockNodes(
-  node: unknown,
-  callback: (
-    node:
-      | Block
-      | BlockAsRequest
-      | BlockWithNestedBlocks
-      | InlineBlock
-      | InlineBlockAsRequest
-      | InlineBlockWithNestedBlocks,
-  ) => boolean,
+function validateAllBlockNodes<T>(
+  node: Node<T>,
+  callback: (node: Block<T> | InlineBlock<T>) => boolean,
 ): boolean {
   return everyNode(node, (currentNode) => {
     // If this is a block or inlineBlock node, validate it with the callback
-    if (
-      isNode(currentNode) &&
-      (isBlock(currentNode) || isInlineBlock(currentNode))
-    ) {
+    if (isBlock<T>(currentNode) || isInlineBlock<T>(currentNode)) {
       return callback(currentNode);
     }
     // For all other node types, they're valid by default
@@ -193,7 +134,7 @@ export function isStructuredTextFieldValue(
 ): value is StructuredTextFieldValue {
   if (value === null) return true;
 
-  if (!isValidDocumentStructure(value)) {
+  if (!isDocument<unknown>(value)) {
     return false;
   }
 
@@ -212,7 +153,7 @@ export function isStructuredTextFieldValueAsRequest(
 ): value is StructuredTextFieldValueAsRequest {
   if (value === null) return true;
 
-  if (!isValidDocumentStructure(value)) {
+  if (!isDocument<unknown>(value)) {
     return false;
   }
 
@@ -221,10 +162,10 @@ export function isStructuredTextFieldValueAsRequest(
     const item = node.item;
 
     // String ID
-    if (isBlockStringId(item)) return true;
+    if (isItemId(item)) return true;
 
     // Object (either with or without ID)
-    return isBlockObject(item);
+    return isItemWithOptionalIdAndMeta(item);
   });
 }
 
@@ -237,7 +178,7 @@ export function isStructuredTextFieldValueWithNestedBlocks(
 ): value is StructuredTextFieldValueWithNestedBlocks {
   if (value === null) return true;
 
-  if (!isValidDocumentStructure(value)) {
+  if (!isDocument<unknown>(value)) {
     return false;
   }
 
@@ -246,66 +187,9 @@ export function isStructuredTextFieldValueWithNestedBlocks(
     const item = node.item;
 
     // Must be a full object with ID (nested format always includes full items)
-    return isBlockObjectWithId(item);
+    return isItemWithOptionalMeta(item);
   });
 }
-
-/**
- * =============================================================================
- * SHARED TRANSFORMATION UTILITIES
- * =============================================================================
- *
- * These utility types provide the machinery for automatically transforming
- * structured text types between their different variants. The goal is to
- * recursively walk through complex nested structures and apply the appropriate
- * transformations to Block and InlineBlock nodes while preserving all other types.
- */
-
-/**
- * Utility type that preserves the structure of T but replaces its children with ChildrenType.
- * If T doesn't have children, it returns T unchanged.
- */
-type WithMappedChildren<T, ChildrenType> = T extends { children: any }
-  ? Omit<T, 'children'> & { children: ChildrenType }
-  : T;
-
-/**
- * Generic transformation type that replace 'block' and 'inlineBlock' node types to their variants.
- */
-type MapVariants<T, BlockVariant, InlineBlockVariant> = T extends Block
-  ? BlockVariant
-  : T extends InlineBlock
-    ? InlineBlockVariant
-    : T;
-
-/**
- * Recursively transform a Structured Text node type using the provided variants for 'block' and 'inlineBlock' nodes.
- *
- * This handles three cases:
- * _ Arrays: Transform each array element recursively
- * _ Objects with children: Transform the object itself AND recursively transform its children
- * _ Leaf nodes: Apply the variant mapping
- */
-type DeepMapVariants<T, BlockVariant, InlineBlockVariant> =
-  T extends (infer U)[]
-    ? DeepMapVariants<U, BlockVariant, InlineBlockVariant>[]
-    : T extends { children: infer Children }
-      ? T extends { children: any }
-        ? Omit<T, 'children'> & {
-            children: DeepMapVariants<
-              Children,
-              BlockVariant,
-              InlineBlockVariant
-            >;
-          }
-        : MapVariants<T, BlockVariant, InlineBlockVariant>
-      : MapVariants<T, BlockVariant, InlineBlockVariant>;
-
-import type { StructuredTextEditorConfiguration } from './appearance/structured_text';
-import type { LengthValidator } from './validators/length';
-import type { StructuredTextBlocksValidator } from './validators/structured_text_blocks';
-import type { StructuredTextInlineBlocksValidator } from './validators/structured_text_inline_blocks';
-import type { StructuredTextLinksValidator } from './validators/structured_text_links';
 
 export type StructuredTextFieldValidators = {
   /** Only accept references to block records of the specified block models */

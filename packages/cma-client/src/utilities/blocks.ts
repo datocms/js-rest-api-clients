@@ -22,6 +22,15 @@
  * particularly useful when block transformations require async operations like API calls.
  */
 
+import {
+  type TreePath,
+  collectNodes,
+  collectNodesAsync,
+  filterNodes,
+  filterNodesAsync,
+  mapNodes,
+  mapNodesAsync,
+} from 'datocms-structured-text-utils';
 import type {
   BlockItemInARequest,
   RichTextFieldValue,
@@ -36,15 +45,6 @@ import type {
 } from '../fieldTypes';
 import type * as ApiTypes from '../generated/ApiTypes';
 import type * as RawApiTypes from '../generated/RawApiTypes';
-import {
-  type TreePath,
-  filterNodes,
-  filterNodesAsync,
-  findAllNodes,
-  findAllNodesAsync,
-  mapNodes,
-  mapNodesAsync,
-} from './structuredText';
 
 type PossibleRichTextValue =
   | RichTextFieldValue
@@ -91,7 +91,7 @@ function* iterateBlocks(
   if (fieldType === 'structured_text') {
     const structuredTextValue = value as PossibleStructuredTextValue;
     if (structuredTextValue) {
-      const foundNodes = findAllNodes(
+      const foundNodes = collectNodes(
         structuredTextValue.document,
         (node) => node.type === 'block' || node.type === 'inlineBlock',
       );
@@ -134,7 +134,7 @@ async function* iterateBlocksAsync(
   if (fieldType === 'structured_text') {
     const structuredTextValue = value as PossibleStructuredTextValue;
     if (structuredTextValue) {
-      const foundNodes = await findAllNodesAsync(
+      const foundNodes = await collectNodesAsync(
         structuredTextValue.document,
         async (node) => node.type === 'block' || node.type === 'inlineBlock',
       );
