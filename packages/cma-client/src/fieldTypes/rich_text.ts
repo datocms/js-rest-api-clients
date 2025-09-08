@@ -1,10 +1,14 @@
 import type * as RawApiTypes from '../generated/RawApiTypes';
+import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import type { RichTextEditorConfiguration } from './appearance/rich_text';
 import {
   type BlockItemInARequest,
   isItemId,
   isItemWithOptionalIdAndMeta,
   isItemWithOptionalMeta,
 } from './single_block';
+import type { RichTextBlocksValidator } from './validators/rich_text_blocks';
+import type { SizeValidator } from './validators/size';
 
 /**
  * MODULAR CONTENT FIELD TYPE SYSTEM FOR DATOCMS
@@ -93,6 +97,16 @@ export function isRichTextFieldValue(
   );
 }
 
+export function isLocalizedRichTextFieldValue(
+  value: unknown,
+): value is LocalizedFieldValue<RichTextFieldValue> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isRichTextFieldValue)
+  );
+}
+
 /**
  * Type guard for Modular Content field values in API request format.
  * Allows blocks as string IDs, full objects with IDs, or objects without IDs.
@@ -113,6 +127,16 @@ export function isRichTextFieldValueAsRequest(
   });
 }
 
+export function isLocalizedRichTextFieldValueAsRequest(
+  value: unknown,
+): value is LocalizedFieldValue<RichTextFieldValueAsRequest> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isRichTextFieldValueAsRequest)
+  );
+}
+
 /**
  * Type guard for Modular Content field values with nested blocks (?nested=true format).
  * Ensures all blocks are full RawApiTypes.Item objects with complete data.
@@ -130,9 +154,15 @@ export function isRichTextFieldValueWithNestedBlocks(
   });
 }
 
-import type { RichTextEditorConfiguration } from './appearance/rich_text';
-import type { RichTextBlocksValidator } from './validators/rich_text_blocks';
-import type { SizeValidator } from './validators/size';
+export function isLocalizedRichTextFieldValueWithNestedBlocks(
+  value: unknown,
+): value is LocalizedFieldValue<RichTextFieldValueWithNestedBlocks> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isRichTextFieldValueWithNestedBlocks)
+  );
+}
 
 export type RichTextFieldValidators = {
   /** Only accept references to block records of the specified block models */

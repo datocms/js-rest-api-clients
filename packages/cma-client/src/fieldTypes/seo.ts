@@ -1,3 +1,4 @@
+import type { LocalizedFieldValue } from '../utilities/fieldValue';
 import type { SeoEditorConfiguration } from './appearance/seo';
 import type { DescriptionLengthValidator } from './validators/description_length';
 import type { FileSizeValidator } from './validators/file_size';
@@ -24,6 +25,16 @@ export function isSeoFieldValue(value: unknown): value is SeoFieldValue {
       'image' in value ||
       'twitter_card' in value ||
       'no_index' in value)
+  );
+}
+
+export function isLocalizedSeoFieldValue(
+  value: unknown,
+): value is LocalizedFieldValue<SeoFieldValue> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isSeoFieldValue)
   );
 }
 

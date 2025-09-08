@@ -1,3 +1,4 @@
+import type { LocalizedFieldValue } from '../utilities/fieldValue';
 import type { GalleryEditorConfiguration } from './appearance/gallery';
 import type { ExtensionValidator } from './validators/extension';
 import type { FileSizeValidator } from './validators/file_size';
@@ -27,6 +28,16 @@ export function isGalleryFieldValue(
       (item) =>
         typeof item === 'object' && item !== null && 'upload_id' in item,
     )
+  );
+}
+
+export function isLocalizedGalleryFieldValue(
+  value: unknown,
+): value is LocalizedFieldValue<GalleryFieldValue> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isGalleryFieldValue)
   );
 }
 

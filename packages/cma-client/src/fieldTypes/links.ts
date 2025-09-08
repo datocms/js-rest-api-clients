@@ -1,3 +1,4 @@
+import type { LocalizedFieldValue } from '../utilities/fieldValue';
 import type { LinksEmbedEditorConfiguration } from './appearance/links_embed';
 import type { LinksSelectEditorConfiguration } from './appearance/links_select';
 import type { ItemsItemTypeValidator } from './validators/items_item_type';
@@ -9,6 +10,16 @@ export function isLinksFieldValue(value: unknown): value is LinksFieldValue {
   if (value === null) return true;
   return (
     Array.isArray(value) && value.every((item) => typeof item === 'string')
+  );
+}
+
+export function isLocalizedLinksFieldValue(
+  value: unknown,
+): value is LocalizedFieldValue<LinksFieldValue> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isLinksFieldValue)
   );
 }
 

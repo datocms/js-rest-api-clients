@@ -1,3 +1,4 @@
+import type { LocalizedFieldValue } from '../utilities/fieldValue';
 import type { MarkdownEditorConfiguration } from './appearance/markdown';
 import type { TextareaEditorConfiguration } from './appearance/textarea';
 import type { WysiwygEditorConfiguration } from './appearance/wysiwyg';
@@ -10,6 +11,16 @@ export type TextFieldValue = string | null;
 
 export function isTextFieldValue(value: unknown): value is TextFieldValue {
   return typeof value === 'string' || value === null;
+}
+
+export function isLocalizedTextFieldValue(
+  value: unknown,
+): value is LocalizedFieldValue<TextFieldValue> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isTextFieldValue)
+  );
 }
 
 export type TextFieldValidators = {

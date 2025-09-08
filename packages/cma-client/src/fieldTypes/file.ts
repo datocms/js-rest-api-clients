@@ -1,3 +1,4 @@
+import type { LocalizedFieldValue } from '../utilities/fieldValue';
 import type { FileEditorConfiguration } from './appearance/file';
 import type { ExtensionValidator } from './validators/extension';
 import type { FileSizeValidator } from './validators/file_size';
@@ -20,6 +21,16 @@ export type FileFieldValue = {
 export function isFileFieldValue(value: unknown): value is FileFieldValue {
   if (value === null) return true;
   return typeof value === 'object' && value !== null && 'upload_id' in value;
+}
+
+export function isLocalizedFileFieldValue(
+  value: unknown,
+): value is LocalizedFieldValue<FileFieldValue> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isFileFieldValue)
+  );
 }
 
 export type FileFieldValidators = {

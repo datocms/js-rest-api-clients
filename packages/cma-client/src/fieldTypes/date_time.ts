@@ -1,3 +1,4 @@
+import type { LocalizedFieldValue } from '../utilities/fieldValue';
 import type { DateTimePickerEditorConfiguration } from './appearance/date_time_picker';
 import type { DateTimeRangeValidator } from './validators/date_time_range';
 import type { RequiredValidator } from './validators/required';
@@ -11,6 +12,16 @@ export function isDateTimeFieldValue(
   return (
     typeof value === 'string' &&
     /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(value)
+  );
+}
+
+export function isLocalizedDateTimeFieldValue(
+  value: unknown,
+): value is LocalizedFieldValue<DateTimeFieldValue> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isDateTimeFieldValue)
   );
 }
 

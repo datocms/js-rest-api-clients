@@ -1,3 +1,4 @@
+import type { LocalizedFieldValue } from '../utilities/fieldValue';
 import type { SingleLineEditorConfiguration } from './appearance/single_line';
 import type { StringRadioGroupEditorConfiguration } from './appearance/string_radio_group';
 import type { StringSelectEditorConfiguration } from './appearance/string_select';
@@ -11,6 +12,16 @@ export type StringFieldValue = string | null;
 
 export function isStringFieldValue(value: unknown): value is StringFieldValue {
   return typeof value === 'string' || value === null;
+}
+
+export function isLocalizedStringFieldValue(
+  value: unknown,
+): value is LocalizedFieldValue<StringFieldValue> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isStringFieldValue)
+  );
 }
 
 export type StringFieldValidators = {

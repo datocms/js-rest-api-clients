@@ -1,3 +1,4 @@
+import type { LocalizedFieldValue } from '../utilities/fieldValue';
 import type { MapEditorConfiguration } from './appearance/map';
 import type { RequiredValidator } from './validators/required';
 
@@ -15,6 +16,16 @@ export function isLocationFieldValue(
     value !== null &&
     'latitude' in value &&
     'longitude' in value
+  );
+}
+
+export function isLocalizedLocationFieldValue(
+  value: unknown,
+): value is LocalizedFieldValue<LocationFieldValue> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isLocationFieldValue)
   );
 }
 

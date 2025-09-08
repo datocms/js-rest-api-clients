@@ -1,4 +1,5 @@
 import type * as RawApiTypes from '../generated/RawApiTypes';
+import type { LocalizedFieldValue } from '../utilities/fieldValue';
 
 import type { FramedSingleBlockEditorConfiguration } from './appearance/framed_single_block';
 import type { FramelessSingleBlockEditorConfiguration } from './appearance/frameless_single_block';
@@ -159,6 +160,16 @@ export function isSingleBlockFieldValue(
   return typeof value === 'string' || value === null;
 }
 
+export function isLocalizedSingleBlockFieldValue(
+  value: unknown,
+): value is LocalizedFieldValue<SingleBlockFieldValue> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isSingleBlockFieldValue)
+  );
+}
+
 /**
  * Type guard for Single Block field values in API request format.
  * Allows block as string ID, full object with ID, or object without ID.
@@ -175,6 +186,16 @@ export function isSingleBlockFieldValueAsRequest(
   return isItemWithOptionalIdAndMeta(value);
 }
 
+export function isLocalizedSingleBlockFieldValueAsRequest(
+  value: unknown,
+): value is LocalizedFieldValue<SingleBlockFieldValueAsRequest> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isSingleBlockFieldValueAsRequest)
+  );
+}
+
 /**
  * Type guard for Single Block field values with nested blocks (?nested=true format).
  * Ensures block is a full RawApiTypes.Item object with complete data.
@@ -186,6 +207,16 @@ export function isSingleBlockFieldValueWithNestedBlocks(
 
   // Must be a full object with ID (nested format always includes complete block objects)
   return isItemWithOptionalMeta(value);
+}
+
+export function isLocalizedSingleBlockFieldValueWithNestedBlocks(
+  value: unknown,
+): value is LocalizedFieldValue<SingleBlockFieldValueWithNestedBlocks> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isSingleBlockFieldValueWithNestedBlocks)
+  );
 }
 
 export type SingleBlockFieldValidators = {

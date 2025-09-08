@@ -10,6 +10,7 @@ export * from './utilities/fieldValue';
 export * from './utilities/id';
 export * from './utilities/recursiveBlocks';
 export * from './utilities/schemaRepository';
+export * from './fieldTypes';
 export type { ApiTypes, RawApiTypes };
 // Legacy names
 export type { ApiTypes as SchemaTypes, RawApiTypes as SimpleSchemaTypes };

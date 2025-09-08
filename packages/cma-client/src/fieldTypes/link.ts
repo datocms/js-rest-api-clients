@@ -1,3 +1,4 @@
+import type { LocalizedFieldValue } from '../utilities/fieldValue';
 import type { LinkEmbedEditorConfiguration } from './appearance/link_embed';
 import type { LinkSelectEditorConfiguration } from './appearance/link_select';
 import type { ItemItemTypeValidator } from './validators/item_item_type';
@@ -8,6 +9,16 @@ export type LinkFieldValue = string | null;
 
 export function isLinkFieldValue(value: unknown): value is LinkFieldValue {
   return typeof value === 'string' || value === null;
+}
+
+export function isLocalizedLinkFieldValue(
+  value: unknown,
+): value is LocalizedFieldValue<LinkFieldValue> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isLinkFieldValue)
+  );
 }
 
 export type LinkFieldValidators = {

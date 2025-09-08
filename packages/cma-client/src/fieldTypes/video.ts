@@ -1,3 +1,4 @@
+import type { LocalizedFieldValue } from '../utilities/fieldValue';
 import type { VideoEditorConfiguration } from './appearance/video';
 import type { RequiredValidator } from './validators/required';
 
@@ -19,6 +20,16 @@ export function isVideoFieldValue(value: unknown): value is VideoFieldValue {
     'provider' in value &&
     'provider_uid' in value &&
     'url' in value
+  );
+}
+
+export function isLocalizedVideoFieldValue(
+  value: unknown,
+): value is LocalizedFieldValue<VideoFieldValue> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isVideoFieldValue)
   );
 }
 

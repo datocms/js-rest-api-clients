@@ -9,6 +9,7 @@ import {
   isInlineBlock,
 } from 'datocms-structured-text-utils';
 import type * as RawApiTypes from '../generated/RawApiTypes';
+import type { LocalizedFieldValue } from '../utilities/fieldValue';
 import type { StructuredTextEditorConfiguration } from './appearance/structured_text';
 import {
   type BlockItemInARequest,
@@ -144,6 +145,16 @@ export function isStructuredTextFieldValue(
   });
 }
 
+export function isLocalizedStructuredTextFieldValue(
+  value: unknown,
+): value is LocalizedFieldValue<StructuredTextFieldValue> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isStructuredTextFieldValue)
+  );
+}
+
 /**
  * Type guard for structured text field values in API request format.
  * Allows blocks as string IDs, full objects with IDs, or objects without IDs.
@@ -169,6 +180,16 @@ export function isStructuredTextFieldValueAsRequest(
   });
 }
 
+export function isLocalizedStructuredTextFieldValueAsRequest(
+  value: unknown,
+): value is LocalizedFieldValue<StructuredTextFieldValueAsRequest> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isStructuredTextFieldValueAsRequest)
+  );
+}
+
 /**
  * Type guard for structured text field values with nested blocks (?nested=true format).
  * Ensures all block/inlineBlock nodes have full RawApiTypes.Item objects.
@@ -189,6 +210,16 @@ export function isStructuredTextFieldValueWithNestedBlocks(
     // Must be a full object with ID (nested format always includes full items)
     return isItemWithOptionalMeta(item);
   });
+}
+
+export function isLocalizedStructuredTextFieldValueWithNestedBlocks(
+  value: unknown,
+): value is LocalizedFieldValue<StructuredTextFieldValueWithNestedBlocks> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isStructuredTextFieldValueWithNestedBlocks)
+  );
 }
 
 export type StructuredTextFieldValidators = {

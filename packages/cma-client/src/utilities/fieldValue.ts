@@ -27,7 +27,7 @@ import type * as RawApiTypes from '../generated/RawApiTypes';
  * for various locales structured as an object, such as
  * `{ "en": "Hello", "it": "Ciao" }`
  */
-export type LocalizedFieldValue = Record<string, unknown>;
+export type LocalizedFieldValue<T = unknown> = Record<string, T>;
 
 /**
  * Determines whether a DatoCMS field is localized or not.
