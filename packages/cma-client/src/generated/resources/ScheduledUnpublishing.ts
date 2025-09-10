@@ -1,7 +1,15 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
+import type {
+  ItemTypeDefinition,
+  ItemTypeDefinitionToItemDefinition,
+  ItemTypeDefinitionToItemDefinitionAsRequest,
+  ItemTypeDefinitionToItemDefinitionWithNestedBlocks,
+} from '../../utilities/itemDefinition';
 import type * as ApiTypes from '../ApiTypes';
 import type * as RawApiTypes from '../RawApiTypes';
+
+type NoInfer<T> = [T][T extends any ? 0 : never];
 
 export default class ScheduledUnpublishing extends BaseResource {
   static readonly TYPE = 'scheduled_unpublishing' as const;
@@ -64,11 +72,15 @@ export default class ScheduledUnpublishing extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(itemId: string | ApiTypes.ItemData) {
-    return this.rawDestroy(Utils.toId(itemId)).then((body) =>
-      Utils.deserializeResponseBody<ApiTypes.ScheduledUnpublishingDestroyTargetSchema>(
-        body,
-      ),
+  destroy<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+  ) {
+    return this.rawDestroy<D>(Utils.toId(itemId)).then((body) =>
+      Utils.deserializeResponseBody<
+        ApiTypes.ScheduledUnpublishingDestroyTargetSchema<
+          ItemTypeDefinitionToItemDefinition<NoInfer<D>>
+        >
+      >(body),
     );
   }
 
@@ -80,14 +92,22 @@ export default class ScheduledUnpublishing extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawDestroy(
+  rawDestroy<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string,
-  ): Promise<RawApiTypes.ScheduledUnpublishingDestroyTargetSchema> {
-    return this.client.request<RawApiTypes.ScheduledUnpublishingDestroyTargetSchema>(
-      {
+  ): Promise<
+    RawApiTypes.ScheduledUnpublishingDestroyTargetSchema<
+      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+    >
+  > {
+    return this.client
+      .request({
         method: 'DELETE',
         url: `/items/${itemId}/scheduled-unpublishing`,
-      },
-    );
+      })
+      .then<
+        RawApiTypes.ScheduledUnpublishingDestroyTargetSchema<
+          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+        >
+      >(Utils.deserializeRawResponseBodyWithItems);
   }
 }

@@ -28,6 +28,7 @@ export {
   isItemWithOptionalIdAndMeta,
   isItemWithOptionalMeta,
   isJsonFieldValue,
+  isLatLonFieldValue,
   isLinkFieldValue,
   isLinksFieldValue,
   isLocalized,
@@ -40,9 +41,9 @@ export {
   isLocalizedGalleryFieldValue,
   isLocalizedIntegerFieldValue,
   isLocalizedJsonFieldValue,
+  isLocalizedLatLonFieldValue,
   isLocalizedLinkFieldValue,
   isLocalizedLinksFieldValue,
-  isLocalizedLocationFieldValue,
   isLocalizedRichTextFieldValue,
   isLocalizedRichTextFieldValueAsRequest,
   isLocalizedRichTextFieldValueWithNestedBlocks,
@@ -57,7 +58,6 @@ export {
   isLocalizedStructuredTextFieldValueWithNestedBlocks,
   isLocalizedTextFieldValue,
   isLocalizedVideoFieldValue,
-  isLocationFieldValue,
   isRichTextFieldValue,
   isRichTextFieldValueAsRequest,
   isRichTextFieldValueWithNestedBlocks,
@@ -131,6 +131,7 @@ export type {
   DocumentWithNestedBlocks,
   EnumValidator,
   ExtensionValidator,
+  FieldDefinition,
   FieldValueEntry,
   FileEditorConfiguration,
   FileFieldAppearance,
@@ -156,7 +157,12 @@ export type {
   IntegerFieldAppearance,
   IntegerFieldValidators,
   IntegerFieldValue,
+  ItemDefinition,
   ItemItemTypeValidator,
+  ItemTypeDefinition,
+  ItemTypeDefinitionToItemDefinition,
+  ItemTypeDefinitionToItemDefinitionAsRequest,
+  ItemTypeDefinitionToItemDefinitionWithNestedBlocks,
   ItemWithOptionalIdAndMeta,
   ItemWithOptionalMeta,
   ItemsItemTypeValidator,
@@ -164,6 +170,9 @@ export type {
   JsonFieldAppearance,
   JsonFieldValidators,
   JsonFieldValue,
+  LatLonFieldAppearance,
+  LatLonFieldValidators,
+  LatLonFieldValue,
   LengthValidator,
   LinkEmbedEditorConfiguration,
   LinkFieldAppearance,
@@ -176,9 +185,6 @@ export type {
   LinksFieldValue,
   LinksSelectEditorConfiguration,
   LocalizedFieldValue,
-  LocationFieldAppearance,
-  LocationFieldValidators,
-  LocationFieldValue,
   MapEditorConfiguration,
   MarkdownEditorConfiguration,
   NewBlockInARequest,
@@ -242,6 +248,7 @@ export type {
   TreePath,
   UnchangedBlockInARequest,
   UniqueValidator,
+  UnknownField,
   UpdatedBlockInARequest,
   VideoEditorConfiguration,
   VideoFieldAppearance,
@@ -251,10 +258,6 @@ export type {
 } from '@datocms/cma-client';
 // </AUTO-GENERATED-EXPORTS>
 
-export {
-  buildClient as buildBaseClient,
-  Client as BaseClient,
-} from '@datocms/cma-client';
 export { CanceledPromiseError } from '@datocms/rest-client-utils';
 export type { CancelablePromise } from '@datocms/rest-client-utils';
 export * from './buildClient';

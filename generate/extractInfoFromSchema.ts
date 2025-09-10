@@ -1,6 +1,7 @@
 import * as JsonRefParser from '@apidevtools/json-schema-ref-parser';
 import fetch from 'cross-fetch';
 import { compile as hyperschemaToTypings } from 'hyperschema-to-ts';
+import generateRawSchema from './generateRawSchema';
 import simplifySchema from './generateSimplifiedSchema';
 import toSafeName from './toSafeName';
 
@@ -26,6 +27,9 @@ export type EndpointInfo = {
     isEntityId: boolean;
     relType: string;
   };
+  returnsItem?: boolean;
+  requestBodyRequiresItem?: boolean;
+  offersNestedItemsOptionInQueryParams?: boolean;
   simpleMethodAvailable: boolean;
   requestBodyType?: string;
   optionalRequestBody: boolean;
@@ -166,9 +170,15 @@ function findDataObjects(schema: JsonRefParser.JSONSchema) {
   function find(
     maybeDataSchema: JsonRefParser.JSONSchema,
   ): JsonRefParser.JSONSchema[] {
+    if (Array.isArray(maybeDataSchema)) {
+      return maybeDataSchema.flatMap((schema) =>
+        find(schema as JsonRefParser.JSONSchema),
+      );
+    }
+
     if (maybeDataSchema.type === 'array') {
       if (typeof maybeDataSchema.items !== 'object') {
-        throw new Error('No items?');
+        return [];
       }
       return find(maybeDataSchema.items);
     }
@@ -338,10 +348,30 @@ function generateResourceInfo(
         }
       : undefined;
 
+    const requestBodyType = link.schema
+      ? `${toSafeName(baseTypeName, true)}${toSafeName(link.rel, true)}Schema`
+      : undefined;
+
+    const returnSchema = link.jobSchema || link.targetSchema;
+    const returnsItem = Boolean(
+      returnSchema ? findTypeInDataProperty(returnSchema) === 'item' : false,
+    );
+
+    const requestBodyRequiresItem = link.schema
+      ? findTypeInDataProperty(link.schema) === 'item'
+      : false;
+
     const endpointInfo: EndpointInfo = {
       returnsCollection: ['query', 'instances'].some((x) =>
         link.rel.includes(x),
       ),
+      returnsItem,
+      requestBodyRequiresItem,
+      offersNestedItemsOptionInQueryParams:
+        returnsItem &&
+        Boolean(
+          link.hrefSchema?.properties && 'nested' in link.hrefSchema.properties,
+        ),
       docUrl: isCma
         ? `https://www.datocms.com/docs/content-management-api/resources/${jsonApiType.replace(
             '_',
@@ -357,9 +387,7 @@ function generateResourceInfo(
       urlPlaceholders,
       entityIdPlaceholder:
         urlPlaceholders.find((p) => p.isEntityId) || undefined,
-      requestBodyType: link.schema
-        ? `${toSafeName(baseTypeName, true)}${toSafeName(link.rel, true)}Schema`
-        : undefined,
+      requestBodyType,
       optionalRequestBody: Boolean(link.schema?.type?.includes('null')),
       simpleMethodAvailable: true,
       requestStructure: link.schema
@@ -431,6 +459,80 @@ async function schemaToTs(schema: any) {
 
 function convertFieldTypesToRaw(typings: string) {
   return typings
+    .replace('export type Item ', 'export type RawItem ')
+    .replace(/\bItem\b/g, 'Item<D>')
+    .replace(/included(.*)Item<D>/g, 'included$1Item')
+    .replace('item?: Item<D>', 'item?: Item')
+    .replace(
+      'export type ItemInstancesTargetSchema ',
+      'export type ItemInstancesTargetSchema<D extends ItemDefinition = ItemDefinition> ',
+    )
+    .replace(
+      'export type ItemDestroyJobSchema ',
+      'export type ItemDestroyJobSchema<D extends ItemDefinition = ItemDefinition> ',
+    )
+    .replace(
+      'export type ItemPublishTargetSchema ',
+      'export type ItemPublishTargetSchema<D extends ItemDefinition = ItemDefinition> ',
+    )
+    .replace(
+      'export type ItemUnpublishTargetSchema ',
+      'export type ItemUnpublishTargetSchema<D extends ItemDefinition = ItemDefinition> ',
+    )
+    .replace(
+      'export type ItemReferencesTargetSchema ',
+      'export type ItemReferencesTargetSchema<D extends ItemDefinition = ItemDefinition> ',
+    )
+    .replace(
+      'export type ItemVersionRestoreJobSchema ',
+      'export type ItemVersionRestoreJobSchema<D extends ItemDefinition = ItemDefinition> ',
+    )
+    .replace(
+      'export type ScheduledPublicationDestroyTargetSchema ',
+      'export type ScheduledPublicationDestroyTargetSchema<D extends ItemDefinition = ItemDefinition> ',
+    )
+    .replace(
+      'export type ScheduledUnpublishingDestroyTargetSchema ',
+      'export type ScheduledUnpublishingDestroyTargetSchema<D extends ItemDefinition = ItemDefinition> ',
+    )
+    .replace(
+      'export type UploadReferencesTargetSchema ',
+      'export type UploadReferencesTargetSchema<D extends ItemDefinition = ItemDefinition> ',
+    )
+    .replace(
+      'export type ItemSelfTargetSchema ',
+      'export type ItemSelfTargetSchema<D extends ItemDefinition = ItemDefinition> ',
+    )
+    .replace(
+      'export type ItemCreateTargetSchema ',
+      'export type ItemCreateTargetSchema<D extends ItemDefinition = ItemDefinition> ',
+    )
+    .replace(
+      'export type ItemDuplicateJobSchema ',
+      'export type ItemDuplicateJobSchema<D extends ItemDefinition = ItemDefinition> ',
+    )
+    .replace(
+      'export type ItemUpdateTargetSchema ',
+      'export type ItemUpdateTargetSchema<D extends ItemDefinition = ItemDefinition> ',
+    )
+
+    .replace(
+      'export type ItemValidateExistingSchema ',
+      'export type RawItemValidateExistingSchema ',
+    )
+    .replace(
+      'export type ItemValidateNewSchema ',
+      'export type RawItemValidateNewSchema ',
+    )
+    .replace(
+      'export type ItemCreateSchema ',
+      'export type RawItemCreateSchema ',
+    )
+    .replace(
+      'export type ItemUpdateSchema ',
+      'export type RawItemUpdateSchema ',
+    )
+
     .replace('export type Field ', 'export type RawField ')
     .replace('export type FieldAttributes ', 'export type RawFieldAttributes ')
     .replace(
@@ -443,16 +545,28 @@ function convertFieldTypesToRaw(typings: string) {
     );
 }
 
+function clone<T>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj)) as T;
+}
+
 export default async function extractInfoFromSchema(
   hyperschemaUrl: string,
   isCma: boolean,
 ): Promise<SchemaInfo> {
   const rawSchema = await downloadHyperschema(hyperschemaUrl);
 
-  const simplifiedRawSchema = await downloadHyperschema(hyperschemaUrl);
-  simplifySchema(simplifiedRawSchema);
+  const rawSchemaToGenerateTypings = clone(rawSchema);
+  generateRawSchema(rawSchemaToGenerateTypings);
+  const typings = convertFieldTypesToRaw(
+    await schemaToTs(rawSchemaToGenerateTypings),
+  );
 
-  const typings = await schemaToTs(rawSchema);
+  const rawSchemaToGenerateSimpleTypings = clone(rawSchema);
+  simplifySchema(rawSchemaToGenerateSimpleTypings);
+  const simpleTypings = convertFieldTypesToRaw(
+    await schemaToTs(rawSchemaToGenerateSimpleTypings),
+  );
+
   const schema = await JsonRefParser.dereference(rawSchema);
 
   if (!schema.properties) {
@@ -466,9 +580,7 @@ export default async function extractInfoFromSchema(
         generateResourceInfo(isCma, resource, schema),
       )
       .filter((resourceInfo) => resourceInfo.endpoints.length > 0),
-    simpleTypings: convertFieldTypesToRaw(
-      await schemaToTs(simplifiedRawSchema),
-    ),
-    typings: convertFieldTypesToRaw(typings),
+    simpleTypings,
+    typings,
   };
 }

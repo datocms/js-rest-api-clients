@@ -2,14 +2,12 @@ import type { LocalizedFieldValue } from '../utilities/fieldValue';
 import type { MapEditorConfiguration } from './appearance/map';
 import type { RequiredValidator } from './validators/required';
 
-export type LocationFieldValue = {
+export type LatLonFieldValue = {
   latitude: number;
   longitude: number;
 } | null;
 
-export function isLocationFieldValue(
-  value: unknown,
-): value is LocationFieldValue {
+export function isLatLonFieldValue(value: unknown): value is LatLonFieldValue {
   if (value === null) return true;
   return (
     typeof value === 'object' &&
@@ -19,22 +17,22 @@ export function isLocationFieldValue(
   );
 }
 
-export function isLocalizedLocationFieldValue(
+export function isLocalizedLatLonFieldValue(
   value: unknown,
-): value is LocalizedFieldValue<LocationFieldValue> {
+): value is LocalizedFieldValue<LatLonFieldValue> {
   return (
     typeof value === 'object' &&
     value !== null &&
-    Object.values(value).every(isLocationFieldValue)
+    Object.values(value).every(isLatLonFieldValue)
   );
 }
 
-export type LocationFieldValidators = {
+export type LatLonFieldValidators = {
   /** Value must be specified or it won't be valid */
   required?: RequiredValidator;
 };
 
-export type LocationFieldAppearance =
+export type LatLonFieldAppearance =
   | { editor: 'map'; parameters: MapEditorConfiguration }
   | {
       /** Plugin ID */

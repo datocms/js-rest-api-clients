@@ -129,3 +129,48 @@ export function serializeRequestBody<T extends { data: unknown } | null>(
     },
   } as unknown as T;
 }
+
+function processValueForSerialization(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map(processValueForSerialization);
+  }
+
+  if (value && typeof value === 'object') {
+    const result: Record<string, unknown> = {};
+    for (const [key, val] of Object.entries(value)) {
+      if (key !== '__itemTypeId') {
+        result[key] = processValueForSerialization(val);
+      }
+    }
+    return result;
+  }
+
+  return value;
+}
+
+export function serializeRawItem<S>(item: any): S {
+  if (!item || typeof item !== 'object') {
+    return item;
+  }
+
+  const { __itemTypeId, ...rest } = item;
+
+  const processedItem: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(rest)) {
+    processedItem[key] = processValueForSerialization(value);
+  }
+
+  return processedItem as S;
+}
+
+export function serializeRawRequestBodyWithItems(body: any) {
+  if (!('data' in body)) {
+    throw new Error('Invalid body!');
+  }
+
+  if (Array.isArray(body.data)) {
+    return { ...body, data: body.data.map(serializeRawItem) };
+  }
+
+  return { ...body, data: serializeRawItem(body.data) };
+}

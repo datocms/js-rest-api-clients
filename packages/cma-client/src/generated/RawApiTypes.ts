@@ -24,13 +24,13 @@ import type {
   JsonFieldAppearance,
   JsonFieldValidators,
   JsonFieldValue,
+  LatLonFieldAppearance,
+  LatLonFieldValidators,
+  LatLonFieldValue,
   LinkFieldAppearance,
   LinkFieldValidators,
   LinksFieldAppearance,
   LinksFieldValidators,
-  LocationFieldAppearance,
-  LocationFieldValidators,
-  LocationFieldValue,
   RichTextFieldAppearance,
   RichTextFieldValidators,
   SeoFieldAppearance,
@@ -50,6 +50,8 @@ import type {
   VideoFieldAppearance,
   VideoFieldValidators,
 } from '../fieldTypes';
+
+import type { ItemDefinition } from '../utilities/itemDefinition';
 
 /**
  * Enhanced appearance configuration with field-specific types and addon support
@@ -191,9 +193,9 @@ type GenericFieldAttributes<SourceType> =
   | FieldAttributesForFieldType<
       SourceType,
       'lat_lon',
-      LocationFieldValue,
-      LocationFieldValidators,
-      LocationFieldAppearance
+      LatLonFieldValue,
+      LatLonFieldValidators,
+      LatLonFieldAppearance
     >
   | FieldAttributesForFieldType<
       SourceType,
@@ -403,9 +405,9 @@ type FieldCreateConfig<SourceType> =
   | FieldCreateConfigForFieldType<
       SourceType,
       'lat_lon',
-      LocationFieldValue,
-      LocationFieldValidators,
-      LocationFieldAppearance
+      LatLonFieldValue,
+      LatLonFieldValidators,
+      LatLonFieldAppearance
     >
   | FieldCreateConfigForFieldType<
       SourceType,
@@ -582,9 +584,9 @@ type FieldUpdateConfig<SourceType> =
   | FieldUpdateConfigForFieldType<
       SourceType,
       'lat_lon',
-      LocationFieldValue,
-      LocationFieldValidators,
-      LocationFieldAppearance
+      LatLonFieldValue,
+      LatLonFieldValidators,
+      LatLonFieldAppearance
     >
   | FieldUpdateConfigForFieldType<
       SourceType,
@@ -669,6 +671,33 @@ export type FieldUpdateSchema = Omit<RawFieldUpdateSchema, 'data'> & {
   data: Omit<RawFieldUpdateSchema['data'], 'attributes'> & {
     attributes: FieldUpdateConfig<RawFieldUpdateSchema['data']['attributes']>;
   };
+};
+
+export type ApplyItemDefinitionToSchema<
+  Schema,
+  D extends ItemDefinition = ItemDefinition,
+> = D extends any
+  ? Schema & { attributes: D['fields'] } & {
+      /** Useful for type narrowing */
+      __itemTypeId?: D['itemTypeId'];
+    }
+  : never;
+
+export type Item<D extends ItemDefinition = ItemDefinition> =
+  ApplyItemDefinitionToSchema<RawItem, D>;
+export type ItemValidateExistingSchema<
+  D extends ItemDefinition = ItemDefinition,
+> = {
+  data: ApplyItemDefinitionToSchema<RawItemValidateExistingSchema['data'], D>;
+};
+export type ItemValidateNewSchema<D extends ItemDefinition = ItemDefinition> = {
+  data: ApplyItemDefinitionToSchema<RawItemValidateNewSchema['data'], D>;
+};
+export type ItemCreateSchema<D extends ItemDefinition = ItemDefinition> = {
+  data: ApplyItemDefinitionToSchema<RawItemCreateSchema['data'], D>;
+};
+export type ItemUpdateSchema<D extends ItemDefinition = ItemDefinition> = {
+  data: ApplyItemDefinitionToSchema<RawItemUpdateSchema['data'], D>;
 };
 
 /* tslint:disable */
@@ -1039,17 +1068,17 @@ export type UploadCollectionInstancesHrefSchema = {
   };
 };
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `definition` "type".
  */
 export type ItemType1 = 'item';
 /**
  * RFC 4122 UUID of record expressed in URL-safe base64 format
  *
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `definition` "identity".
  *
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `definition` "id".
  */
 export type ItemIdentity = string;
@@ -1277,7 +1306,7 @@ export type BuildEventInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `instances.hrefSchema` link.
  */
 export type ItemInstancesHrefSchema = {
@@ -1341,7 +1370,7 @@ export type ItemInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `references.hrefSchema` link.
  */
 export type ItemReferencesHrefSchema = {
@@ -1356,7 +1385,7 @@ export type ItemReferencesHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `self.hrefSchema` link.
  */
 export type ItemSelfHrefSchema = {
@@ -1455,7 +1484,7 @@ export type ItemVersionInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `publish.schema` link.
  */
 export type ItemPublishSchema = {
@@ -1477,7 +1506,7 @@ export type ItemPublishSchema = {
   };
 } | null;
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `publish.hrefSchema` link.
  */
 export type ItemPublishHrefSchema = {
@@ -1488,7 +1517,7 @@ export type ItemPublishHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `unpublish.schema` link.
  */
 export type ItemUnpublishSchema = {
@@ -1503,7 +1532,7 @@ export type ItemUnpublishSchema = {
   };
 } | null;
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `unpublish.hrefSchema` link.
  */
 export type ItemUnpublishHrefSchema = {
@@ -4280,13 +4309,13 @@ export type MenuItemAttributes = {
  */
 export type MenuItemRelationships = {
   /**
-   * Item type associated with the menu item
+   * Item<D> type associated with the menu item
    */
   item_type: {
     data: ItemTypeData | null;
   };
   /**
-   * Item type filter associated with the menu item (to be used together with `item_type` relationship)
+   * Item<D> type filter associated with the menu item (to be used together with `item_type` relationship)
    */
   item_type_filter: {
     data: ItemTypeFilterData | null;
@@ -4369,13 +4398,13 @@ export type MenuItemCreateSchema = {
     };
     relationships?: {
       /**
-       * Item type associated with the menu item
+       * Item<D> type associated with the menu item
        */
       item_type?: {
         data: ItemTypeData | null;
       };
       /**
-       * Item type filter associated with the menu item (to be used together with `item_type` relationship)
+       * Item<D> type filter associated with the menu item (to be used together with `item_type` relationship)
        */
       item_type_filter?: {
         data: ItemTypeFilterData | null;
@@ -4429,13 +4458,13 @@ export type MenuItemUpdateSchema = {
     };
     relationships?: {
       /**
-       * Item type associated with the menu item
+       * Item<D> type associated with the menu item
        */
       item_type?: {
         data: ItemTypeData | null;
       };
       /**
-       * Item type filter associated with the menu item (to be used together with `item_type` relationship)
+       * Item<D> type filter associated with the menu item (to be used together with `item_type` relationship)
        */
       item_type_filter?: {
         data: ItemTypeFilterData | null;
@@ -4588,7 +4617,7 @@ export type SchemaMenuItemAttributes = {
  */
 export type SchemaMenuItemRelationships = {
   /**
-   * Item type associated with the schema menu item
+   * Item<D> type associated with the schema menu item
    */
   item_type: {
     data: ItemTypeData | null;
@@ -4645,7 +4674,7 @@ export type SchemaMenuItemCreateSchema = {
     };
     relationships?: {
       /**
-       * Item type associated with the menu item
+       * Item<D> type associated with the menu item
        */
       item_type?: {
         data: ItemTypeData | null;
@@ -4695,7 +4724,7 @@ export type SchemaMenuItemUpdateSchema = {
     };
     relationships?: {
       /**
-       * Item type associated with the menu item
+       * Item<D> type associated with the menu item
        */
       item_type?: {
         data: ItemTypeData | null;
@@ -5172,7 +5201,7 @@ export type ItemTypeRelationships = {
 /**
  * JSON API data
  *
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `definition` "data".
  */
 export type ItemData = {
@@ -7879,28 +7908,17 @@ export type BuildEventSelfTargetSchema = {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "item".
  */
-export type Item = {
+export type RawItem = {
   type: ItemType1;
   id: ItemIdentity;
-  attributes: ItemAttributes;
   relationships: ItemRelationships;
   meta: ItemMeta;
 };
 
 /**
- * The JSON data associated to the record
- *
- * This interface was referenced by `Item`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type ItemAttributes = {
-  [k: string]: unknown;
-};
-
-/**
  * JSON API links
  *
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `definition` "relationships".
  */
 export type ItemRelationships = {
@@ -7926,7 +7944,7 @@ export type ItemRelationships = {
 /**
  * Meta information regarding the record
  *
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `definition` "meta".
  */
 export type ItemMeta = {
@@ -7985,30 +8003,36 @@ export type ItemMeta = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * The JSON data associated to the record
+ *
+ * This interface was referenced by `Item<D>`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type ItemAttributes = {
+  [k: string]: unknown;
+};
+
+/**
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
-export type ItemInstancesTargetSchema = {
-  data: Item[];
+export type ItemInstancesTargetSchema<
+  D extends ItemDefinition = ItemDefinition,
+> = {
+  data: Item<D>[];
   meta: {
     total_count: number;
   };
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `validate_existing.schema` link.
  */
-export type ItemValidateExistingSchema = {
+export type RawItemValidateExistingSchema = {
   data: {
     id: ItemIdentity;
     type: ItemType1;
-    /**
-     * The JSON data associated to the record
-     */
-    attributes: {
-      [k: string]: unknown;
-    };
     relationships: {
       /**
        * The record's model
@@ -8032,18 +8056,12 @@ export type ItemValidateExistingSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `validate_new.schema` link.
  */
-export type ItemValidateNewSchema = {
+export type RawItemValidateNewSchema = {
   data: {
     type: ItemType1;
-    /**
-     * The JSON data associated to the record
-     */
-    attributes: {
-      [k: string]: unknown;
-    };
     relationships: {
       /**
        * The record's model
@@ -8067,19 +8085,13 @@ export type ItemValidateNewSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `create.schema` link.
  */
-export type ItemCreateSchema = {
+export type RawItemCreateSchema = {
   data: {
     id?: ItemIdentity;
     type: ItemType1;
-    /**
-     * The JSON data associated to the record
-     */
-    attributes: {
-      [k: string]: unknown;
-    };
     /**
      * Meta information regarding the record
      */
@@ -8148,16 +8160,17 @@ export type ItemCreateSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `create.targetSchema` link.
  */
-export type ItemCreateTargetSchema = {
-  data: Item;
-  included: (ItemType | Item)[];
-};
+export type ItemCreateTargetSchema<D extends ItemDefinition = ItemDefinition> =
+  {
+    data: Item<D>;
+    included: (ItemType | Item)[];
+  };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `duplicate.targetSchema` link.
  */
 export type ItemDuplicateTargetSchema = {
@@ -8165,28 +8178,23 @@ export type ItemDuplicateTargetSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `duplicate.jobSchema` link.
  */
-export type ItemDuplicateJobSchema = {
-  data: Item;
-  included: ItemType[];
-};
+export type ItemDuplicateJobSchema<D extends ItemDefinition = ItemDefinition> =
+  {
+    data: Item<D>;
+    included: ItemType[];
+  };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `update.schema` link.
  */
-export type ItemUpdateSchema = {
+export type RawItemUpdateSchema = {
   data: {
     type: ItemType1;
     id: ItemIdentity;
-    /**
-     * The JSON data associated to the record
-     */
-    attributes?: {
-      [k: string]: unknown;
-    };
     /**
      * Meta information regarding the record
      */
@@ -8267,32 +8275,35 @@ export type ItemUpdateSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `update.targetSchema` link.
  */
-export type ItemUpdateTargetSchema = {
-  data: Item;
-  included?: (ItemType | Item)[];
-};
+export type ItemUpdateTargetSchema<D extends ItemDefinition = ItemDefinition> =
+  {
+    data: Item<D>;
+    included?: (ItemType | Item)[];
+  };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `references.targetSchema` link.
  */
-export type ItemReferencesTargetSchema = {
-  data: Item[];
+export type ItemReferencesTargetSchema<
+  D extends ItemDefinition = ItemDefinition,
+> = {
+  data: Item<D>[];
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `self.targetSchema` link.
  */
-export type ItemSelfTargetSchema = {
-  data: Item;
+export type ItemSelfTargetSchema<D extends ItemDefinition = ItemDefinition> = {
+  data: Item<D>;
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `current_vs_published_state.targetSchema` link.
  */
 export type ItemCurrentVsPublishedStateTargetSchema = {
@@ -8448,7 +8459,7 @@ export type ScheduledPublicationAttributes = {
  */
 export type ScheduledPublicationRelationships = {
   /**
-   * Item
+   * Item<D>
    */
   item: {
     data: ItemData;
@@ -8500,8 +8511,10 @@ export type ScheduledPublicationCreateTargetSchema = {
  * This interface was referenced by `ScheduledPublication`'s JSON-Schema
  * via the `destroy.targetSchema` link.
  */
-export type ScheduledPublicationDestroyTargetSchema = {
-  data: Item;
+export type ScheduledPublicationDestroyTargetSchema<
+  D extends ItemDefinition = ItemDefinition,
+> = {
+  data: Item<D>;
 };
 
 /**
@@ -8542,7 +8555,7 @@ export type ScheduledUnpublishingAttributes = {
  */
 export type ScheduledUnpublishingRelationships = {
   /**
-   * Item
+   * Item<D>
    */
   item: {
     data: ItemData;
@@ -8585,8 +8598,10 @@ export type ScheduledUnpublishingCreateTargetSchema = {
  * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
  * via the `destroy.targetSchema` link.
  */
-export type ScheduledUnpublishingDestroyTargetSchema = {
-  data: Item;
+export type ScheduledUnpublishingDestroyTargetSchema<
+  D extends ItemDefinition = ItemDefinition,
+> = {
+  data: Item<D>;
 };
 
 /**
@@ -8682,8 +8697,10 @@ export type ItemVersionRestoreTargetSchema = {
  * This interface was referenced by `ItemVersion`'s JSON-Schema
  * via the `restore.jobSchema` link.
  */
-export type ItemVersionRestoreJobSchema = {
-  data: [Item, ItemVersion];
+export type ItemVersionRestoreJobSchema<
+  D extends ItemDefinition = ItemDefinition,
+> = {
+  data: [Item<D>, ItemVersion];
 };
 
 /**
@@ -8706,7 +8723,7 @@ export type ItemVersionSelfTargetSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `destroy.targetSchema` link.
  */
 export type ItemDestroyTargetSchema = {
@@ -8714,33 +8731,36 @@ export type ItemDestroyTargetSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `destroy.jobSchema` link.
  */
-export type ItemDestroyJobSchema = {
-  data: Item;
+export type ItemDestroyJobSchema<D extends ItemDefinition = ItemDefinition> = {
+  data: Item<D>;
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `publish.targetSchema` link.
  */
-export type ItemPublishTargetSchema = {
-  data: Item;
-  included?: ItemType[];
-};
+export type ItemPublishTargetSchema<D extends ItemDefinition = ItemDefinition> =
+  {
+    data: Item<D>;
+    included?: ItemType[];
+  };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `unpublish.targetSchema` link.
  */
-export type ItemUnpublishTargetSchema = {
-  data: Item;
+export type ItemUnpublishTargetSchema<
+  D extends ItemDefinition = ItemDefinition,
+> = {
+  data: Item<D>;
   included?: ItemType[];
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `bulk_publish.schema` link.
  */
 export type ItemBulkPublishSchema = {
@@ -8759,7 +8779,7 @@ export type ItemBulkPublishSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `bulk_publish.targetSchema` link.
  */
 export type ItemBulkPublishTargetSchema = {
@@ -8767,7 +8787,7 @@ export type ItemBulkPublishTargetSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `bulk_publish.jobSchema` link.
  */
 export type ItemBulkPublishJobSchema = {
@@ -8779,7 +8799,7 @@ export type ItemBulkPublishJobSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `bulk_unpublish.schema` link.
  */
 export type ItemBulkUnpublishSchema = {
@@ -8798,7 +8818,7 @@ export type ItemBulkUnpublishSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `bulk_unpublish.targetSchema` link.
  */
 export type ItemBulkUnpublishTargetSchema = {
@@ -8806,7 +8826,7 @@ export type ItemBulkUnpublishTargetSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `bulk_unpublish.jobSchema` link.
  */
 export type ItemBulkUnpublishJobSchema = {
@@ -8818,7 +8838,7 @@ export type ItemBulkUnpublishJobSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `bulk_destroy.schema` link.
  */
 export type ItemBulkDestroySchema = {
@@ -8837,7 +8857,7 @@ export type ItemBulkDestroySchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `bulk_destroy.targetSchema` link.
  */
 export type ItemBulkDestroyTargetSchema = {
@@ -8845,7 +8865,7 @@ export type ItemBulkDestroyTargetSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `bulk_destroy.jobSchema` link.
  */
 export type ItemBulkDestroyJobSchema = {
@@ -8857,7 +8877,7 @@ export type ItemBulkDestroyJobSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `bulk_move_to_stage.schema` link.
  */
 export type ItemBulkMoveToStageSchema = {
@@ -8882,7 +8902,7 @@ export type ItemBulkMoveToStageSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `bulk_move_to_stage.targetSchema` link.
  */
 export type ItemBulkMoveToStageTargetSchema = {
@@ -8890,7 +8910,7 @@ export type ItemBulkMoveToStageTargetSchema = {
 };
 
 /**
- * This interface was referenced by `Item`'s JSON-Schema
+ * This interface was referenced by `Item<D>`'s JSON-Schema
  * via the `bulk_move_to_stage.jobSchema` link.
  */
 export type ItemBulkMoveToStageJobSchema = {
@@ -9359,8 +9379,10 @@ export type UploadUpdateJobSchema = {
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `references.targetSchema` link.
  */
-export type UploadReferencesTargetSchema = {
-  data: Item[];
+export type UploadReferencesTargetSchema<
+  D extends ItemDefinition = ItemDefinition,
+> = {
+  data: Item<D>[];
 };
 
 /**

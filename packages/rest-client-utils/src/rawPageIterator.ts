@@ -1,4 +1,5 @@
 import { Scheduler } from 'async-scheduler';
+import { deserializeRawItem } from './deserialize';
 
 export type IteratorOptions = {
   perPage?: number;
@@ -22,6 +23,7 @@ export async function* rawPageIterator<T>(
     offset: number;
   }) => Promise<JsonApiPage<T>>,
   iteratorOptions?: IteratorOptions,
+  deserializeRawRequestBodyWithItems?: boolean,
 ) {
   const perPage = iteratorOptions?.perPage || pagination.defaultLimit;
 
@@ -59,7 +61,9 @@ export async function* rawPageIterator<T>(
   while (promises.length > 0) {
     const response = await promises.shift()!;
     for (const item of response.data) {
-      yield item;
+      yield deserializeRawRequestBodyWithItems
+        ? deserializeRawItem(item)
+        : item;
     }
   }
 }

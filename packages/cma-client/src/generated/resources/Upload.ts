@@ -1,7 +1,15 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
+import type {
+  ItemTypeDefinition,
+  ItemTypeDefinitionToItemDefinition,
+  ItemTypeDefinitionToItemDefinitionAsRequest,
+  ItemTypeDefinitionToItemDefinitionWithNestedBlocks,
+} from '../../utilities/itemDefinition';
 import type * as ApiTypes from '../ApiTypes';
 import type * as RawApiTypes from '../RawApiTypes';
+
+type NoInfer<T> = [T][T extends any ? 0 : never];
 
 export default class Upload extends BaseResource {
   static readonly TYPE = 'upload' as const;
@@ -256,14 +264,38 @@ export default class Upload extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  references(
+  references<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    uploadId: string | ApiTypes.UploadData,
+    queryParams: ApiTypes.UploadReferencesHrefSchema & { nested: true },
+  ): Promise<
+    ApiTypes.UploadReferencesTargetSchema<
+      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+    >
+  >;
+  references<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    uploadId: string | ApiTypes.UploadData,
+    queryParams?: ApiTypes.UploadReferencesHrefSchema & {
+      nested?: false | undefined;
+    },
+  ): Promise<
+    ApiTypes.UploadReferencesTargetSchema<
+      ItemTypeDefinitionToItemDefinition<NoInfer<D>>
+    >
+  >;
+  /**
+   * Referenced records
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/references
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  references<D extends ItemTypeDefinition = ItemTypeDefinition>(
     uploadId: string | ApiTypes.UploadData,
     queryParams?: ApiTypes.UploadReferencesHrefSchema,
   ) {
-    return this.rawReferences(Utils.toId(uploadId), queryParams).then((body) =>
-      Utils.deserializeResponseBody<ApiTypes.UploadReferencesTargetSchema>(
-        body,
-      ),
+    return this.rawReferences<D>(Utils.toId(uploadId), queryParams).then(
+      (body) => Utils.deserializeResponseBody(body),
     );
   }
 
@@ -275,15 +307,25 @@ export default class Upload extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawReferences(
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
     uploadId: string,
     queryParams?: RawApiTypes.UploadReferencesHrefSchema,
-  ): Promise<RawApiTypes.UploadReferencesTargetSchema> {
-    return this.client.request<RawApiTypes.UploadReferencesTargetSchema>({
-      method: 'GET',
-      url: `/uploads/${uploadId}/references`,
-      queryParams,
-    });
+  ): Promise<
+    RawApiTypes.UploadReferencesTargetSchema<
+      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+    >
+  > {
+    return this.client
+      .request({
+        method: 'GET',
+        url: `/uploads/${uploadId}/references`,
+        queryParams,
+      })
+      .then<
+        RawApiTypes.UploadReferencesTargetSchema<
+          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+        >
+      >(Utils.deserializeRawResponseBodyWithItems);
   }
 
   /**

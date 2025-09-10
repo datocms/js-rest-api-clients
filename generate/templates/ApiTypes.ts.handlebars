@@ -29,9 +29,9 @@
     LinkFieldValidators,
     LinksFieldAppearance,
     LinksFieldValidators,
-    LocationFieldAppearance,
-    LocationFieldValidators,
-    LocationFieldValue,
+    LatLonFieldAppearance,
+    LatLonFieldValidators,
+    LatLonFieldValue,
     RichTextFieldAppearance,
     RichTextFieldValidators,
     SeoFieldAppearance,
@@ -51,6 +51,10 @@
     VideoFieldAppearance,
     VideoFieldValidators,
   } from '../fieldTypes';
+
+  import type {
+    ItemDefinition,
+  } from '../utilities/itemDefinition';
 
   /**
   * Enhanced appearance configuration with field-specific types and addon support
@@ -192,9 +196,9 @@
     | FieldAttributesForFieldType<
         SourceType,
         'lat_lon',
-        LocationFieldValue,
-        LocationFieldValidators,
-        LocationFieldAppearance
+        LatLonFieldValue,
+        LatLonFieldValidators,
+        LatLonFieldAppearance
       >
     | FieldAttributesForFieldType<
         SourceType,
@@ -396,9 +400,9 @@
     | FieldCreateConfigForFieldType<
         SourceType,
         'lat_lon',
-        LocationFieldValue,
-        LocationFieldValidators,
-        LocationFieldAppearance
+        LatLonFieldValue,
+        LatLonFieldValidators,
+        LatLonFieldAppearance
       >
     | FieldCreateConfigForFieldType<
         SourceType,
@@ -580,9 +584,9 @@
     | FieldUpdateConfigForFieldType<
       SourceType,
       'lat_lon',
-      LocationFieldValue,
-      LocationFieldValidators,
-      LocationFieldAppearance
+      LatLonFieldValue,
+      LatLonFieldValidators,
+      LatLonFieldAppearance
     >
     | FieldUpdateConfigForFieldType<
       SourceType,
@@ -663,7 +667,7 @@
       VideoFieldAppearance
     >
 
-  export type FieldUpdateSchema = 
+  export type FieldUpdateSchema =
   {{#if simpleVariant}}
     FieldUpdateConfig<RawFieldUpdateSchema>;
   {{else}}
@@ -673,7 +677,38 @@
       }
     };
   {{/if}}
+
+  {{#if simpleVariant}}
+    export type ApplyItemDefinitionToSchema<
+      Schema,
+      D extends ItemDefinition = ItemDefinition
+    > = D extends any
+      ? Schema & D['fields'] & {
+        /** Useful for type narrowing */
+        __itemTypeId?: D['itemTypeId'];
+      }
+      : never;
+
+    export type Item<D extends ItemDefinition = ItemDefinition> = ApplyItemDefinitionToSchema<RawItem, D>;
+    export type ItemValidateExistingSchema<D extends ItemDefinition = ItemDefinition> = ApplyItemDefinitionToSchema<RawItemValidateExistingSchema, D>;
+    export type ItemValidateNewSchema<D extends ItemDefinition = ItemDefinition> = ApplyItemDefinitionToSchema<RawItemValidateNewSchema, D>;
+    export type ItemCreateSchema<D extends ItemDefinition = ItemDefinition> = ApplyItemDefinitionToSchema<RawItemCreateSchema, D>;
+    export type ItemUpdateSchema<D extends ItemDefinition = ItemDefinition> = ApplyItemDefinitionToSchema<RawItemUpdateSchema, D>;
+  {{else}}
+    export type ApplyItemDefinitionToSchema<Schema, D extends ItemDefinition = ItemDefinition> =
+      D extends any
+      ? Schema & { attributes: D['fields'] } & {
+        /** Useful for type narrowing */
+        __itemTypeId?: D['itemTypeId'];
+      }
+      : never;
+
+      export type Item<D extends ItemDefinition = ItemDefinition> = ApplyItemDefinitionToSchema<RawItem, D>;
+      export type ItemValidateExistingSchema<D extends ItemDefinition = ItemDefinition> = { data: ApplyItemDefinitionToSchema<RawItemValidateExistingSchema['data'], D> };
+      export type ItemValidateNewSchema<D extends ItemDefinition = ItemDefinition> = { data: ApplyItemDefinitionToSchema<RawItemValidateNewSchema['data'], D> };
+      export type ItemCreateSchema<D extends ItemDefinition = ItemDefinition> = { data: ApplyItemDefinitionToSchema<RawItemCreateSchema['data'], D> };
+      export type ItemUpdateSchema<D extends ItemDefinition = ItemDefinition> = { data: ApplyItemDefinitionToSchema<RawItemUpdateSchema['data'], D> };
+  {{/if}}
 {{/if}}
 
 {{{typings}}}
-

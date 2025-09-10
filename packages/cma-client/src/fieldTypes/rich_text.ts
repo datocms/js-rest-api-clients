@@ -1,5 +1,6 @@
 import type * as RawApiTypes from '../generated/RawApiTypes';
 import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import type { ItemDefinition } from '../utilities/itemDefinition';
 import type { RichTextEditorConfiguration } from './appearance/rich_text';
 import {
   type BlockItemInARequest,
@@ -41,7 +42,7 @@ import type { SizeValidator } from './validators/size';
 /**
  * Basic Modular Content field value - array of string block IDs (lightweight references)
  */
-export type RichTextFieldValue = string[] | null;
+export type RichTextFieldValue = string[];
 
 /**
  * =============================================================================
@@ -60,7 +61,9 @@ export type RichTextFieldValue = string[] | null;
  * - RawApiTypes.Item: Full block object with ID (for updates)
  * - Omit<RawApiTypes.Item, 'id'>: Block object without ID (for creation)
  */
-export type RichTextFieldValueAsRequest = BlockItemInARequest[] | null;
+export type RichTextFieldValueAsRequest<
+  D extends ItemDefinition = ItemDefinition,
+> = BlockItemInARequest<D>[] | null;
 
 /**
  * =============================================================================
@@ -75,7 +78,9 @@ export type RichTextFieldValueAsRequest = BlockItemInARequest[] | null;
 /**
  * Modular Content field value with nested blocks - array of fully populated block objects
  */
-export type RichTextFieldValueWithNestedBlocks = RawApiTypes.Item[] | null;
+export type RichTextFieldValueWithNestedBlocks<
+  D extends ItemDefinition = ItemDefinition,
+> = RawApiTypes.Item<D>[];
 
 /**
  * =============================================================================
@@ -111,9 +116,9 @@ export function isLocalizedRichTextFieldValue(
  * Type guard for Modular Content field values in API request format.
  * Allows blocks as string IDs, full objects with IDs, or objects without IDs.
  */
-export function isRichTextFieldValueAsRequest(
-  value: unknown,
-): value is RichTextFieldValueAsRequest {
+export function isRichTextFieldValueAsRequest<
+  D extends ItemDefinition = ItemDefinition,
+>(value: unknown): value is RichTextFieldValueAsRequest<D> {
   if (value === null) return true;
 
   if (!Array.isArray(value)) return false;
@@ -127,9 +132,11 @@ export function isRichTextFieldValueAsRequest(
   });
 }
 
-export function isLocalizedRichTextFieldValueAsRequest(
+export function isLocalizedRichTextFieldValueAsRequest<
+  D extends ItemDefinition = ItemDefinition,
+>(
   value: unknown,
-): value is LocalizedFieldValue<RichTextFieldValueAsRequest> {
+): value is LocalizedFieldValue<RichTextFieldValueAsRequest<D>> {
   return (
     typeof value === 'object' &&
     value !== null &&
@@ -141,9 +148,9 @@ export function isLocalizedRichTextFieldValueAsRequest(
  * Type guard for Modular Content field values with nested blocks (?nested=true format).
  * Ensures all blocks are full RawApiTypes.Item objects with complete data.
  */
-export function isRichTextFieldValueWithNestedBlocks(
-  value: unknown,
-): value is RichTextFieldValueWithNestedBlocks {
+export function isRichTextFieldValueWithNestedBlocks<
+  D extends ItemDefinition = ItemDefinition,
+>(value: unknown): value is RichTextFieldValueWithNestedBlocks<D> {
   if (value === null) return true;
 
   if (!Array.isArray(value)) return false;
@@ -154,9 +161,11 @@ export function isRichTextFieldValueWithNestedBlocks(
   });
 }
 
-export function isLocalizedRichTextFieldValueWithNestedBlocks(
+export function isLocalizedRichTextFieldValueWithNestedBlocks<
+  D extends ItemDefinition = ItemDefinition,
+>(
   value: unknown,
-): value is LocalizedFieldValue<RichTextFieldValueWithNestedBlocks> {
+): value is LocalizedFieldValue<RichTextFieldValueWithNestedBlocks<D>> {
   return (
     typeof value === 'object' &&
     value !== null &&

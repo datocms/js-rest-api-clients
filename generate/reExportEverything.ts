@@ -181,4 +181,3 @@ if (content.includes(START_MARKER) && content.includes(END_MARKER)) {
 // Write updated file
 writeFileSync(SRC_FILE, content);
 console.log(`Updated exports (including types) in ${SRC_FILE}`);
-

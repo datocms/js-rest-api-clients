@@ -4,6 +4,7 @@ type JsonApiEntity = {
   attributes?: object;
   relationships?: object;
   meta?: object;
+  __itemTypeId?: string;
 };
 
 type ResponseWithData = {
@@ -15,6 +16,7 @@ function hasData(thing: unknown): thing is ResponseWithData {
 }
 
 export function deserializeJsonEntity<S>({
+  __itemTypeId,
   id,
   type,
   attributes,
@@ -22,6 +24,7 @@ export function deserializeJsonEntity<S>({
   meta,
 }: JsonApiEntity): S {
   return {
+    ...(__itemTypeId ? { __itemTypeId } : {}),
     ...(id ? { id } : {}),
     ...(type ? { type } : {}),
     ...(attributes || {}),
@@ -47,4 +50,73 @@ export function deserializeResponseBody<T>(body: unknown): T {
   }
 
   return deserializeJsonEntity(body.data) as unknown as T;
+}
+
+type ItemJsonEntity = {
+  id?: string;
+  type: 'item';
+  attributes?: object;
+  relationships: {
+    item_type: {
+      data: { id: string; type: 'item_type' };
+    };
+  };
+  meta?: object;
+};
+
+function isItemEntity(entity: unknown): entity is ItemJsonEntity {
+  return Boolean(
+    entity &&
+      typeof entity === 'object' &&
+      'type' in entity &&
+      entity.type === 'item',
+  );
+}
+
+function processValue(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map(processValue);
+  }
+
+  if (value && typeof value === 'object') {
+    if (isItemEntity(value)) {
+      return deserializeRawItem(value);
+    }
+
+    const result: Record<string, unknown> = {};
+    for (const [key, val] of Object.entries(value)) {
+      result[key] = processValue(val);
+    }
+    return result;
+  }
+
+  return value;
+}
+
+export function deserializeRawItem<S>(entity: S): S {
+  if (!isItemEntity(entity)) {
+    return entity;
+  }
+
+  const processedAttributes = entity.attributes
+    ? processValue(entity.attributes)
+    : entity.attributes;
+
+  return {
+    ...entity,
+    attributes: processedAttributes,
+    __itemTypeId: entity.relationships.item_type.data.id,
+  } as S;
+}
+
+export function deserializeRawResponseBodyWithItems<T>(body: unknown): T {
+  if (!hasData(body)) {
+    throw new Error('Invalid body!');
+  }
+
+  if (Array.isArray(body.data)) {
+    return { ...body, data: body.data.map(deserializeRawItem) } as unknown as T;
+  }
+
+  return { ...body, data: deserializeRawItem(body.data) } as unknown as T;
 }

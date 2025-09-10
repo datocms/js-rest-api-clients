@@ -2,12 +2,18 @@ import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
 import type * as RawApiTypes from '../RawApiTypes';
 import type * as ApiTypes from '../ApiTypes';
+{{#if someEndpointReturnsItem}}
+import type { ItemTypeDefinition, ItemTypeDefinitionToItemDefinition, ItemTypeDefinitionToItemDefinitionWithNestedBlocks, ItemTypeDefinitionToItemDefinitionAsRequest } from '../../utilities/itemDefinition';
+
+type NoInfer<T> = [T][T extends any ? 0 : never];
+{{/if}}
 
 export default class {{{resourceClassName}}} extends BaseResource {
   static readonly TYPE = '{{jsonApiType}}' as const;
 
   {{#each endpoints}}
     {{#if simpleMethodAvailable}}
+      {{#if offersNestedItemsOptionInQueryParams}}
       /**
       * {{{comment}}}
       {{#if docUrl}}
@@ -22,23 +28,88 @@ export default class {{{resourceClassName}}} extends BaseResource {
       * @deprecated {{{deprecated}}}
       {{/if}}
       */
-      {{{name}}}(
+      {{{name}}}{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}{{#if requestBodyRequiresItem}}{{#unless returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/unless}}{{/if}}(
         {{#each urlPlaceholders}}
           {{{variableName}}}: string | ApiTypes.{{{relType}}},
         {{/each}}
         {{#if requestBodyType}}
-          body{{#if optionalRequestBody}}?{{/if}}: ApiTypes.{{{requestBodyType}}},
+          body{{#if optionalRequestBody}}?{{/if}}: ApiTypes.{{{requestBodyType}}}{{#if requestBodyRequiresItem}}<ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>>{{/if}},
+        {{/if}}
+        {{#if queryParamsType}}
+          queryParams: ApiTypes.{{{queryParamsType}}} & { nested: true },
+        {{/if}}
+      ): Promise<
+        {{#if responseType}}
+          ApiTypes.{{{responseType}}}{{#if returnsItem}}<ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>>{{/if}}
+        {{else}}
+          void
+        {{/if}}
+      >;
+      {{{name}}}{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}{{#if requestBodyRequiresItem}}{{#unless returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/unless}}{{/if}}(
+        {{#each urlPlaceholders}}
+          {{{variableName}}}: string | ApiTypes.{{{relType}}},
+        {{/each}}
+        {{#if requestBodyType}}
+          body{{#if optionalRequestBody}}?{{/if}}: ApiTypes.{{{requestBodyType}}}{{#if requestBodyRequiresItem}}<ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>>{{/if}},
+        {{/if}}
+        {{#if queryParamsType}}
+          queryParams?: ApiTypes.{{{queryParamsType}}} & { nested?: false | undefined },
+        {{/if}}
+      ): Promise<
+        {{#if responseType}}
+          ApiTypes.{{{responseType}}}{{#if returnsItem}}<ItemTypeDefinitionToItemDefinition<NoInfer<D>>>{{/if}}
+        {{else}}
+          void
+        {{/if}}
+      >;
+      {{#unless queryParamsType}}
+      {{{name}}}{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}{{#if requestBodyRequiresItem}}{{#unless returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/unless}}{{/if}}(
+        {{#each urlPlaceholders}}
+          {{{variableName}}}: string | ApiTypes.{{{relType}}},
+        {{/each}}
+        {{#if requestBodyType}}
+          body{{#if optionalRequestBody}}?{{/if}}: ApiTypes.{{{requestBodyType}}}{{#if requestBodyRequiresItem}}<ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>>{{/if}},
+        {{/if}}
+      ): Promise<
+        {{#if responseType}}
+          ApiTypes.{{{responseType}}}{{#if returnsItem}}<ItemTypeDefinitionToItemDefinition<NoInfer<D>>>{{/if}}
+        {{else}}
+          void
+        {{/if}}
+      >;
+      {{/unless}}
+      {{/if}}
+      /**
+      * {{{comment}}}
+      {{#if docUrl}}
+      *
+      * Read more: {{{docUrl}}}
+      {{/if}}
+      *
+      * @throws {ApiError}
+      * @throws {TimeoutError}
+      {{#if deprecated}}
+      *
+      * @deprecated {{{deprecated}}}
+      {{/if}}
+      */
+      {{{name}}}{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}{{#if requestBodyRequiresItem}}{{#unless returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/unless}}{{/if}}(
+        {{#each urlPlaceholders}}
+          {{{variableName}}}: string | ApiTypes.{{{relType}}},
+        {{/each}}
+        {{#if requestBodyType}}
+          body{{#if optionalRequestBody}}?{{/if}}: ApiTypes.{{{requestBodyType}}}{{#if requestBodyRequiresItem}}<ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>>{{/if}},
         {{/if}}
         {{#if queryParamsType}}
           queryParams{{#unless queryParamsRequired}}?{{/unless}}: ApiTypes.{{{queryParamsType}}},
         {{/if}}
       ) {
-        return this.{{{rawName}}}(
+        return this.{{{rawName}}}{{#if returnsItem}}<D>{{/if}}(
             {{#each urlPlaceholders}}
               Utils.toId({{{variableName}}}),
             {{/each}}
             {{#if requestBodyType}}
-              {{#if optionalRequestBody}}body ? {{/if}}Utils.serializeRequestBody<RawApiTypes.{{{requestBodyType}}}>(
+              {{#if optionalRequestBody}}body ? {{/if}}Utils.serializeRequestBody<RawApiTypes.{{{requestBodyType}}}{{#if requestBodyRequiresItem}}<ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>>{{/if}}>(
                 body,
                 {
                   {{#if entityIdPlaceholder}}
@@ -58,7 +129,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
             {{/if}}
           )
           {{#if responseType}}
-          .then(body => Utils.deserializeResponseBody<ApiTypes.{{{responseType}}}>(body))
+          .then(body => Utils.deserializeResponseBody{{#unless offersNestedItemsOptionInQueryParams}}<ApiTypes.{{{responseType}}}{{#if returnsItem}}<ItemTypeDefinitionToItemDefinition<NoInfer<D>>>{{/if}}>{{/unless}}(body))
           {{/if}}
         ;
       }
@@ -78,39 +149,39 @@ export default class {{{resourceClassName}}} extends BaseResource {
    * @deprecated {{{deprecated}}}
   {{/if}}
    */
-  {{{rawName}}}(
+  {{{rawName}}}{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}{{#if requestBodyRequiresItem}}{{#unless returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/unless}}{{/if}}(
     {{#each urlPlaceholders}}
       {{{variableName}}}: string,
     {{/each}}
     {{#if requestBodyType}}
-      body{{#if optionalRequestBody}}?{{/if}}: RawApiTypes.{{{requestBodyType}}},
+      body{{#if optionalRequestBody}}?{{/if}}: RawApiTypes.{{{requestBodyType}}}{{#if requestBodyRequiresItem}}<ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>>{{/if}},
     {{/if}}
     {{#if queryParamsType}}
       queryParams{{#unless queryParamsRequired}}?{{/unless}}: RawApiTypes.{{{queryParamsType}}},
     {{/if}}
   ): Promise<
     {{#if responseType}}
-      RawApiTypes.{{{responseType}}}
+      RawApiTypes.{{{responseType}}}{{#if returnsItem}}<ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>>{{/if}}
     {{else}}
       void
     {{/if}}
   > {
-    return this.client.request<
+    return this.client.request{{#unless returnsItem}}<
       {{#if responseType}}
-        RawApiTypes.{{{responseType}}}
+        RawApiTypes.{{{responseType}}}{{#if returnsItem}}<ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>>{{/if}}
       {{else}}
         void
       {{/if}}
-    >({
+    >{{/unless}}({
       method: '{{method}}',
       url: `{{urlTemplate}}`,
       {{#if requestBodyType}}
-        body,
+        body{{#if returnsItem}}: Utils.serializeRawRequestBodyWithItems(body){{/if}},
       {{/if}}
       {{#if queryParamsType}}
         queryParams,
       {{/if}}
-    });
+    }){{#if returnsItem}}{{#if responseType}}.then<RawApiTypes.{{{responseType}}}<ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>>>(Utils.deserializeRawResponseBodyWithItems){{/if}}{{/if}};
   }
 
   {{#if paginatedResponse}}
@@ -126,14 +197,14 @@ export default class {{{resourceClassName}}} extends BaseResource {
     * @throws {ApiError}
     * @throws {TimeoutError}
     */
-      async *{{{name}}}PagedIterator(
+      async *{{{name}}}PagedIterator{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}(
         {{#each urlPlaceholders}}
           {{{variableName}}}: string | ApiTypes.{{{relType}}},
         {{/each}}
         queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<ApiTypes.{{{queryParamsType}}}, 'page'>,
         iteratorOptions?: Utils.IteratorOptions,
       ) {
-        for await (const element of this.{{{rawName}}}PagedIterator(
+        for await (const element of this.{{{rawName}}}PagedIterator{{#if returnsItem}}<NoInfer<D>>{{/if}}(
           {{#each urlPlaceholders}}
             Utils.toId({{{variableName}}}),
           {{/each}}
@@ -141,7 +212,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
           iteratorOptions,
         )) {
           yield Utils.deserializeJsonEntity<
-            ApiTypes.{{{responseType}}}[0]
+            ApiTypes.{{{responseType}}}{{#if returnsItem}}<ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>>{{/if}}[0]
           >(element);
         }
       }
@@ -157,7 +228,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-    {{{rawName}}}PagedIterator(
+    {{{rawName}}}PagedIterator{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}(
       {{#each urlPlaceholders}}
         {{{variableName}}}: string,
       {{/each}}
@@ -167,19 +238,20 @@ export default class {{{resourceClassName}}} extends BaseResource {
       Utils.warnOnPageQueryParam(queryParams);
 
       return Utils.rawPageIterator<
-        RawApiTypes.{{{responseType}}}['data'][0]
+        RawApiTypes.{{{responseType}}}{{#if returnsItem}}<ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>>{{/if}}['data'][0]
       >(
         {
           defaultLimit: {{{paginatedResponse.defaultLimit}}},
           maxLimit: {{{paginatedResponse.maxLimit}}},
         },
-        (page: RawApiTypes.{{{queryParamsType}}}['page']) => this.{{{rawName}}}(
+        (page: RawApiTypes.{{{queryParamsType}}}['page']) => this.{{{rawName}}}{{#if returnsItem}}<D>{{/if}}(
           {{#each urlPlaceholders}}
             {{{variableName}}},
           {{/each}}
           { ...queryParams, page },
         ),
         iteratorOptions,
+        {{#if returnsItem}}{{#if responseType}}true,{{/if}}{{/if}}
       );
     }
   {{/if}}

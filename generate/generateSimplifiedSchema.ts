@@ -1,10 +1,16 @@
-function simplifySchema(objectSchema: any, dropIdRequired: boolean) {
+function simplifySchema(
+  objectSchema: any,
+  dropIdRequired: boolean,
+  shouldDropAttributesProperties = false,
+) {
   const { attributes, relationships, meta, id, type } =
     objectSchema.properties as any;
 
   return {
     ...objectSchema,
-    additionalProperties: Boolean(attributes && !attributes.properties),
+    additionalProperties: shouldDropAttributesProperties
+      ? false
+      : Boolean(attributes && !attributes.properties),
     required: [
       ...(objectSchema.required?.includes('id') && !dropIdRequired
         ? ['id']
@@ -23,7 +29,7 @@ function simplifySchema(objectSchema: any, dropIdRequired: boolean) {
     properties: {
       ...(id ? { id } : {}),
       ...(type ? { type } : {}),
-      ...(attributes?.properties || {}),
+      ...(shouldDropAttributesProperties ? {} : attributes?.properties || {}),
       ...(relationships?.properties
         ? Object.fromEntries(
             Object.entries<any>(relationships.properties).map(
@@ -111,7 +117,12 @@ function simplifyEntityRelationships(schema: any) {
 function applyToInnerObject(
   name: string,
   schema: any,
-  apply: (schema: any, dropIdRequired: boolean) => any,
+  apply: (
+    schema: any,
+    dropIdRequired: boolean,
+    shouldDropAttributesProperties?: boolean,
+  ) => any,
+  shouldDropAttributesProperties = false,
 ) {
   if (!schema) {
     return schema;
@@ -122,12 +133,12 @@ function applyToInnerObject(
   }
 
   if (schema.type === 'object') {
-    return apply(schema, true);
+    return apply(schema, true, shouldDropAttributesProperties);
   }
 
   if (schema.anyOf) {
     schema.anyOf = schema.anyOf.map((i: any) =>
-      applyToInnerObject(name, i, apply),
+      applyToInnerObject(name, i, apply, shouldDropAttributesProperties),
     );
     return schema;
   }
@@ -135,11 +146,19 @@ function applyToInnerObject(
   if (schema.type === 'array') {
     if (schema.items && Array.isArray(schema.items)) {
       schema.items = schema.items.map((i: any) =>
-        applyToInnerObject(name, i, (x) => apply(x, false)),
+        applyToInnerObject(
+          name,
+          i,
+          (x, dropId, shouldDrop) => apply(x, false, shouldDrop),
+          shouldDropAttributesProperties,
+        ),
       );
     } else if (schema.items) {
-      schema.items = applyToInnerObject(name, schema.items, (x) =>
-        apply(x, false),
+      schema.items = applyToInnerObject(
+        name,
+        schema.items,
+        (x, dropId, shouldDrop) => apply(x, false, shouldDrop),
+        shouldDropAttributesProperties,
       );
     }
 
@@ -159,14 +178,31 @@ export default function simplifyLinks(schema: any) {
   )) {
     simplifyEntityRelationships(subschema);
 
+    if (jsonApiType === 'item') {
+      subschema.additionalProperties = false;
+    }
+
     if (subschema.links) {
       for (const link of subschema.links) {
         const originalSchema = link.schema;
+
+        const shouldDropAttributesProperties =
+          jsonApiType === 'item' &&
+          [
+            'instances',
+            'self',
+            'create',
+            'update',
+            'validate_new',
+            'validate_existing',
+            'duplicate',
+          ].includes(link.rel);
 
         link.schema = applyToInnerObject(
           `${jsonApiType} ${link.rel} schema`,
           originalSchema?.properties?.data,
           simplifySchema,
+          shouldDropAttributesProperties,
         );
 
         if (originalSchema?.type.includes('null')) {

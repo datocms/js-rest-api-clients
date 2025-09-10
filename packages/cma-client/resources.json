@@ -4,6 +4,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/role/create",
         "rel": "create",
         "urlTemplate": "/roles",
@@ -51,6 +54,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/role/update",
         "rel": "update",
         "urlTemplate": "/roles/${roleId}",
@@ -110,6 +116,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/role/instances",
         "rel": "instances",
         "urlTemplate": "/roles",
@@ -124,6 +133,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/role/self",
         "rel": "self",
         "urlTemplate": "/roles/${roleId}",
@@ -149,6 +161,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/role/destroy",
         "rel": "destroy",
         "urlTemplate": "/roles/${roleId}",
@@ -174,6 +189,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/role/duplicate",
         "rel": "duplicate",
         "urlTemplate": "/roles/${roleId}/duplicate",
@@ -206,6 +224,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/user/update",
         "rel": "update",
         "urlTemplate": "/users/${userId}",
@@ -238,6 +259,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/user/instances",
         "rel": "instances",
         "urlTemplate": "/users",
@@ -252,6 +276,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/user/self",
         "rel": "self",
         "urlTemplate": "/users/${userId}",
@@ -278,6 +305,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/user/me",
         "rel": "me",
         "urlTemplate": "/users/me",
@@ -293,6 +323,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/user/destroy",
         "rel": "destroy",
         "urlTemplate": "/users/${userId}",
@@ -326,6 +359,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-user/instances",
         "rel": "instances",
         "urlTemplate": "/sso-users",
@@ -340,6 +376,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-user/self",
         "rel": "self",
         "urlTemplate": "/sso-users/${userId}",
@@ -360,6 +399,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-user/copy_users",
         "rel": "copy_users",
         "urlTemplate": "/sso-users/copy-users",
@@ -374,6 +416,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-user/destroy",
         "rel": "destroy",
         "urlTemplate": "/sso-users/${userId}",
@@ -402,6 +447,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/audit-log_event/query",
         "rel": "query",
         "urlTemplate": "/audit-log-events/query",
@@ -429,6 +477,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/menu-item/create",
         "rel": "create",
         "urlTemplate": "/menu-items",
@@ -454,6 +505,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/menu-item/update",
         "rel": "update",
         "urlTemplate": "/menu-items/${menuItemId}",
@@ -491,6 +545,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/menu-item/instances",
         "rel": "instances",
         "urlTemplate": "/menu-items",
@@ -506,6 +563,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/menu-item/self",
         "rel": "self",
         "urlTemplate": "/menu-items/${menuItemId}",
@@ -531,6 +591,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/menu-item/destroy",
         "rel": "destroy",
         "urlTemplate": "/menu-items/${menuItemId}",
@@ -556,6 +619,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/menu-item/reorder",
         "rel": "reorder",
         "urlTemplate": "/menu-items/reorder",
@@ -585,6 +651,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/schema-menu_item/create",
         "rel": "create",
         "urlTemplate": "/schema-menu-items",
@@ -605,6 +674,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/schema-menu_item/update",
         "rel": "update",
         "urlTemplate": "/schema-menu-items/${schemaMenuItemId}",
@@ -637,6 +709,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/schema-menu_item/instances",
         "rel": "instances",
         "urlTemplate": "/schema-menu-items",
@@ -652,6 +727,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/schema-menu_item/self",
         "rel": "self",
         "urlTemplate": "/schema-menu-items/${schemaMenuItemId}",
@@ -677,6 +755,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/schema-menu_item/destroy",
         "rel": "destroy",
         "urlTemplate": "/schema-menu-items/${schemaMenuItemId}",
@@ -702,6 +783,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/schema-menu_item/reorder",
         "rel": "reorder",
         "urlTemplate": "/schema-menu-items/reorder",
@@ -731,6 +815,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-collection/create",
         "rel": "create",
         "urlTemplate": "/upload-collections",
@@ -751,6 +838,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-collection/update",
         "rel": "update",
         "urlTemplate": "/upload-collections/${uploadCollectionId}",
@@ -783,6 +873,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-collection/instances",
         "rel": "instances",
         "urlTemplate": "/upload-collections",
@@ -798,6 +891,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-collection/self",
         "rel": "self",
         "urlTemplate": "/upload-collections/${uploadCollectionId}",
@@ -823,6 +919,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-collection/destroy",
         "rel": "destroy",
         "urlTemplate": "/upload-collections/${uploadCollectionId}",
@@ -848,6 +947,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-collection/reorder",
         "rel": "reorder",
         "urlTemplate": "/upload-collections/reorder",
@@ -877,6 +979,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/create",
         "rel": "create",
         "urlTemplate": "/item-types",
@@ -922,6 +1027,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/update",
         "rel": "update",
         "urlTemplate": "/item-types/${itemTypeId}",
@@ -979,6 +1087,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/instances",
         "rel": "instances",
         "urlTemplate": "/item-types",
@@ -993,6 +1104,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/self",
         "rel": "self",
         "urlTemplate": "/item-types/${itemTypeId}",
@@ -1018,6 +1132,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/duplicate",
         "rel": "duplicate",
         "urlTemplate": "/item-types/${itemTypeId}/duplicate",
@@ -1043,6 +1160,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/destroy",
         "rel": "destroy",
         "urlTemplate": "/item-types/${itemTypeId}",
@@ -1069,6 +1189,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type/reorder_fields_and_fieldsets",
         "rel": "reorder_fields_and_fieldsets",
         "urlTemplate": "/item-types/${itemTypeId}/reorder-fields-and-fieldsets",
@@ -1108,6 +1231,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/create",
         "rel": "create",
         "urlTemplate": "/item-types/${itemTypeId}/fields",
@@ -1146,6 +1272,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/update",
         "rel": "update",
         "urlTemplate": "/fields/${fieldId}",
@@ -1190,6 +1319,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/instances",
         "rel": "instances",
         "urlTemplate": "/item-types/${itemTypeId}/fields",
@@ -1210,6 +1342,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/referencing",
         "rel": "referencing",
         "urlTemplate": "/item-types/${itemTypeId}/fields/referencing",
@@ -1231,6 +1366,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/related",
         "rel": "related",
         "urlTemplate": "/item-types/${itemTypeId}/fields/related",
@@ -1252,6 +1390,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/self",
         "rel": "self",
         "urlTemplate": "/fields/${fieldId}",
@@ -1277,6 +1418,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/destroy",
         "rel": "destroy",
         "urlTemplate": "/fields/${fieldId}",
@@ -1302,6 +1446,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/field/duplicate",
         "rel": "duplicate",
         "urlTemplate": "/fields/${fieldId}/duplicate",
@@ -1334,6 +1481,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/fieldset/create",
         "rel": "create",
         "urlTemplate": "/item-types/${itemTypeId}/fieldsets",
@@ -1366,6 +1516,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/fieldset/update",
         "rel": "update",
         "urlTemplate": "/fieldsets/${fieldsetId}",
@@ -1404,6 +1557,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/fieldset/instances",
         "rel": "instances",
         "urlTemplate": "/item-types/${itemTypeId}/fieldsets",
@@ -1424,6 +1580,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/fieldset/self",
         "rel": "self",
         "urlTemplate": "/fieldsets/${fieldsetId}",
@@ -1449,6 +1608,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/fieldset/destroy",
         "rel": "destroy",
         "urlTemplate": "/fieldsets/${fieldsetId}",
@@ -1481,6 +1643,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/session/create",
         "rel": "create",
         "urlTemplate": "/sessions",
@@ -1509,6 +1674,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/access-token/create",
         "rel": "create",
         "urlTemplate": "/access_tokens",
@@ -1534,6 +1702,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/access-token/update",
         "rel": "update",
         "urlTemplate": "/access_tokens/${accessTokenId}",
@@ -1571,6 +1742,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/access-token/instances",
         "rel": "instances",
         "urlTemplate": "/access_tokens",
@@ -1585,6 +1759,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/access-token/self",
         "rel": "self",
         "urlTemplate": "/access_tokens/${accessTokenId}",
@@ -1610,6 +1787,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/access-token/regenerate_token",
         "rel": "regenerate_token",
         "urlTemplate": "/access_tokens/${accessTokenId}/regenerate_token",
@@ -1635,6 +1815,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/access-token/destroy",
         "rel": "destroy",
         "urlTemplate": "/access_tokens/${accessTokenId}",
@@ -1668,6 +1851,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/plugin/create",
         "rel": "create",
         "urlTemplate": "/plugins",
@@ -1698,6 +1884,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/plugin/update",
         "rel": "update",
         "urlTemplate": "/plugins/${pluginId}",
@@ -1737,6 +1926,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/plugin/instances",
         "rel": "instances",
         "urlTemplate": "/plugins",
@@ -1751,6 +1943,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/plugin/self",
         "rel": "self",
         "urlTemplate": "/plugins/${pluginId}",
@@ -1776,6 +1971,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/plugin/destroy",
         "rel": "destroy",
         "urlTemplate": "/plugins/${pluginId}",
@@ -1801,6 +1999,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/plugin/fields",
         "rel": "fields",
         "urlTemplate": "/plugins/${pluginId}/fields",
@@ -1833,6 +2034,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/job-result/self",
         "rel": "self",
         "urlTemplate": "/job-results/${jobResultId}",
@@ -1865,6 +2069,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/subscription-limit/instances",
         "rel": "instances",
         "urlTemplate": "/subscription-limits",
@@ -1879,6 +2086,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/subscription-limit/self",
         "rel": "self",
         "urlTemplate": "/subscription-limits/${subscriptionLimitId}",
@@ -1911,6 +2121,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/subscription-feature/instances",
         "rel": "instances",
         "urlTemplate": "/subscription-features",
@@ -1932,6 +2145,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-event/instances",
         "rel": "instances",
         "urlTemplate": "/build-events",
@@ -1951,6 +2167,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-event/self",
         "rel": "self",
         "urlTemplate": "/build-events/${buildEventId}",
@@ -1983,6 +2202,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": true,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": true,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/instances",
         "rel": "instances",
         "urlTemplate": "/items",
@@ -2002,6 +2224,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": true,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/validate_existing",
         "rel": "validate_existing",
         "urlTemplate": "/items/${itemId}/validate",
@@ -2034,6 +2259,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": true,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/validate_new",
         "rel": "validate_new",
         "urlTemplate": "/items/validate",
@@ -2054,6 +2282,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": true,
+        "requestBodyRequiresItem": true,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/create",
         "rel": "create",
         "urlTemplate": "/items",
@@ -2074,6 +2305,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": true,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/duplicate",
         "rel": "duplicate",
         "urlTemplate": "/items/${itemId}/duplicate",
@@ -2099,6 +2333,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": true,
+        "requestBodyRequiresItem": true,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/update",
         "rel": "update",
         "urlTemplate": "/items/${itemId}",
@@ -2131,6 +2368,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": true,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": true,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/references",
         "rel": "references",
         "urlTemplate": "/items/${itemId}/references",
@@ -2157,6 +2397,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": true,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": true,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/self",
         "rel": "self",
         "urlTemplate": "/items/${itemId}",
@@ -2183,6 +2426,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/current_vs_published_state",
         "rel": "current_vs_published_state",
         "urlTemplate": "/items/${itemId}/current-vs-published-state",
@@ -2209,6 +2455,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": true,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/destroy",
         "rel": "destroy",
         "urlTemplate": "/items/${itemId}",
@@ -2234,6 +2483,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": true,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/publish",
         "rel": "publish",
         "urlTemplate": "/items/${itemId}/publish",
@@ -2266,6 +2518,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": true,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/unpublish",
         "rel": "unpublish",
         "urlTemplate": "/items/${itemId}/unpublish",
@@ -2298,6 +2553,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/bulk_publish",
         "rel": "bulk_publish",
         "urlTemplate": "/items/bulk/publish",
@@ -2318,6 +2576,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/bulk_unpublish",
         "rel": "bulk_unpublish",
         "urlTemplate": "/items/bulk/unpublish",
@@ -2338,6 +2599,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/bulk_destroy",
         "rel": "bulk_destroy",
         "urlTemplate": "/items/bulk/destroy",
@@ -2358,6 +2622,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item/bulk_move_to_stage",
         "rel": "bulk_move_to_stage",
         "urlTemplate": "/items/bulk/move-to-stage",
@@ -2385,6 +2652,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-version/restore",
         "rel": "restore",
         "urlTemplate": "/versions/${itemVersionId}/restore",
@@ -2410,6 +2680,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-version/instances",
         "rel": "instances",
         "urlTemplate": "/items/${itemId}/versions",
@@ -2435,6 +2708,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-version/self",
         "rel": "self",
         "urlTemplate": "/versions/${itemVersionId}",
@@ -2467,6 +2743,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/create",
         "rel": "create",
         "urlTemplate": "/uploads",
@@ -2494,6 +2773,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/instances",
         "rel": "instances",
         "urlTemplate": "/uploads",
@@ -2513,6 +2795,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/self",
         "rel": "self",
         "urlTemplate": "/uploads/${uploadId}",
@@ -2538,6 +2823,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/destroy",
         "rel": "destroy",
         "urlTemplate": "/uploads/${uploadId}",
@@ -2563,6 +2851,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/update",
         "rel": "update",
         "urlTemplate": "/uploads/${uploadId}",
@@ -2603,6 +2894,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": true,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": true,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/references",
         "rel": "references",
         "urlTemplate": "/uploads/${uploadId}/references",
@@ -2629,6 +2923,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/bulk_tag",
         "rel": "bulk_tag",
         "urlTemplate": "/uploads/bulk/tag",
@@ -2649,6 +2946,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/bulk_set_upload_collection",
         "rel": "bulk_set_upload_collection",
         "urlTemplate": "/uploads/bulk/set-upload-collection",
@@ -2669,6 +2969,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload/bulk_destroy",
         "rel": "bulk_destroy",
         "urlTemplate": "/uploads/bulk/destroy",
@@ -2696,6 +2999,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-request/create",
         "rel": "create",
         "urlTemplate": "/upload-requests",
@@ -2723,6 +3029,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-track/create",
         "rel": "create",
         "urlTemplate": "/uploads/${uploadId}/tracks",
@@ -2755,6 +3064,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-track/instances",
         "rel": "instances",
         "urlTemplate": "/uploads/${uploadId}/tracks",
@@ -2775,6 +3087,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-track/destroy",
         "rel": "destroy",
         "urlTemplate": "/uploads/${uploadId}/tracks/${uploadTrackId}",
@@ -2805,6 +3120,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-track/generate_subtitles",
         "rel": "generate_subtitles",
         "urlTemplate": "/uploads/${uploadId}/tracks/generate-subtitles",
@@ -2839,6 +3157,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/scheduled-publication/create",
         "rel": "create",
         "urlTemplate": "/items/${itemId}/scheduled-publication",
@@ -2865,6 +3186,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": true,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/scheduled-publication/destroy",
         "rel": "destroy",
         "urlTemplate": "/items/${itemId}/scheduled-publication",
@@ -2892,6 +3216,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/scheduled-unpublishing/create",
         "rel": "create",
         "urlTemplate": "/items/${itemId}/scheduled-unpublishing",
@@ -2918,6 +3245,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": true,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/scheduled-unpublishing/destroy",
         "rel": "destroy",
         "urlTemplate": "/items/${itemId}/scheduled-unpublishing",
@@ -2945,6 +3275,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/search-result/instances",
         "rel": "instances",
         "urlTemplate": "/search-results",
@@ -2971,6 +3304,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/environment/fork",
         "rel": "fork",
         "urlTemplate": "/environments/${environmentId}/fork",
@@ -3004,6 +3340,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/environment/promote",
         "rel": "promote",
         "urlTemplate": "/environments/${environmentId}/promote",
@@ -3029,6 +3368,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/environment/rename",
         "rel": "rename",
         "urlTemplate": "/environments/${environmentId}/rename",
@@ -3061,6 +3403,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/environment/instances",
         "rel": "instances",
         "urlTemplate": "/environments",
@@ -3075,6 +3420,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/environment/self",
         "rel": "self",
         "urlTemplate": "/environments/${environmentId}",
@@ -3100,6 +3448,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/environment/destroy",
         "rel": "destroy",
         "urlTemplate": "/environments/${environmentId}",
@@ -3132,6 +3483,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/maintenance-mode/self",
         "rel": "self",
         "urlTemplate": "/maintenance-mode",
@@ -3146,6 +3500,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/maintenance-mode/activate",
         "rel": "activate",
         "urlTemplate": "/maintenance-mode/activate",
@@ -3161,6 +3518,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/maintenance-mode/deactivate",
         "rel": "deactivate",
         "urlTemplate": "/maintenance-mode/deactivate",
@@ -3182,6 +3542,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook/create",
         "rel": "create",
         "urlTemplate": "/webhooks",
@@ -3214,6 +3577,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook/update",
         "rel": "update",
         "urlTemplate": "/webhooks/${webhookId}",
@@ -3258,6 +3624,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook/instances",
         "rel": "instances",
         "urlTemplate": "/webhooks",
@@ -3272,6 +3641,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook/self",
         "rel": "self",
         "urlTemplate": "/webhooks/${webhookId}",
@@ -3297,6 +3669,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook/destroy",
         "rel": "destroy",
         "urlTemplate": "/webhooks/${webhookId}",
@@ -3329,6 +3704,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook-call/instances",
         "rel": "instances",
         "urlTemplate": "/webhook_calls",
@@ -3348,6 +3726,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook-call/self",
         "rel": "self",
         "urlTemplate": "/webhook_calls/${webhookCallId}",
@@ -3373,6 +3754,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/webhook-call/resend_webhook",
         "rel": "resend_webhook",
         "urlTemplate": "/webhook_calls/${webhookCallId}/resend_webhook",
@@ -3404,6 +3788,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/instances",
         "rel": "instances",
         "urlTemplate": "/build-triggers",
@@ -3418,6 +3805,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/self",
         "rel": "self",
         "urlTemplate": "/build-triggers/${buildTriggerId}",
@@ -3443,6 +3833,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/create",
         "rel": "create",
         "urlTemplate": "/build-triggers",
@@ -3471,6 +3864,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/update",
         "rel": "update",
         "urlTemplate": "/build-triggers/${buildTriggerId}",
@@ -3510,6 +3906,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/trigger",
         "rel": "trigger",
         "urlTemplate": "/build-triggers/${buildTriggerId}/trigger",
@@ -3534,6 +3933,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort",
         "rel": "abort",
         "urlTemplate": "/build-triggers/${buildTriggerId}/abort",
@@ -3558,6 +3960,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/abort_indexing",
         "rel": "abort_indexing",
         "urlTemplate": "/build-triggers/${buildTriggerId}/abort_indexing",
@@ -3582,6 +3987,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/reindex",
         "rel": "reindex",
         "urlTemplate": "/build-triggers/${buildTriggerId}/reindex",
@@ -3606,6 +4014,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/build-trigger/destroy",
         "rel": "destroy",
         "urlTemplate": "/build-triggers/${buildTriggerId}",
@@ -3638,6 +4049,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type_filter/create",
         "rel": "create",
         "urlTemplate": "/item-type-filters",
@@ -3658,6 +4072,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type_filter/update",
         "rel": "update",
         "urlTemplate": "/item-type-filters/${itemTypeFilterId}",
@@ -3690,6 +4107,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type_filter/instances",
         "rel": "instances",
         "urlTemplate": "/item-type-filters",
@@ -3704,6 +4124,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type_filter/self",
         "rel": "self",
         "urlTemplate": "/item-type-filters/${itemTypeFilterId}",
@@ -3729,6 +4152,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/item-type_filter/destroy",
         "rel": "destroy",
         "urlTemplate": "/item-type-filters/${itemTypeFilterId}",
@@ -3761,6 +4187,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-filter/create",
         "rel": "create",
         "urlTemplate": "/upload-filters",
@@ -3781,6 +4210,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-filter/update",
         "rel": "update",
         "urlTemplate": "/upload-filters/${uploadFilterId}",
@@ -3813,6 +4245,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-filter/instances",
         "rel": "instances",
         "urlTemplate": "/upload-filters",
@@ -3827,6 +4262,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-filter/self",
         "rel": "self",
         "urlTemplate": "/upload-filters/${uploadFilterId}",
@@ -3852,6 +4290,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-filter/destroy",
         "rel": "destroy",
         "urlTemplate": "/upload-filters/${uploadFilterId}",
@@ -3884,6 +4325,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-invitation/create",
         "rel": "create",
         "urlTemplate": "/site-invitations",
@@ -3904,6 +4348,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-invitation/update",
         "rel": "update",
         "urlTemplate": "/site-invitations/${siteInvitationId}",
@@ -3936,6 +4383,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-invitation/instances",
         "rel": "instances",
         "urlTemplate": "/site-invitations",
@@ -3950,6 +4400,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-invitation/self",
         "rel": "self",
         "urlTemplate": "/site-invitations/${siteInvitationId}",
@@ -3975,6 +4428,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-invitation/destroy",
         "rel": "destroy",
         "urlTemplate": "/site-invitations/${siteInvitationId}",
@@ -4000,6 +4456,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-invitation/resend",
         "rel": "resend",
         "urlTemplate": "/site-invitations/${siteInvitationId}/resend",
@@ -4032,6 +4491,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/editing-session/instances",
         "rel": "instances",
         "urlTemplate": "/editing-sessions",
@@ -4047,6 +4509,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/editing-session/update",
         "rel": "update",
         "urlTemplate": "/editing-sessions/${editingSessionId}",
@@ -4078,6 +4543,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/editing-session/destroy",
         "rel": "destroy",
         "urlTemplate": "/editing-sessions/${editingSessionId}",
@@ -4111,6 +4579,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-group/instances",
         "rel": "instances",
         "urlTemplate": "/sso-groups",
@@ -4125,6 +4596,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-group/copy_roles",
         "rel": "copy_roles",
         "urlTemplate": "/sso-groups/${ssoGroupId}/copy-roles",
@@ -4150,6 +4624,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-group/update",
         "rel": "update",
         "urlTemplate": "/sso-groups/${ssoGroupId}",
@@ -4182,6 +4659,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-group/destroy",
         "rel": "destroy",
         "urlTemplate": "/sso-groups/${ssoGroupId}",
@@ -4214,6 +4694,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-settings/self",
         "rel": "self",
         "urlTemplate": "/sso-settings",
@@ -4228,6 +4711,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-settings/generate_token",
         "rel": "generate_token",
         "urlTemplate": "/sso-settings/generate-token",
@@ -4242,6 +4728,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/sso-settings/update",
         "rel": "update",
         "urlTemplate": "/sso-settings",
@@ -4269,6 +4758,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/emoji-suggestions/self",
         "rel": "self",
         "urlTemplate": "/emoji-suggestions",
@@ -4292,6 +4784,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/white-label_settings/self",
         "rel": "self",
         "urlTemplate": "/white-label-settings",
@@ -4306,6 +4801,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/white-label_settings/update",
         "rel": "update",
         "urlTemplate": "/white-label-settings",
@@ -4333,6 +4831,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/public-info/self",
         "rel": "self",
         "urlTemplate": "/public-info",
@@ -4354,6 +4855,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/daily-usage/instances",
         "rel": "instances",
         "urlTemplate": "/daily-site-usages",
@@ -4375,6 +4879,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/usage-counter/self",
         "rel": "self",
         "urlTemplate": "/usage-log-counters/${usageCounterId}",
@@ -4408,6 +4915,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-tag/instances",
         "rel": "instances",
         "urlTemplate": "/upload-tags",
@@ -4427,6 +4937,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-tag/create",
         "rel": "create",
         "urlTemplate": "/upload-tags",
@@ -4454,6 +4967,9 @@
     "endpoints": [
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/upload-smart_tag/instances",
         "rel": "instances",
         "urlTemplate": "/upload-smart-tags",
@@ -4480,6 +4996,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/self",
         "rel": "self",
         "urlTemplate": "/site",
@@ -4495,6 +5014,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/update",
         "rel": "update",
         "urlTemplate": "/site",
@@ -4526,6 +5048,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_timezone_management",
         "rel": "activate_improved_timezone_management",
         "urlTemplate": "/site/activate-improved-timezone-management",
@@ -4541,6 +5066,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_hex_management",
         "rel": "activate_improved_hex_management",
         "urlTemplate": "/site/activate-improved-hex-management",
@@ -4556,6 +5084,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_gql_multilocale_fields",
         "rel": "activate_improved_gql_multilocale_fields",
         "urlTemplate": "/site/activate-improved-gql-multilocale-fields",
@@ -4571,6 +5102,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_gql_visibility_control",
         "rel": "activate_improved_gql_visibility_control",
         "urlTemplate": "/site/activate-improved-gql-visibility-control",
@@ -4586,6 +5120,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_boolean_fields",
         "rel": "activate_improved_boolean_fields",
         "urlTemplate": "/site/activate-improved-boolean-fields",
@@ -4601,6 +5138,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_draft_mode_as_default",
         "rel": "activate_draft_mode_as_default",
         "urlTemplate": "/site/activate-draft-mode-as-default",
@@ -4616,6 +5156,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_validation_at_publishing",
         "rel": "activate_improved_validation_at_publishing",
         "urlTemplate": "/site/activate-improved-validation-at-publishing",
@@ -4631,6 +5174,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_exposure_of_inline_blocks_in_cda",
         "rel": "activate_improved_exposure_of_inline_blocks_in_cda",
         "urlTemplate": "/site/activate-improved-exposure-of-inline-blocks-in-cda",
@@ -4646,6 +5192,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site/update_assets_cdn_default_settings",
         "rel": "update_assets_cdn_default_settings",
         "urlTemplate": "/site/assets-cdn-default-settings",
@@ -4674,6 +5223,9 @@
     "endpoints": [
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/workflow/create",
         "rel": "create",
         "urlTemplate": "/workflows",
@@ -4694,6 +5246,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/workflow/update",
         "rel": "update",
         "urlTemplate": "/workflows/${workflowId}",
@@ -4726,6 +5281,9 @@
       },
       {
         "returnsCollection": true,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/workflow/instances",
         "rel": "instances",
         "urlTemplate": "/workflows",
@@ -4740,6 +5298,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/workflow/self",
         "rel": "self",
         "urlTemplate": "/workflows/${workflowId}",
@@ -4765,6 +5326,9 @@
       },
       {
         "returnsCollection": false,
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "docUrl": "https://www.datocms.com/docs/content-management-api/resources/workflow/destroy",
         "rel": "destroy",
         "urlTemplate": "/workflows/${workflowId}",

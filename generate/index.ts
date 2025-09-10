@@ -111,9 +111,17 @@ async function generate(prefix: string, hyperschemaUrl: string) {
   );
 
   for (const resourceInfo of schemaInfo.resources) {
-    await writeTemplate<ResourceInfo & { isCma: boolean }>(
+    await writeTemplate<
+      ResourceInfo & { isCma: boolean; someEndpointReturnsItem: boolean }
+    >(
       'resources/ResourceClass.ts',
-      { ...resourceInfo, isCma },
+      {
+        ...resourceInfo,
+        isCma,
+        someEndpointReturnsItem: resourceInfo.endpoints.some(
+          (e) => e.returnsItem,
+        ),
+      },
       `./packages/${prefix}-client/src/generated/resources/${toSafeName(
         resourceInfo.jsonApiType,
         true,

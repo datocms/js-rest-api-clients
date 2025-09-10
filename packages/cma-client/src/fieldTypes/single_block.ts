@@ -1,5 +1,6 @@
 import type * as RawApiTypes from '../generated/RawApiTypes';
 import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import type { ItemDefinition } from '../utilities/itemDefinition';
 
 import type { FramedSingleBlockEditorConfiguration } from './appearance/framed_single_block';
 import type { FramelessSingleBlockEditorConfiguration } from './appearance/frameless_single_block';
@@ -51,14 +52,15 @@ export type SingleBlockFieldValue = string | null;
  */
 
 /** Represents an existing block in a CMA request */
-export type UnchangedBlockInARequest = string;
+export type UnchangedBlockInARequest<
+  D extends ItemDefinition = ItemDefinition,
+> = RawApiTypes.Item<D>['id'];
 /** Represents a block we want to update in a CMA request */
-export type UpdatedBlockInARequest = OptionalFields<RawApiTypes.Item, 'meta'>;
+export type UpdatedBlockInARequest<D extends ItemDefinition = ItemDefinition> =
+  OptionalFields<RawApiTypes.Item<D>, 'meta'>;
 /** Represents a new block to create in a CMA request */
-export type NewBlockInARequest = OptionalFields<
-  RawApiTypes.Item,
-  'id' | 'meta'
->;
+export type NewBlockInARequest<D extends ItemDefinition = ItemDefinition> =
+  OptionalFields<RawApiTypes.Item<D>, 'id' | 'meta'>;
 
 /**
  * Union type representing the different ways a block can be specified in API requests:
@@ -68,10 +70,10 @@ export type NewBlockInARequest = OptionalFields<
  *
  * Also, 'meta' can always be omitted
  */
-export type BlockItemInARequest =
+export type BlockItemInARequest<D extends ItemDefinition = ItemDefinition> =
   | UnchangedBlockInARequest
-  | UpdatedBlockInARequest
-  | NewBlockInARequest;
+  | UpdatedBlockInARequest<D>
+  | NewBlockInARequest<D>;
 
 /**
  * Single Block field value for API requests - allows flexible block representations:
@@ -79,7 +81,9 @@ export type BlockItemInARequest =
  * - Full block object with ID (to update an existing block)
  * - Block object without ID (to create a new block)
  */
-export type SingleBlockFieldValueAsRequest = BlockItemInARequest | null;
+export type SingleBlockFieldValueAsRequest<
+  D extends ItemDefinition = ItemDefinition,
+> = BlockItemInARequest<D> | null;
 
 /**
  * =============================================================================
@@ -94,7 +98,9 @@ export type SingleBlockFieldValueAsRequest = BlockItemInARequest | null;
 /**
  * Single Block field value with nested block - fully populated block object
  */
-export type SingleBlockFieldValueWithNestedBlocks = RawApiTypes.Item | null;
+export type SingleBlockFieldValueWithNestedBlocks<
+  D extends ItemDefinition = ItemDefinition,
+> = RawApiTypes.Item<D> | null;
 
 /**
  * =============================================================================
@@ -110,17 +116,16 @@ export function isItemId(input: unknown): input is string {
   return typeof input === 'string';
 }
 
-export type ItemWithOptionalIdAndMeta = OptionalFields<
-  RawApiTypes.Item,
-  'id' | 'meta'
->;
+export type ItemWithOptionalIdAndMeta<
+  D extends ItemDefinition = ItemDefinition,
+> = OptionalFields<RawApiTypes.Item<D>, 'id' | 'meta'>;
 
 /**
  * Validates if the input is a RawApiTypes.Item object (with optional `id` and `meta`)
  */
-export function isItemWithOptionalIdAndMeta(
-  block: unknown,
-): block is ItemWithOptionalIdAndMeta {
+export function isItemWithOptionalIdAndMeta<
+  D extends ItemDefinition = ItemDefinition,
+>(block: unknown): block is ItemWithOptionalIdAndMeta<D> {
   return (
     typeof block === 'object' &&
     block !== null &&
@@ -129,14 +134,15 @@ export function isItemWithOptionalIdAndMeta(
   );
 }
 
-export type ItemWithOptionalMeta = OptionalFields<RawApiTypes.Item, 'meta'>;
+export type ItemWithOptionalMeta<D extends ItemDefinition = ItemDefinition> =
+  OptionalFields<RawApiTypes.Item<D>, 'meta'>;
 
 /**
  * Validates if the input is a a complete RawApiTypes.Item object with optional `meta`
  */
-export function isItemWithOptionalMeta(
-  block: unknown,
-): block is ItemWithOptionalMeta {
+export function isItemWithOptionalMeta<
+  D extends ItemDefinition = ItemDefinition,
+>(block: unknown): block is ItemWithOptionalMeta<D> {
   return (
     isItemWithOptionalIdAndMeta(block) &&
     'id' in block &&
@@ -174,9 +180,9 @@ export function isLocalizedSingleBlockFieldValue(
  * Type guard for Single Block field values in API request format.
  * Allows block as string ID, full object with ID, or object without ID.
  */
-export function isSingleBlockFieldValueAsRequest(
-  value: unknown,
-): value is SingleBlockFieldValueAsRequest {
+export function isSingleBlockFieldValueAsRequest<
+  D extends ItemDefinition = ItemDefinition,
+>(value: unknown): value is SingleBlockFieldValueAsRequest<D> {
   if (value === null) return true;
 
   // String ID - referencing existing block
@@ -186,9 +192,11 @@ export function isSingleBlockFieldValueAsRequest(
   return isItemWithOptionalIdAndMeta(value);
 }
 
-export function isLocalizedSingleBlockFieldValueAsRequest(
+export function isLocalizedSingleBlockFieldValueAsRequest<
+  D extends ItemDefinition = ItemDefinition,
+>(
   value: unknown,
-): value is LocalizedFieldValue<SingleBlockFieldValueAsRequest> {
+): value is LocalizedFieldValue<SingleBlockFieldValueAsRequest<D>> {
   return (
     typeof value === 'object' &&
     value !== null &&
@@ -200,18 +208,20 @@ export function isLocalizedSingleBlockFieldValueAsRequest(
  * Type guard for Single Block field values with nested blocks (?nested=true format).
  * Ensures block is a full RawApiTypes.Item object with complete data.
  */
-export function isSingleBlockFieldValueWithNestedBlocks(
-  value: unknown,
-): value is SingleBlockFieldValueWithNestedBlocks {
+export function isSingleBlockFieldValueWithNestedBlocks<
+  D extends ItemDefinition = ItemDefinition,
+>(value: unknown): value is SingleBlockFieldValueWithNestedBlocks<D> {
   if (value === null) return true;
 
   // Must be a full object with ID (nested format always includes complete block objects)
   return isItemWithOptionalMeta(value);
 }
 
-export function isLocalizedSingleBlockFieldValueWithNestedBlocks(
+export function isLocalizedSingleBlockFieldValueWithNestedBlocks<
+  D extends ItemDefinition = ItemDefinition,
+>(
   value: unknown,
-): value is LocalizedFieldValue<SingleBlockFieldValueWithNestedBlocks> {
+): value is LocalizedFieldValue<SingleBlockFieldValueWithNestedBlocks<D>> {
   return (
     typeof value === 'object' &&
     value !== null &&
