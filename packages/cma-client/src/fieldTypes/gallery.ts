@@ -16,7 +16,7 @@ export type GalleryFieldValue = Array<{
     x: number;
     y: number;
   } | null;
-}> | null;
+}>;
 
 export function isGalleryFieldValue(
   value: unknown,

@@ -58,7 +58,8 @@ function collectExports(file: SourceFile) {
     // Handle named exports
     const namedExports = stmt.getNamedExports();
     for (const ne of namedExports) {
-      const name = ne.getName();
+      // Use alias if present, otherwise use original name
+      const name = ne.getAliasNode()?.getText() || ne.getName();
       if (blacklist.has(name)) continue;
 
       if (stmt.isTypeOnly()) collected.type.add(name);

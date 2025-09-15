@@ -1,6 +1,6 @@
 import { findFirstNode, isInlineBlock } from 'datocms-structured-text-utils';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
-import { type ItemTypeDefinition, buildBlockRecord } from '../src';
+import { buildBlockRecord, type ItemTypeDefinition } from '../src';
 
 describe('item (explicit typing with item definitions)', () => {
   describe('simple', () => {
@@ -63,7 +63,7 @@ describe('item (explicit typing with item definitions)', () => {
       });
 
       type LandingPage = ItemTypeDefinition<
-        string,
+        'WTyssHtyTzu9_EbszSVhPw',
         {
           title: { type: 'string' };
           rich_text: { type: 'rich_text'; blocks: Block };
@@ -77,6 +77,7 @@ describe('item (explicit typing with item definitions)', () => {
       >;
 
       const landingPageModel = await client.itemTypes.create({
+        id: 'WTyssHtyTzu9_EbszSVhPw',
         name: 'Landing Page',
         api_key: 'landing_page',
       });
@@ -135,7 +136,7 @@ describe('item (explicit typing with item definitions)', () => {
             },
           },
         ],
-        single_block: buildBlockRecord<LandingPage>({
+        single_block: buildBlockRecord<Block>({
           title: 'Single Block: Level 1',
           single_block: buildBlockRecord<Block>({
             title: 'Single Block: Level 2',
@@ -178,7 +179,7 @@ describe('item (explicit typing with item definitions)', () => {
             ],
           },
         },
-        item_type: landingPageModel,
+        item_type: { id: 'WTyssHtyTzu9_EbszSVhPw', type: 'item_type' },
       });
 
       expect(item.title!.toUpperCase()).toBe('LEVEL 0');

@@ -673,14 +673,28 @@ export type FieldUpdateSchema = Omit<RawFieldUpdateSchema, 'data'> & {
   };
 };
 
+type ForceItemTypeDataId<ItemTypeId> = Omit<ItemTypeData, 'id'> & {
+  id: ItemTypeId;
+};
+
+type ForceItemTypeData<T, ItemTypeId> = {
+  [K in keyof T]: T[K] extends ItemTypeData
+    ? ForceItemTypeDataId<ItemTypeId>
+    : T[K] extends object
+      ? ForceItemTypeData<T[K], ItemTypeId>
+      : T[K];
+};
+
+type ForceItemTypeId<T, ItemTypeId> = ForceItemTypeData<T, ItemTypeId> & {
+  /** Useful for type narrowing */
+  __itemTypeId?: ItemTypeId;
+};
+
 export type ApplyItemDefinitionToSchema<
   Schema,
   D extends ItemDefinition = ItemDefinition,
 > = D extends any
-  ? Schema & { attributes: D['fields'] } & {
-      /** Useful for type narrowing */
-      __itemTypeId?: D['itemTypeId'];
-    }
+  ? ForceItemTypeId<Schema, D['itemTypeId']> & { attributes: D['fields'] }
   : never;
 
 export type Item<D extends ItemDefinition = ItemDefinition> =
