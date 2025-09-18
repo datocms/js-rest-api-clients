@@ -189,7 +189,6 @@ export type {
   MarkdownEditorConfiguration,
   NewBlockInARequest,
   NumberRangeValidator,
-  PossiblyLocalizedEntry,
   RawApiTypes,
   RequiredAltTitleValidator,
   RequiredSeoFieldsValidator,

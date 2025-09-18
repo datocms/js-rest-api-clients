@@ -44,8 +44,8 @@ type StructuredTextFieldDefinition<
   AllowedBlocks extends ItemTypeDefinition = ItemTypeDefinition,
   AllowedInlineBlocks extends ItemTypeDefinition = ItemTypeDefinition,
 > = BaseFieldDefinition<'structured_text'> & {
-  blocks: AllowedBlocks;
-  inline_blocks: AllowedInlineBlocks;
+  blocks?: AllowedBlocks;
+  inline_blocks?: AllowedInlineBlocks;
 };
 
 /** Field definition union */
@@ -76,9 +76,11 @@ export type FieldDefinition =
 
 /** Item type definition */
 export type ItemTypeDefinition<
+  Settings extends { locales: string } = { locales: string },
   ItemTypeId extends string = string,
   FieldDefinitions extends Record<string, FieldDefinition> = {},
 > = {
+  settings: Settings;
   itemTypeId: ItemTypeId;
   fields: FieldDefinitions;
 };
@@ -118,109 +120,134 @@ type FieldTypeToValue = {
 };
 
 /** Localized wrapper */
-type LocalizeIfNeeded<T extends FieldDefinition, Value> = T extends {
-  localized: true;
-}
-  ? LocalizedFieldValue<Value>
-  : Value;
+type LocalizeIfNeeded<
+  T extends FieldDefinition,
+  Value,
+  Locales extends string,
+> = T extends { localized: true } ? LocalizedFieldValue<Value, Locales> : Value;
 
 /** Standard mapping */
-type FieldDefinitionToFieldValue<T extends FieldDefinition> = LocalizeIfNeeded<
-  T,
-  FieldTypeToValue[T['type']]
->;
+type FieldDefinitionToFieldValue<
+  T extends FieldDefinition,
+  Locales extends string,
+> = LocalizeIfNeeded<T, FieldTypeToValue[T['type']], Locales>;
 
 /** AsRequest mapping (block fields become generic over allowed blocks) */
-type FieldDefinitionToFieldValueAsRequest<T extends FieldDefinition> =
-  T extends RichTextFieldDefinition<infer B>
+type FieldDefinitionToFieldValueAsRequest<
+  T extends FieldDefinition,
+  Locales extends string,
+> = T extends RichTextFieldDefinition<infer B>
+  ? LocalizeIfNeeded<
+      T,
+      RichTextFieldValueAsRequest<
+        ItemTypeDefinitionToItemDefinitionAsRequest<B>
+      >,
+      Locales
+    >
+  : T extends SingleBlockFieldDefinition<infer B>
     ? LocalizeIfNeeded<
         T,
-        RichTextFieldValueAsRequest<
+        SingleBlockFieldValueAsRequest<
           ItemTypeDefinitionToItemDefinitionAsRequest<B>
-        >
+        >,
+        Locales
       >
-    : T extends SingleBlockFieldDefinition<infer B>
+    : T extends StructuredTextFieldDefinition<infer B, infer I>
       ? LocalizeIfNeeded<
           T,
-          SingleBlockFieldValueAsRequest<
-            ItemTypeDefinitionToItemDefinitionAsRequest<B>
-          >
+          StructuredTextFieldValueAsRequest<
+            T extends { blocks: any }
+              ? ItemTypeDefinitionToItemDefinitionAsRequest<B>
+              : never,
+            T extends { inline_blocks: any }
+              ? ItemTypeDefinitionToItemDefinitionAsRequest<I>
+              : never
+          >,
+          Locales
         >
-      : T extends StructuredTextFieldDefinition<infer B, infer I>
-        ? LocalizeIfNeeded<
-            T,
-            StructuredTextFieldValueAsRequest<
-              ItemTypeDefinitionToItemDefinitionAsRequest<B>,
-              ItemTypeDefinitionToItemDefinitionAsRequest<I>
-            >
-          >
-        : LocalizeIfNeeded<T, FieldTypeToValue[T['type']]>;
+      : LocalizeIfNeeded<T, FieldTypeToValue[T['type']], Locales>;
 
-type FieldDefinitionToFieldValueWithNestedBlocks<T extends FieldDefinition> =
-  T extends RichTextFieldDefinition<infer B>
+type FieldDefinitionToFieldValueWithNestedBlocks<
+  T extends FieldDefinition,
+  Locales extends string,
+> = T extends RichTextFieldDefinition<infer B>
+  ? LocalizeIfNeeded<
+      T,
+      RichTextFieldValueWithNestedBlocks<
+        ItemTypeDefinitionToItemDefinitionWithNestedBlocks<B>
+      >,
+      Locales
+    >
+  : T extends SingleBlockFieldDefinition<infer B>
     ? LocalizeIfNeeded<
         T,
-        RichTextFieldValueWithNestedBlocks<
+        SingleBlockFieldValueWithNestedBlocks<
           ItemTypeDefinitionToItemDefinitionWithNestedBlocks<B>
-        >
+        >,
+        Locales
       >
-    : T extends SingleBlockFieldDefinition<infer B>
+    : T extends StructuredTextFieldDefinition<infer B, infer I>
       ? LocalizeIfNeeded<
           T,
-          SingleBlockFieldValueWithNestedBlocks<
-            ItemTypeDefinitionToItemDefinitionWithNestedBlocks<B>
-          >
+          StructuredTextFieldValueWithNestedBlocks<
+            T extends { blocks: any }
+              ? ItemTypeDefinitionToItemDefinitionWithNestedBlocks<B>
+              : never,
+            T extends { inline_blocks: any }
+              ? ItemTypeDefinitionToItemDefinitionWithNestedBlocks<I>
+              : never
+          >,
+          Locales
         >
-      : T extends StructuredTextFieldDefinition<infer B, infer I>
-        ? LocalizeIfNeeded<
-            T,
-            StructuredTextFieldValueWithNestedBlocks<
-              ItemTypeDefinitionToItemDefinitionWithNestedBlocks<B>,
-              ItemTypeDefinitionToItemDefinitionWithNestedBlocks<I>
-            >
-          >
-        : LocalizeIfNeeded<T, FieldTypeToValue[T['type']]>;
+      : LocalizeIfNeeded<T, FieldTypeToValue[T['type']], Locales>;
 
 /** Transformers */
-export type ItemTypeDefinitionToItemDefinition<T extends ItemTypeDefinition> =
-  T extends ItemTypeDefinition
-    ? keyof T['fields'] extends never
-      ? ItemDefinition<T['itemTypeId']>
-      : ItemDefinition<
-          T['itemTypeId'],
-          {
-            [K in keyof T['fields']]: T['fields'][K] extends FieldDefinition
-              ? FieldDefinitionToFieldValue<T['fields'][K]>
-              : never;
-          }
-        >
-    : never;
+export type ItemTypeDefinitionToItemDefinition<
+  T extends ItemTypeDefinition<any, any, any>,
+> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields>
+  ? keyof Fields extends never
+    ? ItemDefinition<ItemTypeId>
+    : ItemDefinition<
+        ItemTypeId,
+        {
+          [K in keyof Fields]: Fields[K] extends FieldDefinition
+            ? FieldDefinitionToFieldValue<Fields[K], Settings['locales']>
+            : never;
+        }
+      >
+  : never;
 
 export type ItemTypeDefinitionToItemDefinitionAsRequest<
-  T extends ItemTypeDefinition,
-> = T extends ItemTypeDefinition
-  ? keyof T['fields'] extends never
-    ? ItemDefinition<T['itemTypeId']>
+  T extends ItemTypeDefinition<any, any, any>,
+> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields>
+  ? keyof Fields extends never
+    ? ItemDefinition<ItemTypeId>
     : ItemDefinition<
-        T['itemTypeId'],
+        ItemTypeId,
         Partial<{
-          [K in keyof T['fields']]: T['fields'][K] extends FieldDefinition
-            ? FieldDefinitionToFieldValueAsRequest<T['fields'][K]>
+          [K in keyof Fields]: Fields[K] extends FieldDefinition
+            ? FieldDefinitionToFieldValueAsRequest<
+                Fields[K],
+                Settings['locales']
+              >
             : never;
         }>
       >
   : never;
 
 export type ItemTypeDefinitionToItemDefinitionWithNestedBlocks<
-  T extends ItemTypeDefinition,
-> = T extends ItemTypeDefinition
-  ? keyof T['fields'] extends never
-    ? ItemDefinition<T['itemTypeId']>
+  T extends ItemTypeDefinition<any, any, any>,
+> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields>
+  ? keyof Fields extends never
+    ? ItemDefinition<ItemTypeId>
     : ItemDefinition<
-        T['itemTypeId'],
+        ItemTypeId,
         {
-          [K in keyof T['fields']]: T['fields'][K] extends FieldDefinition
-            ? FieldDefinitionToFieldValueWithNestedBlocks<T['fields'][K]>
+          [K in keyof Fields]: Fields[K] extends FieldDefinition
+            ? FieldDefinitionToFieldValueWithNestedBlocks<
+                Fields[K],
+                Settings['locales']
+              >
             : never;
         }
       >

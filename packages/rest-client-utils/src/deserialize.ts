@@ -11,8 +11,16 @@ type ResponseWithData = {
   data: JsonApiEntity | JsonApiEntity[];
 };
 
+type ResponseWithIncluded = {
+  included: JsonApiEntity[];
+};
+
 function hasData(thing: unknown): thing is ResponseWithData {
   return typeof thing === 'object' && !!thing && 'data' in thing;
+}
+
+function hasIncluded(thing: unknown): thing is ResponseWithIncluded {
+  return typeof thing === 'object' && !!thing && 'included' in thing;
 }
 
 export function deserializeJsonEntity<S>({
@@ -114,9 +122,21 @@ export function deserializeRawResponseBodyWithItems<T>(body: unknown): T {
     throw new Error('Invalid body!');
   }
 
+  let data: JsonApiEntity | JsonApiEntity[];
   if (Array.isArray(body.data)) {
-    return { ...body, data: body.data.map(deserializeRawItem) } as unknown as T;
+    data = body.data.map(deserializeRawItem);
+  } else {
+    data = deserializeRawItem(body.data);
   }
 
-  return { ...body, data: deserializeRawItem(body.data) } as unknown as T;
+  let included: JsonApiEntity[] | undefined;
+  if (hasIncluded(body)) {
+    included = body.included.map(deserializeRawItem);
+  }
+
+  return {
+    ...body,
+    data,
+    ...(included ? { included } : {}),
+  } as unknown as T;
 }

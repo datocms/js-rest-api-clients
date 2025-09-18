@@ -21,6 +21,70 @@ interface GenericClient {
 /**
  * Repository for DatoCMS schema entities including item types, fields, and plugins.
  * Provides caching and efficient lookup functionality for schema-related operations.
+ *
+ * ## Purpose
+ *
+ * SchemaRepository is designed to solve the performance problem of repeatedly fetching
+ * the same schema information during complex operations that traverse nested blocks,
+ * structured text, or modular content. It acts as an in-memory cache/memoization layer
+ * for schema entities to avoid redundant API calls.
+ *
+ * ## What it's for:
+ *
+ * - **Caching schema entities**: Automatically caches item types, fields, fieldsets,
+ *   and plugins after the first API request, returning cached results on subsequent calls
+ * - **Complex traversal operations**: Essential when using utilities like
+ *   `mapBlocksInFieldValues()` that need to repeatedly lookup block models and fields
+ *   while traversing nested content structures
+ * - **Bulk operations**: Ideal for scripts that process multiple records of different
+ *   types and need efficient access to schema information
+ * - **Read-heavy workflows**: Perfect for scenarios where you need to repeatedly access
+ *   the same schema information without making redundant API calls
+ *
+ * ## What it's NOT for:
+ *
+ * - **Schema modification**: Do NOT use SchemaRepository if your script modifies models,
+ *   fields, fieldsets, or plugins, as the cache will become stale
+ * - **Record/content operations**: This is only for schema entities, not for records,
+ *   uploads, or other content
+ * - **Long-running applications**: The cache has no expiration or invalidation mechanism,
+ *   so it's not suitable for applications that need fresh schema data over time
+ * - **Concurrent schema changes**: No protection against cache inconsistency if other
+ *   processes modify the schema while your script runs
+ *
+ * ## Usage Pattern
+ *
+ * ```typescript
+ * const schemaRepository = new SchemaRepository(client);
+ *
+ * // These calls will hit the API and cache the results
+ * const models = await schemaRepository.getAllModels();
+ * const blogPost = await schemaRepository.getItemTypeByApiKey('blog_post');
+ *
+ * // These subsequent calls will return cached results (no API calls)
+ * const sameModels = await schemaRepository.getAllModels();
+ * const sameBlogPost = await schemaRepository.getItemTypeByApiKey('blog_post');
+ *
+ * // Pass the repository to utilities that need schema information
+ * await mapBlocksInFieldValues(schemaRepository, record, (block) => {
+ *   // The utility will use the cached schema data internally
+ * });
+ * ```
+ *
+ * ## Performance Benefits
+ *
+ * Without SchemaRepository, a script processing structured text with nested blocks
+ * might make the same `client.itemTypes.list()` or `client.fields.list()` calls
+ * dozens of times. SchemaRepository ensures each unique schema request is made only once.
+ *
+ * ## Best Practices
+ *
+ * - Use SchemaRepository consistently throughout your script — if you need it for one
+ *   utility call, use it for all schema operations to maximize cache efficiency
+ * - Create one instance per script execution, not per operation
+ * - Only use when you have read-only access to schema entities
+ * - Consider using optimistic locking for any record updates to handle potential
+ *   version conflicts when working with cached schema information
  */
 export class SchemaRepository {
   private client: GenericClient;
