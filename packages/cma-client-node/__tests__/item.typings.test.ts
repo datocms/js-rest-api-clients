@@ -7,7 +7,7 @@ describe('item (explicit typing with item definitions)', () => {
     it.concurrent('field values are correctly typed', async () => {
       const client = await generateNewCmaClient();
 
-      type EnvironmentSettings = { locales: 'en' };
+      type EnvironmentSettings = { locales: 'en' | 'it' };
 
       // === Type Definitions ===
       type Block = ItemTypeDefinition<
@@ -356,7 +356,7 @@ describe('item (explicit typing with item definitions)', () => {
 
       // === Type Definitions ===
 
-      type EnvironmentSettings = { locales: 'en' };
+      type EnvironmentSettings = { locales: 'en' | 'it' };
 
       type Block = ItemTypeDefinition<
         EnvironmentSettings,
@@ -743,7 +743,7 @@ describe('item (explicit typing with item definitions)', () => {
     it.concurrent('field values are correctly typed', async () => {
       const client = await generateNewCmaClient();
 
-      type EnvironmentSettings = { locales: 'en' };
+      type EnvironmentSettings = { locales: 'en' | 'it' };
 
       // === Type Definitions ===
       type Block = ItemTypeDefinition<
@@ -829,6 +829,7 @@ describe('item (explicit typing with item definitions)', () => {
         name: 'Landing Page',
         api_key: 'landing_page',
         draft_mode_active: true,
+        all_locales_required: false,
       });
 
       await client.fields.create(landingPageModel.id, {
@@ -946,7 +947,7 @@ describe('item (explicit typing with item definitions)', () => {
       expect(item.title.en!.toUpperCase()).toBe('LEVEL 0');
       expect(item.__itemTypeId).toBe(landingPageModel.id);
       expect(item.rich_text.en).toHaveLength(1);
-      expect(item.rich_text.en.every((id) => typeof id === 'string')).toBe(
+      expect(item.rich_text.en!.every((id) => typeof id === 'string')).toBe(
         true,
       );
       expect(item.single_block.en).toEqual(expect.any(String));
@@ -963,10 +964,10 @@ describe('item (explicit typing with item definitions)', () => {
       expect(nestedItem.__itemTypeId).toBe(landingPageModel.id);
       expect(nestedItem.rich_text.en).toHaveLength(1);
       expect(
-        nestedItem.rich_text.en[0]!.attributes.rich_text[0]!.attributes.title!.toUpperCase(),
+        nestedItem.rich_text.en![0]!.attributes.rich_text[0]!.attributes.title!.toUpperCase(),
       ).toBe('RICH TEXT: LEVEL 2');
       expect(
-        nestedItem.rich_text.en[0]!.attributes.rich_text[0]!.__itemTypeId,
+        nestedItem.rich_text.en![0]!.attributes.rich_text[0]!.__itemTypeId,
       ).toBe(blockModel.id);
       expect(
         nestedItem.single_block.en!.attributes.single_block!.attributes.title!.toUpperCase(),
@@ -1005,10 +1006,10 @@ describe('item (explicit typing with item definitions)', () => {
       expect(nestedListedItems[0]!.__itemTypeId).toBe(landingPageModel.id);
       expect(nestedListedItems[0]!.rich_text.en).toHaveLength(1);
       expect(
-        nestedListedItems[0]!.rich_text.en[0]!.attributes.rich_text[0]!.attributes.title!.toUpperCase(),
+        nestedListedItems[0]!.rich_text.en![0]!.attributes.rich_text[0]!.attributes.title!.toUpperCase(),
       ).toBe('RICH TEXT: LEVEL 2');
       expect(
-        nestedListedItems[0]!.rich_text.en[0]!.attributes.rich_text[0]!
+        nestedListedItems[0]!.rich_text.en![0]!.attributes.rich_text[0]!
           .__itemTypeId,
       ).toBe(blockModel.id);
       expect(
@@ -1053,10 +1054,10 @@ describe('item (explicit typing with item definitions)', () => {
         expect(nestedPaginatedItem.__itemTypeId).toBe(landingPageModel.id);
         expect(nestedPaginatedItem.rich_text.en).toHaveLength(1);
         expect(
-          nestedPaginatedItem.rich_text.en[0]!.attributes.rich_text[0]!.attributes.title!.toUpperCase(),
+          nestedPaginatedItem.rich_text.en![0]!.attributes.rich_text[0]!.attributes.title!.toUpperCase(),
         ).toBe('RICH TEXT: LEVEL 2');
         expect(
-          nestedPaginatedItem.rich_text.en[0]!.attributes.rich_text[0]!
+          nestedPaginatedItem.rich_text.en![0]!.attributes.rich_text[0]!
             .__itemTypeId,
         ).toBe(blockModel.id);
         expect(
@@ -1109,7 +1110,7 @@ describe('item (explicit typing with item definitions)', () => {
 
       // === Type Definitions ===
 
-      type EnvironmentSettings = { locales: 'en' };
+      type EnvironmentSettings = { locales: 'en' | 'it' };
 
       type Block = ItemTypeDefinition<
         EnvironmentSettings,
@@ -1333,10 +1334,10 @@ describe('item (explicit typing with item definitions)', () => {
       expect(rawNestedItem.__itemTypeId).toBe(landingPageModel.id);
       expect(rawNestedItem.attributes.rich_text.en).toHaveLength(1);
       expect(
-        rawNestedItem.attributes.rich_text.en[0]!.attributes.rich_text[0]!.attributes.title!.toUpperCase(),
+        rawNestedItem.attributes.rich_text.en![0]!.attributes.rich_text[0]!.attributes.title!.toUpperCase(),
       ).toBe('RICH TEXT: LEVEL 2');
       expect(
-        rawNestedItem.attributes.rich_text.en[0]!.attributes.rich_text[0]!
+        rawNestedItem.attributes.rich_text.en![0]!.attributes.rich_text[0]!
           .__itemTypeId,
       ).toBe(blockModel.id);
       expect(
@@ -1374,7 +1375,7 @@ describe('item (explicit typing with item definitions)', () => {
       expect(rawListedItems[0]!.__itemTypeId).toBe(landingPageModel.id);
       expect(rawListedItems[0]!.attributes.rich_text.en).toHaveLength(1);
       expect(
-        rawListedItems[0]!.attributes.rich_text.en.every(
+        rawListedItems[0]!.attributes.rich_text.en!.every(
           (id) => typeof id === 'string',
         ),
       ).toBe(true);
@@ -1405,10 +1406,10 @@ describe('item (explicit typing with item definitions)', () => {
       expect(rawNestedListedItems[0]!.__itemTypeId).toBe(landingPageModel.id);
       expect(rawNestedListedItems[0]!.attributes.rich_text.en).toHaveLength(1);
       expect(
-        rawNestedListedItems[0]!.attributes.rich_text.en[0]!.attributes.rich_text[0]!.attributes.title!.toUpperCase(),
+        rawNestedListedItems[0]!.attributes.rich_text.en![0]!.attributes.rich_text[0]!.attributes.title!.toUpperCase(),
       ).toBe('RICH TEXT: LEVEL 2');
       expect(
-        rawNestedListedItems[0]!.attributes.rich_text.en[0]!.attributes
+        rawNestedListedItems[0]!.attributes.rich_text.en![0]!.attributes
           .rich_text[0]!.__itemTypeId,
       ).toBe(blockModel.id);
       expect(
@@ -1445,7 +1446,7 @@ describe('item (explicit typing with item definitions)', () => {
         expect(rawPaginatedItem.__itemTypeId).toBe(landingPageModel.id);
         expect(rawPaginatedItem.attributes.rich_text.en).toHaveLength(1);
         expect(
-          rawPaginatedItem.attributes.rich_text.en.every(
+          rawPaginatedItem.attributes.rich_text.en!.every(
             (id) => typeof id === 'string',
           ),
         ).toBe(true);
@@ -1480,10 +1481,10 @@ describe('item (explicit typing with item definitions)', () => {
         expect(rawNestedPaginatedItem.__itemTypeId).toBe(landingPageModel.id);
         expect(rawNestedPaginatedItem.attributes.rich_text.en).toHaveLength(1);
         expect(
-          rawNestedPaginatedItem.attributes.rich_text.en[0]!.attributes.rich_text[0]!.attributes.title!.toUpperCase(),
+          rawNestedPaginatedItem.attributes.rich_text.en![0]!.attributes.rich_text[0]!.attributes.title!.toUpperCase(),
         ).toBe('RICH TEXT: LEVEL 2');
         expect(
-          rawNestedPaginatedItem.attributes.rich_text.en[0]!.attributes
+          rawNestedPaginatedItem.attributes.rich_text.en![0]!.attributes
             .rich_text[0]!.__itemTypeId,
         ).toBe(blockModel.id);
         expect(

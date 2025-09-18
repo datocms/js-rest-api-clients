@@ -30,7 +30,7 @@ import type * as RawApiTypes from '../generated/RawApiTypes';
 export type LocalizedFieldValue<
   T = unknown,
   L extends string = string,
-> = Record<L, T>;
+> = Partial<Record<L, T>>;
 
 /**
  * Determines whether a DatoCMS field is localized or not.
