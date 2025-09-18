@@ -21,7 +21,6 @@ export type GalleryFieldValue = Array<{
 export function isGalleryFieldValue(
   value: unknown,
 ): value is GalleryFieldValue {
-  if (value === null) return true;
   return (
     Array.isArray(value) &&
     value.every(

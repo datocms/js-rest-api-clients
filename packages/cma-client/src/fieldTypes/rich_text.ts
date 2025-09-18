@@ -95,8 +95,6 @@ export type RichTextFieldValueWithNestedBlocks<
 export function isRichTextFieldValue(
   value: unknown,
 ): value is RichTextFieldValue {
-  if (value === null) return true;
-
   return (
     Array.isArray(value) && value.every((block) => typeof block === 'string')
   );
@@ -151,8 +149,6 @@ export function isLocalizedRichTextFieldValueAsRequest<
 export function isRichTextFieldValueWithNestedBlocks<
   D extends ItemDefinition = ItemDefinition,
 >(value: unknown): value is RichTextFieldValueWithNestedBlocks<D> {
-  if (value === null) return true;
-
   if (!Array.isArray(value)) return false;
 
   return value.every((block) => {

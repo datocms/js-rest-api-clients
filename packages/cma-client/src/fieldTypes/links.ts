@@ -4,10 +4,9 @@ import type { LinksSelectEditorConfiguration } from './appearance/links_select';
 import type { ItemsItemTypeValidator } from './validators/items_item_type';
 import type { SizeValidator } from './validators/size';
 
-export type LinksFieldValue = string[] | null;
+export type LinksFieldValue = string[];
 
 export function isLinksFieldValue(value: unknown): value is LinksFieldValue {
-  if (value === null) return true;
   return (
     Array.isArray(value) && value.every((item) => typeof item === 'string')
   );

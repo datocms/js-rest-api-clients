@@ -176,7 +176,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
       method: '{{method}}',
       url: `{{urlTemplate}}`,
       {{#if requestBodyType}}
-        body{{#if returnsItem}}: Utils.serializeRawRequestBodyWithItems(body){{/if}},
+        body{{#if returnsItem}}: {{#if optionalRequestBody}}body ? {{/if}}Utils.serializeRawRequestBodyWithItems(body){{#if optionalRequestBody}} : undefined{{/if}}{{/if}},
       {{/if}}
       {{#if queryParamsType}}
         queryParams,

@@ -702,7 +702,7 @@ export default class Item extends BaseResource {
       .request({
         method: 'PUT',
         url: `/items/${itemId}/publish`,
-        body: Utils.serializeRawRequestBodyWithItems(body),
+        body: body ? Utils.serializeRawRequestBodyWithItems(body) : undefined,
         queryParams,
       })
       .then<
@@ -765,7 +765,7 @@ export default class Item extends BaseResource {
       .request({
         method: 'PUT',
         url: `/items/${itemId}/unpublish`,
-        body: Utils.serializeRawRequestBodyWithItems(body),
+        body: body ? Utils.serializeRawRequestBodyWithItems(body) : undefined,
         queryParams,
       })
       .then<

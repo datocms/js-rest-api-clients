@@ -8080,13 +8080,751 @@ export type BuildEventRelationships = {
 };
 
 /**
- * DatoCMS stores the individual pieces of content you create from a model as records, which are much like table rows in a database. For backward-compatibility reasons, the API refers to records as "items".
+ * DatoCMS stores the individual pieces of content you create from a model as records (for backwards compatibility the API calls these `item`). The shape of a record’s attributes depends on the fields defined by that record’s model — see the [Object payload](#object-payload) section for the full object payload documentation.
  *
- * You can learn how the records are structured at the API level, and everything that is necessary to interact with the records through CMA in the following detail sections:
+ * ```json
+ * // A simple record
+ * {
+ *   "id": "A4gkL_8pTZmcyJ-IlIEd2w",
+ *   "type": "item",
+ *   "attributes": {
+ *     "title": "My Blog Post",
+ *     "publication_date": "2024-01-15"
+ *   },
+ *   "relationships": {
+ *     "item_type": {
+ *       "data": { "id": "BxZ9Y2aKQVeTnM4hP8wLpD", "type": "item_type" }
+ *     }
+ *   }
+ * }
+ * ```
  *
- * * [List/filter records](https://www.datocms.com/docs/content-management-api/resources/item/instances)
- * * [Create new records](https://www.datocms.com/docs/content-management-api/resources/item/create)
- * * [Update existing records](https://www.datocms.com/docs/content-management-api/resources/item/update)
+ * > [!PROTIP] 📘 New to content modeling?
+ * > Check out the [Content Modeling Guide](/docs/content-modelling) to understand how to design models, fields, and relationships before diving into API usage.
+ *
+ * ---
+ *
+ * ## Field types overview
+ *
+ * ###### Scalar fields
+ * These store basic data types (ie. strings, numbers, booleans):
+ *
+ * <details>
+ * <summary>Single-line string</summary>
+ *
+ * The field accepts `String` values or `null`.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Slug</summary>
+ *
+ * The field accepts `String` values or `null`.
+ * </details>
+ *
+ * <details>
+ * <summary>Multi-line text</summary>
+ *
+ * The field accepts simple `String` values (can include newlines) or `null`
+ * </details>
+ *
+ * <details>
+ * <summary>Boolean</summary>
+ *
+ * The field accepts simple `Boolean` values or `null`.
+ * </details>
+ *
+ * <details>
+ * <summary>Integer</summary>
+ *
+ * The field accepts simple `Integer` values or `null`.
+ * </details>
+ *
+ * <details>
+ * <summary>Float</summary>
+ *
+ * The field accepts simple `Float` values or `null`.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Date</summary>
+ *
+ * The field accepts `String` values in ISO 8601 date format (ie. `"2015-12-29"`) or `null`.
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Date time</summary>
+ *
+ * The field accepts `String` values in ISO 8601 date-time format (ie. `"2020-04-17T16:34:31.981+01:00"`) or `null`.
+ *
+ * If you're on [legacy timezone management](/product-updates/improved-timezone-management), remember that when sending an ISO8601 datetime you should keep in mind that the system will ignore any provided timezone, and will use the project's timezone instead.
+ * </details>
+ *
+ * <details>
+ * <summary>JSON</summary>
+ *
+ * The field accepts `String` values that are valid JSON or `null`.
+ *
+ * **Note**: Must be a JSON-serialized string, not a JavaScript object!
+ *
+ * </details>
+ *
+ * ###### Object Fields
+ * These require structured objects:
+ *
+ * <details>
+ * <summary>Color</summary>
+ *
+ * The field accepts an object with the following properties, or `null`:
+ *
+ * | Property | Required | Type                        |
+ * | -------- | -------- | --------------------------- |
+ * | `red`    | ✅        | `Integer` between 0 and 255 |
+ * | `green`  | ✅        | `Integer` between 0 and 255 |
+ * | `blue`   | ✅        | `Integer` between 0 and 255 |
+ * | `alpha`  | ✅        | `Integer` between 0 and 255 |
+ *
+ * </details>
+ *
+ *
+ * <details>
+ * <summary>Location</summary>
+ *
+ * The field accepts an object with the following properties, or `null`:
+ *
+ * | Property    | Required | Type                          |
+ * | ----------- | -------- | ----------------------------- |
+ * | `latitude`  | ✅        | `Float` between -90.0 to 90   |
+ * | `longitude` | ✅        | `Float` between -180.0 to 180 |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>SEO</summary>
+ *
+ * The field accepts an object with the following properties, or `null`:
+ *
+ * | Property       | Required | Type                                 | Description                                     |
+ * | -------------- | -------- | ------------------------------------ | ----------------------------------------------- |
+ * | `title`        |          | `String`                             | Title meta tag (max. 320 characters)            |
+ * | `description`  |          | `String`                             | Description meta tag (max. 320 characters)      |
+ * | `image`        |          | `Upload ID`                          | Asset to be used for social shares              |
+ * | `twitter_card` |          | `"summary"`, `"summary_large_image"` | Type of Twitter card to use                     |
+ * | `no_index`     |          | `Boolean`                            | Whether the noindex meta tag should be returned |
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>External video</summary>
+ *
+ * The field accepts an object with the following properties, or `null`:
+ *
+ * | Property        | Required | Type                                 | Description                                        | Example                                              |
+ * | --------------- | -------- | ------------------------------------ | -------------------------------------------------- | ---------------------------------------------------- |
+ * | `provider`      | ✅        | `"youtube"`, `"vimeo"`, `"facebook"` | External video provider                            | `"youtube"`                                          |
+ * | `provider_uid`  | ✅        | `String`                             | Unique identifier of the video within the provider | `"vUdGBEb1i9g"`                                      |
+ * | `url`           | ✅        | `URL`                                | URL of the video                                   | `"https://www.youtube.com/watch?v=qJhobECFQYk"`      |
+ * | `width`         | ✅        | `Integer`                            | Video width                                        | `459`                                                |
+ * | `height`        | ✅        | `Integer`                            | Video height                                       | `344`                                                |
+ * | `thumbnail_url` | ✅        | `URL`                                | URL for the video thumb                            | `"https://i.ytimg.com/vi/vUdGBEb1i9g/hqdefault.jpg"` |
+ * | `title`         | ✅        | `String`                             | Title of the video                                 | `"Next.js Conf Booth Welcoming!"`                    |
+ *
+ * </details>
+ *
+ * ###### Reference Fields
+ *
+ * These point to other resources (either assets or other records):
+ *
+ * <details>
+ * <summary>Single-asset</summary>
+ *
+ * The field accepts an object with the following properties, or `null`:
+ *
+ * | Property      | Required | Type                             | Description                                                                                                                                                                                                                  | Example                         |
+ * | ------------- | -------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+ * | `upload_id`   | ✅        | `Upload ID`                      | ID of an asset                                                                                                                                                                                                               | `"dhVR2HqgRVCTGFi0bWqLqA"`      |
+ * | `title`       |          | `String`                         | Title for the asset, if you want to override the asset's default value (see Upload `default_field_metadata`)                                                                                                                 | `"From my trip to Italy"`       |
+ * | `alt`         |          | `String`                         | Alternate text for the asset, if you want to override the asset's default value (see Upload `default_field_metadata`)                                                                                                        | `"Florence skyline"`            |
+ * | `focal_point` |          | `{ x: Float, y: Float }`, `null` | Focal point for the asset, if you want to override the asset's default value (see Upload `default_field_metadata`). Values must be expressed as `Float` between 0 and 1. Focal point can only be specified for image assets. | `{ "x": 0.34, "y": 0.45 }`      |
+ * | `custom_data` |          | `Record<String, String>`         | An object containing custom keys that you can use on your frontend projects                                                                                                                                                  | `{ "watermark_image": "true" }` |
+ *
+ * **API responses**: Always returns asset ID only (use separate asset API for details)
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Asset gallery</summary>
+ *
+ * This field accepts an `Array` of objects with the following properties, or `null`:
+ *
+ * | Property      | Required | Type                             | Description                                                                                                                                                                                                                  | Example                         |
+ * | ------------- | -------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+ * | `upload_id`   | ✅        | `Upload ID`                      | ID of an asset                                                                                                                                                                                                               | `"dhVR2HqgRVCTGFi0bWqLqA"`      |
+ * | `title`       |          | `String`                         | Title for the asset, if you want to override the asset's default value (see Upload `default_field_metadata`)                                                                                                                 | `"Gallery Image Title"`         |
+ * | `alt`         |          | `String`                         | Alternate text for the asset, if you want to override the asset's default value (see Upload `default_field_metadata`)                                                                                                        | `"Gallery image description"`   |
+ * | `focal_point` |          | `{ x: Float, y: Float }`, `null` | Focal point for the asset, if you want to override the asset's default value (see Upload `default_field_metadata`). Values must be expressed as `Float` between 0 and 1. Focal point can only be specified for image assets. | `{ "x": 0.34, "y": 0.45 }`      |
+ * | `custom_data` |          | `Record<String, String>`         | An object containing custom keys that you can use on your frontend projects                                                                                                                                                  | `{ "watermark_image": "true" }` |
+ *
+ * **API responses**: Always returns array of asset IDs only
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Single link</summary>
+ *
+ * This field accepts a `String` representing the ID of the linked record, or `null`. See [Link Fields Guide](/docs/content-modelling/links) for relationship modeling concepts.
+ *
+ * **API responses**: Always returns record ID only
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Multiple links</summary>
+ *
+ * This field accepts an `Array<String>` representing the IDs of the linked records, or `null`. See [Link Fields Guide](/docs/content-modelling/links) for relationship modeling concepts.
+ *
+ * **API responses**: Always returns array of record IDs only
+ *
+ * </details>
+ *
+ * ###### Block Fields
+ *
+ * These are special fields that contain **blocks within records**:
+ *
+ * | Field Type          | What it contains                                                                                                          |
+ * | ------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+ * | **Modular content** | An array of blocks, perfect for building dynamic page sections                                                            |
+ * | **Single block**    | A single block instance or `null`                                                                                         |
+ * | **Structured text** | A rich text document that can have blocks embedded within the flow of content ([DAST format](/docs/structured-text/dast)) |
+ *
+ * Blocks are **records within records** - they're separate items that live inside fields of other records.
+ *
+ * > [!PROTIP] 📚 Content Modeling Context
+ * > To understand when and how to design blocks vs models, see [Blocks Guide](/docs/content-modelling/blocks). For field-specific concepts, see [Modular Content](/docs/content-modelling/modular-content) and [Structured Text](/docs/content-modelling/structured-text).
+ *
+ * Blocks inside those fields are unique because they can be represented in two different ways depending on the context: as a lightweight reference (an ID) or as a full content object. Understanding this duality is key to working with them effectively:
+ *
+ * * **Block ID (Lightweight Reference)**: A simple `String` that uniquely identifies the block (ie. `"dhVR2HqgRVCTGFi_0bWqLqA"`). This is useful when you only need to know *which* block is there, not what's inside it.
+ *
+ * * **Block Object (Full Content)**: The complete record object for the block, containing its own `id`, `type`, `attributes`, and `relationships`. This is used when you need to read or modify the block's actual content.
+ *
+ *   ```json
+ *   {
+ *     "id": "dhVR2HqgRVCTGFi_0bWqLqA",
+ *     "type": "item",
+ *     "attributes": {
+ *       "title": "Block Title",
+ *       "content": "Block content..."
+ *     },
+ *     "relationships": {
+ *       "item_type": {
+ *         "data": { "id": "BxZ9Y2aKQVeTnM4hP8wLpD", "type": "item_type" }
+ *       }
+ *     }
+ *   }
+ *   ```
+ *
+ * <details>
+ * <summary>Modular Content</summary>
+ *
+ * A Modular Content field holds an array of blocks.
+ *
+ * **As an array of IDs:**
+ * ```json
+ * {
+ *   "content_blocks": [
+ *     "dhVR2HqgRVCTGFi_0bWqLqA",
+ *     "kL9mN3pQrStUvWxYzAbCdE"
+ *   ]
+ * }
+ * ```
+ *
+ * **As an array of full objects:**
+ *
+ * ```json
+ * {
+ *   "content_blocks": [
+ *     {
+ *       "id": "dhVR2HqgRVCTGFi_0bWqLqA",
+ *       "type": "item",
+ *       "attributes": { "title": "Hero Section", "content": "Welcome to our site" },
+ *       "relationships": { "item_type": { "data": { "id": "...", "type": "item_type" } } }
+ *     },
+ *     {
+ *       "id": "kL9mN3pQrStUvWxYzAbCdE",
+ *       "type": "item",
+ *       "attributes": { "title": "Image Gallery", "images": [...] },
+ *       "relationships": { "item_type": { "data": { "id": "...", "type": "item_type" } } }
+ *     }
+ *   ]
+ * }
+ * ```
+ * </details>
+ *
+ * <details>
+ * <summary>Single Block</summary>
+ *
+ * A Single Block field holds exactly one block, or `null`.
+ *
+ * **As an ID:**
+ * ```json
+ * {
+ *   "featured_block": "dhVR2HqgRVCTGFi_0bWqLqA"
+ * }
+ * ```
+ *
+ * **As an full object:**
+ *
+ * ```json
+ * {
+ *   "featured_block": {
+ *     "id": "dhVR2HqgRVCTGFi_0bWqLqA",
+ *     "type": "item",
+ *     "attributes": { "title": "Featured Content", "summary": "A summary..." },
+ *     "relationships": { "item_type": { "data": { "id": "...", "type": "item_type" } } }
+ *   }
+ * }
+ * ```
+ * </details>
+ *
+ * <details>
+ * <summary>Structured Text</summary>
+ *
+ * A Structured Text field can contain blocks within its document structure ([DAST format](/docs/structured-text/dast)). The item property of a `block` or `inlineBlock` node will hold either the ID or the full object.
+ *
+ * **With block IDs:**
+ *
+ * ```json
+ * {
+ *   "rich_text_content": {
+ *     "schema": "dast",
+ *     "document": {
+ *       "type": "root",
+ *       "children": [
+ *         {
+ *           "type": "paragraph",
+ *           "children": [{ "type": "span", "value": "Text before block." }]
+ *         },
+ *         {
+ *           "type": "block",
+ *           "item": "dhVR2HqgRVCTGFi_0bWqLqA"
+ *         }
+ *       ]
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * **With full objects:**
+ *
+ * ```json
+ * {
+ *   "rich_text_content": {
+ *     "schema": "dast",
+ *     "document": {
+ *       "type": "root",
+ *       "children": [
+ *         {
+ *         "type": "paragraph",
+ *           "children": [{ "type": "span", "value": "Text before block." }]
+ *         },
+ *         {
+ *           "type": "block",
+ *           "item": {
+ *             "id": "dhVR2HqgRVCTGFi_0bWqLqA",
+ *             "type": "item",
+ *             "attributes": { "title": "Embedded Block", "content": "..." },
+ *             "relationships": { "item_type": { "data": { "id": "...", "type": "item_type" } } }
+ *           }
+ *         }
+ *       ]
+ *     }
+ *   }
+ * }
+ * ```
+ * </details>
+ *
+ * ---
+ *
+ * ## API response modes: Regular vs. Nested
+ *
+ * When fetching record data, the API gives you control over how block fields are represented in the response. These two modes, **Regular** and **Nested**, are available on the following endpoints:
+ *
+ * * [Retrieve a single record (`GET /items/:id`)](/docs/content-management-api/resources/item/self)
+ * * [Retrieve multiple records (`GET /items`)](/docs/content-management-api/resources/item/instances)
+ * * [Retrieve records referenced by a record (`GET /items/:id/references`)](/docs/content-management-api/resources/item/references)
+ * * [Retrieve records linked to an asset (`GET /upload/:id/references`)](/docs/content-management-api/resources/upload/references)
+ *
+ * ###### Regular mode (default)
+ *
+ * By default, the API returns block fields as IDs only. This is efficient and fast, making it ideal for listings or when you don't need the blocks' content immediately.
+ *
+ * ```json
+ * GET /items/A4gkL_8pTZmcyJ-IlIEd2w
+ *
+ * {
+ *   "id": "A4gkL_8pTZmcyJ-IlIEd2w",
+ *   "type": "item",
+ *   "attributes": {
+ *     "title": "My Blog Post",
+ *     "content_blocks": ["dhVR2HqgRVCTGFi_0bWqLqA", "kL9mN3pQrStUvWxYzAbCdE"],
+ *     "featured_block": "nZ8xY2vWqTuJkL3mNcBeFg"
+ *   }
+ * }
+ * ```
+ *
+ * ###### Nested mode (`?nested=true`)
+ *
+ * The same endpoint, when passing the `?nested=true` option, returns **block fields as full objects**. This is essential when you need to display or edit the content within the blocks.
+ *
+ * ```json
+ * GET /items/A4gkL_8pTZmcyJ-IlIEd2w?nested=true
+ *
+ * {
+ *   "id": "A4gkL_8pTZmcyJ-IlIEd2w",
+ *   "type": "item",
+ *   "attributes": {
+ *     "title": "My Blog Post",
+ *     "content_blocks": [
+ *       {
+ *         "id": "dhVR2HqgRVCTGFi_0bWqLqA",
+ *         "type": "item",
+ *         "attributes": { "title": "Hero Section", "content": "Welcome to our site" },
+ *         "relationships": { ... }
+ *       },
+ *       {
+ *         "id": "kL9mN3pQrStUvWxYzAbCdE",
+ *         "type": "item",
+ *         "attributes": { "title": "Image Gallery", "images": [...] },
+ *         "relationships": { ... }
+ *       }
+ *     ],
+ *     "featured_block": {
+ *       "id": "nZ8xY2vWqTuJkL3mNcBeFg",
+ *       "type": "item",
+ *       "attributes": { ... },
+ *       "relationships": { ... }
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * > [!WARNING] Block Fields vs. Other Reference Fields
+ * > Block fields are the **only** field type that change representation between modes! Asset and link fields always return IDs. To get full details for assets or linked records, you need to make separate API calls using their IDs.
+ *
+ * ###### When to use each mode?
+ *
+ * | Use "Regular Mode" when...                                                                                     | Use "Nested Mode" when...                                                                     |
+ * | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+ * | Listing many records or building navigation.                                                                   | Displaying or editing block content, as it provides the actual content needed.                |
+ * | You only need to know which blocks exist.                                                                      | You need to read the actual block content for display or updates.                             |
+ * | Building navigation                                                                                            | Preparing to update blocks                                                                    |
+ * | Performance is critical; it's faster because it returns smaller responses (block IDs instead of full content). | You are building content editing interfaces where usability is more important than raw speed. |
+ *
+ *
+ * ---
+ *
+ * ## Creating and updating blocks
+ *
+ * Working with blocks follows one fundamental constraint:
+ *
+ * **You cannot create, edit, or delete blocks directly. You must always update the parent record that contains them.**
+ *
+ * This ensures data integrity. To create/modify blocks, you send a payload to the parent record's endpoint, using a mix of Block IDs and Block Objects to describe the desired changes.
+ *
+ * ###### Key rules for block operations
+ *
+ * 1.  **To create a new block**: Provide the **full object**, including `type`, `attributes`, and the `relationships.item_type` which specifies the Block Model being used.
+ * 2.  **To update an existing block**: Provide the **full object**, including its `id` and the changed `attributes`. You only need to include the specific attributes that you want to change - unchanged attributes will be preserved. You don't need to specify `relationships.item_type`.
+ * 3.  **To keep an existing block unchanged**: Simply provide its **Block ID** string. This is the most efficient way to handle unchanged blocks.
+ * 4.  **To delete a block**: Omit it from the payload. For a Modular Content array, remove its ID. For a Single Block field, set the value to `null`.
+ * 5.  **To reorder blocks** (in Modular Content): Send an array of Block IDs in the new desired order.
+ *
+ *
+ * The following examples show how to apply these rules.
+ *
+ * <details>
+ * <summary>Working with Modular Content Fields</summary>
+ *
+ * **Current state** (from a regular API response):
+ * ```json
+ * {
+ *   "content_blocks": ["dhVR2HqgRVCTGFi_0bWqLqA", "kL9mN3pQrStUvWxYzAbCdE", "fG8hI1jKlMnOpQrStUvWxY"]
+ * }
+ * ```
+ *
+ * **To update the second block and reorder the others:**
+ * ```json
+ * {
+ *   "content_blocks": [
+ *     "fG8hI1jKlMnOpQrStUvWxY", // Reordered: kept as ID
+ *     {
+ *       "id": "kL9mN3pQrStUvWxYzAbCdE", // Updated: sent as object
+ *       "type": "item",
+ *       "attributes": { "title": "Updated Title" }
+ *     },
+ *     "dhVR2HqgRVCTGFi_0bWqLqA" // Reordered: kept as ID
+ *   ]
+ * }
+ * ```
+ *
+ * **To add a new block at the end and remove the first block:**
+ * ```json
+ * {
+ *   "content_blocks": [
+ *     "kL9mN3pQrStUvWxYzAbCdE", // Kept as ID
+ *     "fG8hI1jKlMnOpQrStUvWxY", // Kept as ID
+ *     {
+ *       "type": "item", // New block: sent as object with relationships
+ *       "attributes": { "title": "A Brand New Block" },
+ *       "relationships": {
+ *         "item_type": {
+ *           "data": { "id": "BxZ9Y2aKQVeTnM4hP8wLpD", "type": "item_type" }
+ *         }
+ *       }
+ *     }
+ *   ]
+ * }
+ * ```
+ *
+ * </details>
+ *
+ * <details>
+ * <summary>Working with Single Block Fields</summary>
+ *
+ * **Current state** (from a regular API response):
+ * ```json
+ * {
+ *   "hero_block": "dhVR2HqgRVCTGFi_0bWqLqA"
+ * }
+ * ```
+ *
+ * **To update the block's content:**
+ * ```json
+ * {
+ *   "hero_block": {
+ *     "id": "dhVR2HqgRVCTGFi_0bWqLqA",
+ *     "type": "item",
+ *     "attributes": { "title": "Updated Hero Title" }
+ *   }
+ * }
+ * ```
+ *
+ * **To replace it with a new block:**
+ * ```json
+ * {
+ *   "hero_block": {
+ *     "type": "item",
+ *     "attributes": { "title": "New Hero Block" },
+ *     "relationships": {
+ *       "item_type": {
+ *         "data": { "id": "BxZ9Y2aKQVeTnM4hP8wLpD", "type": "item_type" }
+ *       }
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * **To remove (delete) the block:**
+ * ```json
+ * {
+ *   "hero_block": null
+ * }
+ * ```
+ * </details>
+ *
+ * <details>
+ * <summary>Working with Structured Text Fields</summary>
+ *
+ * Updating blocks within Structured Text follows the same pattern: you replace the `item`'s ID with a full object for the block you want to change.
+ *
+ * **Current state** (from a regular API response):
+ * ```json
+ * {
+ *   "rich_content": {
+ *     "schema": "dast",
+ *     "document": {
+ *       "type": "root",
+ *       "children": [
+ *         { "type": "block", "item": "dhVR2HqgRVCTGFi_0bWqLqA" },
+ *         { "type": "paragraph", "children": [{ "type": "span", "value": "Some text." }] }
+ *       ]
+ *     }
+ *   }
+ * }
+ * ```
+ *
+ * **To update the block's content:**
+ * ```json
+ * {
+ *   "rich_content": {
+ *     "schema": "dast",
+ *     "document": {
+ *       "type": "root",
+ *       "children": [
+ *         {
+ *           "type": "block",
+ *           "item": {
+ *             "id": "dhVR2HqgRVCTGFi_0bWqLqA", // The block to update
+ *             "type": "item",
+ *             "attributes": { "title": "Updated DAST Block Title" }
+ *           }
+ *         },
+ *         { "type": "paragraph", "children": [{ "type": "span", "value": "Some text." }] }
+ *       ]
+ *     }
+ *   }
+ * }
+ * ```
+ * </details>
+ *
+ * ###### Deeply-nested blocks
+ *
+ * Blocks can contain other blocks, creating hierarchies multiple levels deep. **The same principles apply recursively.** When you fetch a record with `?nested=true`, the API will expand nested blocks at all levels.
+ *
+ * When updating, you are always sending a payload to the top-level parent record, but you can specify changes to deeply nested blocks using the same ID vs. object rules.
+ *
+ * <details>
+ * <summary>Example: Updating a nested block</summary>
+ *
+ * Imagine a "Wrapper" block that contains a Modular Content field with "Child" blocks inside it. To update "Child Block 1" while leaving "Child Block 2" untouched:
+ *
+ * ```json
+ * // This payload is sent to the top-level record containing the "Parent Block"
+ * {
+ *   "wrapper_block": {
+ *     "id": "dhVR2HqgRVCTGFi_0bWqLqA", // ID of the parent block being updated
+ *     "type": "item",
+ *     "attributes": {
+ *       "nested_content": [
+ *         {
+ *           "id": "kL9mN3pQrStUvWxYzAbCdE", // ID of the nested block being updated
+ *           "type": "item",
+ *           "attributes": { "title": "Updated Child Block 1" }
+ *         },
+ *         "fG8hI1jKlMnOpQrStUvWxY" // Unchanged nested block, sent as ID
+ *       ],
+ *       // You can skip any attribute that does not need to change
+ *     }
+ *   }
+ * }
+ * ```
+ * </details>
+ *
+ * ---
+ *
+ * ## Localization
+ *
+ * Localization allows you to store different versions of your content for different languages or regions. When you mark a field as "localizable" in your model, its structure in the API changes to accommodate multiple values.
+ *
+ * The fundamental change is that the field's value is no longer a single piece of data but an **object keyed by locale codes**.
+ *
+ * For example, a simple non-localized `title` field looks like this:
+ * ```json
+ * {
+ *   "title": "Hello World"
+ * }
+ * ```
+ *
+ * When localized, it becomes an object containing a value for each configured locale:
+ * ```json
+ * {
+ *   "title": {
+ *     "en": "Hello World",
+ *     "it": "Ciao Mondo",
+ *     "fr": "Bonjour le Monde"
+ *   }
+ * }
+ * ```
+ * This principle applies to **every type of field**, from simple strings to **Modular Content**, **Single Block**, and **Structured Text** fields. For instance, a localized Modular Content field will contain a separate array of blocks for each language. This powerful feature allows you to have completely different block structures for each locale.
+ *
+ * <details>
+ * <summary>Example: Localized Modular Content field</summary>
+ *
+ * In a `regular` API response, you would see different arrays of block IDs for each locale.
+ *
+ * ```json
+ * {
+ *   "content_blocks": {
+ *     "en": ["dhVR2HqgRVCTGFi0bWqLqA", "kL9mN3pQrStUvWxYzAbCdE"],
+ *     "it": ["fG8hI1jKlMnOpQrStUvWxY", "dhVR2HqgRVCTGFi0bWqLqA"]
+ *   }
+ * }
+ * ```
+ * </details>
+ *
+ * <details>
+ * <summary>Example: Localized Single Block field</summary>
+ * A different block can be assigned to each locale.
+ *
+ * ```json
+ * {
+ *   "hero_block": {
+ *     "en": "dhVR2HqgRVCTGFi0bWqLqA",
+ *     "it": "kL9mN3pQrStUvWxYzAbCdE"
+ *   }
+ * }
+ * ```
+ * </details>
+ *
+ * <details>
+ * <summary>Example: Localized Structured Text field</summary>
+ *
+ * The entire DAST document is localized, allowing for different text and different embedded blocks per locale.
+ *
+ * ```json
+ * {
+ *   "rich_content": {
+ *     "en": {
+ *       "schema": "dast",
+ *       "document": {
+ *         "type": "root",
+ *         "children": [{ "type": "block", "item": "dhVR2HqgRVCTGFi0bWqLqA" }]
+ *       }
+ *     },
+ *     "it": {
+ *       "schema": "dast",
+ *       "document": {
+ *         "type": "root",
+ *         "children": [{ "type": "block", "item": "kL9mN3pQrStUvWxYzAbCdE" }]
+ *       }
+ *     }
+ *   }
+ * }
+ * ```
+ * </details>
+ *
+ * When reading or writing localized content, there are a few key rules to follow to ensure data integrity.
+ *
+ * ###### Locale consistency
+ * Within a single record, all localized fields must have a consistent set of locales. You cannot have a `title` with English and Italian, and a `description` with English and French in the same record.
+ *
+ * ```json
+ * // ❌ This will FAIL due to inconsistent locales ("it" vs "fr")
+ * {
+ *   "title": { "en": "Title", "it": "Titolo" },
+ *   "description": { "en": "Description", "fr": "Description" }
+ * }
+ *
+ * // ✅ This is VALID because locales are consistent across all fields
+ * {
+ *   "title": { "en": "Title", "it": "Titolo" },
+ *   "description": { "en": "Description", "it": "Descrizione" }
+ * }
+ * ```
+ *
+ * ###### Required locales
+ *
+ * Your model can be configured to require that all project's locales are always present ([`attributes.all_locales_required`](/docs/content-management-api/resources/item-type#object-payload)). If that's the case, when creating or updating a record, you must provide a value for all required locales.
+ *
+ * ```json
+ * // ❌ This will FAIL if all locales are required for the model
+ * {
+ *   "title": { "en": "Title" }
+ * }
+ * ```
  *
  *
  * This interface was referenced by `ScheduledPublication`'s JSON-Schema

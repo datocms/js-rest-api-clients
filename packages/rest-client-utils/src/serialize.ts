@@ -164,8 +164,8 @@ export function serializeRawItem<S>(item: any): S {
 }
 
 export function serializeRawRequestBodyWithItems(body: any) {
-  if (!('data' in body)) {
-    throw new Error('Invalid body!');
+  if (!body || !('data' in body)) {
+    return body;
   }
 
   if (Array.isArray(body.data)) {
