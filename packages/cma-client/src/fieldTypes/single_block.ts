@@ -57,10 +57,10 @@ export type UnchangedBlockInARequest<
 > = RawApiTypes.Item<D>['id'];
 /** Represents a block we want to update in a CMA request */
 export type UpdatedBlockInARequest<D extends ItemDefinition = ItemDefinition> =
-  OptionalFields<RawApiTypes.Item<D>, 'meta'>;
+  D extends any ? OptionalFields<RawApiTypes.Item<D>, 'meta'> : never;
 /** Represents a new block to create in a CMA request */
 export type NewBlockInARequest<D extends ItemDefinition = ItemDefinition> =
-  OptionalFields<RawApiTypes.Item<D>, 'id' | 'meta'>;
+  D extends any ? OptionalFields<RawApiTypes.Item<D>, 'id' | 'meta'> : never;
 
 /**
  * Union type representing the different ways a block can be specified in API requests:
