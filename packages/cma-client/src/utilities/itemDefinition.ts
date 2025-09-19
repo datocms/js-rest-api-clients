@@ -139,28 +139,22 @@ type FieldDefinitionToFieldValueAsRequest<
 > = T extends RichTextFieldDefinition<infer B>
   ? LocalizeIfNeeded<
       T,
-      RichTextFieldValueAsRequest<
-        ItemTypeDefinitionToItemDefinitionAsRequest<B>
-      >,
+      RichTextFieldValueAsRequest<ToItemDefinitionAsRequest<B>>,
       Locales
     >
   : T extends SingleBlockFieldDefinition<infer B>
     ? LocalizeIfNeeded<
         T,
-        SingleBlockFieldValueAsRequest<
-          ItemTypeDefinitionToItemDefinitionAsRequest<B>
-        >,
+        SingleBlockFieldValueAsRequest<ToItemDefinitionAsRequest<B>>,
         Locales
       >
     : T extends StructuredTextFieldDefinition<infer B, infer I>
       ? LocalizeIfNeeded<
           T,
           StructuredTextFieldValueAsRequest<
-            T extends { blocks: any }
-              ? ItemTypeDefinitionToItemDefinitionAsRequest<B>
-              : never,
+            T extends { blocks: any } ? ToItemDefinitionAsRequest<B> : never,
             T extends { inline_blocks: any }
-              ? ItemTypeDefinitionToItemDefinitionAsRequest<I>
+              ? ToItemDefinitionAsRequest<I>
               : never
           >,
           Locales
@@ -173,16 +167,14 @@ type FieldDefinitionToFieldValueWithNestedBlocks<
 > = T extends RichTextFieldDefinition<infer B>
   ? LocalizeIfNeeded<
       T,
-      RichTextFieldValueWithNestedBlocks<
-        ItemTypeDefinitionToItemDefinitionWithNestedBlocks<B>
-      >,
+      RichTextFieldValueWithNestedBlocks<ToItemDefinitionWithNestedBlocks<B>>,
       Locales
     >
   : T extends SingleBlockFieldDefinition<infer B>
     ? LocalizeIfNeeded<
         T,
         SingleBlockFieldValueWithNestedBlocks<
-          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<B>
+          ToItemDefinitionWithNestedBlocks<B>
         >,
         Locales
       >
@@ -191,10 +183,10 @@ type FieldDefinitionToFieldValueWithNestedBlocks<
           T,
           StructuredTextFieldValueWithNestedBlocks<
             T extends { blocks: any }
-              ? ItemTypeDefinitionToItemDefinitionWithNestedBlocks<B>
+              ? ToItemDefinitionWithNestedBlocks<B>
               : never,
             T extends { inline_blocks: any }
-              ? ItemTypeDefinitionToItemDefinitionWithNestedBlocks<I>
+              ? ToItemDefinitionWithNestedBlocks<I>
               : never
           >,
           Locales
@@ -202,22 +194,21 @@ type FieldDefinitionToFieldValueWithNestedBlocks<
       : LocalizeIfNeeded<T, FieldTypeToValue[T['type']], Locales>;
 
 /** Transformers */
-export type ItemTypeDefinitionToItemDefinition<
-  T extends ItemTypeDefinition<any, any, any>,
-> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields>
-  ? keyof Fields extends never
-    ? ItemDefinition<ItemTypeId>
-    : ItemDefinition<
-        ItemTypeId,
-        {
-          [K in keyof Fields]: Fields[K] extends FieldDefinition
-            ? FieldDefinitionToFieldValue<Fields[K], Settings['locales']>
-            : never;
-        }
-      >
-  : never;
+export type ToItemDefinition<T extends ItemTypeDefinition<any, any, any>> =
+  T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields>
+    ? keyof Fields extends never
+      ? ItemDefinition<ItemTypeId>
+      : ItemDefinition<
+          ItemTypeId,
+          {
+            [K in keyof Fields]: Fields[K] extends FieldDefinition
+              ? FieldDefinitionToFieldValue<Fields[K], Settings['locales']>
+              : never;
+          }
+        >
+    : never;
 
-export type ItemTypeDefinitionToItemDefinitionAsRequest<
+export type ToItemDefinitionAsRequest<
   T extends ItemTypeDefinition<any, any, any>,
 > = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields>
   ? keyof Fields extends never
@@ -235,7 +226,7 @@ export type ItemTypeDefinitionToItemDefinitionAsRequest<
       >
   : never;
 
-export type ItemTypeDefinitionToItemDefinitionWithNestedBlocks<
+export type ToItemDefinitionWithNestedBlocks<
   T extends ItemTypeDefinition<any, any, any>,
 > = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields>
   ? keyof Fields extends never

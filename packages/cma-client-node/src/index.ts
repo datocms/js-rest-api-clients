@@ -161,9 +161,6 @@ export type {
   ItemDefinition,
   ItemItemTypeValidator,
   ItemTypeDefinition,
-  ItemTypeDefinitionToItemDefinition,
-  ItemTypeDefinitionToItemDefinitionAsRequest,
-  ItemTypeDefinitionToItemDefinitionWithNestedBlocks,
   ItemWithOptionalIdAndMeta,
   ItemWithOptionalMeta,
   ItemsItemTypeValidator,
@@ -247,6 +244,9 @@ export type {
   TextFieldValue,
   TextareaEditorConfiguration,
   TitleLengthValidator,
+  ToItemDefinition,
+  ToItemDefinitionAsRequest,
+  ToItemDefinitionWithNestedBlocks,
   TreePath,
   UnchangedBlockInARequest,
   UniqueValidator,
@@ -259,7 +259,6 @@ export type {
   WysiwygEditorConfiguration,
 } from '@datocms/cma-client';
 // </AUTO-GENERATED-EXPORTS>
-
 export { CanceledPromiseError } from '@datocms/rest-client-utils';
 export type { CancelablePromise } from '@datocms/rest-client-utils';
 export * from './buildClient';

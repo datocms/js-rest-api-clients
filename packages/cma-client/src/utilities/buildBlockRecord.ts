@@ -7,8 +7,8 @@ import type * as ApiTypes from '../generated/ApiTypes';
 import { Item } from '../generated/resources';
 import type {
   ItemTypeDefinition,
-  ItemTypeDefinitionToItemDefinitionAsRequest,
-  ItemTypeDefinitionToItemDefinitionWithNestedBlocks,
+  ToItemDefinitionAsRequest,
+  ToItemDefinitionWithNestedBlocks,
 } from './itemDefinition';
 import { mapBlocksInFieldValues } from './recursiveBlocks';
 import type { SchemaRepository } from './schemaRepository';
@@ -18,14 +18,10 @@ type NoInfer<T> = [T][T extends any ? 0 : never];
 export function buildBlockRecord<
   D extends ItemTypeDefinition = ItemTypeDefinition,
 >(
-  body: ApiTypes.ItemUpdateSchema<
-    ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
-  >,
-): NewBlockInARequest<ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>> {
+  body: ApiTypes.ItemUpdateSchema<ToItemDefinitionAsRequest<NoInfer<D>>>,
+): NewBlockInARequest<ToItemDefinitionAsRequest<NoInfer<D>>> {
   return Utils.serializeRequestBody<{
-    data: NewBlockInARequest<
-      ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
-    >;
+    data: NewBlockInARequest<ToItemDefinitionAsRequest<NoInfer<D>>>;
   }>(body, {
     type: Item.TYPE,
     attributes: '*',
@@ -37,12 +33,10 @@ export async function duplicateBlockRecord<
   D extends ItemTypeDefinition = ItemTypeDefinition,
 >(
   existingBlock: ItemWithOptionalIdAndMeta<
-    ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+    ToItemDefinitionWithNestedBlocks<NoInfer<D>>
   >,
   schemaRepository: SchemaRepository,
-): Promise<
-  NewBlockInARequest<ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>>
-> {
+): Promise<NewBlockInARequest<ToItemDefinitionAsRequest<NoInfer<D>>>> {
   const { type, attributes, relationships } = existingBlock;
 
   const itemType = await schemaRepository.getRawItemTypeById(
@@ -76,7 +70,5 @@ export async function duplicateBlockRecord<
     );
   }
 
-  return newBlock as NewBlockInARequest<
-    ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
-  >;
+  return newBlock as NewBlockInARequest<ToItemDefinitionAsRequest<NoInfer<D>>>;
 }

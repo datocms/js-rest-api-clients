@@ -2,9 +2,9 @@ import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
 import type {
   ItemTypeDefinition,
-  ItemTypeDefinitionToItemDefinition,
-  ItemTypeDefinitionToItemDefinitionAsRequest,
-  ItemTypeDefinitionToItemDefinitionWithNestedBlocks,
+  ToItemDefinition,
+  ToItemDefinitionAsRequest,
+  ToItemDefinitionWithNestedBlocks,
 } from '../../utilities/itemDefinition';
 import type * as ApiTypes from '../ApiTypes';
 import type * as RawApiTypes from '../RawApiTypes';
@@ -269,7 +269,7 @@ export default class Upload extends BaseResource {
     queryParams: ApiTypes.UploadReferencesHrefSchema & { nested: true },
   ): Promise<
     ApiTypes.UploadReferencesTargetSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
     >
   >;
   references<D extends ItemTypeDefinition = ItemTypeDefinition>(
@@ -278,9 +278,7 @@ export default class Upload extends BaseResource {
       nested?: false | undefined;
     },
   ): Promise<
-    ApiTypes.UploadReferencesTargetSchema<
-      ItemTypeDefinitionToItemDefinition<NoInfer<D>>
-    >
+    ApiTypes.UploadReferencesTargetSchema<ToItemDefinition<NoInfer<D>>>
   >;
   /**
    * Referenced records
@@ -309,12 +307,40 @@ export default class Upload extends BaseResource {
    */
   rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
     uploadId: string,
+    queryParams: RawApiTypes.UploadReferencesHrefSchema & { nested: true },
+  ): Promise<
+    RawApiTypes.UploadReferencesTargetSchema<
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
+    >
+  >;
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    uploadId: string,
+    queryParams?: RawApiTypes.UploadReferencesHrefSchema & {
+      nested?: false | undefined;
+    },
+  ): Promise<
+    RawApiTypes.UploadReferencesTargetSchema<ToItemDefinition<NoInfer<D>>>
+  >;
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    uploadId: string,
     queryParams?: RawApiTypes.UploadReferencesHrefSchema,
   ): Promise<
     RawApiTypes.UploadReferencesTargetSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
     >
-  > {
+  >;
+  /**
+   * Referenced records
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/references
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    uploadId: string,
+    queryParams?: RawApiTypes.UploadReferencesHrefSchema,
+  ) {
     return this.client
       .request({
         method: 'GET',
@@ -323,7 +349,7 @@ export default class Upload extends BaseResource {
       })
       .then<
         RawApiTypes.UploadReferencesTargetSchema<
-          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+          ToItemDefinitionWithNestedBlocks<NoInfer<D>>
         >
       >(Utils.deserializeRawResponseBodyWithItems);
   }

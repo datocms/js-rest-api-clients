@@ -2,9 +2,9 @@ import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
 import type {
   ItemTypeDefinition,
-  ItemTypeDefinitionToItemDefinition,
-  ItemTypeDefinitionToItemDefinitionAsRequest,
-  ItemTypeDefinitionToItemDefinitionWithNestedBlocks,
+  ToItemDefinition,
+  ToItemDefinitionAsRequest,
+  ToItemDefinitionWithNestedBlocks,
 } from '../../utilities/itemDefinition';
 import type * as ApiTypes from '../ApiTypes';
 import type * as RawApiTypes from '../RawApiTypes';
@@ -26,18 +26,14 @@ export default class Item extends BaseResource {
     queryParams: ApiTypes.ItemInstancesHrefSchema & { nested: true },
   ): Promise<
     ApiTypes.ItemInstancesTargetSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
     >
   >;
   list<D extends ItemTypeDefinition = ItemTypeDefinition>(
     queryParams?: ApiTypes.ItemInstancesHrefSchema & {
       nested?: false | undefined;
     },
-  ): Promise<
-    ApiTypes.ItemInstancesTargetSchema<
-      ItemTypeDefinitionToItemDefinition<NoInfer<D>>
-    >
-  >;
+  ): Promise<ApiTypes.ItemInstancesTargetSchema<ToItemDefinition<NoInfer<D>>>>;
   /**
    * List all records
    *
@@ -63,12 +59,37 @@ export default class Item extends BaseResource {
    * @throws {TimeoutError}
    */
   rawList<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams: RawApiTypes.ItemInstancesHrefSchema & { nested: true },
+  ): Promise<
+    RawApiTypes.ItemInstancesTargetSchema<
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
+    >
+  >;
+  rawList<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams?: RawApiTypes.ItemInstancesHrefSchema & {
+      nested?: false | undefined;
+    },
+  ): Promise<
+    RawApiTypes.ItemInstancesTargetSchema<ToItemDefinition<NoInfer<D>>>
+  >;
+  rawList<D extends ItemTypeDefinition = ItemTypeDefinition>(
     queryParams?: RawApiTypes.ItemInstancesHrefSchema,
   ): Promise<
     RawApiTypes.ItemInstancesTargetSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
     >
-  > {
+  >;
+  /**
+   * List all records
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawList<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams?: RawApiTypes.ItemInstancesHrefSchema,
+  ) {
     return this.client
       .request({
         method: 'GET',
@@ -77,7 +98,7 @@ export default class Item extends BaseResource {
       })
       .then<
         RawApiTypes.ItemInstancesTargetSchema<
-          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+          ToItemDefinitionWithNestedBlocks<NoInfer<D>>
         >
       >(Utils.deserializeRawResponseBodyWithItems);
   }
@@ -103,7 +124,7 @@ export default class Item extends BaseResource {
     )) {
       yield Utils.deserializeJsonEntity<
         ApiTypes.ItemInstancesTargetSchema<
-          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+          ToItemDefinitionWithNestedBlocks<NoInfer<D>>
         >[0]
       >(element);
     }
@@ -128,7 +149,7 @@ export default class Item extends BaseResource {
 
     return Utils.rawPageIterator<
       RawApiTypes.ItemInstancesTargetSchema<
-        ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+        ToItemDefinitionWithNestedBlocks<NoInfer<D>>
       >['data'][0]
     >(
       {
@@ -155,14 +176,14 @@ export default class Item extends BaseResource {
   validateExisting<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string | ApiTypes.ItemData,
     body: ApiTypes.ItemValidateExistingSchema<
-      ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
+      ToItemDefinitionAsRequest<NoInfer<D>>
     >,
   ) {
     return this.rawValidateExisting(
       Utils.toId(itemId),
       Utils.serializeRequestBody<
         RawApiTypes.ItemValidateExistingSchema<
-          ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
+          ToItemDefinitionAsRequest<NoInfer<D>>
         >
       >(body, {
         id: Utils.toId(itemId),
@@ -186,7 +207,7 @@ export default class Item extends BaseResource {
   rawValidateExisting<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string,
     body: RawApiTypes.ItemValidateExistingSchema<
-      ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
+      ToItemDefinitionAsRequest<NoInfer<D>>
     >,
   ): Promise<void> {
     return this.client.request<void>({
@@ -207,15 +228,11 @@ export default class Item extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   validateNew<D extends ItemTypeDefinition = ItemTypeDefinition>(
-    body: ApiTypes.ItemValidateNewSchema<
-      ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
-    >,
+    body: ApiTypes.ItemValidateNewSchema<ToItemDefinitionAsRequest<NoInfer<D>>>,
   ) {
     return this.rawValidateNew(
       Utils.serializeRequestBody<
-        RawApiTypes.ItemValidateNewSchema<
-          ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
-        >
+        RawApiTypes.ItemValidateNewSchema<ToItemDefinitionAsRequest<NoInfer<D>>>
       >(body, {
         type: 'item',
         attributes: '*',
@@ -236,7 +253,7 @@ export default class Item extends BaseResource {
    */
   rawValidateNew<D extends ItemTypeDefinition = ItemTypeDefinition>(
     body: RawApiTypes.ItemValidateNewSchema<
-      ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
+      ToItemDefinitionAsRequest<NoInfer<D>>
     >,
   ): Promise<void> {
     return this.client.request<void>({
@@ -255,15 +272,11 @@ export default class Item extends BaseResource {
    * @throws {TimeoutError}
    */
   create<D extends ItemTypeDefinition = ItemTypeDefinition>(
-    body: ApiTypes.ItemCreateSchema<
-      ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
-    >,
+    body: ApiTypes.ItemCreateSchema<ToItemDefinitionAsRequest<NoInfer<D>>>,
   ) {
     return this.rawCreate<D>(
       Utils.serializeRequestBody<
-        RawApiTypes.ItemCreateSchema<
-          ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
-        >
+        RawApiTypes.ItemCreateSchema<ToItemDefinitionAsRequest<NoInfer<D>>>
       >(body, {
         type: 'item',
         attributes: '*',
@@ -271,9 +284,7 @@ export default class Item extends BaseResource {
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<
-        ApiTypes.ItemCreateTargetSchema<
-          ItemTypeDefinitionToItemDefinition<NoInfer<D>>
-        >
+        ApiTypes.ItemCreateTargetSchema<ToItemDefinition<NoInfer<D>>>
       >(body),
     );
   }
@@ -287,12 +298,10 @@ export default class Item extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate<D extends ItemTypeDefinition = ItemTypeDefinition>(
-    body: RawApiTypes.ItemCreateSchema<
-      ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
-    >,
+    body: RawApiTypes.ItemCreateSchema<ToItemDefinitionAsRequest<NoInfer<D>>>,
   ): Promise<
     RawApiTypes.ItemCreateTargetSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
     >
   > {
     return this.client
@@ -303,7 +312,7 @@ export default class Item extends BaseResource {
       })
       .then<
         RawApiTypes.ItemCreateTargetSchema<
-          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+          ToItemDefinitionWithNestedBlocks<NoInfer<D>>
         >
       >(Utils.deserializeRawResponseBodyWithItems);
   }
@@ -321,9 +330,7 @@ export default class Item extends BaseResource {
   ) {
     return this.rawDuplicate<D>(Utils.toId(itemId)).then((body) =>
       Utils.deserializeResponseBody<
-        ApiTypes.ItemDuplicateJobSchema<
-          ItemTypeDefinitionToItemDefinition<NoInfer<D>>
-        >
+        ApiTypes.ItemDuplicateJobSchema<ToItemDefinition<NoInfer<D>>>
       >(body),
     );
   }
@@ -340,7 +347,7 @@ export default class Item extends BaseResource {
     itemId: string,
   ): Promise<
     RawApiTypes.ItemDuplicateJobSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
     >
   > {
     return this.client
@@ -350,7 +357,7 @@ export default class Item extends BaseResource {
       })
       .then<
         RawApiTypes.ItemDuplicateJobSchema<
-          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+          ToItemDefinitionWithNestedBlocks<NoInfer<D>>
         >
       >(Utils.deserializeRawResponseBodyWithItems);
   }
@@ -365,16 +372,12 @@ export default class Item extends BaseResource {
    */
   update<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string | ApiTypes.ItemData,
-    body: ApiTypes.ItemUpdateSchema<
-      ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
-    >,
+    body: ApiTypes.ItemUpdateSchema<ToItemDefinitionAsRequest<NoInfer<D>>>,
   ) {
     return this.rawUpdate<D>(
       Utils.toId(itemId),
       Utils.serializeRequestBody<
-        RawApiTypes.ItemUpdateSchema<
-          ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
-        >
+        RawApiTypes.ItemUpdateSchema<ToItemDefinitionAsRequest<NoInfer<D>>>
       >(body, {
         id: Utils.toId(itemId),
         type: 'item',
@@ -383,9 +386,7 @@ export default class Item extends BaseResource {
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<
-        ApiTypes.ItemUpdateTargetSchema<
-          ItemTypeDefinitionToItemDefinition<NoInfer<D>>
-        >
+        ApiTypes.ItemUpdateTargetSchema<ToItemDefinition<NoInfer<D>>>
       >(body),
     );
   }
@@ -400,12 +401,10 @@ export default class Item extends BaseResource {
    */
   rawUpdate<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string,
-    body: RawApiTypes.ItemUpdateSchema<
-      ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
-    >,
+    body: RawApiTypes.ItemUpdateSchema<ToItemDefinitionAsRequest<NoInfer<D>>>,
   ): Promise<
     RawApiTypes.ItemUpdateTargetSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
     >
   > {
     return this.client
@@ -416,7 +415,7 @@ export default class Item extends BaseResource {
       })
       .then<
         RawApiTypes.ItemUpdateTargetSchema<
-          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+          ToItemDefinitionWithNestedBlocks<NoInfer<D>>
         >
       >(Utils.deserializeRawResponseBodyWithItems);
   }
@@ -434,7 +433,7 @@ export default class Item extends BaseResource {
     queryParams: ApiTypes.ItemReferencesHrefSchema & { nested: true },
   ): Promise<
     ApiTypes.ItemReferencesTargetSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
     >
   >;
   references<D extends ItemTypeDefinition = ItemTypeDefinition>(
@@ -442,11 +441,7 @@ export default class Item extends BaseResource {
     queryParams?: ApiTypes.ItemReferencesHrefSchema & {
       nested?: false | undefined;
     },
-  ): Promise<
-    ApiTypes.ItemReferencesTargetSchema<
-      ItemTypeDefinitionToItemDefinition<NoInfer<D>>
-    >
-  >;
+  ): Promise<ApiTypes.ItemReferencesTargetSchema<ToItemDefinition<NoInfer<D>>>>;
   /**
    * Referenced records
    *
@@ -474,12 +469,40 @@ export default class Item extends BaseResource {
    */
   rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string,
+    queryParams: RawApiTypes.ItemReferencesHrefSchema & { nested: true },
+  ): Promise<
+    RawApiTypes.ItemReferencesTargetSchema<
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
+    >
+  >;
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
+    queryParams?: RawApiTypes.ItemReferencesHrefSchema & {
+      nested?: false | undefined;
+    },
+  ): Promise<
+    RawApiTypes.ItemReferencesTargetSchema<ToItemDefinition<NoInfer<D>>>
+  >;
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
     queryParams?: RawApiTypes.ItemReferencesHrefSchema,
   ): Promise<
     RawApiTypes.ItemReferencesTargetSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
     >
-  > {
+  >;
+  /**
+   * Referenced records
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item/references
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
+    queryParams?: RawApiTypes.ItemReferencesHrefSchema,
+  ) {
     return this.client
       .request({
         method: 'GET',
@@ -488,7 +511,7 @@ export default class Item extends BaseResource {
       })
       .then<
         RawApiTypes.ItemReferencesTargetSchema<
-          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+          ToItemDefinitionWithNestedBlocks<NoInfer<D>>
         >
       >(Utils.deserializeRawResponseBodyWithItems);
   }
@@ -505,18 +528,12 @@ export default class Item extends BaseResource {
     itemId: string | ApiTypes.ItemData,
     queryParams: ApiTypes.ItemSelfHrefSchema & { nested: true },
   ): Promise<
-    ApiTypes.ItemSelfTargetSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
-    >
+    ApiTypes.ItemSelfTargetSchema<ToItemDefinitionWithNestedBlocks<NoInfer<D>>>
   >;
   find<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string | ApiTypes.ItemData,
     queryParams?: ApiTypes.ItemSelfHrefSchema & { nested?: false | undefined },
-  ): Promise<
-    ApiTypes.ItemSelfTargetSchema<
-      ItemTypeDefinitionToItemDefinition<NoInfer<D>>
-    >
-  >;
+  ): Promise<ApiTypes.ItemSelfTargetSchema<ToItemDefinition<NoInfer<D>>>>;
   /**
    * Retrieve a record
    *
@@ -544,12 +561,38 @@ export default class Item extends BaseResource {
    */
   rawFind<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string,
+    queryParams: RawApiTypes.ItemSelfHrefSchema & { nested: true },
+  ): Promise<
+    RawApiTypes.ItemSelfTargetSchema<
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
+    >
+  >;
+  rawFind<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
+    queryParams?: RawApiTypes.ItemSelfHrefSchema & {
+      nested?: false | undefined;
+    },
+  ): Promise<RawApiTypes.ItemSelfTargetSchema<ToItemDefinition<NoInfer<D>>>>;
+  rawFind<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
     queryParams?: RawApiTypes.ItemSelfHrefSchema,
   ): Promise<
     RawApiTypes.ItemSelfTargetSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
     >
-  > {
+  >;
+  /**
+   * Retrieve a record
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawFind<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
+    queryParams?: RawApiTypes.ItemSelfHrefSchema,
+  ) {
     return this.client
       .request({
         method: 'GET',
@@ -558,7 +601,7 @@ export default class Item extends BaseResource {
       })
       .then<
         RawApiTypes.ItemSelfTargetSchema<
-          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+          ToItemDefinitionWithNestedBlocks<NoInfer<D>>
         >
       >(Utils.deserializeRawResponseBodyWithItems);
   }
@@ -615,9 +658,7 @@ export default class Item extends BaseResource {
   ) {
     return this.rawDestroy<D>(Utils.toId(itemId)).then((body) =>
       Utils.deserializeResponseBody<
-        ApiTypes.ItemDestroyJobSchema<
-          ItemTypeDefinitionToItemDefinition<NoInfer<D>>
-        >
+        ApiTypes.ItemDestroyJobSchema<ToItemDefinition<NoInfer<D>>>
       >(body),
     );
   }
@@ -634,7 +675,7 @@ export default class Item extends BaseResource {
     itemId: string,
   ): Promise<
     RawApiTypes.ItemDestroyJobSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
     >
   > {
     return this.client
@@ -644,7 +685,7 @@ export default class Item extends BaseResource {
       })
       .then<
         RawApiTypes.ItemDestroyJobSchema<
-          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+          ToItemDefinitionWithNestedBlocks<NoInfer<D>>
         >
       >(Utils.deserializeRawResponseBodyWithItems);
   }
@@ -674,9 +715,7 @@ export default class Item extends BaseResource {
       queryParams,
     ).then((body) =>
       Utils.deserializeResponseBody<
-        ApiTypes.ItemPublishTargetSchema<
-          ItemTypeDefinitionToItemDefinition<NoInfer<D>>
-        >
+        ApiTypes.ItemPublishTargetSchema<ToItemDefinition<NoInfer<D>>>
       >(body),
     );
   }
@@ -695,7 +734,7 @@ export default class Item extends BaseResource {
     queryParams?: RawApiTypes.ItemPublishHrefSchema,
   ): Promise<
     RawApiTypes.ItemPublishTargetSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
     >
   > {
     return this.client
@@ -707,7 +746,7 @@ export default class Item extends BaseResource {
       })
       .then<
         RawApiTypes.ItemPublishTargetSchema<
-          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+          ToItemDefinitionWithNestedBlocks<NoInfer<D>>
         >
       >(Utils.deserializeRawResponseBodyWithItems);
   }
@@ -737,9 +776,7 @@ export default class Item extends BaseResource {
       queryParams,
     ).then((body) =>
       Utils.deserializeResponseBody<
-        ApiTypes.ItemUnpublishTargetSchema<
-          ItemTypeDefinitionToItemDefinition<NoInfer<D>>
-        >
+        ApiTypes.ItemUnpublishTargetSchema<ToItemDefinition<NoInfer<D>>>
       >(body),
     );
   }
@@ -758,7 +795,7 @@ export default class Item extends BaseResource {
     queryParams?: RawApiTypes.ItemUnpublishHrefSchema,
   ): Promise<
     RawApiTypes.ItemUnpublishTargetSchema<
-      ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
     >
   > {
     return this.client
@@ -770,7 +807,7 @@ export default class Item extends BaseResource {
       })
       .then<
         RawApiTypes.ItemUnpublishTargetSchema<
-          ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+          ToItemDefinitionWithNestedBlocks<NoInfer<D>>
         >
       >(Utils.deserializeRawResponseBodyWithItems);
   }

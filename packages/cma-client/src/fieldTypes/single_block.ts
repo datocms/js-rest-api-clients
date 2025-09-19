@@ -120,7 +120,7 @@ export function isItemId(input: unknown): input is string {
 
 export type ItemWithOptionalIdAndMeta<
   D extends ItemDefinition = ItemDefinition,
-> = OptionalFields<RawApiTypes.Item<D>, 'id' | 'meta'>;
+> = D extends any ? OptionalFields<RawApiTypes.Item<D>, 'id' | 'meta'> : never;
 
 /**
  * Validates if the input is a RawApiTypes.Item object (with optional `id` and `meta`)
@@ -137,7 +137,7 @@ export function isItemWithOptionalIdAndMeta<
 }
 
 export type ItemWithOptionalMeta<D extends ItemDefinition = ItemDefinition> =
-  OptionalFields<RawApiTypes.Item<D>, 'meta'>;
+  D extends any ? OptionalFields<RawApiTypes.Item<D>, 'meta'> : never;
 
 /**
  * Validates if the input is a a complete RawApiTypes.Item object with optional `meta`
