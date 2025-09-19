@@ -6,6 +6,7 @@ export {
   TimeoutError,
   blockModelIdsReferencedInField,
   buildBlockRecord,
+  duplicateBlockRecord,
   entriesToFieldValue,
   everyBlockInFieldValues,
   everyFieldValue,

@@ -1,13 +1,14 @@
 import * as Utils from '@datocms/rest-client-utils';
 import type {
   ItemWithOptionalIdAndMeta,
-  NewBlockInARequest
+  NewBlockInARequest,
 } from '../fieldTypes';
 import type * as ApiTypes from '../generated/ApiTypes';
 import { Item } from '../generated/resources';
 import type {
   ItemTypeDefinition,
-  ItemTypeDefinitionToItemDefinitionAsRequest
+  ItemTypeDefinitionToItemDefinitionAsRequest,
+  ItemTypeDefinitionToItemDefinitionWithNestedBlocks,
 } from './itemDefinition';
 import { mapBlocksInFieldValues } from './recursiveBlocks';
 import type { SchemaRepository } from './schemaRepository';
@@ -35,9 +36,13 @@ export function buildBlockRecord<
 export async function duplicateBlockRecord<
   D extends ItemTypeDefinition = ItemTypeDefinition,
 >(
-  existingBlock: ItemWithOptionalIdAndMeta<D>,
+  existingBlock: ItemWithOptionalIdAndMeta<
+    ItemTypeDefinitionToItemDefinitionWithNestedBlocks<NoInfer<D>>
+  >,
   schemaRepository: SchemaRepository,
-): Promise<ItemWithOptionalIdAndMeta<D>> {
+): Promise<
+  NewBlockInARequest<ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>>
+> {
   const { type, attributes, relationships } = existingBlock;
 
   const itemType = await schemaRepository.getRawItemTypeById(
@@ -71,5 +76,7 @@ export async function duplicateBlockRecord<
     );
   }
 
-  return newBlock as ItemWithOptionalIdAndMeta<D>;
+  return newBlock as NewBlockInARequest<
+    ItemTypeDefinitionToItemDefinitionAsRequest<NoInfer<D>>
+  >;
 }

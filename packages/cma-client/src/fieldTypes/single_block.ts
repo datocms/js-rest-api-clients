@@ -55,9 +55,11 @@ export type SingleBlockFieldValue = string | null;
 export type UnchangedBlockInARequest<
   D extends ItemDefinition = ItemDefinition,
 > = RawApiTypes.Item<D>['id'];
+
 /** Represents a block we want to update in a CMA request */
 export type UpdatedBlockInARequest<D extends ItemDefinition = ItemDefinition> =
   D extends any ? OptionalFields<RawApiTypes.Item<D>, 'meta'> : never;
+
 /** Represents a new block to create in a CMA request */
 export type NewBlockInARequest<D extends ItemDefinition = ItemDefinition> =
   D extends any ? OptionalFields<RawApiTypes.Item<D>, 'id' | 'meta'> : never;
