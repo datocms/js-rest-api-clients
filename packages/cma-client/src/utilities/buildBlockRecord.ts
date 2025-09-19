@@ -1,13 +1,13 @@
 import * as Utils from '@datocms/rest-client-utils';
 import type {
   ItemWithOptionalIdAndMeta,
-  NewBlockInARequest,
+  NewBlockInARequest
 } from '../fieldTypes';
 import type * as ApiTypes from '../generated/ApiTypes';
 import { Item } from '../generated/resources';
 import type {
   ItemTypeDefinition,
-  ItemTypeDefinitionToItemDefinitionAsRequest,
+  ItemTypeDefinitionToItemDefinitionAsRequest
 } from './itemDefinition';
 import { mapBlocksInFieldValues } from './recursiveBlocks';
 import type { SchemaRepository } from './schemaRepository';
@@ -68,7 +68,6 @@ export async function duplicateBlockRecord<
 
         return blockWithoutIdAndMeta;
       },
-      [],
     );
   }
 
