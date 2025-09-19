@@ -192,7 +192,7 @@ export default class Item extends BaseResource {
     return this.client.request<void>({
       method: 'POST',
       url: `/items/${itemId}/validate`,
-      body,
+      body: Utils.serializeRawRequestBodyWithItems(body),
     });
   }
 
@@ -242,7 +242,7 @@ export default class Item extends BaseResource {
     return this.client.request<void>({
       method: 'POST',
       url: '/items/validate',
-      body,
+      body: Utils.serializeRawRequestBodyWithItems(body),
     });
   }
 
@@ -702,7 +702,7 @@ export default class Item extends BaseResource {
       .request({
         method: 'PUT',
         url: `/items/${itemId}/publish`,
-        body: body ? Utils.serializeRawRequestBodyWithItems(body) : undefined,
+        body,
         queryParams,
       })
       .then<
@@ -765,7 +765,7 @@ export default class Item extends BaseResource {
       .request({
         method: 'PUT',
         url: `/items/${itemId}/unpublish`,
-        body: body ? Utils.serializeRawRequestBodyWithItems(body) : undefined,
+        body,
         queryParams,
       })
       .then<

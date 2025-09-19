@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
     - API Requests supporting either IDs or full objects: `StructuredTextFieldValueAsRequest`, `isStructuredTextFieldValueAsRequest()`
 
 - **Advanced Block Processing**: Unified API for working with blocks across field types with 28 core functions:
+  - **Duplicate Block**: `duplicateBlockRecord()`
   - **Visit Operations**: `visitBlocksInFieldValues()` + async variant
   - **Transform Operations**: `mapBlocksInFieldValues()` + async variant
   - **Search Operations**: `findAllBlocksInFieldValues()` + async variant
