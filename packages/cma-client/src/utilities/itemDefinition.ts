@@ -4,8 +4,10 @@ import type {
   DateFieldValue,
   DateTimeFieldValue,
   FileFieldValue,
+  FileFieldValueAsRequest,
   FloatFieldValue,
   GalleryFieldValue,
+  GalleryFieldValueAsRequest,
   IntegerFieldValue,
   JsonFieldValue,
   LatLonFieldValue,
@@ -94,7 +96,7 @@ export type ItemDefinition<
   fields: FieldValues;
 };
 
-/** Standard field values */
+/** Standard field values (response format) */
 type FieldTypeToValue = {
   boolean: BooleanFieldValue;
   color: ColorFieldValue;
@@ -114,6 +116,31 @@ type FieldTypeToValue = {
   slug: SlugFieldValue;
   string: StringFieldValue;
   structured_text: StructuredTextFieldValue;
+  text: TextFieldValue;
+  video: VideoFieldValue;
+  unknown: unknown;
+};
+
+/** Request field values (request format with optional metadata) */
+type FieldTypeToValueAsRequest = {
+  boolean: BooleanFieldValue;
+  color: ColorFieldValue;
+  date: DateFieldValue;
+  date_time: DateTimeFieldValue;
+  file: FileFieldValueAsRequest;
+  float: FloatFieldValue;
+  gallery: GalleryFieldValueAsRequest;
+  integer: IntegerFieldValue;
+  json: JsonFieldValue;
+  lat_lon: LatLonFieldValue;
+  link: LinkFieldValue;
+  links: LinksFieldValue;
+  rich_text: RichTextFieldValueAsRequest;
+  seo: SeoFieldValue;
+  single_block: SingleBlockFieldValueAsRequest;
+  slug: SlugFieldValue;
+  string: StringFieldValue;
+  structured_text: StructuredTextFieldValueAsRequest;
   text: TextFieldValue;
   video: VideoFieldValue;
   unknown: unknown;
@@ -159,7 +186,7 @@ type FieldDefinitionToFieldValueAsRequest<
           >,
           Locales
         >
-      : LocalizeIfNeeded<T, FieldTypeToValue[T['type']], Locales>;
+      : LocalizeIfNeeded<T, FieldTypeToValueAsRequest[T['type']], Locales>;
 
 type FieldDefinitionToFieldValueWithNestedBlocks<
   T extends FieldDefinition,

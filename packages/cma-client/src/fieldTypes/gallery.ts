@@ -1,5 +1,11 @@
 import type { LocalizedFieldValue } from '../utilities/fieldValue';
 import type { GalleryEditorConfiguration } from './appearance/gallery';
+import {
+  type FileFieldValue,
+  type FileFieldValueAsRequest,
+  isFileFieldValue,
+  isFileFieldValueAsRequest,
+} from './file';
 import type { ExtensionValidator } from './validators/extension';
 import type { FileSizeValidator } from './validators/file_size';
 import type { ImageAspectRatioValidator } from './validators/image_aspect_ratio';
@@ -7,27 +13,43 @@ import type { ImageDimensionsValidator } from './validators/image_dimensions';
 import type { RequiredAltTitleValidator } from './validators/required_alt_title';
 import type { SizeValidator } from './validators/size';
 
-export type GalleryFieldValue = Array<{
-  upload_id: string;
-  alt?: string | null;
-  title?: string | null;
-  custom_data?: Record<string, unknown>;
-  focal_point?: {
-    x: number;
-    y: number;
-  } | null;
-}>;
+/**
+ * Gallery field type system - similar to File field but for arrays.
+ * See file.ts for detailed explanation of request/response duality.
+ */
 
+/**
+ * Individual gallery item types - extracted from File field types
+ */
+export type GalleryItem = NonNullable<FileFieldValue>;
+export type GalleryItemAsRequest = NonNullable<FileFieldValueAsRequest>;
+
+/**
+ * Gallery field value - response format with all metadata fields present
+ */
+export type GalleryFieldValue = Array<GalleryItem>;
+
+/**
+ * Gallery field value for API requests - metadata fields are optional
+ */
+export type GalleryFieldValueAsRequest = Array<GalleryItemAsRequest>;
+
+/**
+ * Type guard for Gallery field values - validates each item using File field validation
+ */
 export function isGalleryFieldValue(
   value: unknown,
 ): value is GalleryFieldValue {
-  return (
-    Array.isArray(value) &&
-    value.every(
-      (item) =>
-        typeof item === 'object' && item !== null && 'upload_id' in item,
-    )
-  );
+  return Array.isArray(value) && value.every(isFileFieldValue);
+}
+
+/**
+ * Type guard for Gallery field values in API request format
+ */
+export function isGalleryFieldValueAsRequest(
+  value: unknown,
+): value is GalleryFieldValueAsRequest {
+  return Array.isArray(value) && value.every(isFileFieldValueAsRequest);
 }
 
 export function isLocalizedGalleryFieldValue(
@@ -37,6 +59,16 @@ export function isLocalizedGalleryFieldValue(
     typeof value === 'object' &&
     value !== null &&
     Object.values(value).every(isGalleryFieldValue)
+  );
+}
+
+export function isLocalizedGalleryFieldValueAsRequest(
+  value: unknown,
+): value is LocalizedFieldValue<GalleryFieldValueAsRequest> {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    Object.values(value).every(isGalleryFieldValueAsRequest)
   );
 }
 
