@@ -1,4 +1,7 @@
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { ColorPickerEditorConfiguration } from './appearance/color_picker';
 import type { RequiredValidator } from './validators/required';
 
@@ -25,8 +28,7 @@ export function isLocalizedColorFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<ColorFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isColorFieldValue)
   );
 }

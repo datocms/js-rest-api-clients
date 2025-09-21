@@ -1,4 +1,7 @@
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { BooleanEditorConfiguration } from './appearance/boolean';
 import type { BooleanRadioGroupEditorConfiguration } from './appearance/boolean_radio_group';
 
@@ -14,8 +17,7 @@ export function isLocalizedBooleanFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<BooleanFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isBooleanFieldValue)
   );
 }

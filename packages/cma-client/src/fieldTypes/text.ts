@@ -1,4 +1,7 @@
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { MarkdownEditorConfiguration } from './appearance/markdown';
 import type { TextareaEditorConfiguration } from './appearance/textarea';
 import type { WysiwygEditorConfiguration } from './appearance/wysiwyg';
@@ -17,9 +20,7 @@ export function isLocalizedTextFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<TextFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
-    Object.values(value).every(isTextFieldValue)
+    isLocalizedFieldValue(value) && Object.values(value).every(isTextFieldValue)
   );
 }
 

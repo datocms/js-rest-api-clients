@@ -1,4 +1,7 @@
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { GalleryEditorConfiguration } from './appearance/gallery';
 import {
   type FileFieldValue,
@@ -56,8 +59,7 @@ export function isLocalizedGalleryFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<GalleryFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isGalleryFieldValue)
   );
 }
@@ -66,8 +68,7 @@ export function isLocalizedGalleryFieldValueAsRequest(
   value: unknown,
 ): value is LocalizedFieldValue<GalleryFieldValueAsRequest> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isGalleryFieldValueAsRequest)
   );
 }

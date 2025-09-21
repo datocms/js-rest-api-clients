@@ -1,5 +1,8 @@
 import type * as RawApiTypes from '../generated/RawApiTypes';
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { ItemDefinition } from '../utilities/itemDefinition';
 
 import type { FramedSingleBlockEditorConfiguration } from './appearance/framed_single_block';
@@ -132,7 +135,9 @@ export function isItemWithOptionalIdAndMeta<
     typeof block === 'object' &&
     block !== null &&
     'type' in block &&
-    'attributes' in block
+    block.type === 'item' &&
+    'attributes' in block &&
+    'relationships' in block
   );
 }
 
@@ -172,8 +177,7 @@ export function isLocalizedSingleBlockFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<SingleBlockFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isSingleBlockFieldValue)
   );
 }
@@ -200,8 +204,7 @@ export function isLocalizedSingleBlockFieldValueAsRequest<
   value: unknown,
 ): value is LocalizedFieldValue<SingleBlockFieldValueAsRequest<D>> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isSingleBlockFieldValueAsRequest)
   );
 }
@@ -225,8 +228,7 @@ export function isLocalizedSingleBlockFieldValueWithNestedBlocks<
   value: unknown,
 ): value is LocalizedFieldValue<SingleBlockFieldValueWithNestedBlocks<D>> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isSingleBlockFieldValueWithNestedBlocks)
   );
 }

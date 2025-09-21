@@ -1,4 +1,8 @@
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
+import { isValidId } from '../utilities/id';
 import type { LinksEmbedEditorConfiguration } from './appearance/links_embed';
 import type { LinksSelectEditorConfiguration } from './appearance/links_select';
 import type { ItemsItemTypeValidator } from './validators/items_item_type';
@@ -8,7 +12,8 @@ export type LinksFieldValue = string[];
 
 export function isLinksFieldValue(value: unknown): value is LinksFieldValue {
   return (
-    Array.isArray(value) && value.every((item) => typeof item === 'string')
+    Array.isArray(value) &&
+    value.every((item) => typeof item === 'string' && isValidId(item))
   );
 }
 
@@ -16,8 +21,7 @@ export function isLocalizedLinksFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<LinksFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isLinksFieldValue)
   );
 }

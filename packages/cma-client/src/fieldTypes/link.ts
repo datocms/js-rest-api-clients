@@ -1,4 +1,8 @@
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
+import { isValidId } from '../utilities/id';
 import type { LinkEmbedEditorConfiguration } from './appearance/link_embed';
 import type { LinkSelectEditorConfiguration } from './appearance/link_select';
 import type { ItemItemTypeValidator } from './validators/item_item_type';
@@ -8,16 +12,14 @@ import type { UniqueValidator } from './validators/unique';
 export type LinkFieldValue = string | null;
 
 export function isLinkFieldValue(value: unknown): value is LinkFieldValue {
-  return typeof value === 'string' || value === null;
+  return (typeof value === 'string' && isValidId(value)) || value === null;
 }
 
 export function isLocalizedLinkFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<LinkFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
-    Object.values(value).every(isLinkFieldValue)
+    isLocalizedFieldValue(value) && Object.values(value).every(isLinkFieldValue)
   );
 }
 

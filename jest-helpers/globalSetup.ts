@@ -3,7 +3,7 @@ import 'dotenv/config';
 import { ApiError } from '../packages/dashboard-client';
 import {
   generateNewDashboardClient,
-  shuffleArray,
+  shuffleArray
 } from './generateNewDashboardClient';
 
 function isOldEnough(isoDatetime: string) {

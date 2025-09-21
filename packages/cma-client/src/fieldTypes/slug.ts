@@ -1,4 +1,7 @@
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { SlugEditorConfiguration } from './appearance/slug';
 import type { LengthValidator } from './validators/length';
 import type { RequiredValidator } from './validators/required';
@@ -16,9 +19,7 @@ export function isLocalizedSlugFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<SlugFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
-    Object.values(value).every(isSlugFieldValue)
+    isLocalizedFieldValue(value) && Object.values(value).every(isSlugFieldValue)
   );
 }
 

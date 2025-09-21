@@ -1,4 +1,7 @@
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { SeoEditorConfiguration } from './appearance/seo';
 import type { DescriptionLengthValidator } from './validators/description_length';
 import type { FileSizeValidator } from './validators/file_size';
@@ -32,9 +35,7 @@ export function isLocalizedSeoFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<SeoFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
-    Object.values(value).every(isSeoFieldValue)
+    isLocalizedFieldValue(value) && Object.values(value).every(isSeoFieldValue)
   );
 }
 

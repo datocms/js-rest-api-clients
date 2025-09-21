@@ -1,4 +1,7 @@
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { IntegerEditorConfiguration } from './appearance/integer';
 import type { NumberRangeValidator } from './validators/number_range';
 import type { RequiredValidator } from './validators/required';
@@ -15,8 +18,7 @@ export function isLocalizedIntegerFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<IntegerFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isIntegerFieldValue)
   );
 }

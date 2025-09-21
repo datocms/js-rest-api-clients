@@ -8,6 +8,7 @@ export * from './utilities/buildBlockRecord';
 export * from './utilities/fieldsContainingReferences';
 export * from './utilities/fieldValue';
 export * from './utilities/id';
+export * from './utilities/inspectItem';
 export * from './utilities/recursiveBlocks';
 export * from './utilities/schemaRepository';
 export * from './utilities/itemDefinition';

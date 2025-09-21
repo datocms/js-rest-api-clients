@@ -1,4 +1,7 @@
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { FloatEditorConfiguration } from './appearance/float';
 import type { NumberRangeValidator } from './validators/number_range';
 import type { RequiredValidator } from './validators/required';
@@ -13,8 +16,7 @@ export function isLocalizedFloatFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<FloatFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isFloatFieldValue)
   );
 }

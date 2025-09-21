@@ -1,3 +1,4 @@
+export * from './appearance';
 export * from './boolean';
 export * from './color';
 export * from './date';
@@ -17,7 +18,5 @@ export * from './slug';
 export * from './string';
 export * from './structured_text';
 export * from './text';
-export * from './video';
-
-export * from './appearance';
 export * from './validators';
+export * from './video';

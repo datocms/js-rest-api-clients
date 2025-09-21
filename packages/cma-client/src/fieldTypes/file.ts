@@ -1,4 +1,7 @@
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { FileEditorConfiguration } from './appearance/file';
 import type { ExtensionValidator } from './validators/extension';
 import type { FileSizeValidator } from './validators/file_size';
@@ -87,8 +90,7 @@ export type FileFieldValueAsRequest = {
 export function isFileFieldValue(value: unknown): value is FileFieldValue {
   if (value === null) return true;
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     'upload_id' in value &&
     'alt' in value &&
     'title' in value &&
@@ -101,7 +103,9 @@ export function isFileFieldValue(value: unknown): value is FileFieldValue {
  * Type guard for File field values in API request format.
  * Allows metadata fields to be optional or omitted.
  */
-export function isFileFieldValueAsRequest(value: unknown): value is FileFieldValueAsRequest {
+export function isFileFieldValueAsRequest(
+  value: unknown,
+): value is FileFieldValueAsRequest {
   if (value === null) return true;
   return typeof value === 'object' && value !== null && 'upload_id' in value;
 }
@@ -110,9 +114,7 @@ export function isLocalizedFileFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<FileFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
-    Object.values(value).every(isFileFieldValue)
+    isLocalizedFieldValue(value) && Object.values(value).every(isFileFieldValue)
   );
 }
 
@@ -120,8 +122,7 @@ export function isLocalizedFileFieldValueAsRequest(
   value: unknown,
 ): value is LocalizedFieldValue<FileFieldValueAsRequest> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isFileFieldValueAsRequest)
   );
 }

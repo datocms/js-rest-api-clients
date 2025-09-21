@@ -1,4 +1,7 @@
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { MapEditorConfiguration } from './appearance/map';
 import type { RequiredValidator } from './validators/required';
 
@@ -21,8 +24,7 @@ export function isLocalizedLatLonFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<LatLonFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isLatLonFieldValue)
   );
 }

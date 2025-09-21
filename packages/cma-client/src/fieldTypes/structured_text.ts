@@ -9,7 +9,10 @@ import {
   isInlineBlock,
 } from 'datocms-structured-text-utils';
 import type * as RawApiTypes from '../generated/RawApiTypes';
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { ItemDefinition } from '../utilities/itemDefinition';
 import type { StructuredTextEditorConfiguration } from './appearance/structured_text';
 import {
@@ -176,8 +179,7 @@ export function isLocalizedStructuredTextFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<StructuredTextFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isStructuredTextFieldValue)
   );
 }
@@ -219,8 +221,7 @@ export function isLocalizedStructuredTextFieldValueAsRequest<
   value: unknown,
 ): value is LocalizedFieldValue<StructuredTextFieldValueAsRequest<D>> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isStructuredTextFieldValueAsRequest)
   );
 }
@@ -253,8 +254,7 @@ export function isLocalizedStructuredTextFieldValueWithNestedBlocks<
   value: unknown,
 ): value is LocalizedFieldValue<StructuredTextFieldValueWithNestedBlocks<D>> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isStructuredTextFieldValueWithNestedBlocks)
   );
 }

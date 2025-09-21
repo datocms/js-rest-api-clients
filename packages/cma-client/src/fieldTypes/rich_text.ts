@@ -1,5 +1,8 @@
 import type * as RawApiTypes from '../generated/RawApiTypes';
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { ItemDefinition } from '../utilities/itemDefinition';
 import type { RichTextEditorConfiguration } from './appearance/rich_text';
 import {
@@ -104,8 +107,7 @@ export function isLocalizedRichTextFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<RichTextFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isRichTextFieldValue)
   );
 }
@@ -136,8 +138,7 @@ export function isLocalizedRichTextFieldValueAsRequest<
   value: unknown,
 ): value is LocalizedFieldValue<RichTextFieldValueAsRequest<D>> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isRichTextFieldValueAsRequest)
   );
 }
@@ -163,8 +164,7 @@ export function isLocalizedRichTextFieldValueWithNestedBlocks<
   value: unknown,
 ): value is LocalizedFieldValue<RichTextFieldValueWithNestedBlocks<D>> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
+    isLocalizedFieldValue(value) &&
     Object.values(value).every(isRichTextFieldValueWithNestedBlocks)
   );
 }

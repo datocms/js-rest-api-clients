@@ -1,4 +1,7 @@
-import type { LocalizedFieldValue } from '../utilities/fieldValue';
+import {
+  type LocalizedFieldValue,
+  isLocalizedFieldValue,
+} from '../utilities/fieldValue';
 import type { JsonEditorConfiguration } from './appearance/json';
 import type { StringCheckboxGroupEditorConfiguration } from './appearance/string_checkbox_group';
 import type { StringMultiSelectEditorConfiguration } from './appearance/string_multi_select';
@@ -21,9 +24,7 @@ export function isLocalizedJsonFieldValue(
   value: unknown,
 ): value is LocalizedFieldValue<JsonFieldValue> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
-    Object.values(value).every(isJsonFieldValue)
+    isLocalizedFieldValue(value) && Object.values(value).every(isJsonFieldValue)
   );
 }
 

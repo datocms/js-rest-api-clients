@@ -1,6 +1,6 @@
 import { findFirstNode, isInlineBlock } from 'datocms-structured-text-utils';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
-import { type ItemTypeDefinition, buildBlockRecord } from '../src';
+import { type ItemTypeDefinition, buildBlockRecord, inspectItem } from '../src';
 
 describe('item (explicit typing with item definitions)', () => {
   describe('simple methods', () => {
@@ -205,6 +205,8 @@ describe('item (explicit typing with item definitions)', () => {
       const nestedItem = await client.items.find<LandingPage>(item, {
         nested: true,
       });
+
+      console.log(inspectItem(nestedItem));
 
       expect(nestedItem.title!.toUpperCase()).toBe('LEVEL 0');
       expect(nestedItem.__itemTypeId).toBe(landingPageModel.id);

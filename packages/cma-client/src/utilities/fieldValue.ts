@@ -47,6 +47,25 @@ export function isLocalized(
   return 'attributes' in field ? field.attributes.localized : field.localized;
 }
 
+export function isLocalizedFieldValue<T = unknown, L extends string = string>(
+  value: unknown,
+): value is LocalizedFieldValue<T, L> {
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+    return false;
+  }
+
+  const keys = Object.keys(value);
+
+  if (keys.length === 0) {
+    return false;
+  }
+
+  const localePattern =
+    /^[A-Za-z]{2,4}(-[A-Za-z]{4})?(-([A-Za-z]{2}|[0-9]{3}))?$/;
+
+  return keys.every((key) => localePattern.test(key));
+}
+
 /**
  * A normalized entry that represents a single value from either a localized or non-localized field.
  *
