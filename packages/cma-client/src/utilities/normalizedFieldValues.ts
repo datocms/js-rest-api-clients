@@ -325,7 +325,7 @@ export async function someNormalizedFieldValuesAsync<
  * @param testFn - The function to test each locale value or the direct value
  * @returns true if all values pass the test, false otherwise
  */
-export function everyNormalizedFieldValues<
+export function everyNormalizedFieldValue<
   T = unknown,
   L extends string = string,
 >(
@@ -350,7 +350,7 @@ export function everyNormalizedFieldValues<
  * @param testFn - The function to test each locale value or the direct value
  * @returns true if all values pass the test, false otherwise
  */
-export async function everyNormalizedFieldValuesAsync<
+export async function everyNormalizedFieldValueAsync<
   T = unknown,
   L extends string = string,
 >(

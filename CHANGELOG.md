@@ -30,7 +30,7 @@ All notable changes to this project will be documented in this file.
   - **Type Operations**: `isLocalized()`, `LocalizedFieldValue<T>` type
   - **Transform Operations**: `mapNormalizedFieldValues()` + async variant
   - **Filter Operations**: `filterNormalizedFieldValues()` + async variant
-  - **Test Operations**: `someNormalizedFieldValues()`, `everyNormalizedFieldValues()`, `visitNormalizedFieldValues()` + async variants
+  - **Test Operations**: `someNormalizedFieldValues()`, `everyNormalizedFieldValue()`, `visitNormalizedFieldValues()` + async variants
 
 - **`SchemaRepository` class**: In-memory caching system for DatoCMS schema entities that solves performance problems during complex operations. When traversing nested blocks or structured text, scripts often repeatedly fetch the same schema information. SchemaRepository caches item types, fields, fieldsets, and plugins after the first API request, eliminating redundant calls and dramatically improving performance for bulk operations and read-heavy workflows:
   - **Item Type Operations**: `getAllItemTypes()`, `getAllModels()`, `getAllBlockModels()`, `getItemTypeByApiKey()`, `getItemTypeById()`, `getItemTypeFields()`, `getItemTypeFieldsets()`
