@@ -5,6 +5,7 @@ export { Client } from './generated/Client';
 export type { ClientConfigOptions } from './generated/Client';
 export * as Resources from './generated/resources';
 export * from './utilities/buildBlockRecord';
+export * from './utilities/duplicateBlockRecord';
 export * from './utilities/fieldsContainingReferences';
 export * from './utilities/id';
 export * from './utilities/inspectItem';

@@ -669,13 +669,13 @@ type ForceItemTypeDataId<ItemTypeId> = Omit<ItemTypeData, 'id'> & {
   id: ItemTypeId;
 };
 
-type ForceItemTypeData<T, ItemTypeId> = {
-  [K in keyof T]: T[K] extends ItemTypeData
-    ? ForceItemTypeDataId<ItemTypeId>
-    : T[K] extends object
-      ? ForceItemTypeData<T[K], ItemTypeId>
-      : T[K];
-};
+type ForceItemTypeData<T, ItemTypeId> = T extends ItemTypeData
+  ? ForceItemTypeDataId<ItemTypeId>
+  : T extends Function
+    ? T
+    : T extends object
+      ? { [K in keyof T]: ForceItemTypeData<T[K], ItemTypeId> }
+      : T;
 
 type ForceItemTypeId<T, ItemTypeId> = ForceItemTypeData<T, ItemTypeId> & {
   /** Useful for type narrowing */

@@ -1,8 +1,9 @@
 import {
-  buildBlockRecord, type ApiTypes,
+  type ApiTypes,
   type ItemTypeDefinition,
   type RawApiTypes,
-  type ToItemDefinitionAsRequest
+  type ToItemDefinitionAsRequest,
+  buildBlockRecord,
 } from '../src';
 import { inspectItem } from '../src/utilities/inspectItem';
 
@@ -86,7 +87,9 @@ type Block = ItemTypeDefinition<
 
 describe('inspectItem', () => {
   it('inspects an item with all field types', () => {
-    const item: RawApiTypes.ItemUpdateSchema<ToItemDefinitionAsRequest<ComprehensiveModel>>['data'] = {
+    const item: RawApiTypes.ItemUpdateSchema<
+      ToItemDefinitionAsRequest<ComprehensiveModel>
+    >['data'] = {
       type: 'item',
       id: 'IdMLV2GJTXyQ0Bfns7R4IQ',
       relationships: {
@@ -692,7 +695,6 @@ describe('inspectItem', () => {
       null_link: null,
       empty_links: [],
     };
-
 
     const output = inspectItem(item);
 

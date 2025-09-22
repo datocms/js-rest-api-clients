@@ -362,7 +362,7 @@ describe('item (explicit typing with item definitions)', () => {
 
       type Block = ItemTypeDefinition<
         EnvironmentSettings,
-        string,
+        'WTyssHtyTzu9_EbszSVhPw',
         {
           title: { type: 'string' };
           rich_text: { type: 'rich_text'; blocks: Block };
@@ -377,6 +377,7 @@ describe('item (explicit typing with item definitions)', () => {
 
       // === Block Model Setup ===
       const blockModel = await client.itemTypes.create({
+        id: 'WTyssHtyTzu9_EbszSVhPw',
         name: 'Block',
         api_key: 'block',
         modular_block: true,
@@ -420,7 +421,7 @@ describe('item (explicit typing with item definitions)', () => {
       // === Landing Page Model Setup ===
       type LandingPage = ItemTypeDefinition<
         EnvironmentSettings,
-        'WTyssHtyTzu9_EbszSVhPw',
+        string,
         {
           title: { type: 'string' };
           rich_text: { type: 'rich_text'; blocks: Block };
@@ -434,7 +435,6 @@ describe('item (explicit typing with item definitions)', () => {
       >;
 
       const landingPageModel = await client.itemTypes.create({
-        id: 'WTyssHtyTzu9_EbszSVhPw',
         name: 'Landing Page',
         api_key: 'landing_page',
         draft_mode_active: true,
@@ -489,12 +489,17 @@ describe('item (explicit typing with item definitions)', () => {
                   rich_text: [
                     buildBlockRecord<Block>({
                       title: 'Rich Text: Level 2',
-                      item_type: blockModel,
+                      item_type: {
+                        type: 'item_type',
+                        id: 'WTyssHtyTzu9_EbszSVhPw',
+                      },
                     }),
                   ],
                 },
                 relationships: {
-                  item_type: { data: { id: blockModel.id, type: 'item_type' } },
+                  item_type: {
+                    data: { id: 'WTyssHtyTzu9_EbszSVhPw', type: 'item_type' },
+                  },
                 },
               },
             ],
@@ -502,9 +507,9 @@ describe('item (explicit typing with item definitions)', () => {
               title: 'Single Block: Level 1',
               single_block: buildBlockRecord<Block>({
                 title: 'Single Block: Level 2',
-                item_type: blockModel,
+                item_type: { type: 'item_type', id: 'WTyssHtyTzu9_EbszSVhPw' },
               }),
-              item_type: blockModel,
+              item_type: { type: 'item_type', id: 'WTyssHtyTzu9_EbszSVhPw' },
             }),
             structured_text: {
               schema: 'dast',
@@ -527,13 +532,19 @@ describe('item (explicit typing with item definitions)', () => {
                                   type: 'block',
                                   item: buildBlockRecord<Block>({
                                     title: 'Structured Text: Level 2',
-                                    item_type: blockModel,
+                                    item_type: {
+                                      type: 'item_type',
+                                      id: 'WTyssHtyTzu9_EbszSVhPw',
+                                    },
                                   }),
                                 },
                               ],
                             },
                           },
-                          item_type: blockModel,
+                          item_type: {
+                            type: 'item_type',
+                            id: 'WTyssHtyTzu9_EbszSVhPw',
+                          },
                         }),
                       },
                     ],
@@ -544,7 +555,7 @@ describe('item (explicit typing with item definitions)', () => {
           },
           relationships: {
             item_type: {
-              data: { id: 'WTyssHtyTzu9_EbszSVhPw', type: 'item_type' },
+              data: { id: landingPageModel.id, type: 'item_type' },
             },
           },
         },
