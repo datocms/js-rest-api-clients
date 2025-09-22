@@ -19,6 +19,11 @@ import type { SchemaRepository } from './schemaRepository';
 export type TreePath = readonly (string | number)[];
 
 /**
+ * Traversal direction for recursive operations
+ */
+export type TraversalDirection = 'top-down' | 'bottom-up';
+
+/**
  * Recursively visit every block in a non-localized field value and all nested blocks within those blocks.
  * This function traverses not only the direct blocks in the non-localized field value but also recursively
  * visits blocks contained within the attributes of each block, creating a complete traversal
@@ -144,6 +149,8 @@ export async function findAllBlocksInNonLocalizedFieldValue(
  * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
  * @param nonLocalizedFieldValue - The non-localized field value containing blocks to filter
  * @param predicate - Asynchronous function that tests each block, including nested ones
+ * @param options - Optional configuration object
+ * @param options.traversalDirection - Direction of traversal: 'top-down' (default) applies predicate before processing children, 'bottom-up' processes children first
  * @returns Promise that resolves to the new non-localized field value with recursively filtered blocks
  */
 export async function filterBlocksInNonLocalizedFieldValue(
@@ -154,41 +161,74 @@ export async function filterBlocksInNonLocalizedFieldValue(
     item: BlockItemInARequest,
     path: TreePath,
   ) => boolean | Promise<boolean>,
+  options: { traversalDirection?: TraversalDirection } = {},
   path: TreePath = [],
 ): Promise<unknown> {
-  return nonRecursiveFilterBlocksInNonLocalizedFieldValueAsync(
-    fieldType,
-    nonLocalizedFieldValue,
-    async (block, innerPath) => {
-      const blockPath = [...path, ...innerPath];
-      const passes = await predicate(block, blockPath);
+  const { traversalDirection = 'top-down' } = options;
 
-      if (!passes) {
-        return false;
-      }
+  const mapperFunc = async (
+    block: BlockItemInARequest,
+    innerPath: TreePath,
+  ) => {
+    const blockPath = [...path, ...innerPath];
 
-      if (!isItemWithOptionalIdAndMeta(block)) {
-        return true;
-      }
+    if (!isItemWithOptionalIdAndMeta(block)) {
+      return block;
+    }
 
-      const itemType = await schemaRepository.getRawItemTypeById(
-        block.relationships.item_type.data.id,
-      );
+    const itemType = await schemaRepository.getRawItemTypeById(
+      block.relationships.item_type.data.id,
+    );
 
-      const fields = await schemaRepository.getRawItemTypeFields(itemType);
+    const fields = await schemaRepository.getRawItemTypeFields(itemType);
+
+    if (traversalDirection === 'top-down') {
+      const blockCopy = { ...block, attributes: { ...block.attributes } };
 
       for (const field of fields) {
-        block.attributes[field.attributes.api_key] =
+        blockCopy.attributes[field.attributes.api_key] =
           await filterBlocksInNonLocalizedFieldValue(
             schemaRepository,
             field.attributes.field_type,
-            block.attributes[field.attributes.api_key],
+            blockCopy.attributes[field.attributes.api_key],
             predicate,
+            options,
             [...blockPath, 'attributes', field.attributes.api_key],
           );
       }
 
-      return true;
+      return blockCopy;
+    }
+
+    const blockCopy = { ...block, attributes: { ...block.attributes } };
+
+    for (const field of fields) {
+      blockCopy.attributes[field.attributes.api_key] =
+        await filterBlocksInNonLocalizedFieldValue(
+          schemaRepository,
+          field.attributes.field_type,
+          blockCopy.attributes[field.attributes.api_key],
+          predicate,
+          options,
+          [...blockPath, 'attributes', field.attributes.api_key],
+        );
+    }
+
+    return blockCopy;
+  };
+
+  const mappedValue = await nonRecursiveMapBlocksInNonLocalizedFieldValueAsync(
+    fieldType,
+    nonLocalizedFieldValue,
+    mapperFunc,
+  );
+
+  return nonRecursiveFilterBlocksInNonLocalizedFieldValueAsync(
+    fieldType,
+    mappedValue,
+    async (block, innerPath) => {
+      const blockPath = [...path, ...innerPath];
+      return await predicate(block, blockPath);
     },
   );
 }
@@ -365,6 +405,8 @@ export async function everyBlockInNonLocalizedFieldValue(
  * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
  * @param nonLocalizedFieldValue - The non-localized field value containing blocks to transform
  * @param mapper - Asynchronous function that transforms each block, including nested ones
+ * @param options - Optional configuration object
+ * @param options.traversalDirection - Direction of traversal: 'top-down' (default) applies mapper before processing children, 'bottom-up' processes children first
  * @returns Promise that resolves to the new non-localized field value with recursively transformed blocks
  */
 export async function mapBlocksInNonLocalizedFieldValue(
@@ -375,36 +417,64 @@ export async function mapBlocksInNonLocalizedFieldValue(
     item: BlockItemInARequest,
     path: TreePath,
   ) => BlockItemInARequest | Promise<BlockItemInARequest>,
+  options: { traversalDirection?: TraversalDirection } = {},
   path: TreePath = [],
 ) {
+  const { traversalDirection = 'top-down' } = options;
+
   return nonRecursiveMapBlocksInNonLocalizedFieldValueAsync(
     fieldType,
     nonLocalizedFieldValue,
     async (block, innerPath) => {
-      const newBlock = await mapper(block, [...path, ...innerPath]);
+      const blockPath = [...path, ...innerPath];
 
-      if (!isItemWithOptionalIdAndMeta(newBlock)) {
-        return newBlock;
+      if (!isItemWithOptionalIdAndMeta(block)) {
+        return await mapper(block, blockPath);
       }
 
       const itemType = await schemaRepository.getRawItemTypeById(
-        newBlock.relationships.item_type.data.id,
+        block.relationships.item_type.data.id,
       );
 
       const fields = await schemaRepository.getRawItemTypeFields(itemType);
 
+      if (traversalDirection === 'top-down') {
+        const newBlock = await mapper(block, blockPath);
+
+        if (!isItemWithOptionalIdAndMeta(newBlock)) {
+          return newBlock;
+        }
+
+        for (const field of fields) {
+          newBlock.attributes[field.attributes.api_key] =
+            await mapBlocksInNonLocalizedFieldValue(
+              schemaRepository,
+              field.attributes.field_type,
+              newBlock.attributes[field.attributes.api_key],
+              mapper,
+              options,
+              [...blockPath, 'attributes', field.attributes.api_key],
+            );
+        }
+
+        return newBlock;
+      }
+
+      const blockCopy = { ...block };
+
       for (const field of fields) {
-        newBlock.attributes[field.attributes.api_key] =
+        blockCopy.attributes[field.attributes.api_key] =
           await mapBlocksInNonLocalizedFieldValue(
             schemaRepository,
             field.attributes.field_type,
-            newBlock.attributes[field.attributes.api_key],
+            blockCopy.attributes[field.attributes.api_key],
             mapper,
-            [...path, ...innerPath, 'attributes', field.attributes.api_key],
+            options,
+            [...blockPath, 'attributes', field.attributes.api_key],
           );
       }
 
-      return newBlock;
+      return await mapper(blockCopy, blockPath);
     },
   );
 }

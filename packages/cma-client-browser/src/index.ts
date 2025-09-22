@@ -244,6 +244,7 @@ export type {
   ToItemDefinition,
   ToItemDefinitionAsRequest,
   ToItemDefinitionWithNestedBlocks,
+  TraversalDirection,
   TreePath,
   UnchangedBlockInARequest,
   UniqueValidator,
