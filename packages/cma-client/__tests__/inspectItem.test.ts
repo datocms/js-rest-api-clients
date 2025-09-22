@@ -1,9 +1,8 @@
 import {
-  type ApiTypes,
+  buildBlockRecord, type ApiTypes,
   type ItemTypeDefinition,
   type RawApiTypes,
-  type ToItemDefinitionAsRequest,
-  buildBlockRecord,
+  type ToItemDefinitionAsRequest
 } from '../src';
 import { inspectItem } from '../src/utilities/inspectItem';
 
@@ -87,7 +86,7 @@ type Block = ItemTypeDefinition<
 
 describe('inspectItem', () => {
   it('inspects an item with all field types', () => {
-    const item: any = {
+    const item: RawApiTypes.ItemUpdateSchema<ToItemDefinitionAsRequest<ComprehensiveModel>>['data'] = {
       type: 'item',
       id: 'IdMLV2GJTXyQ0Bfns7R4IQ',
       relationships: {
@@ -323,7 +322,7 @@ describe('inspectItem', () => {
     expect(output).toMatchSnapshot();
   });
 
-  it('RawApiTypes.Item', () => {
+  it('ApiTypes.ItemCreateSchema', () => {
     const item: ApiTypes.ItemCreateSchema<
       ToItemDefinitionAsRequest<ComprehensiveModel>
     > = {
@@ -462,6 +461,238 @@ describe('inspectItem', () => {
         },
       },
     };
+
+    const output = inspectItem(item);
+
+    expect(output).toMatchSnapshot();
+  });
+
+  it('ApiTypes.Item', () => {
+    const item: ApiTypes.Item<ToItemDefinitionAsRequest<ComprehensiveModel>> = {
+      type: 'item',
+      id: 'IdMLV2GJTXyQ0Bfns7R4IQ',
+      item_type: {
+        type: 'item_type',
+        id: 'O9BXqTayQ_Wf-Yw6d863LQ',
+      },
+      meta: {
+        created_at: '2023-01-01T00:00:00Z',
+        updated_at: '2023-01-01T00:00:00Z',
+        published_at: null,
+        first_published_at: null,
+        publication_scheduled_at: null,
+        unpublishing_scheduled_at: null,
+        is_valid: true,
+        is_current_version_valid: true,
+        is_published_version_valid: false,
+        stage: 'draft',
+        current_version: '1',
+        status: 'draft',
+        has_children: false,
+      },
+      // String field
+      string_field: 'Sample string',
+
+      // Text field
+      text_field:
+        'This is a longer text content that might span multiple lines',
+
+      // Boolean fields
+      boolean_true: true,
+      boolean_false: false,
+      boolean_null: null,
+
+      // Number fields
+      integer_field: 42,
+      float_field: Math.PI,
+
+      // Color field
+      color_field: {
+        red: 255,
+        green: 128,
+        blue: 0,
+        alpha: 255,
+      },
+
+      // Date and DateTime fields
+      date_field: '2023-12-25',
+      datetime_field: '2023-12-25T10:30:00Z',
+
+      // File field
+      file_field: {
+        upload_id: 'P4qKpnFfTR6Tc96-NwceLQ',
+        alt: 'Sample image alt text',
+        title: 'Sample image title',
+        custom_data: {
+          photographer: 'John Doe',
+          location: 'Paris',
+        },
+        focal_point: {
+          x: 0.5,
+          y: 0.3,
+        },
+      },
+
+      // Gallery field
+      gallery_field: [
+        {
+          upload_id: 'RvLIJ-z0T32S2hd71zBxnQ',
+          alt: 'First gallery image',
+          title: 'Gallery Image 1',
+          custom_data: {},
+          focal_point: null,
+        },
+        {
+          upload_id: 'a0QsFvzMQKCH1h-axboXKQ',
+          alt: null,
+          title: 'Gallery Image 2',
+          custom_data: {
+            category: 'landscape',
+          },
+          focal_point: {
+            x: 0.7,
+            y: 0.4,
+          },
+        },
+      ],
+
+      // JSON field
+      json_field: JSON.stringify({
+        nested: {
+          data: 'value',
+          number: 123,
+          array: [1, 2, 3],
+        },
+      }),
+
+      // Lat/Lon field
+      lat_lon_field: {
+        latitude: 48.8566,
+        longitude: 2.3522,
+      },
+
+      // Link field
+      link_field: 'FicV5CxCSQ6yOrgfwRoiKA',
+
+      // Links field
+      links_field: ['NVPfHLHQQZe_rDi4_e6M2w', 'VY3VzQFUS9C1ITDkG48Sgw'],
+
+      // Slug field
+      slug_field: 'sample-slug-value',
+
+      // SEO field
+      seo_field: {
+        title: 'SEO Title',
+        description: 'SEO Description for better search engine optimization',
+        image: null,
+        no_index: false,
+        twitter_card: null,
+      },
+
+      // Video field
+      video_field: {
+        provider: 'youtube',
+        provider_uid: 'dQw4w9WgXcQ',
+        url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+        title: 'Sample Video Title',
+        thumbnail_url:
+          'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+        width: 1920,
+        height: 1080,
+      },
+
+      structured_text: {
+        schema: 'dast',
+        document: {
+          type: 'root',
+          children: [
+            {
+              type: 'heading',
+              level: 1,
+              children: [{ type: 'span', value: 'Main Title' }],
+            },
+            {
+              type: 'paragraph',
+              children: [
+                { type: 'span', value: 'This is a ' },
+                { type: 'span', marks: ['strong'], value: 'bold' },
+                { type: 'span', value: ' paragraph.' },
+              ],
+            },
+            {
+              type: 'list',
+              style: 'bulleted',
+              children: [
+                {
+                  type: 'listItem',
+                  children: [
+                    {
+                      type: 'paragraph',
+                      children: [{ type: 'span', value: 'First item' }],
+                    },
+                  ],
+                },
+                {
+                  type: 'listItem',
+                  children: [
+                    {
+                      type: 'paragraph',
+                      children: [{ type: 'span', value: 'Second item' }],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'block',
+              item: 'block-123',
+            },
+            {
+              type: 'block',
+              item: buildBlockRecord<Block>({
+                item_type: {
+                  type: 'item_type',
+                  id: 'NOYldjT6TtKXXjZ8efU-dw',
+                },
+                title: 'Foobar',
+              }),
+            },
+            {
+              type: 'code',
+              language: 'javascript',
+              code: 'console.log("hello");',
+            },
+          ],
+        },
+      },
+
+      single_block: buildBlockRecord<Block>({
+        item_type: {
+          type: 'item_type',
+          id: 'NOYldjT6TtKXXjZ8efU-dw',
+        },
+        title: 'Foobar',
+      }),
+
+      rich_text: [
+        'RjJIdPrFSwuxSBQQySDjxw',
+        buildBlockRecord<Block>({
+          item_type: {
+            type: 'item_type',
+            id: 'NOYldjT6TtKXXjZ8efU-dw',
+          },
+          title: 'Foobar',
+        }),
+      ],
+
+      // Null values
+      null_string: null,
+      null_file: null,
+      empty_gallery: [],
+      null_link: null,
+      empty_links: [],
+    };
+
 
     const output = inspectItem(item);
 

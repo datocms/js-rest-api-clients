@@ -1,7 +1,84 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`inspectItem RawApiTypes.Item 1`] = `
-"└ Item
+exports[`inspectItem ApiTypes.Item 1`] = `
+"└ Item "IdMLV2GJTXyQ0Bfns7R4IQ" (item_type: "O9BXqTayQ_Wf-Yw6d863LQ")
+  ├ string_field: "Sample string"
+  ├ text_field: "This is a longer text content that might span multiple lines"
+  ├ boolean_true: true
+  ├ boolean_false: false
+  ├ boolean_null: null
+  ├ integer_field: 42
+  ├ float_field: 3.141592653589793
+  ├ color_field: #FF8000
+  ├ date_field: 2023-12-25
+  ├ datetime_field: 2023-12-25T10:30:00Z
+  ├ file_field
+  │ ├ upload_id: "P4qKpnFfTR6Tc96-NwceLQ"
+  │ ├ alt: "Sample image alt text"
+  │ ├ title: "Sample image title"
+  │ ├ custom_data: {"photographer":"John Doe","location":"Paris"}
+  │ └ focal_point: x=50% y=30%
+  ├ gallery_field
+  │ ├ [0]
+  │ │ ├ upload_id: "RvLIJ-z0T32S2hd71zBxnQ"
+  │ │ ├ alt: "First gallery image"
+  │ │ └ title: "Gallery Image 1"
+  │ └ [1]
+  │   ├ upload_id: "a0QsFvzMQKCH1h-axboXKQ"
+  │   ├ title: "Gallery Image 2"
+  │   ├ custom_data: {"category":"landscape"}
+  │   └ focal_point: x=70% y=40%
+  ├ json_field: {"nested":{"data":"value","number":123,"array":[1,2,3]}}
+  ├ lat_lon_field
+  │ ├ latitude: 48.8566
+  │ └ longitude: 2.3522
+  ├ link_field: "FicV5CxCSQ6yOrgfwRoiKA"
+  ├ links_field
+  │ ├ [0]: "NVPfHLHQQZe_rDi4_e6M2w"
+  │ └ [1]: "VY3VzQFUS9C1ITDkG48Sgw"
+  ├ slug_field: "sample-slug-value"
+  ├ seo_field
+  │ ├ title: "SEO Title"
+  │ ├ description: "SEO Description for better search engine optimization"
+  │ └ no_index: false
+  ├ video_field
+  │ └ title: "Sample Video Title"
+  ├ structured_text
+  │ ├ heading (level: 1)
+  │ │ └ span "Main Title"
+  │ ├ paragraph
+  │ │ ├ span "This is a "
+  │ │ ├ span (marks: strong) "bold"
+  │ │ └ span " paragraph."
+  │ ├ list (style: bulleted)
+  │ │ ├ listItem
+  │ │ │ └ paragraph
+  │ │ │   └ span "First item"
+  │ │ └ listItem
+  │ │   └ paragraph
+  │ │     └ span "Second item"
+  │ ├ block "block-123"
+  │ ├ block
+  │ │ └ Item (item_type: "NOYldjT6TtKXXjZ8efU-dw")
+  │ │   └ title: "Foobar"
+  │ └ code (language: "javascript") "console.log("hello");"
+  ├ single_block
+  │ └ Item (item_type: "NOYldjT6TtKXXjZ8efU-dw")
+  │   └ title: "Foobar"
+  ├ rich_text
+  │ ├ [0] "RjJIdPrFSwuxSBQQySDjxw"
+  │ └ [1] Item (item_type: "NOYldjT6TtKXXjZ8efU-dw")
+  │   └ title: "Foobar"
+  ├ null_string: null
+  ├ null_file: null
+  ├ empty_gallery: []
+  ├ null_link: null
+  └ empty_links: []
+"
+`;
+
+exports[`inspectItem ApiTypes.ItemCreateSchema 1`] = `
+"└ Item (item_type: "O9BXqTayQ_Wf-Yw6d863LQ")
   ├ single_block
   │ └ Item (item_type: "NOYldjT6TtKXXjZ8efU-dw")
   │   └ title: "Foobar"

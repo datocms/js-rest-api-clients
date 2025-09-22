@@ -1,3 +1,4 @@
+import * as Utils from '@datocms/rest-client-utils';
 import {
   type TreeNode,
   formatAsTree,
@@ -64,8 +65,9 @@ import {
   isTextFieldValue,
   isVideoFieldValue,
 } from '../fieldTypes';
+import { Item as ItemResource } from '../generated/resources';
 
-import { type ApiTypes, type RawApiTypes, buildBlockRecord } from '../index';
+import type { ApiTypes, RawApiTypes } from '../index';
 import type { LocalizedFieldValue } from './normalizedFieldValues';
 import { isLocalizedFieldValue } from './normalizedFieldValues';
 
@@ -208,14 +210,20 @@ function inspectFieldValue(
   return `UNKNOWN: ${JSON.stringify(value)}`;
 }
 
-function extractAttributes(item: Item): Record<string, unknown> {
+function normalizeItem(item: any): RawApiTypes.Item {
   if ('attributes' in item) {
-    return item.attributes as Record<string, unknown>;
+    return item;
   }
 
-  const serializedItem = buildBlockRecord(item);
-  const { __itemTypeId, ...rest } = serializedItem.attributes;
-  return rest;
+  const { __itemTypeId, ...itemWithoutItemTypeId } = item;
+
+  return Utils.serializeRequestBody<{
+    data: RawApiTypes.Item;
+  }>(itemWithoutItemTypeId, {
+    type: ItemResource.TYPE,
+    attributes: '*',
+    relationships: ['item_type', 'creator'],
+  }).data;
 }
 
 export type InspectItemOptions = {
@@ -232,8 +240,10 @@ function itemInspectionTreeNodes(
 ): TreeNode {
   let itemTypeId: string | undefined;
 
-  if ('relationships' in item && item.relationships) {
-    const relationships = item.relationships as any;
+  const normalizedItem = normalizeItem(item);
+
+  if ('relationships' in normalizedItem && normalizedItem.relationships) {
+    const relationships = normalizedItem.relationships as any;
     if (relationships.item_type?.data?.id) {
       itemTypeId = relationships.item_type.data.id;
     }
@@ -241,7 +251,7 @@ function itemInspectionTreeNodes(
 
   const rootLabel = [
     'Item',
-    'id' in item ? JSON.stringify(item.id) : null,
+    'id' in item ? JSON.stringify(normalizedItem.id) : null,
     itemTypeId ? `(item_type: ${JSON.stringify(itemTypeId)})` : null,
   ]
     .filter(Boolean)
@@ -249,11 +259,13 @@ function itemInspectionTreeNodes(
 
   const nodes: TreeNode[] = [];
 
-  for (const [attributeName, attributeValue] of Object.entries(
-    extractAttributes(item),
-  )) {
-    const inspectResult = inspectFieldValue(attributeValue, options);
-    nodes.push(createChildNode(attributeName, inspectResult));
+  if ('attributes' in normalizedItem) {
+    for (const [attributeName, attributeValue] of Object.entries(
+      normalizedItem.attributes,
+    )) {
+      const inspectResult = inspectFieldValue(attributeValue, options);
+      nodes.push(createChildNode(attributeName, inspectResult));
+    }
   }
 
   return {
