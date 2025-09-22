@@ -1,7 +1,7 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
+} from '../utilities/normalizedFieldValues';
 import type { GalleryEditorConfiguration } from './appearance/gallery';
 import {
   type FileFieldValue,

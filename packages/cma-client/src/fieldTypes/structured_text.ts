@@ -9,11 +9,11 @@ import {
   isInlineBlock,
 } from 'datocms-structured-text-utils';
 import type * as RawApiTypes from '../generated/RawApiTypes';
+import type { ItemDefinition } from '../utilities/itemDefinition';
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
-import type { ItemDefinition } from '../utilities/itemDefinition';
+} from '../utilities/normalizedFieldValues';
 import type { StructuredTextEditorConfiguration } from './appearance/structured_text';
 import {
   type BlockItemInARequest,

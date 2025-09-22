@@ -1,7 +1,7 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
+} from '../utilities/normalizedFieldValues';
 import type { JsonEditorConfiguration } from './appearance/json';
 import type { StringCheckboxGroupEditorConfiguration } from './appearance/string_checkbox_group';
 import type { StringMultiSelectEditorConfiguration } from './appearance/string_multi_select';

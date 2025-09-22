@@ -1,7 +1,7 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
+} from '../utilities/normalizedFieldValues';
 import type { SeoEditorConfiguration } from './appearance/seo';
 import type { DescriptionLengthValidator } from './validators/description_length';
 import type { FileSizeValidator } from './validators/file_size';

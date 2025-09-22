@@ -1,7 +1,7 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
+} from '../utilities/normalizedFieldValues';
 import type { ColorPickerEditorConfiguration } from './appearance/color_picker';
 import type { RequiredValidator } from './validators/required';
 

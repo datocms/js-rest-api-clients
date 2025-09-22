@@ -1,9 +1,9 @@
 import type * as RawApiTypes from '../generated/RawApiTypes';
+import type { ItemDefinition } from '../utilities/itemDefinition';
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
-import type { ItemDefinition } from '../utilities/itemDefinition';
+} from '../utilities/normalizedFieldValues';
 import type { RichTextEditorConfiguration } from './appearance/rich_text';
 import {
   type BlockItemInARequest,

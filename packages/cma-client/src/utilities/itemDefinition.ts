@@ -28,7 +28,7 @@ import type {
   TextFieldValue,
   VideoFieldValue,
 } from '../fieldTypes';
-import type { LocalizedFieldValue } from './fieldValue';
+import type { LocalizedFieldValue } from './normalizedFieldValues';
 
 /** Base field definition */
 type BaseFieldDefinition<Type extends string> = {

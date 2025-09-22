@@ -1,7 +1,7 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
+} from '../utilities/normalizedFieldValues';
 import type { MapEditorConfiguration } from './appearance/map';
 import type { RequiredValidator } from './validators/required';
 

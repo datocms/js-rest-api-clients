@@ -1,7 +1,7 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
+} from '../utilities/normalizedFieldValues';
 import type { BooleanEditorConfiguration } from './appearance/boolean';
 import type { BooleanRadioGroupEditorConfiguration } from './appearance/boolean_radio_group';
 

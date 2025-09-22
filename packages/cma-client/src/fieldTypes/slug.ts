@@ -1,7 +1,7 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
+} from '../utilities/normalizedFieldValues';
 import type { SlugEditorConfiguration } from './appearance/slug';
 import type { LengthValidator } from './validators/length';
 import type { RequiredValidator } from './validators/required';

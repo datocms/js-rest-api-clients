@@ -1,7 +1,7 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
+} from '../utilities/normalizedFieldValues';
 import type { IntegerEditorConfiguration } from './appearance/integer';
 import type { NumberRangeValidator } from './validators/number_range';
 import type { RequiredValidator } from './validators/required';

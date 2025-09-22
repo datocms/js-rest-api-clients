@@ -1,7 +1,7 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
+} from '../utilities/normalizedFieldValues';
 import type { SingleLineEditorConfiguration } from './appearance/single_line';
 import type { StringRadioGroupEditorConfiguration } from './appearance/string_radio_group';
 import type { StringSelectEditorConfiguration } from './appearance/string_select';

@@ -1,8 +1,8 @@
+import { isValidId } from '../utilities/id';
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
-import { isValidId } from '../utilities/id';
+} from '../utilities/normalizedFieldValues';
 import type { LinksEmbedEditorConfiguration } from './appearance/links_embed';
 import type { LinksSelectEditorConfiguration } from './appearance/links_select';
 import type { ItemsItemTypeValidator } from './validators/items_item_type';

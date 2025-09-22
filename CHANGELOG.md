@@ -10,10 +10,12 @@ All notable changes to this project will be documented in this file.
   - Type guards for runtime validation (e.g., `isStringFieldValue()`, `isLocalizedStringFieldValue()`)
   - Validators configuration (e.g., `StringFieldValidators`)
   - Appearance configuration (e.g., `StringFieldAppearance`)
-  - **Complex content fields** (`structured_text`, `rich_text`, `single_block`) additionally offer variants of field value for:
+  - Block fields (`structured_text`, `rich_text`, `single_block`) additionally offer variants for:
     - Regular API responses with blocks as IDs: `StructuredTextFieldValue`, `isStructuredTextFieldValue()`
-    - Nested Mode API responses with blocks as full objects: `StructuredTextFieldValueWithNestedBlocks`, `isStructuredTextFieldValueWithNestedBlocks()`
-    - API Requests supporting either IDs or full objects: `StructuredTextFieldValueAsRequest`, `isStructuredTextFieldValueAsRequest()`
+    - "Nested Mode" API responses with blocks as full objects: `StructuredTextFieldValueWithNestedBlocks`, `isStructuredTextFieldValueWithNestedBlocks()`
+    - API Requests, supporting either IDs or full objects: `StructuredTextFieldValueAsRequest`, `isStructuredTextFieldValueAsRequest()`
+
+- **`inspectItem()`**: An great new method for displaying your records in the console, making them more visually appealing!
 
 - **Advanced Block Processing**: Unified API for working with blocks across field types with 28 core functions:
   - **Duplicate Block**: `duplicateBlockRecord()`
@@ -24,11 +26,11 @@ All notable changes to this project will be documented in this file.
   - **Reduce Operations**: `reduceBlocksInFieldValues()` + async variant
   - **Test Operations**: `someBlocksInFieldValues()`, `everyBlockInFieldValues()` + async variants
 
-- **Localization-Aware Field Value Utilities**: Unified interface for working with field values that may or may not be localized. DatoCMS fields can contain either direct values (`"Hello"`) or localized objects (`{ "en": "Hello", "it": "Ciao" }`). These utilities eliminate the need for manual localization checks and provide consistent operations regardless of localization status:
+- **Localization-Aware Utilities**: Unified interface for working with field values that may or may not be localized. DatoCMS fields can contain either direct values (`"Hello"`) or localized objects (`{ "en": "Hello", "it": "Ciao" }`). These utilities eliminate the need for manual localization checks and provide consistent operations regardless of localization status:
   - **Type Operations**: `isLocalized()`, `LocalizedFieldValue<T>` type
-  - **Transform Operations**: `fieldValueToEntries()`, `entriesToFieldValue()`, `mapFieldValue()` + async variant
-  - **Filter Operations**: `filterFieldValue()` + async variant
-  - **Test Operations**: `someFieldValue()`, `everyFieldValue()`, `visitFieldValue()` + async variants
+  - **Transform Operations**: `mapNormalizedFieldValues()` + async variant
+  - **Filter Operations**: `filterNormalizedFieldValues()` + async variant
+  - **Test Operations**: `someNormalizedFieldValues()`, `everyNormalizedFieldValues()`, `visitNormalizedFieldValues()` + async variants
 
 - **`SchemaRepository` class**: In-memory caching system for DatoCMS schema entities that solves performance problems during complex operations. When traversing nested blocks or structured text, scripts often repeatedly fetch the same schema information. SchemaRepository caches item types, fields, fieldsets, and plugins after the first API request, eliminating redundant calls and dramatically improving performance for bulk operations and read-heavy workflows:
   - **Item Type Operations**: `getAllItemTypes()`, `getAllModels()`, `getAllBlockModels()`, `getItemTypeByApiKey()`, `getItemTypeById()`, `getItemTypeFields()`, `getItemTypeFieldsets()`

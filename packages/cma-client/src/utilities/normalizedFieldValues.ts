@@ -74,7 +74,10 @@ export function isLocalizedFieldValue<T = unknown, L extends string = string>(
  *
  * This uniform structure allows the same processing logic to work with both field types.
  */
-export type FieldValueEntry<T = unknown, L extends string = string> = {
+export type NormalizedFieldValueEntry<
+  T = unknown,
+  L extends string = string,
+> = {
   locale: L | undefined;
   value: T;
 };
@@ -89,10 +92,13 @@ export type FieldValueEntry<T = unknown, L extends string = string> = {
  * @param value - The field value to convert (either a localized object or direct value)
  * @returns Array of entries where each entry contains a locale (string for localized, undefined for non-localized) and the corresponding value
  */
-export function fieldValueToEntries<T = unknown, L extends string = string>(
+export function toNormalizedFieldValueEntries<
+  T = unknown,
+  L extends string = string,
+>(
   field: RawApiTypes.Field | ApiTypes.Field,
   value: T | LocalizedFieldValue<T, L>,
-): FieldValueEntry<T, L>[] {
+): NormalizedFieldValueEntry<T, L>[] {
   if (isLocalized(field)) {
     const localizedValue = value as LocalizedFieldValue<T, L>;
 
@@ -108,7 +114,7 @@ export function fieldValueToEntries<T = unknown, L extends string = string>(
 /**
  * Converts an array of possibly localized entries back into the appropriate field value format.
  *
- * This function is the inverse of `fieldValueToEntries`. It takes a uniform
+ * This function is the inverse of `toNormalizedFieldValueEntries`. It takes a uniform
  * array of entries and converts them back to either a localized object or a direct value,
  * depending on the field's localization setting.
  *
@@ -116,9 +122,12 @@ export function fieldValueToEntries<T = unknown, L extends string = string>(
  * @param entries - Array of entries to convert back to field value format
  * @returns Either a localized object (for localized fields) or the direct value (for non-localized fields)
  */
-export function entriesToFieldValue<T = unknown, L extends string = string>(
+export function fromNormalizedFieldValueEntries<
+  T = unknown,
+  L extends string = string,
+>(
   field: RawApiTypes.Field | ApiTypes.Field,
-  entries: FieldValueEntry<T, L>[],
+  entries: NormalizedFieldValueEntry<T, L>[],
 ): T | LocalizedFieldValue<T, L> {
   if (isLocalized(field)) {
     return Object.fromEntries(
@@ -144,7 +153,7 @@ export function entriesToFieldValue<T = unknown, L extends string = string>(
  * @param mapFn - The function to apply to each locale value or the direct value
  * @returns The mapped value with the same structure as the input
  */
-export function mapFieldValue<
+export function mapNormalizedFieldValues<
   TInput = unknown,
   TOutput = unknown,
   L extends string = string,
@@ -153,12 +162,12 @@ export function mapFieldValue<
   value: TInput | LocalizedFieldValue<TInput, L>,
   mapFn: (locale: L | undefined, localeValue: TInput) => TOutput,
 ): TOutput | LocalizedFieldValue<TOutput, L> {
-  const entries = fieldValueToEntries<TInput, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<TInput, L>(field, value);
   const mappedEntries = entries.map(({ locale, value }) => ({
     locale,
     value: mapFn(locale, value),
   }));
-  return entriesToFieldValue<TOutput, L>(field, mappedEntries);
+  return fromNormalizedFieldValueEntries<TOutput, L>(field, mappedEntries);
 }
 
 /**
@@ -172,7 +181,7 @@ export function mapFieldValue<
  * @param mapFn - The function to apply to each locale value or the direct value
  * @returns The mapped value with the same structure as the input
  */
-export async function mapFieldValueAsync<
+export async function mapNormalizedFieldValuesAsync<
   TInput = unknown,
   TOutput = unknown,
   L extends string = string,
@@ -181,14 +190,14 @@ export async function mapFieldValueAsync<
   value: TInput | LocalizedFieldValue<TInput, L>,
   mapFn: (locale: L | undefined, localeValue: TInput) => Promise<TOutput>,
 ): Promise<TOutput | LocalizedFieldValue<TOutput, L>> {
-  const entries = fieldValueToEntries<TInput, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<TInput, L>(field, value);
   const mappedEntries = await Promise.all(
     entries.map(async ({ locale, value }) => ({
       locale,
       value: await mapFn(locale, value),
     })),
   );
-  return entriesToFieldValue<TOutput, L>(field, mappedEntries);
+  return fromNormalizedFieldValueEntries<TOutput, L>(field, mappedEntries);
 }
 
 /**
@@ -201,18 +210,21 @@ export async function mapFieldValueAsync<
  * @param filterFn - The function to test each locale value or the direct value
  * @returns The filtered value with the same structure as the input
  */
-export function filterFieldValue<T = unknown, L extends string = string>(
+export function filterNormalizedFieldValues<
+  T = unknown,
+  L extends string = string,
+>(
   field: RawApiTypes.Field | ApiTypes.Field,
   value: T | LocalizedFieldValue<T, L>,
   filterFn: (locale: L | undefined, localeValue: T) => boolean,
 ): T | LocalizedFieldValue<T, L> | undefined {
-  const entries = fieldValueToEntries<T, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<T, L>(field, value);
   const filteredEntries = entries.filter((entry) =>
     filterFn(entry.locale, entry.value),
   );
 
   if (isLocalized(field)) {
-    return entriesToFieldValue<T, L>(field, filteredEntries);
+    return fromNormalizedFieldValueEntries<T, L>(field, filteredEntries);
   }
 
   return filteredEntries.length > 0 ? filteredEntries[0]?.value : undefined;
@@ -228,7 +240,7 @@ export function filterFieldValue<T = unknown, L extends string = string>(
  * @param filterFn - The function to test each locale value or the direct value
  * @returns The filtered value with the same structure as the input
  */
-export async function filterFieldValueAsync<
+export async function filterNormalizedFieldValuesAsync<
   T = unknown,
   L extends string = string,
 >(
@@ -236,7 +248,7 @@ export async function filterFieldValueAsync<
   value: T | LocalizedFieldValue<T, L>,
   filterFn: (locale: L | undefined, localeValue: T) => Promise<boolean>,
 ): Promise<T | LocalizedFieldValue<T, L> | undefined> {
-  const entries = fieldValueToEntries<T, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<T, L>(field, value);
   const results = await Promise.all(
     entries.map(async ({ locale, value }) => ({
       locale,
@@ -250,7 +262,7 @@ export async function filterFieldValueAsync<
     .map(({ locale, value }) => ({ locale, value }));
 
   if (isLocalized(field)) {
-    return entriesToFieldValue<T, L>(field, filteredEntries);
+    return fromNormalizedFieldValueEntries<T, L>(field, filteredEntries);
   }
 
   return filteredEntries.length > 0 ? filteredEntries[0]?.value : undefined;
@@ -266,12 +278,15 @@ export async function filterFieldValueAsync<
  * @param testFn - The function to test each locale value or the direct value
  * @returns true if at least one value passes the test, false otherwise
  */
-export function someFieldValue<T = unknown, L extends string = string>(
+export function someNormalizedFieldValues<
+  T = unknown,
+  L extends string = string,
+>(
   field: RawApiTypes.Field | ApiTypes.Field,
   value: T | LocalizedFieldValue<T, L>,
   testFn: (locale: L | undefined, localeValue: T) => boolean,
 ): boolean {
-  const entries = fieldValueToEntries<T, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<T, L>(field, value);
   return entries.some(({ locale, value }) => testFn(locale, value));
 }
 
@@ -285,7 +300,7 @@ export function someFieldValue<T = unknown, L extends string = string>(
  * @param testFn - The function to test each locale value or the direct value
  * @returns true if at least one value passes the test, false otherwise
  */
-export async function someFieldValueAsync<
+export async function someNormalizedFieldValuesAsync<
   T = unknown,
   L extends string = string,
 >(
@@ -293,7 +308,7 @@ export async function someFieldValueAsync<
   value: T | LocalizedFieldValue<T, L>,
   testFn: (locale: L | undefined, localeValue: T) => Promise<boolean>,
 ): Promise<boolean> {
-  const entries = fieldValueToEntries<T, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<T, L>(field, value);
   const results = await Promise.all(
     entries.map(({ locale, value }) => testFn(locale, value)),
   );
@@ -310,12 +325,15 @@ export async function someFieldValueAsync<
  * @param testFn - The function to test each locale value or the direct value
  * @returns true if all values pass the test, false otherwise
  */
-export function everyFieldValue<T = unknown, L extends string = string>(
+export function everyNormalizedFieldValues<
+  T = unknown,
+  L extends string = string,
+>(
   field: RawApiTypes.Field | ApiTypes.Field,
   value: T | LocalizedFieldValue<T, L>,
   testFn: (locale: L | undefined, localeValue: T) => boolean,
 ): boolean {
-  return !someFieldValue(
+  return !someNormalizedFieldValues(
     field,
     value,
     (locale, localeValue) => !testFn(locale, localeValue),
@@ -332,7 +350,7 @@ export function everyFieldValue<T = unknown, L extends string = string>(
  * @param testFn - The function to test each locale value or the direct value
  * @returns true if all values pass the test, false otherwise
  */
-export async function everyFieldValueAsync<
+export async function everyNormalizedFieldValuesAsync<
   T = unknown,
   L extends string = string,
 >(
@@ -340,7 +358,7 @@ export async function everyFieldValueAsync<
   value: T | LocalizedFieldValue<T, L>,
   testFn: (locale: L | undefined, localeValue: T) => Promise<boolean>,
 ): Promise<boolean> {
-  return !(await someFieldValueAsync(
+  return !(await someNormalizedFieldValuesAsync(
     field,
     value,
     async (locale, localeValue) => !(await testFn(locale, localeValue)),
@@ -356,12 +374,15 @@ export async function everyFieldValueAsync<
  * @param value - The field value (either localized object or direct value)
  * @param visitFn - The function to call for each locale value or the direct value
  */
-export function visitFieldValue<T = unknown, L extends string = string>(
+export function visitNormalizedFieldValues<
+  T = unknown,
+  L extends string = string,
+>(
   field: RawApiTypes.Field | ApiTypes.Field,
   value: T | LocalizedFieldValue<T, L>,
   visitFn: (locale: L | undefined, localeValue: T) => void,
 ): void {
-  const entries = fieldValueToEntries<T, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<T, L>(field, value);
   for (const { locale, value } of entries) {
     visitFn(locale, value);
   }
@@ -376,7 +397,7 @@ export function visitFieldValue<T = unknown, L extends string = string>(
  * @param value - The field value (either localized object or direct value)
  * @param visitFn - The function to call for each locale value or the direct value
  */
-export async function visitFieldValueAsync<
+export async function visitNormalizedFieldValuesAsync<
   T = unknown,
   L extends string = string,
 >(
@@ -384,6 +405,6 @@ export async function visitFieldValueAsync<
   value: T | LocalizedFieldValue<T, L>,
   visitFn: (locale: L | undefined, localeValue: T) => Promise<void>,
 ): Promise<void> {
-  const entries = fieldValueToEntries<T, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<T, L>(field, value);
   await Promise.all(entries.map(({ locale, value }) => visitFn(locale, value)));
 }

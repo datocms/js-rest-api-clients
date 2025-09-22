@@ -66,8 +66,8 @@ import {
 } from '../fieldTypes';
 
 import { type ApiTypes, type RawApiTypes, buildBlockRecord } from '../index';
-import type { LocalizedFieldValue } from './fieldValue';
-import { isLocalizedFieldValue } from './fieldValue';
+import type { LocalizedFieldValue } from './normalizedFieldValues';
+import { isLocalizedFieldValue } from './normalizedFieldValues';
 
 type Item =
   | ApiTypes.Item
@@ -81,7 +81,10 @@ type Item =
 
 interface FieldTypeHandler {
   guard: (value: unknown) => boolean;
-  inspect: (value: any, maxWidth: number) => string | TreeNode | TreeNode[];
+  inspect: (
+    value: any,
+    options?: InspectItemOptions,
+  ) => string | TreeNode | TreeNode[];
 }
 
 const fieldTypeHandlers: FieldTypeHandler[] = [
@@ -160,7 +163,7 @@ function createChildNode(
 
 function inspectFieldValue(
   value: unknown,
-  maxWidth: number,
+  options?: InspectItemOptions,
 ): string | TreeNode | TreeNode[] {
   if (isLocalizedFieldValue(value)) {
     for (const handler of fieldTypeHandlers) {
@@ -172,7 +175,7 @@ function inspectFieldValue(
         );
 
         return localeEntries.map(([locale, localeValue]) => {
-          const inspectResult = handler.inspect(localeValue, maxWidth);
+          const inspectResult = handler.inspect(localeValue, options);
 
           if (typeof inspectResult === 'string') {
             return { label: `${locale}: ${inspectResult}` };
@@ -197,7 +200,7 @@ function inspectFieldValue(
 
   for (const handler of fieldTypeHandlers) {
     if (handler.guard(value)) {
-      return handler.inspect(value, maxWidth);
+      return handler.inspect(value, options);
     }
   }
 
@@ -215,11 +218,18 @@ function extractAttributes(item: Item): Record<string, unknown> {
   return rest;
 }
 
-export function inspectItem(item: Item, maxWidth = 80): string {
-  return formatAsTree(itemInspectionTreeNodes(item, maxWidth));
+export type InspectItemOptions = {
+  maxWidth?: number;
+};
+
+export function inspectItem(item: Item, options?: InspectItemOptions): string {
+  return formatAsTree(itemInspectionTreeNodes(item, options));
 }
 
-function itemInspectionTreeNodes(item: Item, maxWidth = 80): TreeNode {
+function itemInspectionTreeNodes(
+  item: Item,
+  options?: InspectItemOptions,
+): TreeNode {
   let itemTypeId: string | undefined;
 
   if ('relationships' in item && item.relationships) {
@@ -242,7 +252,7 @@ function itemInspectionTreeNodes(item: Item, maxWidth = 80): TreeNode {
   for (const [attributeName, attributeValue] of Object.entries(
     extractAttributes(item),
   )) {
-    const inspectResult = inspectFieldValue(attributeValue, maxWidth);
+    const inspectResult = inspectFieldValue(attributeValue, options);
     nodes.push(createChildNode(attributeName, inspectResult));
   }
 
@@ -257,18 +267,18 @@ function structuredTextInspectionTreeNodes(
     | StructuredTextFieldValue
     | StructuredTextFieldValueAsRequest
     | StructuredTextFieldValueWithNestedBlocks,
-  maxWidth: number,
+  options?: InspectItemOptions,
 ) {
   if (value === null) return 'null';
 
   return inspectionTreeNodes<BlockItemInARequest, BlockItemInARequest>(value, {
-    maxWidth,
+    maxWidth: options?.maxWidth || 80,
     blockFormatter: (block, maxWidth) => {
       if (typeof block === 'string') {
         return JSON.stringify(block);
       }
 
-      return itemInspectionTreeNodes(block, maxWidth);
+      return itemInspectionTreeNodes(block, options);
     },
   });
 }
@@ -278,11 +288,11 @@ function singleBlockInspectionTreeNodes(
     | SingleBlockFieldValue
     | SingleBlockFieldValueAsRequest
     | SingleBlockFieldValueWithNestedBlocks,
-  maxWidth: number,
+  options?: InspectItemOptions,
 ) {
   if (value === null) return 'null';
   if (typeof value === 'string') return JSON.stringify(value);
-  return itemInspectionTreeNodes(value, maxWidth);
+  return itemInspectionTreeNodes(value, options);
 }
 
 function richTextInspectionTreeNodes(
@@ -290,12 +300,12 @@ function richTextInspectionTreeNodes(
     | RichTextFieldValue
     | RichTextFieldValueAsRequest
     | RichTextFieldValueWithNestedBlocks,
-  maxWidth: number,
+  options?: InspectItemOptions,
 ): string | TreeNode[] {
   if (value === null) return 'null';
 
   return value.map<TreeNode>((item, index) => {
-    const result = singleBlockInspectionTreeNodes(item, maxWidth);
+    const result = singleBlockInspectionTreeNodes(item, options);
     if (typeof result === 'string') {
       return { label: `[${index}] ${result}` };
     }
@@ -333,7 +343,7 @@ function dateTimeInspectionTreeNodes(value: DateTimeFieldValue): string {
 
 function fileInspectionTreeNodes(
   value: FileFieldValue | FileFieldValueAsRequest,
-  maxWidth: number,
+  options?: InspectItemOptions,
 ): string | TreeNode[] {
   if (value === null) return 'null';
 
@@ -343,19 +353,19 @@ function fileInspectionTreeNodes(
 
   if (value.alt) {
     nodes.push({
-      label: `alt: ${JSON.stringify(truncate(value.alt, maxWidth))}`,
+      label: `alt: ${JSON.stringify(truncate(value.alt, options?.maxWidth || 80))}`,
     });
   }
 
   if (value.title) {
     nodes.push({
-      label: `title: ${JSON.stringify(truncate(value.title, maxWidth))}`,
+      label: `title: ${JSON.stringify(truncate(value.title, options?.maxWidth || 80))}`,
     });
   }
 
   if (value.custom_data && Object.keys(value.custom_data).length > 0) {
     nodes.push({
-      label: `custom_data: ${truncate(JSON.stringify(value.custom_data), maxWidth)}`,
+      label: `custom_data: ${truncate(JSON.stringify(value.custom_data), options?.maxWidth || 80)}`,
     });
   }
 
@@ -375,7 +385,7 @@ function floatInspectionTreeNodes(value: FloatFieldValue): string {
 
 function galleryInspectionTreeNodes(
   value: GalleryFieldValue | GalleryFieldValueAsRequest,
-  maxWidth: number,
+  options?: InspectItemOptions,
 ): string | TreeNode[] {
   if (!value || value.length === 0) return '[]';
 
@@ -388,19 +398,19 @@ function galleryInspectionTreeNodes(
 
     if (item.alt) {
       nodes.push({
-        label: `alt: ${JSON.stringify(truncate(item.alt, maxWidth))}`,
+        label: `alt: ${JSON.stringify(truncate(item.alt, options?.maxWidth || 80))}`,
       });
     }
 
     if (item.title) {
       nodes.push({
-        label: `title: ${JSON.stringify(truncate(item.title, maxWidth))}`,
+        label: `title: ${JSON.stringify(truncate(item.title, options?.maxWidth || 80))}`,
       });
     }
 
     if (item.custom_data && Object.keys(item.custom_data).length > 0) {
       nodes.push({
-        label: `custom_data: ${truncate(JSON.stringify(item.custom_data), maxWidth)}`,
+        label: `custom_data: ${truncate(JSON.stringify(item.custom_data), options?.maxWidth || 80)}`,
       });
     }
 
@@ -426,10 +436,10 @@ function integerInspectionTreeNodes(value: IntegerFieldValue): string {
 
 function jsonInspectionTreeNodes(
   value: JsonFieldValue,
-  maxWidth: number,
+  options?: InspectItemOptions,
 ): string {
   if (value === null) return 'null';
-  return truncate(JSON.stringify(JSON.parse(value)), maxWidth);
+  return truncate(JSON.stringify(JSON.parse(value)), options?.maxWidth || 80);
 }
 
 function latLonInspectionTreeNodes(
@@ -458,7 +468,7 @@ function linksInspectionTreeNodes(value: LinksFieldValue): string | TreeNode[] {
 
 function seoFieldInspectionTreeNodes(
   value: SeoFieldValue,
-  maxWidth: number,
+  options?: InspectItemOptions,
 ): string | TreeNode[] {
   if (value === null) return 'null';
 
@@ -466,13 +476,13 @@ function seoFieldInspectionTreeNodes(
 
   if (value.title) {
     nodes.push({
-      label: `title: ${JSON.stringify(truncate(value.title, maxWidth))}`,
+      label: `title: ${JSON.stringify(truncate(value.title, options?.maxWidth || 80))}`,
     });
   }
 
   if (value.description) {
     nodes.push({
-      label: `description: ${JSON.stringify(truncate(value.description, maxWidth))}`,
+      label: `description: ${JSON.stringify(truncate(value.description, options?.maxWidth || 80))}`,
     });
   }
 
@@ -499,31 +509,31 @@ function seoFieldInspectionTreeNodes(
 
 function slugInspectionTreeNodes(
   value: SlugFieldValue,
-  maxWidth: number,
+  options?: InspectItemOptions,
 ): string {
   if (value === null) return 'null';
-  return JSON.stringify(truncate(value, maxWidth));
+  return JSON.stringify(truncate(value, options?.maxWidth || 80));
 }
 
 function stringInspectionTreeNodes(
   value: StringFieldValue,
-  maxWidth: number,
+  options?: InspectItemOptions,
 ): string {
   if (value === null) return 'null';
-  return JSON.stringify(truncate(value, maxWidth));
+  return JSON.stringify(truncate(value, options?.maxWidth || 80));
 }
 
 function textInspectionTreeNodes(
   value: TextFieldValue,
-  maxWidth: number,
+  options?: InspectItemOptions,
 ): string {
   if (value === null) return 'null';
-  return JSON.stringify(truncate(value, maxWidth));
+  return JSON.stringify(truncate(value, options?.maxWidth || 80));
 }
 
 function videoFieldInspectionTreeNodes(
   value: VideoFieldValue,
-  maxWidth: number,
+  options?: InspectItemOptions,
 ): string | TreeNode[] {
   if (value === null) return 'null';
 
@@ -537,7 +547,7 @@ function videoFieldInspectionTreeNodes(
 
   if (value.title) {
     nodes.push({
-      label: `title: ${JSON.stringify(truncate(value.title, maxWidth))}`,
+      label: `title: ${JSON.stringify(truncate(value.title, options?.maxWidth || 80))}`,
     });
   }
 
@@ -546,14 +556,14 @@ function videoFieldInspectionTreeNodes(
 
 function localizedFieldValueInspectionTreeNodes(
   value: LocalizedFieldValue<unknown>,
-  maxWidth: number,
+  options?: InspectItemOptions,
 ): TreeNode[] {
   const localeEntries = Object.entries(value).sort(([a], [b]) =>
     a.localeCompare(b),
   );
 
   return localeEntries.map(([locale, localeValue]) => {
-    const inspectResult = inspectFieldValue(localeValue, maxWidth);
+    const inspectResult = inspectFieldValue(localeValue, options);
 
     if (typeof inspectResult === 'string') {
       return { label: `${locale}: ${inspectResult}` };

@@ -1,9 +1,9 @@
 import type * as RawApiTypes from '../generated/RawApiTypes';
+import type { ItemDefinition } from '../utilities/itemDefinition';
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
-import type { ItemDefinition } from '../utilities/itemDefinition';
+} from '../utilities/normalizedFieldValues';
 
 import type { FramedSingleBlockEditorConfiguration } from './appearance/framed_single_block';
 import type { FramelessSingleBlockEditorConfiguration } from './appearance/frameless_single_block';

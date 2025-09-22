@@ -1,7 +1,7 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
+} from '../utilities/normalizedFieldValues';
 import type { MarkdownEditorConfiguration } from './appearance/markdown';
 import type { TextareaEditorConfiguration } from './appearance/textarea';
 import type { WysiwygEditorConfiguration } from './appearance/wysiwyg';

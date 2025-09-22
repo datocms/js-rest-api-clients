@@ -1,7 +1,7 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
+} from '../utilities/normalizedFieldValues';
 import type { VideoEditorConfiguration } from './appearance/video';
 import type { RequiredValidator } from './validators/required';
 

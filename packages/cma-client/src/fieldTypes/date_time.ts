@@ -1,7 +1,7 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/fieldValue';
+} from '../utilities/normalizedFieldValues';
 import type { DateTimePickerEditorConfiguration } from './appearance/date_time_picker';
 import type { DateTimeRangeValidator } from './validators/date_time_range';
 import type { RequiredValidator } from './validators/required';

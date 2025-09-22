@@ -318,7 +318,7 @@ describe('inspectItem', () => {
       },
     };
 
-    const output = inspectItem(item, 80);
+    const output = inspectItem(item);
 
     expect(output).toMatchSnapshot();
   });
@@ -342,7 +342,7 @@ describe('inspectItem', () => {
       item_type: { type: 'item_type', id: 'O9BXqTayQ_Wf-Yw6d863LQ' },
     };
 
-    const output = inspectItem(item, 80);
+    const output = inspectItem(item);
 
     expect(output).toMatchSnapshot();
   });
@@ -463,7 +463,7 @@ describe('inspectItem', () => {
       },
     };
 
-    const output = inspectItem(item, 80);
+    const output = inspectItem(item);
 
     expect(output).toMatchSnapshot();
   });
