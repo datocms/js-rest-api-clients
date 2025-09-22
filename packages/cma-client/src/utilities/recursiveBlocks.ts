@@ -56,7 +56,7 @@ export async function visitBlocksInNonLocalizedFieldValue(
       for (const field of fields) {
         await visitBlocksInNonLocalizedFieldValue(
           schemaRepository,
-          fieldType,
+          field.attributes.field_type,
           block.attributes[field.attributes.api_key],
           visitor,
           [...path, ...innerPath, 'attributes', field.attributes.api_key],
@@ -121,7 +121,7 @@ export async function findAllBlocksInNonLocalizedFieldValue(
       for (const field of fields) {
         const nestedResults = await findAllBlocksInNonLocalizedFieldValue(
           schemaRepository,
-          fieldType,
+          field.attributes.field_type,
           block.attributes[field.attributes.api_key],
           predicate,
           [...path, ...innerPath, 'attributes', field.attributes.api_key],
@@ -181,7 +181,7 @@ export async function filterBlocksInNonLocalizedFieldValue(
         block.attributes[field.attributes.api_key] =
           await filterBlocksInNonLocalizedFieldValue(
             schemaRepository,
-            fieldType,
+            field.attributes.field_type,
             block.attributes[field.attributes.api_key],
             predicate,
             [...blockPath, 'attributes', field.attributes.api_key],
@@ -243,7 +243,7 @@ export async function reduceBlocksInNonLocalizedFieldValue<R>(
       for (const field of fields) {
         accumulator = await reduceBlocksInNonLocalizedFieldValue(
           schemaRepository,
-          fieldType,
+          field.attributes.field_type,
           block.attributes[field.attributes.api_key],
           reducer,
           accumulator,
@@ -308,7 +308,7 @@ export async function someBlocksInNonLocalizedFieldValue(
 
         const nestedMatch = await someBlocksInNonLocalizedFieldValue(
           schemaRepository,
-          fieldType,
+          field.attributes.field_type,
           block.attributes[field.attributes.api_key],
           predicate,
           [...path, ...innerPath, 'attributes', field.attributes.api_key],
@@ -397,7 +397,7 @@ export async function mapBlocksInNonLocalizedFieldValue(
         newBlock.attributes[field.attributes.api_key] =
           await mapBlocksInNonLocalizedFieldValue(
             schemaRepository,
-            fieldType,
+            field.attributes.field_type,
             newBlock.attributes[field.attributes.api_key],
             mapper,
             [...path, ...innerPath, 'attributes', field.attributes.api_key],
