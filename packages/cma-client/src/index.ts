@@ -9,7 +9,6 @@ export * from './utilities/fieldsContainingReferences';
 export * from './utilities/id';
 export * from './utilities/inspectItem';
 export * from './utilities/itemDefinition';
-export * from './utilities/nonRecursiveBlocks';
 export * from './utilities/normalizedFieldValues';
 export * from './utilities/recursiveBlocks';
 export * from './utilities/schemaRepository';
@@ -19,4 +18,3 @@ export type { ApiTypes as SchemaTypes, RawApiTypes as SimpleSchemaTypes };
 
 import type * as ApiTypes from './generated/ApiTypes';
 import type * as RawApiTypes from './generated/RawApiTypes';
-

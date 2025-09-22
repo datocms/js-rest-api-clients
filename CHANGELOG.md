@@ -19,12 +19,12 @@ All notable changes to this project will be documented in this file.
 
 - **Advanced Block Processing**: Unified API for working with blocks across field types with 28 core functions:
   - **Duplicate Block**: `duplicateBlockRecord()`
-  - **Visit Operations**: `visitBlocksInFieldValues()` + async variant
-  - **Transform Operations**: `mapBlocksInFieldValues()` + async variant
-  - **Search Operations**: `findAllBlocksInFieldValues()` + async variant
-  - **Filter Operations**: `filterBlocksInFieldValues()` + async variant
-  - **Reduce Operations**: `reduceBlocksInFieldValues()` + async variant
-  - **Test Operations**: `someBlocksInFieldValues()`, `everyBlockInFieldValues()` + async variants
+  - **Visit Operations**: `visitBlocksInNonLocalizedFieldValue()` + async variant
+  - **Transform Operations**: `mapBlocksInNonLocalizedFieldValue()` + async variant
+  - **Search Operations**: `findAllBlocksInNonLocalizedFieldValue()` + async variant
+  - **Filter Operations**: `filterBlocksInNonLocalizedFieldValue()` + async variant
+  - **Reduce Operations**: `reduceBlocksInNonLocalizedFieldValue()` + async variant
+  - **Test Operations**: `someBlocksInNonLocalizedFieldValue()`, `everyBlockInNonLocalizedFieldValue()` + async variants
 
 - **Localization-Aware Utilities**: Unified interface for working with field values that may or may not be localized. DatoCMS fields can contain either direct values (`"Hello"`) or localized objects (`{ "en": "Hello", "it": "Ciao" }`). These utilities eliminate the need for manual localization checks and provide consistent operations regardless of localization status:
   - **Type Operations**: `isLocalized()`, `LocalizedFieldValue<T>` type

@@ -1,33 +1,45 @@
 import {
-  isItemWithOptionalIdAndMeta, type BlockItemInARequest
+  type BlockItemInARequest,
+  isItemWithOptionalIdAndMeta,
 } from '../fieldTypes';
 import type * as ApiTypes from '../generated/ApiTypes';
-import type * as RawApiTypes from '../generated/RawApiTypes';
 import {
-  nonRecursiveFilterBlocksInFieldValueAsync,
-  nonRecursiveFindAllBlocksInFieldValueAsync,
-  nonRecursiveMapBlocksInFieldValueAsync,
-  nonRecursiveReduceBlocksInFieldValueAsync,
-  nonRecursiveSomeBlocksInFieldValueAsync,
-  nonRecursiveVisitBlocksInFieldValueAsync
+  nonRecursiveFilterBlocksInNonLocalizedFieldValueAsync,
+  nonRecursiveFindAllBlocksInNonLocalizedFieldValueAsync,
+  nonRecursiveMapBlocksInNonLocalizedFieldValueAsync,
+  nonRecursiveReduceBlocksInNonLocalizedFieldValueAsync,
+  nonRecursiveSomeBlocksInNonLocalizedFieldValueAsync,
+  nonRecursiveVisitBlocksInNonLocalizedFieldValueAsync,
 } from './nonRecursiveBlocks';
 import type { SchemaRepository } from './schemaRepository';
 
 /**
- * Path through a field value (ie. ['content', 0, 'attributes', 'title'])
+ * Path through a non-localized field value (ie. ['content', 0, 'attributes', 'title'])
  */
 export type TreePath = readonly (string | number)[];
 
-export async function visitBlocksInFieldValues(
+/**
+ * Recursively visit every block in a non-localized field value and all nested blocks within those blocks.
+ * This function traverses not only the direct blocks in the non-localized field value but also recursively
+ * visits blocks contained within the attributes of each block, creating a complete traversal
+ * of the entire block hierarchy.
+ *
+ * @param schemaRepository - Repository for accessing DatoCMS schema information to resolve block structures
+ * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
+ * @param nonLocalizedFieldValue - The non-localized field value containing blocks to visit
+ * @param visitor - Asynchronous function called for each block found, including nested blocks
+ * @returns Promise that resolves when all blocks and nested blocks have been visited
+ */
+export async function visitBlocksInNonLocalizedFieldValue(
   schemaRepository: SchemaRepository,
-  field: RawApiTypes.Field | ApiTypes.Field,
-  value: unknown,
+  fieldType: ApiTypes.Field['field_type'],
+  nonLocalizedFieldValue: unknown,
   visitor: (item: BlockItemInARequest, path: TreePath) => void | Promise<void>,
   path: TreePath = [],
 ): Promise<void> {
-  await nonRecursiveVisitBlocksInFieldValueAsync(
-    field,
-    value,
+  await nonRecursiveVisitBlocksInNonLocalizedFieldValueAsync(
+    fieldType,
+    nonLocalizedFieldValue,
     async (block, innerPath) => {
       await visitor(block, [...path, ...innerPath]);
 
@@ -42,27 +54,33 @@ export async function visitBlocksInFieldValues(
       const fields = await schemaRepository.getRawItemTypeFields(itemType);
 
       for (const field of fields) {
-        await visitBlocksInFieldValues(
+        await visitBlocksInNonLocalizedFieldValue(
           schemaRepository,
-          field,
+          fieldType,
           block.attributes[field.attributes.api_key],
           visitor,
-          [
-            ...path,
-            ...innerPath,
-            'attributes',
-            field.attributes.api_key,
-          ],
+          [...path, ...innerPath, 'attributes', field.attributes.api_key],
         );
       }
     },
   );
 }
 
-export async function findAllBlocksInFieldValues(
+/**
+ * Recursively find all blocks that match the predicate function in a non-localized field value.
+ * Searches through all direct blocks and recursively through nested blocks within
+ * the attributes of each block, returning all matches found throughout the hierarchy.
+ *
+ * @param schemaRepository - Repository for accessing DatoCMS schema information to resolve block structures
+ * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
+ * @param nonLocalizedFieldValue - The non-localized field value containing blocks to search
+ * @param predicate - Asynchronous function that tests each block, including nested ones
+ * @returns Promise that resolves to an array of objects, each containing a matching block and its full path
+ */
+export async function findAllBlocksInNonLocalizedFieldValue(
   schemaRepository: SchemaRepository,
-  field: RawApiTypes.Field | ApiTypes.Field,
-  value: unknown,
+  fieldType: ApiTypes.Field['field_type'],
+  nonLocalizedFieldValue: unknown,
   predicate: (
     item: BlockItemInARequest,
     path: TreePath,
@@ -71,11 +89,13 @@ export async function findAllBlocksInFieldValues(
 ): Promise<Array<{ item: BlockItemInARequest; path: TreePath }>> {
   const results: Array<{ item: BlockItemInARequest; path: TreePath }> = [];
 
-  const directMatches = await nonRecursiveFindAllBlocksInFieldValueAsync(
-    field,
-    value,
-    async (block, innerPath) => await predicate(block, [...path, ...innerPath]),
-  );
+  const directMatches =
+    await nonRecursiveFindAllBlocksInNonLocalizedFieldValueAsync(
+      fieldType,
+      nonLocalizedFieldValue,
+      async (block, innerPath) =>
+        await predicate(block, [...path, ...innerPath]),
+    );
 
   results.push(
     ...directMatches.map(({ item, path: innerPath }) => ({
@@ -84,9 +104,9 @@ export async function findAllBlocksInFieldValues(
     })),
   );
 
-  await nonRecursiveVisitBlocksInFieldValueAsync(
-    field,
-    value,
+  await nonRecursiveVisitBlocksInNonLocalizedFieldValueAsync(
+    fieldType,
+    nonLocalizedFieldValue,
     async (block, innerPath) => {
       if (!isItemWithOptionalIdAndMeta(block)) {
         return;
@@ -99,17 +119,12 @@ export async function findAllBlocksInFieldValues(
       const fields = await schemaRepository.getRawItemTypeFields(itemType);
 
       for (const field of fields) {
-        const nestedResults = await findAllBlocksInFieldValues(
+        const nestedResults = await findAllBlocksInNonLocalizedFieldValue(
           schemaRepository,
-          field,
+          fieldType,
           block.attributes[field.attributes.api_key],
           predicate,
-          [
-            ...path,
-            ...innerPath,
-            'attributes',
-            field.attributes.api_key,
-          ],
+          [...path, ...innerPath, 'attributes', field.attributes.api_key],
         );
         results.push(...nestedResults);
       }
@@ -119,19 +134,31 @@ export async function findAllBlocksInFieldValues(
   return results;
 }
 
-export async function filterBlocksInFieldValues(
+/**
+ * Recursively filter blocks in a non-localized field value, removing those that don't match the predicate.
+ * Creates a new non-localized field value structure containing only blocks that pass the predicate test,
+ * including recursive filtering of nested blocks within block attributes. The filtering
+ * preserves the original non-localized field value structure and hierarchy.
+ *
+ * @param schemaRepository - Repository for accessing DatoCMS schema information to resolve block structures
+ * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
+ * @param nonLocalizedFieldValue - The non-localized field value containing blocks to filter
+ * @param predicate - Asynchronous function that tests each block, including nested ones
+ * @returns Promise that resolves to the new non-localized field value with recursively filtered blocks
+ */
+export async function filterBlocksInNonLocalizedFieldValue(
   schemaRepository: SchemaRepository,
-  field: RawApiTypes.Field | ApiTypes.Field,
-  value: unknown,
+  fieldType: ApiTypes.Field['field_type'],
+  nonLocalizedFieldValue: unknown,
   predicate: (
     item: BlockItemInARequest,
     path: TreePath,
   ) => boolean | Promise<boolean>,
   path: TreePath = [],
 ): Promise<unknown> {
-  return nonRecursiveFilterBlocksInFieldValueAsync(
-    field,
-    value,
+  return nonRecursiveFilterBlocksInNonLocalizedFieldValueAsync(
+    fieldType,
+    nonLocalizedFieldValue,
     async (block, innerPath) => {
       const blockPath = [...path, ...innerPath];
       const passes = await predicate(block, blockPath);
@@ -151,17 +178,14 @@ export async function filterBlocksInFieldValues(
       const fields = await schemaRepository.getRawItemTypeFields(itemType);
 
       for (const field of fields) {
-        block.attributes[field.attributes.api_key] = await filterBlocksInFieldValues(
-          schemaRepository,
-          field,
-          block.attributes[field.attributes.api_key],
-          predicate,
-          [
-            ...blockPath,
-            'attributes',
-            field.attributes.api_key,
-          ],
-        );
+        block.attributes[field.attributes.api_key] =
+          await filterBlocksInNonLocalizedFieldValue(
+            schemaRepository,
+            fieldType,
+            block.attributes[field.attributes.api_key],
+            predicate,
+            [...blockPath, 'attributes', field.attributes.api_key],
+          );
       }
 
       return true;
@@ -169,10 +193,23 @@ export async function filterBlocksInFieldValues(
   );
 }
 
-export async function reduceBlocksInFieldValues<R>(
+/**
+ * Recursively reduce all blocks in a non-localized field value to a single value by applying a reducer function.
+ * Processes each direct block and recursively processes nested blocks within block attributes,
+ * accumulating results from the entire block hierarchy into a single value.
+ *
+ * @template R - The type of the accumulated result
+ * @param schemaRepository - Repository for accessing DatoCMS schema information to resolve block structures
+ * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
+ * @param nonLocalizedFieldValue - The non-localized field value containing blocks to reduce
+ * @param reducer - Asynchronous function that processes each block and updates the accumulator
+ * @param initialNonLocalizedFieldValue - The initial value for the accumulator
+ * @returns Promise that resolves to the final accumulated value from all blocks in the hierarchy
+ */
+export async function reduceBlocksInNonLocalizedFieldValue<R>(
   schemaRepository: SchemaRepository,
-  field: RawApiTypes.Field | ApiTypes.Field,
-  value: unknown,
+  fieldType: ApiTypes.Field['field_type'],
+  nonLocalizedFieldValue: unknown,
   reducer: (
     accumulator: R,
     item: BlockItemInARequest,
@@ -181,17 +218,17 @@ export async function reduceBlocksInFieldValues<R>(
   initialValue: R,
   path: TreePath = [],
 ): Promise<R> {
-  let accumulator = await nonRecursiveReduceBlocksInFieldValueAsync(
-    field,
-    value,
+  let accumulator = await nonRecursiveReduceBlocksInNonLocalizedFieldValueAsync(
+    fieldType,
+    nonLocalizedFieldValue,
     async (acc, block, innerPath) =>
       await reducer(acc, block, [...path, ...innerPath]),
     initialValue,
   );
 
-  await nonRecursiveVisitBlocksInFieldValueAsync(
-    field,
-    value,
+  await nonRecursiveVisitBlocksInNonLocalizedFieldValueAsync(
+    fieldType,
+    nonLocalizedFieldValue,
     async (block, innerPath) => {
       if (!isItemWithOptionalIdAndMeta(block)) {
         return;
@@ -204,18 +241,13 @@ export async function reduceBlocksInFieldValues<R>(
       const fields = await schemaRepository.getRawItemTypeFields(itemType);
 
       for (const field of fields) {
-        accumulator = await reduceBlocksInFieldValues(
+        accumulator = await reduceBlocksInNonLocalizedFieldValue(
           schemaRepository,
-          field,
+          fieldType,
           block.attributes[field.attributes.api_key],
           reducer,
           accumulator,
-          [
-            ...path,
-            ...innerPath,
-            'attributes',
-            field.attributes.api_key,
-          ],
+          [...path, ...innerPath, 'attributes', field.attributes.api_key],
         );
       }
     },
@@ -224,19 +256,31 @@ export async function reduceBlocksInFieldValues<R>(
   return accumulator;
 }
 
-export async function someBlocksInFieldValues(
+/**
+ * Recursively check if any block in the non-localized field value matches the predicate function.
+ * Tests both direct blocks and recursively tests nested blocks within block attributes.
+ * Returns true as soon as the first matching block is found anywhere in the hierarchy
+ * (short-circuit evaluation).
+ *
+ * @param schemaRepository - Repository for accessing DatoCMS schema information to resolve block structures
+ * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
+ * @param nonLocalizedFieldValue - The non-localized field value containing blocks to test
+ * @param predicate - Asynchronous function that tests each block, including nested ones
+ * @returns Promise that resolves to true if any block in the hierarchy matches, false otherwise
+ */
+export async function someBlocksInNonLocalizedFieldValue(
   schemaRepository: SchemaRepository,
-  field: RawApiTypes.Field | ApiTypes.Field,
-  value: unknown,
+  fieldType: ApiTypes.Field['field_type'],
+  nonLocalizedFieldValue: unknown,
   predicate: (
     item: BlockItemInARequest,
     path: TreePath,
   ) => boolean | Promise<boolean>,
   path: TreePath = [],
 ): Promise<boolean> {
-  const directMatch = await nonRecursiveSomeBlocksInFieldValueAsync(
-    field,
-    value,
+  const directMatch = await nonRecursiveSomeBlocksInNonLocalizedFieldValueAsync(
+    fieldType,
+    nonLocalizedFieldValue,
     async (block, innerPath) => await predicate(block, [...path, ...innerPath]),
   );
 
@@ -245,9 +289,9 @@ export async function someBlocksInFieldValues(
   }
 
   let found = false;
-  await nonRecursiveVisitBlocksInFieldValueAsync(
-    field,
-    value,
+  await nonRecursiveVisitBlocksInNonLocalizedFieldValueAsync(
+    fieldType,
+    nonLocalizedFieldValue,
     async (block, innerPath) => {
       if (found || !isItemWithOptionalIdAndMeta(block)) {
         return;
@@ -262,17 +306,12 @@ export async function someBlocksInFieldValues(
       for (const field of fields) {
         if (found) break;
 
-        const nestedMatch = await someBlocksInFieldValues(
+        const nestedMatch = await someBlocksInNonLocalizedFieldValue(
           schemaRepository,
-          field,
+          fieldType,
           block.attributes[field.attributes.api_key],
           predicate,
-          [
-            ...path,
-            ...innerPath,
-            'attributes',
-            field.attributes.api_key,
-          ],
+          [...path, ...innerPath, 'attributes', field.attributes.api_key],
         );
 
         if (nestedMatch) {
@@ -285,38 +324,62 @@ export async function someBlocksInFieldValues(
   return found;
 }
 
-export async function everyBlockInFieldValues(
+/**
+ * Recursively check if every block in the non-localized field value matches the predicate function.
+ * Tests both direct blocks and recursively tests nested blocks within block attributes.
+ * Returns false as soon as the first non-matching block is found anywhere in the hierarchy
+ * (short-circuit evaluation).
+ *
+ * @param schemaRepository - Repository for accessing DatoCMS schema information to resolve block structures
+ * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
+ * @param nonLocalizedFieldValue - The non-localized field value containing blocks to test
+ * @param predicate - Asynchronous function that tests each block, including nested ones
+ * @returns Promise that resolves to true if all blocks in the hierarchy match, false otherwise
+ */
+export async function everyBlockInNonLocalizedFieldValue(
   schemaRepository: SchemaRepository,
-  field: RawApiTypes.Field | ApiTypes.Field,
-  value: unknown,
+  fieldType: ApiTypes.Field['field_type'],
+  nonLocalizedFieldValue: unknown,
   predicate: (
     item: BlockItemInARequest,
     path: TreePath,
   ) => boolean | Promise<boolean>,
   path: TreePath = [],
 ): Promise<boolean> {
-  return !(await someBlocksInFieldValues(
+  return !(await someBlocksInNonLocalizedFieldValue(
     schemaRepository,
-    field,
-    value,
+    fieldType,
+    nonLocalizedFieldValue,
     async (item, path) => !(await predicate(item, path)),
     path,
   ));
 }
 
-export async function mapBlocksInFieldValues(
+/**
+ * Recursively transform blocks in a non-localized field value by applying a mapping function to each block.
+ * Creates a new non-localized field value structure with transformed blocks while preserving the original
+ * structure. Applies the mapping function to both direct blocks and recursively to nested
+ * blocks within block attributes throughout the entire hierarchy.
+ *
+ * @param schemaRepository - Repository for accessing DatoCMS schema information to resolve block structures
+ * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
+ * @param nonLocalizedFieldValue - The non-localized field value containing blocks to transform
+ * @param mapper - Asynchronous function that transforms each block, including nested ones
+ * @returns Promise that resolves to the new non-localized field value with recursively transformed blocks
+ */
+export async function mapBlocksInNonLocalizedFieldValue(
   schemaRepository: SchemaRepository,
-  field: RawApiTypes.Field | ApiTypes.Field,
-  value: unknown,
+  fieldType: ApiTypes.Field['field_type'],
+  nonLocalizedFieldValue: unknown,
   mapper: (
     item: BlockItemInARequest,
     path: TreePath,
   ) => BlockItemInARequest | Promise<BlockItemInARequest>,
   path: TreePath = [],
 ) {
-  return nonRecursiveMapBlocksInFieldValueAsync(
-    field,
-    value,
+  return nonRecursiveMapBlocksInNonLocalizedFieldValueAsync(
+    fieldType,
+    nonLocalizedFieldValue,
     async (block, innerPath) => {
       const newBlock = await mapper(block, [...path, ...innerPath]);
 
@@ -331,18 +394,14 @@ export async function mapBlocksInFieldValues(
       const fields = await schemaRepository.getRawItemTypeFields(itemType);
 
       for (const field of fields) {
-        newBlock.attributes[field.attributes.api_key] = await mapBlocksInFieldValues(
-          schemaRepository,
-          field,
-          newBlock.attributes[field.attributes.api_key],
-          mapper,
-          [
-            ...path,
-            ...innerPath,
-            'attributes',
-            field.attributes.api_key,
-          ],
-        );
+        newBlock.attributes[field.attributes.api_key] =
+          await mapBlocksInNonLocalizedFieldValue(
+            schemaRepository,
+            fieldType,
+            newBlock.attributes[field.attributes.api_key],
+            mapper,
+            [...path, ...innerPath, 'attributes', field.attributes.api_key],
+          );
       }
 
       return newBlock;

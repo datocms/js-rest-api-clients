@@ -10,7 +10,7 @@ import type {
   ToItemDefinitionAsRequest,
   ToItemDefinitionWithNestedBlocks,
 } from './itemDefinition';
-import { mapBlocksInFieldValues } from './recursiveBlocks';
+import { mapBlocksInNonLocalizedFieldValue } from './recursiveBlocks';
 import type { SchemaRepository } from './schemaRepository';
 
 type NoInfer<T> = [T][T extends any ? 0 : never];
@@ -52,22 +52,23 @@ export async function duplicateBlockRecord<
   const fields = await schemaRepository.getRawItemTypeFields(itemType);
 
   for (const field of fields) {
-    newBlock.attributes[field.attributes.api_key] = mapBlocksInFieldValues(
-      schemaRepository,
-      field,
-      newBlock.attributes[field.attributes.api_key],
-      (block, path) => {
-        if (typeof block === 'string') {
-          throw new Error(
-            `Block cannot be duplicated as it contains nested block at ${path.join('.')} that is expressed as ID (${block}) instead of full object!`,
-          );
-        }
+    newBlock.attributes[field.attributes.api_key] =
+      mapBlocksInNonLocalizedFieldValue(
+        schemaRepository,
+        field.attributes.field_type,
+        newBlock.attributes[field.attributes.api_key],
+        (block, path) => {
+          if (typeof block === 'string') {
+            throw new Error(
+              `Block cannot be duplicated as it contains nested block at ${path.join('.')} that is expressed as ID (${block}) instead of full object!`,
+            );
+          }
 
-        const { id, meta, ...blockWithoutIdAndMeta } = block;
+          const { id, meta, ...blockWithoutIdAndMeta } = block;
 
-        return blockWithoutIdAndMeta;
-      },
-    );
+          return blockWithoutIdAndMeta;
+        },
+      );
   }
 
   return newBlock as NewBlockInARequest<ToItemDefinitionAsRequest<NoInfer<D>>>;

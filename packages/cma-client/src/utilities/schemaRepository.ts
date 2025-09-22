@@ -34,7 +34,7 @@ interface GenericClient {
  * - **Caching schema entities**: Automatically caches item types, fields, fieldsets,
  *   and plugins after the first API request, returning cached results on subsequent calls
  * - **Complex traversal operations**: Essential when using utilities like
- *   `mapBlocksInFieldValues()` that need to repeatedly lookup block models and fields
+ *   `mapBlocksInNonLocalizedFieldValue()` that need to repeatedly lookup block models and fields
  *   while traversing nested content structures
  * - **Bulk operations**: Ideal for scripts that process multiple records of different
  *   types and need efficient access to schema information
@@ -66,7 +66,7 @@ interface GenericClient {
  * const sameBlogPost = await schemaRepository.getItemTypeByApiKey('blog_post');
  *
  * // Pass the repository to utilities that need schema information
- * await mapBlocksInFieldValues(schemaRepository, record, (block) => {
+ * await mapBlocksInNonLocalizedFieldValue(schemaRepository, record, (block) => {
  *   // The utility will use the cached schema data internally
  * });
  * ```
