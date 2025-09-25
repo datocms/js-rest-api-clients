@@ -15,7 +15,7 @@ describe('field', () => {
       field_type: 'file',
       localized: false,
       api_key: 'image',
-      validators: { required: {} },
+      validators: { required: {} }
     });
     expect(field.label).toEqual('Image');
 

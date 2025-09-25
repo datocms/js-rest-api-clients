@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`item (explicit typing with item definitions) simple methods field values are correctly typed 1`] = `
+{
+  "__itemTypeId": "cr3EA7ueQtaJyV91jyiEyw",
+  "attributes": {
+    "rich_text": [
+      {
+        "__itemTypeId": "cr3EA7ueQtaJyV91jyiEyw",
+        "attributes": {
+          "rich_text": [],
+          "single_block": null,
+          "structured_text": null,
+          "title": "Rich Text: Level 2",
+        },
+        "relationships": {
+          "item_type": {
+            "data": {
+              "id": "cr3EA7ueQtaJyV91jyiEyw",
+              "type": "item_type",
+            },
+          },
+        },
+        "type": "item",
+      },
+    ],
+    "single_block": null,
+    "structured_text": null,
+    "title": "Rich Text: Level 1",
+  },
+  "relationships": {
+    "item_type": {
+      "data": {
+        "id": "cr3EA7ueQtaJyV91jyiEyw",
+        "type": "item_type",
+      },
+    },
+  },
+  "type": "item",
+}
+`;

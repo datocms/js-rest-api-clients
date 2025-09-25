@@ -7133,8 +7133,8 @@ export type ItemValidateExistingSchema<
           | OrganizationData;
       };
     };
+    __itemTypeId?: D['itemTypeId'];
   };
-  __itemTypeId?: D['itemTypeId'];
 };
 /**
  * This interface was referenced by `Item`'s JSON-Schema
@@ -7168,8 +7168,8 @@ export type ItemValidateNewSchema<
           | OrganizationData;
       };
     };
+    __itemTypeId?: D['itemTypeId'];
   };
-  __itemTypeId?: D['itemTypeId'];
 };
 /**
  * This interface was referenced by `Item`'s JSON-Schema
@@ -7249,8 +7249,8 @@ export type ItemCreateSchema<
           | OrganizationData;
       };
     };
+    __itemTypeId?: D['itemTypeId'];
   };
-  __itemTypeId?: D['itemTypeId'];
 };
 /**
  * This interface was referenced by `Item`'s JSON-Schema
@@ -7381,8 +7381,8 @@ export type ItemUpdateSchema<
           | OrganizationData;
       };
     };
+    __itemTypeId?: D['itemTypeId'];
   };
-  __itemTypeId?: D['itemTypeId'];
 };
 /**
  * This interface was referenced by `Item`'s JSON-Schema

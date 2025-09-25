@@ -2,11 +2,10 @@ import type * as RawApiTypes from '../generated/RawApiTypes';
 import { isValidId } from '../utilities/id';
 import type {
   ItemTypeDefinition,
-  ToItemAttributesInRequest,
+  ToItemAttributesInRequest
 } from '../utilities/itemDefinition';
 import {
-  type LocalizedFieldValue,
-  isLocalizedFieldValue,
+  isLocalizedFieldValue, type LocalizedFieldValue
 } from '../utilities/normalizedFieldValues';
 
 import type { FramedSingleBlockEditorConfiguration } from './appearance/framed_single_block';
@@ -68,7 +67,7 @@ export type UpdatedBlockInRequest<
   __itemTypeId?: D['itemTypeId'];
   type: RawApiTypes.ItemType1;
   id: RawApiTypes.ItemIdentity;
-  relationships?: RawApiTypes.ItemRelationships<D>;
+  relationships: RawApiTypes.ItemRelationships<D>;
   meta?: RawApiTypes.ItemMeta;
   attributes: ToItemAttributesInRequest<D>;
 };
@@ -265,19 +264,19 @@ export type SingleBlockFieldValidators = {
 
 export type SingleBlockFieldAppearance =
   | {
-      editor: 'framed_single_block';
-      parameters: FramedSingleBlockEditorConfiguration;
-    }
+    editor: 'framed_single_block';
+    parameters: FramedSingleBlockEditorConfiguration;
+  }
   | {
-      editor: 'frameless_single_block';
-      parameters: FramelessSingleBlockEditorConfiguration;
-    }
+    editor: 'frameless_single_block';
+    parameters: FramelessSingleBlockEditorConfiguration;
+  }
   | {
-      /** Plugin ID */
-      editor: string;
-      /** Plugin configuration */
-      parameters: Record<string, unknown>;
-    };
+    /** Plugin ID */
+    editor: string;
+    /** Plugin configuration */
+    parameters: Record<string, unknown>;
+  };
 
 // UTILITIES
 

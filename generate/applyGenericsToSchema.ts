@@ -32,6 +32,9 @@ import ts from 'typescript';
  *      remove it and instead intersect the type with:
  *        ToItemAttributesInRequest<D>
  *    - Replace ItemTypeData with ItemTypeData<D>
+ *    - Add __itemTypeId?: D['itemTypeId'] property:
+ *        - If type has a "data" property, add it inside the "data" object
+ *        - Otherwise, add it at the top level
  *
  * 5. ItemRelationships
  *    - Add generic:
@@ -282,6 +285,17 @@ export function applyGenerics(sourceCode: string): string {
       ),
     );
 
+    // Check if the type has a "data" property
+    let hasDataProperty = false;
+    if (ts.isTypeLiteralNode(transformedType)) {
+      hasDataProperty = transformedType.members.some(
+        (member) =>
+          ts.isPropertySignature(member) &&
+          ts.isIdentifier(member.name) &&
+          member.name.text === 'data',
+      );
+    }
+
     // If the type is a TypeLiteral with a top-level {[k: string]: unknown},
     // remove it and instead intersect ToItemAttributesInRequest<D>
     if (ts.isTypeLiteralNode(transformedType)) {
@@ -292,22 +306,59 @@ export function applyGenerics(sourceCode: string): string {
       const hadIndexSignature =
         membersWithoutIndex.length !== transformedType.members.length;
 
-      if (hadIndexSignature) {
-        finalType = ts.factory.createIntersectionTypeNode([
-          ts.factory.createTypeLiteralNode([
-            ...membersWithoutIndex,
-            itemTypeIdProperty,
-          ]),
-          ts.factory.createTypeReferenceNode('ToItemAttributesInRequest', [
-            ts.factory.createTypeReferenceNode('D', undefined),
-          ]),
-        ]);
+      if (hasDataProperty) {
+        // Add __itemTypeId inside the data property
+        const updatedMembers = membersWithoutIndex.map((member) => {
+          if (
+            ts.isPropertySignature(member) &&
+            ts.isIdentifier(member.name) &&
+            member.name.text === 'data' &&
+            member.type &&
+            ts.isTypeLiteralNode(member.type)
+          ) {
+            return ts.factory.updatePropertySignature(
+              member,
+              member.modifiers,
+              member.name,
+              member.questionToken,
+              ts.factory.createTypeLiteralNode([
+                ...member.type.members,
+                itemTypeIdProperty,
+              ]),
+            );
+          }
+          return member;
+        });
+
+        if (hadIndexSignature) {
+          finalType = ts.factory.createIntersectionTypeNode([
+            ts.factory.createTypeLiteralNode(updatedMembers),
+            ts.factory.createTypeReferenceNode('ToItemAttributesInRequest', [
+              ts.factory.createTypeReferenceNode('D', undefined),
+            ]),
+          ]);
+        } else {
+          finalType = ts.factory.createTypeLiteralNode(updatedMembers);
+        }
       } else {
-        // No index signature, just add the property to existing members
-        finalType = ts.factory.createTypeLiteralNode([
-          ...transformedType.members,
-          itemTypeIdProperty,
-        ]);
+        // No data property, add __itemTypeId at top level
+        if (hadIndexSignature) {
+          finalType = ts.factory.createIntersectionTypeNode([
+            ts.factory.createTypeLiteralNode([
+              ...membersWithoutIndex,
+              itemTypeIdProperty,
+            ]),
+            ts.factory.createTypeReferenceNode('ToItemAttributesInRequest', [
+              ts.factory.createTypeReferenceNode('D', undefined),
+            ]),
+          ]);
+        } else {
+          // No index signature, just add the property to existing members
+          finalType = ts.factory.createTypeLiteralNode([
+            ...transformedType.members,
+            itemTypeIdProperty,
+          ]);
+        }
       }
     } else {
       // If it's not a type literal, intersect with a type containing __itemTypeId
