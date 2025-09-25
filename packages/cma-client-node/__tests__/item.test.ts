@@ -253,12 +253,12 @@ describe('item', () => {
 
     expect((item.content as string[]).length).toEqual(2);
 
-    const itemWithNestedBlocks = await client.items.find(item.id, {
+    const itemInNestedResponse = await client.items.find(item.id, {
       nested: true,
     });
 
     await client.items.update(item.id, {
-      content: (itemWithNestedBlocks.content as RawApiTypes.Item[]).map(
+      content: (itemInNestedResponse.content as RawApiTypes.Item[]).map(
         (block) =>
           buildBlockRecord({
             id: block.id,
@@ -268,12 +268,12 @@ describe('item', () => {
       ),
     });
 
-    const updatedItemWithNestedBlocks = await client.items.find(item.id, {
+    const updatedItemInNestedResponse = await client.items.find(item.id, {
       nested: true,
     });
 
     const updatedContent =
-      updatedItemWithNestedBlocks.content as RawApiTypes.Item[];
+      updatedItemInNestedResponse.content as RawApiTypes.Item[];
 
     expect(updatedContent[0]!.attributes.text).toEqual('Updated Foo');
     expect(updatedContent[1]!.attributes.text).toEqual('Updated Bar');

@@ -1,12 +1,13 @@
-import type * as RawApiTypes from '../generated/RawApiTypes';
-import type { ItemDefinition } from '../utilities/itemDefinition';
+import { isValidId } from '../utilities/id';
+import type { ItemTypeDefinition } from '../utilities/itemDefinition';
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
 } from '../utilities/normalizedFieldValues';
 import type { RichTextEditorConfiguration } from './appearance/rich_text';
 import {
-  type BlockItemInARequest,
+  type BlockInNestedResponse,
+  type BlockInRequest,
   isItemId,
   isItemWithOptionalIdAndMeta,
   isItemWithOptionalMeta,
@@ -64,9 +65,9 @@ export type RichTextFieldValue = string[];
  * - RawApiTypes.Item: Full block object with ID (for updates)
  * - Omit<RawApiTypes.Item, 'id'>: Block object without ID (for creation)
  */
-export type RichTextFieldValueAsRequest<
-  D extends ItemDefinition = ItemDefinition,
-> = BlockItemInARequest<D>[] | null;
+export type RichTextFieldValueInRequest<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = BlockInRequest<D>[] | null;
 
 /**
  * =============================================================================
@@ -81,9 +82,9 @@ export type RichTextFieldValueAsRequest<
 /**
  * Modular Content field value with nested blocks - array of fully populated block objects
  */
-export type RichTextFieldValueWithNestedBlocks<
-  D extends ItemDefinition = ItemDefinition,
-> = RawApiTypes.Item<D>[];
+export type RichTextFieldValueInNestedResponse<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = BlockInNestedResponse<D>[];
 
 /**
  * =============================================================================
@@ -99,7 +100,8 @@ export function isRichTextFieldValue(
   value: unknown,
 ): value is RichTextFieldValue {
   return (
-    Array.isArray(value) && value.every((block) => typeof block === 'string')
+    Array.isArray(value) &&
+    value.every((block) => typeof block === 'string' && isValidId(block))
   );
 }
 
@@ -116,9 +118,9 @@ export function isLocalizedRichTextFieldValue(
  * Type guard for Modular Content field values in API request format.
  * Allows blocks as string IDs, full objects with IDs, or objects without IDs.
  */
-export function isRichTextFieldValueAsRequest<
-  D extends ItemDefinition = ItemDefinition,
->(value: unknown): value is RichTextFieldValueAsRequest<D> {
+export function isRichTextFieldValueInRequest<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+>(value: unknown): value is RichTextFieldValueInRequest<D> {
   if (value === null) return true;
 
   if (!Array.isArray(value)) return false;
@@ -132,14 +134,14 @@ export function isRichTextFieldValueAsRequest<
   });
 }
 
-export function isLocalizedRichTextFieldValueAsRequest<
-  D extends ItemDefinition = ItemDefinition,
+export function isLocalizedRichTextFieldValueInRequest<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
 >(
   value: unknown,
-): value is LocalizedFieldValue<RichTextFieldValueAsRequest<D>> {
+): value is LocalizedFieldValue<RichTextFieldValueInRequest<D>> {
   return (
     isLocalizedFieldValue(value) &&
-    Object.values(value).every(isRichTextFieldValueAsRequest)
+    Object.values(value).every(isRichTextFieldValueInRequest)
   );
 }
 
@@ -147,9 +149,9 @@ export function isLocalizedRichTextFieldValueAsRequest<
  * Type guard for Modular Content field values with nested blocks (?nested=true format).
  * Ensures all blocks are full RawApiTypes.Item objects with complete data.
  */
-export function isRichTextFieldValueWithNestedBlocks<
-  D extends ItemDefinition = ItemDefinition,
->(value: unknown): value is RichTextFieldValueWithNestedBlocks<D> {
+export function isRichTextFieldValueInNestedResponse<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+>(value: unknown): value is RichTextFieldValueInNestedResponse<D> {
   if (!Array.isArray(value)) return false;
 
   return value.every((block) => {
@@ -158,14 +160,14 @@ export function isRichTextFieldValueWithNestedBlocks<
   });
 }
 
-export function isLocalizedRichTextFieldValueWithNestedBlocks<
-  D extends ItemDefinition = ItemDefinition,
+export function isLocalizedRichTextFieldValueInNestedResponse<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
 >(
   value: unknown,
-): value is LocalizedFieldValue<RichTextFieldValueWithNestedBlocks<D>> {
+): value is LocalizedFieldValue<RichTextFieldValueInNestedResponse<D>> {
   return (
     isLocalizedFieldValue(value) &&
-    Object.values(value).every(isRichTextFieldValueWithNestedBlocks)
+    Object.values(value).every(isRichTextFieldValueInNestedResponse)
   );
 }
 

@@ -66,7 +66,7 @@ export type FileFieldValue = {
 /**
  * File field value for API requests - metadata fields are optional
  */
-export type FileFieldValueAsRequest = {
+export type FileFieldValueInRequest = {
   upload_id: string;
   alt?: string | null;
   title?: string | null;
@@ -103,9 +103,9 @@ export function isFileFieldValue(value: unknown): value is FileFieldValue {
  * Type guard for File field values in API request format.
  * Allows metadata fields to be optional or omitted.
  */
-export function isFileFieldValueAsRequest(
+export function isFileFieldValueInRequest(
   value: unknown,
-): value is FileFieldValueAsRequest {
+): value is FileFieldValueInRequest {
   if (value === null) return true;
   return typeof value === 'object' && value !== null && 'upload_id' in value;
 }
@@ -118,12 +118,12 @@ export function isLocalizedFileFieldValue(
   );
 }
 
-export function isLocalizedFileFieldValueAsRequest(
+export function isLocalizedFileFieldValueInRequest(
   value: unknown,
-): value is LocalizedFieldValue<FileFieldValueAsRequest> {
+): value is LocalizedFieldValue<FileFieldValueInRequest> {
   return (
     isLocalizedFieldValue(value) &&
-    Object.values(value).every(isFileFieldValueAsRequest)
+    Object.values(value).every(isFileFieldValueInRequest)
   );
 }
 

@@ -6,14 +6,14 @@ All notable changes to this project will be documented in this file.
 
 - **Complete Field Type System**: Full TypeScript definitions for all 20 DatoCMS field types. Every field type now offers:
   - A type representing the field value (e.g., `StringFieldValue`)
-  - A type for API requests (e.g., `StringFieldValueAsRequest`)
+  - A type for API requests (e.g., `StringFieldValueInRequest`)
   - Type guards for runtime validation (e.g., `isStringFieldValue()`, `isLocalizedStringFieldValue()`)
   - Validators configuration (e.g., `StringFieldValidators`)
   - Appearance configuration (e.g., `StringFieldAppearance`)
   - Block fields (`structured_text`, `rich_text`, `single_block`) additionally offer variants for:
     - Regular API responses with blocks as IDs: `StructuredTextFieldValue`, `isStructuredTextFieldValue()`
-    - "Nested Mode" API responses with blocks as full objects: `StructuredTextFieldValueWithNestedBlocks`, `isStructuredTextFieldValueWithNestedBlocks()`
-    - API Requests, supporting either IDs or full objects: `StructuredTextFieldValueAsRequest`, `isStructuredTextFieldValueAsRequest()`
+    - "Nested Mode" API responses with blocks as full objects: `StructuredTextFieldValueInNestedResponse`, `isStructuredTextFieldValueInNestedResponse()`
+    - API Requests, supporting either IDs or full objects: `StructuredTextFieldValueInRequest`, `isStructuredTextFieldValueInRequest()`
 
 - **`inspectItem()`**: An great new method for displaying your records in the console, making them more visually appealing!
 

@@ -5,63 +5,63 @@ import {
   inspectionTreeNodes,
 } from 'datocms-structured-text-utils';
 import {
-  type BlockItemInARequest,
+  type BlockInRequest,
   type BooleanFieldValue,
   type ColorFieldValue,
   type DateFieldValue,
   type DateTimeFieldValue,
   type FileFieldValue,
-  type FileFieldValueAsRequest,
+  type FileFieldValueInRequest,
   type FloatFieldValue,
   type GalleryFieldValue,
-  type GalleryFieldValueAsRequest,
+  type GalleryFieldValueInRequest,
   type IntegerFieldValue,
   type JsonFieldValue,
   type LatLonFieldValue,
   type LinkFieldValue,
   type LinksFieldValue,
-  type NewBlockInARequest,
+  type NewBlockInRequest,
   type RichTextFieldValue,
-  type RichTextFieldValueAsRequest,
-  type RichTextFieldValueWithNestedBlocks,
+  type RichTextFieldValueInNestedResponse,
+  type RichTextFieldValueInRequest,
   type SeoFieldValue,
   type SingleBlockFieldValue,
-  type SingleBlockFieldValueAsRequest,
-  type SingleBlockFieldValueWithNestedBlocks,
+  type SingleBlockFieldValueInNestedResponse,
+  type SingleBlockFieldValueInRequest,
   type SlugFieldValue,
   type StringFieldValue,
   type StructuredTextFieldValue,
-  type StructuredTextFieldValueAsRequest,
-  type StructuredTextFieldValueWithNestedBlocks,
+  type StructuredTextFieldValueInNestedResponse,
+  type StructuredTextFieldValueInRequest,
   type TextFieldValue,
-  type UpdatedBlockInARequest,
+  type UpdatedBlockInRequest,
   type VideoFieldValue,
   isBooleanFieldValue,
   isColorFieldValue,
   isDateFieldValue,
   isDateTimeFieldValue,
   isFileFieldValue,
-  isFileFieldValueAsRequest,
+  isFileFieldValueInRequest,
   isFloatFieldValue,
   isGalleryFieldValue,
-  isGalleryFieldValueAsRequest,
+  isGalleryFieldValueInRequest,
   isIntegerFieldValue,
   isJsonFieldValue,
   isLatLonFieldValue,
   isLinkFieldValue,
   isLinksFieldValue,
   isRichTextFieldValue,
-  isRichTextFieldValueAsRequest,
-  isRichTextFieldValueWithNestedBlocks,
+  isRichTextFieldValueInNestedResponse,
+  isRichTextFieldValueInRequest,
   isSeoFieldValue,
   isSingleBlockFieldValue,
-  isSingleBlockFieldValueAsRequest,
-  isSingleBlockFieldValueWithNestedBlocks,
+  isSingleBlockFieldValueInNestedResponse,
+  isSingleBlockFieldValueInRequest,
   isSlugFieldValue,
   isStringFieldValue,
   isStructuredTextFieldValue,
-  isStructuredTextFieldValueAsRequest,
-  isStructuredTextFieldValueWithNestedBlocks,
+  isStructuredTextFieldValueInNestedResponse,
+  isStructuredTextFieldValueInRequest,
   isTextFieldValue,
   isVideoFieldValue,
 } from '../fieldTypes';
@@ -74,8 +74,8 @@ import { isLocalizedFieldValue } from './normalizedFieldValues';
 type Item =
   | ApiTypes.Item
   | RawApiTypes.Item
-  | NewBlockInARequest
-  | UpdatedBlockInARequest
+  | NewBlockInRequest
+  | UpdatedBlockInRequest
   | RawApiTypes.ItemCreateSchema
   | RawApiTypes.ItemUpdateSchema
   | ApiTypes.ItemCreateSchema
@@ -97,9 +97,9 @@ const fieldTypeHandlers: FieldTypeHandler[] = [
   { guard: isDateFieldValue, inspect: dateInspectionTreeNodes },
   { guard: isDateTimeFieldValue, inspect: dateTimeInspectionTreeNodes },
   { guard: isGalleryFieldValue, inspect: galleryInspectionTreeNodes },
-  { guard: isGalleryFieldValueAsRequest, inspect: galleryInspectionTreeNodes },
+  { guard: isGalleryFieldValueInRequest, inspect: galleryInspectionTreeNodes },
   { guard: isFileFieldValue, inspect: fileInspectionTreeNodes },
-  { guard: isFileFieldValueAsRequest, inspect: fileInspectionTreeNodes },
+  { guard: isFileFieldValueInRequest, inspect: fileInspectionTreeNodes },
   { guard: isJsonFieldValue, inspect: jsonInspectionTreeNodes },
   { guard: isSlugFieldValue, inspect: slugInspectionTreeNodes },
   { guard: isStringFieldValue, inspect: stringInspectionTreeNodes },
@@ -114,29 +114,29 @@ const fieldTypeHandlers: FieldTypeHandler[] = [
     inspect: structuredTextInspectionTreeNodes,
   },
   {
-    guard: isStructuredTextFieldValueAsRequest,
+    guard: isStructuredTextFieldValueInRequest,
     inspect: structuredTextInspectionTreeNodes,
   },
   {
-    guard: isStructuredTextFieldValueWithNestedBlocks,
+    guard: isStructuredTextFieldValueInNestedResponse,
     inspect: structuredTextInspectionTreeNodes,
   },
   { guard: isSingleBlockFieldValue, inspect: singleBlockInspectionTreeNodes },
   {
-    guard: isSingleBlockFieldValueAsRequest,
+    guard: isSingleBlockFieldValueInRequest,
     inspect: singleBlockInspectionTreeNodes,
   },
   {
-    guard: isSingleBlockFieldValueWithNestedBlocks,
+    guard: isSingleBlockFieldValueInNestedResponse,
     inspect: singleBlockInspectionTreeNodes,
   },
   { guard: isRichTextFieldValue, inspect: richTextInspectionTreeNodes },
   {
-    guard: isRichTextFieldValueAsRequest,
+    guard: isRichTextFieldValueInRequest,
     inspect: richTextInspectionTreeNodes,
   },
   {
-    guard: isRichTextFieldValueWithNestedBlocks,
+    guard: isRichTextFieldValueInNestedResponse,
     inspect: richTextInspectionTreeNodes,
   },
 ];
@@ -277,13 +277,13 @@ function itemInspectionTreeNodes(
 function structuredTextInspectionTreeNodes(
   value:
     | StructuredTextFieldValue
-    | StructuredTextFieldValueAsRequest
-    | StructuredTextFieldValueWithNestedBlocks,
+    | StructuredTextFieldValueInRequest
+    | StructuredTextFieldValueInNestedResponse,
   options?: InspectItemOptions,
 ) {
   if (value === null) return 'null';
 
-  return inspectionTreeNodes<BlockItemInARequest, BlockItemInARequest>(value, {
+  return inspectionTreeNodes<BlockInRequest, BlockInRequest>(value, {
     maxWidth: options?.maxWidth || 80,
     blockFormatter: (block, maxWidth) => {
       if (typeof block === 'string') {
@@ -298,8 +298,8 @@ function structuredTextInspectionTreeNodes(
 function singleBlockInspectionTreeNodes(
   value:
     | SingleBlockFieldValue
-    | SingleBlockFieldValueAsRequest
-    | SingleBlockFieldValueWithNestedBlocks,
+    | SingleBlockFieldValueInRequest
+    | SingleBlockFieldValueInNestedResponse,
   options?: InspectItemOptions,
 ) {
   if (value === null) return 'null';
@@ -310,8 +310,8 @@ function singleBlockInspectionTreeNodes(
 function richTextInspectionTreeNodes(
   value:
     | RichTextFieldValue
-    | RichTextFieldValueAsRequest
-    | RichTextFieldValueWithNestedBlocks,
+    | RichTextFieldValueInRequest
+    | RichTextFieldValueInNestedResponse,
   options?: InspectItemOptions,
 ): string | TreeNode[] {
   if (value === null) return 'null';
@@ -354,7 +354,7 @@ function dateTimeInspectionTreeNodes(value: DateTimeFieldValue): string {
 }
 
 function fileInspectionTreeNodes(
-  value: FileFieldValue | FileFieldValueAsRequest,
+  value: FileFieldValue | FileFieldValueInRequest,
   options?: InspectItemOptions,
 ): string | TreeNode[] {
   if (value === null) return 'null';
@@ -396,7 +396,7 @@ function floatInspectionTreeNodes(value: FloatFieldValue): string {
 }
 
 function galleryInspectionTreeNodes(
-  value: GalleryFieldValue | GalleryFieldValueAsRequest,
+  value: GalleryFieldValue | GalleryFieldValueInRequest,
   options?: InspectItemOptions,
 ): string | TreeNode[] {
   if (!value || value.length === 0) return '[]';

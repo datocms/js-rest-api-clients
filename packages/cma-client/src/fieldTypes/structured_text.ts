@@ -8,15 +8,16 @@ import {
   isDocument,
   isInlineBlock,
 } from 'datocms-structured-text-utils';
-import type * as RawApiTypes from '../generated/RawApiTypes';
-import type { ItemDefinition } from '../utilities/itemDefinition';
+import { isValidId } from '../utilities/id';
+import type { ItemTypeDefinition } from '../utilities/itemDefinition';
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
 } from '../utilities/normalizedFieldValues';
 import type { StructuredTextEditorConfiguration } from './appearance/structured_text';
 import {
-  type BlockItemInARequest,
+  type BlockInNestedResponse,
+  type BlockInRequest,
   isItemId,
   isItemWithOptionalIdAndMeta,
   isItemWithOptionalMeta,
@@ -60,25 +61,26 @@ import type { StructuredTextLinksValidator } from './validators/structured_text_
 /**
  * Variant of 'block' structured text node for API requests
  */
-export type BlockAsRequest<D extends ItemDefinition = ItemDefinition> = Block<
-  BlockItemInARequest<D>
->;
+export type BlockNodeInRequest<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = Block<BlockInRequest<D>>;
 
 /**
  * Variant of 'inlineBlock' structured text node for API requests
  */
-export type InlineBlockAsRequest<D extends ItemDefinition = ItemDefinition> =
-  InlineBlock<BlockItemInARequest<D>>;
+export type InlineBlockNodeInRequest<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = InlineBlock<BlockInRequest<D>>;
 
 /**
  * Variant of Structured Text document for API requests
  */
-export type DocumentAsRequest<
-  BlockItemDefinition extends ItemDefinition = ItemDefinition,
-  InlineBlockItemDefinition extends ItemDefinition = ItemDefinition,
+export type DocumentInRequest<
+  BlockItemTypeDefinition extends ItemTypeDefinition = ItemTypeDefinition,
+  InlineBlockItemTypeDefinition extends ItemTypeDefinition = ItemTypeDefinition,
 > = Document<
-  BlockItemInARequest<BlockItemDefinition>,
-  BlockItemInARequest<InlineBlockItemDefinition>
+  BlockInRequest<BlockItemTypeDefinition>,
+  BlockInRequest<InlineBlockItemTypeDefinition>
 >;
 
 /**
@@ -94,25 +96,26 @@ export type DocumentAsRequest<
 /**
  * Variant of 'block' structured text node for ?nested=true API responses
  */
-export type BlockWithNestedBlocks<D extends ItemDefinition = ItemDefinition> =
-  Block<RawApiTypes.Item<D>>;
+export type BlockNodeInNestedResponse<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = Block<BlockInNestedResponse<D>>;
 
 /**
  * Variant of 'inlineBlock' structured text node for ?nested=true API responses
  */
-export type InlineBlockWithNestedBlocks<
-  D extends ItemDefinition = ItemDefinition,
-> = InlineBlock<RawApiTypes.Item<D>>;
+export type InlineBlockNodeInNestedResponse<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = InlineBlock<BlockInNestedResponse<D>>;
 
 /**
  * Variant of Structured Text document for ?nested=true API responses
  */
-export type DocumentWithNestedBlocks<
-  BlockItemDefinition extends ItemDefinition = ItemDefinition,
-  InlineBlockItemDefinition extends ItemDefinition = ItemDefinition,
+export type DocumentInNestedResponse<
+  BlockItemTypeDefinition extends ItemTypeDefinition = ItemTypeDefinition,
+  InlineBlockItemTypeDefinition extends ItemTypeDefinition = ItemTypeDefinition,
 > = Document<
-  RawApiTypes.Item<BlockItemDefinition>,
-  RawApiTypes.Item<InlineBlockItemDefinition>
+  BlockInNestedResponse<BlockItemTypeDefinition>,
+  BlockInNestedResponse<InlineBlockItemTypeDefinition>
 >;
 
 /**
@@ -126,16 +129,19 @@ export type DocumentWithNestedBlocks<
  * Can be null (empty field) or a document with blocks as string IDs
  */
 export type StructuredTextFieldValue = Document | null;
-export type StructuredTextFieldValueAsRequest<
-  BlockItemDefinition extends ItemDefinition = ItemDefinition,
-  InlineBlockItemDefinition extends ItemDefinition = ItemDefinition,
-> = DocumentAsRequest<BlockItemDefinition, InlineBlockItemDefinition> | null;
-export type StructuredTextFieldValueWithNestedBlocks<
-  BlockItemDefinition extends ItemDefinition = ItemDefinition,
-  InlineBlockItemDefinition extends ItemDefinition = ItemDefinition,
-> = DocumentWithNestedBlocks<
-  BlockItemDefinition,
-  InlineBlockItemDefinition
+export type StructuredTextFieldValueInRequest<
+  BlockItemTypeDefinition extends ItemTypeDefinition = ItemTypeDefinition,
+  InlineBlockItemTypeDefinition extends ItemTypeDefinition = ItemTypeDefinition,
+> = DocumentInRequest<
+  BlockItemTypeDefinition,
+  InlineBlockItemTypeDefinition
+> | null;
+export type StructuredTextFieldValueInNestedResponse<
+  BlockItemTypeDefinition extends ItemTypeDefinition = ItemTypeDefinition,
+  InlineBlockItemTypeDefinition extends ItemTypeDefinition = ItemTypeDefinition,
+> = DocumentInNestedResponse<
+  BlockItemTypeDefinition,
+  InlineBlockItemTypeDefinition
 > | null;
 
 /**
@@ -171,7 +177,7 @@ export function isStructuredTextFieldValue(
 
   // Check that all block/inlineBlock nodes have string item IDs
   return validateAllBlockNodes(value.document, (node) => {
-    return typeof node.item === 'string';
+    return typeof node.item === 'string' && isValidId(node.item);
   });
 }
 
@@ -188,14 +194,14 @@ export function isLocalizedStructuredTextFieldValue(
  * Type guard for structured text field values in API request format.
  * Allows blocks as string IDs, full objects with IDs, or objects without IDs.
  */
-export function isStructuredTextFieldValueAsRequest<
-  BlockItemDefinition extends ItemDefinition = ItemDefinition,
-  InlineBlockItemDefinition extends ItemDefinition = ItemDefinition,
+export function isStructuredTextFieldValueInRequest<
+  BlockItemTypeDefinition extends ItemTypeDefinition = ItemTypeDefinition,
+  InlineBlockItemTypeDefinition extends ItemTypeDefinition = ItemTypeDefinition,
 >(
   value: unknown,
-): value is StructuredTextFieldValueAsRequest<
-  BlockItemDefinition,
-  InlineBlockItemDefinition
+): value is StructuredTextFieldValueInRequest<
+  BlockItemTypeDefinition,
+  InlineBlockItemTypeDefinition
 > {
   if (value === null) return true;
 
@@ -215,14 +221,14 @@ export function isStructuredTextFieldValueAsRequest<
   });
 }
 
-export function isLocalizedStructuredTextFieldValueAsRequest<
-  D extends ItemDefinition = ItemDefinition,
+export function isLocalizedStructuredTextFieldValueInRequest<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
 >(
   value: unknown,
-): value is LocalizedFieldValue<StructuredTextFieldValueAsRequest<D>> {
+): value is LocalizedFieldValue<StructuredTextFieldValueInRequest<D>> {
   return (
     isLocalizedFieldValue(value) &&
-    Object.values(value).every(isStructuredTextFieldValueAsRequest)
+    Object.values(value).every(isStructuredTextFieldValueInRequest)
   );
 }
 
@@ -230,9 +236,9 @@ export function isLocalizedStructuredTextFieldValueAsRequest<
  * Type guard for structured text field values with nested blocks (?nested=true format).
  * Ensures all block/inlineBlock nodes have full RawApiTypes.Item objects.
  */
-export function isStructuredTextFieldValueWithNestedBlocks<
-  D extends ItemDefinition = ItemDefinition,
->(value: unknown): value is StructuredTextFieldValueWithNestedBlocks<D> {
+export function isStructuredTextFieldValueInNestedResponse<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+>(value: unknown): value is StructuredTextFieldValueInNestedResponse<D> {
   if (value === null) return true;
 
   if (!isDocument<unknown>(value)) {
@@ -248,14 +254,14 @@ export function isStructuredTextFieldValueWithNestedBlocks<
   });
 }
 
-export function isLocalizedStructuredTextFieldValueWithNestedBlocks<
-  D extends ItemDefinition = ItemDefinition,
+export function isLocalizedStructuredTextFieldValueInNestedResponse<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
 >(
   value: unknown,
-): value is LocalizedFieldValue<StructuredTextFieldValueWithNestedBlocks<D>> {
+): value is LocalizedFieldValue<StructuredTextFieldValueInNestedResponse<D>> {
   return (
     isLocalizedFieldValue(value) &&
-    Object.values(value).every(isStructuredTextFieldValueWithNestedBlocks)
+    Object.values(value).every(isStructuredTextFieldValueInNestedResponse)
   );
 }
 

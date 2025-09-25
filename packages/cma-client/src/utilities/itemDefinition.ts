@@ -1,30 +1,32 @@
 import type {
+  BlockInNestedResponse,
+  BlockInRequest,
   BooleanFieldValue,
   ColorFieldValue,
   DateFieldValue,
   DateTimeFieldValue,
   FileFieldValue,
-  FileFieldValueAsRequest,
+  FileFieldValueInRequest,
   FloatFieldValue,
   GalleryFieldValue,
-  GalleryFieldValueAsRequest,
+  GalleryFieldValueInRequest,
   IntegerFieldValue,
   JsonFieldValue,
   LatLonFieldValue,
   LinkFieldValue,
   LinksFieldValue,
   RichTextFieldValue,
-  RichTextFieldValueAsRequest,
-  RichTextFieldValueWithNestedBlocks,
+  RichTextFieldValueInNestedResponse,
+  RichTextFieldValueInRequest,
   SeoFieldValue,
   SingleBlockFieldValue,
-  SingleBlockFieldValueAsRequest,
-  SingleBlockFieldValueWithNestedBlocks,
+  SingleBlockFieldValueInNestedResponse,
+  SingleBlockFieldValueInRequest,
   SlugFieldValue,
   StringFieldValue,
   StructuredTextFieldValue,
-  StructuredTextFieldValueAsRequest,
-  StructuredTextFieldValueWithNestedBlocks,
+  StructuredTextFieldValueInNestedResponse,
+  StructuredTextFieldValueInRequest,
   TextFieldValue,
   VideoFieldValue,
 } from '../fieldTypes';
@@ -87,15 +89,6 @@ export type ItemTypeDefinition<
   fields: FieldDefinitions;
 };
 
-/** Item definition */
-export type ItemDefinition<
-  ItemTypeId extends string = string,
-  FieldValues extends Record<string, unknown> = Record<string, unknown>,
-> = {
-  itemTypeId: ItemTypeId;
-  fields: FieldValues;
-};
-
 /** Standard field values (response format) */
 type FieldTypeToValue = {
   boolean: BooleanFieldValue;
@@ -122,25 +115,25 @@ type FieldTypeToValue = {
 };
 
 /** Request field values (request format with optional metadata) */
-type FieldTypeToValueAsRequest = {
+type FieldTypeToValueInRequest = {
   boolean: BooleanFieldValue;
   color: ColorFieldValue;
   date: DateFieldValue;
   date_time: DateTimeFieldValue;
-  file: FileFieldValueAsRequest;
+  file: FileFieldValueInRequest;
   float: FloatFieldValue;
-  gallery: GalleryFieldValueAsRequest;
+  gallery: GalleryFieldValueInRequest;
   integer: IntegerFieldValue;
   json: JsonFieldValue;
   lat_lon: LatLonFieldValue;
   link: LinkFieldValue;
   links: LinksFieldValue;
-  rich_text: RichTextFieldValueAsRequest;
+  rich_text: RichTextFieldValueInRequest;
   seo: SeoFieldValue;
-  single_block: SingleBlockFieldValueAsRequest;
+  single_block: SingleBlockFieldValueInRequest;
   slug: SlugFieldValue;
   string: StringFieldValue;
-  structured_text: StructuredTextFieldValueAsRequest;
+  structured_text: StructuredTextFieldValueInRequest;
   text: TextFieldValue;
   video: VideoFieldValue;
   unknown: unknown;
@@ -159,116 +152,134 @@ type FieldDefinitionToFieldValue<
   Locales extends string,
 > = LocalizeIfNeeded<T, FieldTypeToValue[T['type']], Locales>;
 
-/** AsRequest mapping (block fields become generic over allowed blocks) */
-type FieldDefinitionToFieldValueAsRequest<
+/** InRequest mapping (block fields become generic over allowed blocks) */
+type FieldDefinitionToFieldValueInRequest<
   T extends FieldDefinition,
   Locales extends string,
 > = T extends RichTextFieldDefinition<infer B>
-  ? LocalizeIfNeeded<
-      T,
-      RichTextFieldValueAsRequest<ToItemDefinitionAsRequest<B>>,
-      Locales
-    >
+  ? LocalizeIfNeeded<T, RichTextFieldValueInRequest<B>, Locales>
   : T extends SingleBlockFieldDefinition<infer B>
-    ? LocalizeIfNeeded<
-        T,
-        SingleBlockFieldValueAsRequest<ToItemDefinitionAsRequest<B>>,
-        Locales
-      >
+    ? LocalizeIfNeeded<T, SingleBlockFieldValueInRequest<B>, Locales>
     : T extends StructuredTextFieldDefinition<infer B, infer I>
       ? LocalizeIfNeeded<
           T,
-          StructuredTextFieldValueAsRequest<
-            T extends { blocks: any } ? ToItemDefinitionAsRequest<B> : never,
-            T extends { inline_blocks: any }
-              ? ToItemDefinitionAsRequest<I>
-              : never
+          StructuredTextFieldValueInRequest<
+            T extends { blocks: any } ? B : never,
+            T extends { inline_blocks: any } ? I : never
           >,
           Locales
         >
-      : LocalizeIfNeeded<T, FieldTypeToValueAsRequest[T['type']], Locales>;
+      : LocalizeIfNeeded<T, FieldTypeToValueInRequest[T['type']], Locales>;
 
-type FieldDefinitionToFieldValueWithNestedBlocks<
+type FieldDefinitionToFieldValueInNestedResponse<
   T extends FieldDefinition,
   Locales extends string,
 > = T extends RichTextFieldDefinition<infer B>
-  ? LocalizeIfNeeded<
-      T,
-      RichTextFieldValueWithNestedBlocks<ToItemDefinitionWithNestedBlocks<B>>,
-      Locales
-    >
+  ? LocalizeIfNeeded<T, RichTextFieldValueInNestedResponse<B>, Locales>
   : T extends SingleBlockFieldDefinition<infer B>
-    ? LocalizeIfNeeded<
-        T,
-        SingleBlockFieldValueWithNestedBlocks<
-          ToItemDefinitionWithNestedBlocks<B>
-        >,
-        Locales
-      >
+    ? LocalizeIfNeeded<T, SingleBlockFieldValueInNestedResponse<B>, Locales>
     : T extends StructuredTextFieldDefinition<infer B, infer I>
       ? LocalizeIfNeeded<
           T,
-          StructuredTextFieldValueWithNestedBlocks<
-            T extends { blocks: any }
-              ? ToItemDefinitionWithNestedBlocks<B>
-              : never,
-            T extends { inline_blocks: any }
-              ? ToItemDefinitionWithNestedBlocks<I>
-              : never
+          StructuredTextFieldValueInNestedResponse<
+            T extends { blocks: any } ? B : never,
+            T extends { inline_blocks: any } ? I : never
           >,
           Locales
         >
       : LocalizeIfNeeded<T, FieldTypeToValue[T['type']], Locales>;
 
 /** Transformers */
-export type ToItemDefinition<T extends ItemTypeDefinition<any, any, any>> =
+export type ToItemAttributes<T extends ItemTypeDefinition<any, any, any>> =
   T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields>
     ? keyof Fields extends never
-      ? ItemDefinition<ItemTypeId>
-      : ItemDefinition<
-          ItemTypeId,
-          {
-            [K in keyof Fields]: Fields[K] extends FieldDefinition
-              ? FieldDefinitionToFieldValue<Fields[K], Settings['locales']>
-              : never;
-          }
-        >
-    : never;
-
-export type ToItemDefinitionAsRequest<
-  T extends ItemTypeDefinition<any, any, any>,
-> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields>
-  ? keyof Fields extends never
-    ? ItemDefinition<ItemTypeId>
-    : ItemDefinition<
-        ItemTypeId,
-        Partial<{
+      ? Record<string, unknown>
+      : {
           [K in keyof Fields]: Fields[K] extends FieldDefinition
-            ? FieldDefinitionToFieldValueAsRequest<
-                Fields[K],
-                Settings['locales']
-              >
-            : never;
-        }>
-      >
-  : never;
-
-export type ToItemDefinitionWithNestedBlocks<
-  T extends ItemTypeDefinition<any, any, any>,
-> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields>
-  ? keyof Fields extends never
-    ? ItemDefinition<ItemTypeId>
-    : ItemDefinition<
-        ItemTypeId,
-        {
-          [K in keyof Fields]: Fields[K] extends FieldDefinition
-            ? FieldDefinitionToFieldValueWithNestedBlocks<
-                Fields[K],
-                Settings['locales']
-              >
+            ? FieldDefinitionToFieldValue<Fields[K], Settings['locales']>
             : never;
         }
-      >
+    : never;
+
+export type ToItemAttributesInRequest<
+  T extends ItemTypeDefinition<any, any, any>,
+> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields>
+  ? keyof Fields extends never
+    ? Record<string, unknown>
+    : Partial<{
+        [K in keyof Fields]: Fields[K] extends FieldDefinition
+          ? FieldDefinitionToFieldValueInRequest<Fields[K], Settings['locales']>
+          : never;
+      }>
   : never;
 
-export type UnknownField = Record<string, unknown>;
+export type ToItemAttributesInNestedResponse<
+  T extends ItemTypeDefinition<any, any, any>,
+> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields>
+  ? keyof Fields extends never
+    ? Record<string, unknown>
+    : {
+        [K in keyof Fields]: Fields[K] extends FieldDefinition
+          ? FieldDefinitionToFieldValueInNestedResponse<
+              Fields[K],
+              Settings['locales']
+            >
+          : never;
+      }
+  : never;
+
+type NestedItemTypeDefinitions<
+  T extends ItemTypeDefinition<any, any, any>,
+  Seen extends string = never,
+> = T extends ItemTypeDefinition<any, infer Id, infer Fields>
+  ? Id extends Seen
+    ? never // we already visited this item type -> stop recursing
+    : {
+        [K in keyof Fields]: Fields[K] extends RichTextFieldDefinition<infer B>
+          ? B | NestedItemTypeDefinitions<B, Seen | Id>
+          : Fields[K] extends SingleBlockFieldDefinition<infer B>
+            ? B | NestedItemTypeDefinitions<B, Seen | Id>
+            : Fields[K] extends StructuredTextFieldDefinition<infer B, infer I>
+              ?
+                  | B
+                  | I
+                  | NestedItemTypeDefinitions<B, Seen | Id>
+                  | NestedItemTypeDefinitions<I, Seen | Id>
+              : never;
+      }[keyof Fields]
+  : never;
+
+export type ExtractNestedBlocksFromFieldValue<T> =
+  T extends RichTextFieldValueInNestedResponse<infer D>
+    ?
+        | BlockInNestedResponse<D>
+        | BlockInNestedResponse<NestedItemTypeDefinitions<D>>
+    : T extends SingleBlockFieldValueInNestedResponse<infer D>
+      ?
+          | BlockInNestedResponse<D>
+          | BlockInNestedResponse<NestedItemTypeDefinitions<D>>
+      : T extends StructuredTextFieldValueInNestedResponse<infer DB, infer DI>
+        ?
+            | BlockInNestedResponse<DB>
+            | BlockInNestedResponse<NestedItemTypeDefinitions<DB>>
+            | BlockInNestedResponse<DI>
+            | BlockInNestedResponse<NestedItemTypeDefinitions<DI>>
+        : T extends StructuredTextFieldValueInNestedResponse<infer D>
+          ?
+              | BlockInNestedResponse<D>
+              | BlockInNestedResponse<NestedItemTypeDefinitions<D>>
+          : T extends RichTextFieldValueInRequest<infer D>
+            ? BlockInRequest<D> | BlockInRequest<NestedItemTypeDefinitions<D>>
+            : T extends SingleBlockFieldValueInRequest<infer D>
+              ? BlockInRequest<D> | BlockInRequest<NestedItemTypeDefinitions<D>>
+              : T extends StructuredTextFieldValueInRequest<infer DB, infer DI>
+                ?
+                    | BlockInRequest<DB>
+                    | BlockInRequest<NestedItemTypeDefinitions<DB>>
+                    | BlockInRequest<DI>
+                    | BlockInRequest<NestedItemTypeDefinitions<DI>>
+                : T extends StructuredTextFieldValueInRequest<infer D>
+                  ?
+                      | BlockInRequest<D>
+                      | BlockInRequest<NestedItemTypeDefinitions<D>>
+                  : never;

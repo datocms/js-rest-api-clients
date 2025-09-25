@@ -1,16 +1,15 @@
-import assert from "node:assert";
+import assert from 'node:assert';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
-import type { ApiTypes } from "../src";
+import type { ApiTypes } from '../src';
 import {
-  buildBlockRecord, inspectItem,
+  type LocalizedFieldValue,
+  SchemaRepository,
+  buildBlockRecord,
   isItemWithOptionalMeta,
   isLocalized,
   mapBlocksInNonLocalizedFieldValue,
-  mapNormalizedFieldValues,
   mapNormalizedFieldValuesAsync,
-  SchemaRepository,
-  type LocalizedFieldValue
-} from "../src";
+} from '../src';
 
 describe('utilities test', () => {
   it('should correctly process localized fields and duplicate content using utility functions', async () => {
@@ -32,53 +31,53 @@ describe('utilities test', () => {
     const client = await generateNewCmaClient();
 
     // Update site with required locales including Austrian English
-    await client.site.update({ locales: ["en", "de", "en-AT"] });
+    await client.site.update({ locales: ['en', 'de', 'en-AT'] });
 
     // Create a ContentBlock model for rich text content
     const contentBlockModel = await client.itemTypes.create({
-      id: "T4m4tPymSACFzsqbZS65WA",
-      name: "Content Block",
-      api_key: "content_block",
+      id: 'T4m4tPymSACFzsqbZS65WA',
+      name: 'Content Block',
+      api_key: 'content_block',
       modular_block: true,
     });
 
     await client.fields.create(contentBlockModel.id, {
-      label: "Title",
-      field_type: "string",
-      api_key: "title",
+      label: 'Title',
+      field_type: 'string',
+      api_key: 'title',
     });
 
     await client.fields.create(contentBlockModel.id, {
-      label: "Description",
-      field_type: "text",
-      api_key: "description",
+      label: 'Description',
+      field_type: 'text',
+      api_key: 'description',
     });
 
     // Create a Product model with localized fields
     const productModel = await client.itemTypes.create({
-      id: "UZyfjdBES8y2W2ruMEHSoA",
-      name: "Product",
-      api_key: "product",
+      id: 'UZyfjdBES8y2W2ruMEHSoA',
+      name: 'Product',
+      api_key: 'product',
     });
 
     await client.fields.create(productModel.id, {
-      label: "Name",
-      field_type: "string",
-      api_key: "name",
+      label: 'Name',
+      field_type: 'string',
+      api_key: 'name',
       localized: true,
     });
 
     await client.fields.create(productModel.id, {
-      label: "Description",
-      field_type: "text",
-      api_key: "description",
+      label: 'Description',
+      field_type: 'text',
+      api_key: 'description',
       localized: true,
     });
 
     await client.fields.create(productModel.id, {
-      label: "Features",
-      field_type: "rich_text",
-      api_key: "features",
+      label: 'Features',
+      field_type: 'rich_text',
+      api_key: 'features',
       localized: true,
       validators: {
         rich_text_blocks: {
@@ -88,68 +87,68 @@ describe('utilities test', () => {
     });
 
     await client.fields.create(productModel.id, {
-      label: "Price",
-      field_type: "float",
-      api_key: "price",
+      label: 'Price',
+      field_type: 'float',
+      api_key: 'price',
     });
 
     // Create a BlogPost model with localized fields
     const blogPostModel = await client.itemTypes.create({
-      id: "JItInCQJSIeCLX3oGPvN1w",
-      name: "Blog Post",
-      api_key: "blog_post",
+      id: 'JItInCQJSIeCLX3oGPvN1w',
+      name: 'Blog Post',
+      api_key: 'blog_post',
     });
 
     await client.fields.create(blogPostModel.id, {
-      label: "Title",
-      field_type: "string",
-      api_key: "title",
+      label: 'Title',
+      field_type: 'string',
+      api_key: 'title',
       localized: true,
     });
 
     await client.fields.create(blogPostModel.id, {
-      label: "Content",
-      field_type: "text",
-      api_key: "content",
+      label: 'Content',
+      field_type: 'text',
+      api_key: 'content',
       localized: true,
     });
 
     // Create sample products with English and German content (en-AT will be duplicated from en)
     await client.items.create({
-      item_type: { type: "item_type", id: productModel.id },
+      item_type: { type: 'item_type', id: productModel.id },
       name: {
-        en: "Premium Wireless Headphones",
-        de: "Premium Kabellose Kopfhörer",
+        en: 'Premium Wireless Headphones',
+        de: 'Premium Kabellose Kopfhörer',
       },
       description: {
-        en: "Experience crystal-clear audio with our top-of-the-line wireless headphones featuring noise cancellation.",
-        de: "Erleben Sie kristallklaren Klang mit unseren hochwertigen kabellosen Kopfhörern mit Geräuschunterdrückung.",
+        en: 'Experience crystal-clear audio with our top-of-the-line wireless headphones featuring noise cancellation.',
+        de: 'Erleben Sie kristallklaren Klang mit unseren hochwertigen kabellosen Kopfhörern mit Geräuschunterdrückung.',
       },
       features: {
         en: [
           buildBlockRecord({
-            item_type: { type: "item_type", id: contentBlockModel.id },
-            title: "Active Noise Cancellation",
+            item_type: { type: 'item_type', id: contentBlockModel.id },
+            title: 'Active Noise Cancellation',
             description:
-              "Block out unwanted noise with our advanced ANC technology.",
+              'Block out unwanted noise with our advanced ANC technology.',
           }),
           buildBlockRecord({
-            item_type: { type: "item_type", id: contentBlockModel.id },
-            title: "30-Hour Battery Life",
-            description: "All-day listening with fast charging capabilities.",
+            item_type: { type: 'item_type', id: contentBlockModel.id },
+            title: '30-Hour Battery Life',
+            description: 'All-day listening with fast charging capabilities.',
           }),
         ],
         de: [
           buildBlockRecord({
-            item_type: { type: "item_type", id: contentBlockModel.id },
-            title: "Aktive Geräuschunterdrückung",
+            item_type: { type: 'item_type', id: contentBlockModel.id },
+            title: 'Aktive Geräuschunterdrückung',
             description:
-              "Blockieren Sie unerwünschte Geräusche mit unserer fortschrittlichen ANC-Technologie.",
+              'Blockieren Sie unerwünschte Geräusche mit unserer fortschrittlichen ANC-Technologie.',
           }),
           buildBlockRecord({
-            item_type: { type: "item_type", id: contentBlockModel.id },
-            title: "30 Stunden Akkulaufzeit",
-            description: "Ganztägiges Hören mit Schnellladefunktion.",
+            item_type: { type: 'item_type', id: contentBlockModel.id },
+            title: '30 Stunden Akkulaufzeit',
+            description: 'Ganztägiges Hören mit Schnellladefunktion.',
           }),
         ],
       },
@@ -157,29 +156,29 @@ describe('utilities test', () => {
     });
 
     await client.items.create({
-      item_type: { type: "item_type", id: productModel.id },
+      item_type: { type: 'item_type', id: productModel.id },
       name: {
-        en: "Smart Fitness Tracker",
-        de: "Intelligenter Fitness-Tracker",
+        en: 'Smart Fitness Tracker',
+        de: 'Intelligenter Fitness-Tracker',
       },
       description: {
-        en: "Track your health and fitness goals with precision using our advanced wearable technology.",
-        de: "Verfolgen Sie Ihre Gesundheits- und Fitnessziele präzise mit unserer fortschrittlichen Wearable-Technologie.",
+        en: 'Track your health and fitness goals with precision using our advanced wearable technology.',
+        de: 'Verfolgen Sie Ihre Gesundheits- und Fitnessziele präzise mit unserer fortschrittlichen Wearable-Technologie.',
       },
       features: {
         en: [
           buildBlockRecord({
-            item_type: { type: "item_type", id: contentBlockModel.id },
-            title: "Heart Rate Monitoring",
-            description: "Continuous heart rate tracking throughout the day.",
+            item_type: { type: 'item_type', id: contentBlockModel.id },
+            title: 'Heart Rate Monitoring',
+            description: 'Continuous heart rate tracking throughout the day.',
           }),
         ],
         de: [
           buildBlockRecord({
-            item_type: { type: "item_type", id: contentBlockModel.id },
-            title: "Herzfrequenzüberwachung",
+            item_type: { type: 'item_type', id: contentBlockModel.id },
+            title: 'Herzfrequenzüberwachung',
             description:
-              "Kontinuierliche Herzfrequenzüberwachung den ganzen Tag über.",
+              'Kontinuierliche Herzfrequenzüberwachung den ganzen Tag über.',
           }),
         ],
       },
@@ -188,26 +187,26 @@ describe('utilities test', () => {
 
     // Create sample blog posts
     await client.items.create({
-      item_type: { type: "item_type", id: blogPostModel.id },
+      item_type: { type: 'item_type', id: blogPostModel.id },
       title: {
-        en: "The Future of Wearable Technology",
-        de: "Die Zukunft der Wearable-Technologie",
+        en: 'The Future of Wearable Technology',
+        de: 'Die Zukunft der Wearable-Technologie',
       },
       content: {
-        en: "Wearable technology continues to evolve, bringing new possibilities for health monitoring and personal productivity. From smartwatches to fitness trackers, these devices are becoming integral parts of our daily lives.",
-        de: "Die Wearable-Technologie entwickelt sich weiter und eröffnet neue Möglichkeiten für Gesundheitsüberwachung und persönliche Produktivität. Von Smartwatches bis hin zu Fitness-Trackern werden diese Geräte zu integralen Bestandteilen unseres täglichen Lebens.",
+        en: 'Wearable technology continues to evolve, bringing new possibilities for health monitoring and personal productivity. From smartwatches to fitness trackers, these devices are becoming integral parts of our daily lives.',
+        de: 'Die Wearable-Technologie entwickelt sich weiter und eröffnet neue Möglichkeiten für Gesundheitsüberwachung und persönliche Produktivität. Von Smartwatches bis hin zu Fitness-Trackern werden diese Geräte zu integralen Bestandteilen unseres täglichen Lebens.',
       },
     });
 
     await client.items.create({
-      item_type: { type: "item_type", id: blogPostModel.id },
+      item_type: { type: 'item_type', id: blogPostModel.id },
       title: {
-        en: "Audio Innovation in 2024",
-        de: "Audio-Innovation 2024",
+        en: 'Audio Innovation in 2024',
+        de: 'Audio-Innovation 2024',
       },
       content: {
-        en: "This year marks significant advances in audio technology, with improvements in noise cancellation, battery life, and sound quality reaching new heights.",
-        de: "Dieses Jahr markiert bedeutende Fortschritte in der Audiotechnologie, wobei Verbesserungen bei Geräuschunterdrückung, Akkulaufzeit und Klangqualität neue Höhen erreichen.",
+        en: 'This year marks significant advances in audio technology, with improvements in noise cancellation, battery life, and sound quality reaching new heights.',
+        de: 'Dieses Jahr markiert bedeutende Fortschritte in der Audiotechnologie, wobei Verbesserungen bei Geräuschunterdrückung, Akkulaufzeit und Klangqualität neue Höhen erreichen.',
       },
     });
 
@@ -228,29 +227,32 @@ describe('utilities test', () => {
         let hasChanges = false;
 
         for (const field of localizedFields) {
-          const fieldValueWithNestedBlocks = record[
+          const fieldValueInNestedResponse = record[
             field.api_key
           ] as LocalizedFieldValue;
 
           // Skip if en content doesn't exist
-          if (!fieldValueWithNestedBlocks["en"]) {
+          if (!fieldValueInNestedResponse.en) {
             continue;
           }
 
           // Test that original field has expected locales
-          expect(fieldValueWithNestedBlocks.en).toBeDefined();
-          expect(fieldValueWithNestedBlocks.de).toBeDefined();
-          expect(fieldValueWithNestedBlocks["en-AT"]).toBeUndefined();
+          expect(fieldValueInNestedResponse.en).toBeDefined();
+          expect(fieldValueInNestedResponse.de).toBeDefined();
+          expect(fieldValueInNestedResponse['en-AT']).toBeUndefined();
 
           // Process the locales by converting any full block object to just IDs
-          const newFieldValue = await mapNormalizedFieldValuesAsync(
+          const newFieldValue = (await mapNormalizedFieldValuesAsync(
             field,
-            fieldValueWithNestedBlocks,
-            async (_locale: string | undefined, fieldValueForLocale: unknown) => {
+            fieldValueInNestedResponse,
+            async (
+              _locale: string | undefined,
+              fieldValueForLocale: unknown,
+            ) => {
               const result = await mapBlocksInNonLocalizedFieldValue(
-                schemaRepository,
-                field.field_type,
                 fieldValueForLocale,
+                field.field_type,
+                schemaRepository,
                 (block) => {
                   assert(isItemWithOptionalMeta(block));
                   // Passing just the ID => "Keep the existing block unchanged"
@@ -259,10 +261,16 @@ describe('utilities test', () => {
               );
 
               // Test that mapBlocksInNonLocalizedFieldValue works correctly
-              if (field.field_type === 'string' || field.field_type === 'text') {
+              if (
+                field.field_type === 'string' ||
+                field.field_type === 'text'
+              ) {
                 // For simple fields, should return the original value unchanged
                 expect(result).toEqual(fieldValueForLocale);
-              } else if (field.field_type === 'rich_text' && Array.isArray(result)) {
+              } else if (
+                field.field_type === 'rich_text' &&
+                Array.isArray(result)
+              ) {
                 // For rich_text fields, should convert blocks to IDs
                 for (const item of result) {
                   expect(typeof item).toBe('string'); // Should be ID strings
@@ -271,17 +279,19 @@ describe('utilities test', () => {
 
               return result;
             },
-          ) as LocalizedFieldValue;
+          )) as LocalizedFieldValue;
 
           // Test that mapNormalizedFieldValuesAsync preserves existing locales
-          expect(Object.keys(newFieldValue)).toEqual(Object.keys(fieldValueWithNestedBlocks));
+          expect(Object.keys(newFieldValue)).toEqual(
+            Object.keys(fieldValueInNestedResponse),
+          );
 
           // Duplicate en content and assign it as en-AT
           // Use recursive mapping to remove IDs from any block
-          newFieldValue["en-AT"] = await mapBlocksInNonLocalizedFieldValue(
-            schemaRepository,
+          newFieldValue['en-AT'] = await mapBlocksInNonLocalizedFieldValue(
+            fieldValueInNestedResponse.en,
             field.field_type,
-            fieldValueWithNestedBlocks["en"],
+            schemaRepository,
             (block) => {
               assert(isItemWithOptionalMeta(block));
               // Block with no ID => "Create new block instance"
@@ -299,26 +309,33 @@ describe('utilities test', () => {
         if (hasChanges) {
           // Test expectations before update
           for (const field of localizedFields) {
-            const fieldValue = updatePayload[field.api_key] as LocalizedFieldValue;
+            const fieldValue = updatePayload[
+              field.api_key
+            ] as LocalizedFieldValue;
 
             // Should have original locales preserved
             expect(fieldValue.en).toBeDefined();
             expect(fieldValue.de).toBeDefined();
 
             // Should have new en-AT locale added
-            expect(fieldValue["en-AT"]).toBeDefined();
+            expect(fieldValue['en-AT']).toBeDefined();
 
             // For simple fields, en-AT should equal en
             if (field.field_type === 'string' || field.field_type === 'text') {
-              expect(fieldValue["en-AT"]).toEqual(fieldValue.en);
+              expect(fieldValue['en-AT']).toEqual(fieldValue.en);
             }
 
             // For rich_text fields, en-AT should have new block instances (no IDs)
-            if (field.field_type === 'rich_text' && Array.isArray(fieldValue["en-AT"])) {
+            if (
+              field.field_type === 'rich_text' &&
+              Array.isArray(fieldValue['en-AT'])
+            ) {
               // Should have same number of blocks as en
-              expect(fieldValue["en-AT"]).toHaveLength((fieldValue.en as any[]).length);
+              expect(fieldValue['en-AT']).toHaveLength(
+                (fieldValue.en as any[]).length,
+              );
 
-              for (const block of fieldValue["en-AT"] as any[]) {
+              for (const block of fieldValue['en-AT'] as any[]) {
                 expect(block.id).toBeUndefined();
                 expect(block.attributes).toBeDefined();
                 expect(block.relationships).toBeDefined();
@@ -328,28 +345,37 @@ describe('utilities test', () => {
 
           await client.items.update(record.id, updatePayload);
 
-          const nestedRecord = await client.items.find(record.id, { nested: true });
+          const nestedRecord = await client.items.find(record.id, {
+            nested: true,
+          });
 
           // Test expectations after update
           for (const field of localizedFields) {
-            const fieldValue = nestedRecord[field.api_key] as LocalizedFieldValue;
+            const fieldValue = nestedRecord[
+              field.api_key
+            ] as LocalizedFieldValue;
 
             // Should have all three locales
             expect(fieldValue.en).toBeDefined();
             expect(fieldValue.de).toBeDefined();
-            expect(fieldValue["en-AT"]).toBeDefined();
+            expect(fieldValue['en-AT']).toBeDefined();
 
             // en-AT should have same content as en (but different IDs for rich_text)
             if (field.field_type === 'string' || field.field_type === 'text') {
-              expect(fieldValue["en-AT"]).toEqual(fieldValue.en);
-            } else if (field.field_type === 'rich_text' && Array.isArray(fieldValue["en-AT"])) {
+              expect(fieldValue['en-AT']).toEqual(fieldValue.en);
+            } else if (
+              field.field_type === 'rich_text' &&
+              Array.isArray(fieldValue['en-AT'])
+            ) {
               // Should have same number of blocks
-              expect(fieldValue["en-AT"]).toHaveLength((fieldValue.en as any[]).length);
+              expect(fieldValue['en-AT']).toHaveLength(
+                (fieldValue.en as any[]).length,
+              );
 
               // Each block should have different ID but same content
-              for (let i = 0; i < (fieldValue["en-AT"] as any[]).length; i++) {
+              for (let i = 0; i < (fieldValue['en-AT'] as any[]).length; i++) {
                 const enBlock = (fieldValue.en as any[])[i];
-                const enAtBlock = (fieldValue["en-AT"] as any[])[i];
+                const enAtBlock = (fieldValue['en-AT'] as any[])[i];
 
                 expect(enAtBlock.id).toBeDefined();
                 expect(enAtBlock.id).not.toEqual(enBlock.id);

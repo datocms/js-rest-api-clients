@@ -1,7 +1,7 @@
 import * as JsonRefParser from '@apidevtools/json-schema-ref-parser';
 import fetch from 'cross-fetch';
 import { compile as hyperschemaToTypings } from 'hyperschema-to-ts';
-import generateRawSchema from './generateRawSchema';
+import { applyGenerics } from './applyGenericsToSchema';
 import simplifySchema from './generateSimplifiedSchema';
 import toSafeName from './toSafeName';
 
@@ -457,93 +457,97 @@ async function schemaToTs(schema: any) {
   return result.replace(/export interface ([^ ]+) {/g, 'export type $1 = {');
 }
 
-function convertFieldTypesToRaw(typings: string) {
-  return typings
-    .replace('export type Item ', 'export type RawItem ')
-    .replace(/\bItem\b/g, 'Item<D>')
-    .replace(/included(.*)Item<D>/g, 'included$1Item')
-    .replace('item?: Item<D>', 'item?: Item')
-    .replace(
-      'export type ItemInstancesTargetSchema ',
-      'export type ItemInstancesTargetSchema<D extends ItemDefinition = ItemDefinition> ',
-    )
-    .replace(
-      'export type ItemDestroyJobSchema ',
-      'export type ItemDestroyJobSchema<D extends ItemDefinition = ItemDefinition> ',
-    )
-    .replace(
-      'export type ItemPublishTargetSchema ',
-      'export type ItemPublishTargetSchema<D extends ItemDefinition = ItemDefinition> ',
-    )
-    .replace(
-      'export type ItemUnpublishTargetSchema ',
-      'export type ItemUnpublishTargetSchema<D extends ItemDefinition = ItemDefinition> ',
-    )
-    .replace(
-      'export type ItemReferencesTargetSchema ',
-      'export type ItemReferencesTargetSchema<D extends ItemDefinition = ItemDefinition> ',
-    )
-    .replace(
-      'export type ItemVersionRestoreJobSchema ',
-      'export type ItemVersionRestoreJobSchema<D extends ItemDefinition = ItemDefinition> ',
-    )
-    .replace(
-      'export type ScheduledPublicationDestroyTargetSchema ',
-      'export type ScheduledPublicationDestroyTargetSchema<D extends ItemDefinition = ItemDefinition> ',
-    )
-    .replace(
-      'export type ScheduledUnpublishingDestroyTargetSchema ',
-      'export type ScheduledUnpublishingDestroyTargetSchema<D extends ItemDefinition = ItemDefinition> ',
-    )
-    .replace(
-      'export type UploadReferencesTargetSchema ',
-      'export type UploadReferencesTargetSchema<D extends ItemDefinition = ItemDefinition> ',
-    )
-    .replace(
-      'export type ItemSelfTargetSchema ',
-      'export type ItemSelfTargetSchema<D extends ItemDefinition = ItemDefinition> ',
-    )
-    .replace(
-      'export type ItemCreateTargetSchema ',
-      'export type ItemCreateTargetSchema<D extends ItemDefinition = ItemDefinition> ',
-    )
-    .replace(
-      'export type ItemDuplicateJobSchema ',
-      'export type ItemDuplicateJobSchema<D extends ItemDefinition = ItemDefinition> ',
-    )
-    .replace(
-      'export type ItemUpdateTargetSchema ',
-      'export type ItemUpdateTargetSchema<D extends ItemDefinition = ItemDefinition> ',
-    )
+// function applyGenerics(typings: string) {
+//   return typings
+//     .replace('export type Item ', 'export type ItemStableShell ')
+//     .replace(/\bItem\b/g, 'Item<D>')
+//     .replace(/included(.*)Item<D>/g, 'included$1Item')
+//     .replace('item?: Item<D>', 'item?: Item')
 
-    .replace(
-      'export type ItemValidateExistingSchema ',
-      'export type RawItemValidateExistingSchema ',
-    )
-    .replace(
-      'export type ItemValidateNewSchema ',
-      'export type RawItemValidateNewSchema ',
-    )
-    .replace(
-      'export type ItemCreateSchema ',
-      'export type RawItemCreateSchema ',
-    )
-    .replace(
-      'export type ItemUpdateSchema ',
-      'export type RawItemUpdateSchema ',
-    )
+//     // ITEM REQUESTS
+//     .replace(
+//       'export type ItemValidateExistingSchema ',
+//       'export type ItemValidateExistingSchemaStableShell ',
+//     )
+//     .replace(
+//       'export type ItemValidateNewSchema ',
+//       'export type ItemValidateNewSchemaStableShell ',
+//     )
+//     .replace(
+//       'export type ItemCreateSchema ',
+//       'export type ItemCreateSchemaStableShell ',
+//     )
+//     .replace(
+//       'export type ItemUpdateSchema ',
+//       'export type ItemUpdateSchemaStableShell ',
+//     )
 
-    .replace('export type Field ', 'export type RawField ')
-    .replace('export type FieldAttributes ', 'export type RawFieldAttributes ')
-    .replace(
-      'export type FieldCreateSchema ',
-      'export type RawFieldCreateSchema ',
-    )
-    .replace(
-      'export type FieldUpdateSchema ',
-      'export type RawFieldUpdateSchema ',
-    );
-}
+//     // ITEM RESPONSES
+// .replace(
+//   'export type ItemInstancesTargetSchema ',
+//   'export type ItemInstancesTargetSchema<D extends ItemTypeDefinition | undefined = undefined> ',
+// )
+// .replace(
+//   'export type UploadReferencesTargetSchema ',
+//   'export type UploadReferencesTargetSchema<D extends ItemTypeDefinition | undefined = undefined> ',
+// )
+// .replace(
+//   'export type ItemSelfTargetSchema ',
+//   'export type ItemSelfTargetSchema<D extends ItemTypeDefinition | undefined = undefined> ',
+// )
+// .replace(
+//   'export type ItemCreateTargetSchema ',
+//   'export type ItemCreateTargetSchema<D extends ItemTypeDefinition | undefined = undefined> ',
+// )
+// .replace(
+//   'export type ItemDuplicateJobSchema ',
+//   'export type ItemDuplicateJobSchema<D extends ItemTypeDefinition | undefined = undefined> ',
+// )
+// .replace(
+//   'export type ItemUpdateTargetSchema ',
+//   'export type ItemUpdateTargetSchema<D extends ItemTypeDefinition | undefined = undefined> ',
+// )
+// .replace(
+//   'export type ItemDestroyJobSchema ',
+//   'export type ItemDestroyJobSchema<D extends ItemTypeDefinition | undefined = undefined> ',
+// )
+// .replace(
+//   'export type ItemPublishTargetSchema ',
+//   'export type ItemPublishTargetSchema<D extends ItemTypeDefinition | undefined = undefined> ',
+// )
+// .replace(
+//   'export type ItemUnpublishTargetSchema ',
+//   'export type ItemUnpublishTargetSchema<D extends ItemTypeDefinition | undefined = undefined> ',
+// )
+// .replace(
+//   'export type ItemReferencesTargetSchema ',
+//   'export type ItemReferencesTargetSchema<D extends ItemTypeDefinition | undefined = undefined> ',
+// )
+// .replace(
+//   'export type ItemVersionRestoreJobSchema ',
+//   'export type ItemVersionRestoreJobSchema<D extends ItemTypeDefinition | undefined = undefined> ',
+// )
+// .replace(
+//   'export type ScheduledPublicationDestroyTargetSchema ',
+//   'export type ScheduledPublicationDestroyTargetSchema<D extends ItemTypeDefinition | undefined = undefined> ',
+// )
+// .replace(
+//   'export type ScheduledUnpublishingDestroyTargetSchema ',
+//   'export type ScheduledUnpublishingDestroyTargetSchema<D extends ItemTypeDefinition | undefined = undefined> ',
+// )
+
+//     // FIELDS
+// .replace('export type Field ', 'export type FieldStableShell ')
+// .replace('export type FieldAttributes ', 'export type FieldAttributesStableShell ')
+// .replace(
+//   'export type FieldCreateSchema ',
+//   'export type FieldCreateSchemaStableShell ',
+// )
+// .replace(
+//   'export type FieldUpdateSchema ',
+//   'export type FieldUpdateSchemaStableShell ',
+// );
+// }
 
 function clone<T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj)) as T;
@@ -556,14 +560,11 @@ export default async function extractInfoFromSchema(
   const rawSchema = await downloadHyperschema(hyperschemaUrl);
 
   const rawSchemaToGenerateTypings = clone(rawSchema);
-  generateRawSchema(rawSchemaToGenerateTypings);
-  const typings = convertFieldTypesToRaw(
-    await schemaToTs(rawSchemaToGenerateTypings),
-  );
+  const typings = applyGenerics(await schemaToTs(rawSchemaToGenerateTypings));
 
   const rawSchemaToGenerateSimpleTypings = clone(rawSchema);
   simplifySchema(rawSchemaToGenerateSimpleTypings);
-  const simpleTypings = convertFieldTypesToRaw(
+  const simpleTypings = applyGenerics(
     await schemaToTs(rawSchemaToGenerateSimpleTypings),
   );
 

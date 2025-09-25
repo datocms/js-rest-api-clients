@@ -1,6 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`inspectItem ApiTypes.Item 1`] = `
+exports[`inspectItem ApiTypes.ItemCreateSchema 1`] = `
+"└ Item (item_type: "O9BXqTayQ_Wf-Yw6d863LQ")
+  ├ single_block
+  │ └ Item (item_type: "NOYldjT6TtKXXjZ8efU-dw")
+  │   └ title: "Foobar"
+  └ lat_lon_field
+    ├ latitude: 48.8566
+    └ longitude: 2.3522
+"
+`;
+
+exports[`inspectItem ApiTypes.ItemCreateSchema 2`] = `
 "└ Item "IdMLV2GJTXyQ0Bfns7R4IQ" (item_type: "O9BXqTayQ_Wf-Yw6d863LQ")
   ├ string_field: "Sample string"
   ├ text_field: "This is a longer text content that might span multiple lines"
@@ -74,17 +85,6 @@ exports[`inspectItem ApiTypes.Item 1`] = `
   ├ empty_gallery: []
   ├ null_link: null
   └ empty_links: []
-"
-`;
-
-exports[`inspectItem ApiTypes.ItemCreateSchema 1`] = `
-"└ Item (item_type: "O9BXqTayQ_Wf-Yw6d863LQ")
-  ├ single_block
-  │ └ Item (item_type: "NOYldjT6TtKXXjZ8efU-dw")
-  │   └ title: "Foobar"
-  └ lat_lon_field
-    ├ latitude: 48.8566
-    └ longitude: 2.3522
 "
 `;
 

@@ -1,11 +1,6 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type {
-  ItemTypeDefinition,
-  ToItemDefinition,
-  ToItemDefinitionAsRequest,
-  ToItemDefinitionWithNestedBlocks,
-} from '../../utilities/itemDefinition';
+import type { ItemTypeDefinition } from '../../utilities/itemDefinition';
 import type * as ApiTypes from '../ApiTypes';
 import type * as RawApiTypes from '../RawApiTypes';
 
@@ -267,19 +262,13 @@ export default class Upload extends BaseResource {
   references<D extends ItemTypeDefinition = ItemTypeDefinition>(
     uploadId: string | ApiTypes.UploadData,
     queryParams: ApiTypes.UploadReferencesHrefSchema & { nested: true },
-  ): Promise<
-    ApiTypes.UploadReferencesTargetSchema<
-      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
-    >
-  >;
+  ): Promise<ApiTypes.UploadReferencesTargetSchema<NoInfer<D>, true>>;
   references<D extends ItemTypeDefinition = ItemTypeDefinition>(
     uploadId: string | ApiTypes.UploadData,
     queryParams?: ApiTypes.UploadReferencesHrefSchema & {
       nested?: false | undefined;
     },
-  ): Promise<
-    ApiTypes.UploadReferencesTargetSchema<ToItemDefinition<NoInfer<D>>>
-  >;
+  ): Promise<ApiTypes.UploadReferencesTargetSchema<NoInfer<D>, false>>;
   /**
    * Referenced records
    *
@@ -308,27 +297,17 @@ export default class Upload extends BaseResource {
   rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
     uploadId: string,
     queryParams: RawApiTypes.UploadReferencesHrefSchema & { nested: true },
-  ): Promise<
-    RawApiTypes.UploadReferencesTargetSchema<
-      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
-    >
-  >;
+  ): Promise<RawApiTypes.UploadReferencesTargetSchema<NoInfer<D>, true>>;
   rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
     uploadId: string,
     queryParams?: RawApiTypes.UploadReferencesHrefSchema & {
       nested?: false | undefined;
     },
-  ): Promise<
-    RawApiTypes.UploadReferencesTargetSchema<ToItemDefinition<NoInfer<D>>>
-  >;
+  ): Promise<RawApiTypes.UploadReferencesTargetSchema<NoInfer<D>, false>>;
   rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
     uploadId: string,
     queryParams?: RawApiTypes.UploadReferencesHrefSchema,
-  ): Promise<
-    RawApiTypes.UploadReferencesTargetSchema<
-      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
-    >
-  >;
+  ): Promise<RawApiTypes.UploadReferencesTargetSchema<NoInfer<D>, true>>;
   /**
    * Referenced records
    *
@@ -347,11 +326,9 @@ export default class Upload extends BaseResource {
         url: `/uploads/${uploadId}/references`,
         queryParams,
       })
-      .then<
-        RawApiTypes.UploadReferencesTargetSchema<
-          ToItemDefinitionWithNestedBlocks<NoInfer<D>>
-        >
-      >(Utils.deserializeRawResponseBodyWithItems);
+      .then<RawApiTypes.UploadReferencesTargetSchema<NoInfer<D>, true>>(
+        Utils.deserializeRawResponseBodyWithItems,
+      );
   }
 
   /**

@@ -24,91 +24,42 @@
 
 import {
   type TreePath,
-  collectNodes,
   collectNodesAsync,
-  filterNodes,
   filterNodesAsync,
   mapNodes,
   mapNodesAsync,
 } from 'datocms-structured-text-utils';
 import type {
-  BlockItemInARequest,
+  BlockInRequest,
   RichTextFieldValue,
-  RichTextFieldValueAsRequest,
-  RichTextFieldValueWithNestedBlocks,
+  RichTextFieldValueInNestedResponse,
+  RichTextFieldValueInRequest,
   SingleBlockFieldValue,
-  SingleBlockFieldValueAsRequest,
-  SingleBlockFieldValueWithNestedBlocks,
+  SingleBlockFieldValueInNestedResponse,
+  SingleBlockFieldValueInRequest,
   StructuredTextFieldValue,
-  StructuredTextFieldValueAsRequest,
-  StructuredTextFieldValueWithNestedBlocks,
+  StructuredTextFieldValueInNestedResponse,
+  StructuredTextFieldValueInRequest,
 } from '../fieldTypes';
 import type * as ApiTypes from '../generated/ApiTypes';
-import { isLocalizedFieldValue } from './normalizedFieldValues';
 
 type PossibleRichTextValue =
   | RichTextFieldValue
-  | RichTextFieldValueAsRequest
-  | RichTextFieldValueWithNestedBlocks;
+  | RichTextFieldValueInRequest
+  | RichTextFieldValueInNestedResponse;
 type PossibleSingleBlockValue =
   | SingleBlockFieldValue
-  | SingleBlockFieldValueAsRequest
-  | SingleBlockFieldValueWithNestedBlocks;
+  | SingleBlockFieldValueInRequest
+  | SingleBlockFieldValueInNestedResponse;
 type PossibleStructuredTextValue =
   | StructuredTextFieldValue
-  | StructuredTextFieldValueAsRequest
-  | StructuredTextFieldValueWithNestedBlocks;
-
-function* iterateBlocks(
-  fieldType: ApiTypes.Field['field_type'],
-  nonLocalizedFieldValue: unknown,
-): Generator<{ item: BlockItemInARequest; path: TreePath }> {
-  if (isLocalizedFieldValue(nonLocalizedFieldValue)) {
-    throw new Error('A non-localized field value is required!');
-  }
-
-  if (fieldType === 'rich_text') {
-    const richTextValue = nonLocalizedFieldValue as PossibleRichTextValue;
-    if (richTextValue) {
-      for (let index = 0; index < richTextValue.length; index++) {
-        const item = richTextValue[index]!;
-        yield { item, path: [index] };
-      }
-    }
-    return;
-  }
-
-  if (fieldType === 'single_block') {
-    const singleBlockValue = nonLocalizedFieldValue as PossibleSingleBlockValue;
-    if (singleBlockValue) {
-      yield { item: singleBlockValue, path: [] };
-    }
-    return;
-  }
-
-  if (fieldType === 'structured_text') {
-    const structuredTextValue =
-      nonLocalizedFieldValue as PossibleStructuredTextValue;
-    if (structuredTextValue) {
-      const foundNodes = collectNodes(
-        structuredTextValue.document,
-        (node) => node.type === 'block' || node.type === 'inlineBlock',
-      );
-
-      for (const { node, path } of foundNodes) {
-        if (node.type === 'block' || node.type === 'inlineBlock') {
-          yield { item: node.item, path };
-        }
-      }
-    }
-    return;
-  }
-}
+  | StructuredTextFieldValueInRequest
+  | StructuredTextFieldValueInNestedResponse;
 
 async function* iterateBlocksAsync(
   fieldType: ApiTypes.Field['field_type'],
   nonLocalizedFieldValue: unknown,
-): AsyncGenerator<{ item: BlockItemInARequest; path: TreePath }> {
+): AsyncGenerator<{ item: BlockInRequest; path: TreePath }> {
   if (fieldType === 'rich_text') {
     const richTextValue = nonLocalizedFieldValue as PossibleRichTextValue;
     if (richTextValue) {
@@ -153,34 +104,13 @@ async function* iterateBlocksAsync(
  *
  * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
  * @param nonLocalizedFieldValue - The non-localized field value containing blocks to visit
- * @param visitor - Synchronous function called for each block. Receives the block item and its path
- */
-export function nonRecursiveVisitBlocksInNonLocalizedFieldValue(
-  fieldType: ApiTypes.Field['field_type'],
-  nonLocalizedFieldValue: unknown,
-  visitor: (item: BlockItemInARequest, path: TreePath) => void,
-): void {
-  for (const { item, path } of iterateBlocks(
-    fieldType,
-    nonLocalizedFieldValue,
-  )) {
-    visitor(item, path);
-  }
-}
-
-/**
- * Visit every block in a field value, calling the visitor function for each block found.
- * Supports rich text, single block, and structured text field types.
- *
- * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
- * @param nonLocalizedFieldValue - The non-localized field value containing blocks to visit
  * @param visitor - Asynchronous function called for each block. Receives the block item and its path
  * @returns Promise that resolves when all blocks have been visited
  */
 export async function nonRecursiveVisitBlocksInNonLocalizedFieldValueAsync(
   fieldType: ApiTypes.Field['field_type'],
   nonLocalizedFieldValue: unknown,
-  visitor: (item: BlockItemInARequest, path: TreePath) => Promise<void>,
+  visitor: (item: BlockInRequest, path: TreePath) => Promise<void>,
 ): Promise<void> {
   for await (const { item, path } of iterateBlocksAsync(
     fieldType,
@@ -203,7 +133,7 @@ export async function nonRecursiveVisitBlocksInNonLocalizedFieldValueAsync(
 export function nonRecursiveMapBlocksInNonLocalizedFieldValue(
   fieldType: ApiTypes.Field['field_type'],
   nonLocalizedFieldValue: unknown,
-  mapper: (item: BlockItemInARequest, path: TreePath) => BlockItemInARequest,
+  mapper: (item: BlockInRequest, path: TreePath) => BlockInRequest,
 ): unknown {
   if (fieldType === 'rich_text') {
     const richTextValue = nonLocalizedFieldValue as PossibleRichTextValue;
@@ -256,10 +186,7 @@ export function nonRecursiveMapBlocksInNonLocalizedFieldValue(
 export async function nonRecursiveMapBlocksInNonLocalizedFieldValueAsync(
   fieldType: ApiTypes.Field['field_type'],
   nonLocalizedFieldValue: unknown,
-  mapper: (
-    item: BlockItemInARequest,
-    path: TreePath,
-  ) => Promise<BlockItemInARequest>,
+  mapper: (item: BlockInRequest, path: TreePath) => Promise<BlockInRequest>,
 ): Promise<unknown> {
   if (fieldType === 'rich_text') {
     const richTextValue = nonLocalizedFieldValue as PossibleRichTextValue;
@@ -307,43 +234,15 @@ export async function nonRecursiveMapBlocksInNonLocalizedFieldValueAsync(
  *
  * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
  * @param nonLocalizedFieldValue - The non-localized field value containing blocks to search
- * @param predicate - Synchronous function that tests each block. Should return true for matching blocks
- * @returns Array of objects, each containing a matching block and its path
- */
-export function nonRecursiveFindAllBlocksInNonLocalizedFieldValue(
-  fieldType: ApiTypes.Field['field_type'],
-  nonLocalizedFieldValue: unknown,
-  predicate: (item: BlockItemInARequest, path: TreePath) => boolean,
-): Array<{ item: BlockItemInARequest; path: TreePath }> {
-  const results: Array<{ item: BlockItemInARequest; path: TreePath }> = [];
-
-  for (const { item, path } of iterateBlocks(
-    fieldType,
-    nonLocalizedFieldValue,
-  )) {
-    if (predicate(item, path)) {
-      results.push({ item, path });
-    }
-  }
-
-  return results;
-}
-
-/**
- * Find all blocks that match the predicate function.
- * Searches through all blocks in the non-localized field value and returns all matches.
- *
- * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
- * @param nonLocalizedFieldValue - The non-localized field value containing blocks to search
  * @param predicate - Asynchronous function that tests each block. Should return true for matching blocks
  * @returns Promise that resolves to an array of objects, each containing a matching block and its path
  */
 export async function nonRecursiveFindAllBlocksInNonLocalizedFieldValueAsync(
   fieldType: ApiTypes.Field['field_type'],
   nonLocalizedFieldValue: unknown,
-  predicate: (item: BlockItemInARequest, path: TreePath) => Promise<boolean>,
-): Promise<Array<{ item: BlockItemInARequest; path: TreePath }>> {
-  const results: Array<{ item: BlockItemInARequest; path: TreePath }> = [];
+  predicate: (item: BlockInRequest, path: TreePath) => Promise<boolean>,
+): Promise<Array<{ item: BlockInRequest; path: TreePath }>> {
+  const results: Array<{ item: BlockInRequest; path: TreePath }> = [];
 
   for await (const { item, path } of iterateBlocksAsync(
     fieldType,
@@ -364,87 +263,16 @@ export async function nonRecursiveFindAllBlocksInNonLocalizedFieldValueAsync(
  *
  * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
  * @param nonLocalizedFieldValue - The non-localized field value containing blocks to filter
- * @param predicate - Synchronous function that tests each block. Blocks returning false are removed
- * @returns The new field value with filtered blocks
- */
-export function nonRecursiveFilterBlocksInNonLocalizedFieldValue(
-  fieldType: ApiTypes.Field['field_type'],
-  nonLocalizedFieldValue: unknown,
-  predicate: (item: BlockItemInARequest, path: TreePath) => boolean,
-): unknown {
-  if (fieldType === 'rich_text') {
-    const filteredItems: BlockItemInARequest[] = [];
-
-    for (const { item, path } of iterateBlocks(
-      fieldType,
-      nonLocalizedFieldValue,
-    )) {
-      if (predicate(item, path)) {
-        filteredItems.push(item);
-      }
-    }
-
-    return filteredItems;
-  }
-
-  if (fieldType === 'single_block') {
-    for (const { item, path } of iterateBlocks(
-      fieldType,
-      nonLocalizedFieldValue,
-    )) {
-      if (predicate(item, path)) {
-        return item;
-      }
-    }
-    return null;
-  }
-
-  if (fieldType === 'structured_text') {
-    const structuredTextValue =
-      nonLocalizedFieldValue as PossibleStructuredTextValue;
-
-    if (!structuredTextValue) {
-      return null;
-    }
-
-    const filteredDocument = filterNodes(
-      structuredTextValue.document,
-      (node, _parent, path) => {
-        if (node.type === 'block' || node.type === 'inlineBlock') {
-          return predicate(node.item, path);
-        }
-        return true;
-      },
-    );
-
-    return filteredDocument
-      ? {
-          schema: 'dast',
-          document: filteredDocument,
-        }
-      : null;
-  }
-
-  return nonLocalizedFieldValue;
-}
-
-/**
- * Filter blocks in a field value, removing those that don't match the predicate.
- * Creates a new field value containing only blocks that pass the predicate test.
- * Preserves the original field value structure and hierarchy.
- *
- * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
- * @param nonLocalizedFieldValue - The non-localized field value containing blocks to filter
  * @param predicate - Asynchronous function that tests each block. Blocks returning false are removed
  * @returns Promise that resolves to the new field value with filtered blocks
  */
 export async function nonRecursiveFilterBlocksInNonLocalizedFieldValueAsync(
   fieldType: ApiTypes.Field['field_type'],
   nonLocalizedFieldValue: unknown,
-  predicate: (item: BlockItemInARequest, path: TreePath) => Promise<boolean>,
+  predicate: (item: BlockInRequest, path: TreePath) => Promise<boolean>,
 ): Promise<unknown> {
   if (fieldType === 'rich_text') {
-    const filteredItems: BlockItemInARequest[] = [];
+    const filteredItems: BlockInRequest[] = [];
 
     for await (const { item, path } of iterateBlocksAsync(
       fieldType,
@@ -506,35 +334,6 @@ export async function nonRecursiveFilterBlocksInNonLocalizedFieldValueAsync(
  * @template R - The type of the accumulated result
  * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
  * @param nonLocalizedFieldValue - The non-localized field value containing blocks to reduce
- * @param reducer - Synchronous function that processes each block and updates the accumulator
- * @param initialValue - The initial value for the accumulator
- * @returns The final accumulated value
- */
-export function nonRecursiveReduceBlocksInNonLocalizedFieldValue<R>(
-  fieldType: ApiTypes.Field['field_type'],
-  nonLocalizedFieldValue: unknown,
-  reducer: (accumulator: R, item: BlockItemInARequest, path: TreePath) => R,
-  initialValue: R,
-): R {
-  let accumulator = initialValue;
-
-  for (const { item, path } of iterateBlocks(
-    fieldType,
-    nonLocalizedFieldValue,
-  )) {
-    accumulator = reducer(accumulator, item, path);
-  }
-
-  return accumulator;
-}
-
-/**
- * Reduce all blocks in a field value to a single value by applying a reducer function.
- * Processes each block in the non-localized field value and accumulates the results into a single value.
- *
- * @template R - The type of the accumulated result
- * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
- * @param nonLocalizedFieldValue - The non-localized field value containing blocks to reduce
  * @param reducer - Asynchronous function that processes each block and updates the accumulator
  * @param initialValue - The initial value for the accumulator
  * @returns Promise that resolves to the final accumulated value
@@ -542,11 +341,7 @@ export function nonRecursiveReduceBlocksInNonLocalizedFieldValue<R>(
 export async function nonRecursiveReduceBlocksInNonLocalizedFieldValueAsync<R>(
   fieldType: ApiTypes.Field['field_type'],
   nonLocalizedFieldValue: unknown,
-  reducer: (
-    accumulator: R,
-    item: BlockItemInARequest,
-    path: TreePath,
-  ) => Promise<R>,
+  reducer: (accumulator: R, item: BlockInRequest, path: TreePath) => Promise<R>,
   initialValue: R,
 ): Promise<R> {
   let accumulator = initialValue;
@@ -567,39 +362,13 @@ export async function nonRecursiveReduceBlocksInNonLocalizedFieldValueAsync<R>(
  *
  * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
  * @param nonLocalizedFieldValue - The non-localized field value containing blocks to test
- * @param predicate - Synchronous function that tests each block. Should return true for matching blocks
- * @returns True if any block matches, false otherwise
- */
-export function nonRecursiveSomeBlocksInNonLocalizedFieldValue(
-  fieldType: ApiTypes.Field['field_type'],
-  nonLocalizedFieldValue: unknown,
-  predicate: (item: BlockItemInARequest, path: TreePath) => boolean,
-): boolean {
-  for (const { item, path } of iterateBlocks(
-    fieldType,
-    nonLocalizedFieldValue,
-  )) {
-    if (predicate(item, path)) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-/**
- * Check if any block in the non-localized field value matches the predicate function.
- * Returns true as soon as the first matching block is found (short-circuit evaluation).
- *
- * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
- * @param nonLocalizedFieldValue - The non-localized field value containing blocks to test
  * @param predicate - Asynchronous function that tests each block. Should return true for matching blocks
  * @returns Promise that resolves to true if any block matches, false otherwise
  */
 export async function nonRecursiveSomeBlocksInNonLocalizedFieldValueAsync(
   fieldType: ApiTypes.Field['field_type'],
   nonLocalizedFieldValue: unknown,
-  predicate: (item: BlockItemInARequest, path: TreePath) => Promise<boolean>,
+  predicate: (item: BlockInRequest, path: TreePath) => Promise<boolean>,
 ): Promise<boolean> {
   for await (const { item, path } of iterateBlocksAsync(
     fieldType,
@@ -619,36 +388,13 @@ export async function nonRecursiveSomeBlocksInNonLocalizedFieldValueAsync(
  *
  * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
  * @param nonLocalizedFieldValue - The non-localized field value containing blocks to test
- * @param predicate - Synchronous function that tests each block. Should return true for valid blocks
- * @returns True if all blocks match, false otherwise
- */
-export function nonRecursiveEveryBlockInNonLocalizedFieldValue(
-  fieldType: ApiTypes.Field['field_type'],
-  nonLocalizedFieldValue: unknown,
-  predicate: (item: BlockItemInARequest, path: TreePath) => boolean,
-): boolean {
-  return !nonRecursiveSomeBlocksInNonLocalizedFieldValue(
-    fieldType,
-    nonLocalizedFieldValue,
-    (item, path) => {
-      return !predicate(item, path);
-    },
-  );
-}
-
-/**
- * Check if every block in the non-localized field value matches the predicate function.
- * Returns false as soon as the first non-matching block is found (short-circuit evaluation).
- *
- * @param fieldType - The type of DatoCMS field definition that determines how the value is processed
- * @param nonLocalizedFieldValue - The non-localized field value containing blocks to test
  * @param predicate - Asynchronous function that tests each block. Should return true for valid blocks
  * @returns Promise that resolves to true if all blocks match, false otherwise
  */
 export async function nonRecursiveEveryBlockInNonLocalizedFieldValueAsync(
   fieldType: ApiTypes.Field['field_type'],
   nonLocalizedFieldValue: unknown,
-  predicate: (item: BlockItemInARequest, path: TreePath) => Promise<boolean>,
+  predicate: (item: BlockInRequest, path: TreePath) => Promise<boolean>,
 ): Promise<boolean> {
   return !(await nonRecursiveSomeBlocksInNonLocalizedFieldValueAsync(
     fieldType,

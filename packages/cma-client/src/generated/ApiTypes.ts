@@ -1,711 +1,64 @@
 import type {
-  BooleanFieldAppearance,
-  BooleanFieldValidators,
-  BooleanFieldValue,
-  ColorFieldAppearance,
-  ColorFieldValidators,
-  ColorFieldValue,
-  DateFieldAppearance,
-  DateFieldValidators,
-  DateFieldValue,
-  DateTimeFieldAppearance,
-  DateTimeFieldValidators,
-  DateTimeFieldValue,
-  FileFieldAppearance,
-  FileFieldValidators,
-  FloatFieldAppearance,
-  FloatFieldValidators,
-  FloatFieldValue,
-  GalleryFieldAppearance,
-  GalleryFieldValidators,
-  IntegerFieldAppearance,
-  IntegerFieldValidators,
-  IntegerFieldValue,
-  JsonFieldAppearance,
-  JsonFieldValidators,
-  JsonFieldValue,
-  LatLonFieldAppearance,
-  LatLonFieldValidators,
-  LatLonFieldValue,
-  LinkFieldAppearance,
-  LinkFieldValidators,
-  LinksFieldAppearance,
-  LinksFieldValidators,
-  RichTextFieldAppearance,
-  RichTextFieldValidators,
-  SeoFieldAppearance,
-  SeoFieldValidators,
-  SingleBlockFieldAppearance,
-  SingleBlockFieldValidators,
-  SlugFieldAppearance,
-  SlugFieldValidators,
-  StringFieldAppearance,
-  StringFieldValidators,
-  StringFieldValue,
-  StructuredTextFieldAppearance,
-  StructuredTextFieldValidators,
-  TextFieldAppearance,
-  TextFieldValidators,
-  TextFieldValue,
-  VideoFieldAppearance,
-  VideoFieldValidators,
-} from '../fieldTypes';
+  FieldCreateConfig,
+  FieldUpdateConfig,
+  GenericFieldAttributes,
+} from '../fieldTypes/schema';
 
-import type { ItemDefinition } from '../utilities/itemDefinition';
+import type {
+  ItemTypeDefinition,
+  ToItemAttributes,
+  ToItemAttributesInNestedResponse,
+  ToItemAttributesInRequest,
+} from '../utilities/itemDefinition';
 
-/**
- * Enhanced appearance configuration with field-specific types and addon support
- */
-type FieldAppearanceConfig<TAppearance> = TAppearance &
-  Omit<RawFieldAttributes['appearance'], keyof TAppearance>;
+export type Field = GenericFieldAttributes<FieldStableShell>;
 
-/**
- * Base field configuration for attributes (non-localized), extending the original RawApiTypes
- */
-type NonLocalizedFieldAttributesForFieldType<
-  SourceType,
-  FieldType extends RawFieldAttributes['field_type'],
-  FieldValue,
-  FieldValidators,
-  FieldAppearance,
-> = Omit<
-  SourceType,
-  'field_type' | 'default_value' | 'validators' | 'appearance' | 'localized'
-> & {
-  field_type: FieldType;
-  localized: false;
-  default_value: FieldValue;
-  validators: FieldValidators;
-  appearance: FieldAppearanceConfig<FieldAppearance>;
+export type FieldAttributes =
+  GenericFieldAttributes<FieldAttributesStableShell>;
+
+export type FieldCreateSchema = FieldCreateConfig<FieldCreateSchemaStableShell>;
+
+export type FieldUpdateSchema = FieldUpdateConfig<FieldUpdateSchemaStableShell>;
+
+export type ItemTypeData<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+  type: ItemTypeType;
+  id: D extends ItemTypeDefinition ? D['itemTypeId'] : ItemTypeIdentity;
 };
 
-/**
- * Base field configuration for attributes (localized), extending the original RawApiTypes
- */
-type LocalizedFieldAttributesForFieldType<
-  SourceType,
-  FieldType extends RawFieldAttributes['field_type'],
-  FieldValue,
-  FieldValidators,
-  FieldAppearance,
-> = Omit<
-  SourceType,
-  'field_type' | 'default_value' | 'validators' | 'appearance' | 'localized'
-> & {
-  field_type: FieldType;
-  localized: true;
-  default_value: FieldValue | Record<string, FieldValue>;
-  validators: FieldValidators;
-  appearance: FieldAppearanceConfig<FieldAppearance>;
-};
+export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+  __itemTypeId?: D['itemTypeId'];
+  id: ItemIdentity;
+  type: ItemType1;
+  item_type: ItemTypeData<D>;
+  creator?:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
+  meta: ItemMeta;
+} & ToItemAttributes<D>;
 
-/**
- * Union of localized and non-localized field configurations for attributes
- */
-type FieldAttributesForFieldType<
-  SourceType,
-  FieldType extends RawFieldAttributes['field_type'],
-  FieldValue,
-  FieldValidators,
-  FieldAppearance,
-> =
-  | NonLocalizedFieldAttributesForFieldType<
-      SourceType,
-      FieldType,
-      FieldValue,
-      FieldValidators,
-      FieldAppearance
-    >
-  | LocalizedFieldAttributesForFieldType<
-      SourceType,
-      FieldType,
-      FieldValue,
-      FieldValidators,
-      FieldAppearance
-    >;
-
-type GenericFieldAttributes<SourceType> =
-  | FieldAttributesForFieldType<
-      SourceType,
-      'boolean',
-      BooleanFieldValue,
-      BooleanFieldValidators,
-      BooleanFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'color',
-      ColorFieldValue,
-      ColorFieldValidators,
-      ColorFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'date',
-      DateFieldValue,
-      DateFieldValidators,
-      DateFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'date_time',
-      DateTimeFieldValue,
-      DateTimeFieldValidators,
-      DateTimeFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'file',
-      // this field type does not support default values
-      null,
-      FileFieldValidators,
-      FileFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'float',
-      FloatFieldValue,
-      FloatFieldValidators,
-      FloatFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'gallery',
-      // this field type does not support default values
-      null,
-      GalleryFieldValidators,
-      GalleryFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'integer',
-      IntegerFieldValue,
-      IntegerFieldValidators,
-      IntegerFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'json',
-      JsonFieldValue,
-      JsonFieldValidators,
-      JsonFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'lat_lon',
-      LatLonFieldValue,
-      LatLonFieldValidators,
-      LatLonFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'link',
-      // this field type does not support default values
-      null,
-      LinkFieldValidators,
-      LinkFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'links',
-      // this field type does not support default values
-      null,
-      LinksFieldValidators,
-      LinksFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'rich_text',
-      // this field type does not support default values
-      null,
-      RichTextFieldValidators,
-      RichTextFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'seo',
-      // this field type does not support default values
-      null,
-      SeoFieldValidators,
-      SeoFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'single_block',
-      // this field type does not support default values
-      null,
-      SingleBlockFieldValidators,
-      SingleBlockFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'slug',
-      // this field type does not support default values
-      null,
-      SlugFieldValidators,
-      SlugFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'string',
-      StringFieldValue,
-      StringFieldValidators,
-      StringFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'structured_text',
-      // this field type does not support default values
-      null,
-      StructuredTextFieldValidators,
-      StructuredTextFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'text',
-      TextFieldValue,
-      TextFieldValidators,
-      TextFieldAppearance
-    >
-  | FieldAttributesForFieldType<
-      SourceType,
-      'video',
-      // this field type does not support default values
-      null,
-      VideoFieldValidators,
-      VideoFieldAppearance
-    >;
-
-export type FieldAttributes = GenericFieldAttributes<RawFieldAttributes>;
-
-export type Field = GenericFieldAttributes<RawField>;
-
-type LocalizedFieldCreateConfigForFieldType<
-  SourceType,
-  FieldType extends RawFieldAttributes['field_type'],
-  FieldValue,
-  FieldValidators,
-  FieldAppearance,
-> = Omit<
-  SourceType,
-  'field_type' | 'default_value' | 'validators' | 'appearance' | 'localized'
-> & {
-  field_type: FieldType;
-  localized: true;
-  default_value?: Record<string, FieldValue>;
-  validators?: FieldValidators;
-  appearance?: FieldAppearanceConfig<FieldAppearance>;
-};
-
-type NonLocalizedFieldCreateConfigForFieldType<
-  SourceType,
-  FieldType extends RawFieldAttributes['field_type'],
-  FieldValue,
-  FieldValidators,
-  FieldAppearance,
-> = Omit<
-  SourceType,
-  'field_type' | 'default_value' | 'validators' | 'appearance' | 'localized'
-> & {
-  field_type: FieldType;
-  localized?: false;
-  default_value?: FieldValue;
-  validators?: FieldValidators;
-  appearance?: FieldAppearanceConfig<FieldAppearance>;
-};
-
-type FieldCreateConfigForFieldType<
-  SourceType,
-  FieldType extends RawFieldAttributes['field_type'],
-  FieldValue,
-  FieldValidators,
-  FieldAppearance,
-> =
-  | LocalizedFieldCreateConfigForFieldType<
-      SourceType,
-      FieldType,
-      FieldValue,
-      FieldValidators,
-      FieldAppearance
-    >
-  | NonLocalizedFieldCreateConfigForFieldType<
-      SourceType,
-      FieldType,
-      FieldValue,
-      FieldValidators,
-      FieldAppearance
-    >;
-
-type FieldCreateConfig<SourceType> =
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'boolean',
-      BooleanFieldValue,
-      BooleanFieldValidators,
-      BooleanFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'color',
-      ColorFieldValue,
-      ColorFieldValidators,
-      ColorFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'date',
-      DateFieldValue,
-      DateFieldValidators,
-      DateFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'date_time',
-      DateTimeFieldValue,
-      DateTimeFieldValidators,
-      DateTimeFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'file',
-      // this field type does not support default values
-      null,
-      FileFieldValidators,
-      FileFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'float',
-      FloatFieldValue,
-      FloatFieldValidators,
-      FloatFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'gallery',
-      // this field type does not support default values
-      null,
-      GalleryFieldValidators,
-      GalleryFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'integer',
-      IntegerFieldValue,
-      IntegerFieldValidators,
-      IntegerFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'json',
-      JsonFieldValue,
-      JsonFieldValidators,
-      JsonFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'lat_lon',
-      LatLonFieldValue,
-      LatLonFieldValidators,
-      LatLonFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'link',
-      // this field type does not support default values
-      null,
-      LinkFieldValidators,
-      LinkFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'links',
-      // this field type does not support default values
-      null,
-      LinksFieldValidators,
-      LinksFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'rich_text',
-      // this field type does not support default values
-      null,
-      RichTextFieldValidators,
-      RichTextFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'seo',
-      // this field type does not support default values
-      null,
-      SeoFieldValidators,
-      SeoFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'single_block',
-      // this field type does not support default values
-      null,
-      SingleBlockFieldValidators,
-      SingleBlockFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'slug',
-      // this field type does not support default values
-      null,
-      SlugFieldValidators,
-      SlugFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'string',
-      StringFieldValue,
-      StringFieldValidators,
-      StringFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'structured_text',
-      // this field type does not support default values
-      null,
-      StructuredTextFieldValidators,
-      StructuredTextFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'text',
-      TextFieldValue,
-      TextFieldValidators,
-      TextFieldAppearance
-    >
-  | FieldCreateConfigForFieldType<
-      SourceType,
-      'video',
-      // this field type does not support default values
-      null,
-      VideoFieldValidators,
-      VideoFieldAppearance
-    >;
-
-export type FieldCreateSchema = FieldCreateConfig<RawFieldCreateSchema>;
-
-/**
- * Helper type to conditionally handle default values based on localization for field updates
- */
-type FieldUpdateDefaultValue<T> = T | Record<string, T> | undefined;
-
-type FieldUpdateConfigForFieldType<
-  SourceType,
-  FieldType extends RawFieldAttributes['field_type'],
-  FieldValue,
-  FieldValidators,
-  FieldAppearance,
-> = Omit<
-  SourceType,
-  'field_type' | 'default_value' | 'validators' | 'appearance'
-> & {
-  field_type?: FieldType;
-  default_value?: FieldUpdateDefaultValue<FieldValue>;
-  validators?: FieldValidators;
-  appearance?: FieldAppearanceConfig<FieldAppearance>;
-};
-
-type FieldUpdateConfig<SourceType> =
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'boolean',
-      BooleanFieldValue,
-      BooleanFieldValidators,
-      BooleanFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'color',
-      ColorFieldValue,
-      ColorFieldValidators,
-      ColorFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'date',
-      DateFieldValue,
-      DateFieldValidators,
-      DateFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'date_time',
-      DateTimeFieldValue,
-      DateTimeFieldValidators,
-      DateTimeFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'file',
-      // this field type does not support default values
-      null,
-      FileFieldValidators,
-      FileFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'float',
-      FloatFieldValue,
-      FloatFieldValidators,
-      FloatFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'gallery',
-      // this field type does not support default values
-      null,
-      GalleryFieldValidators,
-      GalleryFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'integer',
-      IntegerFieldValue,
-      IntegerFieldValidators,
-      IntegerFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'json',
-      JsonFieldValue,
-      JsonFieldValidators,
-      JsonFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'lat_lon',
-      LatLonFieldValue,
-      LatLonFieldValidators,
-      LatLonFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'link',
-      // this field type does not support default values
-      null,
-      LinkFieldValidators,
-      LinkFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'links',
-      // this field type does not support default values
-      null,
-      LinksFieldValidators,
-      LinksFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'rich_text',
-      // this field type does not support default values
-      null,
-      RichTextFieldValidators,
-      RichTextFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'seo',
-      // this field type does not support default values
-      null,
-      SeoFieldValidators,
-      SeoFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'single_block',
-      // this field type does not support default values
-      null,
-      SingleBlockFieldValidators,
-      SingleBlockFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'slug',
-      // this field type does not support default values
-      null,
-      SlugFieldValidators,
-      SlugFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'string',
-      StringFieldValue,
-      StringFieldValidators,
-      StringFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'structured_text',
-      // this field type does not support default values
-      null,
-      StructuredTextFieldValidators,
-      StructuredTextFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'text',
-      TextFieldValue,
-      TextFieldValidators,
-      TextFieldAppearance
-    >
-  | FieldUpdateConfigForFieldType<
-      SourceType,
-      'video',
-      // this field type does not support default values
-      null,
-      VideoFieldValidators,
-      VideoFieldAppearance
-    >;
-
-export type FieldUpdateSchema = FieldUpdateConfig<RawFieldUpdateSchema>;
-
-type ForceItemTypeDataId<ItemTypeId> = Omit<ItemTypeData, 'id'> & {
-  id: ItemTypeId;
-};
-
-type ForceItemTypeData<T, ItemTypeId> = T extends ItemTypeData
-  ? ForceItemTypeDataId<ItemTypeId>
-  : T extends Function
-    ? T
-    : T extends object
-      ? { [K in keyof T]: ForceItemTypeData<T[K], ItemTypeId> }
-      : T;
-
-type ForceItemTypeId<T, ItemTypeId> = ForceItemTypeData<T, ItemTypeId> & {
-  /** Useful for type narrowing */
-  __itemTypeId?: ItemTypeId;
-};
-
-export type ApplyItemDefinitionToSchema<
-  Schema,
-  D extends ItemDefinition = ItemDefinition,
-> = D extends any
-  ? ForceItemTypeId<Schema, D['itemTypeId']> & D['fields']
-  : never;
-
-export type Item<D extends ItemDefinition = ItemDefinition> =
-  ApplyItemDefinitionToSchema<RawItem, D>;
-export type ItemValidateExistingSchema<
-  D extends ItemDefinition = ItemDefinition,
-> = ApplyItemDefinitionToSchema<RawItemValidateExistingSchema, D>;
-export type ItemValidateNewSchema<D extends ItemDefinition = ItemDefinition> =
-  ApplyItemDefinitionToSchema<RawItemValidateNewSchema, D>;
-export type ItemCreateSchema<D extends ItemDefinition = ItemDefinition> =
-  ApplyItemDefinitionToSchema<RawItemCreateSchema, D>;
-export type ItemUpdateSchema<D extends ItemDefinition = ItemDefinition> =
-  ApplyItemDefinitionToSchema<RawItemUpdateSchema, D>;
+export type ItemInNestedResponse<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = {
+  __itemTypeId?: D['itemTypeId'];
+  id: ItemIdentity;
+  type: ItemType1;
+  item_type: ItemTypeData<D>;
+  creator?:
+    | AccountData
+    | AccessTokenData
+    | UserData
+    | SsoUserData
+    | OrganizationData;
+  meta: ItemMeta;
+} & ToItemAttributesInNestedResponse<D>;
 
 /* tslint:disable */
 /**
  * This file was automatically generated by hyperschema-to-ts: DO NOT MODIFY IT BY HAND.
  */
-
 /**
  * ID of role
  *
@@ -1173,17 +526,17 @@ export type UploadCollectionReorderSchema = {
  */
 export type UploadCollectionReorderJobSchema = UploadCollection[];
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "type".
  */
 export type ItemType1 = 'item';
 /**
  * RFC 4122 UUID of record expressed in URL-safe base64 format
  *
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "identity".
  *
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "id".
  */
 export type ItemIdentity = string;
@@ -1489,14 +842,15 @@ export type BuildEventInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
 export type ItemInstancesTargetSchema<
-  D extends ItemDefinition = ItemDefinition,
-> = Item<D>[];
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+  NestedMode extends boolean = false,
+> = NestedMode extends false ? Item<D>[] : ItemInNestedResponse<D>[];
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `instances.hrefSchema` link.
  */
 export type ItemInstancesHrefSchema = {
@@ -1560,14 +914,15 @@ export type ItemInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `references.targetSchema` link.
  */
 export type ItemReferencesTargetSchema<
-  D extends ItemDefinition = ItemDefinition,
-> = Item<D>[];
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+  NestedMode extends boolean = false,
+> = NestedMode extends false ? Item<D>[] : ItemInNestedResponse<D>[];
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `references.hrefSchema` link.
  */
 export type ItemReferencesHrefSchema = {
@@ -1582,7 +937,7 @@ export type ItemReferencesHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `self.hrefSchema` link.
  */
 export type ItemSelfHrefSchema = {
@@ -1657,7 +1012,7 @@ export type ItemVersionType = 'item_version';
  */
 export type ItemVersionIdentity = string;
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `publish.schema` link.
  */
 export type ItemPublishSchema = {
@@ -1675,7 +1030,7 @@ export type ItemPublishSchema = {
   non_localized_content: boolean;
 } | null;
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `publish.hrefSchema` link.
  */
 export type ItemPublishHrefSchema = {
@@ -1686,7 +1041,7 @@ export type ItemPublishHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `unpublish.schema` link.
  */
 export type ItemUnpublishSchema = {
@@ -1697,7 +1052,7 @@ export type ItemUnpublishSchema = {
   content_in_locales: string[];
 } | null;
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `unpublish.hrefSchema` link.
  */
 export type ItemUnpublishHrefSchema = {
@@ -1708,22 +1063,22 @@ export type ItemUnpublishHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_publish.jobSchema` link.
  */
 export type ItemBulkPublishJobSchema = unknown[];
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_unpublish.jobSchema` link.
  */
 export type ItemBulkUnpublishJobSchema = unknown[];
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_destroy.jobSchema` link.
  */
 export type ItemBulkDestroyJobSchema = unknown[];
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_move_to_stage.jobSchema` link.
  */
 export type ItemBulkMoveToStageJobSchema = unknown[];
@@ -1732,8 +1087,11 @@ export type ItemBulkMoveToStageJobSchema = unknown[];
  * via the `restore.jobSchema` link.
  */
 export type ItemVersionRestoreJobSchema<
-  D extends ItemDefinition = ItemDefinition,
-> = [Item<D>, ItemVersion];
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+  NestedMode extends boolean = false,
+> = NestedMode extends false
+  ? [Item<D>, ItemVersion]
+  : [ItemInNestedResponse<D>, ItemVersion];
 /**
  * This interface was referenced by `ItemVersion`'s JSON-Schema
  * via the `instances.targetSchema` link.
@@ -1836,8 +1194,9 @@ export type UploadInstancesHrefSchema = {
  * via the `references.targetSchema` link.
  */
 export type UploadReferencesTargetSchema<
-  D extends ItemDefinition = ItemDefinition,
-> = Item<D>[];
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+  NestedMode extends boolean = false,
+> = NestedMode extends false ? Item<D>[] : ItemInNestedResponse<D>[];
 /**
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `references.hrefSchema` link.
@@ -2560,62 +1919,6 @@ export type SiteSelfHrefSchema = {
  * via the `instances.targetSchema` link.
  */
 export type WorkflowInstancesTargetSchema = Workflow[];
-
-export type DatoApi = {
-  role?: Role;
-  user?: User;
-  sso_user?: SsoUser;
-  audit_log_event?: AuditLogEvent;
-  account?: Account;
-  organization?: Organization;
-  site_plan?: SitePlan;
-  menu_item?: MenuItem;
-  schema_menu_item?: SchemaMenuItem;
-  upload_collection?: UploadCollection;
-  item_type?: ItemType;
-  field?: Field;
-  fieldset?: Fieldset;
-  job?: Job;
-  session?: Session;
-  access_token?: AccessToken;
-  plugin?: Plugin;
-  job_result?: JobResult;
-  subscription_limit?: SubscriptionLimit;
-  subscription_feature?: SubscriptionFeature;
-  build_event?: BuildEvent;
-  item?: Item;
-  item_current_vs_published_state?: ItemCurrentVsPublishedState;
-  item_version?: ItemVersion;
-  upload?: Upload;
-  upload_request?: UploadRequest;
-  upload_track?: UploadTrack;
-  scheduled_publication?: ScheduledPublication;
-  scheduled_unpublishing?: ScheduledUnpublishing;
-  search_result?: SearchResult;
-  environment?: Environment;
-  maintenance_mode?: MaintenanceMode;
-  webhook?: Webhook;
-  webhook_call?: WebhookCall;
-  build_trigger?: BuildTrigger;
-  item_type_filter?: ItemTypeFilter;
-  upload_filter?: UploadFilter;
-  site_invitation?: SiteInvitation;
-  editing_session?: EditingSession;
-  form_data?: FormData;
-  sso_group?: SsoGroup;
-  sso_settings?: SsoSettings;
-  emoji_suggestions?: EmojiSuggestions;
-  white_label_settings?: WhiteLabelSettings;
-  public_info?: PublicInfo;
-  daily_usage?: DailyUsage;
-  usage_counter?: UsageCounter;
-  upload_tag?: UploadTag;
-  upload_smart_tag?: UploadSmartTag;
-  site?: Site;
-  workflow?: Workflow;
-  [k: string]: unknown;
-};
-
 /**
  * A Role represents a specific set of actions an editor (or an API token) can perform on your administrative area.
  *
@@ -2865,7 +2168,6 @@ export type RoleData = {
   type: RoleType;
   id: RoleIdentity;
 };
-
 /**
  * Meta information regarding the record
  *
@@ -3097,7 +2399,6 @@ export type RoleMeta = {
     }[];
   };
 };
-
 /**
  * JSON API attributes
  *
@@ -3328,7 +2629,6 @@ export type RoleAttributes = {
     build_trigger?: BuildTriggerIdentity | null;
   }[];
 };
-
 /**
  * JSON API links
  *
@@ -3338,7 +2638,6 @@ export type RoleAttributes = {
 export type RoleRelationships = {
   inherits_permissions_from: RoleData[];
 };
-
 /**
  * This interface was referenced by `Role`'s JSON-Schema
  * via the `create.schema` link.
@@ -3570,7 +2869,6 @@ export type RoleCreateSchema = {
   inherits_permissions_from?: RoleData[];
   meta?: RoleMeta;
 };
-
 /**
  * This interface was referenced by `Role`'s JSON-Schema
  * via the `update.schema` link.
@@ -3803,7 +3101,6 @@ export type RoleUpdateSchema = {
   inherits_permissions_from?: RoleData[];
   meta?: RoleMeta;
 };
-
 /**
  * A DatoCMS administrative area can be accessed by multiple people. Every collaborator is linked to a specific Role, which describes what actions it will be able to perform once logged in.
  *
@@ -3847,7 +3144,6 @@ export type UserMeta = {
    */
   last_access: string | null;
 };
-
 /**
  * JSON API data
  *
@@ -3858,7 +3154,6 @@ export type UserData = {
   type: UserType;
   id: UserIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -3883,7 +3178,6 @@ export type UserAttributes = {
    */
   is_active: boolean;
 };
-
 /**
  * JSON API links
  *
@@ -3893,7 +3187,6 @@ export type UserAttributes = {
 export type UserRelationships = {
   role: RoleData;
 };
-
 /**
  * This interface was referenced by `User`'s JSON-Schema
  * via the `update.schema` link.
@@ -3907,7 +3200,6 @@ export type UserUpdateSchema = {
   is_active?: boolean;
   role?: RoleData;
 };
-
 /**
  * A Single Sign-On user exists when a DatoCMS project is connected to an external Identity Provider. An SSO user will not use the standard login procedure but has to go through SAML authentication. It can also be linked to one or more IdP groups.
  *
@@ -3953,7 +3245,6 @@ export type SsoGroupData = {
   type: SsoGroupType;
   id: SsoGroupIdentity;
 };
-
 /**
  * Meta information on the user
  *
@@ -3966,7 +3257,6 @@ export type SsoUserMeta = {
    */
   last_access: string | null;
 };
-
 /**
  * JSON API data
  *
@@ -3977,7 +3267,6 @@ export type SsoUserData = {
   type: SsoUserType;
   id: SsoUserIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -4006,7 +3295,6 @@ export type SsoUserAttributes = {
    */
   last_name: string | null;
 };
-
 /**
  * JSON API links
  *
@@ -4017,7 +3305,6 @@ export type SsoUserRelationships = {
   groups: SsoGroupData[];
   role: RoleData | null;
 };
-
 /**
  * An API token allows access to our API. It is linked to a Role, which describes what actions can be performed.
  *
@@ -4065,7 +3352,6 @@ export type AccessTokenData = {
   type: AccessTokenType;
   id: AccessTokenIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -4095,7 +3381,6 @@ export type AccessTokenAttributes = {
   can_access_cma: boolean;
   hardcoded_type: null | string;
 };
-
 /**
  * JSON API links
  *
@@ -4105,7 +3390,6 @@ export type AccessTokenAttributes = {
 export type AccessTokenRelationships = {
   role: RoleData | null;
 };
-
 /**
  * This interface was referenced by `AccessToken`'s JSON-Schema
  * via the `create.schema` link.
@@ -4130,7 +3414,6 @@ export type AccessTokenCreateSchema = {
   can_access_cma: boolean;
   role: RoleData | null;
 };
-
 /**
  * This interface was referenced by `AccessToken`'s JSON-Schema
  * via the `update.schema` link.
@@ -4156,7 +3439,6 @@ export type AccessTokenUpdateSchema = {
   can_access_cma: boolean;
   role: RoleData | null;
 };
-
 /**
  * DatoCMS account
  *
@@ -4183,7 +3465,6 @@ export type Account = {
    */
   company: string | null;
 };
-
 /**
  * JSON API data
  *
@@ -4194,7 +3475,6 @@ export type AccountData = {
   type: AccountType;
   id: AccountIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -4219,7 +3499,6 @@ export type AccountAttributes = {
    */
   company: string | null;
 };
-
 /**
  * If the Audit log functionality is enabled in a project, logged events can be queried using SQL-like language and fetched in full detail so that they can be exported or analyzed.
  *
@@ -4316,7 +3595,6 @@ export type AuditLogEvent = {
   };
   meta: AuditLogEventMeta;
 };
-
 /**
  * JSON API meta
  *
@@ -4329,7 +3607,6 @@ export type AuditLogEventMeta = {
    */
   occurred_at: string;
 };
-
 /**
  * JSON API data
  *
@@ -4340,7 +3617,6 @@ export type AuditLogEventData = {
   type: AuditLogEventType;
   id: AuditLogEventIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -4434,7 +3710,6 @@ export type AuditLogEventAttributes = {
     };
   };
 };
-
 /**
  * This interface was referenced by `AuditLogEvent`'s JSON-Schema
  * via the `query.schema` link.
@@ -4454,7 +3729,6 @@ export type AuditLogEventQuerySchema = {
    */
   detailed_log?: boolean;
 };
-
 /**
  * DatoCMS organization
  *
@@ -4469,7 +3743,6 @@ export type Organization = {
    */
   name: string;
 };
-
 /**
  * JSON API data
  *
@@ -4480,7 +3753,6 @@ export type OrganizationData = {
   type: OrganizationType;
   id: OrganizationIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -4493,7 +3765,6 @@ export type OrganizationAttributes = {
    */
   name: string;
 };
-
 /**
  * Stores the information regarding the current plan for the project.
  *
@@ -4722,7 +3993,6 @@ export type SitePlan = {
     };
   };
 };
-
 /**
  * JSON API data
  *
@@ -4733,7 +4003,6 @@ export type SitePlanData = {
   type: SitePlanType;
   id: SitePlanIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -4960,7 +4229,6 @@ export type SitePlanAttributes = {
     };
   };
 };
-
 /**
  * In DatoCMS you can organize the different Models present in your administrative area reordering and grouping them, so that their purpose will be more clear to the final editor.
  *
@@ -4998,17 +4266,6 @@ export type MenuItemDestroyTargetSchema = MenuItem;
 /**
  * JSON API data
  *
- * This interface was referenced by `ItemType`'s JSON-Schema
- * via the `definition` "data".
- */
-export type ItemTypeData = {
-  type: ItemTypeType;
-  id: ItemTypeIdentity;
-};
-
-/**
- * JSON API data
- *
  * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
  * via the `definition` "data".
  */
@@ -5016,7 +4273,6 @@ export type ItemTypeFilterData = {
   type: ItemTypeFilterType;
   id: ItemTypeFilterIdentity;
 };
-
 /**
  * JSON API data
  *
@@ -5027,7 +4283,6 @@ export type MenuItemData = {
   type: MenuItemType;
   id: MenuItemIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -5052,7 +4307,6 @@ export type MenuItemAttributes = {
    */
   open_in_new_tab: boolean;
 };
-
 /**
  * JSON API links
  *
@@ -5065,7 +4319,6 @@ export type MenuItemRelationships = {
   parent: null | MenuItemData;
   children: MenuItemData[];
 };
-
 /**
  * This interface was referenced by `MenuItem`'s JSON-Schema
  * via the `create.schema` link.
@@ -5093,7 +4346,6 @@ export type MenuItemCreateSchema = {
   item_type_filter?: ItemTypeFilterData | null;
   parent?: null | MenuItemData;
 };
-
 /**
  * This interface was referenced by `MenuItem`'s JSON-Schema
  * via the `update.schema` link.
@@ -5121,7 +4373,6 @@ export type MenuItemUpdateSchema = {
   item_type_filter?: ItemTypeFilterData | null;
   parent?: null | MenuItemData;
 };
-
 /**
  * This interface was referenced by `MenuItem`'s JSON-Schema
  * via the `reorder.targetSchema` link.
@@ -5153,22 +4404,22 @@ export type MenuItemUpdateSchema = {
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `duplicate.targetSchema` link.
  *
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `duplicate.targetSchema` link.
  *
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `destroy.targetSchema` link.
  *
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_publish.targetSchema` link.
  *
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_unpublish.targetSchema` link.
  *
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_destroy.targetSchema` link.
  *
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_move_to_stage.targetSchema` link.
  *
  * This interface was referenced by `ItemVersion`'s JSON-Schema
@@ -5248,7 +4499,6 @@ export type JobData = {
   type: JobType;
   id: JobIdentity;
 };
-
 /**
  * In DatoCMS you can organize the different models and blocks present in your administrative area reordering and grouping them, so that their purpose will be more clear to the final editor.
  *
@@ -5288,7 +4538,6 @@ export type SchemaMenuItemData = {
   type: SchemaMenuItemType;
   id: SchemaMenuItemIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -5309,7 +4558,6 @@ export type SchemaMenuItemAttributes = {
    */
   kind: 'item_type' | 'modular_block';
 };
-
 /**
  * JSON API links
  *
@@ -5321,7 +4569,6 @@ export type SchemaMenuItemRelationships = {
   parent: null | SchemaMenuItemData;
   children: SchemaMenuItemData[];
 };
-
 /**
  * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
  * via the `create.schema` link.
@@ -5344,7 +4591,6 @@ export type SchemaMenuItemCreateSchema = {
   item_type?: ItemTypeData | null;
   parent?: null | SchemaMenuItemData;
 };
-
 /**
  * This interface was referenced by `SchemaMenuItem`'s JSON-Schema
  * via the `update.schema` link.
@@ -5368,7 +4614,6 @@ export type SchemaMenuItemUpdateSchema = {
   parent?: null | SchemaMenuItemData;
   children?: SchemaMenuItemData[];
 };
-
 /**
  * In DatoCMS you can organize the uploads present in your administrative area in collection, so that the final editors can easily navigate uploads.
  *
@@ -5403,7 +4648,6 @@ export type UploadCollectionData = {
   type: UploadCollectionType;
   id: UploadCollectionIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -5420,7 +4664,6 @@ export type UploadCollectionAttributes = {
    */
   position: number;
 };
-
 /**
  * JSON API links
  *
@@ -5431,7 +4674,6 @@ export type UploadCollectionRelationships = {
   parent: null | UploadCollectionData;
   children: UploadCollectionData[];
 };
-
 /**
  * This interface was referenced by `UploadCollection`'s JSON-Schema
  * via the `create.schema` link.
@@ -5449,7 +4691,6 @@ export type UploadCollectionCreateSchema = {
   position?: number;
   parent?: null | UploadCollectionData;
 };
-
 /**
  * This interface was referenced by `UploadCollection`'s JSON-Schema
  * via the `update.schema` link.
@@ -5468,7 +4709,6 @@ export type UploadCollectionUpdateSchema = {
   parent?: null | UploadCollectionData;
   children?: UploadCollectionData[];
 };
-
 /**
  * The way you define the kind of content you can edit inside your administrative area passes through the concept of Models, which are much like database tables. For backward-compatibility reasons, the API refers to models as "item types".
  *
@@ -5567,14 +4807,13 @@ export type ItemTypeDestroyJobSchema = ItemType;
 /**
  * JSON API data
  *
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "data".
  */
 export type ItemData = {
   type: ItemType1;
   id: ItemIdentity;
 };
-
 /**
  * JSON API data
  *
@@ -5585,7 +4824,6 @@ export type FieldData = {
   type: FieldType;
   id: FieldIdentity;
 };
-
 /**
  * JSON API data
  *
@@ -5596,7 +4834,6 @@ export type FieldsetData = {
   type: FieldsetType;
   id: FieldsetIdentity;
 };
-
 /**
  * JSON API data
  *
@@ -5607,7 +4844,6 @@ export type WorkflowData = {
   type: WorkflowType;
   id: WorkflowIdentity;
 };
-
 /**
  * Meta information regarding the item type
  *
@@ -5620,7 +4856,6 @@ export type ItemTypeMeta = {
    */
   has_singleton_item: boolean;
 };
-
 /**
  * JSON API attributes
  *
@@ -5698,7 +4933,6 @@ export type ItemTypeAttributes = {
    */
   inverse_relationships_enabled: boolean;
 };
-
 /**
  * JSON API links
  *
@@ -5717,7 +4951,6 @@ export type ItemTypeRelationships = {
   ordering_field: FieldData | null;
   workflow: WorkflowData | null;
 };
-
 /**
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `create.schema` link.
@@ -5798,7 +5031,6 @@ export type ItemTypeCreateSchema = {
   excerpt_field?: FieldData | null;
   workflow?: WorkflowData | null;
 };
-
 /**
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `update.schema` link.
@@ -5889,7 +5121,6 @@ export type ItemTypeUpdateSchema = {
     has_singleton_item?: boolean;
   };
 };
-
 /**
  * DatoCMS offers a number of different fields that you can combine together to create a [Model](/docs/content-management-api/resources/item-type). Using the database metaphore, fields are like table columns, and when creating them you need to specify their type (`string`, `float`, etc.) and any required validation.
  *
@@ -6844,7 +6075,7 @@ export type ItemTypeUpdateSchema = {
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "field".
  */
-export type RawField = {
+export type FieldStableShell = {
   id: FieldIdentity;
   type: FieldType;
   /**
@@ -6973,7 +6204,7 @@ export type FieldDuplicateJobSchema = Field;
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export type RawFieldAttributes = {
+export type FieldAttributesStableShell = {
   /**
    * The label of the field
    */
@@ -7087,7 +6318,6 @@ export type RawFieldAttributes = {
    */
   deep_filtering_enabled: boolean;
 };
-
 /**
  * JSON API links
  *
@@ -7098,12 +6328,11 @@ export type FieldRelationships = {
   item_type: ItemTypeData;
   fieldset: null | FieldsetData;
 };
-
 /**
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `create.schema` link.
  */
-export type RawFieldCreateSchema = {
+export type FieldCreateSchemaStableShell = {
   id?: FieldIdentity;
   type?: FieldType;
   /**
@@ -7220,12 +6449,11 @@ export type RawFieldCreateSchema = {
   deep_filtering_enabled?: boolean;
   fieldset?: null | FieldsetData;
 };
-
 /**
  * This interface was referenced by `Field`'s JSON-Schema
  * via the `update.schema` link.
  */
-export type RawFieldUpdateSchema = {
+export type FieldUpdateSchemaStableShell = {
   id?: FieldIdentity;
   type?: FieldType;
   /**
@@ -7342,7 +6570,6 @@ export type RawFieldUpdateSchema = {
   deep_filtering_enabled?: boolean;
   fieldset?: null | FieldsetData;
 };
-
 /**
  * Fields can be organized and grouped into fieldset to better present them to editors.
  *
@@ -7406,7 +6633,6 @@ export type FieldsetAttributes = {
    */
   position: number;
 };
-
 /**
  * JSON API links
  *
@@ -7416,7 +6642,6 @@ export type FieldsetAttributes = {
 export type FieldsetRelationships = {
   item_type: ItemTypeData;
 };
-
 /**
  * This interface was referenced by `Fieldset`'s JSON-Schema
  * via the `create.schema` link.
@@ -7445,7 +6670,6 @@ export type FieldsetCreateSchema = {
    */
   start_collapsed?: boolean;
 };
-
 /**
  * This interface was referenced by `Fieldset`'s JSON-Schema
  * via the `update.schema` link.
@@ -7474,7 +6698,6 @@ export type FieldsetUpdateSchema = {
    */
   start_collapsed?: boolean;
 };
-
 /**
  * A session is required to access to read-and-write API endpoints
  *
@@ -7502,7 +6725,6 @@ export type SessionData = {
   type: SessionType;
   id: SessionIdentity;
 };
-
 /**
  * JSON API links
  *
@@ -7517,7 +6739,6 @@ export type SessionRelationships = {
     | SsoUserData
     | OrganizationData;
 };
-
 /**
  * This interface was referenced by `Session`'s JSON-Schema
  * via the `create.schema` link.
@@ -7537,7 +6758,6 @@ export type SessionCreateSchema = {
    */
   otp_code?: string;
 };
-
 /**
  * Plugins enable developers to replace DatoCMS field components with HTML5 applications so the editing experiences of the DatoCMS web app can be customized.
  *
@@ -7631,7 +6851,6 @@ export type PluginMeta = {
    */
   version: string;
 };
-
 /**
  * JSON API data
  *
@@ -7642,7 +6861,6 @@ export type PluginData = {
   type: PluginType;
   id: PluginIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -7717,7 +6935,6 @@ export type PluginAttributes = {
     instance: unknown[];
   };
 };
-
 /**
  * This interface was referenced by `Plugin`'s JSON-Schema
  * via the `create.schema` link.
@@ -7784,7 +7001,6 @@ export type PluginCreateSchema = {
    */
   package_version?: null | string;
 };
-
 /**
  * This interface was referenced by `Plugin`'s JSON-Schema
  * via the `update.schema` link.
@@ -7822,7 +7038,6 @@ export type PluginUpdateSchema = {
     [k: string]: unknown;
   };
 };
-
 /**
  * Some API endpoint give results asynchronously, returning the ID of a job.
  *
@@ -7854,7 +7069,6 @@ export type JobResultData = {
   type: JobResultType;
   id: JobResultIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -7873,7 +7087,6 @@ export type JobResultAttributes = {
     [k: string]: unknown;
   };
 };
-
 /**
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "subscription_limit".
@@ -7905,7 +7118,6 @@ export type SubscriptionLimitData = {
   type: SubscriptionLimitType;
   id: SubscriptionLimitIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -7926,7 +7138,6 @@ export type SubscriptionLimitAttributes = {
    */
   limit: number | null;
 };
-
 /**
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "subscription_feature".
@@ -7947,7 +7158,6 @@ export type SubscriptionFeature = {
    */
   enabled: boolean;
 };
-
 /**
  * JSON API data
  *
@@ -7958,7 +7168,6 @@ export type SubscriptionFeatureData = {
   type: SubscriptionFeatureType;
   id: SubscriptionFeatureIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -7979,7 +7188,6 @@ export type SubscriptionFeatureAttributes = {
    */
   enabled: boolean;
 };
-
 /**
  * Represents an event occurred during the deploy process of your administrative area.
  *
@@ -8025,7 +7233,6 @@ export type BuildTriggerData = {
   type: BuildTriggerType;
   id: BuildTriggerIdentity;
 };
-
 /**
  * JSON API data
  *
@@ -8036,7 +7243,6 @@ export type BuildEventData = {
   type: BuildEventType;
   id: BuildEventIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -8068,7 +7274,6 @@ export type BuildEventAttributes = {
     [k: string]: unknown;
   };
 };
-
 /**
  * JSON API links
  *
@@ -8078,801 +7283,46 @@ export type BuildEventAttributes = {
 export type BuildEventRelationships = {
   build_trigger: BuildTriggerData;
 };
-
-/**
- * DatoCMS stores the individual pieces of content you create from a model as records (for backwards compatibility the API calls these `item`). The shape of a record’s attributes depends on the fields defined by that record’s model — see the [Object payload](#object-payload) section for the full object payload documentation.
- *
- * ```json
- * // A simple record
- * {
- *   "id": "A4gkL_8pTZmcyJ-IlIEd2w",
- *   "type": "item",
- *   "attributes": {
- *     "title": "My Blog Post",
- *     "publication_date": "2024-01-15"
- *   },
- *   "relationships": {
- *     "item_type": {
- *       "data": { "id": "BxZ9Y2aKQVeTnM4hP8wLpD", "type": "item_type" }
- *     }
- *   }
- * }
- * ```
- *
- * > [!PROTIP] 📘 New to content modeling?
- * > Check out the [Content Modeling Guide](/docs/content-modelling) to understand how to design models, fields, and relationships before diving into API usage.
- *
- * ---
- *
- * ## Field types overview
- *
- * ###### Scalar fields
- * These store basic data types (ie. strings, numbers, booleans):
- *
- * <details>
- * <summary>Single-line string</summary>
- *
- * The field accepts `String` values or `null`.
- *
- * </details>
- *
- * <details>
- * <summary>Slug</summary>
- *
- * The field accepts `String` values or `null`.
- * </details>
- *
- * <details>
- * <summary>Multi-line text</summary>
- *
- * The field accepts simple `String` values (can include newlines) or `null`
- * </details>
- *
- * <details>
- * <summary>Boolean</summary>
- *
- * The field accepts simple `Boolean` values or `null`.
- * </details>
- *
- * <details>
- * <summary>Integer</summary>
- *
- * The field accepts simple `Integer` values or `null`.
- * </details>
- *
- * <details>
- * <summary>Float</summary>
- *
- * The field accepts simple `Float` values or `null`.
- *
- * </details>
- *
- * <details>
- * <summary>Date</summary>
- *
- * The field accepts `String` values in ISO 8601 date format (ie. `"2015-12-29"`) or `null`.
- *
- * </details>
- *
- * <details>
- * <summary>Date time</summary>
- *
- * The field accepts `String` values in ISO 8601 date-time format (ie. `"2020-04-17T16:34:31.981+01:00"`) or `null`.
- *
- * If you're on [legacy timezone management](/product-updates/improved-timezone-management), remember that when sending an ISO8601 datetime you should keep in mind that the system will ignore any provided timezone, and will use the project's timezone instead.
- * </details>
- *
- * <details>
- * <summary>JSON</summary>
- *
- * The field accepts `String` values that are valid JSON or `null`.
- *
- * **Note**: Must be a JSON-serialized string, not a JavaScript object!
- *
- * </details>
- *
- * ###### Object Fields
- * These require structured objects:
- *
- * <details>
- * <summary>Color</summary>
- *
- * The field accepts an object with the following properties, or `null`:
- *
- * | Property | Required | Type                        |
- * | -------- | -------- | --------------------------- |
- * | `red`    | ✅        | `Integer` between 0 and 255 |
- * | `green`  | ✅        | `Integer` between 0 and 255 |
- * | `blue`   | ✅        | `Integer` between 0 and 255 |
- * | `alpha`  | ✅        | `Integer` between 0 and 255 |
- *
- * </details>
- *
- *
- * <details>
- * <summary>Location</summary>
- *
- * The field accepts an object with the following properties, or `null`:
- *
- * | Property    | Required | Type                          |
- * | ----------- | -------- | ----------------------------- |
- * | `latitude`  | ✅        | `Float` between -90.0 to 90   |
- * | `longitude` | ✅        | `Float` between -180.0 to 180 |
- *
- * </details>
- *
- * <details>
- * <summary>SEO</summary>
- *
- * The field accepts an object with the following properties, or `null`:
- *
- * | Property       | Required | Type                                 | Description                                     |
- * | -------------- | -------- | ------------------------------------ | ----------------------------------------------- |
- * | `title`        |          | `String`                             | Title meta tag (max. 320 characters)            |
- * | `description`  |          | `String`                             | Description meta tag (max. 320 characters)      |
- * | `image`        |          | `Upload ID`                          | Asset to be used for social shares              |
- * | `twitter_card` |          | `"summary"`, `"summary_large_image"` | Type of Twitter card to use                     |
- * | `no_index`     |          | `Boolean`                            | Whether the noindex meta tag should be returned |
- *
- * </details>
- *
- * <details>
- * <summary>External video</summary>
- *
- * The field accepts an object with the following properties, or `null`:
- *
- * | Property        | Required | Type                                 | Description                                        | Example                                              |
- * | --------------- | -------- | ------------------------------------ | -------------------------------------------------- | ---------------------------------------------------- |
- * | `provider`      | ✅        | `"youtube"`, `"vimeo"`, `"facebook"` | External video provider                            | `"youtube"`                                          |
- * | `provider_uid`  | ✅        | `String`                             | Unique identifier of the video within the provider | `"vUdGBEb1i9g"`                                      |
- * | `url`           | ✅        | `URL`                                | URL of the video                                   | `"https://www.youtube.com/watch?v=qJhobECFQYk"`      |
- * | `width`         | ✅        | `Integer`                            | Video width                                        | `459`                                                |
- * | `height`        | ✅        | `Integer`                            | Video height                                       | `344`                                                |
- * | `thumbnail_url` | ✅        | `URL`                                | URL for the video thumb                            | `"https://i.ytimg.com/vi/vUdGBEb1i9g/hqdefault.jpg"` |
- * | `title`         | ✅        | `String`                             | Title of the video                                 | `"Next.js Conf Booth Welcoming!"`                    |
- *
- * </details>
- *
- * ###### Reference Fields
- *
- * These point to other resources (either assets or other records):
- *
- * <details>
- * <summary>Single-asset</summary>
- *
- * The field accepts an object with the following properties, or `null`:
- *
- * | Property      | Required | Type                             | Description                                                                                                                                                                                                                  | Example                         |
- * | ------------- | -------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
- * | `upload_id`   | ✅        | `Upload ID`                      | ID of an asset                                                                                                                                                                                                               | `"dhVR2HqgRVCTGFi0bWqLqA"`      |
- * | `title`       |          | `String`                         | Title for the asset, if you want to override the asset's default value (see Upload `default_field_metadata`)                                                                                                                 | `"From my trip to Italy"`       |
- * | `alt`         |          | `String`                         | Alternate text for the asset, if you want to override the asset's default value (see Upload `default_field_metadata`)                                                                                                        | `"Florence skyline"`            |
- * | `focal_point` |          | `{ x: Float, y: Float }`, `null` | Focal point for the asset, if you want to override the asset's default value (see Upload `default_field_metadata`). Values must be expressed as `Float` between 0 and 1. Focal point can only be specified for image assets. | `{ "x": 0.34, "y": 0.45 }`      |
- * | `custom_data` |          | `Record<String, String>`         | An object containing custom keys that you can use on your frontend projects                                                                                                                                                  | `{ "watermark_image": "true" }` |
- *
- * **API responses**: Always returns asset ID only (use separate asset API for details)
- *
- * </details>
- *
- * <details>
- * <summary>Asset gallery</summary>
- *
- * This field accepts an `Array` of objects with the following properties, or `null`:
- *
- * | Property      | Required | Type                             | Description                                                                                                                                                                                                                  | Example                         |
- * | ------------- | -------- | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- |
- * | `upload_id`   | ✅        | `Upload ID`                      | ID of an asset                                                                                                                                                                                                               | `"dhVR2HqgRVCTGFi0bWqLqA"`      |
- * | `title`       |          | `String`                         | Title for the asset, if you want to override the asset's default value (see Upload `default_field_metadata`)                                                                                                                 | `"Gallery Image Title"`         |
- * | `alt`         |          | `String`                         | Alternate text for the asset, if you want to override the asset's default value (see Upload `default_field_metadata`)                                                                                                        | `"Gallery image description"`   |
- * | `focal_point` |          | `{ x: Float, y: Float }`, `null` | Focal point for the asset, if you want to override the asset's default value (see Upload `default_field_metadata`). Values must be expressed as `Float` between 0 and 1. Focal point can only be specified for image assets. | `{ "x": 0.34, "y": 0.45 }`      |
- * | `custom_data` |          | `Record<String, String>`         | An object containing custom keys that you can use on your frontend projects                                                                                                                                                  | `{ "watermark_image": "true" }` |
- *
- * **API responses**: Always returns array of asset IDs only
- *
- * </details>
- *
- * <details>
- * <summary>Single link</summary>
- *
- * This field accepts a `String` representing the ID of the linked record, or `null`. See [Link Fields Guide](/docs/content-modelling/links) for relationship modeling concepts.
- *
- * **API responses**: Always returns record ID only
- *
- * </details>
- *
- * <details>
- * <summary>Multiple links</summary>
- *
- * This field accepts an `Array<String>` representing the IDs of the linked records, or `null`. See [Link Fields Guide](/docs/content-modelling/links) for relationship modeling concepts.
- *
- * **API responses**: Always returns array of record IDs only
- *
- * </details>
- *
- * ###### Block Fields
- *
- * These are special fields that contain **blocks within records**:
- *
- * | Field Type          | What it contains                                                                                                          |
- * | ------------------- | ------------------------------------------------------------------------------------------------------------------------- |
- * | **Modular content** | An array of blocks, perfect for building dynamic page sections                                                            |
- * | **Single block**    | A single block instance or `null`                                                                                         |
- * | **Structured text** | A rich text document that can have blocks embedded within the flow of content ([DAST format](/docs/structured-text/dast)) |
- *
- * Blocks are **records within records** - they're separate items that live inside fields of other records.
- *
- * > [!PROTIP] 📚 Content Modeling Context
- * > To understand when and how to design blocks vs models, see [Blocks Guide](/docs/content-modelling/blocks). For field-specific concepts, see [Modular Content](/docs/content-modelling/modular-content) and [Structured Text](/docs/content-modelling/structured-text).
- *
- * Blocks inside those fields are unique because they can be represented in two different ways depending on the context: as a lightweight reference (an ID) or as a full content object. Understanding this duality is key to working with them effectively:
- *
- * * **Block ID (Lightweight Reference)**: A simple `String` that uniquely identifies the block (ie. `"dhVR2HqgRVCTGFi_0bWqLqA"`). This is useful when you only need to know *which* block is there, not what's inside it.
- *
- * * **Block Object (Full Content)**: The complete record object for the block, containing its own `id`, `type`, `attributes`, and `relationships`. This is used when you need to read or modify the block's actual content.
- *
- *   ```json
- *   {
- *     "id": "dhVR2HqgRVCTGFi_0bWqLqA",
- *     "type": "item",
- *     "attributes": {
- *       "title": "Block Title",
- *       "content": "Block content..."
- *     },
- *     "relationships": {
- *       "item_type": {
- *         "data": { "id": "BxZ9Y2aKQVeTnM4hP8wLpD", "type": "item_type" }
- *       }
- *     }
- *   }
- *   ```
- *
- * <details>
- * <summary>Modular Content</summary>
- *
- * A Modular Content field holds an array of blocks.
- *
- * **As an array of IDs:**
- * ```json
- * {
- *   "content_blocks": [
- *     "dhVR2HqgRVCTGFi_0bWqLqA",
- *     "kL9mN3pQrStUvWxYzAbCdE"
- *   ]
- * }
- * ```
- *
- * **As an array of full objects:**
- *
- * ```json
- * {
- *   "content_blocks": [
- *     {
- *       "id": "dhVR2HqgRVCTGFi_0bWqLqA",
- *       "type": "item",
- *       "attributes": { "title": "Hero Section", "content": "Welcome to our site" },
- *       "relationships": { "item_type": { "data": { "id": "...", "type": "item_type" } } }
- *     },
- *     {
- *       "id": "kL9mN3pQrStUvWxYzAbCdE",
- *       "type": "item",
- *       "attributes": { "title": "Image Gallery", "images": [...] },
- *       "relationships": { "item_type": { "data": { "id": "...", "type": "item_type" } } }
- *     }
- *   ]
- * }
- * ```
- * </details>
- *
- * <details>
- * <summary>Single Block</summary>
- *
- * A Single Block field holds exactly one block, or `null`.
- *
- * **As an ID:**
- * ```json
- * {
- *   "featured_block": "dhVR2HqgRVCTGFi_0bWqLqA"
- * }
- * ```
- *
- * **As an full object:**
- *
- * ```json
- * {
- *   "featured_block": {
- *     "id": "dhVR2HqgRVCTGFi_0bWqLqA",
- *     "type": "item",
- *     "attributes": { "title": "Featured Content", "summary": "A summary..." },
- *     "relationships": { "item_type": { "data": { "id": "...", "type": "item_type" } } }
- *   }
- * }
- * ```
- * </details>
- *
- * <details>
- * <summary>Structured Text</summary>
- *
- * A Structured Text field can contain blocks within its document structure ([DAST format](/docs/structured-text/dast)). The item property of a `block` or `inlineBlock` node will hold either the ID or the full object.
- *
- * **With block IDs:**
- *
- * ```json
- * {
- *   "rich_text_content": {
- *     "schema": "dast",
- *     "document": {
- *       "type": "root",
- *       "children": [
- *         {
- *           "type": "paragraph",
- *           "children": [{ "type": "span", "value": "Text before block." }]
- *         },
- *         {
- *           "type": "block",
- *           "item": "dhVR2HqgRVCTGFi_0bWqLqA"
- *         }
- *       ]
- *     }
- *   }
- * }
- * ```
- *
- * **With full objects:**
- *
- * ```json
- * {
- *   "rich_text_content": {
- *     "schema": "dast",
- *     "document": {
- *       "type": "root",
- *       "children": [
- *         {
- *         "type": "paragraph",
- *           "children": [{ "type": "span", "value": "Text before block." }]
- *         },
- *         {
- *           "type": "block",
- *           "item": {
- *             "id": "dhVR2HqgRVCTGFi_0bWqLqA",
- *             "type": "item",
- *             "attributes": { "title": "Embedded Block", "content": "..." },
- *             "relationships": { "item_type": { "data": { "id": "...", "type": "item_type" } } }
- *           }
- *         }
- *       ]
- *     }
- *   }
- * }
- * ```
- * </details>
- *
- * ---
- *
- * ## API response modes: Regular vs. Nested
- *
- * When fetching record data, the API gives you control over how block fields are represented in the response. These two modes, **Regular** and **Nested**, are available on the following endpoints:
- *
- * * [Retrieve a single record (`GET /items/:id`)](/docs/content-management-api/resources/item/self)
- * * [Retrieve multiple records (`GET /items`)](/docs/content-management-api/resources/item/instances)
- * * [Retrieve records referenced by a record (`GET /items/:id/references`)](/docs/content-management-api/resources/item/references)
- * * [Retrieve records linked to an asset (`GET /upload/:id/references`)](/docs/content-management-api/resources/upload/references)
- *
- * ###### Regular mode (default)
- *
- * By default, the API returns block fields as IDs only. This is efficient and fast, making it ideal for listings or when you don't need the blocks' content immediately.
- *
- * ```json
- * GET /items/A4gkL_8pTZmcyJ-IlIEd2w
- *
- * {
- *   "id": "A4gkL_8pTZmcyJ-IlIEd2w",
- *   "type": "item",
- *   "attributes": {
- *     "title": "My Blog Post",
- *     "content_blocks": ["dhVR2HqgRVCTGFi_0bWqLqA", "kL9mN3pQrStUvWxYzAbCdE"],
- *     "featured_block": "nZ8xY2vWqTuJkL3mNcBeFg"
- *   }
- * }
- * ```
- *
- * ###### Nested mode (`?nested=true`)
- *
- * The same endpoint, when passing the `?nested=true` option, returns **block fields as full objects**. This is essential when you need to display or edit the content within the blocks.
- *
- * ```json
- * GET /items/A4gkL_8pTZmcyJ-IlIEd2w?nested=true
- *
- * {
- *   "id": "A4gkL_8pTZmcyJ-IlIEd2w",
- *   "type": "item",
- *   "attributes": {
- *     "title": "My Blog Post",
- *     "content_blocks": [
- *       {
- *         "id": "dhVR2HqgRVCTGFi_0bWqLqA",
- *         "type": "item",
- *         "attributes": { "title": "Hero Section", "content": "Welcome to our site" },
- *         "relationships": { ... }
- *       },
- *       {
- *         "id": "kL9mN3pQrStUvWxYzAbCdE",
- *         "type": "item",
- *         "attributes": { "title": "Image Gallery", "images": [...] },
- *         "relationships": { ... }
- *       }
- *     ],
- *     "featured_block": {
- *       "id": "nZ8xY2vWqTuJkL3mNcBeFg",
- *       "type": "item",
- *       "attributes": { ... },
- *       "relationships": { ... }
- *     }
- *   }
- * }
- * ```
- *
- * > [!WARNING] Block Fields vs. Other Reference Fields
- * > Block fields are the **only** field type that change representation between modes! Asset and link fields always return IDs. To get full details for assets or linked records, you need to make separate API calls using their IDs.
- *
- * ###### When to use each mode?
- *
- * | Use "Regular Mode" when...                                                                                     | Use "Nested Mode" when...                                                                     |
- * | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
- * | Listing many records or building navigation.                                                                   | Displaying or editing block content, as it provides the actual content needed.                |
- * | You only need to know which blocks exist.                                                                      | You need to read the actual block content for display or updates.                             |
- * | Building navigation                                                                                            | Preparing to update blocks                                                                    |
- * | Performance is critical; it's faster because it returns smaller responses (block IDs instead of full content). | You are building content editing interfaces where usability is more important than raw speed. |
- *
- *
- * ---
- *
- * ## Creating and updating blocks
- *
- * Working with blocks follows one fundamental constraint:
- *
- * **You cannot create, edit, or delete blocks directly. You must always update the parent record that contains them.**
- *
- * This ensures data integrity. To create/modify blocks, you send a payload to the parent record's endpoint, using a mix of Block IDs and Block Objects to describe the desired changes.
- *
- * ###### Key rules for block operations
- *
- * 1.  **To create a new block**: Provide the **full object**, including `type`, `attributes`, and the `relationships.item_type` which specifies the Block Model being used.
- * 2.  **To update an existing block**: Provide the **full object**, including its `id` and the changed `attributes`. You only need to include the specific attributes that you want to change - unchanged attributes will be preserved. You don't need to specify `relationships.item_type`.
- * 3.  **To keep an existing block unchanged**: Simply provide its **Block ID** string. This is the most efficient way to handle unchanged blocks.
- * 4.  **To delete a block**: Omit it from the payload. For a Modular Content array, remove its ID. For a Single Block field, set the value to `null`.
- * 5.  **To reorder blocks** (in Modular Content): Send an array of Block IDs in the new desired order.
- *
- *
- * The following examples show how to apply these rules.
- *
- * <details>
- * <summary>Working with Modular Content Fields</summary>
- *
- * **Current state** (from a regular API response):
- * ```json
- * {
- *   "content_blocks": ["dhVR2HqgRVCTGFi_0bWqLqA", "kL9mN3pQrStUvWxYzAbCdE", "fG8hI1jKlMnOpQrStUvWxY"]
- * }
- * ```
- *
- * **To update the second block and reorder the others:**
- * ```json
- * {
- *   "content_blocks": [
- *     "fG8hI1jKlMnOpQrStUvWxY", // Reordered: kept as ID
- *     {
- *       "id": "kL9mN3pQrStUvWxYzAbCdE", // Updated: sent as object
- *       "type": "item",
- *       "attributes": { "title": "Updated Title" }
- *     },
- *     "dhVR2HqgRVCTGFi_0bWqLqA" // Reordered: kept as ID
- *   ]
- * }
- * ```
- *
- * **To add a new block at the end and remove the first block:**
- * ```json
- * {
- *   "content_blocks": [
- *     "kL9mN3pQrStUvWxYzAbCdE", // Kept as ID
- *     "fG8hI1jKlMnOpQrStUvWxY", // Kept as ID
- *     {
- *       "type": "item", // New block: sent as object with relationships
- *       "attributes": { "title": "A Brand New Block" },
- *       "relationships": {
- *         "item_type": {
- *           "data": { "id": "BxZ9Y2aKQVeTnM4hP8wLpD", "type": "item_type" }
- *         }
- *       }
- *     }
- *   ]
- * }
- * ```
- *
- * </details>
- *
- * <details>
- * <summary>Working with Single Block Fields</summary>
- *
- * **Current state** (from a regular API response):
- * ```json
- * {
- *   "hero_block": "dhVR2HqgRVCTGFi_0bWqLqA"
- * }
- * ```
- *
- * **To update the block's content:**
- * ```json
- * {
- *   "hero_block": {
- *     "id": "dhVR2HqgRVCTGFi_0bWqLqA",
- *     "type": "item",
- *     "attributes": { "title": "Updated Hero Title" }
- *   }
- * }
- * ```
- *
- * **To replace it with a new block:**
- * ```json
- * {
- *   "hero_block": {
- *     "type": "item",
- *     "attributes": { "title": "New Hero Block" },
- *     "relationships": {
- *       "item_type": {
- *         "data": { "id": "BxZ9Y2aKQVeTnM4hP8wLpD", "type": "item_type" }
- *       }
- *     }
- *   }
- * }
- * ```
- *
- * **To remove (delete) the block:**
- * ```json
- * {
- *   "hero_block": null
- * }
- * ```
- * </details>
- *
- * <details>
- * <summary>Working with Structured Text Fields</summary>
- *
- * Updating blocks within Structured Text follows the same pattern: you replace the `item`'s ID with a full object for the block you want to change.
- *
- * **Current state** (from a regular API response):
- * ```json
- * {
- *   "rich_content": {
- *     "schema": "dast",
- *     "document": {
- *       "type": "root",
- *       "children": [
- *         { "type": "block", "item": "dhVR2HqgRVCTGFi_0bWqLqA" },
- *         { "type": "paragraph", "children": [{ "type": "span", "value": "Some text." }] }
- *       ]
- *     }
- *   }
- * }
- * ```
- *
- * **To update the block's content:**
- * ```json
- * {
- *   "rich_content": {
- *     "schema": "dast",
- *     "document": {
- *       "type": "root",
- *       "children": [
- *         {
- *           "type": "block",
- *           "item": {
- *             "id": "dhVR2HqgRVCTGFi_0bWqLqA", // The block to update
- *             "type": "item",
- *             "attributes": { "title": "Updated DAST Block Title" }
- *           }
- *         },
- *         { "type": "paragraph", "children": [{ "type": "span", "value": "Some text." }] }
- *       ]
- *     }
- *   }
- * }
- * ```
- * </details>
- *
- * ###### Deeply-nested blocks
- *
- * Blocks can contain other blocks, creating hierarchies multiple levels deep. **The same principles apply recursively.** When you fetch a record with `?nested=true`, the API will expand nested blocks at all levels.
- *
- * When updating, you are always sending a payload to the top-level parent record, but you can specify changes to deeply nested blocks using the same ID vs. object rules.
- *
- * <details>
- * <summary>Example: Updating a nested block</summary>
- *
- * Imagine a "Wrapper" block that contains a Modular Content field with "Child" blocks inside it. To update "Child Block 1" while leaving "Child Block 2" untouched:
- *
- * ```json
- * // This payload is sent to the top-level record containing the "Parent Block"
- * {
- *   "wrapper_block": {
- *     "id": "dhVR2HqgRVCTGFi_0bWqLqA", // ID of the parent block being updated
- *     "type": "item",
- *     "attributes": {
- *       "nested_content": [
- *         {
- *           "id": "kL9mN3pQrStUvWxYzAbCdE", // ID of the nested block being updated
- *           "type": "item",
- *           "attributes": { "title": "Updated Child Block 1" }
- *         },
- *         "fG8hI1jKlMnOpQrStUvWxY" // Unchanged nested block, sent as ID
- *       ],
- *       // You can skip any attribute that does not need to change
- *     }
- *   }
- * }
- * ```
- * </details>
- *
- * ---
- *
- * ## Localization
- *
- * Localization allows you to store different versions of your content for different languages or regions. When you mark a field as "localizable" in your model, its structure in the API changes to accommodate multiple values.
- *
- * The fundamental change is that the field's value is no longer a single piece of data but an **object keyed by locale codes**.
- *
- * For example, a simple non-localized `title` field looks like this:
- * ```json
- * {
- *   "title": "Hello World"
- * }
- * ```
- *
- * When localized, it becomes an object containing a value for each configured locale:
- * ```json
- * {
- *   "title": {
- *     "en": "Hello World",
- *     "it": "Ciao Mondo",
- *     "fr": "Bonjour le Monde"
- *   }
- * }
- * ```
- * This principle applies to **every type of field**, from simple strings to **Modular Content**, **Single Block**, and **Structured Text** fields. For instance, a localized Modular Content field will contain a separate array of blocks for each language. This powerful feature allows you to have completely different block structures for each locale.
- *
- * <details>
- * <summary>Example: Localized Modular Content field</summary>
- *
- * In a `regular` API response, you would see different arrays of block IDs for each locale.
- *
- * ```json
- * {
- *   "content_blocks": {
- *     "en": ["dhVR2HqgRVCTGFi0bWqLqA", "kL9mN3pQrStUvWxYzAbCdE"],
- *     "it": ["fG8hI1jKlMnOpQrStUvWxY", "dhVR2HqgRVCTGFi0bWqLqA"]
- *   }
- * }
- * ```
- * </details>
- *
- * <details>
- * <summary>Example: Localized Single Block field</summary>
- * A different block can be assigned to each locale.
- *
- * ```json
- * {
- *   "hero_block": {
- *     "en": "dhVR2HqgRVCTGFi0bWqLqA",
- *     "it": "kL9mN3pQrStUvWxYzAbCdE"
- *   }
- * }
- * ```
- * </details>
- *
- * <details>
- * <summary>Example: Localized Structured Text field</summary>
- *
- * The entire DAST document is localized, allowing for different text and different embedded blocks per locale.
- *
- * ```json
- * {
- *   "rich_content": {
- *     "en": {
- *       "schema": "dast",
- *       "document": {
- *         "type": "root",
- *         "children": [{ "type": "block", "item": "dhVR2HqgRVCTGFi0bWqLqA" }]
- *       }
- *     },
- *     "it": {
- *       "schema": "dast",
- *       "document": {
- *         "type": "root",
- *         "children": [{ "type": "block", "item": "kL9mN3pQrStUvWxYzAbCdE" }]
- *       }
- *     }
- *   }
- * }
- * ```
- * </details>
- *
- * When reading or writing localized content, there are a few key rules to follow to ensure data integrity.
- *
- * ###### Locale consistency
- * Within a single record, all localized fields must have a consistent set of locales. You cannot have a `title` with English and Italian, and a `description` with English and French in the same record.
- *
- * ```json
- * // ❌ This will FAIL due to inconsistent locales ("it" vs "fr")
- * {
- *   "title": { "en": "Title", "it": "Titolo" },
- *   "description": { "en": "Description", "fr": "Description" }
- * }
- *
- * // ✅ This is VALID because locales are consistent across all fields
- * {
- *   "title": { "en": "Title", "it": "Titolo" },
- *   "description": { "en": "Description", "it": "Descrizione" }
- * }
- * ```
- *
- * ###### Required locales
- *
- * Your model can be configured to require that all project's locales are always present ([`attributes.all_locales_required`](/docs/content-management-api/resources/item-type#object-payload)). If that's the case, when creating or updating a record, you must provide a value for all required locales.
- *
- * ```json
- * // ❌ This will FAIL if all locales are required for the model
- * {
- *   "title": { "en": "Title" }
- * }
- * ```
- *
- *
- * This interface was referenced by `ScheduledPublication`'s JSON-Schema
- * via the `destroy.targetSchema` link.
- *
- * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
- * via the `destroy.targetSchema` link.
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "item".
- */
-export type RawItem = {
-  id: ItemIdentity;
-  type: ItemType1;
-  item_type: ItemTypeData;
-  creator?:
-    | AccountData
-    | AccessTokenData
-    | UserData
-    | SsoUserData
-    | OrganizationData;
-  meta: ItemMeta;
-};
-export type ItemCreateTargetSchema<D extends ItemDefinition = ItemDefinition> =
-  Item<D>;
-export type ItemDuplicateJobSchema<D extends ItemDefinition = ItemDefinition> =
-  Item<D>;
-export type ItemUpdateTargetSchema<D extends ItemDefinition = ItemDefinition> =
-  Item<D>;
-export type ItemSelfTargetSchema<D extends ItemDefinition = ItemDefinition> =
-  Item<D>;
-export type ItemDestroyJobSchema<D extends ItemDefinition = ItemDefinition> =
-  Item<D>;
-export type ItemPublishTargetSchema<D extends ItemDefinition = ItemDefinition> =
-  Item<D>;
+export type ItemCreateTargetSchema<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+  NestedMode extends boolean = false,
+> = NestedMode extends false ? Item<D> : ItemInNestedResponse<D>;
+export type ItemDuplicateJobSchema<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+  NestedMode extends boolean = false,
+> = NestedMode extends false ? Item<D> : ItemInNestedResponse<D>;
+export type ItemUpdateTargetSchema<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+  NestedMode extends boolean = false,
+> = NestedMode extends false ? Item<D> : ItemInNestedResponse<D>;
+export type ItemSelfTargetSchema<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+  NestedMode extends boolean = false,
+> = NestedMode extends false ? Item<D> : ItemInNestedResponse<D>;
+export type ItemDestroyJobSchema<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+  NestedMode extends boolean = false,
+> = NestedMode extends false ? Item<D> : ItemInNestedResponse<D>;
+export type ItemPublishTargetSchema<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+  NestedMode extends boolean = false,
+> = NestedMode extends false ? Item<D> : ItemInNestedResponse<D>;
 export type ItemUnpublishTargetSchema<
-  D extends ItemDefinition = ItemDefinition,
-> = Item<D>;
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+  NestedMode extends boolean = false,
+> = NestedMode extends false ? Item<D> : ItemInNestedResponse<D>;
 export type ScheduledPublicationDestroyTargetSchema<
-  D extends ItemDefinition = ItemDefinition,
-> = Item<D>;
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+  NestedMode extends boolean = false,
+> = NestedMode extends false ? Item<D> : ItemInNestedResponse<D>;
 export type ScheduledUnpublishingDestroyTargetSchema<
-  D extends ItemDefinition = ItemDefinition,
-> = Item<D>;
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+  NestedMode extends boolean = false,
+> = NestedMode extends false ? Item<D> : ItemInNestedResponse<D>;
 /**
  * Meta information regarding the record
  *
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "meta".
  */
 export type ItemMeta = {
@@ -8929,25 +7379,16 @@ export type ItemMeta = {
    */
   has_children: null | boolean;
 };
-
-/**
- * The JSON data associated to the record
- *
- * This interface was referenced by `Item<D>`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type ItemAttributes = {
-  [k: string]: unknown;
-};
-
 /**
  * JSON API links
  *
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export type ItemRelationships = {
-  item_type: ItemTypeData;
+export type ItemRelationships<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = {
+  item_type: ItemTypeData<D>;
   creator?:
     | AccountData
     | AccessTokenData
@@ -8955,46 +7396,49 @@ export type ItemRelationships = {
     | SsoUserData
     | OrganizationData;
 };
-
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `validate_existing.schema` link.
  */
-export type RawItemValidateExistingSchema = {
+export type ItemValidateExistingSchema<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = {
   id?: ItemIdentity;
   type?: ItemType1;
-  item_type: ItemTypeData;
+  item_type: ItemTypeData<D>;
   creator?:
     | AccountData
     | AccessTokenData
     | UserData
     | SsoUserData
     | OrganizationData;
-};
-
+} & ToItemAttributesInRequest<D>;
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `validate_new.schema` link.
  */
-export type RawItemValidateNewSchema = {
+export type ItemValidateNewSchema<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = {
   type?: ItemType1;
-  item_type: ItemTypeData;
+  item_type: ItemTypeData<D>;
   creator?:
     | AccountData
     | AccessTokenData
     | UserData
     | SsoUserData
     | OrganizationData;
-};
-
+} & ToItemAttributesInRequest<D>;
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `create.schema` link.
  */
-export type RawItemCreateSchema = {
+export type ItemCreateSchema<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = {
   id?: ItemIdentity;
   type?: ItemType1;
-  item_type: ItemTypeData;
+  item_type: ItemTypeData<D>;
   creator?:
     | AccountData
     | AccessTokenData
@@ -9046,16 +7490,17 @@ export type RawItemCreateSchema = {
      */
     current_version?: string;
   };
-};
-
+} & ToItemAttributesInRequest<D>;
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `update.schema` link.
  */
-export type RawItemUpdateSchema = {
+export type ItemUpdateSchema<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = {
   id?: ItemIdentity;
   type?: ItemType1;
-  item_type?: ItemTypeData;
+  item_type?: ItemTypeData<D>;
   creator?:
     | AccountData
     | AccessTokenData
@@ -9119,12 +7564,11 @@ export type RawItemUpdateSchema = {
      */
     has_children?: null | boolean;
   };
-};
-
+} & ToItemAttributesInRequest<D>;
 /**
  * Information about the record
  *
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `current_vs_published_state.targetSchema` link.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -9157,7 +7601,6 @@ export type ScheduledPublicationData = {
   type: ScheduledPublicationType;
   id: ScheduledPublicationIdentity;
 };
-
 /**
  * JSON API data
  *
@@ -9168,7 +7611,6 @@ export type ScheduledUnpublishingData = {
   type: ScheduledUnpublishingType;
   id: ScheduledUnpublishingIdentity;
 };
-
 /**
  * JSON API data
  *
@@ -9179,7 +7621,6 @@ export type ItemVersionData = {
   type: ItemVersionType;
   id: ItemVersionIdentity;
 };
-
 /**
  * JSON API data
  *
@@ -9190,7 +7631,6 @@ export type ItemCurrentVsPublishedStateData = {
   type: ItemCurrentVsPublishedStateType;
   id: ItemCurrentVsPublishedStateIdentity;
 };
-
 /**
  * The JSON data associated to the record
  *
@@ -9207,7 +7647,6 @@ export type ItemCurrentVsPublishedStateAttributes = {
   current_version_invalid_locales: string[];
   current_version_non_localized_fields_invalid: boolean;
 };
-
 /**
  * JSON API links
  *
@@ -9219,9 +7658,8 @@ export type ItemCurrentVsPublishedStateRelationships = {
   scheduled_unpublishing: ScheduledUnpublishingData | null;
   published_version: ItemVersionData | null;
 };
-
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_publish.schema` link.
  */
 export type ItemBulkPublishSchema = {
@@ -9229,9 +7667,8 @@ export type ItemBulkPublishSchema = {
   items: ItemData[];
   minItems?: unknown;
 };
-
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_unpublish.schema` link.
  */
 export type ItemBulkUnpublishSchema = {
@@ -9239,9 +7676,8 @@ export type ItemBulkUnpublishSchema = {
   items: ItemData[];
   minItems?: unknown;
 };
-
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_destroy.schema` link.
  */
 export type ItemBulkDestroySchema = {
@@ -9249,9 +7685,8 @@ export type ItemBulkDestroySchema = {
   items: ItemData[];
   minItems?: unknown;
 };
-
 /**
- * This interface was referenced by `Item<D>`'s JSON-Schema
+ * This interface was referenced by `Item`'s JSON-Schema
  * via the `bulk_move_to_stage.schema` link.
  */
 export type ItemBulkMoveToStageSchema = {
@@ -9263,7 +7698,6 @@ export type ItemBulkMoveToStageSchema = {
   items: ItemData[];
   minItems?: unknown;
 };
-
 /**
  * Every change to a record is stored as a separate record version in DatoCMS.
  *
@@ -9309,7 +7743,6 @@ export type ItemVersionMeta = {
    */
   is_current: boolean;
 };
-
 /**
  * The JSON data associated to the record version
  *
@@ -9319,7 +7752,6 @@ export type ItemVersionMeta = {
 export type ItemVersionAttributes = {
   [k: string]: unknown;
 };
-
 /**
  * JSON API links
  *
@@ -9336,7 +7768,6 @@ export type ItemVersionRelationships = {
     | SsoUserData
     | OrganizationData;
 };
-
 /**
  * Each media object you upload to the Media Area of your DatoCMS project is represented as an `upload` entity.
  *
@@ -9529,7 +7960,6 @@ export type UploadData = {
   type: UploadType;
   id: UploadIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -9699,7 +8129,6 @@ export type UploadAttributes = {
     alpha: number;
   }[];
 };
-
 /**
  * JSON API links
  *
@@ -9715,7 +8144,6 @@ export type UploadRelationships = {
     | SsoUserData
     | OrganizationData;
 };
-
 /**
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `create.schema` link.
@@ -9783,7 +8211,6 @@ export type UploadCreateSchema = {
   tags?: string[];
   upload_collection?: UploadCollectionData | null;
 };
-
 /**
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `update.schema` link.
@@ -9861,7 +8288,6 @@ export type UploadUpdateSchema = {
     | OrganizationData;
   upload_collection?: UploadCollectionData | null;
 };
-
 /**
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `bulk_tag.schema` link.
@@ -9874,7 +8300,6 @@ export type UploadBulkTagSchema = {
   tags: string[];
   uploads: UploadData[];
 };
-
 /**
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `bulk_set_upload_collection.schema` link.
@@ -9884,7 +8309,6 @@ export type UploadBulkSetUploadCollectionSchema = {
   upload_collection: null | UploadCollectionData;
   uploads: UploadData[];
 };
-
 /**
  * This interface was referenced by `Upload`'s JSON-Schema
  * via the `bulk_destroy.schema` link.
@@ -9893,7 +8317,6 @@ export type UploadBulkDestroySchema = {
   type?: 'upload_bulk_destroy_operation';
   uploads: UploadData[];
 };
-
 /**
  * To upload a file with the Content Management API, first you need to obtain an upload permission. The `upload_request` entity contains the S3-like URL where you will be able to upload the file with a raw/binary PUT request.
  *
@@ -9934,7 +8357,6 @@ export type UploadRequestAttributes = {
   };
   [k: string]: unknown;
 };
-
 /**
  * This interface was referenced by `UploadRequest`'s JSON-Schema
  * via the `create.schema` link.
@@ -9946,7 +8368,6 @@ export type UploadRequestCreateSchema = {
    */
   filename?: string;
 };
-
 /**
  * If the asset linked to an Upload entity is a video file, you have the option to include additional audio tracks and subtitle tracks to it.
  *
@@ -9997,7 +8418,6 @@ export type UploadTrackData = {
   type: 'subtitles' | 'audio';
   id: UploadTrackIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -10030,7 +8450,6 @@ export type UploadTrackAttributes = {
    */
   closed_captions: null | boolean;
 };
-
 /**
  * JSON API links
  *
@@ -10040,7 +8459,6 @@ export type UploadTrackAttributes = {
 export type UploadTrackRelationships = {
   upload: UploadData;
 };
-
 /**
  * This interface was referenced by `UploadTrack`'s JSON-Schema
  * via the `create.schema` link.
@@ -10067,7 +8485,6 @@ export type UploadTrackCreateSchema = {
    */
   closed_captions?: null | boolean;
 };
-
 /**
  * This interface was referenced by `UploadTrack`'s JSON-Schema
  * via the `generate_subtitles.schema` link.
@@ -10083,7 +8500,6 @@ export type UploadTrackGenerateSubtitlesSchema = {
    */
   language_code: string;
 };
-
 /**
  * You can create scheduled publication to publish records in the future
  *
@@ -10138,7 +8554,6 @@ export type ScheduledPublicationAttributes = {
     non_localized_content: boolean;
   };
 };
-
 /**
  * JSON API links
  *
@@ -10148,7 +8563,6 @@ export type ScheduledPublicationAttributes = {
 export type ScheduledPublicationRelationships = {
   item: ItemData;
 };
-
 /**
  * This interface was referenced by `ScheduledPublication`'s JSON-Schema
  * via the `create.schema` link.
@@ -10173,7 +8587,6 @@ export type ScheduledPublicationCreateSchema = {
     non_localized_content: boolean;
   };
 };
-
 /**
  * You can create a scheduled unpublishing to unpublish records in the future
  *
@@ -10210,7 +8623,6 @@ export type ScheduledUnpublishingAttributes = {
    */
   content_in_locales: null | string[];
 };
-
 /**
  * JSON API links
  *
@@ -10220,7 +8632,6 @@ export type ScheduledUnpublishingAttributes = {
 export type ScheduledUnpublishingRelationships = {
   item: ItemData;
 };
-
 /**
  * This interface was referenced by `ScheduledUnpublishing`'s JSON-Schema
  * via the `create.schema` link.
@@ -10236,7 +8647,6 @@ export type ScheduledUnpublishingCreateSchema = {
    */
   content_in_locales?: null | string[];
 };
-
 /**
  * DatoCMS Site Search is a way to deliver tailored search results to your site visitors. This is the endpoint you can use to query for results.
  *
@@ -10267,7 +8677,6 @@ export type SearchResult = {
     body?: string[] | null;
   };
 };
-
 /**
  * JSON API data
  *
@@ -10278,7 +8687,6 @@ export type SearchResultData = {
   type: SearchResultType;
   id: SearchResultIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -10307,7 +8715,6 @@ export type SearchResultAttributes = {
     body?: string[] | null;
   };
 };
-
 /**
  * [Environments](https://www.datocms.com/docs/general-concepts/primary-and-sandbox-environments) make it easier for your development team to **manage and maintain content structure once your content has been published**. You can think of environments like code branches: great for testing, development and pre-production environments.
  *
@@ -10377,7 +8784,6 @@ export type EnvironmentMeta = {
    */
   forked_from: string | null;
 };
-
 /**
  * JSON API data
  *
@@ -10388,7 +8794,6 @@ export type EnvironmentData = {
   type: EnvironmentType;
   id: EnvironmentIdentity;
 };
-
 /**
  * This interface was referenced by `Environment`'s JSON-Schema
  * via the `fork.schema` link.
@@ -10400,7 +8805,6 @@ export type EnvironmentForkSchema = {
   id: string;
   type?: EnvironmentType;
 };
-
 /**
  * This interface was referenced by `Environment`'s JSON-Schema
  * via the `rename.schema` link.
@@ -10412,7 +8816,6 @@ export type EnvironmentRenameSchema = {
   id: string;
   type?: EnvironmentType;
 };
-
 /**
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "maintenance_mode".
@@ -10438,7 +8841,6 @@ export type MaintenanceModeData = {
   type: MaintenanceModeType;
   id: MaintenanceModeIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -10451,7 +8853,6 @@ export type MaintenanceModeAttributes = {
    */
   active: boolean;
 };
-
 /**
  * A webhook allows to make requests following certain Dato events. It is linked to a Role, which describes what actions can be performed.
  *
@@ -10556,7 +8957,6 @@ export type WebhookData = {
   type: WebhookType;
   id: WebhookIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -10645,7 +9045,6 @@ export type WebhookAttributes = {
    */
   auto_retry: boolean;
 };
-
 /**
  * This interface was referenced by `Webhook`'s JSON-Schema
  * via the `create.schema` link.
@@ -10733,7 +9132,6 @@ export type WebhookCreateSchema = {
    */
   auto_retry?: boolean;
 };
-
 /**
  * This interface was referenced by `Webhook`'s JSON-Schema
  * via the `update.schema` link.
@@ -10822,7 +9220,6 @@ export type WebhookUpdateSchema = {
    */
   auto_retry?: boolean;
 };
-
 /**
  * This represents a log entry in the webhooks activity list, detailing a specific webhook event along with its delivery attempt information.
  *
@@ -10920,7 +9317,6 @@ export type WebhookCallData = {
   type: WebhookCallType;
   id: WebhookCallIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -11004,7 +9400,6 @@ export type WebhookCallAttributes = {
    */
   status: 'pending' | 'success' | 'failed' | 'rescheduled';
 };
-
 /**
  * JSON API links
  *
@@ -11014,7 +9409,6 @@ export type WebhookCallAttributes = {
 export type WebhookCallRelationships = {
   webhook: WebhookData;
 };
-
 /**
  * Configuration for different build triggers. You can have different staging and production environments in order to test your site before final deploy
  *
@@ -11129,7 +9523,6 @@ export type BuildTriggerAttributes = {
    */
   indexing_enabled: boolean;
 };
-
 /**
  * This interface was referenced by `BuildTrigger`'s JSON-Schema
  * via the `create.schema` link.
@@ -11167,7 +9560,6 @@ export type BuildTriggerCreateSchema = {
     [k: string]: unknown;
   };
 };
-
 /**
  * This interface was referenced by `BuildTrigger`'s JSON-Schema
  * via the `update.schema` link.
@@ -11202,7 +9594,6 @@ export type BuildTriggerUpdateSchema = {
     [k: string]: unknown;
   };
 };
-
 /**
  * In DatoCMS you can create filters to help you (and other editors) quickly search for records
  *
@@ -11316,7 +9707,6 @@ export type ItemTypeFilterAttributes = {
    */
   shared: boolean;
 };
-
 /**
  * JSON API links
  *
@@ -11326,7 +9716,6 @@ export type ItemTypeFilterAttributes = {
 export type ItemTypeFilterRelationships = {
   item_type: ItemTypeData;
 };
-
 /**
  * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
  * via the `create.schema` link.
@@ -11381,7 +9770,6 @@ export type ItemTypeFilterCreateSchema = {
   shared?: boolean;
   item_type: ItemTypeData;
 };
-
 /**
  * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
  * via the `update.schema` link.
@@ -11436,7 +9824,6 @@ export type ItemTypeFilterUpdateSchema = {
   };
   item_type?: ItemTypeData;
 };
-
 /**
  * In DatoCMS you can create filters to help you (and other editors) quickly search for uploads
  *
@@ -11475,7 +9862,6 @@ export type UploadFilterData = {
   type: UploadFilterType;
   id: UploadFilterIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -11498,7 +9884,6 @@ export type UploadFilterAttributes = {
    */
   shared: boolean;
 };
-
 /**
  * This interface was referenced by `UploadFilter`'s JSON-Schema
  * via the `create.schema` link.
@@ -11521,7 +9906,6 @@ export type UploadFilterCreateSchema = {
    */
   shared: boolean;
 };
-
 /**
  * This interface was referenced by `UploadFilter`'s JSON-Schema
  * via the `update.schema` link.
@@ -11544,7 +9928,6 @@ export type UploadFilterUpdateSchema = {
     [k: string]: unknown;
   };
 };
-
 /**
  * A DatoCMS administrative area can be accessed by multiple people. Every invitation is linked to a specific Role, which describes what actions it will be able to perform once the user will register.
  *
@@ -11583,7 +9966,6 @@ export type SiteInvitationData = {
   type: SiteInvitationType;
   id: SiteInvitationIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -11604,7 +9986,6 @@ export type SiteInvitationAttributes = {
    */
   invitation_link?: null | string;
 };
-
 /**
  * JSON API links
  *
@@ -11614,7 +9995,6 @@ export type SiteInvitationAttributes = {
 export type SiteInvitationRelationships = {
   role: RoleData;
 };
-
 /**
  * This interface was referenced by `SiteInvitation`'s JSON-Schema
  * via the `create.schema` link.
@@ -11627,7 +10007,6 @@ export type SiteInvitationCreateSchema = {
   email: string;
   role: RoleData;
 };
-
 /**
  * This interface was referenced by `SiteInvitation`'s JSON-Schema
  * via the `update.schema` link.
@@ -11637,7 +10016,6 @@ export type SiteInvitationUpdateSchema = {
   type?: SiteInvitationType;
   role?: RoleData;
 };
-
 /**
  * Session track users movements in the administrative area, and allows locking a record when editing it.
  *
@@ -11675,7 +10053,6 @@ export type EditingSessionData = {
   type: EditingSessionType;
   id: EditingSessionIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -11692,7 +10069,6 @@ export type EditingSessionAttributes = {
    */
   locked_at: string | null;
 };
-
 /**
  * JSON API links
  *
@@ -11709,7 +10085,6 @@ export type EditingSessionRelationships = {
     | SsoUserData
     | OrganizationData;
 };
-
 /**
  * Form contents for an editing session
  *
@@ -11724,7 +10099,6 @@ export type FormData = {
   };
   editor: AccountData;
 };
-
 /**
  * JSON API data
  *
@@ -11735,7 +10109,6 @@ export type FormDataData = {
   type: FormDataType;
   id: FormDataIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -11747,7 +10120,6 @@ export type FormDataAttributes = {
     [k: string]: unknown;
   };
 };
-
 /**
  * JSON API links
  *
@@ -11757,7 +10129,6 @@ export type FormDataAttributes = {
 export type FormDataRelationships = {
   editor: AccountData;
 };
-
 /**
  * A Single Sign-On group exists when a DatoCMS project is connected to an Identity Provider. These groups can be used to link DatoCMS roles to the Identity Provider's groups.
  *
@@ -11797,7 +10168,6 @@ export type SsoGroupAttributes = {
    */
   priority: number;
 };
-
 /**
  * JSON API links
  *
@@ -11808,7 +10178,6 @@ export type SsoGroupRelationships = {
   role: RoleData;
   users: SsoUserData[];
 };
-
 /**
  * This interface was referenced by `SsoGroup`'s JSON-Schema
  * via the `update.schema` link.
@@ -11822,7 +10191,6 @@ export type SsoGroupUpdateSchema = {
   priority: number;
   role: RoleData;
 };
-
 /**
  * Represents the Single Sign-on settings of the current DatoCMS project
  *
@@ -11878,7 +10246,6 @@ export type SsoSettingsData = {
   type: SsoSettingsType;
   id: SsoSettingsIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -11919,7 +10286,6 @@ export type SsoSettingsAttributes = {
    */
   scim_api_token?: string;
 };
-
 /**
  * JSON API links
  *
@@ -11929,7 +10295,6 @@ export type SsoSettingsAttributes = {
 export type SsoSettingsRelationships = {
   default_role: null | RoleData;
 };
-
 /**
  * This interface was referenced by `SsoSettings`'s JSON-Schema
  * via the `generate_token.targetSchema` link.
@@ -11945,7 +10310,6 @@ export type SsoSettingsGenerateTokenTargetSchema = {
   };
   [k: string]: unknown;
 };
-
 /**
  * This interface was referenced by `SsoSettings`'s JSON-Schema
  * via the `update.schema` link.
@@ -11963,7 +10327,6 @@ export type SsoSettingsUpdateSchema = {
   idp_saml_metadata_xml?: null | string;
   default_role?: RoleData;
 };
-
 /**
  * The entity suggests several emojis that are connected to a specific term
  *
@@ -11989,7 +10352,6 @@ export type EmojiSuggestionsData = {
   type: EmojiSuggestionsType;
   id: EmojiSuggestionsIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -12002,7 +10364,6 @@ export type EmojiSuggestionsAttributes = {
    */
   emojis: string[];
 };
-
 /**
  * Represents the white-label settings of the current DatoCMS project
  *
@@ -12029,7 +10390,6 @@ export type WhiteLabelSettingsData = {
   type: WhiteLabelSettingsType;
   id: WhiteLabelSettingsIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -12042,7 +10402,6 @@ export type WhiteLabelSettingsAttributes = {
    */
   custom_i18n_messages_template_url: null | string;
 };
-
 /**
  * This interface was referenced by `WhiteLabelSettings`'s JSON-Schema
  * via the `update.schema` link.
@@ -12055,7 +10414,6 @@ export type WhiteLabelSettingsUpdateSchema = {
    */
   custom_i18n_messages_template_url?: null | string;
 };
-
 /**
  * Info that can be accessed by unauthorized users
  *
@@ -12136,7 +10494,6 @@ export type PublicInfoData = {
   type: PublicInfoType;
   id: PublicInfoIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -12204,7 +10561,6 @@ export type PublicInfoAttributes = {
     [k: string]: unknown;
   };
 };
-
 /**
  * DatoCMS resources usage organized by day
  *
@@ -12251,7 +10607,6 @@ export type DailyUsage = {
    */
   mux_encoded_seconds: number;
 };
-
 /**
  * JSON API data
  *
@@ -12262,7 +10617,6 @@ export type DailyUsageData = {
   type: DailyUsageType;
   id: DailyUsageIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -12307,7 +10661,6 @@ export type DailyUsageAttributes = {
    */
   mux_encoded_seconds: number;
 };
-
 /**
  * You can use counters to analyze your project's data consumption over a period of time. Counters are especially useful if your project is exceeding its API calls/traffic quota limits, to better understand where and how requests are originating. Counters are updated every minute, so you can debug in real-time the results of your changes.
  *
@@ -12339,7 +10692,6 @@ export type UsageCounterData = {
   type: UsageCounterType;
   id: UsageCounterIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -12358,7 +10710,6 @@ export type UsageCounterAttributes = {
     counter: number;
   }[];
 };
-
 /**
  * All the project's upload tags
  *
@@ -12384,7 +10735,6 @@ export type UploadTagData = {
   type: UploadTagType;
   id: UploadTagIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -12397,7 +10747,6 @@ export type UploadTagAttributes = {
    */
   name: string;
 };
-
 /**
  * This interface was referenced by `UploadTag`'s JSON-Schema
  * via the `create.schema` link.
@@ -12409,7 +10758,6 @@ export type UploadTagCreateSchema = {
    */
   name: string;
 };
-
 /**
  * All the site's upload automatically generated tags
  *
@@ -12424,7 +10772,6 @@ export type UploadSmartTag = {
    */
   name: string;
 };
-
 /**
  * JSON API data
  *
@@ -12435,7 +10782,6 @@ export type UploadSmartTagData = {
   type: UploadSmartTagType;
   id: UploadSmartTagIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -12448,7 +10794,6 @@ export type UploadSmartTagAttributes = {
    */
   name: string;
 };
-
 /**
  * A site represents a specific DatoCMS administrative area
  *
@@ -12684,7 +11029,6 @@ export type SiteMeta = {
    */
   improved_exposure_of_inline_blocks_in_cda: boolean;
 };
-
 /**
  * JSON API data
  *
@@ -12695,7 +11039,6 @@ export type SiteData = {
   type: SiteType;
   id: SiteIdentity;
 };
-
 /**
  * JSON API attributes
  *
@@ -12863,7 +11206,6 @@ export type SiteAttributes = {
     [k: string]: unknown;
   } | null;
 };
-
 /**
  * JSON API links
  *
@@ -12878,7 +11220,6 @@ export type SiteRelationships = {
    */
   item_types: ItemTypeData[];
 };
-
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `update.schema` link.
@@ -13044,7 +11385,6 @@ export type SiteUpdateSchema = {
     improved_exposure_of_inline_blocks_in_cda?: boolean;
   };
 };
-
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `update_assets_cdn_default_settings.schema` link.
@@ -13083,7 +11423,6 @@ export type SiteUpdateAssetsCdnDefaultSettingsSchema = {
     };
   };
 };
-
 /**
  * Through workflows it is possible to set up a precise state machine able to bring a draft content up to the final publication (and beyond), through a series of intermediate, fully customizable approval steps.
  *
@@ -13203,7 +11542,6 @@ export type WorkflowAttributes = {
     }[],
   ];
 };
-
 /**
  * This interface was referenced by `Workflow`'s JSON-Schema
  * via the `create.schema` link.
@@ -13261,7 +11599,6 @@ export type WorkflowCreateSchema = {
     }[],
   ];
 };
-
 /**
  * This interface was referenced by `Workflow`'s JSON-Schema
  * via the `update.schema` link.

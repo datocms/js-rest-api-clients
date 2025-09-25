@@ -1,9 +1,7 @@
 import {
-  type ApiTypes,
+  buildBlockRecord, type ApiTypes,
   type ItemTypeDefinition,
-  type RawApiTypes,
-  type ToItemDefinitionAsRequest,
-  buildBlockRecord,
+  type RawApiTypes
 } from '../src';
 import { inspectItem } from '../src/utilities/inspectItem';
 
@@ -88,7 +86,7 @@ type Block = ItemTypeDefinition<
 describe('inspectItem', () => {
   it('inspects an item with all field types', () => {
     const item: RawApiTypes.ItemUpdateSchema<
-      ToItemDefinitionAsRequest<ComprehensiveModel>
+      ComprehensiveModel
     >['data'] = {
       type: 'item',
       id: 'IdMLV2GJTXyQ0Bfns7R4IQ',
@@ -327,9 +325,8 @@ describe('inspectItem', () => {
 
   it('ApiTypes.ItemCreateSchema', () => {
     const item: ApiTypes.ItemCreateSchema<
-      ToItemDefinitionAsRequest<ComprehensiveModel>
+      ComprehensiveModel
     > = {
-      __itemTypeId: 'O9BXqTayQ_Wf-Yw6d863LQ',
       single_block: buildBlockRecord<Block>({
         item_type: {
           type: 'item_type',
@@ -350,7 +347,7 @@ describe('inspectItem', () => {
   });
 
   it('inspects localized fields', () => {
-    const item: RawApiTypes.Item<ToItemDefinitionAsRequest<LocalizedModel>> = {
+    const item: RawApiTypes.Item<LocalizedModel> = {
       type: 'item',
       id: 'localizedTestId',
       relationships: {
@@ -470,29 +467,15 @@ describe('inspectItem', () => {
     expect(output).toMatchSnapshot();
   });
 
-  it('ApiTypes.Item', () => {
-    const item: ApiTypes.Item<ToItemDefinitionAsRequest<ComprehensiveModel>> = {
+  it('ApiTypes.ItemCreateSchema', () => {
+    const item: ApiTypes.ItemCreateSchema<ComprehensiveModel> = {
       type: 'item',
       id: 'IdMLV2GJTXyQ0Bfns7R4IQ',
       item_type: {
         type: 'item_type',
         id: 'O9BXqTayQ_Wf-Yw6d863LQ',
       },
-      meta: {
-        created_at: '2023-01-01T00:00:00Z',
-        updated_at: '2023-01-01T00:00:00Z',
-        published_at: null,
-        first_published_at: null,
-        publication_scheduled_at: null,
-        unpublishing_scheduled_at: null,
-        is_valid: true,
-        is_current_version_valid: true,
-        is_published_version_valid: false,
-        stage: 'draft',
-        current_version: '1',
-        status: 'draft',
-        has_children: false,
-      },
+
       // String field
       string_field: 'Sample string',
 

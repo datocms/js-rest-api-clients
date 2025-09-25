@@ -5,9 +5,9 @@ import {
 import type { GalleryEditorConfiguration } from './appearance/gallery';
 import {
   type FileFieldValue,
-  type FileFieldValueAsRequest,
+  type FileFieldValueInRequest,
   isFileFieldValue,
-  isFileFieldValueAsRequest,
+  isFileFieldValueInRequest,
 } from './file';
 import type { ExtensionValidator } from './validators/extension';
 import type { FileSizeValidator } from './validators/file_size';
@@ -25,7 +25,7 @@ import type { SizeValidator } from './validators/size';
  * Individual gallery item types - extracted from File field types
  */
 export type GalleryItem = NonNullable<FileFieldValue>;
-export type GalleryItemAsRequest = NonNullable<FileFieldValueAsRequest>;
+export type GalleryItemInRequest = NonNullable<FileFieldValueInRequest>;
 
 /**
  * Gallery field value - response format with all metadata fields present
@@ -35,7 +35,7 @@ export type GalleryFieldValue = Array<GalleryItem>;
 /**
  * Gallery field value for API requests - metadata fields are optional
  */
-export type GalleryFieldValueAsRequest = Array<GalleryItemAsRequest>;
+export type GalleryFieldValueInRequest = Array<GalleryItemInRequest>;
 
 /**
  * Type guard for Gallery field values - validates each item using File field validation
@@ -49,10 +49,10 @@ export function isGalleryFieldValue(
 /**
  * Type guard for Gallery field values in API request format
  */
-export function isGalleryFieldValueAsRequest(
+export function isGalleryFieldValueInRequest(
   value: unknown,
-): value is GalleryFieldValueAsRequest {
-  return Array.isArray(value) && value.every(isFileFieldValueAsRequest);
+): value is GalleryFieldValueInRequest {
+  return Array.isArray(value) && value.every(isFileFieldValueInRequest);
 }
 
 export function isLocalizedGalleryFieldValue(
@@ -64,12 +64,12 @@ export function isLocalizedGalleryFieldValue(
   );
 }
 
-export function isLocalizedGalleryFieldValueAsRequest(
+export function isLocalizedGalleryFieldValueInRequest(
   value: unknown,
-): value is LocalizedFieldValue<GalleryFieldValueAsRequest> {
+): value is LocalizedFieldValue<GalleryFieldValueInRequest> {
   return (
     isLocalizedFieldValue(value) &&
-    Object.values(value).every(isGalleryFieldValueAsRequest)
+    Object.values(value).every(isGalleryFieldValueInRequest)
   );
 }
 

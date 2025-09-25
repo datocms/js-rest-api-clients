@@ -42,11 +42,11 @@ describe('single block', () => {
 
     expect(typeof item.content).toBe('string');
 
-    const itemWithNestedBlocks = await client.items.find(item.id, {
+    const itemInNestedResponse = await client.items.find(item.id, {
       nested: true,
     });
 
-    const block = itemWithNestedBlocks.content as RawApiTypes.Item;
+    const block = itemInNestedResponse.content as RawApiTypes.Item;
 
     await client.items.update(item.id, {
       content: buildBlockRecord({
@@ -56,12 +56,12 @@ describe('single block', () => {
       }),
     });
 
-    const updatedItemWithNestedBlocks = await client.items.find(item.id, {
+    const updatedItemInNestedResponse = await client.items.find(item.id, {
       nested: true,
     });
 
     const updatedBlock =
-      updatedItemWithNestedBlocks.content as RawApiTypes.Item;
+      updatedItemInNestedResponse.content as RawApiTypes.Item;
 
     expect(updatedBlock.attributes.text).toEqual('Updated Foo');
   });

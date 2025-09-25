@@ -1,11 +1,6 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type {
-  ItemTypeDefinition,
-  ToItemDefinition,
-  ToItemDefinitionAsRequest,
-  ToItemDefinitionWithNestedBlocks,
-} from '../../utilities/itemDefinition';
+import type { ItemTypeDefinition } from '../../utilities/itemDefinition';
 import type * as ApiTypes from '../ApiTypes';
 import type * as RawApiTypes from '../RawApiTypes';
 
@@ -77,9 +72,7 @@ export default class ScheduledUnpublishing extends BaseResource {
   ) {
     return this.rawDestroy<D>(Utils.toId(itemId)).then((body) =>
       Utils.deserializeResponseBody<
-        ApiTypes.ScheduledUnpublishingDestroyTargetSchema<
-          ToItemDefinition<NoInfer<D>>
-        >
+        ApiTypes.ScheduledUnpublishingDestroyTargetSchema<NoInfer<D>>
       >(body),
     );
   }
@@ -95,9 +88,7 @@ export default class ScheduledUnpublishing extends BaseResource {
   rawDestroy<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string,
   ): Promise<
-    RawApiTypes.ScheduledUnpublishingDestroyTargetSchema<
-      ToItemDefinitionWithNestedBlocks<NoInfer<D>>
-    >
+    RawApiTypes.ScheduledUnpublishingDestroyTargetSchema<NoInfer<D>, true>
   > {
     return this.client
       .request({
@@ -105,9 +96,7 @@ export default class ScheduledUnpublishing extends BaseResource {
         url: `/items/${itemId}/scheduled-unpublishing`,
       })
       .then<
-        RawApiTypes.ScheduledUnpublishingDestroyTargetSchema<
-          ToItemDefinitionWithNestedBlocks<NoInfer<D>>
-        >
+        RawApiTypes.ScheduledUnpublishingDestroyTargetSchema<NoInfer<D>, true>
       >(Utils.deserializeRawResponseBodyWithItems);
   }
 }

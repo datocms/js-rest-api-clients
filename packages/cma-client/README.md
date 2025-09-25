@@ -75,18 +75,18 @@ Visit every block in a non-localized field value recursively, including blocks n
 **TypeScript Signature:**
 ```typescript
 async function visitBlocksInNonLocalizedFieldValue(
-  schemaRepository: SchemaRepository,
-  fieldType: string,
   nonLocalizedFieldValue: unknown,
-  visitor: (item: BlockItemInARequest, path: TreePath) => void | Promise<void>,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  visitor: (item: BlockInRequest, path: TreePath) => void | Promise<void>,
   path?: TreePath
 ): Promise<void>
 ```
 
 **Parameters:**
-- `schemaRepository`: Repository for caching schema lookups
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `nonLocalizedFieldValue`: The non-localized field value
+- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
 - `visitor`: Function called for each block (including nested)
 - `path`: Optional base path for tracking location
 ```
@@ -100,20 +100,19 @@ Transform all blocks in a non-localized field value recursively, including neste
 **TypeScript Signature:**
 ```typescript
 async function mapBlocksInNonLocalizedFieldValue(
-  schemaRepository: SchemaRepository,
-  fieldType: string,
   nonLocalizedFieldValue: unknown,
-  mapper: (item: BlockItemInARequest, path: TreePath) => BlockItemInARequest | Promise<BlockItemInARequest>,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  mapper: (item: BlockInRequest, path: TreePath) => BlockInRequest | Promise<BlockInRequest>,
   path?: TreePath
 ): Promise<unknown>
 ```
 
 **Parameters:**
-- `schemaRepository`: Repository for caching schema lookups
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `nonLocalizedFieldValue`: The non-localized field value
+- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
 - `mapper`: Function that transforms each block
-- `path`: Optional base path
 
 **Returns:** New field value
 </details>
@@ -126,20 +125,19 @@ Filter blocks recursively, removing blocks at any nesting level that don't match
 **TypeScript Signature:**
 ```typescript
 async function filterBlocksInNonLocalizedFieldValue(
-  schemaRepository: SchemaRepository,
-  fieldType: string,
   nonLocalizedFieldValue: unknown,
-  predicate: (item: BlockItemInARequest, path: TreePath) => boolean | Promise<boolean>,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
   path?: TreePath
 ): Promise<unknown>
 ```
 
 **Parameters:**
-- `schemaRepository`: Repository for caching schema lookups
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `nonLocalizedFieldValue`: The non-localized field value to filter
+- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
 - `predicate`: Function that tests each block
-- `path`: Optional base path
 
 **Returns:** New field value with filtered blocks
 
@@ -163,20 +161,19 @@ Find all blocks that match the predicate, searching recursively through nested b
 **TypeScript Signature:**
 ```typescript
 async function findAllBlocksInNonLocalizedFieldValue(
-  schemaRepository: SchemaRepository,
-  fieldType: string,
   nonLocalizedFieldValue: unknown,
-  predicate: (item: BlockItemInARequest, path: TreePath) => boolean | Promise<boolean>,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
   path?: TreePath
-): Promise<Array<{ item: BlockItemInARequest; path: TreePath }>>
+): Promise<Array<{ item: BlockInRequest; path: TreePath }>>
 ```
 
 **Parameters:**
-- `schemaRepository`: Repository for caching schema lookups
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `nonLocalizedFieldValue`: The non-localized field value to search
+- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
 - `predicate`: Function that tests each block
-- `path`: Optional base path
 
 **Returns:** Array of all matching blocks with their paths
 </details>
@@ -189,22 +186,21 @@ Reduce all blocks recursively to a single value.
 **TypeScript Signature:**
 ```typescript
 async function reduceBlocksInNonLocalizedFieldValue<R>(
-  schemaRepository: SchemaRepository,
-  fieldType: string,
   nonLocalizedFieldValue: unknown,
-  reducer: (accumulator: R, item: BlockItemInARequest, path: TreePath) => R | Promise<R>,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  reducer: (accumulator: R, item: BlockInRequest, path: TreePath) => R | Promise<R>,
   initialValue: R,
   path?: TreePath
 ): Promise<R>
 ```
 
 **Parameters:**
-- `schemaRepository`: Repository for caching schema lookups
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `nonLocalizedFieldValue`: The non-localized field value to reduce
+- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
 - `reducer`: Function that processes each block
 - `initialValue`: Initial accumulator value
-- `path`: Optional base path
 
 **Returns:** The final accumulated value
 ```
@@ -218,20 +214,19 @@ Check if any block (including nested) matches the predicate.
 **TypeScript Signature:**
 ```typescript
 async function someBlocksInNonLocalizedFieldValue(
-  schemaRepository: SchemaRepository,
-  fieldType: string,
   nonLocalizedFieldValue: unknown,
-  predicate: (item: BlockItemInARequest, path: TreePath) => boolean | Promise<boolean>,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
   path?: TreePath
 ): Promise<boolean>
 ```
 
 **Parameters:**
-- `schemaRepository`: Repository for caching schema lookups
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `nonLocalizedFieldValue`: The non-localized field value to test
+- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
 - `predicate`: Function that tests each block
-- `path`: Optional base path
 
 **Returns:** True if any block matches
 ```
@@ -245,20 +240,19 @@ Check if every block (including nested) matches the predicate.
 **TypeScript Signature:**
 ```typescript
 async function everyBlockInNonLocalizedFieldValue(
-  schemaRepository: SchemaRepository,
-  fieldType: string,
   nonLocalizedFieldValue: unknown,
-  predicate: (item: BlockItemInARequest, path: TreePath) => boolean | Promise<boolean>,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
   path?: TreePath
 ): Promise<boolean>
 ```
 
 **Parameters:**
-- `schemaRepository`: Repository for caching schema lookups
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `nonLocalizedFieldValue`: The non-localized field value to test
+- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
 - `predicate`: Function that tests each block
-- `path`: Optional base path
 
 **Returns:** True if all blocks match
 </details>
@@ -273,8 +267,8 @@ Converts a block data object into the proper format for API requests.
 **TypeScript Signature:**
 ```typescript
 function buildBlockRecord<D extends ItemTypeDefinition>(
-  body: ItemUpdateSchema<ToItemDefinitionAsRequest<D>>
-): NewBlockInARequest<ToItemDefinitionAsRequest<D>>
+  body: ItemUpdateSchema<ToItemDefinitionInRequest<D>>
+): NewBlockInRequest<ToItemDefinitionInRequest<D>>
 ```
 
 **Parameters:**
@@ -291,9 +285,9 @@ Creates a deep copy of a block record, including all nested blocks, removing IDs
 **TypeScript Signature:**
 ```typescript
 async function duplicateBlockRecord<D extends ItemTypeDefinition>(
-  existingBlock: ItemWithOptionalIdAndMeta<ToItemDefinitionWithNestedBlocks<D>>,
+  existingBlock: ItemWithOptionalIdAndMeta<ToItemDefinitionInNestedResponse<D>>,
   schemaRepository: SchemaRepository
-): Promise<NewBlockInARequest<ToItemDefinitionAsRequest<D>>>
+): Promise<NewBlockInRequest<ToItemDefinitionInRequest<D>>>
 ```
 
 **Parameters:**
