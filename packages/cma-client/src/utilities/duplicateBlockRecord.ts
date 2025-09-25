@@ -14,13 +14,14 @@ export async function duplicateBlockRecord<
   existingBlock: ItemWithOptionalIdAndMeta<NoInfer<D>>,
   schemaRepository: SchemaRepository,
 ): Promise<NewBlockInRequest<NoInfer<D>>> {
-  const { type, attributes, relationships } = existingBlock;
+  const { __itemTypeId, type, attributes, relationships } = existingBlock;
 
   const itemType = await schemaRepository.getRawItemTypeById(
     existingBlock.relationships.item_type.data.id,
   );
 
   const newBlock = {
+    __itemTypeId,
     type,
     relationships,
     attributes,

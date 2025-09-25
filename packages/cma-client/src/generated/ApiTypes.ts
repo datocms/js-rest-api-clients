@@ -7412,6 +7412,7 @@ export type ItemValidateExistingSchema<
     | UserData
     | SsoUserData
     | OrganizationData;
+  __itemTypeId?: D['itemTypeId'];
 } & ToItemAttributesInRequest<D>;
 /**
  * This interface was referenced by `Item`'s JSON-Schema
@@ -7428,6 +7429,7 @@ export type ItemValidateNewSchema<
     | UserData
     | SsoUserData
     | OrganizationData;
+  __itemTypeId?: D['itemTypeId'];
 } & ToItemAttributesInRequest<D>;
 /**
  * This interface was referenced by `Item`'s JSON-Schema
@@ -7490,6 +7492,7 @@ export type ItemCreateSchema<
      */
     current_version?: string;
   };
+  __itemTypeId?: D['itemTypeId'];
 } & ToItemAttributesInRequest<D>;
 /**
  * This interface was referenced by `Item`'s JSON-Schema
@@ -7564,6 +7567,7 @@ export type ItemUpdateSchema<
      */
     has_children?: null | boolean;
   };
+  __itemTypeId?: D['itemTypeId'];
 } & ToItemAttributesInRequest<D>;
 /**
  * Information about the record

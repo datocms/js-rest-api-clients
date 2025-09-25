@@ -7134,6 +7134,7 @@ export type ItemValidateExistingSchema<
       };
     };
   };
+  __itemTypeId?: D['itemTypeId'];
 };
 /**
  * This interface was referenced by `Item`'s JSON-Schema
@@ -7168,6 +7169,7 @@ export type ItemValidateNewSchema<
       };
     };
   };
+  __itemTypeId?: D['itemTypeId'];
 };
 /**
  * This interface was referenced by `Item`'s JSON-Schema
@@ -7248,6 +7250,7 @@ export type ItemCreateSchema<
       };
     };
   };
+  __itemTypeId?: D['itemTypeId'];
 };
 /**
  * This interface was referenced by `Item`'s JSON-Schema
@@ -7379,6 +7382,7 @@ export type ItemUpdateSchema<
       };
     };
   };
+  __itemTypeId?: D['itemTypeId'];
 };
 /**
  * This interface was referenced by `Item`'s JSON-Schema

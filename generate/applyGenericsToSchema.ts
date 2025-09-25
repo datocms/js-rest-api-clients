@@ -24,7 +24,6 @@ import ts from 'typescript';
  *
  * 4. Item schemas
  *    (ItemValidateExistingSchema, ItemValidateNewSchema, ItemCreateSchema, ItemUpdateSchema)
- *    - Rename to *StableShell
  *    - Add generic:
  *        <D extends ItemTypeDefinition = ItemTypeDefinition>
  *    - Replace `attributes: { [k: string]: unknown }` with:
@@ -152,7 +151,7 @@ export function applyGenerics(sourceCode: string): string {
     return ts.visitNode(typeNode, visit) as ts.TypeNode;
   }
 
-  function makeAliasForSchema(
+  function transformItemTargetSchema(
     node: ts.TypeAliasDeclaration,
     context: ts.TransformationContext,
   ): ts.TypeAliasDeclaration {
@@ -270,6 +269,19 @@ export function applyGenerics(sourceCode: string): string {
 
     let finalType: ts.TypeNode = transformedType;
 
+    // Add __itemTypeId?: D['itemTypeId'] property
+    const itemTypeIdProperty = ts.factory.createPropertySignature(
+      undefined,
+      ts.factory.createIdentifier('__itemTypeId'),
+      ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+      ts.factory.createIndexedAccessTypeNode(
+        ts.factory.createTypeReferenceNode('D', undefined),
+        ts.factory.createLiteralTypeNode(
+          ts.factory.createStringLiteral('itemTypeId'),
+        ),
+      ),
+    );
+
     // If the type is a TypeLiteral with a top-level {[k: string]: unknown},
     // remove it and instead intersect ToItemAttributesInRequest<D>
     if (ts.isTypeLiteralNode(transformedType)) {
@@ -282,12 +294,27 @@ export function applyGenerics(sourceCode: string): string {
 
       if (hadIndexSignature) {
         finalType = ts.factory.createIntersectionTypeNode([
-          ts.factory.createTypeLiteralNode(membersWithoutIndex),
+          ts.factory.createTypeLiteralNode([
+            ...membersWithoutIndex,
+            itemTypeIdProperty,
+          ]),
           ts.factory.createTypeReferenceNode('ToItemAttributesInRequest', [
             ts.factory.createTypeReferenceNode('D', undefined),
           ]),
         ]);
+      } else {
+        // No index signature, just add the property to existing members
+        finalType = ts.factory.createTypeLiteralNode([
+          ...transformedType.members,
+          itemTypeIdProperty,
+        ]);
       }
+    } else {
+      // If it's not a type literal, intersect with a type containing __itemTypeId
+      finalType = ts.factory.createIntersectionTypeNode([
+        transformedType,
+        ts.factory.createTypeLiteralNode([itemTypeIdProperty]),
+      ]);
     }
 
     return ts.factory.updateTypeAliasDeclaration(
@@ -324,7 +351,7 @@ export function applyGenerics(sourceCode: string): string {
         }
 
         if (itemTargetSchemas.has(name) && ts.isTypeAliasDeclaration(node)) {
-          return makeAliasForSchema(node, context);
+          return transformItemTargetSchema(node, context);
         }
 
         if (itemSchemas.has(name) && ts.isTypeAliasDeclaration(node)) {
