@@ -92,7 +92,6 @@ export {
   visitNormalizedFieldValues,
   visitNormalizedFieldValuesAsync,
 } from '@datocms/cma-client';
-
 export type {
   ApiTypes,
   BlockInNestedResponse,

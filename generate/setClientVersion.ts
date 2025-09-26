@@ -1,11 +1,11 @@
-#!/usr/bin/env node -r ts-node/register
+#!/usr/bin/env -S node -r ts-node/register
 
 import { readFileSync, writeFileSync } from 'node:fs';
 
 for (const dir of ['cma-client', 'dashboard-client']) {
-  const version: string = JSON.parse(
+  const version: string = (JSON.parse(
     readFileSync(`./packages/${dir}/package.json`, 'utf8'),
-  ).version;
+  ) as any).version;
 
   const sourceFilePath = `./packages/${dir}/src/generated/Client.ts`;
 

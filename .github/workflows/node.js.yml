@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [20.x, 22.x]
 
     steps:
       - uses: actions/checkout@v3
@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
       - run: npm ci
       - run: ./node_modules/.bin/lerna -v
       - run: ./node_modules/.bin/lerna bootstrap

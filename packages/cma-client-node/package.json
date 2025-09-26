@@ -42,7 +42,7 @@
     "unist-util-map": "^2.0.1"
   },
   "scripts": {
-    "build": "../../generate/reExportEverything.ts cma-client-node && tsc && tsc --project ./tsconfig.esnext.json",
+    "build": "../../generate/reExportEverything.ts cma-client-node && ../../node_modules/.bin/biome check --write ./src/index.ts && tsc && tsc --project ./tsconfig.esnext.json",
     "prebuild": "rimraf dist"
   },
   "bugs": {

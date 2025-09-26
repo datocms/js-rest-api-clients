@@ -1,8 +1,10 @@
 import { findFirstNode, isInlineBlock } from 'datocms-structured-text-utils';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 import {
+  type ItemTypeDefinition,
+  SchemaRepository,
   buildBlockRecord,
-  duplicateBlockRecord, SchemaRepository, type ItemTypeDefinition
+  duplicateBlockRecord,
 } from '../src';
 
 describe('item (explicit typing with item definitions)', () => {
@@ -15,7 +17,7 @@ describe('item (explicit typing with item definitions)', () => {
       // === Type Definitions ===
       type Block = ItemTypeDefinition<
         EnvironmentSettings,
-        "cr3EA7ueQtaJyV91jyiEyw",
+        'cr3EA7ueQtaJyV91jyiEyw',
         {
           title: { type: 'string' };
           rich_text: { type: 'rich_text'; blocks: Block };
@@ -140,12 +142,17 @@ describe('item (explicit typing with item definitions)', () => {
               rich_text: [
                 buildBlockRecord<Block>({
                   title: 'Rich Text: Level 2',
-                  item_type: { type: 'item_type', id: 'cr3EA7ueQtaJyV91jyiEyw' },
+                  item_type: {
+                    type: 'item_type',
+                    id: 'cr3EA7ueQtaJyV91jyiEyw',
+                  },
                 }),
               ],
             },
             relationships: {
-              item_type: { data: { id: 'cr3EA7ueQtaJyV91jyiEyw', type: 'item_type' } },
+              item_type: {
+                data: { id: 'cr3EA7ueQtaJyV91jyiEyw', type: 'item_type' },
+              },
             },
           },
         ],
@@ -178,13 +185,19 @@ describe('item (explicit typing with item definitions)', () => {
                               type: 'block',
                               item: buildBlockRecord<Block>({
                                 title: 'Structured Text: Level 2',
-                                item_type: { type: 'item_type', id: 'cr3EA7ueQtaJyV91jyiEyw' },
+                                item_type: {
+                                  type: 'item_type',
+                                  id: 'cr3EA7ueQtaJyV91jyiEyw',
+                                },
                               }),
                             },
                           ],
                         },
                       },
-                      item_type: { type: 'item_type', id: 'cr3EA7ueQtaJyV91jyiEyw' },
+                      item_type: {
+                        type: 'item_type',
+                        id: 'cr3EA7ueQtaJyV91jyiEyw',
+                      },
                     }),
                   },
                 ],

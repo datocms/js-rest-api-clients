@@ -32,7 +32,7 @@
     "@datocms/rest-client-utils": "^5.1.13"
   },
   "scripts": {
-    "build": "../../generate/reExportEverything.ts cma-client-browser && tsc && tsc --project ./tsconfig.esnext.json && ts-node ./esbuild.ts",
+    "build": "../../generate/reExportEverything.ts cma-client-browser && ../../node_modules/.bin/biome check --write ./src/index.ts && tsc && tsc --project ./tsconfig.esnext.json && ts-node ./esbuild.ts",
     "prebuild": "rimraf dist"
   },
   "bugs": {
