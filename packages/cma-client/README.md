@@ -22,16 +22,16 @@ Every field type follows a consistent pattern providing:
 import { LatLonFieldValue, isLatLonFieldValue, isLocalizedLatLonFieldValue } from '@datocms/cma-client';
 import type { LatLonFieldValidators, LatLonFieldAppearance } from '@datocms/cma-client';
 
-// Field value type - can be boolean or null
-const value: LatLonFieldValue = true;
+// Field value type - object with latitude/longitude or null
+const value: LatLonFieldValue = { latitude: 45.4642, longitude: 9.1900 };
 
 // Type guard functions for validation
 if (isLatLonFieldValue(someValue)) {
-  // someValue is guaranteed to be boolean | null
+  // someValue is guaranteed to be { latitude: number; longitude: number } | null
 }
 
 if (isLocalizedLatLonFieldValue(localizedValue)) {
-  // localizedValue is a localized boolean field
+  // localizedValue is a localized lat/lon field
 }
 
 // Validator and appearance types available for type-safe configuration
