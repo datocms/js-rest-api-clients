@@ -641,9 +641,10 @@ const processed = entries.map(({ locale, value }) => ({
 
 // Convert back to field value format
 const result = fromNormalizedFieldValueEntries(field, processed);
+```
 </details>
 
-### 4. SchemaRepository
+## SchemaRepository
 
 The `SchemaRepository` class provides a lightweight, in-memory cache for DatoCMS schema entities (item types, fields, fieldsets, and plugins). It helps avoid redundant API calls when working across multiple functions or utilities that require schema lookups.
 
