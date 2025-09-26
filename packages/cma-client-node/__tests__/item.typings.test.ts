@@ -1,6 +1,11 @@
 import { findFirstNode, isInlineBlock } from 'datocms-structured-text-utils';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
-import { buildBlockRecord, duplicateBlockRecord, SchemaRepository, type ItemTypeDefinition } from '../src';
+import {
+  type ItemTypeDefinition,
+  SchemaRepository,
+  buildBlockRecord,
+  duplicateBlockRecord,
+} from '../src';
 
 describe('item (explicit typing with item definitions)', () => {
   describe('simple methods', () => {
@@ -216,7 +221,10 @@ describe('item (explicit typing with item definitions)', () => {
         nestedItem.rich_text[0]!.attributes.rich_text[0]!.__itemTypeId,
       ).toBe(blockModel.id);
 
-      const duplicatedBlock = await duplicateBlockRecord(nestedItem.rich_text[0]!, new SchemaRepository(client));
+      const duplicatedBlock = await duplicateBlockRecord(
+        nestedItem.rich_text[0]!,
+        new SchemaRepository(client),
+      );
       expect(duplicatedBlock).toMatchSnapshot();
 
       expect(

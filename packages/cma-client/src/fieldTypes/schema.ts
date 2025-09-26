@@ -93,7 +93,7 @@ type LocalizedFieldAttributesForFieldType<
 > & {
   field_type: FieldType;
   localized: true;
-  default_value: FieldValue | Record<string, FieldValue>;
+  default_value: Record<string, FieldValue>;
   validators: FieldValidators;
   appearance: FieldAppearanceConfig<FieldAppearance>;
 };

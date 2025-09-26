@@ -14,7 +14,7 @@ API client for [DatoCMS](https://www.datocms.com). Take a look at the full [API 
 
 This library provides a comprehensive set of utility functions to work with DatoCMS records, blocks, and field values. These utilities make it easier to manipulate, traverse, and inspect your content programmatically.
 
-### 1. Record Inspection Utilities
+### 1. Record/block inspection
 
 The `inspectItem()` function provides a visual, tree-structured representation of DatoCMS records in the console, making it easier to debug and understand complex content structures.
 
@@ -59,9 +59,9 @@ console.log(inspectItem(record));
 ```
 </details>
 
-### 2. Block Processing Utilities
+### 2. Block processing utilities
 
-These utilities provide a unified interface for working with blocks embedded within DatoCMS field values. DatoCMS supports three field types that can contain blocks: Modular Content (arrays of blocks), Single Block fields, and Structured Text (with embedded blocks). These functions abstract away the differences between field types, providing consistent APIs for common operations.
+These utilities provide a unified interface for working with blocks embedded within DatoCMS field values. DatoCMS supports three field types that can contain blocks: Modular Content (arrays of blocks), Single Block fields, and Structured Text (rich-text with embedded blocks). These functions abstract away the differences between field types, providing consistent APIs for common operations.
 
 #### Recursive Block Operations
 
@@ -79,7 +79,6 @@ async function visitBlocksInNonLocalizedFieldValue(
   fieldType: string,
   schemaRepository: SchemaRepository,
   visitor: (item: BlockInRequest, path: TreePath) => void | Promise<void>,
-  path?: TreePath
 ): Promise<void>
 ```
 
@@ -88,8 +87,6 @@ async function visitBlocksInNonLocalizedFieldValue(
 - `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `schemaRepository`: Repository for caching schema lookups
 - `visitor`: Function called for each block (including nested)
-- `path`: Optional base path for tracking location
-```
 </details>
 
 <details>
@@ -104,7 +101,6 @@ async function mapBlocksInNonLocalizedFieldValue(
   fieldType: string,
   schemaRepository: SchemaRepository,
   mapper: (item: BlockInRequest, path: TreePath) => BlockInRequest | Promise<BlockInRequest>,
-  path?: TreePath
 ): Promise<unknown>
 ```
 
@@ -129,7 +125,6 @@ async function filterBlocksInNonLocalizedFieldValue(
   fieldType: string,
   schemaRepository: SchemaRepository,
   predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
-  path?: TreePath
 ): Promise<unknown>
 ```
 
@@ -165,7 +160,6 @@ async function findAllBlocksInNonLocalizedFieldValue(
   fieldType: string,
   schemaRepository: SchemaRepository,
   predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
-  path?: TreePath
 ): Promise<Array<{ item: BlockInRequest; path: TreePath }>>
 ```
 
@@ -191,7 +185,6 @@ async function reduceBlocksInNonLocalizedFieldValue<R>(
   schemaRepository: SchemaRepository,
   reducer: (accumulator: R, item: BlockInRequest, path: TreePath) => R | Promise<R>,
   initialValue: R,
-  path?: TreePath
 ): Promise<R>
 ```
 
@@ -203,7 +196,6 @@ async function reduceBlocksInNonLocalizedFieldValue<R>(
 - `initialValue`: Initial accumulator value
 
 **Returns:** The final accumulated value
-```
 </details>
 
 <details>
@@ -218,7 +210,6 @@ async function someBlocksInNonLocalizedFieldValue(
   fieldType: string,
   schemaRepository: SchemaRepository,
   predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
-  path?: TreePath
 ): Promise<boolean>
 ```
 
@@ -229,7 +220,6 @@ async function someBlocksInNonLocalizedFieldValue(
 - `predicate`: Function that tests each block
 
 **Returns:** True if any block matches
-```
 </details>
 
 <details>
@@ -244,7 +234,6 @@ async function everyBlockInNonLocalizedFieldValue(
   fieldType: string,
   schemaRepository: SchemaRepository,
   predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
-  path?: TreePath
 ): Promise<boolean>
 ```
 
@@ -300,22 +289,6 @@ async function duplicateBlockRecord<D extends ItemTypeDefinition>(
 ### 3. Localization-Aware Field Utilities
 
 These utilities provide a unified interface for working with DatoCMS field values that may or may not be localized. They eliminate the need for conditional logic when processing fields that could be either localized or non-localized.
-
-<details>
-<summary><strong>isLocalized()</strong> - Check if a field is localized</summary>
-
-Determines whether a DatoCMS field is configured for localization.
-
-**TypeScript Signature:**
-```typescript
-function isLocalized(field: Field): boolean
-```
-
-**Parameters:**
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
-
-**Returns:** True if the field is localized, false otherwise
-</details>
 
 <details>
 <summary><strong>mapNormalizedFieldValues() / mapNormalizedFieldValuesAsync()</strong> - Transform field values</summary>
@@ -497,25 +470,57 @@ const processed = entries.map(({ locale, value }) => ({
 
 // Convert back to field value format
 const result = fromNormalizedFieldValueEntries(field, processed);
-```
 </details>
 
-### 4. Schema Repository
+### 4. SchemaRepository
 
-The `SchemaRepository` class provides an in-memory caching system for DatoCMS schema entities, significantly improving performance when working with complex content structures.
+The `SchemaRepository` class provides a lightweight, in-memory cache for DatoCMS schema entities (item types, fields, fieldsets, and plugins). It helps avoid redundant API calls when working across multiple functions or utilities that require schema lookups.
 
-<details>
-<summary><strong>SchemaRepository</strong> - Cache schema entities for performance</summary>
+**Why use it?**
 
-Repository for DatoCMS schema entities including item types, fields, fieldsets, and plugins. Provides caching and efficient lookup functionality for schema-related operations.
+- **Cache once, reuse everywhere**: The first API call stores results in memory; all subsequent lookups are instant.
+- **Efficient schema access**: Retrieve entities by ID, API key, or package name without re-fetching.
+- **Optimized for block processing**: Essential for utilities like `mapBlocksInNonLocalizedFieldValue`.
+- **Fewer API calls**: Dramatically speeds up bulk operations and complex traversals.
 
-**Key Features:**
-- Automatic caching of schema entities after first fetch
-- Efficient lookups by ID, API key, or package name
-- Essential for recursive block operations
-- Dramatically reduces API calls during complex traversals
+**Usage Example:**
+```typescript
+const schemaRepository = new SchemaRepository(client);
 
-**TypeScript Class:**
+// First call: fetches from API and caches result
+const blogPost = await schemaRepository.getItemTypeByApiKey('blog_post');
+const fields = await schemaRepository.getItemTypeFields(blogPost);
+
+// Next calls: resolved instantly from cache (no API calls)
+const sameBlogPost = await schemaRepository.getItemTypeByApiKey('blog_post');
+const sameFields = await schemaRepository.getItemTypeFields(blogPost);
+
+// Works seamlessly with block-processing utilities
+await mapBlocksInNonLocalizedFieldValue(
+  fieldValue,
+  field,
+  schemaRepository,  // share cached lookups
+  async (block) => {
+    // transform block here
+  }
+);
+```
+
+**When to Use**
+
+* Traversing relationships that repeatedly query schema
+* Bulk record processing scripts
+* Block-processing utilities that need frequent lookups
+* Any script where reducing API calls matters
+
+**When Not to Use**
+
+* Scripts that modify schema (models, fields, etc.)
+* Long-running applications (cache never expires)
+* Situations where the schema might change during execution
+
+<details><summary><strong>Class signature</strong></summary>
+
 ```typescript
 class SchemaRepository {
   constructor(client: GenericClient)
@@ -542,41 +547,6 @@ class SchemaRepository {
   // ... and more raw variants
 }
 ```
-
-**When to Use:**
-- Complex traversal operations that repeatedly lookup schema
-- Bulk operations processing multiple records
-- Scripts that need efficient access to schema information
-- Working with recursive block utilities
-
-**When NOT to Use:**
-- Scripts that modify schema (models, fields, etc.)
-- Long-running applications (no cache expiration)
-- When schema might change during execution
-
-**Usage Example:**
-```typescript
-const schemaRepository = new SchemaRepository(client);
-
-// First call fetches from API and caches
-const blogPost = await schemaRepository.getItemTypeByApiKey('blog_post');
-const fields = await schemaRepository.getItemTypeFields(blogPost);
-
-// Subsequent calls use cached data (no API calls)
-const sameBlogPost = await schemaRepository.getItemTypeByApiKey('blog_post');
-const sameFields = await schemaRepository.getItemTypeFields(blogPost);
-
-// Use with recursive utilities for optimal performance
-await mapBlocksInNonLocalizedFieldValue(
-  schemaRepository,  // Pass repository for efficient lookups
-  field,
-  fieldValue,
-  async (block) => { /* transform */ }
-);
-```
-
-**Performance Impact:**
-Without SchemaRepository, a script processing structured text with nested blocks might make the same API calls dozens of times. SchemaRepository ensures each unique schema request is made only once, dramatically improving performance for complex operations.
 </details>
 
 ## Contributing
