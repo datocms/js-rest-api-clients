@@ -1,10 +1,8 @@
 import { findFirstNode, isInlineBlock } from 'datocms-structured-text-utils';
 import { generateNewCmaClient } from '../../../jest-helpers/generateNewCmaClient';
 import {
-  type ItemTypeDefinition,
-  SchemaRepository,
   buildBlockRecord,
-  duplicateBlockRecord,
+  duplicateBlockRecord, SchemaRepository, type ItemTypeDefinition
 } from '../src';
 
 describe('item (explicit typing with item definitions)', () => {
@@ -17,7 +15,7 @@ describe('item (explicit typing with item definitions)', () => {
       // === Type Definitions ===
       type Block = ItemTypeDefinition<
         EnvironmentSettings,
-        string,
+        "cr3EA7ueQtaJyV91jyiEyw",
         {
           title: { type: 'string' };
           rich_text: { type: 'rich_text'; blocks: Block };
@@ -32,6 +30,7 @@ describe('item (explicit typing with item definitions)', () => {
 
       // === Block Model Setup ===
       const blockModel = await client.itemTypes.create({
+        id: 'cr3EA7ueQtaJyV91jyiEyw',
         name: 'Block',
         api_key: 'block',
         modular_block: true,
@@ -141,12 +140,12 @@ describe('item (explicit typing with item definitions)', () => {
               rich_text: [
                 buildBlockRecord<Block>({
                   title: 'Rich Text: Level 2',
-                  item_type: blockModel,
+                  item_type: { type: 'item_type', id: 'cr3EA7ueQtaJyV91jyiEyw' },
                 }),
               ],
             },
             relationships: {
-              item_type: { data: { id: blockModel.id, type: 'item_type' } },
+              item_type: { data: { id: 'cr3EA7ueQtaJyV91jyiEyw', type: 'item_type' } },
             },
           },
         ],
@@ -154,9 +153,9 @@ describe('item (explicit typing with item definitions)', () => {
           title: 'Single Block: Level 1',
           single_block: buildBlockRecord<Block>({
             title: 'Single Block: Level 2',
-            item_type: blockModel,
+            item_type: { type: 'item_type', id: 'cr3EA7ueQtaJyV91jyiEyw' },
           }),
-          item_type: blockModel,
+          item_type: { type: 'item_type', id: 'cr3EA7ueQtaJyV91jyiEyw' },
         }),
         structured_text: {
           schema: 'dast',
@@ -179,13 +178,13 @@ describe('item (explicit typing with item definitions)', () => {
                               type: 'block',
                               item: buildBlockRecord<Block>({
                                 title: 'Structured Text: Level 2',
-                                item_type: blockModel,
+                                item_type: { type: 'item_type', id: 'cr3EA7ueQtaJyV91jyiEyw' },
                               }),
                             },
                           ],
                         },
                       },
-                      item_type: blockModel,
+                      item_type: { type: 'item_type', id: 'cr3EA7ueQtaJyV91jyiEyw' },
                     }),
                   },
                 ],
