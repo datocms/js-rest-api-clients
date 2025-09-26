@@ -19,8 +19,8 @@ Every field type follows a consistent pattern providing:
 **Example: `lat_lon` Field Type**
 
 ```typescript
-import { LatLonFieldValue, isLatLonFieldValue, isLocalizedLatLonFieldValue } from '@datocms/cma-client';
-import type { LatLonFieldValidators, LatLonFieldAppearance } from '@datocms/cma-client';
+import { isLatLonFieldValue, isLocalizedLatLonFieldValue } from '@datocms/cma-client';
+import type { LatLonFieldValue, LatLonFieldValidators, LatLonFieldAppearance } from '@datocms/cma-client';
 
 // Field value type - object with latitude/longitude or null
 const value: LatLonFieldValue = { latitude: 45.4642, longitude: 9.1900 };
