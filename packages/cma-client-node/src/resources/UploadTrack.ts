@@ -1,4 +1,4 @@
-import { Resources, type SimpleSchemaTypes } from '@datocms/cma-client';
+import { type ApiTypes, Resources } from '@datocms/cma-client';
 import {
   type CancelablePromise,
   CanceledPromiseError,
@@ -18,7 +18,7 @@ export type OnUploadTrackProgressInfo =
   | OnProgressCreatingUploadTrackObjectInfo;
 
 export type CreateUploadTrackFromLocalFileSchema = Omit<
-  SimpleSchemaTypes.UploadTrackCreateSchema,
+  ApiTypes.UploadTrackCreateSchema,
   'url_or_upload_request_id'
 > & {
   localPath: string;
@@ -32,13 +32,13 @@ export default class Upload extends Resources.UploadTrack {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload-track/create
    */
   createFromLocalFile(
-    uploadId: string | SimpleSchemaTypes.UploadData,
+    uploadId: string | ApiTypes.UploadData,
     body: CreateUploadTrackFromLocalFileSchema,
-  ): CancelablePromise<SimpleSchemaTypes.UploadTrack> {
+  ): CancelablePromise<ApiTypes.UploadTrack> {
     let isCanceledBeforeUpload = false;
     let runningPromise: CancelablePromise<string> | undefined;
 
-    return makeCancelablePromise<SimpleSchemaTypes.UploadTrack>(
+    return makeCancelablePromise<ApiTypes.UploadTrack>(
       async () => {
         if (isCanceledBeforeUpload) {
           throw new CanceledPromiseError();

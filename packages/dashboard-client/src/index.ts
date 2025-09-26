@@ -1,7 +1,11 @@
-export { ApiError, TimeoutError, LogLevel } from '@datocms/rest-client-utils';
-export { Client } from './generated/Client';
-export * as Resources from './generated/resources';
-export type { ClientConfigOptions } from './generated/Client';
+export { ApiError, LogLevel, TimeoutError } from '@datocms/rest-client-utils';
 export * from './buildClient';
-export * as SchemaTypes from './generated/SchemaTypes';
-export * as SimpleSchemaTypes from './generated/SimpleSchemaTypes';
+export { Client } from './generated/Client';
+export type { ClientConfigOptions } from './generated/Client';
+export * as Resources from './generated/resources';
+export type { ApiTypes, RawApiTypes };
+// Legacy names
+export type { ApiTypes as SchemaTypes, RawApiTypes as SimpleSchemaTypes };
+
+import type * as ApiTypes from './generated/ApiTypes';
+import type * as RawApiTypes from './generated/RawApiTypes';

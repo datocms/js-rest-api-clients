@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class DailyUsage extends BaseResource {
   static readonly TYPE = 'daily_usage' as const;
@@ -16,7 +16,7 @@ export default class DailyUsage extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.DailyUsageInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.DailyUsageInstancesTargetSchema>(
         body,
       ),
     );
@@ -30,8 +30,8 @@ export default class DailyUsage extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.DailyUsageInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.DailyUsageInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.DailyUsageInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.DailyUsageInstancesTargetSchema>({
       method: 'GET',
       url: '/daily-site-usages',
     });

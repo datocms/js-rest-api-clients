@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class SsoUser extends BaseResource {
   static readonly TYPE = 'sso_user' as const;
@@ -16,7 +16,7 @@ export default class SsoUser extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SsoUserInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SsoUserInstancesTargetSchema>(
         body,
       ),
     );
@@ -30,8 +30,8 @@ export default class SsoUser extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.SsoUserInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.SsoUserInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.SsoUserInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.SsoUserInstancesTargetSchema>({
       method: 'GET',
       url: '/sso-users',
     });
@@ -45,11 +45,9 @@ export default class SsoUser extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(userId: string | SimpleSchemaTypes.UserData) {
+  find(userId: string | ApiTypes.UserData) {
     return this.rawFind(Utils.toId(userId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SsoUserSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.SsoUserSelfTargetSchema>(body),
     );
   }
 
@@ -61,8 +59,8 @@ export default class SsoUser extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(userId: string): Promise<SchemaTypes.SsoUserSelfTargetSchema> {
-    return this.client.request<SchemaTypes.SsoUserSelfTargetSchema>({
+  rawFind(userId: string): Promise<RawApiTypes.SsoUserSelfTargetSchema> {
+    return this.client.request<RawApiTypes.SsoUserSelfTargetSchema>({
       method: 'GET',
       url: `/sso-users/${userId}`,
     });
@@ -78,7 +76,7 @@ export default class SsoUser extends BaseResource {
    */
   copyUsers() {
     return this.rawCopyUsers().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SsoUserCopyUsersTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SsoUserCopyUsersTargetSchema>(
         body,
       ),
     );
@@ -92,8 +90,8 @@ export default class SsoUser extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawCopyUsers(): Promise<SchemaTypes.SsoUserCopyUsersTargetSchema> {
-    return this.client.request<SchemaTypes.SsoUserCopyUsersTargetSchema>({
+  rawCopyUsers(): Promise<RawApiTypes.SsoUserCopyUsersTargetSchema> {
+    return this.client.request<RawApiTypes.SsoUserCopyUsersTargetSchema>({
       method: 'POST',
       url: '/sso-users/copy-users',
     });
@@ -108,13 +106,11 @@ export default class SsoUser extends BaseResource {
    * @throws {TimeoutError}
    */
   destroy(
-    userId: string | SimpleSchemaTypes.UserData,
-    queryParams?: SimpleSchemaTypes.SsoUserDestroyHrefSchema,
+    userId: string | ApiTypes.UserData,
+    queryParams?: ApiTypes.SsoUserDestroyHrefSchema,
   ) {
     return this.rawDestroy(Utils.toId(userId), queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SsoUserDestroyTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.SsoUserDestroyTargetSchema>(body),
     );
   }
 
@@ -128,9 +124,9 @@ export default class SsoUser extends BaseResource {
    */
   rawDestroy(
     userId: string,
-    queryParams?: SchemaTypes.SsoUserDestroyHrefSchema,
-  ): Promise<SchemaTypes.SsoUserDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.SsoUserDestroyTargetSchema>({
+    queryParams?: RawApiTypes.SsoUserDestroyHrefSchema,
+  ): Promise<RawApiTypes.SsoUserDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.SsoUserDestroyTargetSchema>({
       method: 'DELETE',
       url: `/sso-users/${userId}`,
       queryParams,

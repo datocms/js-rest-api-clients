@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class AuditLogEvent extends BaseResource {
   static readonly TYPE = 'audit_log_event' as const;
@@ -14,15 +14,15 @@ export default class AuditLogEvent extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  query(body: SimpleSchemaTypes.AuditLogEventQuerySchema) {
+  query(body: ApiTypes.AuditLogEventQuerySchema) {
     return this.rawQuery(
-      Utils.serializeRequestBody<SchemaTypes.AuditLogEventQuerySchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.AuditLogEventQuerySchema>(body, {
         type: 'audit_log_query',
         attributes: ['filter', 'next_token', 'detailed_log'],
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AuditLogEventQueryTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.AuditLogEventQueryTargetSchema>(
         body,
       ),
     );
@@ -37,9 +37,9 @@ export default class AuditLogEvent extends BaseResource {
    * @throws {TimeoutError}
    */
   rawQuery(
-    body: SchemaTypes.AuditLogEventQuerySchema,
-  ): Promise<SchemaTypes.AuditLogEventQueryTargetSchema> {
-    return this.client.request<SchemaTypes.AuditLogEventQueryTargetSchema>({
+    body: RawApiTypes.AuditLogEventQuerySchema,
+  ): Promise<RawApiTypes.AuditLogEventQueryTargetSchema> {
+    return this.client.request<RawApiTypes.AuditLogEventQueryTargetSchema>({
       method: 'POST',
       url: '/audit-log-events/query',
       body,

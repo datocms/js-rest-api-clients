@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class Session extends BaseResource {
   static readonly TYPE = 'session' as const;
@@ -13,9 +13,9 @@ export default class Session extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.SessionCreateSchema,
-  ): Promise<SchemaTypes.SessionCreateTargetSchema> {
-    return this.client.request<SchemaTypes.SessionCreateTargetSchema>({
+    body: RawApiTypes.SessionCreateSchema,
+  ): Promise<RawApiTypes.SessionCreateTargetSchema> {
+    return this.client.request<RawApiTypes.SessionCreateTargetSchema>({
       method: 'POST',
       url: '/sessions',
       body,

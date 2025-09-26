@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class Session extends BaseResource {
   static readonly TYPE = 'session' as const;
@@ -16,17 +16,15 @@ export default class Session extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  create(body: SimpleSchemaTypes.SessionCreateSchema) {
+  create(body: ApiTypes.SessionCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.SessionCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.SessionCreateSchema>(body, {
         type: 'email_credentials',
         attributes: ['email', 'password', 'otp_code'],
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SessionCreateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.SessionCreateTargetSchema>(body),
     );
   }
 
@@ -41,9 +39,9 @@ export default class Session extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawCreate(
-    body: SchemaTypes.SessionCreateSchema,
-  ): Promise<SchemaTypes.SessionCreateTargetSchema> {
-    return this.client.request<SchemaTypes.SessionCreateTargetSchema>({
+    body: RawApiTypes.SessionCreateSchema,
+  ): Promise<RawApiTypes.SessionCreateTargetSchema> {
+    return this.client.request<RawApiTypes.SessionCreateTargetSchema>({
       method: 'POST',
       url: '/sessions',
       body,

@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class OrganizationMembership extends BaseResource {
   static readonly TYPE = 'organization_membership' as const;
@@ -13,14 +13,12 @@ export default class OrganizationMembership extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    organizationMembershipId:
-      | string
-      | SimpleSchemaTypes.OrganizationMembershipData,
-    body: SimpleSchemaTypes.OrganizationMembershipUpdateSchema,
+    organizationMembershipId: string | ApiTypes.OrganizationMembershipData,
+    body: ApiTypes.OrganizationMembershipUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(organizationMembershipId),
-      Utils.serializeRequestBody<SchemaTypes.OrganizationMembershipUpdateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.OrganizationMembershipUpdateSchema>(
         body,
         {
           id: Utils.toId(organizationMembershipId),
@@ -30,7 +28,7 @@ export default class OrganizationMembership extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMembershipUpdateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationMembershipUpdateTargetSchema>(
         body,
       ),
     );
@@ -44,9 +42,9 @@ export default class OrganizationMembership extends BaseResource {
    */
   rawUpdate(
     organizationMembershipId: string,
-    body: SchemaTypes.OrganizationMembershipUpdateSchema,
-  ): Promise<SchemaTypes.OrganizationMembershipUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationMembershipUpdateTargetSchema>(
+    body: RawApiTypes.OrganizationMembershipUpdateSchema,
+  ): Promise<RawApiTypes.OrganizationMembershipUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationMembershipUpdateTargetSchema>(
       {
         method: 'PUT',
         url: `/organization-memberships/${organizationMembershipId}`,
@@ -61,11 +59,9 @@ export default class OrganizationMembership extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(
-    queryParams?: SimpleSchemaTypes.OrganizationMembershipInstancesHrefSchema,
-  ) {
+  list(queryParams?: ApiTypes.OrganizationMembershipInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMembershipInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationMembershipInstancesTargetSchema>(
         body,
       ),
     );
@@ -78,9 +74,9 @@ export default class OrganizationMembership extends BaseResource {
    * @throws {TimeoutError}
    */
   rawList(
-    queryParams?: SchemaTypes.OrganizationMembershipInstancesHrefSchema,
-  ): Promise<SchemaTypes.OrganizationMembershipInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationMembershipInstancesTargetSchema>(
+    queryParams?: RawApiTypes.OrganizationMembershipInstancesHrefSchema,
+  ): Promise<RawApiTypes.OrganizationMembershipInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationMembershipInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/organization-memberships',
@@ -96,14 +92,12 @@ export default class OrganizationMembership extends BaseResource {
    * @throws {TimeoutError}
    */
   find(
-    organizationMembershipId:
-      | string
-      | SimpleSchemaTypes.OrganizationMembershipData,
-    queryParams?: SimpleSchemaTypes.OrganizationMembershipSelfHrefSchema,
+    organizationMembershipId: string | ApiTypes.OrganizationMembershipData,
+    queryParams?: ApiTypes.OrganizationMembershipSelfHrefSchema,
   ) {
     return this.rawFind(Utils.toId(organizationMembershipId), queryParams).then(
       (body) =>
-        Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMembershipSelfTargetSchema>(
+        Utils.deserializeResponseBody<ApiTypes.OrganizationMembershipSelfTargetSchema>(
           body,
         ),
     );
@@ -117,9 +111,9 @@ export default class OrganizationMembership extends BaseResource {
    */
   rawFind(
     organizationMembershipId: string,
-    queryParams?: SchemaTypes.OrganizationMembershipSelfHrefSchema,
-  ): Promise<SchemaTypes.OrganizationMembershipSelfTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationMembershipSelfTargetSchema>(
+    queryParams?: RawApiTypes.OrganizationMembershipSelfHrefSchema,
+  ): Promise<RawApiTypes.OrganizationMembershipSelfTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationMembershipSelfTargetSchema>(
       {
         method: 'GET',
         url: `/organization-memberships/${organizationMembershipId}`,
@@ -134,9 +128,9 @@ export default class OrganizationMembership extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  findMe(queryParams?: SimpleSchemaTypes.OrganizationMembershipMeHrefSchema) {
+  findMe(queryParams?: ApiTypes.OrganizationMembershipMeHrefSchema) {
     return this.rawFindMe(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMembershipMeTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationMembershipMeTargetSchema>(
         body,
       ),
     );
@@ -149,9 +143,9 @@ export default class OrganizationMembership extends BaseResource {
    * @throws {TimeoutError}
    */
   rawFindMe(
-    queryParams?: SchemaTypes.OrganizationMembershipMeHrefSchema,
-  ): Promise<SchemaTypes.OrganizationMembershipMeTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationMembershipMeTargetSchema>(
+    queryParams?: RawApiTypes.OrganizationMembershipMeHrefSchema,
+  ): Promise<RawApiTypes.OrganizationMembershipMeTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationMembershipMeTargetSchema>(
       {
         method: 'GET',
         url: '/organization-memberships/me',
@@ -167,12 +161,10 @@ export default class OrganizationMembership extends BaseResource {
    * @throws {TimeoutError}
    */
   destroy(
-    organizationMembershipId:
-      | string
-      | SimpleSchemaTypes.OrganizationMembershipData,
+    organizationMembershipId: string | ApiTypes.OrganizationMembershipData,
   ) {
     return this.rawDestroy(Utils.toId(organizationMembershipId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMembershipDestroyTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationMembershipDestroyTargetSchema>(
         body,
       ),
     );
@@ -186,8 +178,8 @@ export default class OrganizationMembership extends BaseResource {
    */
   rawDestroy(
     organizationMembershipId: string,
-  ): Promise<SchemaTypes.OrganizationMembershipDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationMembershipDestroyTargetSchema>(
+  ): Promise<RawApiTypes.OrganizationMembershipDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationMembershipDestroyTargetSchema>(
       {
         method: 'DELETE',
         url: `/organization-memberships/${organizationMembershipId}`,

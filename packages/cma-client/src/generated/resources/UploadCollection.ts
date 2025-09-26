@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class UploadCollection extends BaseResource {
   static readonly TYPE = 'upload_collection' as const;
@@ -14,9 +14,9 @@ export default class UploadCollection extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.UploadCollectionCreateSchema) {
+  create(body: ApiTypes.UploadCollectionCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.UploadCollectionCreateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.UploadCollectionCreateSchema>(
         body,
         {
           type: 'upload_collection',
@@ -25,7 +25,7 @@ export default class UploadCollection extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadCollectionCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadCollectionCreateTargetSchema>(
         body,
       ),
     );
@@ -40,9 +40,9 @@ export default class UploadCollection extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.UploadCollectionCreateSchema,
-  ): Promise<SchemaTypes.UploadCollectionCreateTargetSchema> {
-    return this.client.request<SchemaTypes.UploadCollectionCreateTargetSchema>({
+    body: RawApiTypes.UploadCollectionCreateSchema,
+  ): Promise<RawApiTypes.UploadCollectionCreateTargetSchema> {
+    return this.client.request<RawApiTypes.UploadCollectionCreateTargetSchema>({
       method: 'POST',
       url: '/upload-collections',
       body,
@@ -58,12 +58,12 @@ export default class UploadCollection extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    uploadCollectionId: string | SimpleSchemaTypes.UploadCollectionData,
-    body: SimpleSchemaTypes.UploadCollectionUpdateSchema,
+    uploadCollectionId: string | ApiTypes.UploadCollectionData,
+    body: ApiTypes.UploadCollectionUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(uploadCollectionId),
-      Utils.serializeRequestBody<SchemaTypes.UploadCollectionUpdateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.UploadCollectionUpdateSchema>(
         body,
         {
           id: Utils.toId(uploadCollectionId),
@@ -73,7 +73,7 @@ export default class UploadCollection extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadCollectionUpdateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadCollectionUpdateTargetSchema>(
         body,
       ),
     );
@@ -89,9 +89,9 @@ export default class UploadCollection extends BaseResource {
    */
   rawUpdate(
     uploadCollectionId: string,
-    body: SchemaTypes.UploadCollectionUpdateSchema,
-  ): Promise<SchemaTypes.UploadCollectionUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.UploadCollectionUpdateTargetSchema>({
+    body: RawApiTypes.UploadCollectionUpdateSchema,
+  ): Promise<RawApiTypes.UploadCollectionUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.UploadCollectionUpdateTargetSchema>({
       method: 'PUT',
       url: `/upload-collections/${uploadCollectionId}`,
       body,
@@ -106,9 +106,9 @@ export default class UploadCollection extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(queryParams?: SimpleSchemaTypes.UploadCollectionInstancesHrefSchema) {
+  list(queryParams?: ApiTypes.UploadCollectionInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadCollectionInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadCollectionInstancesTargetSchema>(
         body,
       ),
     );
@@ -123,9 +123,9 @@ export default class UploadCollection extends BaseResource {
    * @throws {TimeoutError}
    */
   rawList(
-    queryParams?: SchemaTypes.UploadCollectionInstancesHrefSchema,
-  ): Promise<SchemaTypes.UploadCollectionInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.UploadCollectionInstancesTargetSchema>(
+    queryParams?: RawApiTypes.UploadCollectionInstancesHrefSchema,
+  ): Promise<RawApiTypes.UploadCollectionInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.UploadCollectionInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/upload-collections',
@@ -142,9 +142,9 @@ export default class UploadCollection extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(uploadCollectionId: string | SimpleSchemaTypes.UploadCollectionData) {
+  find(uploadCollectionId: string | ApiTypes.UploadCollectionData) {
     return this.rawFind(Utils.toId(uploadCollectionId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadCollectionSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadCollectionSelfTargetSchema>(
         body,
       ),
     );
@@ -160,8 +160,8 @@ export default class UploadCollection extends BaseResource {
    */
   rawFind(
     uploadCollectionId: string,
-  ): Promise<SchemaTypes.UploadCollectionSelfTargetSchema> {
-    return this.client.request<SchemaTypes.UploadCollectionSelfTargetSchema>({
+  ): Promise<RawApiTypes.UploadCollectionSelfTargetSchema> {
+    return this.client.request<RawApiTypes.UploadCollectionSelfTargetSchema>({
       method: 'GET',
       url: `/upload-collections/${uploadCollectionId}`,
     });
@@ -175,9 +175,9 @@ export default class UploadCollection extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(uploadCollectionId: string | SimpleSchemaTypes.UploadCollectionData) {
+  destroy(uploadCollectionId: string | ApiTypes.UploadCollectionData) {
     return this.rawDestroy(Utils.toId(uploadCollectionId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadCollectionDestroyTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadCollectionDestroyTargetSchema>(
         body,
       ),
     );
@@ -193,8 +193,8 @@ export default class UploadCollection extends BaseResource {
    */
   rawDestroy(
     uploadCollectionId: string,
-  ): Promise<SchemaTypes.UploadCollectionDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.UploadCollectionDestroyTargetSchema>(
+  ): Promise<RawApiTypes.UploadCollectionDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.UploadCollectionDestroyTargetSchema>(
       {
         method: 'DELETE',
         url: `/upload-collections/${uploadCollectionId}`,
@@ -212,9 +212,9 @@ export default class UploadCollection extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  reorder(body: SimpleSchemaTypes.UploadCollectionReorderSchema) {
+  reorder(body: ApiTypes.UploadCollectionReorderSchema) {
     return this.rawReorder(
-      Utils.serializeRequestBody<SchemaTypes.UploadCollectionReorderSchema>(
+      Utils.serializeRequestBody<RawApiTypes.UploadCollectionReorderSchema>(
         body,
         {
           type: 'upload_collection',
@@ -223,7 +223,7 @@ export default class UploadCollection extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadCollectionReorderJobSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadCollectionReorderJobSchema>(
         body,
       ),
     );
@@ -240,9 +240,9 @@ export default class UploadCollection extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawReorder(
-    body: SchemaTypes.UploadCollectionReorderSchema,
-  ): Promise<SchemaTypes.UploadCollectionReorderJobSchema> {
-    return this.client.request<SchemaTypes.UploadCollectionReorderJobSchema>({
+    body: RawApiTypes.UploadCollectionReorderSchema,
+  ): Promise<RawApiTypes.UploadCollectionReorderJobSchema> {
+    return this.client.request<RawApiTypes.UploadCollectionReorderJobSchema>({
       method: 'POST',
       url: '/upload-collections/reorder',
       body,

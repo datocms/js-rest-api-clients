@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class SiteInvitation extends BaseResource {
   static readonly TYPE = 'site_invitation' as const;
@@ -14,15 +14,15 @@ export default class SiteInvitation extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.SiteInvitationCreateSchema) {
+  create(body: ApiTypes.SiteInvitationCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.SiteInvitationCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.SiteInvitationCreateSchema>(body, {
         type: 'site_invitation',
         attributes: ['email'],
         relationships: ['role'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteInvitationCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteInvitationCreateTargetSchema>(
         body,
       ),
     );
@@ -37,9 +37,9 @@ export default class SiteInvitation extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.SiteInvitationCreateSchema,
-  ): Promise<SchemaTypes.SiteInvitationCreateTargetSchema> {
-    return this.client.request<SchemaTypes.SiteInvitationCreateTargetSchema>({
+    body: RawApiTypes.SiteInvitationCreateSchema,
+  ): Promise<RawApiTypes.SiteInvitationCreateTargetSchema> {
+    return this.client.request<RawApiTypes.SiteInvitationCreateTargetSchema>({
       method: 'POST',
       url: '/site-invitations',
       body,
@@ -55,19 +55,19 @@ export default class SiteInvitation extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    siteInvitationId: string | SimpleSchemaTypes.SiteInvitationData,
-    body: SimpleSchemaTypes.SiteInvitationUpdateSchema,
+    siteInvitationId: string | ApiTypes.SiteInvitationData,
+    body: ApiTypes.SiteInvitationUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(siteInvitationId),
-      Utils.serializeRequestBody<SchemaTypes.SiteInvitationUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.SiteInvitationUpdateSchema>(body, {
         id: Utils.toId(siteInvitationId),
         type: 'site_invitation',
         attributes: [],
         relationships: ['role'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteInvitationUpdateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteInvitationUpdateTargetSchema>(
         body,
       ),
     );
@@ -83,9 +83,9 @@ export default class SiteInvitation extends BaseResource {
    */
   rawUpdate(
     siteInvitationId: string,
-    body: SchemaTypes.SiteInvitationUpdateSchema,
-  ): Promise<SchemaTypes.SiteInvitationUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.SiteInvitationUpdateTargetSchema>({
+    body: RawApiTypes.SiteInvitationUpdateSchema,
+  ): Promise<RawApiTypes.SiteInvitationUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.SiteInvitationUpdateTargetSchema>({
       method: 'PUT',
       url: `/site-invitations/${siteInvitationId}`,
       body,
@@ -102,7 +102,7 @@ export default class SiteInvitation extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteInvitationInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteInvitationInstancesTargetSchema>(
         body,
       ),
     );
@@ -116,8 +116,8 @@ export default class SiteInvitation extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.SiteInvitationInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.SiteInvitationInstancesTargetSchema>(
+  rawList(): Promise<RawApiTypes.SiteInvitationInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.SiteInvitationInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/site-invitations',
@@ -133,9 +133,9 @@ export default class SiteInvitation extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(siteInvitationId: string | SimpleSchemaTypes.SiteInvitationData) {
+  find(siteInvitationId: string | ApiTypes.SiteInvitationData) {
     return this.rawFind(Utils.toId(siteInvitationId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteInvitationSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteInvitationSelfTargetSchema>(
         body,
       ),
     );
@@ -151,8 +151,8 @@ export default class SiteInvitation extends BaseResource {
    */
   rawFind(
     siteInvitationId: string,
-  ): Promise<SchemaTypes.SiteInvitationSelfTargetSchema> {
-    return this.client.request<SchemaTypes.SiteInvitationSelfTargetSchema>({
+  ): Promise<RawApiTypes.SiteInvitationSelfTargetSchema> {
+    return this.client.request<RawApiTypes.SiteInvitationSelfTargetSchema>({
       method: 'GET',
       url: `/site-invitations/${siteInvitationId}`,
     });
@@ -166,9 +166,9 @@ export default class SiteInvitation extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(siteInvitationId: string | SimpleSchemaTypes.SiteInvitationData) {
+  destroy(siteInvitationId: string | ApiTypes.SiteInvitationData) {
     return this.rawDestroy(Utils.toId(siteInvitationId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteInvitationDestroyTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteInvitationDestroyTargetSchema>(
         body,
       ),
     );
@@ -184,8 +184,8 @@ export default class SiteInvitation extends BaseResource {
    */
   rawDestroy(
     siteInvitationId: string,
-  ): Promise<SchemaTypes.SiteInvitationDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.SiteInvitationDestroyTargetSchema>({
+  ): Promise<RawApiTypes.SiteInvitationDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.SiteInvitationDestroyTargetSchema>({
       method: 'DELETE',
       url: `/site-invitations/${siteInvitationId}`,
     });
@@ -199,9 +199,9 @@ export default class SiteInvitation extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  resend(siteInvitationId: string | SimpleSchemaTypes.SiteInvitationData) {
+  resend(siteInvitationId: string | ApiTypes.SiteInvitationData) {
     return this.rawResend(Utils.toId(siteInvitationId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteInvitationResendTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteInvitationResendTargetSchema>(
         body,
       ),
     );
@@ -217,8 +217,8 @@ export default class SiteInvitation extends BaseResource {
    */
   rawResend(
     siteInvitationId: string,
-  ): Promise<SchemaTypes.SiteInvitationResendTargetSchema> {
-    return this.client.request<SchemaTypes.SiteInvitationResendTargetSchema>({
+  ): Promise<RawApiTypes.SiteInvitationResendTargetSchema> {
+    return this.client.request<RawApiTypes.SiteInvitationResendTargetSchema>({
       method: 'POST',
       url: `/site-invitations/${siteInvitationId}/resend`,
     });

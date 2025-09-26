@@ -1,7 +1,10 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type { ItemTypeDefinition } from '../../utilities/itemDefinition';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
+
+type NoInfer<T> = [T][T extends any ? 0 : never];
 
 export default class ScheduledUnpublishing extends BaseResource {
   static readonly TYPE = 'scheduled_unpublishing' as const;
@@ -15,12 +18,12 @@ export default class ScheduledUnpublishing extends BaseResource {
    * @throws {TimeoutError}
    */
   create(
-    itemId: string | SimpleSchemaTypes.ItemData,
-    body: SimpleSchemaTypes.ScheduledUnpublishingCreateSchema,
+    itemId: string | ApiTypes.ItemData,
+    body: ApiTypes.ScheduledUnpublishingCreateSchema,
   ) {
     return this.rawCreate(
       Utils.toId(itemId),
-      Utils.serializeRequestBody<SchemaTypes.ScheduledUnpublishingCreateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.ScheduledUnpublishingCreateSchema>(
         body,
         {
           type: 'scheduled_unpublishing',
@@ -29,7 +32,7 @@ export default class ScheduledUnpublishing extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ScheduledUnpublishingCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ScheduledUnpublishingCreateTargetSchema>(
         body,
       ),
     );
@@ -45,9 +48,9 @@ export default class ScheduledUnpublishing extends BaseResource {
    */
   rawCreate(
     itemId: string,
-    body: SchemaTypes.ScheduledUnpublishingCreateSchema,
-  ): Promise<SchemaTypes.ScheduledUnpublishingCreateTargetSchema> {
-    return this.client.request<SchemaTypes.ScheduledUnpublishingCreateTargetSchema>(
+    body: RawApiTypes.ScheduledUnpublishingCreateSchema,
+  ): Promise<RawApiTypes.ScheduledUnpublishingCreateTargetSchema> {
+    return this.client.request<RawApiTypes.ScheduledUnpublishingCreateTargetSchema>(
       {
         method: 'POST',
         url: `/items/${itemId}/scheduled-unpublishing`,
@@ -64,11 +67,13 @@ export default class ScheduledUnpublishing extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(itemId: string | SimpleSchemaTypes.ItemData) {
-    return this.rawDestroy(Utils.toId(itemId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ScheduledUnpublishingDestroyTargetSchema>(
-        body,
-      ),
+  destroy<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+  ) {
+    return this.rawDestroy<D>(Utils.toId(itemId)).then((body) =>
+      Utils.deserializeResponseBody<
+        ApiTypes.ScheduledUnpublishingDestroyTargetSchema<NoInfer<D>>
+      >(body),
     );
   }
 
@@ -80,14 +85,18 @@ export default class ScheduledUnpublishing extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawDestroy(
+  rawDestroy<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string,
-  ): Promise<SchemaTypes.ScheduledUnpublishingDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.ScheduledUnpublishingDestroyTargetSchema>(
-      {
+  ): Promise<
+    RawApiTypes.ScheduledUnpublishingDestroyTargetSchema<NoInfer<D>, true>
+  > {
+    return this.client
+      .request({
         method: 'DELETE',
         url: `/items/${itemId}/scheduled-unpublishing`,
-      },
-    );
+      })
+      .then<
+        RawApiTypes.ScheduledUnpublishingDestroyTargetSchema<NoInfer<D>, true>
+      >(Utils.deserializeRawResponseBodyWithItems);
   }
 }

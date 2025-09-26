@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class Site extends BaseResource {
   static readonly TYPE = 'site' as const;
@@ -14,11 +14,9 @@ export default class Site extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(queryParams?: SimpleSchemaTypes.SiteSelfHrefSchema) {
+  find(queryParams?: ApiTypes.SiteSelfHrefSchema) {
     return this.rawFind(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.SiteSelfTargetSchema>(body),
     );
   }
 
@@ -31,9 +29,9 @@ export default class Site extends BaseResource {
    * @throws {TimeoutError}
    */
   rawFind(
-    queryParams?: SchemaTypes.SiteSelfHrefSchema,
-  ): Promise<SchemaTypes.SiteSelfTargetSchema> {
-    return this.client.request<SchemaTypes.SiteSelfTargetSchema>({
+    queryParams?: RawApiTypes.SiteSelfHrefSchema,
+  ): Promise<RawApiTypes.SiteSelfTargetSchema> {
+    return this.client.request<RawApiTypes.SiteSelfTargetSchema>({
       method: 'GET',
       url: '/site',
       queryParams,
@@ -48,9 +46,9 @@ export default class Site extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  update(body: SimpleSchemaTypes.SiteUpdateSchema) {
+  update(body: ApiTypes.SiteUpdateSchema) {
     return this.rawUpdate(
-      Utils.serializeRequestBody<SchemaTypes.SiteUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.SiteUpdateSchema>(body, {
         type: 'site',
         attributes: [
           'no_index',
@@ -67,9 +65,7 @@ export default class Site extends BaseResource {
         relationships: ['sso_default_role'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteUpdateJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.SiteUpdateJobSchema>(body),
     );
   }
 
@@ -82,9 +78,9 @@ export default class Site extends BaseResource {
    * @throws {TimeoutError}
    */
   rawUpdate(
-    body: SchemaTypes.SiteUpdateSchema,
-  ): Promise<SchemaTypes.SiteUpdateJobSchema> {
-    return this.client.request<SchemaTypes.SiteUpdateJobSchema>({
+    body: RawApiTypes.SiteUpdateSchema,
+  ): Promise<RawApiTypes.SiteUpdateJobSchema> {
+    return this.client.request<RawApiTypes.SiteUpdateJobSchema>({
       method: 'PUT',
       url: '/site',
       body,
@@ -103,7 +99,7 @@ export default class Site extends BaseResource {
    */
   activateImprovedTimezoneManagement() {
     return this.rawActivateImprovedTimezoneManagement().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedTimezoneManagementJobSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteActivateImprovedTimezoneManagementJobSchema>(
         body,
       ),
     );
@@ -119,8 +115,8 @@ export default class Site extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  rawActivateImprovedTimezoneManagement(): Promise<SchemaTypes.SiteActivateImprovedTimezoneManagementJobSchema> {
-    return this.client.request<SchemaTypes.SiteActivateImprovedTimezoneManagementJobSchema>(
+  rawActivateImprovedTimezoneManagement(): Promise<RawApiTypes.SiteActivateImprovedTimezoneManagementJobSchema> {
+    return this.client.request<RawApiTypes.SiteActivateImprovedTimezoneManagementJobSchema>(
       {
         method: 'PUT',
         url: '/site/activate-improved-timezone-management',
@@ -140,7 +136,7 @@ export default class Site extends BaseResource {
    */
   activateImprovedHexManagement() {
     return this.rawActivateImprovedHexManagement().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedHexManagementTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteActivateImprovedHexManagementTargetSchema>(
         body,
       ),
     );
@@ -156,8 +152,8 @@ export default class Site extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  rawActivateImprovedHexManagement(): Promise<SchemaTypes.SiteActivateImprovedHexManagementTargetSchema> {
-    return this.client.request<SchemaTypes.SiteActivateImprovedHexManagementTargetSchema>(
+  rawActivateImprovedHexManagement(): Promise<RawApiTypes.SiteActivateImprovedHexManagementTargetSchema> {
+    return this.client.request<RawApiTypes.SiteActivateImprovedHexManagementTargetSchema>(
       {
         method: 'PUT',
         url: '/site/activate-improved-hex-management',
@@ -177,7 +173,7 @@ export default class Site extends BaseResource {
    */
   activateImprovedGqlMultilocaleFields() {
     return this.rawActivateImprovedGqlMultilocaleFields().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedGqlMultilocaleFieldsTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteActivateImprovedGqlMultilocaleFieldsTargetSchema>(
         body,
       ),
     );
@@ -193,8 +189,8 @@ export default class Site extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  rawActivateImprovedGqlMultilocaleFields(): Promise<SchemaTypes.SiteActivateImprovedGqlMultilocaleFieldsTargetSchema> {
-    return this.client.request<SchemaTypes.SiteActivateImprovedGqlMultilocaleFieldsTargetSchema>(
+  rawActivateImprovedGqlMultilocaleFields(): Promise<RawApiTypes.SiteActivateImprovedGqlMultilocaleFieldsTargetSchema> {
+    return this.client.request<RawApiTypes.SiteActivateImprovedGqlMultilocaleFieldsTargetSchema>(
       {
         method: 'PUT',
         url: '/site/activate-improved-gql-multilocale-fields',
@@ -214,7 +210,7 @@ export default class Site extends BaseResource {
    */
   activateImprovedGqlVisibilityControl() {
     return this.rawActivateImprovedGqlVisibilityControl().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedGqlVisibilityControlTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteActivateImprovedGqlVisibilityControlTargetSchema>(
         body,
       ),
     );
@@ -230,8 +226,8 @@ export default class Site extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  rawActivateImprovedGqlVisibilityControl(): Promise<SchemaTypes.SiteActivateImprovedGqlVisibilityControlTargetSchema> {
-    return this.client.request<SchemaTypes.SiteActivateImprovedGqlVisibilityControlTargetSchema>(
+  rawActivateImprovedGqlVisibilityControl(): Promise<RawApiTypes.SiteActivateImprovedGqlVisibilityControlTargetSchema> {
+    return this.client.request<RawApiTypes.SiteActivateImprovedGqlVisibilityControlTargetSchema>(
       {
         method: 'PUT',
         url: '/site/activate-improved-gql-visibility-control',
@@ -251,7 +247,7 @@ export default class Site extends BaseResource {
    */
   activateImprovedBooleanFields() {
     return this.rawActivateImprovedBooleanFields().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedBooleanFieldsTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteActivateImprovedBooleanFieldsTargetSchema>(
         body,
       ),
     );
@@ -267,8 +263,8 @@ export default class Site extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  rawActivateImprovedBooleanFields(): Promise<SchemaTypes.SiteActivateImprovedBooleanFieldsTargetSchema> {
-    return this.client.request<SchemaTypes.SiteActivateImprovedBooleanFieldsTargetSchema>(
+  rawActivateImprovedBooleanFields(): Promise<RawApiTypes.SiteActivateImprovedBooleanFieldsTargetSchema> {
+    return this.client.request<RawApiTypes.SiteActivateImprovedBooleanFieldsTargetSchema>(
       {
         method: 'PUT',
         url: '/site/activate-improved-boolean-fields',
@@ -288,7 +284,7 @@ export default class Site extends BaseResource {
    */
   activateDraftModeAsDefault() {
     return this.rawActivateDraftModeAsDefault().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateDraftModeAsDefaultTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteActivateDraftModeAsDefaultTargetSchema>(
         body,
       ),
     );
@@ -304,8 +300,8 @@ export default class Site extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  rawActivateDraftModeAsDefault(): Promise<SchemaTypes.SiteActivateDraftModeAsDefaultTargetSchema> {
-    return this.client.request<SchemaTypes.SiteActivateDraftModeAsDefaultTargetSchema>(
+  rawActivateDraftModeAsDefault(): Promise<RawApiTypes.SiteActivateDraftModeAsDefaultTargetSchema> {
+    return this.client.request<RawApiTypes.SiteActivateDraftModeAsDefaultTargetSchema>(
       {
         method: 'PUT',
         url: '/site/activate-draft-mode-as-default',
@@ -325,7 +321,7 @@ export default class Site extends BaseResource {
    */
   activateImprovedValidationAtPublishing() {
     return this.rawActivateImprovedValidationAtPublishing().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedValidationAtPublishingTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteActivateImprovedValidationAtPublishingTargetSchema>(
         body,
       ),
     );
@@ -341,8 +337,8 @@ export default class Site extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  rawActivateImprovedValidationAtPublishing(): Promise<SchemaTypes.SiteActivateImprovedValidationAtPublishingTargetSchema> {
-    return this.client.request<SchemaTypes.SiteActivateImprovedValidationAtPublishingTargetSchema>(
+  rawActivateImprovedValidationAtPublishing(): Promise<RawApiTypes.SiteActivateImprovedValidationAtPublishingTargetSchema> {
+    return this.client.request<RawApiTypes.SiteActivateImprovedValidationAtPublishingTargetSchema>(
       {
         method: 'PUT',
         url: '/site/activate-improved-validation-at-publishing',
@@ -362,7 +358,7 @@ export default class Site extends BaseResource {
    */
   activateImprovedExposureOfInlineBlocksInCda() {
     return this.rawActivateImprovedExposureOfInlineBlocksInCda().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema>(
         body,
       ),
     );
@@ -378,8 +374,8 @@ export default class Site extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  rawActivateImprovedExposureOfInlineBlocksInCda(): Promise<SchemaTypes.SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema> {
-    return this.client.request<SchemaTypes.SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema>(
+  rawActivateImprovedExposureOfInlineBlocksInCda(): Promise<RawApiTypes.SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema> {
+    return this.client.request<RawApiTypes.SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema>(
       {
         method: 'PUT',
         url: '/site/activate-improved-exposure-of-inline-blocks-in-cda',
@@ -398,10 +394,10 @@ export default class Site extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   updateAssetsCdnDefaultSettings(
-    body: SimpleSchemaTypes.SiteUpdateAssetsCdnDefaultSettingsSchema,
+    body: ApiTypes.SiteUpdateAssetsCdnDefaultSettingsSchema,
   ) {
     return this.rawUpdateAssetsCdnDefaultSettings(
-      Utils.serializeRequestBody<SchemaTypes.SiteUpdateAssetsCdnDefaultSettingsSchema>(
+      Utils.serializeRequestBody<RawApiTypes.SiteUpdateAssetsCdnDefaultSettingsSchema>(
         body,
         {
           type: 'assets-cdn-default-settings',
@@ -410,7 +406,7 @@ export default class Site extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteUpdateAssetsCdnDefaultSettingsTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.SiteUpdateAssetsCdnDefaultSettingsTargetSchema>(
         body,
       ),
     );
@@ -427,9 +423,9 @@ export default class Site extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawUpdateAssetsCdnDefaultSettings(
-    body: SchemaTypes.SiteUpdateAssetsCdnDefaultSettingsSchema,
-  ): Promise<SchemaTypes.SiteUpdateAssetsCdnDefaultSettingsTargetSchema> {
-    return this.client.request<SchemaTypes.SiteUpdateAssetsCdnDefaultSettingsTargetSchema>(
+    body: RawApiTypes.SiteUpdateAssetsCdnDefaultSettingsSchema,
+  ): Promise<RawApiTypes.SiteUpdateAssetsCdnDefaultSettingsTargetSchema> {
+    return this.client.request<RawApiTypes.SiteUpdateAssetsCdnDefaultSettingsTargetSchema>(
       {
         method: 'PUT',
         url: '/site/assets-cdn-default-settings',

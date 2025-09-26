@@ -1,6 +1,7 @@
 import * as JsonRefParser from '@apidevtools/json-schema-ref-parser';
 import fetch from 'cross-fetch';
 import { compile as hyperschemaToTypings } from 'hyperschema-to-ts';
+import { applyGenerics } from './applyGenericsToSchema';
 import simplifySchema from './generateSimplifiedSchema';
 import toSafeName from './toSafeName';
 
@@ -26,6 +27,9 @@ export type EndpointInfo = {
     isEntityId: boolean;
     relType: string;
   };
+  returnsItem?: boolean;
+  requestBodyRequiresItem?: boolean;
+  offersNestedItemsOptionInQueryParams?: boolean;
   simpleMethodAvailable: boolean;
   requestBodyType?: string;
   optionalRequestBody: boolean;
@@ -166,9 +170,15 @@ function findDataObjects(schema: JsonRefParser.JSONSchema) {
   function find(
     maybeDataSchema: JsonRefParser.JSONSchema,
   ): JsonRefParser.JSONSchema[] {
+    if (Array.isArray(maybeDataSchema)) {
+      return maybeDataSchema.flatMap((schema) =>
+        find(schema as JsonRefParser.JSONSchema),
+      );
+    }
+
     if (maybeDataSchema.type === 'array') {
       if (typeof maybeDataSchema.items !== 'object') {
-        throw new Error('No items?');
+        return [];
       }
       return find(maybeDataSchema.items);
     }
@@ -338,10 +348,30 @@ function generateResourceInfo(
         }
       : undefined;
 
+    const requestBodyType = link.schema
+      ? `${toSafeName(baseTypeName, true)}${toSafeName(link.rel, true)}Schema`
+      : undefined;
+
+    const returnSchema = link.jobSchema || link.targetSchema;
+    const returnsItem = Boolean(
+      returnSchema ? findTypeInDataProperty(returnSchema) === 'item' : false,
+    );
+
+    const requestBodyRequiresItem = link.schema
+      ? findTypeInDataProperty(link.schema) === 'item'
+      : false;
+
     const endpointInfo: EndpointInfo = {
       returnsCollection: ['query', 'instances'].some((x) =>
         link.rel.includes(x),
       ),
+      returnsItem,
+      requestBodyRequiresItem,
+      offersNestedItemsOptionInQueryParams:
+        returnsItem &&
+        Boolean(
+          link.hrefSchema?.properties && 'nested' in link.hrefSchema.properties,
+        ),
       docUrl: isCma
         ? `https://www.datocms.com/docs/content-management-api/resources/${jsonApiType.replace(
             '_',
@@ -357,9 +387,7 @@ function generateResourceInfo(
       urlPlaceholders,
       entityIdPlaceholder:
         urlPlaceholders.find((p) => p.isEntityId) || undefined,
-      requestBodyType: link.schema
-        ? `${toSafeName(baseTypeName, true)}${toSafeName(link.rel, true)}Schema`
-        : undefined,
+      requestBodyType,
       optionalRequestBody: Boolean(link.schema?.type?.includes('null')),
       simpleMethodAvailable: true,
       requestStructure: link.schema
@@ -425,8 +453,12 @@ function generateResourceInfo(
 }
 
 async function schemaToTs(schema: any) {
-  const result = await hyperschemaToTypings(schema, 'SiteApiSchema', {});
+  const result = await hyperschemaToTypings(schema, 'SiteApiTypes', {});
   return result.replace(/export interface ([^ ]+) {/g, 'export type $1 = {');
+}
+
+function clone<T>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj)) as T;
 }
 
 export default async function extractInfoFromSchema(
@@ -435,10 +467,15 @@ export default async function extractInfoFromSchema(
 ): Promise<SchemaInfo> {
   const rawSchema = await downloadHyperschema(hyperschemaUrl);
 
-  const simplifiedRawSchema = await downloadHyperschema(hyperschemaUrl);
-  simplifySchema(simplifiedRawSchema);
+  const rawSchemaToGenerateTypings = clone(rawSchema);
+  const typings = applyGenerics(await schemaToTs(rawSchemaToGenerateTypings));
 
-  const typings = await schemaToTs(rawSchema);
+  const rawSchemaToGenerateSimpleTypings = clone(rawSchema);
+  simplifySchema(rawSchemaToGenerateSimpleTypings);
+  const simpleTypings = applyGenerics(
+    await schemaToTs(rawSchemaToGenerateSimpleTypings),
+  );
+
   const schema = await JsonRefParser.dereference(rawSchema);
 
   if (!schema.properties) {
@@ -452,7 +489,7 @@ export default async function extractInfoFromSchema(
         generateResourceInfo(isCma, resource, schema),
       )
       .filter((resourceInfo) => resourceInfo.endpoints.length > 0),
-    simpleTypings: await schemaToTs(simplifiedRawSchema),
-    typings: typings,
+    simpleTypings,
+    typings,
   };
 }

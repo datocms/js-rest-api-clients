@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class PerOwnerPricingSubscription extends BaseResource {
   static readonly TYPE = 'per_owner_pricing_subscription' as const;
@@ -12,9 +12,9 @@ export default class PerOwnerPricingSubscription extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.PerOwnerPricingSubscriptionCreateSchema) {
+  create(body: ApiTypes.PerOwnerPricingSubscriptionCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.PerOwnerPricingSubscriptionCreateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.PerOwnerPricingSubscriptionCreateSchema>(
         body,
         {
           type: 'per_owner_pricing_subscription',
@@ -28,7 +28,7 @@ export default class PerOwnerPricingSubscription extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PerOwnerPricingSubscriptionCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PerOwnerPricingSubscriptionCreateTargetSchema>(
         body,
       ),
     );
@@ -41,9 +41,9 @@ export default class PerOwnerPricingSubscription extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.PerOwnerPricingSubscriptionCreateSchema,
-  ): Promise<SchemaTypes.PerOwnerPricingSubscriptionCreateTargetSchema> {
-    return this.client.request<SchemaTypes.PerOwnerPricingSubscriptionCreateTargetSchema>(
+    body: RawApiTypes.PerOwnerPricingSubscriptionCreateSchema,
+  ): Promise<RawApiTypes.PerOwnerPricingSubscriptionCreateTargetSchema> {
+    return this.client.request<RawApiTypes.PerOwnerPricingSubscriptionCreateTargetSchema>(
       {
         method: 'POST',
         url: '/per-owner-pricing-subscriptions',
@@ -58,9 +58,9 @@ export default class PerOwnerPricingSubscription extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  simulate(body: SimpleSchemaTypes.PerOwnerPricingSubscriptionSimulateSchema) {
+  simulate(body: ApiTypes.PerOwnerPricingSubscriptionSimulateSchema) {
     return this.rawSimulate(
-      Utils.serializeRequestBody<SchemaTypes.PerOwnerPricingSubscriptionSimulateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.PerOwnerPricingSubscriptionSimulateSchema>(
         body,
         {
           type: 'per_owner_pricing_subscription',
@@ -69,7 +69,7 @@ export default class PerOwnerPricingSubscription extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PerOwnerPricingSubscriptionSimulateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PerOwnerPricingSubscriptionSimulateTargetSchema>(
         body,
       ),
     );
@@ -82,9 +82,9 @@ export default class PerOwnerPricingSubscription extends BaseResource {
    * @throws {TimeoutError}
    */
   rawSimulate(
-    body: SchemaTypes.PerOwnerPricingSubscriptionSimulateSchema,
-  ): Promise<SchemaTypes.PerOwnerPricingSubscriptionSimulateTargetSchema> {
-    return this.client.request<SchemaTypes.PerOwnerPricingSubscriptionSimulateTargetSchema>(
+    body: RawApiTypes.PerOwnerPricingSubscriptionSimulateSchema,
+  ): Promise<RawApiTypes.PerOwnerPricingSubscriptionSimulateTargetSchema> {
+    return this.client.request<RawApiTypes.PerOwnerPricingSubscriptionSimulateTargetSchema>(
       {
         method: 'POST',
         url: '/per-owner-pricing-subscriptions/simulate',
@@ -99,9 +99,9 @@ export default class PerOwnerPricingSubscription extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  validate(body: SimpleSchemaTypes.PerOwnerPricingSubscriptionValidateSchema) {
+  validate(body: ApiTypes.PerOwnerPricingSubscriptionValidateSchema) {
     return this.rawValidate(
-      Utils.serializeRequestBody<SchemaTypes.PerOwnerPricingSubscriptionValidateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.PerOwnerPricingSubscriptionValidateSchema>(
         body,
         {
           type: 'per_owner_pricing_subscription',
@@ -110,7 +110,7 @@ export default class PerOwnerPricingSubscription extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PerOwnerPricingSubscriptionValidateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PerOwnerPricingSubscriptionValidateTargetSchema>(
         body,
       ),
     );
@@ -123,9 +123,9 @@ export default class PerOwnerPricingSubscription extends BaseResource {
    * @throws {TimeoutError}
    */
   rawValidate(
-    body: SchemaTypes.PerOwnerPricingSubscriptionValidateSchema,
-  ): Promise<SchemaTypes.PerOwnerPricingSubscriptionValidateTargetSchema> {
-    return this.client.request<SchemaTypes.PerOwnerPricingSubscriptionValidateTargetSchema>(
+    body: RawApiTypes.PerOwnerPricingSubscriptionValidateSchema,
+  ): Promise<RawApiTypes.PerOwnerPricingSubscriptionValidateTargetSchema> {
+    return this.client.request<RawApiTypes.PerOwnerPricingSubscriptionValidateTargetSchema>(
       {
         method: 'POST',
         url: '/per-owner-pricing-subscriptions/validate',

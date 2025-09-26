@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class OrganizationInvitation extends BaseResource {
   static readonly TYPE = 'organization_invitation' as const;
@@ -12,9 +12,9 @@ export default class OrganizationInvitation extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.OrganizationInvitationCreateSchema) {
+  create(body: ApiTypes.OrganizationInvitationCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.OrganizationInvitationCreateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.OrganizationInvitationCreateSchema>(
         body,
         {
           type: 'organization_invitation',
@@ -23,7 +23,7 @@ export default class OrganizationInvitation extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationInvitationCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationInvitationCreateTargetSchema>(
         body,
       ),
     );
@@ -36,9 +36,9 @@ export default class OrganizationInvitation extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.OrganizationInvitationCreateSchema,
-  ): Promise<SchemaTypes.OrganizationInvitationCreateTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationInvitationCreateTargetSchema>(
+    body: RawApiTypes.OrganizationInvitationCreateSchema,
+  ): Promise<RawApiTypes.OrganizationInvitationCreateTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationInvitationCreateTargetSchema>(
       {
         method: 'POST',
         url: '/organization-invitations',
@@ -54,14 +54,12 @@ export default class OrganizationInvitation extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    organizationInvitationId:
-      | string
-      | SimpleSchemaTypes.OrganizationInvitationData,
-    body: SimpleSchemaTypes.OrganizationInvitationUpdateSchema,
+    organizationInvitationId: string | ApiTypes.OrganizationInvitationData,
+    body: ApiTypes.OrganizationInvitationUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(organizationInvitationId),
-      Utils.serializeRequestBody<SchemaTypes.OrganizationInvitationUpdateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.OrganizationInvitationUpdateSchema>(
         body,
         {
           id: Utils.toId(organizationInvitationId),
@@ -71,7 +69,7 @@ export default class OrganizationInvitation extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationInvitationUpdateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationInvitationUpdateTargetSchema>(
         body,
       ),
     );
@@ -85,9 +83,9 @@ export default class OrganizationInvitation extends BaseResource {
    */
   rawUpdate(
     organizationInvitationId: string,
-    body: SchemaTypes.OrganizationInvitationUpdateSchema,
-  ): Promise<SchemaTypes.OrganizationInvitationUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationInvitationUpdateTargetSchema>(
+    body: RawApiTypes.OrganizationInvitationUpdateSchema,
+  ): Promise<RawApiTypes.OrganizationInvitationUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationInvitationUpdateTargetSchema>(
       {
         method: 'PUT',
         url: `/organization-invitations/${organizationInvitationId}`,
@@ -104,7 +102,7 @@ export default class OrganizationInvitation extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationInvitationInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationInvitationInstancesTargetSchema>(
         body,
       ),
     );
@@ -116,8 +114,8 @@ export default class OrganizationInvitation extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.OrganizationInvitationInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationInvitationInstancesTargetSchema>(
+  rawList(): Promise<RawApiTypes.OrganizationInvitationInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationInvitationInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/organization-invitations',
@@ -131,13 +129,9 @@ export default class OrganizationInvitation extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(
-    organizationInvitationId:
-      | string
-      | SimpleSchemaTypes.OrganizationInvitationData,
-  ) {
+  find(organizationInvitationId: string | ApiTypes.OrganizationInvitationData) {
     return this.rawFind(Utils.toId(organizationInvitationId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationInvitationSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationInvitationSelfTargetSchema>(
         body,
       ),
     );
@@ -151,8 +145,8 @@ export default class OrganizationInvitation extends BaseResource {
    */
   rawFind(
     organizationInvitationId: string,
-  ): Promise<SchemaTypes.OrganizationInvitationSelfTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationInvitationSelfTargetSchema>(
+  ): Promise<RawApiTypes.OrganizationInvitationSelfTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationInvitationSelfTargetSchema>(
       {
         method: 'GET',
         url: `/organization-invitations/${organizationInvitationId}`,
@@ -167,12 +161,10 @@ export default class OrganizationInvitation extends BaseResource {
    * @throws {TimeoutError}
    */
   destroy(
-    organizationInvitationId:
-      | string
-      | SimpleSchemaTypes.OrganizationInvitationData,
+    organizationInvitationId: string | ApiTypes.OrganizationInvitationData,
   ) {
     return this.rawDestroy(Utils.toId(organizationInvitationId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationInvitationDestroyTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationInvitationDestroyTargetSchema>(
         body,
       ),
     );
@@ -186,8 +178,8 @@ export default class OrganizationInvitation extends BaseResource {
    */
   rawDestroy(
     organizationInvitationId: string,
-  ): Promise<SchemaTypes.OrganizationInvitationDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationInvitationDestroyTargetSchema>(
+  ): Promise<RawApiTypes.OrganizationInvitationDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationInvitationDestroyTargetSchema>(
       {
         method: 'DELETE',
         url: `/organization-invitations/${organizationInvitationId}`,
@@ -202,9 +194,7 @@ export default class OrganizationInvitation extends BaseResource {
    * @throws {TimeoutError}
    */
   resend(
-    organizationInvitationId:
-      | string
-      | SimpleSchemaTypes.OrganizationInvitationData,
+    organizationInvitationId: string | ApiTypes.OrganizationInvitationData,
   ) {
     return this.rawResend(Utils.toId(organizationInvitationId));
   }
@@ -229,16 +219,14 @@ export default class OrganizationInvitation extends BaseResource {
    * @throws {TimeoutError}
    */
   redeem(
-    organizationInvitationId:
-      | string
-      | SimpleSchemaTypes.OrganizationInvitationData,
-    queryParams?: SimpleSchemaTypes.OrganizationInvitationRedeemHrefSchema,
+    organizationInvitationId: string | ApiTypes.OrganizationInvitationData,
+    queryParams?: ApiTypes.OrganizationInvitationRedeemHrefSchema,
   ) {
     return this.rawRedeem(
       Utils.toId(organizationInvitationId),
       queryParams,
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationInvitationRedeemTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationInvitationRedeemTargetSchema>(
         body,
       ),
     );
@@ -252,9 +240,9 @@ export default class OrganizationInvitation extends BaseResource {
    */
   rawRedeem(
     organizationInvitationId: string,
-    queryParams?: SchemaTypes.OrganizationInvitationRedeemHrefSchema,
-  ): Promise<SchemaTypes.OrganizationInvitationRedeemTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationInvitationRedeemTargetSchema>(
+    queryParams?: RawApiTypes.OrganizationInvitationRedeemHrefSchema,
+  ): Promise<RawApiTypes.OrganizationInvitationRedeemTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationInvitationRedeemTargetSchema>(
       {
         method: 'PUT',
         url: `/organization-invitations/${organizationInvitationId}/redeem`,

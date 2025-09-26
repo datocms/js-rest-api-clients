@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class BuildEvent extends BaseResource {
   static readonly TYPE = 'build_event' as const;
@@ -14,9 +14,9 @@ export default class BuildEvent extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(queryParams?: SimpleSchemaTypes.BuildEventInstancesHrefSchema) {
+  list(queryParams?: ApiTypes.BuildEventInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.BuildEventInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.BuildEventInstancesTargetSchema>(
         body,
       ),
     );
@@ -31,9 +31,9 @@ export default class BuildEvent extends BaseResource {
    * @throws {TimeoutError}
    */
   rawList(
-    queryParams?: SchemaTypes.BuildEventInstancesHrefSchema,
-  ): Promise<SchemaTypes.BuildEventInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.BuildEventInstancesTargetSchema>({
+    queryParams?: RawApiTypes.BuildEventInstancesHrefSchema,
+  ): Promise<RawApiTypes.BuildEventInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.BuildEventInstancesTargetSchema>({
       method: 'GET',
       url: '/build-events',
       queryParams,
@@ -50,7 +50,7 @@ export default class BuildEvent extends BaseResource {
    */
   async *listPagedIterator(
     queryParams?: Utils.OmitFromKnownKeys<
-      SimpleSchemaTypes.BuildEventInstancesHrefSchema,
+      ApiTypes.BuildEventInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -60,7 +60,7 @@ export default class BuildEvent extends BaseResource {
       iteratorOptions,
     )) {
       yield Utils.deserializeJsonEntity<
-        SimpleSchemaTypes.BuildEventInstancesTargetSchema[0]
+        ApiTypes.BuildEventInstancesTargetSchema[0]
       >(element);
     }
   }
@@ -75,7 +75,7 @@ export default class BuildEvent extends BaseResource {
    */
   rawListPagedIterator(
     queryParams?: Utils.OmitFromKnownKeys<
-      SchemaTypes.BuildEventInstancesHrefSchema,
+      RawApiTypes.BuildEventInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -83,13 +83,13 @@ export default class BuildEvent extends BaseResource {
     Utils.warnOnPageQueryParam(queryParams);
 
     return Utils.rawPageIterator<
-      SchemaTypes.BuildEventInstancesTargetSchema['data'][0]
+      RawApiTypes.BuildEventInstancesTargetSchema['data'][0]
     >(
       {
         defaultLimit: 30,
         maxLimit: 500,
       },
-      (page: SchemaTypes.BuildEventInstancesHrefSchema['page']) =>
+      (page: RawApiTypes.BuildEventInstancesHrefSchema['page']) =>
         this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );
@@ -103,11 +103,9 @@ export default class BuildEvent extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(buildEventId: string | SimpleSchemaTypes.BuildEventData) {
+  find(buildEventId: string | ApiTypes.BuildEventData) {
     return this.rawFind(Utils.toId(buildEventId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.BuildEventSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.BuildEventSelfTargetSchema>(body),
     );
   }
 
@@ -121,8 +119,8 @@ export default class BuildEvent extends BaseResource {
    */
   rawFind(
     buildEventId: string,
-  ): Promise<SchemaTypes.BuildEventSelfTargetSchema> {
-    return this.client.request<SchemaTypes.BuildEventSelfTargetSchema>({
+  ): Promise<RawApiTypes.BuildEventSelfTargetSchema> {
+    return this.client.request<RawApiTypes.BuildEventSelfTargetSchema>({
       method: 'GET',
       url: `/build-events/${buildEventId}`,
     });

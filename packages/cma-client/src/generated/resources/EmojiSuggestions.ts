@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class EmojiSuggestions extends BaseResource {
   static readonly TYPE = 'emoji_suggestions' as const;
@@ -16,9 +16,9 @@ export default class EmojiSuggestions extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  find(queryParams?: SimpleSchemaTypes.EmojiSuggestionsSelfHrefSchema) {
+  find(queryParams?: ApiTypes.EmojiSuggestionsSelfHrefSchema) {
     return this.rawFind(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.EmojiSuggestionsSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.EmojiSuggestionsSelfTargetSchema>(
         body,
       ),
     );
@@ -35,9 +35,9 @@ export default class EmojiSuggestions extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   rawFind(
-    queryParams?: SchemaTypes.EmojiSuggestionsSelfHrefSchema,
-  ): Promise<SchemaTypes.EmojiSuggestionsSelfTargetSchema> {
-    return this.client.request<SchemaTypes.EmojiSuggestionsSelfTargetSchema>({
+    queryParams?: RawApiTypes.EmojiSuggestionsSelfHrefSchema,
+  ): Promise<RawApiTypes.EmojiSuggestionsSelfTargetSchema> {
+    return this.client.request<RawApiTypes.EmojiSuggestionsSelfTargetSchema>({
       method: 'GET',
       url: '/emoji-suggestions',
       queryParams,

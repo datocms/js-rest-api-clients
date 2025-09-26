@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class PerOwnerPricingPlan extends BaseResource {
   static readonly TYPE = 'per_owner_pricing_plan' as const;
@@ -14,7 +14,7 @@ export default class PerOwnerPricingPlan extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PerOwnerPricingPlanInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PerOwnerPricingPlanInstancesTargetSchema>(
         body,
       ),
     );
@@ -26,8 +26,8 @@ export default class PerOwnerPricingPlan extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.PerOwnerPricingPlanInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.PerOwnerPricingPlanInstancesTargetSchema>(
+  rawList(): Promise<RawApiTypes.PerOwnerPricingPlanInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.PerOwnerPricingPlanInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/per-owner-pricing-plans',
@@ -43,7 +43,7 @@ export default class PerOwnerPricingPlan extends BaseResource {
    */
   activableAsAppointedOrganizationList() {
     return this.rawActivableAsAppointedOrganizationList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PerOwnerPricingPlanActivableAsAppointedOrganizationInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PerOwnerPricingPlanActivableAsAppointedOrganizationInstancesTargetSchema>(
         body,
       ),
     );
@@ -55,8 +55,8 @@ export default class PerOwnerPricingPlan extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawActivableAsAppointedOrganizationList(): Promise<SchemaTypes.PerOwnerPricingPlanActivableAsAppointedOrganizationInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.PerOwnerPricingPlanActivableAsAppointedOrganizationInstancesTargetSchema>(
+  rawActivableAsAppointedOrganizationList(): Promise<RawApiTypes.PerOwnerPricingPlanActivableAsAppointedOrganizationInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.PerOwnerPricingPlanActivableAsAppointedOrganizationInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/per-owner-pricing-plans/activable-as-appointed-organization',

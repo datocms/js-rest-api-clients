@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class PerSitePricingBillingProfile extends BaseResource {
   static readonly TYPE = 'per_site_pricing_billing_profile' as const;
@@ -14,7 +14,7 @@ export default class PerSitePricingBillingProfile extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PerSitePricingBillingProfileInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PerSitePricingBillingProfileInstancesTargetSchema>(
         body,
       ),
     );
@@ -26,8 +26,8 @@ export default class PerSitePricingBillingProfile extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.PerSitePricingBillingProfileInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.PerSitePricingBillingProfileInstancesTargetSchema>(
+  rawList(): Promise<RawApiTypes.PerSitePricingBillingProfileInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.PerSitePricingBillingProfileInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/per-site-pricing-billing-profiles',
@@ -44,14 +44,14 @@ export default class PerSitePricingBillingProfile extends BaseResource {
   find(
     perSitePricingBillingProfileId:
       | string
-      | SimpleSchemaTypes.PerSitePricingBillingProfileData,
-    queryParams?: SimpleSchemaTypes.PerSitePricingBillingProfileSelfHrefSchema,
+      | ApiTypes.PerSitePricingBillingProfileData,
+    queryParams?: ApiTypes.PerSitePricingBillingProfileSelfHrefSchema,
   ) {
     return this.rawFind(
       Utils.toId(perSitePricingBillingProfileId),
       queryParams,
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PerSitePricingBillingProfileSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PerSitePricingBillingProfileSelfTargetSchema>(
         body,
       ),
     );
@@ -65,9 +65,9 @@ export default class PerSitePricingBillingProfile extends BaseResource {
    */
   rawFind(
     perSitePricingBillingProfileId: string,
-    queryParams?: SchemaTypes.PerSitePricingBillingProfileSelfHrefSchema,
-  ): Promise<SchemaTypes.PerSitePricingBillingProfileSelfTargetSchema> {
-    return this.client.request<SchemaTypes.PerSitePricingBillingProfileSelfTargetSchema>(
+    queryParams?: RawApiTypes.PerSitePricingBillingProfileSelfHrefSchema,
+  ): Promise<RawApiTypes.PerSitePricingBillingProfileSelfTargetSchema> {
+    return this.client.request<RawApiTypes.PerSitePricingBillingProfileSelfTargetSchema>(
       {
         method: 'GET',
         url: `/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}`,
@@ -85,12 +85,12 @@ export default class PerSitePricingBillingProfile extends BaseResource {
   updateCreditCard(
     perSitePricingBillingProfileId:
       | string
-      | SimpleSchemaTypes.PerSitePricingBillingProfileData,
-    body: SimpleSchemaTypes.PerSitePricingBillingProfileUpdateCreditCardSchema,
+      | ApiTypes.PerSitePricingBillingProfileData,
+    body: ApiTypes.PerSitePricingBillingProfileUpdateCreditCardSchema,
   ) {
     return this.rawUpdateCreditCard(
       Utils.toId(perSitePricingBillingProfileId),
-      Utils.serializeRequestBody<SchemaTypes.PerSitePricingBillingProfileUpdateCreditCardSchema>(
+      Utils.serializeRequestBody<RawApiTypes.PerSitePricingBillingProfileUpdateCreditCardSchema>(
         body,
         {
           type: 'card',
@@ -99,7 +99,7 @@ export default class PerSitePricingBillingProfile extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PerSitePricingBillingProfileUpdateCreditCardTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PerSitePricingBillingProfileUpdateCreditCardTargetSchema>(
         body,
       ),
     );
@@ -113,9 +113,9 @@ export default class PerSitePricingBillingProfile extends BaseResource {
    */
   rawUpdateCreditCard(
     perSitePricingBillingProfileId: string,
-    body: SchemaTypes.PerSitePricingBillingProfileUpdateCreditCardSchema,
-  ): Promise<SchemaTypes.PerSitePricingBillingProfileUpdateCreditCardTargetSchema> {
-    return this.client.request<SchemaTypes.PerSitePricingBillingProfileUpdateCreditCardTargetSchema>(
+    body: RawApiTypes.PerSitePricingBillingProfileUpdateCreditCardSchema,
+  ): Promise<RawApiTypes.PerSitePricingBillingProfileUpdateCreditCardTargetSchema> {
+    return this.client.request<RawApiTypes.PerSitePricingBillingProfileUpdateCreditCardTargetSchema>(
       {
         method: 'PUT',
         url: `/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/credit-card`,
@@ -133,12 +133,12 @@ export default class PerSitePricingBillingProfile extends BaseResource {
   updateInfo(
     perSitePricingBillingProfileId:
       | string
-      | SimpleSchemaTypes.PerSitePricingBillingProfileData,
-    body: SimpleSchemaTypes.PerSitePricingBillingProfileUpdateInfoSchema,
+      | ApiTypes.PerSitePricingBillingProfileData,
+    body: ApiTypes.PerSitePricingBillingProfileUpdateInfoSchema,
   ) {
     return this.rawUpdateInfo(
       Utils.toId(perSitePricingBillingProfileId),
-      Utils.serializeRequestBody<SchemaTypes.PerSitePricingBillingProfileUpdateInfoSchema>(
+      Utils.serializeRequestBody<RawApiTypes.PerSitePricingBillingProfileUpdateInfoSchema>(
         body,
         {
           type: 'per_site_pricing_billing_profile',
@@ -147,7 +147,7 @@ export default class PerSitePricingBillingProfile extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PerSitePricingBillingProfileUpdateInfoTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.PerSitePricingBillingProfileUpdateInfoTargetSchema>(
         body,
       ),
     );
@@ -161,9 +161,9 @@ export default class PerSitePricingBillingProfile extends BaseResource {
    */
   rawUpdateInfo(
     perSitePricingBillingProfileId: string,
-    body: SchemaTypes.PerSitePricingBillingProfileUpdateInfoSchema,
-  ): Promise<SchemaTypes.PerSitePricingBillingProfileUpdateInfoTargetSchema> {
-    return this.client.request<SchemaTypes.PerSitePricingBillingProfileUpdateInfoTargetSchema>(
+    body: RawApiTypes.PerSitePricingBillingProfileUpdateInfoSchema,
+  ): Promise<RawApiTypes.PerSitePricingBillingProfileUpdateInfoTargetSchema> {
+    return this.client.request<RawApiTypes.PerSitePricingBillingProfileUpdateInfoTargetSchema>(
       {
         method: 'PUT',
         url: `/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/info`,
@@ -181,11 +181,11 @@ export default class PerSitePricingBillingProfile extends BaseResource {
   destroy(
     perSitePricingBillingProfileId:
       | string
-      | SimpleSchemaTypes.PerSitePricingBillingProfileData,
+      | ApiTypes.PerSitePricingBillingProfileData,
   ) {
     return this.rawDestroy(Utils.toId(perSitePricingBillingProfileId)).then(
       (body) =>
-        Utils.deserializeResponseBody<SimpleSchemaTypes.PerSitePricingBillingProfileDestroyTargetSchema>(
+        Utils.deserializeResponseBody<ApiTypes.PerSitePricingBillingProfileDestroyTargetSchema>(
           body,
         ),
     );
@@ -199,8 +199,8 @@ export default class PerSitePricingBillingProfile extends BaseResource {
    */
   rawDestroy(
     perSitePricingBillingProfileId: string,
-  ): Promise<SchemaTypes.PerSitePricingBillingProfileDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.PerSitePricingBillingProfileDestroyTargetSchema>(
+  ): Promise<RawApiTypes.PerSitePricingBillingProfileDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.PerSitePricingBillingProfileDestroyTargetSchema>(
       {
         method: 'DELETE',
         url: `/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}`,

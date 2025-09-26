@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class Plugin extends BaseResource {
   static readonly TYPE = 'plugin' as const;
@@ -14,9 +14,9 @@ export default class Plugin extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.PluginCreateSchema) {
+  create(body: ApiTypes.PluginCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.PluginCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.PluginCreateSchema>(body, {
         type: 'plugin',
         attributes: [
           'package_name',
@@ -32,9 +32,7 @@ export default class Plugin extends BaseResource {
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PluginCreateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.PluginCreateTargetSchema>(body),
     );
   }
 
@@ -47,9 +45,9 @@ export default class Plugin extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.PluginCreateSchema,
-  ): Promise<SchemaTypes.PluginCreateTargetSchema> {
-    return this.client.request<SchemaTypes.PluginCreateTargetSchema>({
+    body: RawApiTypes.PluginCreateSchema,
+  ): Promise<RawApiTypes.PluginCreateTargetSchema> {
+    return this.client.request<RawApiTypes.PluginCreateTargetSchema>({
       method: 'POST',
       url: '/plugins',
       body,
@@ -65,12 +63,12 @@ export default class Plugin extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    pluginId: string | SimpleSchemaTypes.PluginData,
-    body: SimpleSchemaTypes.PluginUpdateSchema,
+    pluginId: string | ApiTypes.PluginData,
+    body: ApiTypes.PluginUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(pluginId),
-      Utils.serializeRequestBody<SchemaTypes.PluginUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.PluginUpdateSchema>(body, {
         id: Utils.toId(pluginId),
         type: 'plugin',
         attributes: [
@@ -84,9 +82,7 @@ export default class Plugin extends BaseResource {
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PluginUpdateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.PluginUpdateTargetSchema>(body),
     );
   }
 
@@ -100,9 +96,9 @@ export default class Plugin extends BaseResource {
    */
   rawUpdate(
     pluginId: string,
-    body: SchemaTypes.PluginUpdateSchema,
-  ): Promise<SchemaTypes.PluginUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.PluginUpdateTargetSchema>({
+    body: RawApiTypes.PluginUpdateSchema,
+  ): Promise<RawApiTypes.PluginUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.PluginUpdateTargetSchema>({
       method: 'PUT',
       url: `/plugins/${pluginId}`,
       body,
@@ -119,9 +115,7 @@ export default class Plugin extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PluginInstancesTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.PluginInstancesTargetSchema>(body),
     );
   }
 
@@ -133,8 +127,8 @@ export default class Plugin extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.PluginInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.PluginInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.PluginInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.PluginInstancesTargetSchema>({
       method: 'GET',
       url: '/plugins',
     });
@@ -148,11 +142,9 @@ export default class Plugin extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(pluginId: string | SimpleSchemaTypes.PluginData) {
+  find(pluginId: string | ApiTypes.PluginData) {
     return this.rawFind(Utils.toId(pluginId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PluginSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.PluginSelfTargetSchema>(body),
     );
   }
 
@@ -164,8 +156,8 @@ export default class Plugin extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(pluginId: string): Promise<SchemaTypes.PluginSelfTargetSchema> {
-    return this.client.request<SchemaTypes.PluginSelfTargetSchema>({
+  rawFind(pluginId: string): Promise<RawApiTypes.PluginSelfTargetSchema> {
+    return this.client.request<RawApiTypes.PluginSelfTargetSchema>({
       method: 'GET',
       url: `/plugins/${pluginId}`,
     });
@@ -179,11 +171,9 @@ export default class Plugin extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(pluginId: string | SimpleSchemaTypes.PluginData) {
+  destroy(pluginId: string | ApiTypes.PluginData) {
     return this.rawDestroy(Utils.toId(pluginId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PluginDestroyTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.PluginDestroyTargetSchema>(body),
     );
   }
 
@@ -195,8 +185,8 @@ export default class Plugin extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawDestroy(pluginId: string): Promise<SchemaTypes.PluginDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.PluginDestroyTargetSchema>({
+  rawDestroy(pluginId: string): Promise<RawApiTypes.PluginDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.PluginDestroyTargetSchema>({
       method: 'DELETE',
       url: `/plugins/${pluginId}`,
     });
@@ -210,11 +200,9 @@ export default class Plugin extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  fields(pluginId: string | SimpleSchemaTypes.PluginData) {
+  fields(pluginId: string | ApiTypes.PluginData) {
     return this.rawFields(Utils.toId(pluginId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.PluginFieldsTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.PluginFieldsTargetSchema>(body),
     );
   }
 
@@ -226,8 +214,8 @@ export default class Plugin extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFields(pluginId: string): Promise<SchemaTypes.PluginFieldsTargetSchema> {
-    return this.client.request<SchemaTypes.PluginFieldsTargetSchema>({
+  rawFields(pluginId: string): Promise<RawApiTypes.PluginFieldsTargetSchema> {
+    return this.client.request<RawApiTypes.PluginFieldsTargetSchema>({
       method: 'GET',
       url: `/plugins/${pluginId}/fields`,
     });

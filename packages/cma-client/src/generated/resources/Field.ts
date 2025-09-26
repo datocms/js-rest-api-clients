@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class Field extends BaseResource {
   static readonly TYPE = 'field' as const;
@@ -15,12 +15,12 @@ export default class Field extends BaseResource {
    * @throws {TimeoutError}
    */
   create(
-    itemTypeId: string | SimpleSchemaTypes.ItemTypeData,
-    body: SimpleSchemaTypes.FieldCreateSchema,
+    itemTypeId: string | ApiTypes.ItemTypeData,
+    body: ApiTypes.FieldCreateSchema,
   ) {
     return this.rawCreate(
       Utils.toId(itemTypeId),
-      Utils.serializeRequestBody<SchemaTypes.FieldCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.FieldCreateSchema>(body, {
         type: 'field',
         attributes: [
           'label',
@@ -38,9 +38,7 @@ export default class Field extends BaseResource {
         relationships: ['fieldset'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.FieldCreateJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.FieldCreateJobSchema>(body),
     );
   }
 
@@ -54,9 +52,9 @@ export default class Field extends BaseResource {
    */
   rawCreate(
     itemTypeId: string,
-    body: SchemaTypes.FieldCreateSchema,
-  ): Promise<SchemaTypes.FieldCreateJobSchema> {
-    return this.client.request<SchemaTypes.FieldCreateJobSchema>({
+    body: RawApiTypes.FieldCreateSchema,
+  ): Promise<RawApiTypes.FieldCreateJobSchema> {
+    return this.client.request<RawApiTypes.FieldCreateJobSchema>({
       method: 'POST',
       url: `/item-types/${itemTypeId}/fields`,
       body,
@@ -72,12 +70,12 @@ export default class Field extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    fieldId: string | SimpleSchemaTypes.FieldData,
-    body: SimpleSchemaTypes.FieldUpdateSchema,
+    fieldId: string | ApiTypes.FieldData,
+    body: ApiTypes.FieldUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(fieldId),
-      Utils.serializeRequestBody<SchemaTypes.FieldUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.FieldUpdateSchema>(body, {
         id: Utils.toId(fieldId),
         type: 'field',
         attributes: [
@@ -96,9 +94,7 @@ export default class Field extends BaseResource {
         relationships: ['fieldset'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.FieldUpdateJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.FieldUpdateJobSchema>(body),
     );
   }
 
@@ -112,9 +108,9 @@ export default class Field extends BaseResource {
    */
   rawUpdate(
     fieldId: string,
-    body: SchemaTypes.FieldUpdateSchema,
-  ): Promise<SchemaTypes.FieldUpdateJobSchema> {
-    return this.client.request<SchemaTypes.FieldUpdateJobSchema>({
+    body: RawApiTypes.FieldUpdateSchema,
+  ): Promise<RawApiTypes.FieldUpdateJobSchema> {
+    return this.client.request<RawApiTypes.FieldUpdateJobSchema>({
       method: 'PUT',
       url: `/fields/${fieldId}`,
       body,
@@ -122,31 +118,29 @@ export default class Field extends BaseResource {
   }
 
   /**
-   * List all fields
+   * List all fields of a model/block
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/instances
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
+  list(itemTypeId: string | ApiTypes.ItemTypeData) {
     return this.rawList(Utils.toId(itemTypeId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.FieldInstancesTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.FieldInstancesTargetSchema>(body),
     );
   }
 
   /**
-   * List all fields
+   * List all fields of a model/block
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/instances
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(itemTypeId: string): Promise<SchemaTypes.FieldInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.FieldInstancesTargetSchema>({
+  rawList(itemTypeId: string): Promise<RawApiTypes.FieldInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.FieldInstancesTargetSchema>({
       method: 'GET',
       url: `/item-types/${itemTypeId}/fields`,
     });
@@ -162,9 +156,9 @@ export default class Field extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  referencing(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
+  referencing(itemTypeId: string | ApiTypes.ItemTypeData) {
     return this.rawReferencing(Utils.toId(itemTypeId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.FieldReferencingTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.FieldReferencingTargetSchema>(
         body,
       ),
     );
@@ -182,8 +176,8 @@ export default class Field extends BaseResource {
    */
   rawReferencing(
     itemTypeId: string,
-  ): Promise<SchemaTypes.FieldReferencingTargetSchema> {
-    return this.client.request<SchemaTypes.FieldReferencingTargetSchema>({
+  ): Promise<RawApiTypes.FieldReferencingTargetSchema> {
+    return this.client.request<RawApiTypes.FieldReferencingTargetSchema>({
       method: 'GET',
       url: `/item-types/${itemTypeId}/fields/referencing`,
     });
@@ -199,11 +193,9 @@ export default class Field extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  related(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
+  related(itemTypeId: string | ApiTypes.ItemTypeData) {
     return this.rawRelated(Utils.toId(itemTypeId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.FieldRelatedTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.FieldRelatedTargetSchema>(body),
     );
   }
 
@@ -219,8 +211,8 @@ export default class Field extends BaseResource {
    */
   rawRelated(
     itemTypeId: string,
-  ): Promise<SchemaTypes.FieldRelatedTargetSchema> {
-    return this.client.request<SchemaTypes.FieldRelatedTargetSchema>({
+  ): Promise<RawApiTypes.FieldRelatedTargetSchema> {
+    return this.client.request<RawApiTypes.FieldRelatedTargetSchema>({
       method: 'GET',
       url: `/item-types/${itemTypeId}/fields/related`,
     });
@@ -234,11 +226,9 @@ export default class Field extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(fieldId: string | SimpleSchemaTypes.FieldData) {
+  find(fieldId: string | ApiTypes.FieldData) {
     return this.rawFind(Utils.toId(fieldId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.FieldSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.FieldSelfTargetSchema>(body),
     );
   }
 
@@ -250,8 +240,8 @@ export default class Field extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(fieldId: string): Promise<SchemaTypes.FieldSelfTargetSchema> {
-    return this.client.request<SchemaTypes.FieldSelfTargetSchema>({
+  rawFind(fieldId: string): Promise<RawApiTypes.FieldSelfTargetSchema> {
+    return this.client.request<RawApiTypes.FieldSelfTargetSchema>({
       method: 'GET',
       url: `/fields/${fieldId}`,
     });
@@ -265,11 +255,9 @@ export default class Field extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(fieldId: string | SimpleSchemaTypes.FieldData) {
+  destroy(fieldId: string | ApiTypes.FieldData) {
     return this.rawDestroy(Utils.toId(fieldId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.FieldDestroyJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.FieldDestroyJobSchema>(body),
     );
   }
 
@@ -281,8 +269,8 @@ export default class Field extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawDestroy(fieldId: string): Promise<SchemaTypes.FieldDestroyJobSchema> {
-    return this.client.request<SchemaTypes.FieldDestroyJobSchema>({
+  rawDestroy(fieldId: string): Promise<RawApiTypes.FieldDestroyJobSchema> {
+    return this.client.request<RawApiTypes.FieldDestroyJobSchema>({
       method: 'DELETE',
       url: `/fields/${fieldId}`,
     });
@@ -296,11 +284,9 @@ export default class Field extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  duplicate(fieldId: string | SimpleSchemaTypes.FieldData) {
+  duplicate(fieldId: string | ApiTypes.FieldData) {
     return this.rawDuplicate(Utils.toId(fieldId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.FieldDuplicateJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.FieldDuplicateJobSchema>(body),
     );
   }
 
@@ -312,8 +298,8 @@ export default class Field extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawDuplicate(fieldId: string): Promise<SchemaTypes.FieldDuplicateJobSchema> {
-    return this.client.request<SchemaTypes.FieldDuplicateJobSchema>({
+  rawDuplicate(fieldId: string): Promise<RawApiTypes.FieldDuplicateJobSchema> {
+    return this.client.request<RawApiTypes.FieldDuplicateJobSchema>({
       method: 'POST',
       url: `/fields/${fieldId}/duplicate`,
     });

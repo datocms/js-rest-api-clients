@@ -1,7 +1,10 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type { ItemTypeDefinition } from '../../utilities/itemDefinition';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
+
+type NoInfer<T> = [T][T extends any ? 0 : never];
 
 export default class Item extends BaseResource {
   static readonly TYPE = 'item' as const;
@@ -14,11 +17,27 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(queryParams?: SimpleSchemaTypes.ItemInstancesHrefSchema) {
-    return this.rawList(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemInstancesTargetSchema>(
-        body,
-      ),
+  list<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams: ApiTypes.ItemInstancesHrefSchema & { nested: true },
+  ): Promise<ApiTypes.ItemInstancesTargetSchema<NoInfer<D>, true>>;
+  list<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams?: ApiTypes.ItemInstancesHrefSchema & {
+      nested?: false | undefined;
+    },
+  ): Promise<ApiTypes.ItemInstancesTargetSchema<NoInfer<D>, false>>;
+  /**
+   * List all records
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  list<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams?: ApiTypes.ItemInstancesHrefSchema,
+  ) {
+    return this.rawList<D>(queryParams).then((body) =>
+      Utils.deserializeResponseBody(body),
     );
   }
 
@@ -30,14 +49,37 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(
-    queryParams?: SchemaTypes.ItemInstancesHrefSchema,
-  ): Promise<SchemaTypes.ItemInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.ItemInstancesTargetSchema>({
-      method: 'GET',
-      url: '/items',
-      queryParams,
-    });
+  rawList<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams: RawApiTypes.ItemInstancesHrefSchema & { nested: true },
+  ): Promise<RawApiTypes.ItemInstancesTargetSchema<NoInfer<D>, true>>;
+  rawList<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams?: RawApiTypes.ItemInstancesHrefSchema & {
+      nested?: false | undefined;
+    },
+  ): Promise<RawApiTypes.ItemInstancesTargetSchema<NoInfer<D>, false>>;
+  rawList<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams?: RawApiTypes.ItemInstancesHrefSchema,
+  ): Promise<RawApiTypes.ItemInstancesTargetSchema<NoInfer<D>, true>>;
+  /**
+   * List all records
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item/instances
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawList<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams?: RawApiTypes.ItemInstancesHrefSchema,
+  ) {
+    return this.client
+      .request({
+        method: 'GET',
+        url: '/items',
+        queryParams,
+      })
+      .then<RawApiTypes.ItemInstancesTargetSchema<NoInfer<D>, true>>(
+        Utils.deserializeRawResponseBodyWithItems,
+      );
   }
 
   /**
@@ -48,19 +90,19 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  async *listPagedIterator(
+  async *listPagedIterator<D extends ItemTypeDefinition = ItemTypeDefinition>(
     queryParams?: Utils.OmitFromKnownKeys<
-      SimpleSchemaTypes.ItemInstancesHrefSchema,
+      ApiTypes.ItemInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
   ) {
-    for await (const element of this.rawListPagedIterator(
+    for await (const element of this.rawListPagedIterator<NoInfer<D>>(
       queryParams,
       iteratorOptions,
     )) {
       yield Utils.deserializeJsonEntity<
-        SimpleSchemaTypes.ItemInstancesTargetSchema[0]
+        ApiTypes.ItemInstancesTargetSchema<NoInfer<D>, true>[0]
       >(element);
     }
   }
@@ -73,9 +115,9 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawListPagedIterator(
+  rawListPagedIterator<D extends ItemTypeDefinition = ItemTypeDefinition>(
     queryParams?: Utils.OmitFromKnownKeys<
-      SchemaTypes.ItemInstancesHrefSchema,
+      RawApiTypes.ItemInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -83,15 +125,16 @@ export default class Item extends BaseResource {
     Utils.warnOnPageQueryParam(queryParams);
 
     return Utils.rawPageIterator<
-      SchemaTypes.ItemInstancesTargetSchema['data'][0]
+      RawApiTypes.ItemInstancesTargetSchema<NoInfer<D>, true>['data'][0]
     >(
       {
         defaultLimit: 30,
         maxLimit: 500,
       },
-      (page: SchemaTypes.ItemInstancesHrefSchema['page']) =>
-        this.rawList({ ...queryParams, page }),
+      (page: RawApiTypes.ItemInstancesHrefSchema['page']) =>
+        this.rawList<D>({ ...queryParams, page }),
       iteratorOptions,
+      true,
     );
   }
 
@@ -105,13 +148,15 @@ export default class Item extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  validateExisting(
-    itemId: string | SimpleSchemaTypes.ItemData,
-    body: SimpleSchemaTypes.ItemValidateExistingSchema,
+  validateExisting<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+    body: ApiTypes.ItemValidateExistingSchema<NoInfer<D>>,
   ) {
     return this.rawValidateExisting(
       Utils.toId(itemId),
-      Utils.serializeRequestBody<SchemaTypes.ItemValidateExistingSchema>(body, {
+      Utils.serializeRequestBody<
+        RawApiTypes.ItemValidateExistingSchema<NoInfer<D>>
+      >(body, {
         id: Utils.toId(itemId),
         type: 'item',
         attributes: '*',
@@ -130,14 +175,14 @@ export default class Item extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  rawValidateExisting(
+  rawValidateExisting<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string,
-    body: SchemaTypes.ItemValidateExistingSchema,
+    body: RawApiTypes.ItemValidateExistingSchema<NoInfer<D>>,
   ): Promise<void> {
     return this.client.request<void>({
       method: 'POST',
       url: `/items/${itemId}/validate`,
-      body,
+      body: Utils.serializeRawRequestBodyWithItems(body),
     });
   }
 
@@ -151,13 +196,18 @@ export default class Item extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  validateNew(body: SimpleSchemaTypes.ItemValidateNewSchema) {
+  validateNew<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    body: ApiTypes.ItemValidateNewSchema<NoInfer<D>>,
+  ) {
     return this.rawValidateNew(
-      Utils.serializeRequestBody<SchemaTypes.ItemValidateNewSchema>(body, {
-        type: 'item',
-        attributes: '*',
-        relationships: ['item_type', 'creator'],
-      }),
+      Utils.serializeRequestBody<RawApiTypes.ItemValidateNewSchema<NoInfer<D>>>(
+        body,
+        {
+          type: 'item',
+          attributes: '*',
+          relationships: ['item_type', 'creator'],
+        },
+      ),
     );
   }
 
@@ -171,11 +221,13 @@ export default class Item extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  rawValidateNew(body: SchemaTypes.ItemValidateNewSchema): Promise<void> {
+  rawValidateNew<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    body: RawApiTypes.ItemValidateNewSchema<NoInfer<D>>,
+  ): Promise<void> {
     return this.client.request<void>({
       method: 'POST',
       url: '/items/validate',
-      body,
+      body: Utils.serializeRawRequestBodyWithItems(body),
     });
   }
 
@@ -187,17 +239,22 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.ItemCreateSchema) {
-    return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.ItemCreateSchema>(body, {
-        type: 'item',
-        attributes: '*',
-        relationships: ['item_type', 'creator'],
-      }),
+  create<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    body: ApiTypes.ItemCreateSchema<NoInfer<D>>,
+  ) {
+    return this.rawCreate<D>(
+      Utils.serializeRequestBody<RawApiTypes.ItemCreateSchema<NoInfer<D>>>(
+        body,
+        {
+          type: 'item',
+          attributes: '*',
+          relationships: ['item_type', 'creator'],
+        },
+      ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemCreateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<
+        ApiTypes.ItemCreateTargetSchema<NoInfer<D>>
+      >(body),
     );
   }
 
@@ -209,14 +266,18 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawCreate(
-    body: SchemaTypes.ItemCreateSchema,
-  ): Promise<SchemaTypes.ItemCreateTargetSchema> {
-    return this.client.request<SchemaTypes.ItemCreateTargetSchema>({
-      method: 'POST',
-      url: '/items',
-      body,
-    });
+  rawCreate<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    body: RawApiTypes.ItemCreateSchema<NoInfer<D>>,
+  ): Promise<RawApiTypes.ItemCreateTargetSchema<NoInfer<D>, true>> {
+    return this.client
+      .request({
+        method: 'POST',
+        url: '/items',
+        body: Utils.serializeRawRequestBodyWithItems(body),
+      })
+      .then<RawApiTypes.ItemCreateTargetSchema<NoInfer<D>, true>>(
+        Utils.deserializeRawResponseBodyWithItems,
+      );
   }
 
   /**
@@ -227,11 +288,13 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  duplicate(itemId: string | SimpleSchemaTypes.ItemData) {
-    return this.rawDuplicate(Utils.toId(itemId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemDuplicateJobSchema>(
-        body,
-      ),
+  duplicate<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+  ) {
+    return this.rawDuplicate<D>(Utils.toId(itemId)).then((body) =>
+      Utils.deserializeResponseBody<
+        ApiTypes.ItemDuplicateJobSchema<NoInfer<D>>
+      >(body),
     );
   }
 
@@ -243,11 +306,17 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawDuplicate(itemId: string): Promise<SchemaTypes.ItemDuplicateJobSchema> {
-    return this.client.request<SchemaTypes.ItemDuplicateJobSchema>({
-      method: 'POST',
-      url: `/items/${itemId}/duplicate`,
-    });
+  rawDuplicate<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
+  ): Promise<RawApiTypes.ItemDuplicateJobSchema<NoInfer<D>, true>> {
+    return this.client
+      .request({
+        method: 'POST',
+        url: `/items/${itemId}/duplicate`,
+      })
+      .then<RawApiTypes.ItemDuplicateJobSchema<NoInfer<D>, true>>(
+        Utils.deserializeRawResponseBodyWithItems,
+      );
   }
 
   /**
@@ -258,22 +327,25 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  update(
-    itemId: string | SimpleSchemaTypes.ItemData,
-    body: SimpleSchemaTypes.ItemUpdateSchema,
+  update<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+    body: ApiTypes.ItemUpdateSchema<NoInfer<D>>,
   ) {
-    return this.rawUpdate(
+    return this.rawUpdate<D>(
       Utils.toId(itemId),
-      Utils.serializeRequestBody<SchemaTypes.ItemUpdateSchema>(body, {
-        id: Utils.toId(itemId),
-        type: 'item',
-        attributes: '*',
-        relationships: ['item_type', 'creator'],
-      }),
-    ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemUpdateTargetSchema>(
+      Utils.serializeRequestBody<RawApiTypes.ItemUpdateSchema<NoInfer<D>>>(
         body,
+        {
+          id: Utils.toId(itemId),
+          type: 'item',
+          attributes: '*',
+          relationships: ['item_type', 'creator'],
+        },
       ),
+    ).then((body) =>
+      Utils.deserializeResponseBody<
+        ApiTypes.ItemUpdateTargetSchema<NoInfer<D>>
+      >(body),
     );
   }
 
@@ -285,15 +357,19 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawUpdate(
+  rawUpdate<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string,
-    body: SchemaTypes.ItemUpdateSchema,
-  ): Promise<SchemaTypes.ItemUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.ItemUpdateTargetSchema>({
-      method: 'PUT',
-      url: `/items/${itemId}`,
-      body,
-    });
+    body: RawApiTypes.ItemUpdateSchema<NoInfer<D>>,
+  ): Promise<RawApiTypes.ItemUpdateTargetSchema<NoInfer<D>, true>> {
+    return this.client
+      .request({
+        method: 'PUT',
+        url: `/items/${itemId}`,
+        body: Utils.serializeRawRequestBodyWithItems(body),
+      })
+      .then<RawApiTypes.ItemUpdateTargetSchema<NoInfer<D>, true>>(
+        Utils.deserializeRawResponseBodyWithItems,
+      );
   }
 
   /**
@@ -304,14 +380,30 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  references(
-    itemId: string | SimpleSchemaTypes.ItemData,
-    queryParams?: SimpleSchemaTypes.ItemReferencesHrefSchema,
+  references<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+    queryParams: ApiTypes.ItemReferencesHrefSchema & { nested: true },
+  ): Promise<ApiTypes.ItemReferencesTargetSchema<NoInfer<D>, true>>;
+  references<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+    queryParams?: ApiTypes.ItemReferencesHrefSchema & {
+      nested?: false | undefined;
+    },
+  ): Promise<ApiTypes.ItemReferencesTargetSchema<NoInfer<D>, false>>;
+  /**
+   * Referenced records
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item/references
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  references<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+    queryParams?: ApiTypes.ItemReferencesHrefSchema,
   ) {
-    return this.rawReferences(Utils.toId(itemId), queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemReferencesTargetSchema>(
-        body,
-      ),
+    return this.rawReferences<D>(Utils.toId(itemId), queryParams).then((body) =>
+      Utils.deserializeResponseBody(body),
     );
   }
 
@@ -323,15 +415,41 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawReferences(
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string,
-    queryParams?: SchemaTypes.ItemReferencesHrefSchema,
-  ): Promise<SchemaTypes.ItemReferencesTargetSchema> {
-    return this.client.request<SchemaTypes.ItemReferencesTargetSchema>({
-      method: 'GET',
-      url: `/items/${itemId}/references`,
-      queryParams,
-    });
+    queryParams: RawApiTypes.ItemReferencesHrefSchema & { nested: true },
+  ): Promise<RawApiTypes.ItemReferencesTargetSchema<NoInfer<D>, true>>;
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
+    queryParams?: RawApiTypes.ItemReferencesHrefSchema & {
+      nested?: false | undefined;
+    },
+  ): Promise<RawApiTypes.ItemReferencesTargetSchema<NoInfer<D>, false>>;
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
+    queryParams?: RawApiTypes.ItemReferencesHrefSchema,
+  ): Promise<RawApiTypes.ItemReferencesTargetSchema<NoInfer<D>, true>>;
+  /**
+   * Referenced records
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item/references
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
+    queryParams?: RawApiTypes.ItemReferencesHrefSchema,
+  ) {
+    return this.client
+      .request({
+        method: 'GET',
+        url: `/items/${itemId}/references`,
+        queryParams,
+      })
+      .then<RawApiTypes.ItemReferencesTargetSchema<NoInfer<D>, true>>(
+        Utils.deserializeRawResponseBodyWithItems,
+      );
   }
 
   /**
@@ -342,14 +460,28 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(
-    itemId: string | SimpleSchemaTypes.ItemData,
-    queryParams?: SimpleSchemaTypes.ItemSelfHrefSchema,
+  find<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+    queryParams: ApiTypes.ItemSelfHrefSchema & { nested: true },
+  ): Promise<ApiTypes.ItemSelfTargetSchema<NoInfer<D>, true>>;
+  find<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+    queryParams?: ApiTypes.ItemSelfHrefSchema & { nested?: false | undefined },
+  ): Promise<ApiTypes.ItemSelfTargetSchema<NoInfer<D>, false>>;
+  /**
+   * Retrieve a record
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  find<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+    queryParams?: ApiTypes.ItemSelfHrefSchema,
   ) {
-    return this.rawFind(Utils.toId(itemId), queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemSelfTargetSchema>(
-        body,
-      ),
+    return this.rawFind<D>(Utils.toId(itemId), queryParams).then((body) =>
+      Utils.deserializeResponseBody(body),
     );
   }
 
@@ -361,15 +493,41 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(
+  rawFind<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string,
-    queryParams?: SchemaTypes.ItemSelfHrefSchema,
-  ): Promise<SchemaTypes.ItemSelfTargetSchema> {
-    return this.client.request<SchemaTypes.ItemSelfTargetSchema>({
-      method: 'GET',
-      url: `/items/${itemId}`,
-      queryParams,
-    });
+    queryParams: RawApiTypes.ItemSelfHrefSchema & { nested: true },
+  ): Promise<RawApiTypes.ItemSelfTargetSchema<NoInfer<D>, true>>;
+  rawFind<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
+    queryParams?: RawApiTypes.ItemSelfHrefSchema & {
+      nested?: false | undefined;
+    },
+  ): Promise<RawApiTypes.ItemSelfTargetSchema<NoInfer<D>, false>>;
+  rawFind<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
+    queryParams?: RawApiTypes.ItemSelfHrefSchema,
+  ): Promise<RawApiTypes.ItemSelfTargetSchema<NoInfer<D>, true>>;
+  /**
+   * Retrieve a record
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item/self
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawFind<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
+    queryParams?: RawApiTypes.ItemSelfHrefSchema,
+  ) {
+    return this.client
+      .request({
+        method: 'GET',
+        url: `/items/${itemId}`,
+        queryParams,
+      })
+      .then<RawApiTypes.ItemSelfTargetSchema<NoInfer<D>, true>>(
+        Utils.deserializeRawResponseBodyWithItems,
+      );
   }
 
   /**
@@ -382,9 +540,9 @@ export default class Item extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  currentVsPublishedState(itemId: string | SimpleSchemaTypes.ItemData) {
+  currentVsPublishedState(itemId: string | ApiTypes.ItemData) {
     return this.rawCurrentVsPublishedState(Utils.toId(itemId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemCurrentVsPublishedStateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ItemCurrentVsPublishedStateTargetSchema>(
         body,
       ),
     );
@@ -402,8 +560,8 @@ export default class Item extends BaseResource {
    */
   rawCurrentVsPublishedState(
     itemId: string,
-  ): Promise<SchemaTypes.ItemCurrentVsPublishedStateTargetSchema> {
-    return this.client.request<SchemaTypes.ItemCurrentVsPublishedStateTargetSchema>(
+  ): Promise<RawApiTypes.ItemCurrentVsPublishedStateTargetSchema> {
+    return this.client.request<RawApiTypes.ItemCurrentVsPublishedStateTargetSchema>(
       {
         method: 'GET',
         url: `/items/${itemId}/current-vs-published-state`,
@@ -419,9 +577,11 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(itemId: string | SimpleSchemaTypes.ItemData) {
-    return this.rawDestroy(Utils.toId(itemId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemDestroyJobSchema>(
+  destroy<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+  ) {
+    return this.rawDestroy<D>(Utils.toId(itemId)).then((body) =>
+      Utils.deserializeResponseBody<ApiTypes.ItemDestroyJobSchema<NoInfer<D>>>(
         body,
       ),
     );
@@ -435,11 +595,17 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawDestroy(itemId: string): Promise<SchemaTypes.ItemDestroyJobSchema> {
-    return this.client.request<SchemaTypes.ItemDestroyJobSchema>({
-      method: 'DELETE',
-      url: `/items/${itemId}`,
-    });
+  rawDestroy<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string,
+  ): Promise<RawApiTypes.ItemDestroyJobSchema<NoInfer<D>, true>> {
+    return this.client
+      .request({
+        method: 'DELETE',
+        url: `/items/${itemId}`,
+      })
+      .then<RawApiTypes.ItemDestroyJobSchema<NoInfer<D>, true>>(
+        Utils.deserializeRawResponseBodyWithItems,
+      );
   }
 
   /**
@@ -450,15 +616,15 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  publish(
-    itemId: string | SimpleSchemaTypes.ItemData,
-    body?: SimpleSchemaTypes.ItemPublishSchema,
-    queryParams?: SimpleSchemaTypes.ItemPublishHrefSchema,
+  publish<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+    body?: ApiTypes.ItemPublishSchema,
+    queryParams?: ApiTypes.ItemPublishHrefSchema,
   ) {
-    return this.rawPublish(
+    return this.rawPublish<D>(
       Utils.toId(itemId),
       body
-        ? Utils.serializeRequestBody<SchemaTypes.ItemPublishSchema>(body, {
+        ? Utils.serializeRequestBody<RawApiTypes.ItemPublishSchema>(body, {
             type: 'selective_publish_operation',
             attributes: ['content_in_locales', 'non_localized_content'],
             relationships: [],
@@ -466,9 +632,9 @@ export default class Item extends BaseResource {
         : null,
       queryParams,
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemPublishTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<
+        ApiTypes.ItemPublishTargetSchema<NoInfer<D>>
+      >(body),
     );
   }
 
@@ -480,17 +646,21 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawPublish(
+  rawPublish<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string,
-    body?: SchemaTypes.ItemPublishSchema,
-    queryParams?: SchemaTypes.ItemPublishHrefSchema,
-  ): Promise<SchemaTypes.ItemPublishTargetSchema> {
-    return this.client.request<SchemaTypes.ItemPublishTargetSchema>({
-      method: 'PUT',
-      url: `/items/${itemId}/publish`,
-      body,
-      queryParams,
-    });
+    body?: RawApiTypes.ItemPublishSchema,
+    queryParams?: RawApiTypes.ItemPublishHrefSchema,
+  ): Promise<RawApiTypes.ItemPublishTargetSchema<NoInfer<D>, true>> {
+    return this.client
+      .request({
+        method: 'PUT',
+        url: `/items/${itemId}/publish`,
+        body,
+        queryParams,
+      })
+      .then<RawApiTypes.ItemPublishTargetSchema<NoInfer<D>, true>>(
+        Utils.deserializeRawResponseBodyWithItems,
+      );
   }
 
   /**
@@ -501,15 +671,15 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  unpublish(
-    itemId: string | SimpleSchemaTypes.ItemData,
-    body?: SimpleSchemaTypes.ItemUnpublishSchema,
-    queryParams?: SimpleSchemaTypes.ItemUnpublishHrefSchema,
+  unpublish<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    itemId: string | ApiTypes.ItemData,
+    body?: ApiTypes.ItemUnpublishSchema,
+    queryParams?: ApiTypes.ItemUnpublishHrefSchema,
   ) {
-    return this.rawUnpublish(
+    return this.rawUnpublish<D>(
       Utils.toId(itemId),
       body
-        ? Utils.serializeRequestBody<SchemaTypes.ItemUnpublishSchema>(body, {
+        ? Utils.serializeRequestBody<RawApiTypes.ItemUnpublishSchema>(body, {
             type: 'selective_unpublish_operation',
             attributes: ['content_in_locales'],
             relationships: [],
@@ -517,9 +687,9 @@ export default class Item extends BaseResource {
         : null,
       queryParams,
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemUnpublishTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<
+        ApiTypes.ItemUnpublishTargetSchema<NoInfer<D>>
+      >(body),
     );
   }
 
@@ -531,17 +701,21 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawUnpublish(
+  rawUnpublish<D extends ItemTypeDefinition = ItemTypeDefinition>(
     itemId: string,
-    body?: SchemaTypes.ItemUnpublishSchema,
-    queryParams?: SchemaTypes.ItemUnpublishHrefSchema,
-  ): Promise<SchemaTypes.ItemUnpublishTargetSchema> {
-    return this.client.request<SchemaTypes.ItemUnpublishTargetSchema>({
-      method: 'PUT',
-      url: `/items/${itemId}/unpublish`,
-      body,
-      queryParams,
-    });
+    body?: RawApiTypes.ItemUnpublishSchema,
+    queryParams?: RawApiTypes.ItemUnpublishHrefSchema,
+  ): Promise<RawApiTypes.ItemUnpublishTargetSchema<NoInfer<D>, true>> {
+    return this.client
+      .request({
+        method: 'PUT',
+        url: `/items/${itemId}/unpublish`,
+        body,
+        queryParams,
+      })
+      .then<RawApiTypes.ItemUnpublishTargetSchema<NoInfer<D>, true>>(
+        Utils.deserializeRawResponseBodyWithItems,
+      );
   }
 
   /**
@@ -552,17 +726,15 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  bulkPublish(body: SimpleSchemaTypes.ItemBulkPublishSchema) {
+  bulkPublish(body: ApiTypes.ItemBulkPublishSchema) {
     return this.rawBulkPublish(
-      Utils.serializeRequestBody<SchemaTypes.ItemBulkPublishSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.ItemBulkPublishSchema>(body, {
         type: 'item_bulk_publish_operation',
         attributes: [],
         relationships: ['items'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemBulkPublishJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.ItemBulkPublishJobSchema>(body),
     );
   }
 
@@ -575,9 +747,9 @@ export default class Item extends BaseResource {
    * @throws {TimeoutError}
    */
   rawBulkPublish(
-    body: SchemaTypes.ItemBulkPublishSchema,
-  ): Promise<SchemaTypes.ItemBulkPublishJobSchema> {
-    return this.client.request<SchemaTypes.ItemBulkPublishJobSchema>({
+    body: RawApiTypes.ItemBulkPublishSchema,
+  ): Promise<RawApiTypes.ItemBulkPublishJobSchema> {
+    return this.client.request<RawApiTypes.ItemBulkPublishJobSchema>({
       method: 'POST',
       url: '/items/bulk/publish',
       body,
@@ -592,17 +764,15 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  bulkUnpublish(body: SimpleSchemaTypes.ItemBulkUnpublishSchema) {
+  bulkUnpublish(body: ApiTypes.ItemBulkUnpublishSchema) {
     return this.rawBulkUnpublish(
-      Utils.serializeRequestBody<SchemaTypes.ItemBulkUnpublishSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.ItemBulkUnpublishSchema>(body, {
         type: 'item_bulk_unpublish_operation',
         attributes: [],
         relationships: ['items'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemBulkUnpublishJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.ItemBulkUnpublishJobSchema>(body),
     );
   }
 
@@ -615,9 +785,9 @@ export default class Item extends BaseResource {
    * @throws {TimeoutError}
    */
   rawBulkUnpublish(
-    body: SchemaTypes.ItemBulkUnpublishSchema,
-  ): Promise<SchemaTypes.ItemBulkUnpublishJobSchema> {
-    return this.client.request<SchemaTypes.ItemBulkUnpublishJobSchema>({
+    body: RawApiTypes.ItemBulkUnpublishSchema,
+  ): Promise<RawApiTypes.ItemBulkUnpublishJobSchema> {
+    return this.client.request<RawApiTypes.ItemBulkUnpublishJobSchema>({
       method: 'POST',
       url: '/items/bulk/unpublish',
       body,
@@ -632,17 +802,15 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  bulkDestroy(body: SimpleSchemaTypes.ItemBulkDestroySchema) {
+  bulkDestroy(body: ApiTypes.ItemBulkDestroySchema) {
     return this.rawBulkDestroy(
-      Utils.serializeRequestBody<SchemaTypes.ItemBulkDestroySchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.ItemBulkDestroySchema>(body, {
         type: 'item_bulk_destroy_operation',
         attributes: [],
         relationships: ['items'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemBulkDestroyJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.ItemBulkDestroyJobSchema>(body),
     );
   }
 
@@ -655,9 +823,9 @@ export default class Item extends BaseResource {
    * @throws {TimeoutError}
    */
   rawBulkDestroy(
-    body: SchemaTypes.ItemBulkDestroySchema,
-  ): Promise<SchemaTypes.ItemBulkDestroyJobSchema> {
-    return this.client.request<SchemaTypes.ItemBulkDestroyJobSchema>({
+    body: RawApiTypes.ItemBulkDestroySchema,
+  ): Promise<RawApiTypes.ItemBulkDestroyJobSchema> {
+    return this.client.request<RawApiTypes.ItemBulkDestroyJobSchema>({
       method: 'POST',
       url: '/items/bulk/destroy',
       body,
@@ -672,15 +840,15 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  bulkMoveToStage(body: SimpleSchemaTypes.ItemBulkMoveToStageSchema) {
+  bulkMoveToStage(body: ApiTypes.ItemBulkMoveToStageSchema) {
     return this.rawBulkMoveToStage(
-      Utils.serializeRequestBody<SchemaTypes.ItemBulkMoveToStageSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.ItemBulkMoveToStageSchema>(body, {
         type: 'item_bulk_move_to_stage_operation',
         attributes: ['stage'],
         relationships: ['items'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ItemBulkMoveToStageJobSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ItemBulkMoveToStageJobSchema>(
         body,
       ),
     );
@@ -695,9 +863,9 @@ export default class Item extends BaseResource {
    * @throws {TimeoutError}
    */
   rawBulkMoveToStage(
-    body: SchemaTypes.ItemBulkMoveToStageSchema,
-  ): Promise<SchemaTypes.ItemBulkMoveToStageJobSchema> {
-    return this.client.request<SchemaTypes.ItemBulkMoveToStageJobSchema>({
+    body: RawApiTypes.ItemBulkMoveToStageSchema,
+  ): Promise<RawApiTypes.ItemBulkMoveToStageJobSchema> {
+    return this.client.request<RawApiTypes.ItemBulkMoveToStageJobSchema>({
       method: 'POST',
       url: '/items/bulk/move-to-stage',
       body,

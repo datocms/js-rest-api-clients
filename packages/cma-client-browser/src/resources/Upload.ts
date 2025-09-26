@@ -1,4 +1,4 @@
-import { Resources, type SimpleSchemaTypes } from '@datocms/cma-client';
+import { type ApiTypes, Resources } from '@datocms/cma-client';
 import {
   type CancelablePromise,
   CanceledPromiseError,
@@ -18,7 +18,7 @@ export type OnUploadProgressInfo =
   | OnProgressCreatingUploadObjectInfo;
 
 export type CreateUploadFromFileOrBlobSchema = Omit<
-  SimpleSchemaTypes.UploadCreateSchema,
+  ApiTypes.UploadCreateSchema,
   'path'
 > & {
   fileOrBlob: File | Blob;
@@ -27,7 +27,7 @@ export type CreateUploadFromFileOrBlobSchema = Omit<
 };
 
 export type UpdateUploadFromFileOrBlobSchema = Omit<
-  SimpleSchemaTypes.UploadUpdateSchema,
+  ApiTypes.UploadUpdateSchema,
   'path'
 > & {
   fileOrBlob: File | Blob;
@@ -43,7 +43,7 @@ export default class Upload extends Resources.Upload {
    */
   createFromFileOrBlob(
     body: CreateUploadFromFileOrBlobSchema,
-  ): CancelablePromise<SimpleSchemaTypes.Upload> {
+  ): CancelablePromise<ApiTypes.Upload> {
     let isCanceledBeforeUpload = false;
     let uploadPromise: CancelablePromise<string> | undefined;
 
@@ -84,9 +84,9 @@ export default class Upload extends Resources.Upload {
    * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/update
    */
   updateFromFileOrBlob(
-    uploadId: string | SimpleSchemaTypes.UploadData,
+    uploadId: string | ApiTypes.UploadData,
     body: UpdateUploadFromFileOrBlobSchema,
-  ): CancelablePromise<SimpleSchemaTypes.Upload> {
+  ): CancelablePromise<ApiTypes.Upload> {
     let isCanceledBeforeUpload = false;
     let uploadPromise: CancelablePromise<string> | undefined;
 

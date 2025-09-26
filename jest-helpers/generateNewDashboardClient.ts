@@ -3,7 +3,7 @@ import {
   ApiError,
   buildClient,
   Client,
-  ClientConfigOptions,
+  ClientConfigOptions
 } from '../packages/dashboard-client';
 
 const fetchFn = typeof fetch === 'undefined' ? ponyfillFetch : fetch;
@@ -75,6 +75,7 @@ export async function generateNewDashboardClient(
       });
 
       process.env.DATOCMS_SESSION_ID = account.data.id;
+      // console.log('DATOCMS_SESSION_ID', account.data.id);
 
       return generateNewDashboardClient(extraConfig);
     } catch (e) {

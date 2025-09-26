@@ -1,0 +1,99 @@
+{{#if isCma}}
+  import type {
+    GenericFieldAttributes,
+    FieldCreateConfig,
+    FieldUpdateConfig,
+  } from '../fieldTypes/schema';
+
+  import type {
+    ItemTypeDefinition,
+    ToItemAttributes,
+    ToItemAttributesInRequest,
+    ToItemAttributesInNestedResponse,
+  } from '../utilities/itemDefinition';
+
+  {{#if simpleVariant}}
+  export type Field = GenericFieldAttributes<FieldStableShell>;
+  {{else}}
+  export type Field = FieldStableShell;
+  {{/if}}
+
+  export type FieldAttributes = GenericFieldAttributes<FieldAttributesStableShell>;
+
+  export type FieldCreateSchema =
+    {{#if simpleVariant}}
+      FieldCreateConfig<FieldCreateSchemaStableShell>;
+    {{else}}
+      Omit<FieldCreateSchemaStableShell, 'data'> & {
+        data: Omit<FieldCreateSchemaStableShell['data'], 'attributes'> & {
+          attributes: FieldCreateConfig<FieldCreateSchemaStableShell['data']['attributes']>,
+        }
+      };
+    {{/if}}
+
+  export type FieldUpdateSchema =
+    {{#if simpleVariant}}
+      FieldUpdateConfig<FieldUpdateSchemaStableShell>;
+    {{else}}
+      Omit<FieldUpdateSchemaStableShell, 'data'> & {
+        data: Omit<FieldUpdateSchemaStableShell['data'], 'attributes'> & {
+          attributes: FieldUpdateConfig<FieldUpdateSchemaStableShell['data']['attributes']>
+        }
+      };
+    {{/if}}
+
+  export type ItemTypeData<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+    type: ItemTypeType;
+    id: D extends ItemTypeDefinition ? D['itemTypeId'] : ItemTypeIdentity;
+  };
+
+  {{#if simpleVariant}}
+    export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+      __itemTypeId?: D['itemTypeId'];
+      id: ItemIdentity;
+      type: ItemType1;
+      item_type: ItemTypeData<D>;
+      creator?:
+        | AccountData
+        | AccessTokenData
+        | UserData
+        | SsoUserData
+        | OrganizationData;
+      meta: ItemMeta;
+    } & ToItemAttributes<D>;
+
+    export type ItemInNestedResponse<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+      __itemTypeId?: D['itemTypeId'];
+      id: ItemIdentity;
+      type: ItemType1;
+      item_type: ItemTypeData<D>;
+      creator?:
+        | AccountData
+        | AccessTokenData
+        | UserData
+        | SsoUserData
+        | OrganizationData;
+      meta: ItemMeta;
+    } & ToItemAttributesInNestedResponse<D>;
+  {{else}}
+    export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+      __itemTypeId?: D['itemTypeId'];
+      type: ItemType1;
+      id: ItemIdentity;
+      relationships: ItemRelationships<D>;
+      meta: ItemMeta;
+      attributes: ToItemAttributes<D>;
+    };
+
+    export type ItemInNestedResponse<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+      __itemTypeId?: D['itemTypeId'];
+      type: ItemType1;
+      id: ItemIdentity;
+      relationships: ItemRelationships<D>;
+      meta: ItemMeta;
+      attributes: ToItemAttributesInNestedResponse<D>;
+    };
+  {{/if}}
+{{/if}}
+
+{{{typings}}}

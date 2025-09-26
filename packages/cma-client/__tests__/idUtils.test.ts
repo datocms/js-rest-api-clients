@@ -1,4 +1,4 @@
-import { generateId, isValidId } from '../src/idUtils';
+import { generateId, isValidId } from '../src/utilities/id';
 
 describe('generateId', () => {
   it('expects an ID from generateId() to validate as a DatoCMS ID', () => {

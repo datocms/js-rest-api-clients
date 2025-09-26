@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class UploadTrack extends BaseResource {
   static readonly TYPE = 'upload_track' as const;
@@ -15,12 +15,12 @@ export default class UploadTrack extends BaseResource {
    * @throws {TimeoutError}
    */
   create(
-    uploadId: string | SimpleSchemaTypes.UploadData,
-    body: SimpleSchemaTypes.UploadTrackCreateSchema,
+    uploadId: string | ApiTypes.UploadData,
+    body: ApiTypes.UploadTrackCreateSchema,
   ) {
     return this.rawCreate(
       Utils.toId(uploadId),
-      Utils.serializeRequestBody<SchemaTypes.UploadTrackCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.UploadTrackCreateSchema>(body, {
         type: 'upload_track',
         attributes: [
           'url_or_upload_request_id',
@@ -32,9 +32,7 @@ export default class UploadTrack extends BaseResource {
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadTrackCreateJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UploadTrackCreateJobSchema>(body),
     );
   }
 
@@ -48,9 +46,9 @@ export default class UploadTrack extends BaseResource {
    */
   rawCreate(
     uploadId: string,
-    body: SchemaTypes.UploadTrackCreateSchema,
-  ): Promise<SchemaTypes.UploadTrackCreateJobSchema> {
-    return this.client.request<SchemaTypes.UploadTrackCreateJobSchema>({
+    body: RawApiTypes.UploadTrackCreateSchema,
+  ): Promise<RawApiTypes.UploadTrackCreateJobSchema> {
+    return this.client.request<RawApiTypes.UploadTrackCreateJobSchema>({
       method: 'POST',
       url: `/uploads/${uploadId}/tracks`,
       body,
@@ -65,9 +63,9 @@ export default class UploadTrack extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(uploadId: string | SimpleSchemaTypes.UploadData) {
+  list(uploadId: string | ApiTypes.UploadData) {
     return this.rawList(Utils.toId(uploadId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadTrackInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadTrackInstancesTargetSchema>(
         body,
       ),
     );
@@ -83,8 +81,8 @@ export default class UploadTrack extends BaseResource {
    */
   rawList(
     uploadId: string,
-  ): Promise<SchemaTypes.UploadTrackInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.UploadTrackInstancesTargetSchema>({
+  ): Promise<RawApiTypes.UploadTrackInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.UploadTrackInstancesTargetSchema>({
       method: 'GET',
       url: `/uploads/${uploadId}/tracks`,
     });
@@ -99,16 +97,14 @@ export default class UploadTrack extends BaseResource {
    * @throws {TimeoutError}
    */
   destroy(
-    uploadId: string | SimpleSchemaTypes.UploadData,
-    uploadTrackId: string | SimpleSchemaTypes.UploadTrackData,
+    uploadId: string | ApiTypes.UploadData,
+    uploadTrackId: string | ApiTypes.UploadTrackData,
   ) {
     return this.rawDestroy(
       Utils.toId(uploadId),
       Utils.toId(uploadTrackId),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadTrackDestroyJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UploadTrackDestroyJobSchema>(body),
     );
   }
 
@@ -123,8 +119,8 @@ export default class UploadTrack extends BaseResource {
   rawDestroy(
     uploadId: string,
     uploadTrackId: string,
-  ): Promise<SchemaTypes.UploadTrackDestroyJobSchema> {
-    return this.client.request<SchemaTypes.UploadTrackDestroyJobSchema>({
+  ): Promise<RawApiTypes.UploadTrackDestroyJobSchema> {
+    return this.client.request<RawApiTypes.UploadTrackDestroyJobSchema>({
       method: 'DELETE',
       url: `/uploads/${uploadId}/tracks/${uploadTrackId}`,
     });
@@ -141,12 +137,12 @@ export default class UploadTrack extends BaseResource {
    * @deprecated This API call is to be considered private and might change without notice
    */
   generateSubtitles(
-    uploadId: string | SimpleSchemaTypes.UploadData,
-    body: SimpleSchemaTypes.UploadTrackGenerateSubtitlesSchema,
+    uploadId: string | ApiTypes.UploadData,
+    body: ApiTypes.UploadTrackGenerateSubtitlesSchema,
   ) {
     return this.rawGenerateSubtitles(
       Utils.toId(uploadId),
-      Utils.serializeRequestBody<SchemaTypes.UploadTrackGenerateSubtitlesSchema>(
+      Utils.serializeRequestBody<RawApiTypes.UploadTrackGenerateSubtitlesSchema>(
         body,
         {
           type: 'upload_track',
@@ -155,7 +151,7 @@ export default class UploadTrack extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadTrackGenerateSubtitlesJobSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadTrackGenerateSubtitlesJobSchema>(
         body,
       ),
     );
@@ -173,9 +169,9 @@ export default class UploadTrack extends BaseResource {
    */
   rawGenerateSubtitles(
     uploadId: string,
-    body: SchemaTypes.UploadTrackGenerateSubtitlesSchema,
-  ): Promise<SchemaTypes.UploadTrackGenerateSubtitlesJobSchema> {
-    return this.client.request<SchemaTypes.UploadTrackGenerateSubtitlesJobSchema>(
+    body: RawApiTypes.UploadTrackGenerateSubtitlesSchema,
+  ): Promise<RawApiTypes.UploadTrackGenerateSubtitlesJobSchema> {
+    return this.client.request<RawApiTypes.UploadTrackGenerateSubtitlesJobSchema>(
       {
         method: 'POST',
         url: `/uploads/${uploadId}/tracks/generate-subtitles`,

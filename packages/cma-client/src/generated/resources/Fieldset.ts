@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class Fieldset extends BaseResource {
   static readonly TYPE = 'fieldset' as const;
@@ -15,12 +15,12 @@ export default class Fieldset extends BaseResource {
    * @throws {TimeoutError}
    */
   create(
-    itemTypeId: string | SimpleSchemaTypes.ItemTypeData,
-    body: SimpleSchemaTypes.FieldsetCreateSchema,
+    itemTypeId: string | ApiTypes.ItemTypeData,
+    body: ApiTypes.FieldsetCreateSchema,
   ) {
     return this.rawCreate(
       Utils.toId(itemTypeId),
-      Utils.serializeRequestBody<SchemaTypes.FieldsetCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.FieldsetCreateSchema>(body, {
         type: 'fieldset',
         attributes: [
           'title',
@@ -32,9 +32,7 @@ export default class Fieldset extends BaseResource {
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.FieldsetCreateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.FieldsetCreateTargetSchema>(body),
     );
   }
 
@@ -48,9 +46,9 @@ export default class Fieldset extends BaseResource {
    */
   rawCreate(
     itemTypeId: string,
-    body: SchemaTypes.FieldsetCreateSchema,
-  ): Promise<SchemaTypes.FieldsetCreateTargetSchema> {
-    return this.client.request<SchemaTypes.FieldsetCreateTargetSchema>({
+    body: RawApiTypes.FieldsetCreateSchema,
+  ): Promise<RawApiTypes.FieldsetCreateTargetSchema> {
+    return this.client.request<RawApiTypes.FieldsetCreateTargetSchema>({
       method: 'POST',
       url: `/item-types/${itemTypeId}/fieldsets`,
       body,
@@ -66,12 +64,12 @@ export default class Fieldset extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    fieldsetId: string | SimpleSchemaTypes.FieldsetData,
-    body: SimpleSchemaTypes.FieldsetUpdateSchema,
+    fieldsetId: string | ApiTypes.FieldsetData,
+    body: ApiTypes.FieldsetUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(fieldsetId),
-      Utils.serializeRequestBody<SchemaTypes.FieldsetUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.FieldsetUpdateSchema>(body, {
         id: Utils.toId(fieldsetId),
         type: 'fieldset',
         attributes: [
@@ -84,9 +82,7 @@ export default class Fieldset extends BaseResource {
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.FieldsetUpdateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.FieldsetUpdateTargetSchema>(body),
     );
   }
 
@@ -100,9 +96,9 @@ export default class Fieldset extends BaseResource {
    */
   rawUpdate(
     fieldsetId: string,
-    body: SchemaTypes.FieldsetUpdateSchema,
-  ): Promise<SchemaTypes.FieldsetUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.FieldsetUpdateTargetSchema>({
+    body: RawApiTypes.FieldsetUpdateSchema,
+  ): Promise<RawApiTypes.FieldsetUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.FieldsetUpdateTargetSchema>({
       method: 'PUT',
       url: `/fieldsets/${fieldsetId}`,
       body,
@@ -110,23 +106,23 @@ export default class Fieldset extends BaseResource {
   }
 
   /**
-   * List all fieldsets
+   * List all fieldsets of a model/block
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/instances
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(itemTypeId: string | SimpleSchemaTypes.ItemTypeData) {
+  list(itemTypeId: string | ApiTypes.ItemTypeData) {
     return this.rawList(Utils.toId(itemTypeId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.FieldsetInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.FieldsetInstancesTargetSchema>(
         body,
       ),
     );
   }
 
   /**
-   * List all fieldsets
+   * List all fieldsets of a model/block
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/fieldset/instances
    *
@@ -135,8 +131,8 @@ export default class Fieldset extends BaseResource {
    */
   rawList(
     itemTypeId: string,
-  ): Promise<SchemaTypes.FieldsetInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.FieldsetInstancesTargetSchema>({
+  ): Promise<RawApiTypes.FieldsetInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.FieldsetInstancesTargetSchema>({
       method: 'GET',
       url: `/item-types/${itemTypeId}/fieldsets`,
     });
@@ -150,11 +146,9 @@ export default class Fieldset extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(fieldsetId: string | SimpleSchemaTypes.FieldsetData) {
+  find(fieldsetId: string | ApiTypes.FieldsetData) {
     return this.rawFind(Utils.toId(fieldsetId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.FieldsetSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.FieldsetSelfTargetSchema>(body),
     );
   }
 
@@ -166,8 +160,8 @@ export default class Fieldset extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(fieldsetId: string): Promise<SchemaTypes.FieldsetSelfTargetSchema> {
-    return this.client.request<SchemaTypes.FieldsetSelfTargetSchema>({
+  rawFind(fieldsetId: string): Promise<RawApiTypes.FieldsetSelfTargetSchema> {
+    return this.client.request<RawApiTypes.FieldsetSelfTargetSchema>({
       method: 'GET',
       url: `/fieldsets/${fieldsetId}`,
     });
@@ -181,11 +175,9 @@ export default class Fieldset extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(fieldsetId: string | SimpleSchemaTypes.FieldsetData) {
+  destroy(fieldsetId: string | ApiTypes.FieldsetData) {
     return this.rawDestroy(Utils.toId(fieldsetId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.FieldsetDestroyTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.FieldsetDestroyTargetSchema>(body),
     );
   }
 
@@ -199,8 +191,8 @@ export default class Fieldset extends BaseResource {
    */
   rawDestroy(
     fieldsetId: string,
-  ): Promise<SchemaTypes.FieldsetDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.FieldsetDestroyTargetSchema>({
+  ): Promise<RawApiTypes.FieldsetDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.FieldsetDestroyTargetSchema>({
       method: 'DELETE',
       url: `/fieldsets/${fieldsetId}`,
     });

@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class WebhookCall extends BaseResource {
   static readonly TYPE = 'webhook_call' as const;
@@ -14,9 +14,9 @@ export default class WebhookCall extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(queryParams?: SimpleSchemaTypes.WebhookCallInstancesHrefSchema) {
+  list(queryParams?: ApiTypes.WebhookCallInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.WebhookCallInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.WebhookCallInstancesTargetSchema>(
         body,
       ),
     );
@@ -31,9 +31,9 @@ export default class WebhookCall extends BaseResource {
    * @throws {TimeoutError}
    */
   rawList(
-    queryParams?: SchemaTypes.WebhookCallInstancesHrefSchema,
-  ): Promise<SchemaTypes.WebhookCallInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.WebhookCallInstancesTargetSchema>({
+    queryParams?: RawApiTypes.WebhookCallInstancesHrefSchema,
+  ): Promise<RawApiTypes.WebhookCallInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.WebhookCallInstancesTargetSchema>({
       method: 'GET',
       url: '/webhook_calls',
       queryParams,
@@ -50,7 +50,7 @@ export default class WebhookCall extends BaseResource {
    */
   async *listPagedIterator(
     queryParams?: Utils.OmitFromKnownKeys<
-      SimpleSchemaTypes.WebhookCallInstancesHrefSchema,
+      ApiTypes.WebhookCallInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -60,7 +60,7 @@ export default class WebhookCall extends BaseResource {
       iteratorOptions,
     )) {
       yield Utils.deserializeJsonEntity<
-        SimpleSchemaTypes.WebhookCallInstancesTargetSchema[0]
+        ApiTypes.WebhookCallInstancesTargetSchema[0]
       >(element);
     }
   }
@@ -75,7 +75,7 @@ export default class WebhookCall extends BaseResource {
    */
   rawListPagedIterator(
     queryParams?: Utils.OmitFromKnownKeys<
-      SchemaTypes.WebhookCallInstancesHrefSchema,
+      RawApiTypes.WebhookCallInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -83,13 +83,13 @@ export default class WebhookCall extends BaseResource {
     Utils.warnOnPageQueryParam(queryParams);
 
     return Utils.rawPageIterator<
-      SchemaTypes.WebhookCallInstancesTargetSchema['data'][0]
+      RawApiTypes.WebhookCallInstancesTargetSchema['data'][0]
     >(
       {
         defaultLimit: 30,
         maxLimit: 500,
       },
-      (page: SchemaTypes.WebhookCallInstancesHrefSchema['page']) =>
+      (page: RawApiTypes.WebhookCallInstancesHrefSchema['page']) =>
         this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );
@@ -103,11 +103,9 @@ export default class WebhookCall extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(webhookCallId: string | SimpleSchemaTypes.WebhookCallData) {
+  find(webhookCallId: string | ApiTypes.WebhookCallData) {
     return this.rawFind(Utils.toId(webhookCallId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.WebhookCallSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.WebhookCallSelfTargetSchema>(body),
     );
   }
 
@@ -121,8 +119,8 @@ export default class WebhookCall extends BaseResource {
    */
   rawFind(
     webhookCallId: string,
-  ): Promise<SchemaTypes.WebhookCallSelfTargetSchema> {
-    return this.client.request<SchemaTypes.WebhookCallSelfTargetSchema>({
+  ): Promise<RawApiTypes.WebhookCallSelfTargetSchema> {
+    return this.client.request<RawApiTypes.WebhookCallSelfTargetSchema>({
       method: 'GET',
       url: `/webhook_calls/${webhookCallId}`,
     });
@@ -136,7 +134,7 @@ export default class WebhookCall extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  resendWebhook(webhookCallId: string | SimpleSchemaTypes.WebhookCallData) {
+  resendWebhook(webhookCallId: string | ApiTypes.WebhookCallData) {
     return this.rawResendWebhook(Utils.toId(webhookCallId));
   }
 

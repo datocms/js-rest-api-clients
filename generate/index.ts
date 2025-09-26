@@ -74,15 +74,23 @@ async function generate(prefix: string, hyperschemaUrl: string) {
   );
 
   await writeTemplate(
-    'SchemaTypes.ts',
-    { typings: schemaInfo.typings },
-    `./packages/${prefix}-client/src/generated/SchemaTypes.ts`,
+    'ApiTypes.ts',
+    {
+      typings: schemaInfo.typings,
+      simpleVariant: false,
+      isCma: prefix === 'cma',
+    },
+    `./packages/${prefix}-client/src/generated/RawApiTypes.ts`,
   );
 
   await writeTemplate(
-    'SchemaTypes.ts',
-    { typings: schemaInfo.simpleTypings },
-    `./packages/${prefix}-client/src/generated/SimpleSchemaTypes.ts`,
+    'ApiTypes.ts',
+    {
+      typings: schemaInfo.simpleTypings,
+      simpleVariant: true,
+      isCma: prefix === 'cma',
+    },
+    `./packages/${prefix}-client/src/generated/ApiTypes.ts`,
   );
 
   const resources = schemaInfo.resources.map((resource) => ({
@@ -103,9 +111,17 @@ async function generate(prefix: string, hyperschemaUrl: string) {
   );
 
   for (const resourceInfo of schemaInfo.resources) {
-    await writeTemplate<ResourceInfo & { isCma: boolean }>(
+    await writeTemplate<
+      ResourceInfo & { isCma: boolean; someEndpointReturnsItem: boolean }
+    >(
       'resources/ResourceClass.ts',
-      { ...resourceInfo, isCma },
+      {
+        ...resourceInfo,
+        isCma,
+        someEndpointReturnsItem: resourceInfo.endpoints.some(
+          (e) => e.returnsItem,
+        ),
+      },
       `./packages/${prefix}-client/src/generated/resources/${toSafeName(
         resourceInfo.jsonApiType,
         true,

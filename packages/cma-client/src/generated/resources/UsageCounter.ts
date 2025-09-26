@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class UsageCounter extends BaseResource {
   static readonly TYPE = 'usage_counter' as const;
@@ -15,11 +15,11 @@ export default class UsageCounter extends BaseResource {
    * @throws {TimeoutError}
    */
   find(
-    usageCounterId: string | SimpleSchemaTypes.UsageCounterData,
-    queryParams?: SimpleSchemaTypes.UsageCounterSelfHrefSchema,
+    usageCounterId: string | ApiTypes.UsageCounterData,
+    queryParams?: ApiTypes.UsageCounterSelfHrefSchema,
   ) {
     return this.rawFind(Utils.toId(usageCounterId), queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UsageCounterSelfTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UsageCounterSelfTargetSchema>(
         body,
       ),
     );
@@ -35,9 +35,9 @@ export default class UsageCounter extends BaseResource {
    */
   rawFind(
     usageCounterId: string,
-    queryParams?: SchemaTypes.UsageCounterSelfHrefSchema,
-  ): Promise<SchemaTypes.UsageCounterSelfTargetSchema> {
-    return this.client.request<SchemaTypes.UsageCounterSelfTargetSchema>({
+    queryParams?: RawApiTypes.UsageCounterSelfHrefSchema,
+  ): Promise<RawApiTypes.UsageCounterSelfTargetSchema> {
+    return this.client.request<RawApiTypes.UsageCounterSelfTargetSchema>({
       method: 'GET',
       url: `/usage-log-counters/${usageCounterId}`,
       queryParams,

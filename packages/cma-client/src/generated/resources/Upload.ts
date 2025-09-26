@@ -1,7 +1,10 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type { ItemTypeDefinition } from '../../utilities/itemDefinition';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
+
+type NoInfer<T> = [T][T extends any ? 0 : never];
 
 export default class Upload extends BaseResource {
   static readonly TYPE = 'upload' as const;
@@ -14,9 +17,9 @@ export default class Upload extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.UploadCreateSchema) {
+  create(body: ApiTypes.UploadCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.UploadCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.UploadCreateSchema>(body, {
         type: 'upload',
         attributes: [
           'path',
@@ -29,9 +32,7 @@ export default class Upload extends BaseResource {
         relationships: ['upload_collection'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadCreateJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UploadCreateJobSchema>(body),
     );
   }
 
@@ -44,9 +45,9 @@ export default class Upload extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.UploadCreateSchema,
-  ): Promise<SchemaTypes.UploadCreateJobSchema> {
-    return this.client.request<SchemaTypes.UploadCreateJobSchema>({
+    body: RawApiTypes.UploadCreateSchema,
+  ): Promise<RawApiTypes.UploadCreateJobSchema> {
+    return this.client.request<RawApiTypes.UploadCreateJobSchema>({
       method: 'POST',
       url: '/uploads',
       body,
@@ -61,11 +62,9 @@ export default class Upload extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(queryParams?: SimpleSchemaTypes.UploadInstancesHrefSchema) {
+  list(queryParams?: ApiTypes.UploadInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadInstancesTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UploadInstancesTargetSchema>(body),
     );
   }
 
@@ -78,9 +77,9 @@ export default class Upload extends BaseResource {
    * @throws {TimeoutError}
    */
   rawList(
-    queryParams?: SchemaTypes.UploadInstancesHrefSchema,
-  ): Promise<SchemaTypes.UploadInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.UploadInstancesTargetSchema>({
+    queryParams?: RawApiTypes.UploadInstancesHrefSchema,
+  ): Promise<RawApiTypes.UploadInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.UploadInstancesTargetSchema>({
       method: 'GET',
       url: '/uploads',
       queryParams,
@@ -97,7 +96,7 @@ export default class Upload extends BaseResource {
    */
   async *listPagedIterator(
     queryParams?: Utils.OmitFromKnownKeys<
-      SimpleSchemaTypes.UploadInstancesHrefSchema,
+      ApiTypes.UploadInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -107,7 +106,7 @@ export default class Upload extends BaseResource {
       iteratorOptions,
     )) {
       yield Utils.deserializeJsonEntity<
-        SimpleSchemaTypes.UploadInstancesTargetSchema[0]
+        ApiTypes.UploadInstancesTargetSchema[0]
       >(element);
     }
   }
@@ -122,7 +121,7 @@ export default class Upload extends BaseResource {
    */
   rawListPagedIterator(
     queryParams?: Utils.OmitFromKnownKeys<
-      SchemaTypes.UploadInstancesHrefSchema,
+      RawApiTypes.UploadInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -130,13 +129,13 @@ export default class Upload extends BaseResource {
     Utils.warnOnPageQueryParam(queryParams);
 
     return Utils.rawPageIterator<
-      SchemaTypes.UploadInstancesTargetSchema['data'][0]
+      RawApiTypes.UploadInstancesTargetSchema['data'][0]
     >(
       {
         defaultLimit: 30,
         maxLimit: 500,
       },
-      (page: SchemaTypes.UploadInstancesHrefSchema['page']) =>
+      (page: RawApiTypes.UploadInstancesHrefSchema['page']) =>
         this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );
@@ -150,11 +149,9 @@ export default class Upload extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(uploadId: string | SimpleSchemaTypes.UploadData) {
+  find(uploadId: string | ApiTypes.UploadData) {
     return this.rawFind(Utils.toId(uploadId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UploadSelfTargetSchema>(body),
     );
   }
 
@@ -166,8 +163,8 @@ export default class Upload extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(uploadId: string): Promise<SchemaTypes.UploadSelfTargetSchema> {
-    return this.client.request<SchemaTypes.UploadSelfTargetSchema>({
+  rawFind(uploadId: string): Promise<RawApiTypes.UploadSelfTargetSchema> {
+    return this.client.request<RawApiTypes.UploadSelfTargetSchema>({
       method: 'GET',
       url: `/uploads/${uploadId}`,
     });
@@ -181,11 +178,9 @@ export default class Upload extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(uploadId: string | SimpleSchemaTypes.UploadData) {
+  destroy(uploadId: string | ApiTypes.UploadData) {
     return this.rawDestroy(Utils.toId(uploadId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadDestroyTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UploadDestroyTargetSchema>(body),
     );
   }
 
@@ -197,8 +192,8 @@ export default class Upload extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawDestroy(uploadId: string): Promise<SchemaTypes.UploadDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.UploadDestroyTargetSchema>({
+  rawDestroy(uploadId: string): Promise<RawApiTypes.UploadDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.UploadDestroyTargetSchema>({
       method: 'DELETE',
       url: `/uploads/${uploadId}`,
     });
@@ -213,12 +208,12 @@ export default class Upload extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    uploadId: string | SimpleSchemaTypes.UploadData,
-    body: SimpleSchemaTypes.UploadUpdateSchema,
+    uploadId: string | ApiTypes.UploadData,
+    body: ApiTypes.UploadUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(uploadId),
-      Utils.serializeRequestBody<SchemaTypes.UploadUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.UploadUpdateSchema>(body, {
         id: Utils.toId(uploadId),
         type: 'upload',
         attributes: [
@@ -233,9 +228,7 @@ export default class Upload extends BaseResource {
         relationships: ['creator', 'upload_collection'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadUpdateJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UploadUpdateJobSchema>(body),
     );
   }
 
@@ -249,9 +242,9 @@ export default class Upload extends BaseResource {
    */
   rawUpdate(
     uploadId: string,
-    body: SchemaTypes.UploadUpdateSchema,
-  ): Promise<SchemaTypes.UploadUpdateJobSchema> {
-    return this.client.request<SchemaTypes.UploadUpdateJobSchema>({
+    body: RawApiTypes.UploadUpdateSchema,
+  ): Promise<RawApiTypes.UploadUpdateJobSchema> {
+    return this.client.request<RawApiTypes.UploadUpdateJobSchema>({
       method: 'PUT',
       url: `/uploads/${uploadId}`,
       body,
@@ -266,14 +259,30 @@ export default class Upload extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  references(
-    uploadId: string | SimpleSchemaTypes.UploadData,
-    queryParams?: SimpleSchemaTypes.UploadReferencesHrefSchema,
+  references<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    uploadId: string | ApiTypes.UploadData,
+    queryParams: ApiTypes.UploadReferencesHrefSchema & { nested: true },
+  ): Promise<ApiTypes.UploadReferencesTargetSchema<NoInfer<D>, true>>;
+  references<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    uploadId: string | ApiTypes.UploadData,
+    queryParams?: ApiTypes.UploadReferencesHrefSchema & {
+      nested?: false | undefined;
+    },
+  ): Promise<ApiTypes.UploadReferencesTargetSchema<NoInfer<D>, false>>;
+  /**
+   * Referenced records
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/references
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  references<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    uploadId: string | ApiTypes.UploadData,
+    queryParams?: ApiTypes.UploadReferencesHrefSchema,
   ) {
-    return this.rawReferences(Utils.toId(uploadId), queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadReferencesTargetSchema>(
-        body,
-      ),
+    return this.rawReferences<D>(Utils.toId(uploadId), queryParams).then(
+      (body) => Utils.deserializeResponseBody(body),
     );
   }
 
@@ -285,15 +294,41 @@ export default class Upload extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawReferences(
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
     uploadId: string,
-    queryParams?: SchemaTypes.UploadReferencesHrefSchema,
-  ): Promise<SchemaTypes.UploadReferencesTargetSchema> {
-    return this.client.request<SchemaTypes.UploadReferencesTargetSchema>({
-      method: 'GET',
-      url: `/uploads/${uploadId}/references`,
-      queryParams,
-    });
+    queryParams: RawApiTypes.UploadReferencesHrefSchema & { nested: true },
+  ): Promise<RawApiTypes.UploadReferencesTargetSchema<NoInfer<D>, true>>;
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    uploadId: string,
+    queryParams?: RawApiTypes.UploadReferencesHrefSchema & {
+      nested?: false | undefined;
+    },
+  ): Promise<RawApiTypes.UploadReferencesTargetSchema<NoInfer<D>, false>>;
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    uploadId: string,
+    queryParams?: RawApiTypes.UploadReferencesHrefSchema,
+  ): Promise<RawApiTypes.UploadReferencesTargetSchema<NoInfer<D>, true>>;
+  /**
+   * Referenced records
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/upload/references
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawReferences<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    uploadId: string,
+    queryParams?: RawApiTypes.UploadReferencesHrefSchema,
+  ) {
+    return this.client
+      .request({
+        method: 'GET',
+        url: `/uploads/${uploadId}/references`,
+        queryParams,
+      })
+      .then<RawApiTypes.UploadReferencesTargetSchema<NoInfer<D>, true>>(
+        Utils.deserializeRawResponseBodyWithItems,
+      );
   }
 
   /**
@@ -304,17 +339,15 @@ export default class Upload extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  bulkTag(body: SimpleSchemaTypes.UploadBulkTagSchema) {
+  bulkTag(body: ApiTypes.UploadBulkTagSchema) {
     return this.rawBulkTag(
-      Utils.serializeRequestBody<SchemaTypes.UploadBulkTagSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.UploadBulkTagSchema>(body, {
         type: 'upload_bulk_tag_operation',
         attributes: ['tags'],
         relationships: ['uploads'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadBulkTagJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UploadBulkTagJobSchema>(body),
     );
   }
 
@@ -327,9 +360,9 @@ export default class Upload extends BaseResource {
    * @throws {TimeoutError}
    */
   rawBulkTag(
-    body: SchemaTypes.UploadBulkTagSchema,
-  ): Promise<SchemaTypes.UploadBulkTagJobSchema> {
-    return this.client.request<SchemaTypes.UploadBulkTagJobSchema>({
+    body: RawApiTypes.UploadBulkTagSchema,
+  ): Promise<RawApiTypes.UploadBulkTagJobSchema> {
+    return this.client.request<RawApiTypes.UploadBulkTagJobSchema>({
       method: 'POST',
       url: '/uploads/bulk/tag',
       body,
@@ -344,11 +377,9 @@ export default class Upload extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  bulkSetUploadCollection(
-    body: SimpleSchemaTypes.UploadBulkSetUploadCollectionSchema,
-  ) {
+  bulkSetUploadCollection(body: ApiTypes.UploadBulkSetUploadCollectionSchema) {
     return this.rawBulkSetUploadCollection(
-      Utils.serializeRequestBody<SchemaTypes.UploadBulkSetUploadCollectionSchema>(
+      Utils.serializeRequestBody<RawApiTypes.UploadBulkSetUploadCollectionSchema>(
         body,
         {
           type: 'upload_bulk_set_upload_collection_operation',
@@ -357,7 +388,7 @@ export default class Upload extends BaseResource {
         },
       ),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadBulkSetUploadCollectionJobSchema>(
+      Utils.deserializeResponseBody<ApiTypes.UploadBulkSetUploadCollectionJobSchema>(
         body,
       ),
     );
@@ -372,9 +403,9 @@ export default class Upload extends BaseResource {
    * @throws {TimeoutError}
    */
   rawBulkSetUploadCollection(
-    body: SchemaTypes.UploadBulkSetUploadCollectionSchema,
-  ): Promise<SchemaTypes.UploadBulkSetUploadCollectionJobSchema> {
-    return this.client.request<SchemaTypes.UploadBulkSetUploadCollectionJobSchema>(
+    body: RawApiTypes.UploadBulkSetUploadCollectionSchema,
+  ): Promise<RawApiTypes.UploadBulkSetUploadCollectionJobSchema> {
+    return this.client.request<RawApiTypes.UploadBulkSetUploadCollectionJobSchema>(
       {
         method: 'POST',
         url: '/uploads/bulk/set-upload-collection',
@@ -391,17 +422,15 @@ export default class Upload extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  bulkDestroy(body: SimpleSchemaTypes.UploadBulkDestroySchema) {
+  bulkDestroy(body: ApiTypes.UploadBulkDestroySchema) {
     return this.rawBulkDestroy(
-      Utils.serializeRequestBody<SchemaTypes.UploadBulkDestroySchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.UploadBulkDestroySchema>(body, {
         type: 'upload_bulk_destroy_operation',
         attributes: [],
         relationships: ['uploads'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.UploadBulkDestroyJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.UploadBulkDestroyJobSchema>(body),
     );
   }
 
@@ -414,9 +443,9 @@ export default class Upload extends BaseResource {
    * @throws {TimeoutError}
    */
   rawBulkDestroy(
-    body: SchemaTypes.UploadBulkDestroySchema,
-  ): Promise<SchemaTypes.UploadBulkDestroyJobSchema> {
-    return this.client.request<SchemaTypes.UploadBulkDestroyJobSchema>({
+    body: RawApiTypes.UploadBulkDestroySchema,
+  ): Promise<RawApiTypes.UploadBulkDestroyJobSchema> {
+    return this.client.request<RawApiTypes.UploadBulkDestroyJobSchema>({
       method: 'POST',
       url: '/uploads/bulk/destroy',
       body,

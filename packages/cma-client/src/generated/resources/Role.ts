@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class Role extends BaseResource {
   static readonly TYPE = 'role' as const;
@@ -14,9 +14,9 @@ export default class Role extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.RoleCreateSchema) {
+  create(body: ApiTypes.RoleCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.RoleCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.RoleCreateSchema>(body, {
         type: 'role',
         attributes: [
           'name',
@@ -49,9 +49,7 @@ export default class Role extends BaseResource {
         relationships: ['inherits_permissions_from'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.RoleCreateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.RoleCreateTargetSchema>(body),
     );
   }
 
@@ -64,9 +62,9 @@ export default class Role extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.RoleCreateSchema,
-  ): Promise<SchemaTypes.RoleCreateTargetSchema> {
-    return this.client.request<SchemaTypes.RoleCreateTargetSchema>({
+    body: RawApiTypes.RoleCreateSchema,
+  ): Promise<RawApiTypes.RoleCreateTargetSchema> {
+    return this.client.request<RawApiTypes.RoleCreateTargetSchema>({
       method: 'POST',
       url: '/roles',
       body,
@@ -81,13 +79,10 @@ export default class Role extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  update(
-    roleId: string | SimpleSchemaTypes.RoleData,
-    body: SimpleSchemaTypes.RoleUpdateSchema,
-  ) {
+  update(roleId: string | ApiTypes.RoleData, body: ApiTypes.RoleUpdateSchema) {
     return this.rawUpdate(
       Utils.toId(roleId),
-      Utils.serializeRequestBody<SchemaTypes.RoleUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.RoleUpdateSchema>(body, {
         id: Utils.toId(roleId),
         type: 'role',
         attributes: [
@@ -121,9 +116,7 @@ export default class Role extends BaseResource {
         relationships: ['inherits_permissions_from'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.RoleUpdateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.RoleUpdateTargetSchema>(body),
     );
   }
 
@@ -137,9 +130,9 @@ export default class Role extends BaseResource {
    */
   rawUpdate(
     roleId: string,
-    body: SchemaTypes.RoleUpdateSchema,
-  ): Promise<SchemaTypes.RoleUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.RoleUpdateTargetSchema>({
+    body: RawApiTypes.RoleUpdateSchema,
+  ): Promise<RawApiTypes.RoleUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.RoleUpdateTargetSchema>({
       method: 'PUT',
       url: `/roles/${roleId}`,
       body,
@@ -156,9 +149,7 @@ export default class Role extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.RoleInstancesTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.RoleInstancesTargetSchema>(body),
     );
   }
 
@@ -170,8 +161,8 @@ export default class Role extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.RoleInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.RoleInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.RoleInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.RoleInstancesTargetSchema>({
       method: 'GET',
       url: '/roles',
     });
@@ -185,11 +176,9 @@ export default class Role extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(roleId: string | SimpleSchemaTypes.RoleData) {
+  find(roleId: string | ApiTypes.RoleData) {
     return this.rawFind(Utils.toId(roleId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.RoleSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.RoleSelfTargetSchema>(body),
     );
   }
 
@@ -201,8 +190,8 @@ export default class Role extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(roleId: string): Promise<SchemaTypes.RoleSelfTargetSchema> {
-    return this.client.request<SchemaTypes.RoleSelfTargetSchema>({
+  rawFind(roleId: string): Promise<RawApiTypes.RoleSelfTargetSchema> {
+    return this.client.request<RawApiTypes.RoleSelfTargetSchema>({
       method: 'GET',
       url: `/roles/${roleId}`,
     });
@@ -216,11 +205,9 @@ export default class Role extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(roleId: string | SimpleSchemaTypes.RoleData) {
+  destroy(roleId: string | ApiTypes.RoleData) {
     return this.rawDestroy(Utils.toId(roleId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.RoleDestroyTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.RoleDestroyTargetSchema>(body),
     );
   }
 
@@ -232,8 +219,8 @@ export default class Role extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawDestroy(roleId: string): Promise<SchemaTypes.RoleDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.RoleDestroyTargetSchema>({
+  rawDestroy(roleId: string): Promise<RawApiTypes.RoleDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.RoleDestroyTargetSchema>({
       method: 'DELETE',
       url: `/roles/${roleId}`,
     });
@@ -247,11 +234,9 @@ export default class Role extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  duplicate(roleId: string | SimpleSchemaTypes.RoleData) {
+  duplicate(roleId: string | ApiTypes.RoleData) {
     return this.rawDuplicate(Utils.toId(roleId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.RoleDuplicateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.RoleDuplicateTargetSchema>(body),
     );
   }
 
@@ -263,8 +248,8 @@ export default class Role extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawDuplicate(roleId: string): Promise<SchemaTypes.RoleDuplicateTargetSchema> {
-    return this.client.request<SchemaTypes.RoleDuplicateTargetSchema>({
+  rawDuplicate(roleId: string): Promise<RawApiTypes.RoleDuplicateTargetSchema> {
+    return this.client.request<RawApiTypes.RoleDuplicateTargetSchema>({
       method: 'POST',
       url: `/roles/${roleId}/duplicate`,
     });

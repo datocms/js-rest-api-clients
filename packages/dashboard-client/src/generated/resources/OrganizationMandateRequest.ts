@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class OrganizationMandateRequest extends BaseResource {
   static readonly TYPE = 'organization_mandate_request' as const;
@@ -13,11 +13,11 @@ export default class OrganizationMandateRequest extends BaseResource {
    * @throws {TimeoutError}
    */
   create(
-    body: SimpleSchemaTypes.OrganizationMandateRequestCreateSchema,
-    queryParams?: SimpleSchemaTypes.OrganizationMandateRequestCreateHrefSchema,
+    body: ApiTypes.OrganizationMandateRequestCreateSchema,
+    queryParams?: ApiTypes.OrganizationMandateRequestCreateHrefSchema,
   ) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.OrganizationMandateRequestCreateSchema>(
+      Utils.serializeRequestBody<RawApiTypes.OrganizationMandateRequestCreateSchema>(
         body,
         {
           type: 'organization_mandate_request',
@@ -27,7 +27,7 @@ export default class OrganizationMandateRequest extends BaseResource {
       ),
       queryParams,
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMandateRequestCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationMandateRequestCreateTargetSchema>(
         body,
       ),
     );
@@ -40,10 +40,10 @@ export default class OrganizationMandateRequest extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.OrganizationMandateRequestCreateSchema,
-    queryParams?: SchemaTypes.OrganizationMandateRequestCreateHrefSchema,
-  ): Promise<SchemaTypes.OrganizationMandateRequestCreateTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationMandateRequestCreateTargetSchema>(
+    body: RawApiTypes.OrganizationMandateRequestCreateSchema,
+    queryParams?: RawApiTypes.OrganizationMandateRequestCreateHrefSchema,
+  ): Promise<RawApiTypes.OrganizationMandateRequestCreateTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationMandateRequestCreateTargetSchema>(
       {
         method: 'POST',
         url: '/organization-mandate-requests',
@@ -61,7 +61,7 @@ export default class OrganizationMandateRequest extends BaseResource {
    */
   pendingList() {
     return this.rawPendingList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMandateRequestPendingInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationMandateRequestPendingInstancesTargetSchema>(
         body,
       ),
     );
@@ -73,8 +73,8 @@ export default class OrganizationMandateRequest extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawPendingList(): Promise<SchemaTypes.OrganizationMandateRequestPendingInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationMandateRequestPendingInstancesTargetSchema>(
+  rawPendingList(): Promise<RawApiTypes.OrganizationMandateRequestPendingInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationMandateRequestPendingInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/organization-mandate-requests/pending',
@@ -90,7 +90,7 @@ export default class OrganizationMandateRequest extends BaseResource {
    */
   requestedList() {
     return this.rawRequestedList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMandateRequestRequestedInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.OrganizationMandateRequestRequestedInstancesTargetSchema>(
         body,
       ),
     );
@@ -102,8 +102,8 @@ export default class OrganizationMandateRequest extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawRequestedList(): Promise<SchemaTypes.OrganizationMandateRequestRequestedInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationMandateRequestRequestedInstancesTargetSchema>(
+  rawRequestedList(): Promise<RawApiTypes.OrganizationMandateRequestRequestedInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationMandateRequestRequestedInstancesTargetSchema>(
       {
         method: 'GET',
         url: '/organization-mandate-requests/requested',
@@ -120,11 +120,11 @@ export default class OrganizationMandateRequest extends BaseResource {
   destroy(
     organizationMandateRequestId:
       | string
-      | SimpleSchemaTypes.OrganizationMandateRequestData,
+      | ApiTypes.OrganizationMandateRequestData,
   ) {
     return this.rawDestroy(Utils.toId(organizationMandateRequestId)).then(
       (body) =>
-        Utils.deserializeResponseBody<SimpleSchemaTypes.OrganizationMandateRequestDestroyTargetSchema>(
+        Utils.deserializeResponseBody<ApiTypes.OrganizationMandateRequestDestroyTargetSchema>(
           body,
         ),
     );
@@ -138,8 +138,8 @@ export default class OrganizationMandateRequest extends BaseResource {
    */
   rawDestroy(
     organizationMandateRequestId: string,
-  ): Promise<SchemaTypes.OrganizationMandateRequestDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.OrganizationMandateRequestDestroyTargetSchema>(
+  ): Promise<RawApiTypes.OrganizationMandateRequestDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.OrganizationMandateRequestDestroyTargetSchema>(
       {
         method: 'DELETE',
         url: `/organization-mandate-requests/${organizationMandateRequestId}`,
@@ -156,7 +156,7 @@ export default class OrganizationMandateRequest extends BaseResource {
   approve(
     organizationMandateRequestId:
       | string
-      | SimpleSchemaTypes.OrganizationMandateRequestData,
+      | ApiTypes.OrganizationMandateRequestData,
   ) {
     return this.rawApprove(Utils.toId(organizationMandateRequestId));
   }
@@ -183,7 +183,7 @@ export default class OrganizationMandateRequest extends BaseResource {
   reject(
     organizationMandateRequestId:
       | string
-      | SimpleSchemaTypes.OrganizationMandateRequestData,
+      | ApiTypes.OrganizationMandateRequestData,
   ) {
     return this.rawReject(Utils.toId(organizationMandateRequestId));
   }

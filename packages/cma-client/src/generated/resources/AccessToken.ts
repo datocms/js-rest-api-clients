@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class AccessToken extends BaseResource {
   static readonly TYPE = 'access_token' as const;
@@ -14,9 +14,9 @@ export default class AccessToken extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.AccessTokenCreateSchema) {
+  create(body: ApiTypes.AccessTokenCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.AccessTokenCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.AccessTokenCreateSchema>(body, {
         type: 'access_token',
         attributes: [
           'name',
@@ -27,7 +27,7 @@ export default class AccessToken extends BaseResource {
         relationships: ['role'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenCreateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.AccessTokenCreateTargetSchema>(
         body,
       ),
     );
@@ -42,9 +42,9 @@ export default class AccessToken extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.AccessTokenCreateSchema,
-  ): Promise<SchemaTypes.AccessTokenCreateTargetSchema> {
-    return this.client.request<SchemaTypes.AccessTokenCreateTargetSchema>({
+    body: RawApiTypes.AccessTokenCreateSchema,
+  ): Promise<RawApiTypes.AccessTokenCreateTargetSchema> {
+    return this.client.request<RawApiTypes.AccessTokenCreateTargetSchema>({
       method: 'POST',
       url: '/access_tokens',
       body,
@@ -60,12 +60,12 @@ export default class AccessToken extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    accessTokenId: string | SimpleSchemaTypes.AccessTokenData,
-    body: SimpleSchemaTypes.AccessTokenUpdateSchema,
+    accessTokenId: string | ApiTypes.AccessTokenData,
+    body: ApiTypes.AccessTokenUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(accessTokenId),
-      Utils.serializeRequestBody<SchemaTypes.AccessTokenUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.AccessTokenUpdateSchema>(body, {
         id: Utils.toId(accessTokenId),
         type: 'access_token',
         attributes: [
@@ -77,7 +77,7 @@ export default class AccessToken extends BaseResource {
         relationships: ['role'],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenUpdateTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.AccessTokenUpdateTargetSchema>(
         body,
       ),
     );
@@ -93,9 +93,9 @@ export default class AccessToken extends BaseResource {
    */
   rawUpdate(
     accessTokenId: string,
-    body: SchemaTypes.AccessTokenUpdateSchema,
-  ): Promise<SchemaTypes.AccessTokenUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.AccessTokenUpdateTargetSchema>({
+    body: RawApiTypes.AccessTokenUpdateSchema,
+  ): Promise<RawApiTypes.AccessTokenUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.AccessTokenUpdateTargetSchema>({
       method: 'PUT',
       url: `/access_tokens/${accessTokenId}`,
       body,
@@ -112,7 +112,7 @@ export default class AccessToken extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.AccessTokenInstancesTargetSchema>(
         body,
       ),
     );
@@ -126,8 +126,8 @@ export default class AccessToken extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.AccessTokenInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.AccessTokenInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.AccessTokenInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.AccessTokenInstancesTargetSchema>({
       method: 'GET',
       url: '/access_tokens',
     });
@@ -141,11 +141,9 @@ export default class AccessToken extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(accessTokenId: string | SimpleSchemaTypes.AccessTokenData) {
+  find(accessTokenId: string | ApiTypes.AccessTokenData) {
     return this.rawFind(Utils.toId(accessTokenId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.AccessTokenSelfTargetSchema>(body),
     );
   }
 
@@ -159,8 +157,8 @@ export default class AccessToken extends BaseResource {
    */
   rawFind(
     accessTokenId: string,
-  ): Promise<SchemaTypes.AccessTokenSelfTargetSchema> {
-    return this.client.request<SchemaTypes.AccessTokenSelfTargetSchema>({
+  ): Promise<RawApiTypes.AccessTokenSelfTargetSchema> {
+    return this.client.request<RawApiTypes.AccessTokenSelfTargetSchema>({
       method: 'GET',
       url: `/access_tokens/${accessTokenId}`,
     });
@@ -174,9 +172,9 @@ export default class AccessToken extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  regenerateToken(accessTokenId: string | SimpleSchemaTypes.AccessTokenData) {
+  regenerateToken(accessTokenId: string | ApiTypes.AccessTokenData) {
     return this.rawRegenerateToken(Utils.toId(accessTokenId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenRegenerateTokenTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.AccessTokenRegenerateTokenTargetSchema>(
         body,
       ),
     );
@@ -192,8 +190,8 @@ export default class AccessToken extends BaseResource {
    */
   rawRegenerateToken(
     accessTokenId: string,
-  ): Promise<SchemaTypes.AccessTokenRegenerateTokenTargetSchema> {
-    return this.client.request<SchemaTypes.AccessTokenRegenerateTokenTargetSchema>(
+  ): Promise<RawApiTypes.AccessTokenRegenerateTokenTargetSchema> {
+    return this.client.request<RawApiTypes.AccessTokenRegenerateTokenTargetSchema>(
       {
         method: 'POST',
         url: `/access_tokens/${accessTokenId}/regenerate_token`,
@@ -210,12 +208,12 @@ export default class AccessToken extends BaseResource {
    * @throws {TimeoutError}
    */
   destroy(
-    accessTokenId: string | SimpleSchemaTypes.AccessTokenData,
-    queryParams?: SimpleSchemaTypes.AccessTokenDestroyHrefSchema,
+    accessTokenId: string | ApiTypes.AccessTokenData,
+    queryParams?: ApiTypes.AccessTokenDestroyHrefSchema,
   ) {
     return this.rawDestroy(Utils.toId(accessTokenId), queryParams).then(
       (body) =>
-        Utils.deserializeResponseBody<SimpleSchemaTypes.AccessTokenDestroyTargetSchema>(
+        Utils.deserializeResponseBody<ApiTypes.AccessTokenDestroyTargetSchema>(
           body,
         ),
     );
@@ -231,9 +229,9 @@ export default class AccessToken extends BaseResource {
    */
   rawDestroy(
     accessTokenId: string,
-    queryParams?: SchemaTypes.AccessTokenDestroyHrefSchema,
-  ): Promise<SchemaTypes.AccessTokenDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.AccessTokenDestroyTargetSchema>({
+    queryParams?: RawApiTypes.AccessTokenDestroyHrefSchema,
+  ): Promise<RawApiTypes.AccessTokenDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.AccessTokenDestroyTargetSchema>({
       method: 'DELETE',
       url: `/access_tokens/${accessTokenId}`,
       queryParams,

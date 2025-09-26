@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class Webhook extends BaseResource {
   static readonly TYPE = 'webhook' as const;
@@ -14,9 +14,9 @@ export default class Webhook extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  create(body: SimpleSchemaTypes.WebhookCreateSchema) {
+  create(body: ApiTypes.WebhookCreateSchema) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.WebhookCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.WebhookCreateSchema>(body, {
         type: 'webhook',
         attributes: [
           'name',
@@ -34,9 +34,7 @@ export default class Webhook extends BaseResource {
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.WebhookCreateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.WebhookCreateTargetSchema>(body),
     );
   }
 
@@ -49,9 +47,9 @@ export default class Webhook extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.WebhookCreateSchema,
-  ): Promise<SchemaTypes.WebhookCreateTargetSchema> {
-    return this.client.request<SchemaTypes.WebhookCreateTargetSchema>({
+    body: RawApiTypes.WebhookCreateSchema,
+  ): Promise<RawApiTypes.WebhookCreateTargetSchema> {
+    return this.client.request<RawApiTypes.WebhookCreateTargetSchema>({
       method: 'POST',
       url: '/webhooks',
       body,
@@ -67,12 +65,12 @@ export default class Webhook extends BaseResource {
    * @throws {TimeoutError}
    */
   update(
-    webhookId: string | SimpleSchemaTypes.WebhookData,
-    body: SimpleSchemaTypes.WebhookUpdateSchema,
+    webhookId: string | ApiTypes.WebhookData,
+    body: ApiTypes.WebhookUpdateSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(webhookId),
-      Utils.serializeRequestBody<SchemaTypes.WebhookUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.WebhookUpdateSchema>(body, {
         id: Utils.toId(webhookId),
         type: 'webhook',
         attributes: [
@@ -91,9 +89,7 @@ export default class Webhook extends BaseResource {
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.WebhookUpdateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.WebhookUpdateTargetSchema>(body),
     );
   }
 
@@ -107,9 +103,9 @@ export default class Webhook extends BaseResource {
    */
   rawUpdate(
     webhookId: string,
-    body: SchemaTypes.WebhookUpdateSchema,
-  ): Promise<SchemaTypes.WebhookUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.WebhookUpdateTargetSchema>({
+    body: RawApiTypes.WebhookUpdateSchema,
+  ): Promise<RawApiTypes.WebhookUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.WebhookUpdateTargetSchema>({
       method: 'PUT',
       url: `/webhooks/${webhookId}`,
       body,
@@ -126,7 +122,7 @@ export default class Webhook extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.WebhookInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.WebhookInstancesTargetSchema>(
         body,
       ),
     );
@@ -140,8 +136,8 @@ export default class Webhook extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.WebhookInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.WebhookInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.WebhookInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.WebhookInstancesTargetSchema>({
       method: 'GET',
       url: '/webhooks',
     });
@@ -155,11 +151,9 @@ export default class Webhook extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(webhookId: string | SimpleSchemaTypes.WebhookData) {
+  find(webhookId: string | ApiTypes.WebhookData) {
     return this.rawFind(Utils.toId(webhookId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.WebhookSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.WebhookSelfTargetSchema>(body),
     );
   }
 
@@ -171,8 +165,8 @@ export default class Webhook extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(webhookId: string): Promise<SchemaTypes.WebhookSelfTargetSchema> {
-    return this.client.request<SchemaTypes.WebhookSelfTargetSchema>({
+  rawFind(webhookId: string): Promise<RawApiTypes.WebhookSelfTargetSchema> {
+    return this.client.request<RawApiTypes.WebhookSelfTargetSchema>({
       method: 'GET',
       url: `/webhooks/${webhookId}`,
     });
@@ -186,11 +180,9 @@ export default class Webhook extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(webhookId: string | SimpleSchemaTypes.WebhookData) {
+  destroy(webhookId: string | ApiTypes.WebhookData) {
     return this.rawDestroy(Utils.toId(webhookId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.WebhookDestroyTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.WebhookDestroyTargetSchema>(body),
     );
   }
 
@@ -204,8 +196,8 @@ export default class Webhook extends BaseResource {
    */
   rawDestroy(
     webhookId: string,
-  ): Promise<SchemaTypes.WebhookDestroyTargetSchema> {
-    return this.client.request<SchemaTypes.WebhookDestroyTargetSchema>({
+  ): Promise<RawApiTypes.WebhookDestroyTargetSchema> {
+    return this.client.request<RawApiTypes.WebhookDestroyTargetSchema>({
       method: 'DELETE',
       url: `/webhooks/${webhookId}`,
     });

@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class ResourceUsage extends BaseResource {
   static readonly TYPE = 'resource_usage' as const;
@@ -14,7 +14,7 @@ export default class ResourceUsage extends BaseResource {
    */
   list() {
     return this.rawList().then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.ResourceUsageInstancesTargetSchema>(
+      Utils.deserializeResponseBody<ApiTypes.ResourceUsageInstancesTargetSchema>(
         body,
       ),
     );
@@ -26,8 +26,8 @@ export default class ResourceUsage extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<SchemaTypes.ResourceUsageInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.ResourceUsageInstancesTargetSchema>({
+  rawList(): Promise<RawApiTypes.ResourceUsageInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.ResourceUsageInstancesTargetSchema>({
       method: 'GET',
       url: '/resource-usages',
     });

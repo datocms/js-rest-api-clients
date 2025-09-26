@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
 import BaseResource from '../../BaseResource';
-import type * as SchemaTypes from '../SchemaTypes';
-import type * as SimpleSchemaTypes from '../SimpleSchemaTypes';
+import type * as ApiTypes from '../ApiTypes';
+import type * as RawApiTypes from '../RawApiTypes';
 
 export default class Site extends BaseResource {
   static readonly TYPE = 'site' as const;
@@ -13,13 +13,11 @@ export default class Site extends BaseResource {
    * @throws {TimeoutError}
    */
   find(
-    siteId: string | SimpleSchemaTypes.SiteData,
-    queryParams?: SimpleSchemaTypes.SiteSelfHrefSchema,
+    siteId: string | ApiTypes.SiteData,
+    queryParams?: ApiTypes.SiteSelfHrefSchema,
   ) {
     return this.rawFind(Utils.toId(siteId), queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteSelfTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.SiteSelfTargetSchema>(body),
     );
   }
 
@@ -31,9 +29,9 @@ export default class Site extends BaseResource {
    */
   rawFind(
     siteId: string,
-    queryParams?: SchemaTypes.SiteSelfHrefSchema,
-  ): Promise<SchemaTypes.SiteSelfTargetSchema> {
-    return this.client.request<SchemaTypes.SiteSelfTargetSchema>({
+    queryParams?: RawApiTypes.SiteSelfHrefSchema,
+  ): Promise<RawApiTypes.SiteSelfTargetSchema> {
+    return this.client.request<RawApiTypes.SiteSelfTargetSchema>({
       method: 'GET',
       url: `/sites/${siteId}`,
       queryParams,
@@ -46,11 +44,9 @@ export default class Site extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(queryParams?: SimpleSchemaTypes.SiteInstancesHrefSchema) {
+  list(queryParams?: ApiTypes.SiteInstancesHrefSchema) {
     return this.rawList(queryParams).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteInstancesTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.SiteInstancesTargetSchema>(body),
     );
   }
 
@@ -61,9 +57,9 @@ export default class Site extends BaseResource {
    * @throws {TimeoutError}
    */
   rawList(
-    queryParams?: SchemaTypes.SiteInstancesHrefSchema,
-  ): Promise<SchemaTypes.SiteInstancesTargetSchema> {
-    return this.client.request<SchemaTypes.SiteInstancesTargetSchema>({
+    queryParams?: RawApiTypes.SiteInstancesHrefSchema,
+  ): Promise<RawApiTypes.SiteInstancesTargetSchema> {
+    return this.client.request<RawApiTypes.SiteInstancesTargetSchema>({
       method: 'GET',
       url: '/sites',
       queryParams,
@@ -78,7 +74,7 @@ export default class Site extends BaseResource {
    */
   async *listPagedIterator(
     queryParams?: Utils.OmitFromKnownKeys<
-      SimpleSchemaTypes.SiteInstancesHrefSchema,
+      ApiTypes.SiteInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -87,9 +83,9 @@ export default class Site extends BaseResource {
       queryParams,
       iteratorOptions,
     )) {
-      yield Utils.deserializeJsonEntity<
-        SimpleSchemaTypes.SiteInstancesTargetSchema[0]
-      >(element);
+      yield Utils.deserializeJsonEntity<ApiTypes.SiteInstancesTargetSchema[0]>(
+        element,
+      );
     }
   }
 
@@ -101,7 +97,7 @@ export default class Site extends BaseResource {
    */
   rawListPagedIterator(
     queryParams?: Utils.OmitFromKnownKeys<
-      SchemaTypes.SiteInstancesHrefSchema,
+      RawApiTypes.SiteInstancesHrefSchema,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -109,13 +105,13 @@ export default class Site extends BaseResource {
     Utils.warnOnPageQueryParam(queryParams);
 
     return Utils.rawPageIterator<
-      SchemaTypes.SiteInstancesTargetSchema['data'][0]
+      RawApiTypes.SiteInstancesTargetSchema['data'][0]
     >(
       {
         defaultLimit: 20,
         maxLimit: 50,
       },
-      (page: SchemaTypes.SiteInstancesHrefSchema['page']) =>
+      (page: RawApiTypes.SiteInstancesHrefSchema['page']) =>
         this.rawList({ ...queryParams, page }),
       iteratorOptions,
     );
@@ -128,11 +124,11 @@ export default class Site extends BaseResource {
    * @throws {TimeoutError}
    */
   create(
-    body: SimpleSchemaTypes.SiteCreateSchema,
-    queryParams?: SimpleSchemaTypes.SiteCreateHrefSchema,
+    body: ApiTypes.SiteCreateSchema,
+    queryParams?: ApiTypes.SiteCreateHrefSchema,
   ) {
     return this.rawCreate(
-      Utils.serializeRequestBody<SchemaTypes.SiteCreateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.SiteCreateSchema>(body, {
         type: 'site',
         attributes: [
           'name',
@@ -145,9 +141,7 @@ export default class Site extends BaseResource {
       }),
       queryParams,
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteCreateJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.SiteCreateJobSchema>(body),
     );
   }
 
@@ -158,10 +152,10 @@ export default class Site extends BaseResource {
    * @throws {TimeoutError}
    */
   rawCreate(
-    body: SchemaTypes.SiteCreateSchema,
-    queryParams?: SchemaTypes.SiteCreateHrefSchema,
-  ): Promise<SchemaTypes.SiteCreateJobSchema> {
-    return this.client.request<SchemaTypes.SiteCreateJobSchema>({
+    body: RawApiTypes.SiteCreateSchema,
+    queryParams?: RawApiTypes.SiteCreateHrefSchema,
+  ): Promise<RawApiTypes.SiteCreateJobSchema> {
+    return this.client.request<RawApiTypes.SiteCreateJobSchema>({
       method: 'POST',
       url: '/sites',
       body,
@@ -175,13 +169,10 @@ export default class Site extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  update(
-    siteId: string | SimpleSchemaTypes.SiteData,
-    body: SimpleSchemaTypes.SiteUpdateSchema,
-  ) {
+  update(siteId: string | ApiTypes.SiteData, body: ApiTypes.SiteUpdateSchema) {
     return this.rawUpdate(
       Utils.toId(siteId),
-      Utils.serializeRequestBody<SchemaTypes.SiteUpdateSchema>(body, {
+      Utils.serializeRequestBody<RawApiTypes.SiteUpdateSchema>(body, {
         id: Utils.toId(siteId),
         type: 'site',
         attributes: [
@@ -193,9 +184,7 @@ export default class Site extends BaseResource {
         relationships: [],
       }),
     ).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteUpdateTargetSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.SiteUpdateTargetSchema>(body),
     );
   }
 
@@ -207,9 +196,9 @@ export default class Site extends BaseResource {
    */
   rawUpdate(
     siteId: string,
-    body: SchemaTypes.SiteUpdateSchema,
-  ): Promise<SchemaTypes.SiteUpdateTargetSchema> {
-    return this.client.request<SchemaTypes.SiteUpdateTargetSchema>({
+    body: RawApiTypes.SiteUpdateSchema,
+  ): Promise<RawApiTypes.SiteUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.SiteUpdateTargetSchema>({
       method: 'PUT',
       url: `/sites/${siteId}`,
       body,
@@ -222,11 +211,9 @@ export default class Site extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  destroy(siteId: string | SimpleSchemaTypes.SiteData) {
+  destroy(siteId: string | ApiTypes.SiteData) {
     return this.rawDestroy(Utils.toId(siteId)).then((body) =>
-      Utils.deserializeResponseBody<SimpleSchemaTypes.SiteDestroyJobSchema>(
-        body,
-      ),
+      Utils.deserializeResponseBody<ApiTypes.SiteDestroyJobSchema>(body),
     );
   }
 
@@ -236,8 +223,8 @@ export default class Site extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawDestroy(siteId: string): Promise<SchemaTypes.SiteDestroyJobSchema> {
-    return this.client.request<SchemaTypes.SiteDestroyJobSchema>({
+  rawDestroy(siteId: string): Promise<RawApiTypes.SiteDestroyJobSchema> {
+    return this.client.request<RawApiTypes.SiteDestroyJobSchema>({
       method: 'DELETE',
       url: `/sites/${siteId}`,
     });
@@ -251,10 +238,10 @@ export default class Site extends BaseResource {
    */
   rawDuplicate(
     siteId: string,
-    body: SchemaTypes.SiteDuplicateSchema,
-    queryParams?: SchemaTypes.SiteDuplicateHrefSchema,
-  ): Promise<SchemaTypes.SiteDuplicateJobSchema> {
-    return this.client.request<SchemaTypes.SiteDuplicateJobSchema>({
+    body: RawApiTypes.SiteDuplicateSchema,
+    queryParams?: RawApiTypes.SiteDuplicateHrefSchema,
+  ): Promise<RawApiTypes.SiteDuplicateJobSchema> {
+    return this.client.request<RawApiTypes.SiteDuplicateJobSchema>({
       method: 'POST',
       url: `/sites/${siteId}/duplicate`,
       body,
