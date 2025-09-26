@@ -1,20 +1,195 @@
-[![Node.js CI](https://github.com/datocms/js-rest-api-clients/actions/workflows/node.js.yml/badge.svg)](https://github.com/datocms/js-rest-api-clients/actions/workflows/node.js.yml)
+# DatoCMS Content Management API Utilities
 
-# DatoCMS Content Management JS API Client (Common)
+Take a look at the full [API documentation](https://www.datocms.com/docs/content-management-api) for examples!
 
-API client for [DatoCMS](https://www.datocms.com). Take a look at the full [API documentation](https://www.datocms.com/docs/content-management-api) for examples.
+## Field Types
 
-<br /><br />
-<a href="https://www.datocms.com/">
-<img src="https://www.datocms.com/images/full_logo.svg" height="60">
-</a>
-<br /><br />
+This library provides comprehensive TypeScript type definitions and utilities for all DatoCMS field types. Each field type includes type guards, validation functions, localization support, and editor appearance configurations.
 
-## Utility Functions
+### What's available
 
-This library provides a comprehensive set of utility functions to work with DatoCMS records, blocks, and field values. These utilities make it easier to manipulate, traverse, and inspect your content programmatically.
+Every field type follows a consistent pattern providing:
 
-### 1. Record/block inspection
+- **Field value types**: TypeScript definitions for the field's data structure
+- **Type guards**: Functions to validate field values at runtime
+- **Localization support**: Utilities for handling localized field variants
+- **Validation types**: Supported validators for the field type
+- **Appearance configuration**: Editor types and their configuration options
+
+**Example: `lat_lon` Field Type**
+
+```typescript
+import { LatLonFieldValue, isLatLonFieldValue, isLocalizedLatLonFieldValue } from '@datocms/cma-client';
+import type { LatLonFieldValidators, LatLonFieldAppearance } from '@datocms/cma-client';
+
+// Field value type - can be boolean or null
+const value: LatLonFieldValue = true;
+
+// Type guard functions for validation
+if (isLatLonFieldValue(someValue)) {
+  // someValue is guaranteed to be boolean | null
+}
+
+if (isLocalizedLatLonFieldValue(localizedValue)) {
+  // localizedValue is a localized boolean field
+}
+
+// Validator and appearance types available for type-safe configuration
+type Validators = LatLonFieldValidators;
+type Appearance = LatLonFieldAppearance;
+```
+
+### Context-Dependent field types
+
+Some field types have different value formats depending on the API context (request vs response) or query parameters:
+
+#### Request vs Response variations
+
+**File and Gallery fields** have different type requirements for API requests versus responses:
+
+```typescript
+import {
+  FileFieldValue,
+  FileFieldValueInRequest,
+  GalleryFieldValue,
+  GalleryFieldValueInRequest,
+  // Type guards for runtime validation
+  isFileFieldValue,
+  isFileFieldValueInRequest,
+  isGalleryFieldValue,
+  isGalleryFieldValueInRequest
+} from '@datocms/cma-client';
+
+// API Response format - all metadata fields present with defaults
+const fileResponse: FileFieldValue = {
+  upload_id: "12345",
+  alt: null,           // Always present (default: null)
+  title: null,         // Always present (default: null)
+  custom_data: {},     // Always present (default: {})
+  focal_point: null    // Always present (default: null)
+};
+
+// API Request format - metadata fields are optional
+const fileRequest: FileFieldValueInRequest = {
+  upload_id: "12345"
+  // alt, title, custom_data, focal_point are optional
+};
+
+// Runtime validation for different contexts
+if (isFileFieldValueInRequest(someFileValue)) {
+  // someFileValue has optional metadata fields
+}
+
+if (isGalleryFieldValue(someGalleryValue)) {
+  // someGalleryValue is array of files with all metadata present
+}
+```
+
+#### "Nested Mode" Response variations
+
+**Block-containing fields** (`structured_text`, `single_block`, `rich_text`) support different block representations for regular responses, for ["Nested Mode" responses](https://www.datocms.com/docs/content-management-api/resources/item#api-response-modes-regular-vs-nested), and for requests:
+
+```typescript
+import {
+  StructuredTextFieldValue,
+  StructuredTextFieldValueInRequest,
+  StructuredTextFieldValueInNestedResponse,
+  // Type guards for all variations (also available for single_block and rich_text)
+  isStructuredTextFieldValue,
+  isStructuredTextFieldValueInRequest,
+  isStructuredTextFieldValueInNestedResponse
+} from '@datocms/cma-client';
+
+// Regular response - blocks as string IDs
+const standard: StructuredTextFieldValue = {
+  document: {
+    type: "root",
+    children: [
+      {
+        type: "block",
+        // String ID reference
+        item: "IdMLV2GJTXyQ0Bfns7R4IQ"
+      }
+    ]
+  }
+};
+
+// Nested Mode response (?nested=true) - blocks as full objects
+const nested: StructuredTextFieldValueInNestedResponse = {
+  document: {
+    type: "root",
+    children: [
+      {
+        type: "block",
+        // Always full block object
+        item: {
+          id: "IdMLV2GJTXyQ0Bfns7R4IQ",
+          type: "item",
+          attributes: { /* ... */ },
+          relationships: { /* ... */ }
+        }
+      }
+    ]
+  }
+};
+
+// Request format - flexible block representation
+const request: StructuredTextFieldValueInRequest = {
+  document: {
+    type: "root",
+    children: [
+      {
+        type: "block",
+        // Can be string ID, to keep block unchanged...
+        item: "FicV5CxCSQ6yOrgfwRoiKA"
+      },
+      {
+        type: "block",
+        // ...or full block object (to create new blocks or update existing ones)
+        item: {
+          type: "item",
+          attributes: { /* ... */ },
+          relationships: { /* ... */ }
+        }
+      }
+    ]
+  }
+};
+
+// Runtime validation for different contexts
+if (isStructuredTextFieldValueInNestedResponse(someStructuredText)) {
+  // someStructuredText has blocks as full objects
+}
+
+if (isStructuredTextFieldValueInRequest(requestData)) {
+  // requestData allows flexible block representations
+}
+```
+
+These variants ensure type safety across different API contexts while maintaining the same conceptual data structure. All localized variants also have corresponding type guards (e.g., `isLocalizedStructuredTextFieldValueInRequest`, `isLocalizedStructuredTextFieldValueInNestedResponse`, etc.).
+
+**TypeScript Generics Support:** For maximum type safety, all field value types and type guards for block-containing fields accept [`ItemTypeDefinition` generics](https://www.datocms.com/docs/content-management-api/resources/item#type-safe-development-with-typescript) to provide precise typing for your specific schema:
+
+```typescript
+import type { MyArticle, MyArticleSection } from './schema';
+
+// Fully typed structured text with specific block types
+const content: StructuredTextFieldValueInRequest<MyArticleSection> = {
+  document: {
+    type: "root",
+    children: [/* ... */]
+  }
+};
+
+// Type guard with generic for precise validation
+if (isStructuredTextFieldValueInNestedResponse<MyArticleSection>(value)) {
+  // value is now typed with your specific block schema
+}
+```
+
+## Block Processing Utilities
+
+### Inspecting Records and Blocks
 
 The `inspectItem()` function provides a visual, tree-structured representation of DatoCMS records in the console, making it easier to debug and understand complex content structures.
 
@@ -59,194 +234,7 @@ console.log(inspectItem(record));
 ```
 </details>
 
-### 2. Block processing utilities
-
-These utilities provide a unified interface for working with blocks embedded within DatoCMS field values. DatoCMS supports three field types that can contain blocks: Modular Content (arrays of blocks), Single Block fields, and Structured Text (rich-text with embedded blocks). These functions abstract away the differences between field types, providing consistent APIs for common operations.
-
-#### Recursive Block Operations
-
-These functions traverse blocks recursively, processing nested blocks within blocks. They require a `SchemaRepository` instance to look up field definitions for nested blocks.
-
-<details>
-<summary><strong>visitBlocksInNonLocalizedFieldValue()</strong> - Recursively visit all blocks</summary>
-
-Visit every block in a non-localized field value recursively, including blocks nested within other blocks.
-
-**TypeScript Signature:**
-```typescript
-async function visitBlocksInNonLocalizedFieldValue(
-  nonLocalizedFieldValue: unknown,
-  fieldType: string,
-  schemaRepository: SchemaRepository,
-  visitor: (item: BlockInRequest, path: TreePath) => void | Promise<void>,
-): Promise<void>
-```
-
-**Parameters:**
-- `nonLocalizedFieldValue`: The non-localized field value
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
-- `schemaRepository`: Repository for caching schema lookups
-- `visitor`: Function called for each block (including nested)
-</details>
-
-<details>
-<summary><strong>mapBlocksInNonLocalizedFieldValue()</strong> - Recursively transform all blocks</summary>
-
-Transform all blocks in a non-localized field value recursively, including nested blocks.
-
-**TypeScript Signature:**
-```typescript
-async function mapBlocksInNonLocalizedFieldValue(
-  nonLocalizedFieldValue: unknown,
-  fieldType: string,
-  schemaRepository: SchemaRepository,
-  mapper: (item: BlockInRequest, path: TreePath) => BlockInRequest | Promise<BlockInRequest>,
-): Promise<unknown>
-```
-
-**Parameters:**
-- `nonLocalizedFieldValue`: The non-localized field value
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
-- `schemaRepository`: Repository for caching schema lookups
-- `mapper`: Function that transforms each block
-
-**Returns:** New field value
-</details>
-
-<details>
-<summary><strong>filterBlocksInNonLocalizedFieldValue()</strong> - Recursively filter blocks</summary>
-
-Filter blocks recursively, removing blocks at any nesting level that don't match the predicate.
-
-**TypeScript Signature:**
-```typescript
-async function filterBlocksInNonLocalizedFieldValue(
-  nonLocalizedFieldValue: unknown,
-  fieldType: string,
-  schemaRepository: SchemaRepository,
-  predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
-): Promise<unknown>
-```
-
-**Parameters:**
-- `nonLocalizedFieldValue`: The non-localized field value to filter
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
-- `schemaRepository`: Repository for caching schema lookups
-- `predicate`: Function that tests each block
-
-**Returns:** New field value with filtered blocks
-
-**Usage Example:**
-```typescript
-// Remove all video blocks at any nesting level
-const noVideos = await filterBlocksInNonLocalizedFieldValue(
-  schemaRepository,
-  field,
-  fieldValue,
-  (block) => block.relationships.item_type.data.id !== 'video_block'
-);
-```
-</details>
-
-<details>
-<summary><strong>findAllBlocksInNonLocalizedFieldValue()</strong> - Recursively search for blocks</summary>
-
-Find all blocks that match the predicate, searching recursively through nested blocks.
-
-**TypeScript Signature:**
-```typescript
-async function findAllBlocksInNonLocalizedFieldValue(
-  nonLocalizedFieldValue: unknown,
-  fieldType: string,
-  schemaRepository: SchemaRepository,
-  predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
-): Promise<Array<{ item: BlockInRequest; path: TreePath }>>
-```
-
-**Parameters:**
-- `nonLocalizedFieldValue`: The non-localized field value to search
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
-- `schemaRepository`: Repository for caching schema lookups
-- `predicate`: Function that tests each block
-
-**Returns:** Array of all matching blocks with their paths
-</details>
-
-<details>
-<summary><strong>reduceBlocksInNonLocalizedFieldValue()</strong> - Recursively reduce blocks</summary>
-
-Reduce all blocks recursively to a single value.
-
-**TypeScript Signature:**
-```typescript
-async function reduceBlocksInNonLocalizedFieldValue<R>(
-  nonLocalizedFieldValue: unknown,
-  fieldType: string,
-  schemaRepository: SchemaRepository,
-  reducer: (accumulator: R, item: BlockInRequest, path: TreePath) => R | Promise<R>,
-  initialValue: R,
-): Promise<R>
-```
-
-**Parameters:**
-- `nonLocalizedFieldValue`: The non-localized field value to reduce
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
-- `schemaRepository`: Repository for caching schema lookups
-- `reducer`: Function that processes each block
-- `initialValue`: Initial accumulator value
-
-**Returns:** The final accumulated value
-</details>
-
-<details>
-<summary><strong>someBlocksInNonLocalizedFieldValue()</strong> - Recursively test for any match</summary>
-
-Check if any block (including nested) matches the predicate.
-
-**TypeScript Signature:**
-```typescript
-async function someBlocksInNonLocalizedFieldValue(
-  nonLocalizedFieldValue: unknown,
-  fieldType: string,
-  schemaRepository: SchemaRepository,
-  predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
-): Promise<boolean>
-```
-
-**Parameters:**
-- `nonLocalizedFieldValue`: The non-localized field value to test
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
-- `schemaRepository`: Repository for caching schema lookups
-- `predicate`: Function that tests each block
-
-**Returns:** True if any block matches
-</details>
-
-<details>
-<summary><strong>everyBlockInNonLocalizedFieldValue()</strong> - Recursively test if all match</summary>
-
-Check if every block (including nested) matches the predicate.
-
-**TypeScript Signature:**
-```typescript
-async function everyBlockInNonLocalizedFieldValue(
-  nonLocalizedFieldValue: unknown,
-  fieldType: string,
-  schemaRepository: SchemaRepository,
-  predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
-): Promise<boolean>
-```
-
-**Parameters:**
-- `nonLocalizedFieldValue`: The non-localized field value to test
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
-- `schemaRepository`: Repository for caching schema lookups
-- `predicate`: Function that tests each block
-
-**Returns:** True if all blocks match
-</details>
-
-#### Block Record Management
+### Creating and Duplicating Blocks
 
 <details>
 <summary><strong>buildBlockRecord()</strong> - Create block records from data</summary>
@@ -286,7 +274,190 @@ async function duplicateBlockRecord<D extends ItemTypeDefinition>(
 **Returns:** New block record without IDs, ready to be created
 </details>
 
-### 3. Localization-Aware Field Utilities
+### Recursive Block Operations
+
+DatoCMS supports three field types that can contain blocks: Modular Content (arrays of blocks), Single Block fields, and Structured Text (rich-text with embedded blocks). These functions abstract away the differences between field types and can traverse blocks recursively, processing nested blocks within blocks. They require a `SchemaRepository` instance to look up field definitions for nested blocks.
+
+<details>
+<summary><strong>visitBlocksInNonLocalizedFieldValue()</strong> - Recursively visit all blocks</summary>
+
+Visit every block in a non-localized field value recursively, including blocks nested within other blocks.
+
+**TypeScript Signature:**
+```typescript
+async function visitBlocksInNonLocalizedFieldValue(
+  nonLocalizedFieldValue: unknown,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  visitor: (item: BlockInRequest, path: TreePath) => void | Promise<void>,
+): Promise<void>
+```
+
+**Parameters:**
+- `nonLocalizedFieldValue`: The non-localized field value
+- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
+- `visitor`: Function called for each block (including nested)
+</details>
+
+<details>
+<summary><strong>mapBlocksInNonLocalizedFieldValue()</strong> - Recursively transform all blocks</summary>
+
+Transform all blocks in a non-localized field value recursively, including nested blocks.
+
+**TypeScript Signature:**
+```typescript
+async function mapBlocksInNonLocalizedFieldValue(
+  nonLocalizedFieldValue: unknown,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  mapper: (item: BlockInRequest, path: TreePath) => BlockInRequest | Promise<BlockInRequest>,
+): Promise<unknown>
+```
+
+**Parameters:**
+- `nonLocalizedFieldValue`: The non-localized field value
+- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
+- `mapper`: Function that transforms each block
+
+**Returns:** New field value
+</details>
+
+<details>
+<summary><strong>filterBlocksInNonLocalizedFieldValue()</strong> - Recursively filter blocks</summary>
+
+Filter blocks recursively, removing blocks at any nesting level that don't match the predicate.
+
+**TypeScript Signature:**
+```typescript
+async function filterBlocksInNonLocalizedFieldValue(
+  nonLocalizedFieldValue: unknown,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
+): Promise<unknown>
+```
+
+**Parameters:**
+- `nonLocalizedFieldValue`: The non-localized field value to filter
+- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
+- `predicate`: Function that tests each block
+
+**Returns:** New field value with filtered blocks
+
+**Usage Example:**
+```typescript
+// Remove all video blocks at any nesting level
+const noVideos = await filterBlocksInNonLocalizedFieldValue(
+  schemaRepository,
+  field,
+  fieldValue,
+  (block) => block.relationships.item_type.data.id !== 'video_block'
+);
+```
+</details>
+
+<details>
+<summary><strong>findAllBlocksInNonLocalizedFieldValue()</strong> - Recursively search for blocks</summary>
+
+Find all blocks that match the predicate, searching recursively through nested blocks.
+
+**TypeScript Signature:**
+```typescript
+async function findAllBlocksInNonLocalizedFieldValue(
+  nonLocalizedFieldValue: unknown,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
+): Promise<Array<{ item: BlockInRequest; path: TreePath }>>
+```
+
+**Parameters:**
+- `nonLocalizedFieldValue`: The non-localized field value to search
+- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
+- `predicate`: Function that tests each block
+
+**Returns:** Array of all matching blocks with their paths
+</details>
+
+<details>
+<summary><strong>reduceBlocksInNonLocalizedFieldValue()</strong> - Recursively reduce blocks</summary>
+
+Reduce all blocks recursively to a single value.
+
+**TypeScript Signature:**
+```typescript
+async function reduceBlocksInNonLocalizedFieldValue<R>(
+  nonLocalizedFieldValue: unknown,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  reducer: (accumulator: R, item: BlockInRequest, path: TreePath) => R | Promise<R>,
+  initialValue: R,
+): Promise<R>
+```
+
+**Parameters:**
+- `nonLocalizedFieldValue`: The non-localized field value to reduce
+- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
+- `reducer`: Function that processes each block
+- `initialValue`: Initial accumulator value
+
+**Returns:** The final accumulated value
+</details>
+
+<details>
+<summary><strong>someBlocksInNonLocalizedFieldValue()</strong> - Recursively test for any match</summary>
+
+Check if any block (including nested) matches the predicate.
+
+**TypeScript Signature:**
+```typescript
+async function someBlocksInNonLocalizedFieldValue(
+  nonLocalizedFieldValue: unknown,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
+): Promise<boolean>
+```
+
+**Parameters:**
+- `nonLocalizedFieldValue`: The non-localized field value to test
+- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
+- `predicate`: Function that tests each block
+
+**Returns:** True if any block matches
+</details>
+
+<details>
+<summary><strong>everyBlockInNonLocalizedFieldValue()</strong> - Recursively test if all match</summary>
+
+Check if every block (including nested) matches the predicate.
+
+**TypeScript Signature:**
+```typescript
+async function everyBlockInNonLocalizedFieldValue(
+  nonLocalizedFieldValue: unknown,
+  fieldType: string,
+  schemaRepository: SchemaRepository,
+  predicate: (item: BlockInRequest, path: TreePath) => boolean | Promise<boolean>,
+): Promise<boolean>
+```
+
+**Parameters:**
+- `nonLocalizedFieldValue`: The non-localized field value to test
+- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `schemaRepository`: Repository for caching schema lookups
+- `predicate`: Function that tests each block
+
+**Returns:** True if all blocks match
+</details>
+
+## Unified Field Processing (Localized & Non-Localized)
 
 These utilities provide a unified interface for working with DatoCMS field values that may or may not be localized. They eliminate the need for conditional logic when processing fields that could be either localized or non-localized.
 
@@ -311,7 +482,7 @@ async function mapNormalizedFieldValuesAsync<TInput, TOutput>(
 ```
 
 **Parameters:**
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `nonLocalizedFieldValue`: The non-localized field value (localized or non-localized)
 - `mapFn`: Function to transform each value (receives locale for localized fields, undefined for non-localized)
 
@@ -339,7 +510,7 @@ async function filterNormalizedFieldValuesAsync<T>(
 ```
 
 **Parameters:**
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `nonLocalizedFieldValue`: The non-localized field value to filter
 - `filterFn`: Predicate function for filtering
 
@@ -367,7 +538,7 @@ async function visitNormalizedFieldValuesAsync<T>(
 ```
 
 **Parameters:**
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `nonLocalizedFieldValue`: The non-localized field value to visit
 - `visitFn`: Function called for each value
 </details>
@@ -393,7 +564,7 @@ async function someNormalizedFieldValuesAsync<T>(
 ```
 
 **Parameters:**
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `nonLocalizedFieldValue`: The non-localized field value to test
 - `testFn`: Predicate function
 
@@ -421,7 +592,7 @@ async function everyNormalizedFieldValueAsync<T>(
 ```
 
 **Parameters:**
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `nonLocalizedFieldValue`: The non-localized field value to test
 - `testFn`: Predicate function
 
@@ -452,7 +623,7 @@ type NormalizedFieldValueEntry<T> = {
 ```
 
 **Parameters:**
-- `fieldType`: The typeo of DatoCMS field (ie. `string`, `rich_text`, etc.)
+- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
 - `nonLocalizedFieldValue`/`entries non-localized`: Value to convert from/to
 
 **Returns:** Normalized entries array or reconstructed field value
