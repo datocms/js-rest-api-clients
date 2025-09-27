@@ -18,6 +18,9 @@ Every field type follows a consistent pattern providing:
 
 **Example: `lat_lon` Field Type**
 
+<details>
+<summary>View example</summary>
+
 ```typescript
 import { isLatLonFieldValue, isLocalizedLatLonFieldValue } from '@datocms/cma-client';
 import type { LatLonFieldValue, LatLonFieldValidators, LatLonFieldAppearance } from '@datocms/cma-client';
@@ -38,6 +41,7 @@ if (isLocalizedLatLonFieldValue(localizedValue)) {
 type Validators = LatLonFieldValidators;
 type Appearance = LatLonFieldAppearance;
 ```
+</details>
 
 ### Context-Dependent field types
 
@@ -46,6 +50,9 @@ Some field types have different value formats depending on the API context (requ
 #### Request vs Response variations
 
 **File and Gallery fields** have different type requirements for API requests versus responses:
+
+<details>
+<summary>View example</summary>
 
 ```typescript
 import {
@@ -84,10 +91,14 @@ if (isGalleryFieldValue(someGalleryValue)) {
   // someGalleryValue is array of files with all metadata present
 }
 ```
+</details>
 
 #### "Nested Mode" Response variations
 
 **Block-containing fields** (`structured_text`, `single_block`, `rich_text`) support different block representations for regular responses, for ["Nested Mode" responses](https://www.datocms.com/docs/content-management-api/resources/item#api-response-modes-regular-vs-nested), and for requests:
+
+<details>
+<summary>View example</summary>
 
 ```typescript
 import {
@@ -165,10 +176,14 @@ if (isStructuredTextFieldValueInRequest(requestData)) {
   // requestData allows flexible block representations
 }
 ```
+</details>
 
 These variants ensure type safety across different API contexts while maintaining the same conceptual data structure. All localized variants also have corresponding type guards (e.g., `isLocalizedStructuredTextFieldValueInRequest`, `isLocalizedStructuredTextFieldValueInNestedResponse`, etc.).
 
 **TypeScript Generics Support:** For maximum type safety, all field value types and type guards for block-containing fields accept [`ItemTypeDefinition` generics](https://www.datocms.com/docs/content-management-api/resources/item#type-safe-development-with-typescript) to provide precise typing for your specific schema:
+
+<details>
+<summary>View example</summary>
 
 ```typescript
 import type { MyArticle, MyArticleSection } from './schema';
@@ -186,6 +201,7 @@ if (isStructuredTextFieldValueInNestedResponse<MyArticleSection>(value)) {
   // value is now typed with your specific block schema
 }
 ```
+</details>
 
 ## Block Processing Utilities
 
@@ -193,10 +209,12 @@ if (isStructuredTextFieldValueInNestedResponse<MyArticleSection>(value)) {
 
 The `inspectItem()` function provides a visual, tree-structured representation of DatoCMS records in the console, making it easier to debug and understand complex content structures.
 
-<details>
-<summary><strong>inspectItem()</strong> - Display records with visual appeal</summary>
+#### inspectItem()
 
 Formats a DatoCMS item (record or block) as a visual tree structure, showing all fields with proper formatting for each field type. Particularly useful for debugging nested structures like modular content and structured text.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signature:**
 ```typescript
@@ -236,10 +254,12 @@ console.log(inspectItem(record));
 
 ### Creating and Duplicating Blocks
 
-<details>
-<summary><strong>buildBlockRecord()</strong> - Create block records from data</summary>
+#### buildBlockRecord()
 
 Converts a block data object into the proper format for API requests.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signature:**
 ```typescript
@@ -254,10 +274,12 @@ function buildBlockRecord<D extends ItemTypeDefinition>(
 **Returns:** Formatted block record ready for API requests
 </details>
 
-<details>
-<summary><strong>duplicateBlockRecord()</strong> - Deep clone blocks with nested content</summary>
+#### duplicateBlockRecord()
 
 Creates a deep copy of a block record, including all nested blocks, removing IDs to create new instances.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signature:**
 ```typescript
@@ -278,10 +300,12 @@ async function duplicateBlockRecord<D extends ItemTypeDefinition>(
 
 DatoCMS supports three field types that can contain blocks: Modular Content (arrays of blocks), Single Block fields, and Structured Text (rich-text with embedded blocks). These functions abstract away the differences between field types and can traverse blocks recursively, processing nested blocks within blocks. They require a `SchemaRepository` instance to look up field definitions for nested blocks.
 
-<details>
-<summary><strong>visitBlocksInNonLocalizedFieldValue()</strong> - Recursively visit all blocks</summary>
+#### visitBlocksInNonLocalizedFieldValue()
 
 Visit every block in a non-localized field value recursively, including blocks nested within other blocks.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signature:**
 ```typescript
@@ -300,10 +324,12 @@ async function visitBlocksInNonLocalizedFieldValue(
 - `visitor`: Function called for each block (including nested)
 </details>
 
-<details>
-<summary><strong>mapBlocksInNonLocalizedFieldValue()</strong> - Recursively transform all blocks</summary>
+#### mapBlocksInNonLocalizedFieldValue()
 
 Transform all blocks in a non-localized field value recursively, including nested blocks.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signature:**
 ```typescript
@@ -324,10 +350,12 @@ async function mapBlocksInNonLocalizedFieldValue(
 **Returns:** New field value
 </details>
 
-<details>
-<summary><strong>filterBlocksInNonLocalizedFieldValue()</strong> - Recursively filter blocks</summary>
+#### filterBlocksInNonLocalizedFieldValue()
 
 Filter blocks recursively, removing blocks at any nesting level that don't match the predicate.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signature:**
 ```typescript
@@ -359,10 +387,12 @@ const noVideos = await filterBlocksInNonLocalizedFieldValue(
 ```
 </details>
 
-<details>
-<summary><strong>findAllBlocksInNonLocalizedFieldValue()</strong> - Recursively search for blocks</summary>
+#### findAllBlocksInNonLocalizedFieldValue()
 
 Find all blocks that match the predicate, searching recursively through nested blocks.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signature:**
 ```typescript
@@ -383,10 +413,12 @@ async function findAllBlocksInNonLocalizedFieldValue(
 **Returns:** Array of all matching blocks with their paths
 </details>
 
-<details>
-<summary><strong>reduceBlocksInNonLocalizedFieldValue()</strong> - Recursively reduce blocks</summary>
+#### reduceBlocksInNonLocalizedFieldValue()
 
 Reduce all blocks recursively to a single value.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signature:**
 ```typescript
@@ -409,10 +441,12 @@ async function reduceBlocksInNonLocalizedFieldValue<R>(
 **Returns:** The final accumulated value
 </details>
 
-<details>
-<summary><strong>someBlocksInNonLocalizedFieldValue()</strong> - Recursively test for any match</summary>
+#### someBlocksInNonLocalizedFieldValue()
 
 Check if any block (including nested) matches the predicate.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signature:**
 ```typescript
@@ -433,10 +467,12 @@ async function someBlocksInNonLocalizedFieldValue(
 **Returns:** True if any block matches
 </details>
 
-<details>
-<summary><strong>everyBlockInNonLocalizedFieldValue()</strong> - Recursively test if all match</summary>
+#### everyBlockInNonLocalizedFieldValue()
 
 Check if every block (including nested) matches the predicate.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signature:**
 ```typescript
@@ -461,10 +497,12 @@ async function everyBlockInNonLocalizedFieldValue(
 
 These utilities provide a unified interface for working with DatoCMS field values that may or may not be localized. They eliminate the need for conditional logic when processing fields that could be either localized or non-localized.
 
-<details>
-<summary><strong>mapNormalizedFieldValues() / mapNormalizedFieldValuesAsync()</strong> - Transform field values</summary>
+#### mapNormalizedFieldValues() / mapNormalizedFieldValuesAsync()
 
 Apply a transformation function to field values, handling both localized and non-localized fields uniformly.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signatures:**
 ```typescript
@@ -489,10 +527,12 @@ async function mapNormalizedFieldValuesAsync<TInput, TOutput>(
 **Returns:** Transformed value maintaining the same structure
 </details>
 
-<details>
-<summary><strong>filterNormalizedFieldValues() / filterNormalizedFieldValuesAsync()</strong> - Filter field values</summary>
+#### filterNormalizedFieldValues() / filterNormalizedFieldValuesAsync()
 
 Filter field values based on a predicate, handling both localized and non-localized fields.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signatures:**
 ```typescript
@@ -517,10 +557,12 @@ async function filterNormalizedFieldValuesAsync<T>(
 **Returns:** Filtered value or undefined if all filtered out
 </details>
 
-<details>
-<summary><strong>visitNormalizedFieldValues() / visitNormalizedFieldValuesAsync()</strong> - Iterate over field values</summary>
+#### visitNormalizedFieldValues() / visitNormalizedFieldValuesAsync()
 
 Visit each value in a field, handling both localized and non-localized fields.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signatures:**
 ```typescript
@@ -543,10 +585,12 @@ async function visitNormalizedFieldValuesAsync<T>(
 - `visitFn`: Function called for each value
 </details>
 
-<details>
-<summary><strong>someNormalizedFieldValues() / someNormalizedFieldValuesAsync()</strong> - Test if any value matches</summary>
+#### someNormalizedFieldValues() / someNormalizedFieldValuesAsync()
 
 Check if at least one field value passes the test.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signatures:**
 ```typescript
@@ -571,10 +615,12 @@ async function someNormalizedFieldValuesAsync<T>(
 **Returns:** True if any value passes the test
 </details>
 
-<details>
-<summary><strong>everyNormalizedFieldValue() / everyNormalizedFieldValueAsync()</strong> - Test if all values match</summary>
+#### everyNormalizedFieldValue() / everyNormalizedFieldValueAsync()
 
 Check if all field values pass the test.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signatures:**
 ```typescript
@@ -599,10 +645,12 @@ async function everyNormalizedFieldValueAsync<T>(
 **Returns:** True if all values pass the test
 </details>
 
-<details>
-<summary><strong>toNormalizedFieldValueEntries() / fromNormalizedFieldValueEntries()</strong> - Convert between formats</summary>
+#### toNormalizedFieldValueEntries() / fromNormalizedFieldValueEntries()
 
 Convert field values to/from a normalized entry format for uniform processing.
+
+<details>
+<summary>View details</summary>
 
 **TypeScript Signatures:**
 ```typescript
@@ -656,6 +704,10 @@ The `SchemaRepository` class provides a lightweight, in-memory cache for DatoCMS
 - **Fewer API calls**: Dramatically speeds up bulk operations and complex traversals.
 
 **Usage Example:**
+
+<details>
+<summary>View example</summary>
+
 ```typescript
 const schemaRepository = new SchemaRepository(client);
 
@@ -670,13 +722,14 @@ const sameFields = await schemaRepository.getItemTypeFields(blogPost);
 // Works seamlessly with block-processing utilities
 await mapBlocksInNonLocalizedFieldValue(
   fieldValue,
-  field,
+  fieldType,
   schemaRepository,  // share cached lookups
   async (block) => {
     // transform block here
   }
 );
 ```
+</details>
 
 **When to Use**
 
