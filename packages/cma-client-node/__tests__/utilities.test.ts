@@ -243,8 +243,8 @@ describe('utilities test', () => {
 
           // Process the locales by converting any full block object to just IDs
           const newFieldValue = (await mapNormalizedFieldValuesAsync(
-            field,
             fieldValueInNestedResponse,
+            field,
             async (
               _locale: string | undefined,
               fieldValueForLocale: unknown,

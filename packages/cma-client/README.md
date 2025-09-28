@@ -507,21 +507,21 @@ Apply a transformation function to field values, handling both localized and non
 **TypeScript Signatures:**
 ```typescript
 function mapNormalizedFieldValues<TInput, TOutput>(
+  localizedOrNonLocalizedFieldValue: TInput | LocalizedFieldValue<TInput>,
   field: Field,
-  value: TInput | LocalizedFieldValue<TInput>,
   mapFn: (locale: string | undefined, localeValue: TInput) => TOutput
 ): TOutput | LocalizedFieldValue<TOutput>
 
 async function mapNormalizedFieldValuesAsync<TInput, TOutput>(
+  localizedOrNonLocalizedFieldValue: TInput | LocalizedFieldValue<TInput>,
   field: Field,
-  value: TInput | LocalizedFieldValue<TInput>,
   mapFn: (locale: string | undefined, localeValue: TInput) => Promise<TOutput>
 ): Promise<TOutput | LocalizedFieldValue<TOutput>>
 ```
 
 **Parameters:**
-- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
-- `nonLocalizedFieldValue`: The non-localized field value (localized or non-localized)
+- `localizedOrNonLocalizedFieldValue`: The field value (localized or non-localized)
+- `field`: The DatoCMS field definition
 - `mapFn`: Function to transform each value (receives locale for localized fields, undefined for non-localized)
 
 **Returns:** Transformed value maintaining the same structure
@@ -537,21 +537,21 @@ Filter field values based on a predicate, handling both localized and non-locali
 **TypeScript Signatures:**
 ```typescript
 function filterNormalizedFieldValues<T>(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T>,
   field: Field,
-  value: T | LocalizedFieldValue<T>,
   filterFn: (locale: string | undefined, localeValue: T) => boolean
 ): T | LocalizedFieldValue<T> | undefined
 
 async function filterNormalizedFieldValuesAsync<T>(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T>,
   field: Field,
-  value: T | LocalizedFieldValue<T>,
   filterFn: (locale: string | undefined, localeValue: T) => Promise<boolean>
 ): Promise<T | LocalizedFieldValue<T> | undefined>
 ```
 
 **Parameters:**
-- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
-- `nonLocalizedFieldValue`: The non-localized field value to filter
+- `localizedOrNonLocalizedFieldValue`: The field value to filter
+- `field`: The DatoCMS field definition
 - `filterFn`: Predicate function for filtering
 
 **Returns:** Filtered value or undefined if all filtered out
@@ -567,21 +567,21 @@ Visit each value in a field, handling both localized and non-localized fields.
 **TypeScript Signatures:**
 ```typescript
 function visitNormalizedFieldValues<T>(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T>,
   field: Field,
-  value: T | LocalizedFieldValue<T>,
   visitFn: (locale: string | undefined, localeValue: T) => void
 ): void
 
 async function visitNormalizedFieldValuesAsync<T>(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T>,
   field: Field,
-  value: T | LocalizedFieldValue<T>,
   visitFn: (locale: string | undefined, localeValue: T) => Promise<void>
 ): Promise<void>
 ```
 
 **Parameters:**
-- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
-- `nonLocalizedFieldValue`: The non-localized field value to visit
+- `localizedOrNonLocalizedFieldValue`: The field value to visit
+- `field`: The DatoCMS field definition
 - `visitFn`: Function called for each value
 </details>
 
@@ -595,21 +595,21 @@ Check if at least one field value passes the test.
 **TypeScript Signatures:**
 ```typescript
 function someNormalizedFieldValues<T>(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T>,
   field: Field,
-  value: T | LocalizedFieldValue<T>,
   testFn: (locale: string | undefined, localeValue: T) => boolean
 ): boolean
 
 async function someNormalizedFieldValuesAsync<T>(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T>,
   field: Field,
-  value: T | LocalizedFieldValue<T>,
   testFn: (locale: string | undefined, localeValue: T) => Promise<boolean>
 ): Promise<boolean>
 ```
 
 **Parameters:**
-- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
-- `nonLocalizedFieldValue`: The non-localized field value to test
+- `localizedOrNonLocalizedFieldValue`: The field value to test
+- `field`: The DatoCMS field definition
 - `testFn`: Predicate function
 
 **Returns:** True if any value passes the test
@@ -625,21 +625,21 @@ Check if all field values pass the test.
 **TypeScript Signatures:**
 ```typescript
 function everyNormalizedFieldValue<T>(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T>,
   field: Field,
-  value: T | LocalizedFieldValue<T>,
   testFn: (locale: string | undefined, localeValue: T) => boolean
 ): boolean
 
 async function everyNormalizedFieldValueAsync<T>(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T>,
   field: Field,
-  value: T | LocalizedFieldValue<T>,
   testFn: (locale: string | undefined, localeValue: T) => Promise<boolean>
 ): Promise<boolean>
 ```
 
 **Parameters:**
-- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
-- `nonLocalizedFieldValue`: The non-localized field value to test
+- `localizedOrNonLocalizedFieldValue`: The field value to test
+- `field`: The DatoCMS field definition
 - `testFn`: Predicate function
 
 **Returns:** True if all values pass the test
@@ -655,13 +655,13 @@ Convert field values to/from a normalized entry format for uniform processing.
 **TypeScript Signatures:**
 ```typescript
 function toNormalizedFieldValueEntries<T>(
-  field: Field,
-  value: T | LocalizedFieldValue<T>
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T>,
+  field: Field
 ): NormalizedFieldValueEntry<T>[]
 
 function fromNormalizedFieldValueEntries<T>(
-  field: Field,
-  entries: NormalizedFieldValueEntry<T>[]
+  entries: NormalizedFieldValueEntry<T>[],
+  field: Field
 ): T | LocalizedFieldValue<T>
 
 type NormalizedFieldValueEntry<T> = {
@@ -671,15 +671,15 @@ type NormalizedFieldValueEntry<T> = {
 ```
 
 **Parameters:**
-- `fieldType`: The type of DatoCMS field (ie. `string`, `rich_text`, etc.)
-- `nonLocalizedFieldValue`/`entries non-localized`: Value to convert from/to
+- `localizedOrNonLocalizedFieldValue`/`entries`: Value to convert from/to
+- `field`: The DatoCMS field definition
 
 **Returns:** Normalized entries array or reconstructed field value
 
 **Usage Example:**
 ```typescript
 // Convert to entries for processing
-const entries = toNormalizedFieldValueEntries(field, fieldValue);
+const entries = toNormalizedFieldValueEntries(fieldValue, field);
 
 // Process entries uniformly
 const processed = entries.map(({ locale, value }) => ({
@@ -688,7 +688,7 @@ const processed = entries.map(({ locale, value }) => ({
 }));
 
 // Convert back to field value format
-const result = fromNormalizedFieldValueEntries(field, processed);
+const result = fromNormalizedFieldValueEntries(processed, field);
 ```
 </details>
 

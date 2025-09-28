@@ -38,8 +38,8 @@ export type LocalizedFieldValue<
  * This function handles both full Schema field objects and simplified Schema field objects
  * by checking the appropriate property based on the object structure.
  *
- * @param field - The DatoCMS field definition (either full or simple schema)
  * @returns true if the field is localized, false otherwise
+ * @param field - The DatoCMS field definition (either full or simple schema)
  */
 export function isLocalized(
   field: RawApiTypes.Field | ApiTypes.Field,
@@ -88,16 +88,16 @@ export type NormalizedFieldValueEntry<
  * This function normalizes the handling of field values by converting them into a consistent
  * array format, regardless of whether the field is localized or not.
  *
- * @param field - The DatoCMS field definition that determines localization behavior
  * @param value - The field value to convert (either a localized object or direct value)
+ * @param field - The DatoCMS field definition that determines localization behavior
  * @returns Array of entries where each entry contains a locale (string for localized, undefined for non-localized) and the corresponding value
  */
 export function toNormalizedFieldValueEntries<
   T = unknown,
   L extends string = string,
 >(
-  field: RawApiTypes.Field | ApiTypes.Field,
   value: T | LocalizedFieldValue<T, L>,
+  field: RawApiTypes.Field | ApiTypes.Field,
 ): NormalizedFieldValueEntry<T, L>[] {
   if (isLocalized(field)) {
     const localizedValue = value as LocalizedFieldValue<T, L>;
@@ -118,16 +118,16 @@ export function toNormalizedFieldValueEntries<
  * array of entries and converts them back to either a localized object or a direct value,
  * depending on the field's localization setting.
  *
- * @param field - The DatoCMS field definition that determines the output format
  * @param entries - Array of entries to convert back to field value format
+ * @param field - The DatoCMS field definition that determines the output format
  * @returns Either a localized object (for localized fields) or the direct value (for non-localized fields)
  */
 export function fromNormalizedFieldValueEntries<
   T = unknown,
   L extends string = string,
 >(
-  field: RawApiTypes.Field | ApiTypes.Field,
   entries: NormalizedFieldValueEntry<T, L>[],
+  field: RawApiTypes.Field | ApiTypes.Field,
 ): T | LocalizedFieldValue<T, L> {
   if (isLocalized(field)) {
     return Object.fromEntries(
@@ -148,8 +148,8 @@ export function fromNormalizedFieldValueEntries<
  * For non-localized fields, applies the mapping function directly to the value.
  *
  * @template T - The type that the mapping function returns
+ * @param localizedOrNonLocalizedFieldValue - The field value (either localized object or direct value)
  * @param field - The DatoCMS field definition
- * @param value - The field value (either localized object or direct value)
  * @param mapFn - The function to apply to each locale value or the direct value
  * @returns The mapped value with the same structure as the input
  */
@@ -158,16 +158,19 @@ export function mapNormalizedFieldValues<
   TOutput = unknown,
   L extends string = string,
 >(
+  localizedOrNonLocalizedFieldValue: TInput | LocalizedFieldValue<TInput, L>,
   field: RawApiTypes.Field | ApiTypes.Field,
-  value: TInput | LocalizedFieldValue<TInput, L>,
   mapFn: (locale: L | undefined, localeValue: TInput) => TOutput,
 ): TOutput | LocalizedFieldValue<TOutput, L> {
-  const entries = toNormalizedFieldValueEntries<TInput, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<TInput, L>(
+    localizedOrNonLocalizedFieldValue,
+    field,
+  );
   const mappedEntries = entries.map(({ locale, value }) => ({
     locale,
     value: mapFn(locale, value),
   }));
-  return fromNormalizedFieldValueEntries<TOutput, L>(field, mappedEntries);
+  return fromNormalizedFieldValueEntries<TOutput, L>(mappedEntries, field);
 }
 
 /**
@@ -176,8 +179,8 @@ export function mapNormalizedFieldValues<
  * For non-localized fields, applies the mapping function directly to the value.
  *
  * @template T - The type that the mapping function returns
+ * @param localizedOrNonLocalizedFieldValue - The field value (either localized object or direct value)
  * @param field - The DatoCMS field definition
- * @param value - The field value (either localized object or direct value)
  * @param mapFn - The function to apply to each locale value or the direct value
  * @returns The mapped value with the same structure as the input
  */
@@ -186,18 +189,21 @@ export async function mapNormalizedFieldValuesAsync<
   TOutput = unknown,
   L extends string = string,
 >(
+  localizedOrNonLocalizedFieldValue: TInput | LocalizedFieldValue<TInput, L>,
   field: RawApiTypes.Field | ApiTypes.Field,
-  value: TInput | LocalizedFieldValue<TInput, L>,
   mapFn: (locale: L | undefined, localeValue: TInput) => Promise<TOutput>,
 ): Promise<TOutput | LocalizedFieldValue<TOutput, L>> {
-  const entries = toNormalizedFieldValueEntries<TInput, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<TInput, L>(
+    localizedOrNonLocalizedFieldValue,
+    field,
+  );
   const mappedEntries = await Promise.all(
     entries.map(async ({ locale, value }) => ({
       locale,
       value: await mapFn(locale, value),
     })),
   );
-  return fromNormalizedFieldValueEntries<TOutput, L>(field, mappedEntries);
+  return fromNormalizedFieldValueEntries<TOutput, L>(mappedEntries, field);
 }
 
 /**
@@ -205,8 +211,8 @@ export async function mapNormalizedFieldValuesAsync<
  * For localized fields, filters each locale value.
  * For non-localized fields, returns the value if the filter passes, otherwise undefined.
  *
+ * @param localizedOrNonLocalizedFieldValue - The field value (either localized object or direct value)
  * @param field - The DatoCMS field definition
- * @param value - The field value (either localized object or direct value)
  * @param filterFn - The function to test each locale value or the direct value
  * @returns The filtered value with the same structure as the input
  */
@@ -214,17 +220,20 @@ export function filterNormalizedFieldValues<
   T = unknown,
   L extends string = string,
 >(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T, L>,
   field: RawApiTypes.Field | ApiTypes.Field,
-  value: T | LocalizedFieldValue<T, L>,
   filterFn: (locale: L | undefined, localeValue: T) => boolean,
 ): T | LocalizedFieldValue<T, L> | undefined {
-  const entries = toNormalizedFieldValueEntries<T, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<T, L>(
+    localizedOrNonLocalizedFieldValue,
+    field,
+  );
   const filteredEntries = entries.filter((entry) =>
     filterFn(entry.locale, entry.value),
   );
 
   if (isLocalized(field)) {
-    return fromNormalizedFieldValueEntries<T, L>(field, filteredEntries);
+    return fromNormalizedFieldValueEntries<T, L>(filteredEntries, field);
   }
 
   return filteredEntries.length > 0 ? filteredEntries[0]?.value : undefined;
@@ -235,8 +244,8 @@ export function filterNormalizedFieldValues<
  * For localized fields, filters each locale value.
  * For non-localized fields, returns the value if the filter passes, otherwise undefined.
  *
+ * @param localizedOrNonLocalizedFieldValue - The field value (either localized object or direct value)
  * @param field - The DatoCMS field definition
- * @param value - The field value (either localized object or direct value)
  * @param filterFn - The function to test each locale value or the direct value
  * @returns The filtered value with the same structure as the input
  */
@@ -244,11 +253,14 @@ export async function filterNormalizedFieldValuesAsync<
   T = unknown,
   L extends string = string,
 >(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T, L>,
   field: RawApiTypes.Field | ApiTypes.Field,
-  value: T | LocalizedFieldValue<T, L>,
   filterFn: (locale: L | undefined, localeValue: T) => Promise<boolean>,
 ): Promise<T | LocalizedFieldValue<T, L> | undefined> {
-  const entries = toNormalizedFieldValueEntries<T, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<T, L>(
+    localizedOrNonLocalizedFieldValue,
+    field,
+  );
   const results = await Promise.all(
     entries.map(async ({ locale, value }) => ({
       locale,
@@ -262,7 +274,7 @@ export async function filterNormalizedFieldValuesAsync<
     .map(({ locale, value }) => ({ locale, value }));
 
   if (isLocalized(field)) {
-    return fromNormalizedFieldValueEntries<T, L>(field, filteredEntries);
+    return fromNormalizedFieldValueEntries<T, L>(filteredEntries, field);
   }
 
   return filteredEntries.length > 0 ? filteredEntries[0]?.value : undefined;
@@ -273,8 +285,8 @@ export async function filterNormalizedFieldValuesAsync<
  * For localized fields, tests each locale value.
  * For non-localized fields, tests the direct value.
  *
+ * @param localizedOrNonLocalizedFieldValue - The field value (either localized object or direct value)
  * @param field - The DatoCMS field definition
- * @param value - The field value (either localized object or direct value)
  * @param testFn - The function to test each locale value or the direct value
  * @returns true if at least one value passes the test, false otherwise
  */
@@ -282,11 +294,14 @@ export function someNormalizedFieldValues<
   T = unknown,
   L extends string = string,
 >(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T, L>,
   field: RawApiTypes.Field | ApiTypes.Field,
-  value: T | LocalizedFieldValue<T, L>,
   testFn: (locale: L | undefined, localeValue: T) => boolean,
 ): boolean {
-  const entries = toNormalizedFieldValueEntries<T, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<T, L>(
+    localizedOrNonLocalizedFieldValue,
+    field,
+  );
   return entries.some(({ locale, value }) => testFn(locale, value));
 }
 
@@ -295,8 +310,8 @@ export function someNormalizedFieldValues<
  * For localized fields, tests each locale value.
  * For non-localized fields, tests the direct value.
  *
+ * @param localizedOrNonLocalizedFieldValue - The field value (either localized object or direct value)
  * @param field - The DatoCMS field definition
- * @param value - The field value (either localized object or direct value)
  * @param testFn - The function to test each locale value or the direct value
  * @returns true if at least one value passes the test, false otherwise
  */
@@ -304,11 +319,14 @@ export async function someNormalizedFieldValuesAsync<
   T = unknown,
   L extends string = string,
 >(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T, L>,
   field: RawApiTypes.Field | ApiTypes.Field,
-  value: T | LocalizedFieldValue<T, L>,
   testFn: (locale: L | undefined, localeValue: T) => Promise<boolean>,
 ): Promise<boolean> {
-  const entries = toNormalizedFieldValueEntries<T, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<T, L>(
+    localizedOrNonLocalizedFieldValue,
+    field,
+  );
   const results = await Promise.all(
     entries.map(({ locale, value }) => testFn(locale, value)),
   );
@@ -320,8 +338,8 @@ export async function someNormalizedFieldValuesAsync<
  * For localized fields, tests each locale value.
  * For non-localized fields, tests the direct value.
  *
+ * @param localizedOrNonLocalizedFieldValue - The field value (either localized object or direct value)
  * @param field - The DatoCMS field definition
- * @param value - The field value (either localized object or direct value)
  * @param testFn - The function to test each locale value or the direct value
  * @returns true if all values pass the test, false otherwise
  */
@@ -329,13 +347,13 @@ export function everyNormalizedFieldValue<
   T = unknown,
   L extends string = string,
 >(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T, L>,
   field: RawApiTypes.Field | ApiTypes.Field,
-  value: T | LocalizedFieldValue<T, L>,
   testFn: (locale: L | undefined, localeValue: T) => boolean,
 ): boolean {
   return !someNormalizedFieldValues(
+    localizedOrNonLocalizedFieldValue,
     field,
-    value,
     (locale, localeValue) => !testFn(locale, localeValue),
   );
 }
@@ -345,8 +363,8 @@ export function everyNormalizedFieldValue<
  * For localized fields, tests each locale value.
  * For non-localized fields, tests the direct value.
  *
+ * @param localizedOrNonLocalizedFieldValue - The field value (either localized object or direct value)
  * @param field - The DatoCMS field definition
- * @param value - The field value (either localized object or direct value)
  * @param testFn - The function to test each locale value or the direct value
  * @returns true if all values pass the test, false otherwise
  */
@@ -354,13 +372,13 @@ export async function everyNormalizedFieldValueAsync<
   T = unknown,
   L extends string = string,
 >(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T, L>,
   field: RawApiTypes.Field | ApiTypes.Field,
-  value: T | LocalizedFieldValue<T, L>,
   testFn: (locale: L | undefined, localeValue: T) => Promise<boolean>,
 ): Promise<boolean> {
   return !(await someNormalizedFieldValuesAsync(
+    localizedOrNonLocalizedFieldValue,
     field,
-    value,
     async (locale, localeValue) => !(await testFn(locale, localeValue)),
   ));
 }
@@ -370,19 +388,19 @@ export async function everyNormalizedFieldValueAsync<
  * For localized fields, visits each locale value.
  * For non-localized fields, visits the direct value.
  *
- * @param field - The DatoCMS field definition
  * @param value - The field value (either localized object or direct value)
+ * @param field - The DatoCMS field definition
  * @param visitFn - The function to call for each locale value or the direct value
  */
 export function visitNormalizedFieldValues<
   T = unknown,
   L extends string = string,
 >(
-  field: RawApiTypes.Field | ApiTypes.Field,
   value: T | LocalizedFieldValue<T, L>,
+  field: RawApiTypes.Field | ApiTypes.Field,
   visitFn: (locale: L | undefined, localeValue: T) => void,
 ): void {
-  const entries = toNormalizedFieldValueEntries<T, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<T, L>(value, field);
   for (const { locale, value } of entries) {
     visitFn(locale, value);
   }
@@ -393,18 +411,21 @@ export function visitNormalizedFieldValues<
  * For localized fields, visits each locale value.
  * For non-localized fields, visits the direct value.
  *
+ * @param localizedOrNonLocalizedFieldValue - The field value (either localized object or direct value)
  * @param field - The DatoCMS field definition
- * @param value - The field value (either localized object or direct value)
  * @param visitFn - The function to call for each locale value or the direct value
  */
 export async function visitNormalizedFieldValuesAsync<
   T = unknown,
   L extends string = string,
 >(
+  localizedOrNonLocalizedFieldValue: T | LocalizedFieldValue<T, L>,
   field: RawApiTypes.Field | ApiTypes.Field,
-  value: T | LocalizedFieldValue<T, L>,
   visitFn: (locale: L | undefined, localeValue: T) => Promise<void>,
 ): Promise<void> {
-  const entries = toNormalizedFieldValueEntries<T, L>(field, value);
+  const entries = toNormalizedFieldValueEntries<T, L>(
+    localizedOrNonLocalizedFieldValue,
+    field,
+  );
   await Promise.all(entries.map(({ locale, value }) => visitFn(locale, value)));
 }
