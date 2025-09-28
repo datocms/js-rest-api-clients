@@ -1,6 +1,7 @@
 import { deserializeResponseBody } from '@datocms/rest-client-utils';
 import type * as ApiTypes from '../generated/ApiTypes';
 import type * as RawApiTypes from '../generated/RawApiTypes';
+import { blockModelIdsReferencedInField } from './fieldsContainingReferences';
 
 interface GenericClient {
   itemTypes: {
@@ -15,6 +16,12 @@ interface GenericClient {
   };
   plugins: {
     rawList(): Promise<{ data: RawApiTypes.Plugin[] }>;
+  };
+  site: {
+    rawFind(params: { include: string }): Promise<{
+      data: any;
+      included?: Array<RawApiTypes.ItemType | RawApiTypes.Field | any>;
+    }>;
   };
 }
 
@@ -436,5 +443,136 @@ export class SchemaRepository {
     }
 
     return plugin;
+  }
+
+  /**
+   * Prefetches all models and their fields in a single optimized API call.
+   * This method populates the internal caches for both item types and fields,
+   * making subsequent lookups very fast without additional API calls.
+   *
+   * This is more efficient than lazy loading when you know you'll need access
+   * to multiple models and fields, as it reduces the number of API requests
+   * from potentially dozens down to just one.
+   *
+   * @returns Promise that resolves when all data has been fetched and cached
+   */
+  async prefetchAllModelsAndFields(): Promise<void> {
+    const { included } = await this.client.site.rawFind({
+      include: 'item_types,item_types.fields',
+    });
+
+    if (!included) {
+      throw new Error('This should not happen');
+    }
+
+    const allItemTypes = included.filter(
+      (item): item is RawApiTypes.ItemType => item.type === 'item_type',
+    );
+    const allFields = included.filter(
+      (item): item is RawApiTypes.Field => item.type === 'field',
+    );
+
+    // Populate item types caches
+    this.itemTypesPromise = Promise.resolve(allItemTypes);
+    for (const itemType of allItemTypes) {
+      this.itemTypesByApiKey.set(itemType.attributes.api_key, itemType);
+      this.itemTypesById.set(itemType.id, itemType);
+    }
+
+    // Group fields by item type and populate fields cache
+    const fieldsByItemTypeId = new Map<string, RawApiTypes.Field[]>();
+    for (const field of allFields) {
+      const itemTypeId = field.relationships.item_type.data.id;
+      if (!fieldsByItemTypeId.has(itemTypeId)) {
+        fieldsByItemTypeId.set(itemTypeId, []);
+      }
+      fieldsByItemTypeId.get(itemTypeId)!.push(field);
+    }
+
+    // Populate the fields cache
+    for (const [itemTypeId, fields] of fieldsByItemTypeId) {
+      this.fieldsByItemType.set(itemTypeId, fields);
+    }
+  }
+
+  /**
+   * Gets all models that directly or indirectly embed the given block models.
+   * This method recursively traverses the schema to find all models that reference
+   * the provided blocks, either directly through block fields or indirectly through
+   * other block models that reference them.
+   *
+   * @param blocks - Array of block models to find references to
+   * @returns Promise that resolves to array of models that embed these blocks
+   */
+  async getRawModelsEmbeddingBlocks(
+    blocks: Array<ApiTypes.ItemType | RawApiTypes.ItemType>,
+  ): Promise<Array<RawApiTypes.ItemType>> {
+    await this.prefetchAllModelsAndFields();
+
+    const allItemTypes = await this.getAllRawItemTypes();
+    const blockIds = new Set(blocks.map((block) => block.id));
+    const embeddingModels: Array<RawApiTypes.ItemType> = [];
+
+    // Helper function to check if a model points to any of the target blocks
+    const modelPointsToBlocks = async (
+      itemType: RawApiTypes.ItemType,
+      alreadyExplored: Set<string> = new Set(),
+    ): Promise<boolean> => {
+      if (alreadyExplored.has(itemType.id)) {
+        return false;
+      }
+
+      alreadyExplored.add(itemType.id);
+
+      const fields = await this.getRawItemTypeFields(itemType);
+
+      for (const field of fields) {
+        const referencedBlockIds = blockModelIdsReferencedInField(field);
+
+        // Check if this field directly references any of our target blocks
+        if (referencedBlockIds.some((id) => blockIds.has(id))) {
+          return true;
+        }
+
+        // Check if this field references other block models that might transitively reference our targets
+        const referencedBlocks = referencedBlockIds
+          .map((id) => allItemTypes.find((it) => it.id === id)!);
+
+        for (const linkedBlock of referencedBlocks) {
+          if (await modelPointsToBlocks(linkedBlock, new Set(alreadyExplored))) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    };
+
+    // Check each model to see if it embeds any of the target blocks
+    for (const itemType of allItemTypes) {
+      if (await modelPointsToBlocks(itemType)) {
+        embeddingModels.push(itemType);
+      }
+    }
+
+    return embeddingModels;
+  }
+
+  /**
+   * Gets all models that directly or indirectly embed the given block models.
+   * This method recursively traverses the schema to find all models that reference
+   * the provided blocks, either directly through block fields or indirectly through
+   * other block models that reference them.
+   *
+   * @param blocks - Array of block models to find references to
+   * @returns Promise that resolves to array of models that embed these blocks
+   */
+  async getModelsEmbeddingBlocks(
+    blocks: Array<ApiTypes.ItemType | RawApiTypes.ItemType>,
+  ): Promise<Array<ApiTypes.ItemType>> {
+    const rawResult = await this.getRawModelsEmbeddingBlocks(blocks);
+    return deserializeResponseBody<ApiTypes.ItemType[]>({
+      data: rawResult,
+    });
   }
 }
