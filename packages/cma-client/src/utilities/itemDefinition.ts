@@ -30,6 +30,32 @@ import type {
   TextFieldValue,
   VideoFieldValue,
 } from '../fieldTypes';
+import type {
+  BooleanHrefFilter,
+  ColorHrefFilter,
+  DateHrefFilter,
+  DateTimeHrefFilter,
+  FileHrefFilter,
+  FloatHrefFilter,
+  GalleryHrefFilter,
+  IntegerHrefFilter,
+  ItemMetaFilter,
+  ItemMetaOrderBy,
+  JsonHrefFilter,
+  LatLonHrefFilter,
+  LinkHrefFilter,
+  LinksHrefFilter,
+  ParentIdFilter,
+  PositionFilter,
+  RichTextHrefFilter,
+  SeoHrefFilter,
+  SingleBlockHrefFilter,
+  SlugHrefFilter,
+  StringHrefFilter,
+  StructuredTextHrefFilter,
+  TextHrefFilter,
+  VideoHrefFilter,
+} from './itemInstancesHrefSchema';
 import type { LocalizedFieldValue } from './normalizedFieldValues';
 
 /** Base field definition */
@@ -139,6 +165,30 @@ type FieldTypeToValueInRequest = {
   unknown: unknown;
 };
 
+type FieldTypeToHrefFilter = {
+  boolean: BooleanHrefFilter;
+  color: ColorHrefFilter;
+  date: DateHrefFilter;
+  date_time: DateTimeHrefFilter;
+  file: FileHrefFilter;
+  float: FloatHrefFilter;
+  gallery: GalleryHrefFilter;
+  integer: IntegerHrefFilter;
+  json: JsonHrefFilter;
+  lat_lon: LatLonHrefFilter;
+  link: LinkHrefFilter;
+  links: LinksHrefFilter;
+  rich_text: RichTextHrefFilter;
+  seo: SeoHrefFilter;
+  single_block: SingleBlockHrefFilter;
+  slug: SlugHrefFilter;
+  string: StringHrefFilter;
+  structured_text: StructuredTextHrefFilter;
+  text: TextHrefFilter;
+  video: VideoHrefFilter;
+  unknown: unknown;
+};
+
 /** Localized wrapper */
 type LocalizeIfNeeded<
   T extends FieldDefinition,
@@ -227,6 +277,48 @@ export type ToItemAttributesInNestedResponse<
           : never;
       }
   : never;
+
+export type ToItemHrefSchemaField<T extends ItemTypeDefinition<any, any, any>> =
+  T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields>
+    ? keyof Fields extends never
+      ? Record<string, unknown>
+      : ItemMetaFilter &
+          Partial<{
+            [K in keyof Fields]: K extends 'position'
+              ? PositionFilter
+              : K extends 'parent_id'
+                ? ParentIdFilter
+                : Fields[K] extends FieldDefinition
+                  ? FieldTypeToHrefFilter[Fields[K]['type']]
+                  : never;
+          }>
+    : never;
+
+export type ToItemHrefSchemaOrderBy<
+  T extends ItemTypeDefinition<any, any, any>,
+> =
+  | (T extends ItemTypeDefinition<
+      infer Settings,
+      infer ItemTypeId,
+      infer Fields
+    >
+      ? keyof Fields extends never
+        ? string
+        : {
+            [K in keyof Fields]: Fields[K] extends FieldDefinition
+              ? Fields[K]['type'] extends
+                  | 'boolean'
+                  | 'date'
+                  | 'date_time'
+                  | 'float'
+                  | 'integer'
+                  | 'string'
+                ? `${K & string}_ASC` | `${K & string}_DESC`
+                : never
+              : never;
+          }[keyof Fields]
+      : never)
+  | ItemMetaOrderBy;
 
 type NestedItemTypeDefinitions<
   T extends ItemTypeDefinition<any, any, any>,

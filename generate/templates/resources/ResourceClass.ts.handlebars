@@ -36,7 +36,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
           body{{#if optionalRequestBody}}?{{/if}}: ApiTypes.{{{requestBodyType}}}{{#if requestBodyRequiresItem}}<NoInfer<D>>{{/if}},
         {{/if}}
         {{#if queryParamsType}}
-          queryParams: ApiTypes.{{{queryParamsType}}} & { nested: true },
+          queryParams: ApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}} & { nested: true },
         {{/if}}
       ): Promise<
         {{#if responseType}}
@@ -53,7 +53,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
           body{{#if optionalRequestBody}}?{{/if}}: ApiTypes.{{{requestBodyType}}}{{#if requestBodyRequiresItem}}<NoInfer<D>>{{/if}},
         {{/if}}
         {{#if queryParamsType}}
-          queryParams?: ApiTypes.{{{queryParamsType}}} & { nested?: false | undefined },
+          queryParams?: ApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}} & { nested?: false | undefined },
         {{/if}}
       ): Promise<
         {{#if responseType}}
@@ -101,7 +101,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
           body{{#if optionalRequestBody}}?{{/if}}: ApiTypes.{{{requestBodyType}}}{{#if requestBodyRequiresItem}}<NoInfer<D>>{{/if}},
         {{/if}}
         {{#if queryParamsType}}
-          queryParams{{#unless queryParamsRequired}}?{{/unless}}: ApiTypes.{{{queryParamsType}}},
+          queryParams{{#unless queryParamsRequired}}?{{/unless}}: ApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}},
         {{/if}}
       ) {
         return this.{{{rawName}}}{{#if returnsItem}}<D>{{/if}}(
@@ -158,7 +158,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
       body{{#if optionalRequestBody}}?{{/if}}: RawApiTypes.{{{requestBodyType}}}{{#if requestBodyRequiresItem}}<NoInfer<D>>{{/if}},
     {{/if}}
     {{#if queryParamsType}}
-      queryParams: RawApiTypes.{{{queryParamsType}}} & { nested: true },
+      queryParams: RawApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}} & { nested: true },
     {{/if}}
   ): Promise<
     {{#if responseType}}
@@ -175,7 +175,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
       body{{#if optionalRequestBody}}?{{/if}}: RawApiTypes.{{{requestBodyType}}}{{#if requestBodyRequiresItem}}<NoInfer<D>>{{/if}},
     {{/if}}
     {{#if queryParamsType}}
-      queryParams?: RawApiTypes.{{{queryParamsType}}} & { nested?: false | undefined },
+      queryParams?: RawApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}} & { nested?: false | undefined },
     {{/if}}
   ): Promise<
     {{#if responseType}}
@@ -208,7 +208,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
     {{#if requestBodyType}}
       body{{#if optionalRequestBody}}?{{/if}}: RawApiTypes.{{{requestBodyType}}}{{#if requestBodyRequiresItem}}<NoInfer<D>>{{/if}},
     {{/if}}
-    queryParams{{#unless queryParamsRequired}}?{{/unless}}: RawApiTypes.{{{queryParamsType}}},
+    queryParams{{#unless queryParamsRequired}}?{{/unless}}: RawApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}},
   ): Promise<
     {{#if responseType}}
       RawApiTypes.{{{responseType}}}{{#if returnsItem}}<NoInfer<D>, true>{{/if}}
@@ -240,7 +240,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
       body{{#if optionalRequestBody}}?{{/if}}: RawApiTypes.{{{requestBodyType}}}{{#if requestBodyRequiresItem}}<NoInfer<D>>{{/if}},
     {{/if}}
     {{#if queryParamsType}}
-      queryParams{{#unless queryParamsRequired}}?{{/unless}}: RawApiTypes.{{{queryParamsType}}},
+      queryParams{{#unless queryParamsRequired}}?{{/unless}}: RawApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}},
     {{/if}}
   ){{#unless offersNestedItemsOptionInQueryParams}}: Promise<
     {{#if responseType}}
@@ -284,7 +284,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
         {{#each urlPlaceholders}}
           {{{variableName}}}: string | ApiTypes.{{{relType}}},
         {{/each}}
-        queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<ApiTypes.{{{queryParamsType}}}, 'page'>,
+        queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<ApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}}, 'page'>,
         iteratorOptions?: Utils.IteratorOptions,
       ) {
         for await (const element of this.{{{rawName}}}PagedIterator{{#if returnsItem}}<NoInfer<D>>{{/if}}(
@@ -315,7 +315,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
       {{#each urlPlaceholders}}
         {{{variableName}}}: string,
       {{/each}}
-      queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<RawApiTypes.{{{queryParamsType}}}, 'page'>,
+      queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<RawApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}}, 'page'>,
       iteratorOptions?: Utils.IteratorOptions,
     ) {
       Utils.warnOnPageQueryParam(queryParams);
@@ -327,7 +327,7 @@ export default class {{{resourceClassName}}} extends BaseResource {
           defaultLimit: {{{paginatedResponse.defaultLimit}}},
           maxLimit: {{{paginatedResponse.maxLimit}}},
         },
-        (page: RawApiTypes.{{{queryParamsType}}}['page']) => this.{{{rawName}}}{{#if returnsItem}}<D>{{/if}}(
+        (page: RawApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}}['page']) => this.{{{rawName}}}{{#if returnsItem}}<D>{{/if}}(
           {{#each urlPlaceholders}}
             {{{variableName}}},
           {{/each}}

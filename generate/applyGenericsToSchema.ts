@@ -22,7 +22,16 @@ import ts from 'typescript';
  *    - Special rule: if the top-level property is "included",
  *      bare Item references inside it remain plain `Item` (no generic).
  *
- * 4. Item schemas
+ * 4. Item href schemas
+ *    (e.g. ItemInstancesHrefSchema)
+ *    - Add generic:
+ *        <D extends ItemTypeDefinition = ItemTypeDefinition>
+ *    - Replace fields?: { [k: string]: unknown } with:
+ *        fields?: ToItemHrefSchemaField<D>
+ *    - Replace order_by?: string with:
+ *        order_by?: ToItemHrefSchemaOrderBy<D>
+ *
+ * 5. Item schemas
  *    (ItemValidateExistingSchema, ItemValidateNewSchema, ItemCreateSchema, ItemUpdateSchema)
  *    - Add generic:
  *        <D extends ItemTypeDefinition = ItemTypeDefinition>
@@ -36,7 +45,7 @@ import ts from 'typescript';
  *        - If type has a "data" property, add it inside the "data" object
  *        - Otherwise, add it at the top level
  *
- * 5. ItemRelationships
+ * 6. ItemRelationships
  *    - Add generic:
  *        <D extends ItemTypeDefinition = ItemTypeDefinition>
  *    - Replace ItemTypeData with ItemTypeData<D>
@@ -87,7 +96,10 @@ export function applyGenerics(sourceCode: string): string {
     'ScheduledUnpublishingDestroyTargetSchema',
   ]);
 
-  // 4. Item schemas
+  // 4. Item href schemas
+  const itemHrefSchemas = new Set(['ItemInstancesHrefSchema']);
+
+  // 5. Item schemas
   const itemSchemas = new Set([
     'ItemValidateExistingSchema',
     'ItemValidateNewSchema',
@@ -193,6 +205,65 @@ export function applyGenerics(sourceCode: string): string {
       ts.factory.createIdentifier(node.name.text),
       [genericParamD, genericParamNested],
       conditionalType,
+    );
+  }
+
+  function transformItemHrefSchema(
+    node: ts.TypeAliasDeclaration,
+    context: ts.TransformationContext,
+  ): ts.TypeAliasDeclaration {
+    const visit: ts.Visitor = (child: ts.Node): ts.Node | undefined => {
+      // Replace fields?: { [k: string]: unknown } with fields?: ToItemHrefSchemaField<D>
+      if (
+        ts.isPropertySignature(child) &&
+        ts.isIdentifier(child.name) &&
+        child.name.text === 'fields' &&
+        child.type &&
+        ts.isTypeLiteralNode(child.type) &&
+        child.type.members.length === 1 &&
+        ts.isIndexSignatureDeclaration(child.type.members[0]!)
+      ) {
+        return ts.factory.updatePropertySignature(
+          child,
+          child.modifiers,
+          child.name,
+          child.questionToken,
+          ts.factory.createTypeReferenceNode('ToItemHrefSchemaField', [
+            ts.factory.createTypeReferenceNode('D', undefined),
+          ]),
+        );
+      }
+
+      // Replace order_by?: string with order_by?: ToItemHrefSchemaOrderBy<D>
+      if (
+        ts.isPropertySignature(child) &&
+        ts.isIdentifier(child.name) &&
+        child.name.text === 'order_by' &&
+        child.type &&
+        child.type.kind === ts.SyntaxKind.StringKeyword
+      ) {
+        return ts.factory.updatePropertySignature(
+          child,
+          child.modifiers,
+          child.name,
+          child.questionToken,
+          ts.factory.createTypeReferenceNode('ToItemHrefSchemaOrderBy', [
+            ts.factory.createTypeReferenceNode('D', undefined),
+          ]),
+        );
+      }
+
+      return ts.visitEachChild(child, visit, context);
+    };
+
+    const transformedType = ts.visitNode(node.type, visit) as ts.TypeNode;
+
+    return ts.factory.updateTypeAliasDeclaration(
+      node,
+      node.modifiers,
+      ts.factory.createIdentifier(node.name.text),
+      [genericParamD],
+      transformedType,
     );
   }
 
@@ -403,6 +474,10 @@ export function applyGenerics(sourceCode: string): string {
 
         if (itemTargetSchemas.has(name) && ts.isTypeAliasDeclaration(node)) {
           return transformItemTargetSchema(node, context);
+        }
+
+        if (itemHrefSchemas.has(name) && ts.isTypeAliasDeclaration(node)) {
+          return transformItemHrefSchema(node, context);
         }
 
         if (itemSchemas.has(name) && ts.isTypeAliasDeclaration(node)) {

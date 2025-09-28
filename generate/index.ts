@@ -118,6 +118,11 @@ async function generate(prefix: string, hyperschemaUrl: string) {
       {
         ...resourceInfo,
         isCma,
+        endpoints: resourceInfo.endpoints.map((endpoint) => ({
+          ...endpoint,
+          isItemInstances:
+            resourceInfo.jsonApiType === 'item' && endpoint.rel === 'instances',
+        })),
         someEndpointReturnsItem: resourceInfo.endpoints.some(
           (e) => e.returnsItem,
         ),

@@ -18,10 +18,10 @@ export default class Item extends BaseResource {
    * @throws {TimeoutError}
    */
   list<D extends ItemTypeDefinition = ItemTypeDefinition>(
-    queryParams: ApiTypes.ItemInstancesHrefSchema & { nested: true },
+    queryParams: ApiTypes.ItemInstancesHrefSchema<D> & { nested: true },
   ): Promise<ApiTypes.ItemInstancesTargetSchema<NoInfer<D>, true>>;
   list<D extends ItemTypeDefinition = ItemTypeDefinition>(
-    queryParams?: ApiTypes.ItemInstancesHrefSchema & {
+    queryParams?: ApiTypes.ItemInstancesHrefSchema<D> & {
       nested?: false | undefined;
     },
   ): Promise<ApiTypes.ItemInstancesTargetSchema<NoInfer<D>, false>>;
@@ -34,7 +34,7 @@ export default class Item extends BaseResource {
    * @throws {TimeoutError}
    */
   list<D extends ItemTypeDefinition = ItemTypeDefinition>(
-    queryParams?: ApiTypes.ItemInstancesHrefSchema,
+    queryParams?: ApiTypes.ItemInstancesHrefSchema<D>,
   ) {
     return this.rawList<D>(queryParams).then((body) =>
       Utils.deserializeResponseBody(body),
@@ -50,15 +50,15 @@ export default class Item extends BaseResource {
    * @throws {TimeoutError}
    */
   rawList<D extends ItemTypeDefinition = ItemTypeDefinition>(
-    queryParams: RawApiTypes.ItemInstancesHrefSchema & { nested: true },
+    queryParams: RawApiTypes.ItemInstancesHrefSchema<D> & { nested: true },
   ): Promise<RawApiTypes.ItemInstancesTargetSchema<NoInfer<D>, true>>;
   rawList<D extends ItemTypeDefinition = ItemTypeDefinition>(
-    queryParams?: RawApiTypes.ItemInstancesHrefSchema & {
+    queryParams?: RawApiTypes.ItemInstancesHrefSchema<D> & {
       nested?: false | undefined;
     },
   ): Promise<RawApiTypes.ItemInstancesTargetSchema<NoInfer<D>, false>>;
   rawList<D extends ItemTypeDefinition = ItemTypeDefinition>(
-    queryParams?: RawApiTypes.ItemInstancesHrefSchema,
+    queryParams?: RawApiTypes.ItemInstancesHrefSchema<D>,
   ): Promise<RawApiTypes.ItemInstancesTargetSchema<NoInfer<D>, true>>;
   /**
    * List all records
@@ -69,7 +69,7 @@ export default class Item extends BaseResource {
    * @throws {TimeoutError}
    */
   rawList<D extends ItemTypeDefinition = ItemTypeDefinition>(
-    queryParams?: RawApiTypes.ItemInstancesHrefSchema,
+    queryParams?: RawApiTypes.ItemInstancesHrefSchema<D>,
   ) {
     return this.client
       .request({
@@ -92,7 +92,7 @@ export default class Item extends BaseResource {
    */
   async *listPagedIterator<D extends ItemTypeDefinition = ItemTypeDefinition>(
     queryParams?: Utils.OmitFromKnownKeys<
-      ApiTypes.ItemInstancesHrefSchema,
+      ApiTypes.ItemInstancesHrefSchema<D>,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -117,7 +117,7 @@ export default class Item extends BaseResource {
    */
   rawListPagedIterator<D extends ItemTypeDefinition = ItemTypeDefinition>(
     queryParams?: Utils.OmitFromKnownKeys<
-      RawApiTypes.ItemInstancesHrefSchema,
+      RawApiTypes.ItemInstancesHrefSchema<D>,
       'page'
     >,
     iteratorOptions?: Utils.IteratorOptions,
@@ -131,7 +131,7 @@ export default class Item extends BaseResource {
         defaultLimit: 30,
         maxLimit: 500,
       },
-      (page: RawApiTypes.ItemInstancesHrefSchema['page']) =>
+      (page: RawApiTypes.ItemInstancesHrefSchema<D>['page']) =>
         this.rawList<D>({ ...queryParams, page }),
       iteratorOptions,
       true,

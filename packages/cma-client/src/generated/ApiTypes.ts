@@ -9,6 +9,8 @@ import type {
   ToItemAttributes,
   ToItemAttributesInNestedResponse,
   ToItemAttributesInRequest,
+  ToItemHrefSchemaField,
+  ToItemHrefSchemaOrderBy,
 } from '../utilities/itemDefinition';
 
 export type Field = GenericFieldAttributes<FieldStableShell>;
@@ -853,7 +855,9 @@ export type ItemInstancesTargetSchema<
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `instances.hrefSchema` link.
  */
-export type ItemInstancesHrefSchema = {
+export type ItemInstancesHrefSchema<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = {
   /**
    * For Modular Content, Structured Text and Single Block fields. If set, returns full payload for nested blocks instead of IDs
    */
@@ -877,9 +881,7 @@ export type ItemInstancesHrefSchema = {
     /**
      * Same as [GraphQL API records filters](/docs/content-delivery-api/filtering-records): you must use square brackets to indicate nesting levels. E.g. if you wanna [filter by parent record](/docs/content-delivery-api/filtering-records#parent) in a tree of records, you must use `filter[fields][parent][eq]=<ID_VALUE>`. Use snake_case for fields names. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
      */
-    fields?: {
-      [k: string]: unknown;
-    };
+    fields?: ToItemHrefSchemaField<D>;
     /**
      * When set, only valid records are included in the results.
      */
@@ -906,7 +908,7 @@ export type ItemInstancesHrefSchema = {
   /**
    * Fields used to order results. You **must** specify also `filter[type]` with one element only to be able use this option. Format: `<field_name>_(ASC|DESC)`, where `<field_name>` can be either the API key of a model's field, or one of the following meta columns: `id`, `_updated_at`, `_created_at`, `_status`, `_published_at`, `_first_published_at`, `_publication_scheduled_at`, `_unpublishing_scheduled_at`, `_is_valid`, `position` (only for sortable models). You can pass multiple comma separated rules.
    */
-  order_by?: string;
+  order_by?: ToItemHrefSchemaOrderBy<D>;
   /**
    * Whether you want the currently published versions (`published`, default) of your records, or the latest available (`current`)
    */

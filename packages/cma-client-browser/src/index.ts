@@ -244,6 +244,8 @@ export type {
   ToItemAttributes,
   ToItemAttributesInNestedResponse,
   ToItemAttributesInRequest,
+  ToItemHrefSchemaField,
+  ToItemHrefSchemaOrderBy,
   TraversalDirection,
   TreePath,
   UnchangedBlockInRequest,
