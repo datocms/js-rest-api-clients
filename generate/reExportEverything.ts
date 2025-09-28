@@ -2,7 +2,7 @@
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { Project, SyntaxKind, type Node } from 'ts-morph';
+import { type Node, Project, SyntaxKind } from 'ts-morph';
 
 const repoRoot = path.resolve(__dirname, '..');
 

@@ -103,6 +103,7 @@ export class SchemaRepository {
   private pluginsPromise: Promise<RawApiTypes.Plugin[]> | null = null;
   private pluginsById: Map<string, RawApiTypes.Plugin> = new Map();
   private pluginsByPackageName: Map<string, RawApiTypes.Plugin> = new Map();
+  private prefetchPromise: Promise<void> | null = null;
 
   /**
    * Creates a new SchemaRepository instance.
@@ -457,42 +458,52 @@ export class SchemaRepository {
    * @returns Promise that resolves when all data has been fetched and cached
    */
   async prefetchAllModelsAndFields(): Promise<void> {
-    const { included } = await this.client.site.rawFind({
-      include: 'item_types,item_types.fields',
-    });
-
-    if (!included) {
-      throw new Error('This should not happen');
+    if (this.prefetchPromise) {
+      return this.prefetchPromise;
     }
 
-    const allItemTypes = included.filter(
-      (item): item is RawApiTypes.ItemType => item.type === 'item_type',
-    );
-    const allFields = included.filter(
-      (item): item is RawApiTypes.Field => item.type === 'field',
-    );
+    const prefetch = async () => {
+      const { included } = await this.client.site.rawFind({
+        include: 'item_types,item_types.fields',
+      });
 
-    // Populate item types caches
-    this.itemTypesPromise = Promise.resolve(allItemTypes);
-    for (const itemType of allItemTypes) {
-      this.itemTypesByApiKey.set(itemType.attributes.api_key, itemType);
-      this.itemTypesById.set(itemType.id, itemType);
-    }
-
-    // Group fields by item type and populate fields cache
-    const fieldsByItemTypeId = new Map<string, RawApiTypes.Field[]>();
-    for (const field of allFields) {
-      const itemTypeId = field.relationships.item_type.data.id;
-      if (!fieldsByItemTypeId.has(itemTypeId)) {
-        fieldsByItemTypeId.set(itemTypeId, []);
+      if (!included) {
+        throw new Error('This should not happen');
       }
-      fieldsByItemTypeId.get(itemTypeId)!.push(field);
-    }
 
-    // Populate the fields cache
-    for (const [itemTypeId, fields] of fieldsByItemTypeId) {
-      this.fieldsByItemType.set(itemTypeId, fields);
-    }
+      const allItemTypes = included.filter(
+        (item): item is RawApiTypes.ItemType => item.type === 'item_type',
+      );
+      const allFields = included.filter(
+        (item): item is RawApiTypes.Field => item.type === 'field',
+      );
+
+      // Populate item types caches
+      this.itemTypesPromise = Promise.resolve(allItemTypes);
+      for (const itemType of allItemTypes) {
+        this.itemTypesByApiKey.set(itemType.attributes.api_key, itemType);
+        this.itemTypesById.set(itemType.id, itemType);
+      }
+
+      // Group fields by item type and populate fields cache
+      const fieldsByItemTypeId = new Map<string, RawApiTypes.Field[]>();
+      for (const field of allFields) {
+        const itemTypeId = field.relationships.item_type.data.id;
+        if (!fieldsByItemTypeId.has(itemTypeId)) {
+          fieldsByItemTypeId.set(itemTypeId, []);
+        }
+        fieldsByItemTypeId.get(itemTypeId)!.push(field);
+      }
+
+      // Populate the fields cache
+      for (const [itemTypeId, fields] of fieldsByItemTypeId) {
+        this.fieldsByItemType.set(itemTypeId, fields);
+      }
+    };
+
+    this.prefetchPromise = prefetch();
+
+    return this.prefetchPromise;
   }
 
   /**
@@ -535,11 +546,14 @@ export class SchemaRepository {
         }
 
         // Check if this field references other block models that might transitively reference our targets
-        const referencedBlocks = referencedBlockIds
-          .map((id) => allItemTypes.find((it) => it.id === id)!);
+        const referencedBlocks = referencedBlockIds.map(
+          (id) => allItemTypes.find((it) => it.id === id)!,
+        );
 
         for (const linkedBlock of referencedBlocks) {
-          if (await modelPointsToBlocks(linkedBlock, new Set(alreadyExplored))) {
+          if (
+            await modelPointsToBlocks(linkedBlock, new Set(alreadyExplored))
+          ) {
             return true;
           }
         }

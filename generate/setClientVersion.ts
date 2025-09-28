@@ -3,9 +3,9 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 
 for (const dir of ['cma-client', 'dashboard-client']) {
-  const version: string = (JSON.parse(
-    readFileSync(`./packages/${dir}/package.json`, 'utf8'),
-  ) as any).version;
+  const version: string = (
+    JSON.parse(readFileSync(`./packages/${dir}/package.json`, 'utf8')) as any
+  ).version;
 
   const sourceFilePath = `./packages/${dir}/src/generated/Client.ts`;
 

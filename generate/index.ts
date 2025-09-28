@@ -1,11 +1,11 @@
 #!/usr/bin/env -S node --stack_size=800 -r ts-node/register
 
-import Handlebars from 'handlebars';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import Handlebars from 'handlebars';
 import rimraf from 'rimraf';
 import extractInfoFromSchema, {
   type ResourceInfo,
-  type SchemaInfo
+  type SchemaInfo,
 } from './extractInfoFromSchema';
 import toSafeName from './toSafeName';
 
