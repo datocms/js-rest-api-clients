@@ -761,6 +761,9 @@ class SchemaRepository {
   async getItemTypeFields(itemType: ItemType): Promise<Field[]>
   async getItemTypeFieldsets(itemType: ItemType): Promise<Fieldset[]>
 
+  // Higher-level utilities
+  async getModelsEmbeddingBlocks(blocks: ItemType[]): Promise<ItemType[]>
+
   // Plugin methods
   async getAllPlugins(): Promise<Plugin[]>
   async getPluginById(id: string): Promise<Plugin>
