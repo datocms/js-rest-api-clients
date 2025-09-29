@@ -305,4 +305,6 @@ export type ItemMetaOrderBy =
   | '_updated_at_ASC'
   | '_updated_at_DESC'
   | '_is_valid_ASC'
-  | '_is_valid_DESC';
+  | '_is_valid_DESC'
+  | '_rank_ASC'
+  | '_rank_DESC';
