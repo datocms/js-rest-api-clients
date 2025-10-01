@@ -19,7 +19,7 @@ export default class UploadRequest extends BaseResource {
       Utils.serializeRequestBody<RawApiTypes.UploadRequestCreateSchema>(body, {
         type: 'upload_request',
         attributes: ['filename'],
-        relationships: [],
+        relationships: ['upload_collection'],
       }),
     ).then((body) =>
       Utils.deserializeResponseBody<ApiTypes.UploadRequestCreateTargetSchema>(
