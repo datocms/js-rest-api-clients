@@ -280,6 +280,34 @@ export default class {{{resourceClassName}}} extends BaseResource {
     * @throws {ApiError}
     * @throws {TimeoutError}
     */
+    {{#if offersNestedItemsOptionInQueryParams}}
+      {{{name}}}PagedIterator{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}(
+        {{#each urlPlaceholders}}
+          {{{variableName}}}: string | ApiTypes.{{{relType}}},
+        {{/each}}
+        queryParams: Utils.OmitFromKnownKeys<ApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}} & { nested: true }, 'page'>,
+        iteratorOptions?: Utils.IteratorOptions,
+      ): AsyncGenerator<
+        {{#if responseType}}
+          ApiTypes.{{{responseType}}}{{#if returnsItem}}<NoInfer<D>, true>{{/if}}[0]
+        {{else}}
+          never
+        {{/if}}
+      >;
+      {{{name}}}PagedIterator{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}(
+        {{#each urlPlaceholders}}
+          {{{variableName}}}: string | ApiTypes.{{{relType}}},
+        {{/each}}
+        queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<ApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}} & { nested?: false | undefined }, 'page'>,
+        iteratorOptions?: Utils.IteratorOptions,
+      ): AsyncGenerator<
+        {{#if responseType}}
+          ApiTypes.{{{responseType}}}{{#if returnsItem}}<NoInfer<D>, false>{{/if}}[0]
+        {{else}}
+          never
+        {{/if}}
+      >;
+    {{/if}}
       async *{{{name}}}PagedIterator{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}(
         {{#each urlPlaceholders}}
           {{{variableName}}}: string | ApiTypes.{{{relType}}},
@@ -311,6 +339,47 @@ export default class {{{resourceClassName}}} extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
+  {{#if offersNestedItemsOptionInQueryParams}}
+    {{{rawName}}}PagedIterator{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}(
+      {{#each urlPlaceholders}}
+        {{{variableName}}}: string,
+      {{/each}}
+      queryParams: Utils.OmitFromKnownKeys<RawApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}} & { nested: true }, 'page'>,
+      iteratorOptions?: Utils.IteratorOptions,
+    ): AsyncGenerator<
+      {{#if responseType}}
+        RawApiTypes.{{{responseType}}}{{#if returnsItem}}<NoInfer<D>, true>{{/if}}['data'][0]
+      {{else}}
+        never
+      {{/if}}
+    >;
+    {{{rawName}}}PagedIterator{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}(
+      {{#each urlPlaceholders}}
+        {{{variableName}}}: string,
+      {{/each}}
+      queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<RawApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}} & { nested?: false | undefined }, 'page'>,
+      iteratorOptions?: Utils.IteratorOptions,
+    ): AsyncGenerator<
+      {{#if responseType}}
+        RawApiTypes.{{{responseType}}}{{#if returnsItem}}<NoInfer<D>, false>{{/if}}['data'][0]
+      {{else}}
+        never
+      {{/if}}
+    >;
+    {{{rawName}}}PagedIterator{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}(
+      {{#each urlPlaceholders}}
+        {{{variableName}}}: string,
+      {{/each}}
+      queryParams{{#unless queryParamsRequired}}?{{/unless}}: Utils.OmitFromKnownKeys<RawApiTypes.{{{queryParamsType}}}{{#if isItemInstances}}<D>{{/if}}, 'page'>,
+      iteratorOptions?: Utils.IteratorOptions,
+    ): AsyncGenerator<
+      {{#if responseType}}
+        RawApiTypes.{{{responseType}}}{{#if returnsItem}}<NoInfer<D>, true>{{/if}}['data'][0]
+      {{else}}
+        never
+      {{/if}}
+    >;
+  {{/if}}
     {{{rawName}}}PagedIterator{{#if returnsItem}}<D extends ItemTypeDefinition = ItemTypeDefinition>{{/if}}(
       {{#each urlPlaceholders}}
         {{{variableName}}}: string,

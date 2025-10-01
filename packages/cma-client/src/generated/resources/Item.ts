@@ -90,6 +90,20 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
+  listPagedIterator<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams: Utils.OmitFromKnownKeys<
+      ApiTypes.ItemInstancesHrefSchema<D> & { nested: true },
+      'page'
+    >,
+    iteratorOptions?: Utils.IteratorOptions,
+  ): AsyncGenerator<ApiTypes.ItemInstancesTargetSchema<NoInfer<D>, true>[0]>;
+  listPagedIterator<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams?: Utils.OmitFromKnownKeys<
+      ApiTypes.ItemInstancesHrefSchema<D> & { nested?: false | undefined },
+      'page'
+    >,
+    iteratorOptions?: Utils.IteratorOptions,
+  ): AsyncGenerator<ApiTypes.ItemInstancesTargetSchema<NoInfer<D>, false>[0]>;
   async *listPagedIterator<D extends ItemTypeDefinition = ItemTypeDefinition>(
     queryParams?: Utils.OmitFromKnownKeys<
       ApiTypes.ItemInstancesHrefSchema<D>,
@@ -115,6 +129,33 @@ export default class Item extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
+  rawListPagedIterator<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams: Utils.OmitFromKnownKeys<
+      RawApiTypes.ItemInstancesHrefSchema<D> & { nested: true },
+      'page'
+    >,
+    iteratorOptions?: Utils.IteratorOptions,
+  ): AsyncGenerator<
+    RawApiTypes.ItemInstancesTargetSchema<NoInfer<D>, true>['data'][0]
+  >;
+  rawListPagedIterator<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams?: Utils.OmitFromKnownKeys<
+      RawApiTypes.ItemInstancesHrefSchema<D> & { nested?: false | undefined },
+      'page'
+    >,
+    iteratorOptions?: Utils.IteratorOptions,
+  ): AsyncGenerator<
+    RawApiTypes.ItemInstancesTargetSchema<NoInfer<D>, false>['data'][0]
+  >;
+  rawListPagedIterator<D extends ItemTypeDefinition = ItemTypeDefinition>(
+    queryParams?: Utils.OmitFromKnownKeys<
+      RawApiTypes.ItemInstancesHrefSchema<D>,
+      'page'
+    >,
+    iteratorOptions?: Utils.IteratorOptions,
+  ): AsyncGenerator<
+    RawApiTypes.ItemInstancesTargetSchema<NoInfer<D>, true>['data'][0]
+  >;
   rawListPagedIterator<D extends ItemTypeDefinition = ItemTypeDefinition>(
     queryParams?: Utils.OmitFromKnownKeys<
       RawApiTypes.ItemInstancesHrefSchema<D>,
