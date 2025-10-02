@@ -19,4 +19,3 @@ export type { ApiTypes as SimpleSchemaTypes, RawApiTypes as SchemaTypes };
 
 import type * as ApiTypes from './generated/ApiTypes';
 import type * as RawApiTypes from './generated/RawApiTypes';
-
