@@ -15,7 +15,8 @@ export * from './utilities/recursiveBlocks';
 export * from './utilities/schemaRepository';
 export type { ApiTypes, RawApiTypes };
 // Legacy names
-export type { ApiTypes as SchemaTypes, RawApiTypes as SimpleSchemaTypes };
+export type { ApiTypes as SimpleSchemaTypes, RawApiTypes as SchemaTypes };
 
 import type * as ApiTypes from './generated/ApiTypes';
 import type * as RawApiTypes from './generated/RawApiTypes';
+
