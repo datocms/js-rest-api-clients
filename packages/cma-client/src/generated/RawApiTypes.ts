@@ -842,6 +842,17 @@ export type ItemVersionInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
+ * This interface was referenced by `ItemVersion`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type ItemVersionSelfHrefSchema = {
+  /**
+   * For Modular Content, Structured Text and Single Block fields, return full payload for nested blocks instead of IDs
+   */
+  nested?: boolean;
+  [k: string]: unknown;
+};
+/**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `publish.schema` link.
  */

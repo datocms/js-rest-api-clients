@@ -2729,6 +2729,7 @@
           "relType": "ItemVersionData"
         },
         "optionalRequestBody": false,
+        "queryParamsType": "ItemVersionSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "ItemVersionSelfTargetSchema",
         "name": "find",

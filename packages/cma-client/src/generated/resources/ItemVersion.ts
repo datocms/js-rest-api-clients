@@ -141,8 +141,11 @@ export default class ItemVersion extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(itemVersionId: string | ApiTypes.ItemVersionData) {
-    return this.rawFind(Utils.toId(itemVersionId)).then((body) =>
+  find(
+    itemVersionId: string | ApiTypes.ItemVersionData,
+    queryParams?: ApiTypes.ItemVersionSelfHrefSchema,
+  ) {
+    return this.rawFind(Utils.toId(itemVersionId), queryParams).then((body) =>
       Utils.deserializeResponseBody<ApiTypes.ItemVersionSelfTargetSchema>(body),
     );
   }
@@ -157,10 +160,12 @@ export default class ItemVersion extends BaseResource {
    */
   rawFind(
     itemVersionId: string,
+    queryParams?: RawApiTypes.ItemVersionSelfHrefSchema,
   ): Promise<RawApiTypes.ItemVersionSelfTargetSchema> {
     return this.client.request<RawApiTypes.ItemVersionSelfTargetSchema>({
       method: 'GET',
       url: `/versions/${itemVersionId}`,
+      queryParams,
     });
   }
 }
