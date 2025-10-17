@@ -22,6 +22,7 @@ import {
   isItemWithOptionalIdAndMeta,
   isItemWithOptionalMeta,
 } from './single_block';
+import type { RequiredValidator } from './validators';
 import type { LengthValidator } from './validators/length';
 import type { StructuredTextBlocksValidator } from './validators/structured_text_blocks';
 import type { StructuredTextInlineBlocksValidator } from './validators/structured_text_inline_blocks';
@@ -266,6 +267,8 @@ export function isLocalizedStructuredTextFieldValueInNestedResponse<
 }
 
 export type StructuredTextFieldValidators = {
+  /** Value must be specified or it won't be valid */
+  required?: RequiredValidator;
   /** Only accept references to block records of the specified block models */
   structured_text_blocks: StructuredTextBlocksValidator;
   /** Only accept itemLink to inlineItem nodes for records of the specified models */

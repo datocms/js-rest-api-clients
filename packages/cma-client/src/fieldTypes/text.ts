@@ -5,10 +5,10 @@ import {
 import type { MarkdownEditorConfiguration } from './appearance/markdown';
 import type { TextareaEditorConfiguration } from './appearance/textarea';
 import type { WysiwygEditorConfiguration } from './appearance/wysiwyg';
+import type { SanitizedHtmlValidator } from './validators';
 import type { FormatValidator } from './validators/format';
 import type { LengthValidator } from './validators/length';
 import type { RequiredValidator } from './validators/required';
-import type { SanitizationValidator } from './validators/sanitization';
 
 export type TextFieldValue = string | null;
 
@@ -32,7 +32,7 @@ export type TextFieldValidators = {
   /** Accepts only strings that match a specified format */
   format?: FormatValidator;
   /** Checks for the presence of malicious code in HTML fields */
-  sanitization?: SanitizationValidator;
+  sanitized_html?: SanitizedHtmlValidator;
 };
 
 export type TextFieldAppearance =

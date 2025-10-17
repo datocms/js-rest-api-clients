@@ -3,6 +3,7 @@ import {
   isLocalizedFieldValue,
 } from '../utilities/normalizedFieldValues';
 import type { SlugEditorConfiguration } from './appearance/slug';
+import type { UniqueValidator } from './validators';
 import type { LengthValidator } from './validators/length';
 import type { RequiredValidator } from './validators/required';
 import type { SlugFormatValidator } from './validators/slug_format';
@@ -26,6 +27,8 @@ export function isLocalizedSlugFieldValue(
 export type SlugFieldValidators = {
   /** Value must be specified or it won't be valid */
   required?: RequiredValidator;
+  /** The value must be unique across the whole collection of records */
+  unique?: UniqueValidator;
   /** Accept strings only with a specified number of characters */
   length?: LengthValidator;
   /** Only accept slugs having a specific format */
