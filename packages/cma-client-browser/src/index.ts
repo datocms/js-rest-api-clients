@@ -195,7 +195,7 @@ export type {
   RichTextFieldValue,
   RichTextFieldValueInNestedResponse,
   RichTextFieldValueInRequest,
-  SanitizationValidator,
+  SanitizedHtmlValidator,
   SchemaTypes,
   SeoEditorConfiguration,
   SeoFieldAppearance,

@@ -9,12 +9,22 @@ import type {
 
 type NoInfer<T> = [T][T extends any ? 0 : never];
 
-type UpdateOrCreateBlockRecordSchema<
+type CreateBlockRecordSchema<
   D extends ItemTypeDefinition = ItemTypeDefinition,
 > = {
-  id?: ApiTypes.ItemIdentity;
   type?: ApiTypes.ItemType1;
   item_type: ApiTypes.ItemTypeData<D>;
+  meta?: ApiTypes.ItemUpdateSchema['meta'];
+  creator?: ApiTypes.ItemUpdateSchema['creator'];
+  __itemTypeId?: D['itemTypeId'];
+} & ToItemAttributesInRequest<D>;
+
+type UpdateBlockRecordSchema<
+  D extends ItemTypeDefinition = ItemTypeDefinition,
+> = {
+  id: ApiTypes.ItemIdentity;
+  type?: ApiTypes.ItemType1;
+  item_type?: ApiTypes.ItemTypeData<D>;
   meta?: ApiTypes.ItemUpdateSchema['meta'];
   creator?: ApiTypes.ItemUpdateSchema['creator'];
   __itemTypeId?: D['itemTypeId'];
@@ -23,7 +33,9 @@ type UpdateOrCreateBlockRecordSchema<
 export function buildBlockRecord<
   D extends ItemTypeDefinition = ItemTypeDefinition,
 >(
-  body: UpdateOrCreateBlockRecordSchema<NoInfer<D>>,
+  body:
+    | CreateBlockRecordSchema<NoInfer<D>>
+    | UpdateBlockRecordSchema<NoInfer<D>>,
 ): NewBlockInRequest<NoInfer<D>> {
   return Utils.serializeRequestBody<{
     data: NewBlockInRequest<NoInfer<D>>;

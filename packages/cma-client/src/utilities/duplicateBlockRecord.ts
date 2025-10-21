@@ -42,9 +42,14 @@ export async function duplicateBlockRecord<
             );
           }
 
-          const { id, meta, ...blockWithoutIdAndMeta } = block;
+          if ('id' in block) {
+            const { id, meta, ...blockWithoutIdAndMeta } = block;
 
-          return blockWithoutIdAndMeta as NewBlockInRequest;
+            return blockWithoutIdAndMeta as NewBlockInRequest;
+          }
+
+          const { meta, ...blockWithoutMeta } = block;
+          return blockWithoutMeta as NewBlockInRequest;
         },
       );
   }

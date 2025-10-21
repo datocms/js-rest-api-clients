@@ -79,7 +79,6 @@ export type NewBlockInRequest<
 > = {
   __itemTypeId?: D['itemTypeId'];
   type: RawApiTypes.ItemType1;
-  id?: RawApiTypes.ItemIdentity;
   relationships: RawApiTypes.ItemRelationships<D>;
   meta?: RawApiTypes.ItemMeta;
   attributes: ToItemAttributesInRequest<D>;
