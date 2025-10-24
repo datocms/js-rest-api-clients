@@ -5251,11 +5251,11 @@ export type ItemTypeUpdateSchema = {
  * <details>
  * <summary>Multi-line text (<code>text</code>)</summary>
  *
- * | Property                       | Value                                          |
- * | ------------------------------ | ---------------------------------------------- |
- * | Code                           | `text`                                         |
- * | Built-in editors for the field | `markdown`, `wysiwyg`, `textarea`              |
- * | Available validators           | `required`, `length`, `format`, `sanitization` |
+ * | Property                       | Value                                            |
+ * | ------------------------------ | ------------------------------------------------ |
+ * | Code                           | `text`                                           |
+ * | Built-in editors for the field | `markdown`, `wysiwyg`, `textarea`                |
+ * | Available validators           | `required`, `length`, `format`, `sanitized_html` |
  *
  * </details>
  *
@@ -5361,11 +5361,11 @@ export type ItemTypeUpdateSchema = {
  * <details>
  * <summary>Slug (<code>slug</code>)</summary>
  *
- * | Property                       | Value                                                   |
- * | ------------------------------ | ------------------------------------------------------- |
- * | Code                           | `slug`                                                  |
- * | Built-in editors for the field | `slug`                                                  |
- * | Available validators           | `required`, `length`, `slug_format`, `slug_title_field` |
+ * | Property                       | Value                                                             |
+ * | ------------------------------ | ----------------------------------------------------------------- |
+ * | Code                           | `slug`                                                            |
+ * | Built-in editors for the field | `slug`                                                            |
+ * | Available validators           | `required`, `unique`, `length`, `slug_format`, `slug_title_field` |
  *
  * </details>
  *
@@ -5455,12 +5455,12 @@ export type ItemTypeUpdateSchema = {
  * <details>
  * <summary>Structured text (<code>structured_text</code>)</summary>
  *
- * | Property                       | Value                                             |
- * | ------------------------------ | ------------------------------------------------- |
- * | Code                           | `structured_text`                                 |
- * | Built-in editors for the field | `structured_text`                                 |
- * | Required validators            | `structured_text_blocks`, `structured_text_links` |
- * | Other validators available     | `length`, `structured_text_inline_blocks`         |
+ * | Property                       | Value                                                 |
+ * | ------------------------------ | ----------------------------------------------------- |
+ * | Code                           | `structured_text`                                     |
+ * | Built-in editors for the field | `structured_text`                                     |
+ * | Required validators            | `structured_text_blocks`, `structured_text_links`     |
+ * | Other validators available     | `required`, `length`, `structured_text_inline_blocks` |
  *
  * </details>
  *
@@ -5774,9 +5774,9 @@ export type ItemTypeUpdateSchema = {
  * </details>
  *
  * <details>
- * <summary><code>sanitization</code></summary>
+ * <summary><code>sanitized_html</code></summary>
  *
- * Checks for the presence of malicious cose in HTML fields: content is valid if no dangerous code is present.
+ * Checks for the presence of malicious code in HTML fields: content is valid if no dangerous code is present.
  *
  * | Parameter                    | Type      | Required | Description                                                  |
  * | ---------------------------- | --------- | -------- | ------------------------------------------------------------ |
@@ -6003,10 +6003,10 @@ export type ItemTypeUpdateSchema = {
  *
  * Built-in editor for _seo_ fields.
  *
- * | Parameter  | Type            | Required | Description                                                                                                                                                          |
- * | ---------- | --------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
- * | `fields`   | `Array<String>` | ✅        | Specify which fields of the SEO input should be visible to editors. Valid values: `"title"`, `"description"`, `"image"`, `"no_index"`, `"twitter_card"`              |
- * | `previews` | `Array<String>` | ✅        | Specify which previews should be visible to editors. Valid values: `"google_search"`, `"twitter"`, `"slack"`, `"whatsapp"`, `"telegram"`, `"facebook"`, `"linkedin"` |
+ * | Parameter  | Type            | Required | Description                                                                                                                                                   |
+ * | ---------- | --------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+ * | `fields`   | `Array<String>` | ✅        | Specify which fields of the SEO input should be visible to editors. Valid values: `"title"`, `"description"`, `"image"`, `"no_index"`, `"twitter_card"`       |
+ * | `previews` | `Array<String>` | ✅        | Specify which previews should be visible to editors. Valid values: `"google"`, `"twitter"`, `"slack"`, `"whatsapp"`, `"telegram"`, `"facebook"`, `"linkedin"` |
  *
  * </details>
  *
@@ -6193,7 +6193,6 @@ export type FieldStableShell = {
       };
       [k: string]: unknown;
     }[];
-    [k: string]: unknown;
   };
   /**
    * Ordering index
@@ -6320,7 +6319,6 @@ export type FieldAttributesStableShell = {
       };
       [k: string]: unknown;
     }[];
-    [k: string]: unknown;
   };
   /**
    * Ordering index
@@ -6435,7 +6433,6 @@ export type FieldCreateSchemaStableShell = {
       };
       [k: string]: unknown;
     }[];
-    [k: string]: unknown;
   };
   /**
    * Ordering index
@@ -6543,7 +6540,6 @@ export type FieldUpdateSchemaStableShell = {
       };
       [k: string]: unknown;
     }[];
-    [k: string]: unknown;
   };
   /**
    * Ordering index
