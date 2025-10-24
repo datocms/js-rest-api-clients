@@ -8,7 +8,7 @@ export type SeoEditorConfiguration = {
   >;
   /** Specify which previews should be visible to editors */
   previews: Array<
-    | 'google_search'
+    | 'google'
     | 'twitter'
     | 'slack'
     | 'whatsapp'
