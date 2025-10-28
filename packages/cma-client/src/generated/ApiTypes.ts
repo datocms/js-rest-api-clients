@@ -614,6 +614,11 @@ export type ItemTypeDestroyHrefSchema = {
 };
 /**
  * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `referencing.targetSchema` link.
+ */
+export type ItemTypeReferencingTargetSchema = ItemType[];
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `reorder_fields_and_fieldsets.schema` link.
  */
 export type ItemTypeReorderFieldsAndFieldsetsSchema = (

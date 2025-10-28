@@ -273,6 +273,39 @@ export default class ItemType extends BaseResource {
   }
 
   /**
+   * List models referencing a model or block model
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/referencing
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  referencing(itemTypeId: string | ApiTypes.ItemTypeData) {
+    return this.rawReferencing(Utils.toId(itemTypeId)).then((body) =>
+      Utils.deserializeResponseBody<ApiTypes.ItemTypeReferencingTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * List models referencing a model or block model
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/referencing
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawReferencing(
+    itemTypeId: string,
+  ): Promise<RawApiTypes.ItemTypeReferencingTargetSchema> {
+    return this.client.request<RawApiTypes.ItemTypeReferencingTargetSchema>({
+      method: 'GET',
+      url: `/item-types/${itemTypeId}/referencing`,
+    });
+  }
+
+  /**
    * Reorders a set of fields and fieldsets within the model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/reorder_fields_and_fieldsets

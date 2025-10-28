@@ -4760,6 +4760,13 @@ export type ItemTypeDestroyJobSchema = {
 };
 /**
  * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `referencing.targetSchema` link.
+ */
+export type ItemTypeReferencingTargetSchema = {
+  data: ItemType[];
+};
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `reorder_fields_and_fieldsets.schema` link.
  */
 export type ItemTypeReorderFieldsAndFieldsetsSchema = {
