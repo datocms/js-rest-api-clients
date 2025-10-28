@@ -147,14 +147,12 @@ export default class Field extends BaseResource {
   }
 
   /**
-   * List referenced fields
+   * List fields referencing a model/block
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/referencing
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
-   *
-   * @deprecated This API call is to be considered private and might change without notice
    */
   referencing(itemTypeId: string | ApiTypes.ItemTypeData) {
     return this.rawReferencing(Utils.toId(itemTypeId)).then((body) =>
@@ -165,14 +163,12 @@ export default class Field extends BaseResource {
   }
 
   /**
-   * List referenced fields
+   * List fields referencing a model/block
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/field/referencing
    *
    * @throws {ApiError}
    * @throws {TimeoutError}
-   *
-   * @deprecated This API call is to be considered private and might change without notice
    */
   rawReferencing(
     itemTypeId: string,

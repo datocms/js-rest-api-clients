@@ -12,7 +12,6 @@ export type EndpointInfo = {
   rel: string;
   name: string;
   rawName: string;
-  returnsCollection: boolean;
   urlTemplate: string;
   method: string;
   comment: string;
@@ -362,9 +361,6 @@ function generateResourceInfo(
       : false;
 
     const endpointInfo: EndpointInfo = {
-      returnsCollection: ['query', 'instances'].some((x) =>
-        link.rel.includes(x),
-      ),
       returnsItem,
       requestBodyRequiresItem,
       offersNestedItemsOptionInQueryParams:
@@ -441,7 +437,9 @@ function generateResourceInfo(
     namespace: toSafeName(
       endpoints.some(
         (e) =>
-          e.returnsCollection ||
+          e.name === 'query' ||
+          e.name === 'list' ||
+          e.name.endsWith('List') ||
           (e.name === 'find' && e.urlPlaceholders.length === 1),
       )
         ? `${jsonApiType}s`

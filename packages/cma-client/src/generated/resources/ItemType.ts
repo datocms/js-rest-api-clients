@@ -273,7 +273,7 @@ export default class ItemType extends BaseResource {
   }
 
   /**
-   * List models referencing a model or block model
+   * List models referencing another model/block
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/referencing
    *
@@ -289,7 +289,7 @@ export default class ItemType extends BaseResource {
   }
 
   /**
-   * List models referencing a model or block model
+   * List models referencing another model/block
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/referencing
    *

@@ -3,7 +3,6 @@
     "jsonApiType": "role",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -53,7 +52,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -115,7 +113,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -132,7 +129,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -160,7 +156,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -188,7 +183,6 @@
         "rawName": "rawDestroy"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -223,7 +217,6 @@
     "jsonApiType": "user",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -258,7 +251,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -275,7 +267,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -304,7 +295,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -322,7 +312,6 @@
         "rawName": "rawFindMe"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -358,7 +347,6 @@
     "jsonApiType": "sso_user",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -375,7 +363,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -398,7 +385,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -415,7 +401,6 @@
         "rawName": "rawCopyUsers"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -446,7 +431,6 @@
     "jsonApiType": "audit_log_event",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -476,7 +460,6 @@
     "jsonApiType": "menu_item",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -504,7 +487,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -544,7 +526,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -562,7 +543,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -590,7 +570,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -618,7 +597,6 @@
         "rawName": "rawDestroy"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -650,7 +628,6 @@
     "jsonApiType": "schema_menu_item",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -673,7 +650,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -708,7 +684,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -726,7 +701,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -754,7 +728,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -782,7 +755,6 @@
         "rawName": "rawDestroy"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -814,7 +786,6 @@
     "jsonApiType": "upload_collection",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -837,7 +808,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -872,7 +842,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -890,7 +859,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -918,7 +886,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -946,7 +913,6 @@
         "rawName": "rawDestroy"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -978,7 +944,6 @@
     "jsonApiType": "item_type",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1026,7 +991,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1086,7 +1050,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1103,7 +1066,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1131,7 +1093,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1159,7 +1120,6 @@
         "rawName": "rawDuplicate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1188,7 +1148,6 @@
         "rawName": "rawDestroy"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1196,7 +1155,7 @@
         "rel": "referencing",
         "urlTemplate": "/item-types/${itemTypeId}/referencing",
         "method": "GET",
-        "comment": "List models referencing a model or block model",
+        "comment": "List models referencing another model/block",
         "urlPlaceholders": [
           {
             "variableName": "itemTypeId",
@@ -1216,7 +1175,6 @@
         "rawName": "rawReferencing"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1258,7 +1216,6 @@
     "jsonApiType": "field",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1299,7 +1256,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1346,7 +1302,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1369,7 +1324,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1377,7 +1331,7 @@
         "rel": "referencing",
         "urlTemplate": "/item-types/${itemTypeId}/fields/referencing",
         "method": "GET",
-        "comment": "List referenced fields",
+        "comment": "List fields referencing a model/block",
         "urlPlaceholders": [
           {
             "variableName": "itemTypeId",
@@ -1388,12 +1342,10 @@
         "optionalRequestBody": false,
         "queryParamsRequired": false,
         "responseType": "FieldReferencingTargetSchema",
-        "deprecated": "This API call is to be considered private and might change without notice",
         "name": "referencing",
         "rawName": "rawReferencing"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1417,7 +1369,6 @@
         "rawName": "rawRelated"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1445,7 +1396,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1473,7 +1423,6 @@
         "rawName": "rawDestroy"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1508,7 +1457,6 @@
     "jsonApiType": "fieldset",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1543,7 +1491,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1584,7 +1531,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1607,7 +1553,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1635,7 +1580,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1670,7 +1614,6 @@
     "jsonApiType": "session",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1701,7 +1644,6 @@
     "jsonApiType": "access_token",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1729,7 +1671,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1769,7 +1710,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1786,7 +1726,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1814,7 +1753,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1842,7 +1780,6 @@
         "rawName": "rawRegenerateToken"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1878,7 +1815,6 @@
     "jsonApiType": "plugin",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1911,7 +1847,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1953,7 +1888,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1970,7 +1904,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -1998,7 +1931,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2026,7 +1958,6 @@
         "rawName": "rawDestroy"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2061,7 +1992,6 @@
     "jsonApiType": "job_result",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2096,7 +2026,6 @@
     "jsonApiType": "subscription_limit",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2113,7 +2042,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2148,7 +2076,6 @@
     "jsonApiType": "subscription_feature",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2172,7 +2099,6 @@
     "jsonApiType": "build_event",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2194,7 +2120,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2229,7 +2154,6 @@
     "jsonApiType": "item",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": true,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": true,
@@ -2251,7 +2175,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": true,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2286,7 +2209,6 @@
         "rawName": "rawValidateExisting"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": true,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2309,7 +2231,6 @@
         "rawName": "rawValidateNew"
       },
       {
-        "returnsCollection": false,
         "returnsItem": true,
         "requestBodyRequiresItem": true,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2332,7 +2253,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": true,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2360,7 +2280,6 @@
         "rawName": "rawDuplicate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": true,
         "requestBodyRequiresItem": true,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2395,7 +2314,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": true,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": true,
@@ -2424,7 +2342,6 @@
         "rawName": "rawReferences"
       },
       {
-        "returnsCollection": false,
         "returnsItem": true,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": true,
@@ -2453,7 +2370,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2482,7 +2398,6 @@
         "rawName": "rawCurrentVsPublishedState"
       },
       {
-        "returnsCollection": false,
         "returnsItem": true,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2510,7 +2425,6 @@
         "rawName": "rawDestroy"
       },
       {
-        "returnsCollection": false,
         "returnsItem": true,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2545,7 +2459,6 @@
         "rawName": "rawPublish"
       },
       {
-        "returnsCollection": false,
         "returnsItem": true,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2580,7 +2493,6 @@
         "rawName": "rawUnpublish"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2603,7 +2515,6 @@
         "rawName": "rawBulkPublish"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2626,7 +2537,6 @@
         "rawName": "rawBulkUnpublish"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2649,7 +2559,6 @@
         "rawName": "rawBulkDestroy"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2679,7 +2588,6 @@
     "jsonApiType": "item_version",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2707,7 +2615,6 @@
         "rawName": "rawRestore"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2735,7 +2642,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2771,7 +2677,6 @@
     "jsonApiType": "upload",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2801,7 +2706,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2823,7 +2727,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2851,7 +2754,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2879,7 +2781,6 @@
         "rawName": "rawDestroy"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2922,7 +2823,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": true,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": true,
@@ -2951,7 +2851,6 @@
         "rawName": "rawReferences"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2974,7 +2873,6 @@
         "rawName": "rawBulkTag"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -2997,7 +2895,6 @@
         "rawName": "rawBulkSetUploadCollection"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3027,7 +2924,6 @@
     "jsonApiType": "upload_request",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3057,7 +2953,6 @@
     "jsonApiType": "upload_track",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3092,7 +2987,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3115,7 +3009,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3148,7 +3041,6 @@
         "rawName": "rawDestroy"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3185,7 +3077,6 @@
     "jsonApiType": "scheduled_publication",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3214,7 +3105,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": true,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3244,7 +3134,6 @@
     "jsonApiType": "scheduled_unpublishing",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3273,7 +3162,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": true,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3303,7 +3191,6 @@
     "jsonApiType": "search_result",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3332,7 +3219,6 @@
     "jsonApiType": "environment",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3368,7 +3254,6 @@
         "rawName": "rawFork"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3396,7 +3281,6 @@
         "rawName": "rawPromote"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3431,7 +3315,6 @@
         "rawName": "rawRename"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3448,7 +3331,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3476,7 +3358,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3511,7 +3392,6 @@
     "jsonApiType": "maintenance_mode",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3528,7 +3408,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3546,7 +3425,6 @@
         "rawName": "rawActivate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3570,7 +3448,6 @@
     "jsonApiType": "webhook",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3605,7 +3482,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3652,7 +3528,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3669,7 +3544,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3697,7 +3571,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3732,7 +3605,6 @@
     "jsonApiType": "webhook_call",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3754,7 +3626,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3782,7 +3653,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3816,7 +3686,6 @@
     "jsonApiType": "build_trigger",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3833,7 +3702,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3861,7 +3729,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3892,7 +3759,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3934,7 +3800,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3961,7 +3826,6 @@
         "rawName": "rawTrigger"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -3988,7 +3852,6 @@
         "rawName": "rawAbort"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4015,7 +3878,6 @@
         "rawName": "rawAbortIndexing"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4042,7 +3904,6 @@
         "rawName": "rawReindex"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4077,7 +3938,6 @@
     "jsonApiType": "item_type_filter",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4100,7 +3960,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4135,7 +3994,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4152,7 +4010,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4180,7 +4037,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4215,7 +4071,6 @@
     "jsonApiType": "upload_filter",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4238,7 +4093,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4273,7 +4127,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4290,7 +4143,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4318,7 +4170,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4353,7 +4204,6 @@
     "jsonApiType": "site_invitation",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4376,7 +4226,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4411,7 +4260,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4428,7 +4276,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4456,7 +4303,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4484,7 +4330,6 @@
         "rawName": "rawDestroy"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4519,7 +4364,6 @@
     "jsonApiType": "editing_session",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4537,7 +4381,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4571,7 +4414,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4607,7 +4449,6 @@
     "jsonApiType": "sso_group",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4624,7 +4465,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4652,7 +4492,6 @@
         "rawName": "rawCopyRoles"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4687,7 +4526,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4722,7 +4560,6 @@
     "jsonApiType": "sso_settings",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4739,7 +4576,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4756,7 +4592,6 @@
         "rawName": "rawGenerateToken"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4786,7 +4621,6 @@
     "jsonApiType": "emoji_suggestions",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4812,7 +4646,6 @@
     "jsonApiType": "white_label_settings",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4829,7 +4662,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4859,7 +4691,6 @@
     "jsonApiType": "public_info",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4883,7 +4714,6 @@
     "jsonApiType": "daily_usage",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4907,7 +4737,6 @@
     "jsonApiType": "usage_counter",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4943,7 +4772,6 @@
     "jsonApiType": "upload_tag",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4965,7 +4793,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -4995,7 +4822,6 @@
     "jsonApiType": "upload_smart_tag",
     "endpoints": [
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5024,7 +4850,6 @@
     "jsonApiType": "site",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5042,7 +4867,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5076,7 +4900,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5094,7 +4917,6 @@
         "rawName": "rawActivateImprovedTimezoneManagement"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5112,7 +4934,6 @@
         "rawName": "rawActivateImprovedHexManagement"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5130,7 +4951,6 @@
         "rawName": "rawActivateImprovedGqlMultilocaleFields"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5148,7 +4968,6 @@
         "rawName": "rawActivateImprovedGqlVisibilityControl"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5166,7 +4985,6 @@
         "rawName": "rawActivateImprovedBooleanFields"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5184,7 +5002,6 @@
         "rawName": "rawActivateDraftModeAsDefault"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5202,7 +5019,6 @@
         "rawName": "rawActivateImprovedValidationAtPublishing"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5220,7 +5036,6 @@
         "rawName": "rawActivateImprovedExposureOfInlineBlocksInCda"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5251,7 +5066,6 @@
     "jsonApiType": "workflow",
     "endpoints": [
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5274,7 +5088,6 @@
         "rawName": "rawCreate"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5309,7 +5122,6 @@
         "rawName": "rawUpdate"
       },
       {
-        "returnsCollection": true,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5326,7 +5138,6 @@
         "rawName": "rawList"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
@@ -5354,7 +5165,6 @@
         "rawName": "rawFind"
       },
       {
-        "returnsCollection": false,
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
