@@ -27,6 +27,7 @@
             "environments_access",
             "can_manage_users",
             "can_manage_shared_filters",
+            "can_manage_site_search_sources",
             "can_manage_upload_collections",
             "can_manage_build_triggers",
             "can_manage_webhooks",
@@ -37,12 +38,15 @@
             "can_manage_access_tokens",
             "can_perform_site_search",
             "can_access_build_events_log",
+            "can_access_site_search_source_events_log",
             "positive_item_type_permissions",
             "negative_item_type_permissions",
             "positive_upload_permissions",
             "negative_upload_permissions",
             "positive_build_trigger_permissions",
-            "negative_build_trigger_permissions"
+            "negative_build_trigger_permissions",
+            "positive_site_search_source_permissions",
+            "negative_site_search_source_permissions"
           ],
           "relationships": ["inherits_permissions_from"]
         },
@@ -88,6 +92,7 @@
             "environments_access",
             "can_manage_users",
             "can_manage_shared_filters",
+            "can_manage_site_search_sources",
             "can_manage_upload_collections",
             "can_manage_build_triggers",
             "can_manage_webhooks",
@@ -98,12 +103,15 @@
             "can_manage_access_tokens",
             "can_perform_site_search",
             "can_access_build_events_log",
+            "can_access_site_search_source_events_log",
             "positive_item_type_permissions",
             "negative_item_type_permissions",
             "positive_upload_permissions",
             "negative_upload_permissions",
             "positive_build_trigger_permissions",
-            "negative_build_trigger_permissions"
+            "negative_build_trigger_permissions",
+            "positive_site_search_source_permissions",
+            "negative_site_search_source_permissions"
           ],
           "relationships": ["inherits_permissions_from"]
         },
@@ -2151,6 +2159,61 @@
     "resourceClassName": "BuildEvent"
   },
   {
+    "jsonApiType": "site_search_source_event",
+    "endpoints": [
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-search_source_event/instances",
+        "rel": "instances",
+        "urlTemplate": "/site-search-source-events",
+        "method": "GET",
+        "comment": "List all site search indexing events",
+        "urlPlaceholders": [],
+        "optionalRequestBody": false,
+        "queryParamsType": "SiteSearchSourceEventInstancesHrefSchema",
+        "queryParamsRequired": false,
+        "responseType": "SiteSearchSourceEventInstancesTargetSchema",
+        "paginatedResponse": {
+          "defaultLimit": 30,
+          "maxLimit": 500
+        },
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-search_source_event/self",
+        "rel": "self",
+        "urlTemplate": "/site-search-source-events/${siteSearchSourceEventId}",
+        "method": "GET",
+        "comment": "Retrieve a site search indexing event",
+        "urlPlaceholders": [
+          {
+            "variableName": "siteSearchSourceEventId",
+            "isEntityId": true,
+            "relType": "SiteSearchSourceEventData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "siteSearchSourceEventId",
+          "isEntityId": true,
+          "relType": "SiteSearchSourceEventData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "SiteSearchSourceEventSelfTargetSchema",
+        "name": "find",
+        "rawName": "rawFind"
+      }
+    ],
+    "namespace": "siteSearchSourceEvents",
+    "resourceClassName": "SiteSearchSourceEvent"
+  },
+  {
     "jsonApiType": "item",
     "endpoints": [
       {
@@ -3747,6 +3810,7 @@
             "webhook_token",
             "adapter",
             "indexing_enabled",
+            "enabled",
             "frontend_url",
             "autotrigger_on_scheduled_publications",
             "adapter_settings"
@@ -3788,6 +3852,7 @@
             "name",
             "adapter",
             "indexing_enabled",
+            "enabled",
             "frontend_url",
             "autotrigger_on_scheduled_publications",
             "adapter_settings"
@@ -3933,6 +3998,201 @@
     ],
     "namespace": "buildTriggers",
     "resourceClassName": "BuildTrigger"
+  },
+  {
+    "jsonApiType": "site_search_source",
+    "endpoints": [
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-search_source/instances",
+        "rel": "instances",
+        "urlTemplate": "/site-search-sources",
+        "method": "GET",
+        "comment": "List all site search sources for a site",
+        "urlPlaceholders": [],
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "SiteSearchSourceInstancesTargetSchema",
+        "name": "list",
+        "rawName": "rawList"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-search_source/self",
+        "rel": "self",
+        "urlTemplate": "/site-search-sources/${siteSearchSourceId}",
+        "method": "GET",
+        "comment": "Retrieve a site search source",
+        "urlPlaceholders": [
+          {
+            "variableName": "siteSearchSourceId",
+            "isEntityId": true,
+            "relType": "SiteSearchSourceData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "siteSearchSourceId",
+          "isEntityId": true,
+          "relType": "SiteSearchSourceData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "SiteSearchSourceSelfTargetSchema",
+        "name": "find",
+        "rawName": "rawFind"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-search_source/create",
+        "rel": "create",
+        "urlTemplate": "/site-search-sources",
+        "method": "POST",
+        "comment": "Create site search source",
+        "urlPlaceholders": [],
+        "requestBodyType": "SiteSearchSourceCreateSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "site_search_source",
+          "attributes": [
+            "name",
+            "enabled",
+            "build_trigger_indexing_enabled",
+            "frontend_url"
+          ],
+          "relationships": ["build_triggers"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteSearchSourceCreateTargetSchema",
+        "name": "create",
+        "rawName": "rawCreate"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-search_source/update",
+        "rel": "update",
+        "urlTemplate": "/site-search-sources/${siteSearchSourceId}",
+        "method": "PUT",
+        "comment": "Update site search source",
+        "urlPlaceholders": [
+          {
+            "variableName": "siteSearchSourceId",
+            "isEntityId": true,
+            "relType": "SiteSearchSourceData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "siteSearchSourceId",
+          "isEntityId": true,
+          "relType": "SiteSearchSourceData"
+        },
+        "requestBodyType": "SiteSearchSourceUpdateSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "site_search_source",
+          "idRequired": true,
+          "attributes": [
+            "name",
+            "enabled",
+            "build_trigger_indexing_enabled",
+            "frontend_url"
+          ],
+          "relationships": ["build_triggers"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "SiteSearchSourceUpdateTargetSchema",
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-search_source/trigger",
+        "rel": "trigger",
+        "urlTemplate": "/site-search-sources/${siteSearchSourceId}/trigger",
+        "method": "POST",
+        "comment": "Trigger a site search indexing",
+        "urlPlaceholders": [
+          {
+            "variableName": "siteSearchSourceId",
+            "isEntityId": true,
+            "relType": "SiteSearchSourceData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "siteSearchSourceId",
+          "isEntityId": true,
+          "relType": "SiteSearchSourceData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "name": "trigger",
+        "rawName": "rawTrigger"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-search_source/abort",
+        "rel": "abort",
+        "urlTemplate": "/site-search-sources/${siteSearchSourceId}/abort",
+        "method": "DELETE",
+        "comment": "Abort a site search spidering and mark it as failed",
+        "urlPlaceholders": [
+          {
+            "variableName": "siteSearchSourceId",
+            "isEntityId": true,
+            "relType": "SiteSearchSourceData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "siteSearchSourceId",
+          "isEntityId": true,
+          "relType": "SiteSearchSourceData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "name": "abort",
+        "rawName": "rawAbort"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/site-search_source/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/site-search-sources/${siteSearchSourceId}",
+        "method": "DELETE",
+        "comment": "Delete a site search source",
+        "urlPlaceholders": [
+          {
+            "variableName": "siteSearchSourceId",
+            "isEntityId": true,
+            "relType": "SiteSearchSourceData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "siteSearchSourceId",
+          "isEntityId": true,
+          "relType": "SiteSearchSourceData"
+        },
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "responseType": "SiteSearchSourceDestroyTargetSchema",
+        "name": "destroy",
+        "rawName": "rawDestroy"
+      }
+    ],
+    "namespace": "siteSearchSources",
+    "resourceClassName": "SiteSearchSource"
   },
   {
     "jsonApiType": "item_type_filter",
