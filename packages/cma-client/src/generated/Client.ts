@@ -55,6 +55,7 @@ export class Client {
   subscriptionLimits: Resources.SubscriptionLimit;
   subscriptionFeatures: Resources.SubscriptionFeature;
   buildEvents: Resources.BuildEvent;
+  siteSearchSourceEvents: Resources.SiteSearchSourceEvent;
   items: Resources.Item;
   itemVersions: Resources.ItemVersion;
   uploads: Resources.Upload;
@@ -68,6 +69,7 @@ export class Client {
   webhooks: Resources.Webhook;
   webhookCalls: Resources.WebhookCall;
   buildTriggers: Resources.BuildTrigger;
+  siteSearchSources: Resources.SiteSearchSource;
   itemTypeFilters: Resources.ItemTypeFilter;
   uploadFilters: Resources.UploadFilter;
   siteInvitations: Resources.SiteInvitation;
@@ -108,6 +110,7 @@ export class Client {
     this.subscriptionLimits = new Resources.SubscriptionLimit(this);
     this.subscriptionFeatures = new Resources.SubscriptionFeature(this);
     this.buildEvents = new Resources.BuildEvent(this);
+    this.siteSearchSourceEvents = new Resources.SiteSearchSourceEvent(this);
     this.items = new Resources.Item(this);
     this.itemVersions = new Resources.ItemVersion(this);
     this.uploads = new Resources.Upload(this);
@@ -121,6 +124,7 @@ export class Client {
     this.webhooks = new Resources.Webhook(this);
     this.webhookCalls = new Resources.WebhookCall(this);
     this.buildTriggers = new Resources.BuildTrigger(this);
+    this.siteSearchSources = new Resources.SiteSearchSource(this);
     this.itemTypeFilters = new Resources.ItemTypeFilter(this);
     this.uploadFilters = new Resources.UploadFilter(this);
     this.siteInvitations = new Resources.SiteInvitation(this);
