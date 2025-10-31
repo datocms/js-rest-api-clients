@@ -9948,6 +9948,10 @@ export type SiteSearchSource = {
    * The public URL of the frontend. This is the starting point from which the website's spidering will start
    */
   frontend_url: string | null;
+  /**
+   * Optional suffix to append to the DatoCmsSearchBot user agent when indexing the website
+   */
+  user_agent_suffix: string | null;
   build_triggers: BuildTriggerData[];
   meta: SiteSearchSourceMeta;
 };
@@ -9994,6 +9998,10 @@ export type SiteSearchSourceAttributes = {
    * The public URL of the frontend. This is the starting point from which the website's spidering will start
    */
   frontend_url: string | null;
+  /**
+   * Optional suffix to append to the DatoCmsSearchBot user agent when indexing the website
+   */
+  user_agent_suffix: string | null;
 };
 /**
  * JSON API links
@@ -10026,6 +10034,10 @@ export type SiteSearchSourceCreateSchema = {
    * The public URL of the frontend. This is the starting point from which the website's spidering will start
    */
   frontend_url: string | null;
+  /**
+   * Optional suffix to append to the DatoCmsSearchBot user agent when indexing the website
+   */
+  user_agent_suffix?: string | null;
   build_triggers?: BuildTriggerData[];
 };
 /**
@@ -10051,6 +10063,10 @@ export type SiteSearchSourceUpdateSchema = {
    * The public URL of the frontend. This is the starting point from which the website's spidering will start
    */
   frontend_url?: string | null;
+  /**
+   * Optional suffix to append to the DatoCmsSearchBot user agent when indexing the website
+   */
+  user_agent_suffix?: string | null;
   build_triggers?: BuildTriggerData[];
 };
 /**
