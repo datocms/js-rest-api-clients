@@ -117,15 +117,15 @@ export type EnvironmentIdentity = string;
  */
 export type BuildTriggerIdentity = string;
 /**
- * ID of site_search_source
+ * ID of search_index
  *
- * This interface was referenced by `SiteSearchSource`'s JSON-Schema
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
  * via the `definition` "identity".
  *
- * This interface was referenced by `SiteSearchSource`'s JSON-Schema
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
  * via the `definition` "id".
  */
-export type SiteSearchSourceIdentity = string;
+export type SearchIndexIdentity = string;
 /**
  * This interface was referenced by `Role`'s JSON-Schema
  * via the `instances.targetSchema` link.
@@ -856,36 +856,35 @@ export type BuildEventInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * ID of site search source event
+ * ID of search index event
  *
- * This interface was referenced by `SiteSearchSourceEvent`'s JSON-Schema
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
  * via the `definition` "identity".
  *
- * This interface was referenced by `SiteSearchSourceEvent`'s JSON-Schema
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
  * via the `definition` "id".
  */
-export type SiteSearchSourceEventIdentity = string;
+export type SearchIndexEventIdentity = string;
 /**
- * This interface was referenced by `SiteSearchSourceEvent`'s JSON-Schema
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
  * via the `definition` "type".
  */
-export type SiteSearchSourceEventType = 'site_search_source_event';
+export type SearchIndexEventType = 'search_index_event';
 /**
- * This interface was referenced by `SiteSearchSource`'s JSON-Schema
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
  * via the `definition` "type".
  */
-export type SiteSearchSourceType = 'site_search_source';
+export type SearchIndexType = 'search_index';
 /**
- * This interface was referenced by `SiteSearchSourceEvent`'s JSON-Schema
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
-export type SiteSearchSourceEventInstancesTargetSchema =
-  SiteSearchSourceEvent[];
+export type SearchIndexEventInstancesTargetSchema = SearchIndexEvent[];
 /**
- * This interface was referenced by `SiteSearchSourceEvent`'s JSON-Schema
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
  * via the `instances.hrefSchema` link.
  */
-export type SiteSearchSourceEventInstancesHrefSchema = {
+export type SearchIndexEventInstancesHrefSchema = {
   /**
    * Parameters to control offset-based pagination
    */
@@ -908,7 +907,7 @@ export type SiteSearchSourceEventInstancesHrefSchema = {
      */
     ids?: string;
     fields?: {
-      site_search_source_id?: {
+      search_index_id?: {
         eq?: string;
       };
       event_type?: {
@@ -931,8 +930,8 @@ export type SiteSearchSourceEventInstancesHrefSchema = {
    * Fields used to order results
    */
   order_by?:
-    | 'site_search_source_id_asc'
-    | 'site_search_source_id_desc'
+    | 'search_index_id_asc'
+    | 'search_index_id_desc'
     | 'created_at_asc'
     | 'created_at_desc'
     | 'event_type_asc'
@@ -1422,11 +1421,11 @@ export type SearchResultInstancesHrefSchema = {
      */
     query: string;
     /**
-     * The site search source ID or name on which the search will be performed. If not provided, the first enabled site search source will be used.
+     * The search index ID or name on which the search will be performed. If not provided, the first enabled search index will be used.
      */
-    site_search_source_id?: string;
+    search_index_id?: string;
     /**
-     * **[Deprecated]** Use `site_search_source_id` instead. The build trigger ID or name on which the search will be performed. This parameter is only supported for backward compatibility and will return an error if the build trigger has multiple site search sources associated.
+     * **[Deprecated]** Use `search_index_id` instead. The build trigger ID or name on which the search will be performed. This parameter is only supported for backward compatibility and will return an error if the build trigger has multiple search indexes associated.
      */
     build_trigger_id?: string;
     /**
@@ -1643,10 +1642,10 @@ export type WebhookCallInstancesHrefSchema = {
  */
 export type BuildTriggerInstancesTargetSchema = BuildTrigger[];
 /**
- * This interface was referenced by `SiteSearchSource`'s JSON-Schema
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
  * via the `instances.targetSchema` link.
  */
-export type SiteSearchSourceInstancesTargetSchema = SiteSearchSource[];
+export type SearchIndexInstancesTargetSchema = SearchIndex[];
 /**
  * This interface was referenced by `ItemTypeFilter`'s JSON-Schema
  * via the `instances.targetSchema` link.
@@ -2095,9 +2094,9 @@ export type Role = {
    */
   can_manage_build_triggers: boolean;
   /**
-   * Can create/edit Site Search Sources
+   * Can create/edit Search Indexes
    */
-  can_manage_site_search_sources: boolean;
+  can_manage_search_indexes: boolean;
   /**
    * Can create/edit webhooks
    */
@@ -2131,9 +2130,9 @@ export type Role = {
    */
   can_access_build_events_log: boolean;
   /**
-   * Can access the site search source events log
+   * Can access the search index events log
    */
-  can_access_site_search_source_events_log: boolean;
+  can_access_search_index_events_log: boolean;
   /**
    * Allowed actions on a model (or all) for a role
    */
@@ -2277,16 +2276,16 @@ export type Role = {
     build_trigger?: BuildTriggerIdentity | null;
   }[];
   /**
-   * Allowed site search sources for a role
+   * Allowed search indexes for a role
    */
-  positive_site_search_source_permissions: {
-    site_search_source?: SiteSearchSourceIdentity | null;
+  positive_search_index_permissions: {
+    search_index?: SearchIndexIdentity | null;
   }[];
   /**
-   * Prohibited site search sources for a role
+   * Prohibited search indexes for a role
    */
-  negative_site_search_source_permissions: {
-    site_search_source?: SiteSearchSourceIdentity | null;
+  negative_search_index_permissions: {
+    search_index?: SearchIndexIdentity | null;
   }[];
   inherits_permissions_from: RoleData[];
   meta: RoleMeta;
@@ -2362,9 +2361,9 @@ export type RoleMeta = {
      */
     can_manage_build_triggers: boolean;
     /**
-     * Can create/edit Site Search Sources
+     * Can create/edit Search Indexes
      */
-    can_manage_site_search_sources: boolean;
+    can_manage_search_indexes: boolean;
     /**
      * Can create/edit webhooks
      */
@@ -2398,9 +2397,9 @@ export type RoleMeta = {
      */
     can_access_build_events_log: boolean;
     /**
-     * Can access the site search source events log
+     * Can access the search index events log
      */
-    can_access_site_search_source_events_log: boolean;
+    can_access_search_index_events_log: boolean;
     /**
      * Allowed actions on a model (or all) for a role
      */
@@ -2544,16 +2543,16 @@ export type RoleMeta = {
       build_trigger?: BuildTriggerIdentity | null;
     }[];
     /**
-     * Allowed site search sources for a role
+     * Allowed search indexes for a role
      */
-    positive_site_search_source_permissions: {
-      site_search_source?: SiteSearchSourceIdentity | null;
+    positive_search_index_permissions: {
+      search_index?: SearchIndexIdentity | null;
     }[];
     /**
-     * Prohibited site search sources for a role
+     * Prohibited search indexes for a role
      */
-    negative_site_search_source_permissions: {
-      site_search_source?: SiteSearchSourceIdentity | null;
+    negative_search_index_permissions: {
+      search_index?: SearchIndexIdentity | null;
     }[];
   };
 };
@@ -2613,9 +2612,9 @@ export type RoleAttributes = {
    */
   can_manage_build_triggers: boolean;
   /**
-   * Can create/edit Site Search Sources
+   * Can create/edit Search Indexes
    */
-  can_manage_site_search_sources: boolean;
+  can_manage_search_indexes: boolean;
   /**
    * Can create/edit webhooks
    */
@@ -2649,9 +2648,9 @@ export type RoleAttributes = {
    */
   can_access_build_events_log: boolean;
   /**
-   * Can access the site search source events log
+   * Can access the search index events log
    */
-  can_access_site_search_source_events_log: boolean;
+  can_access_search_index_events_log: boolean;
   /**
    * Allowed actions on a model (or all) for a role
    */
@@ -2795,16 +2794,16 @@ export type RoleAttributes = {
     build_trigger?: BuildTriggerIdentity | null;
   }[];
   /**
-   * Allowed site search sources for a role
+   * Allowed search indexes for a role
    */
-  positive_site_search_source_permissions: {
-    site_search_source?: SiteSearchSourceIdentity | null;
+  positive_search_index_permissions: {
+    search_index?: SearchIndexIdentity | null;
   }[];
   /**
-   * Prohibited site search sources for a role
+   * Prohibited search indexes for a role
    */
-  negative_site_search_source_permissions: {
-    site_search_source?: SiteSearchSourceIdentity | null;
+  negative_search_index_permissions: {
+    search_index?: SearchIndexIdentity | null;
   }[];
 };
 /**
@@ -2863,9 +2862,9 @@ export type RoleCreateSchema = {
    */
   can_manage_shared_filters?: boolean;
   /**
-   * Can create/edit Site Search Sources
+   * Can create/edit Search Indexes
    */
-  can_manage_site_search_sources?: boolean;
+  can_manage_search_indexes?: boolean;
   /**
    * Can create/edit upload collections
    */
@@ -2907,9 +2906,9 @@ export type RoleCreateSchema = {
    */
   can_access_build_events_log?: boolean;
   /**
-   * Can access the site search source events log
+   * Can access the search index events log
    */
-  can_access_site_search_source_events_log?: boolean;
+  can_access_search_index_events_log?: boolean;
   /**
    * Allowed actions on a model (or all) for a role
    */
@@ -3053,16 +3052,16 @@ export type RoleCreateSchema = {
     build_trigger?: BuildTriggerIdentity | null;
   }[];
   /**
-   * Allowed site search sources for a role
+   * Allowed search indexes for a role
    */
-  positive_site_search_source_permissions?: {
-    site_search_source?: SiteSearchSourceIdentity | null;
+  positive_search_index_permissions?: {
+    search_index?: SearchIndexIdentity | null;
   }[];
   /**
-   * Prohibited site search sources for a role
+   * Prohibited search indexes for a role
    */
-  negative_site_search_source_permissions?: {
-    site_search_source?: SiteSearchSourceIdentity | null;
+  negative_search_index_permissions?: {
+    search_index?: SearchIndexIdentity | null;
   }[];
   inherits_permissions_from?: RoleData[];
   meta?: RoleMeta;
@@ -3115,9 +3114,9 @@ export type RoleUpdateSchema = {
    */
   can_manage_shared_filters?: boolean;
   /**
-   * Can create/edit Site Search Sources
+   * Can create/edit Search Indexes
    */
-  can_manage_site_search_sources?: boolean;
+  can_manage_search_indexes?: boolean;
   /**
    * Can create/edit upload collections
    */
@@ -3159,9 +3158,9 @@ export type RoleUpdateSchema = {
    */
   can_access_build_events_log?: boolean;
   /**
-   * Can access the site search source events log
+   * Can access the search index events log
    */
-  can_access_site_search_source_events_log?: boolean;
+  can_access_search_index_events_log?: boolean;
   /**
    * Allowed actions on a model (or all) for a role
    */
@@ -3305,16 +3304,16 @@ export type RoleUpdateSchema = {
     build_trigger?: BuildTriggerIdentity | null;
   }[];
   /**
-   * Allowed site search sources for a role
+   * Allowed search indexes for a role
    */
-  positive_site_search_source_permissions?: {
-    site_search_source?: SiteSearchSourceIdentity | null;
+  positive_search_index_permissions?: {
+    search_index?: SearchIndexIdentity | null;
   }[];
   /**
-   * Prohibited site search sources for a role
+   * Prohibited search indexes for a role
    */
-  negative_site_search_source_permissions?: {
-    site_search_source?: SiteSearchSourceIdentity | null;
+  negative_search_index_permissions?: {
+    search_index?: SearchIndexIdentity | null;
   }[];
   inherits_permissions_from?: RoleData[];
   meta?: RoleMeta;
@@ -4017,9 +4016,9 @@ export type SitePlan = {
    */
   build_triggers: null | number;
   /**
-   * Number of site search sources
+   * Number of search indexes
    */
-  site_search_sources: null | number;
+  search_indexes: null | number;
   /**
    * Number of plugins
    */
@@ -4184,7 +4183,7 @@ export type SitePlan = {
       amount_per_packet: number;
       price: number;
     };
-    site_search_sources?: {
+    search_indexes?: {
       amount_per_packet: number;
       price: number;
     };
@@ -4261,9 +4260,9 @@ export type SitePlanAttributes = {
    */
   build_triggers: null | number;
   /**
-   * Number of site search sources
+   * Number of search indexes
    */
-  site_search_sources: null | number;
+  search_indexes: null | number;
   /**
    * Number of plugins
    */
@@ -4428,7 +4427,7 @@ export type SitePlanAttributes = {
       amount_per_packet: number;
       price: number;
     };
-    site_search_sources?: {
+    search_indexes?: {
       amount_per_packet: number;
       price: number;
     };
@@ -7508,14 +7507,14 @@ export type BuildEventRelationships = {
   build_trigger: BuildTriggerData;
 };
 /**
- * Represents an event occurred during the site search indexing process.
+ * Represents an event occurred during the search indexing process.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "site_search_source_event".
+ * via the `definition` "search_index_event".
  */
-export type SiteSearchSourceEvent = {
-  id: SiteSearchSourceEventIdentity;
-  type: SiteSearchSourceEventType;
+export type SearchIndexEvent = {
+  id: SearchIndexEventIdentity;
+  type: SearchIndexEventType;
   /**
    * The type of activity
    */
@@ -7534,36 +7533,36 @@ export type SiteSearchSourceEvent = {
   data: {
     [k: string]: unknown;
   };
-  site_search_source: SiteSearchSourceData;
+  search_index: SearchIndexData;
 };
-export type SiteSearchSourceEventSelfTargetSchema = SiteSearchSourceEvent;
+export type SearchIndexEventSelfTargetSchema = SearchIndexEvent;
 /**
  * JSON API data
  *
- * This interface was referenced by `SiteSearchSource`'s JSON-Schema
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
  * via the `definition` "data".
  */
-export type SiteSearchSourceData = {
-  type: SiteSearchSourceType;
-  id: SiteSearchSourceIdentity;
+export type SearchIndexData = {
+  type: SearchIndexType;
+  id: SearchIndexIdentity;
 };
 /**
  * JSON API data
  *
- * This interface was referenced by `SiteSearchSourceEvent`'s JSON-Schema
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
  * via the `definition` "data".
  */
-export type SiteSearchSourceEventData = {
-  type: SiteSearchSourceEventType;
-  id: SiteSearchSourceEventIdentity;
+export type SearchIndexEventData = {
+  type: SearchIndexEventType;
+  id: SearchIndexEventIdentity;
 };
 /**
  * JSON API attributes
  *
- * This interface was referenced by `SiteSearchSourceEvent`'s JSON-Schema
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export type SiteSearchSourceEventAttributes = {
+export type SearchIndexEventAttributes = {
   /**
    * The type of activity
    */
@@ -7586,11 +7585,11 @@ export type SiteSearchSourceEventAttributes = {
 /**
  * JSON API links
  *
- * This interface was referenced by `SiteSearchSourceEvent`'s JSON-Schema
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export type SiteSearchSourceEventRelationships = {
-  site_search_source: SiteSearchSourceData;
+export type SearchIndexEventRelationships = {
+  search_index: SearchIndexData;
 };
 export type ItemCreateTargetSchema<
   D extends ItemTypeDefinition = ItemTypeDefinition,
@@ -9924,20 +9923,20 @@ export type BuildTriggerUpdateSchema = {
   };
 };
 /**
- * A Site Search Source represents a website that should be indexed by DatoCMS Site Search. When enabled, DatoCMS will periodically spider the website to update the search index.
+ * A Search Index represents a website that should be indexed by DatoCMS Site Search. When enabled, DatoCMS will periodically spider the website to update the search index.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "site_search_source".
+ * via the `definition` "search_index".
  */
-export type SiteSearchSource = {
-  id: SiteSearchSourceIdentity;
-  type: SiteSearchSourceType;
+export type SearchIndex = {
+  id: SearchIndexIdentity;
+  type: SearchIndexType;
   /**
-   * Name of the site search source
+   * Name of the search index
    */
   name: string;
   /**
-   * Whether the site search source is enabled or not
+   * Whether the search index is enabled or not
    */
   enabled: boolean;
   /**
@@ -9953,19 +9952,19 @@ export type SiteSearchSource = {
    */
   user_agent_suffix: string | null;
   build_triggers: BuildTriggerData[];
-  meta: SiteSearchSourceMeta;
+  meta: SearchIndexMeta;
 };
-export type SiteSearchSourceSelfTargetSchema = SiteSearchSource;
-export type SiteSearchSourceCreateTargetSchema = SiteSearchSource;
-export type SiteSearchSourceUpdateTargetSchema = SiteSearchSource;
-export type SiteSearchSourceDestroyTargetSchema = SiteSearchSource;
+export type SearchIndexSelfTargetSchema = SearchIndex;
+export type SearchIndexCreateTargetSchema = SearchIndex;
+export type SearchIndexUpdateTargetSchema = SearchIndex;
+export type SearchIndexDestroyTargetSchema = SearchIndex;
 /**
- * Meta information about the site search source
+ * Meta information about the search index
  *
- * This interface was referenced by `SiteSearchSource`'s JSON-Schema
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
  * via the `definition` "meta".
  */
-export type SiteSearchSourceMeta = {
+export type SearchIndexMeta = {
   /**
    * Status of the site search indexing
    */
@@ -9978,16 +9977,16 @@ export type SiteSearchSourceMeta = {
 /**
  * JSON API attributes
  *
- * This interface was referenced by `SiteSearchSource`'s JSON-Schema
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
  * via the `definition` "attributes".
  */
-export type SiteSearchSourceAttributes = {
+export type SearchIndexAttributes = {
   /**
-   * Name of the site search source
+   * Name of the search index
    */
   name: string;
   /**
-   * Whether the site search source is enabled or not
+   * Whether the search index is enabled or not
    */
   enabled: boolean;
   /**
@@ -10006,24 +10005,24 @@ export type SiteSearchSourceAttributes = {
 /**
  * JSON API links
  *
- * This interface was referenced by `SiteSearchSource`'s JSON-Schema
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
  * via the `definition` "relationships".
  */
-export type SiteSearchSourceRelationships = {
+export type SearchIndexRelationships = {
   build_triggers: BuildTriggerData[];
 };
 /**
- * This interface was referenced by `SiteSearchSource`'s JSON-Schema
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
  * via the `create.schema` link.
  */
-export type SiteSearchSourceCreateSchema = {
-  type?: SiteSearchSourceType;
+export type SearchIndexCreateSchema = {
+  type?: SearchIndexType;
   /**
-   * Name of the site search source
+   * Name of the search index
    */
   name: string;
   /**
-   * Whether the site search source is enabled or not
+   * Whether the search index is enabled or not
    */
   enabled: boolean;
   /**
@@ -10041,18 +10040,18 @@ export type SiteSearchSourceCreateSchema = {
   build_triggers?: BuildTriggerData[];
 };
 /**
- * This interface was referenced by `SiteSearchSource`'s JSON-Schema
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
  * via the `update.schema` link.
  */
-export type SiteSearchSourceUpdateSchema = {
-  id?: SiteSearchSourceIdentity;
-  type?: SiteSearchSourceType;
+export type SearchIndexUpdateSchema = {
+  id?: SearchIndexIdentity;
+  type?: SearchIndexType;
   /**
-   * Name of the site search source
+   * Name of the search index
    */
   name?: string;
   /**
-   * Whether the site search source is enabled or not
+   * Whether the search index is enabled or not
    */
   enabled?: boolean;
   /**
