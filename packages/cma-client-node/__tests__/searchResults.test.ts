@@ -18,8 +18,8 @@ describe('Search Results', () => {
     });
 
     // Create a site search source linked to the build trigger
-    const siteSearceSource = await client.siteSearchSources.create({
-      name: 'Test Search Source',
+    const searchIndex = await client.searchIndexes.create({
+      name: 'Test Search Index',
       enabled: true,
       build_trigger_indexing_enabled: true,
       frontend_url: 'http://www.google.com/',
@@ -37,14 +37,14 @@ describe('Search Results', () => {
 
     expect(resultsWhenSearchingViaBuildTrigger).toHaveLength(0);
 
-    const resultsWhenSearchingViaSiteSearchSource =
+    const resultsWhenSearchingViaSiteSearchIndex =
       await client.searchResults.list({
         filter: {
           query: 'project',
-          site_search_source_id: siteSearceSource.id,
+          site_search_source_id: searchIndex.id,
         },
       });
 
-    expect(resultsWhenSearchingViaSiteSearchSource).toHaveLength(0);
+    expect(resultsWhenSearchingViaSiteSearchIndex).toHaveLength(0);
   });
 });
