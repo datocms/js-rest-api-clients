@@ -119,6 +119,16 @@ export type EnvironmentIdentity = string;
  */
 export type BuildTriggerIdentity = string;
 /**
+ * ID of search_index
+ *
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SearchIndexIdentity = string;
+/**
  * This interface was referenced by `User`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -640,10 +650,7 @@ export type BuildEventInstancesHrefSchema = {
           | 'response_success'
           | 'response_failure'
           | 'request_aborted'
-          | 'response_unprocessable'
-          | 'indexing_started'
-          | 'indexing_success'
-          | 'indexing_failure';
+          | 'response_unprocessable';
       };
       created_at?: {
         gt?: string;
@@ -657,6 +664,84 @@ export type BuildEventInstancesHrefSchema = {
   order_by?:
     | 'build_trigger_id_asc'
     | 'build_trigger_id_desc'
+    | 'created_at_asc'
+    | 'created_at_desc'
+    | 'event_type_asc'
+    | 'event_type_desc';
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SearchIndexEventType = 'search_index_event';
+/**
+ * ID of search index event
+ *
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type SearchIndexEventIdentity = string;
+/**
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type SearchIndexType = 'search_index';
+/**
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type SearchIndexEventInstancesHrefSchema = {
+  /**
+   * Parameters to control offset-based pagination
+   */
+  page?: {
+    /**
+     * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
+     */
+    offset?: number;
+    /**
+     * The maximum number of entities to return (defaults to 30, maximum is 500)
+     */
+    limit?: number;
+  };
+  /**
+   * Attributes to filter
+   */
+  filter?: {
+    /**
+     * IDs to fetch, comma separated
+     */
+    ids?: string;
+    fields?: {
+      search_index_id?: {
+        eq?: string;
+      };
+      event_type?: {
+        /**
+         * The type of activity
+         */
+        eq?:
+          | 'indexing_started'
+          | 'indexing_success'
+          | 'indexing_failure'
+          | 'indexing_aborted';
+      };
+      created_at?: {
+        gt?: string;
+        lt?: string;
+      };
+    };
+  };
+  /**
+   * Fields used to order results
+   */
+  order_by?:
+    | 'search_index_id_asc'
+    | 'search_index_id_desc'
     | 'created_at_asc'
     | 'created_at_desc'
     | 'event_type_asc'
@@ -1065,7 +1150,11 @@ export type SearchResultInstancesHrefSchema = {
      */
     query: string;
     /**
-     * The build trigger ID on which the search will be performed. Required if more than one build trigger is present in a project
+     * The search index ID or name on which the search will be performed. If not provided, the first enabled search index will be used.
+     */
+    search_index_id?: string;
+    /**
+     * **[Deprecated]** Use `search_index_id` instead. The build trigger ID or name on which the search will be performed. This parameter is only supported for backward compatibility and will return an error if the build trigger has multiple search indexes associated.
      */
     build_trigger_id?: string;
     /**
@@ -1626,6 +1715,10 @@ export type RoleAttributes = {
    */
   can_manage_build_triggers: boolean;
   /**
+   * Can create/edit Search Indexes
+   */
+  can_manage_search_indexes: boolean;
+  /**
    * Can create/edit webhooks
    */
   can_manage_webhooks: boolean;
@@ -1657,6 +1750,10 @@ export type RoleAttributes = {
    * Can access the build events log
    */
   can_access_build_events_log: boolean;
+  /**
+   * Can access the search index events log
+   */
+  can_access_search_index_events_log: boolean;
   /**
    * Allowed actions on a model (or all) for a role
    */
@@ -1799,6 +1896,18 @@ export type RoleAttributes = {
   negative_build_trigger_permissions: {
     build_trigger?: BuildTriggerIdentity | null;
   }[];
+  /**
+   * Allowed search indexes for a role
+   */
+  positive_search_index_permissions: {
+    search_index?: SearchIndexIdentity | null;
+  }[];
+  /**
+   * Prohibited search indexes for a role
+   */
+  negative_search_index_permissions: {
+    search_index?: SearchIndexIdentity | null;
+  }[];
 };
 /**
  * JSON API links
@@ -1880,6 +1989,10 @@ export type RoleMeta = {
      */
     can_manage_build_triggers: boolean;
     /**
+     * Can create/edit Search Indexes
+     */
+    can_manage_search_indexes: boolean;
+    /**
      * Can create/edit webhooks
      */
     can_manage_webhooks: boolean;
@@ -1911,6 +2024,10 @@ export type RoleMeta = {
      * Can access the build events log
      */
     can_access_build_events_log: boolean;
+    /**
+     * Can access the search index events log
+     */
+    can_access_search_index_events_log: boolean;
     /**
      * Allowed actions on a model (or all) for a role
      */
@@ -2053,6 +2170,18 @@ export type RoleMeta = {
     negative_build_trigger_permissions: {
       build_trigger?: BuildTriggerIdentity | null;
     }[];
+    /**
+     * Allowed search indexes for a role
+     */
+    positive_search_index_permissions: {
+      search_index?: SearchIndexIdentity | null;
+    }[];
+    /**
+     * Prohibited search indexes for a role
+     */
+    negative_search_index_permissions: {
+      search_index?: SearchIndexIdentity | null;
+    }[];
   };
 };
 /**
@@ -2107,6 +2236,10 @@ export type RoleCreateSchema = {
        */
       can_manage_shared_filters?: boolean;
       /**
+       * Can create/edit Search Indexes
+       */
+      can_manage_search_indexes?: boolean;
+      /**
        * Can create/edit upload collections
        */
       can_manage_upload_collections?: boolean;
@@ -2146,6 +2279,10 @@ export type RoleCreateSchema = {
        * Can access the build events log
        */
       can_access_build_events_log?: boolean;
+      /**
+       * Can access the search index events log
+       */
+      can_access_search_index_events_log?: boolean;
       /**
        * Allowed actions on a model (or all) for a role
        */
@@ -2287,6 +2424,18 @@ export type RoleCreateSchema = {
        */
       negative_build_trigger_permissions?: {
         build_trigger?: BuildTriggerIdentity | null;
+      }[];
+      /**
+       * Allowed search indexes for a role
+       */
+      positive_search_index_permissions?: {
+        search_index?: SearchIndexIdentity | null;
+      }[];
+      /**
+       * Prohibited search indexes for a role
+       */
+      negative_search_index_permissions?: {
+        search_index?: SearchIndexIdentity | null;
       }[];
     };
     /**
@@ -2363,6 +2512,10 @@ export type RoleUpdateSchema = {
        */
       can_manage_shared_filters?: boolean;
       /**
+       * Can create/edit Search Indexes
+       */
+      can_manage_search_indexes?: boolean;
+      /**
        * Can create/edit upload collections
        */
       can_manage_upload_collections?: boolean;
@@ -2402,6 +2555,10 @@ export type RoleUpdateSchema = {
        * Can access the build events log
        */
       can_access_build_events_log?: boolean;
+      /**
+       * Can access the search index events log
+       */
+      can_access_search_index_events_log?: boolean;
       /**
        * Allowed actions on a model (or all) for a role
        */
@@ -2543,6 +2700,18 @@ export type RoleUpdateSchema = {
        */
       negative_build_trigger_permissions?: {
         build_trigger?: BuildTriggerIdentity | null;
+      }[];
+      /**
+       * Allowed search indexes for a role
+       */
+      positive_search_index_permissions?: {
+        search_index?: SearchIndexIdentity | null;
+      }[];
+      /**
+       * Prohibited search indexes for a role
+       */
+      negative_search_index_permissions?: {
+        search_index?: SearchIndexIdentity | null;
       }[];
     };
     /**
@@ -3311,6 +3480,10 @@ export type SitePlanAttributes = {
    */
   build_triggers: null | number;
   /**
+   * Number of search indexes
+   */
+  search_indexes: null | number;
+  /**
    * Number of plugins
    */
   plugins: null | number;
@@ -3471,6 +3644,10 @@ export type SitePlanAttributes = {
       price: number;
     };
     build_triggers?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    search_indexes?: {
       amount_per_packet: number;
       price: number;
     };
@@ -6944,10 +7121,7 @@ export type BuildEventAttributes = {
     | 'response_success'
     | 'response_failure'
     | 'request_aborted'
-    | 'response_unprocessable'
-    | 'indexing_started'
-    | 'indexing_success'
-    | 'indexing_failure';
+    | 'response_unprocessable';
   /**
    * The moment the activity occurred
    */
@@ -7009,6 +7183,95 @@ export type BuildEventInstancesTargetSchema = {
  */
 export type BuildEventSelfTargetSchema = {
   data: BuildEvent;
+};
+/**
+ * Represents an event occurred during the search indexing process.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "search_index_event".
+ */
+export type SearchIndexEvent = {
+  type: SearchIndexEventType;
+  id: SearchIndexEventIdentity;
+  attributes: SearchIndexEventAttributes;
+  relationships: SearchIndexEventRelationships;
+};
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SearchIndexEventAttributes = {
+  /**
+   * The type of activity
+   */
+  event_type:
+    | 'indexing_started'
+    | 'indexing_success'
+    | 'indexing_failure'
+    | 'indexing_aborted';
+  /**
+   * The moment the activity occurred
+   */
+  created_at: string;
+  /**
+   * Any details regarding the event
+   */
+  data: {
+    [k: string]: unknown;
+  };
+};
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type SearchIndexEventRelationships = {
+  /**
+   * Source search index
+   */
+  search_index: {
+    data: SearchIndexData;
+  };
+};
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SearchIndexData = {
+  type: SearchIndexType;
+  id: SearchIndexIdentity;
+};
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type SearchIndexEventData = {
+  type: SearchIndexEventType;
+  id: SearchIndexEventIdentity;
+};
+/**
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type SearchIndexEventInstancesTargetSchema = {
+  data: SearchIndexEvent[];
+  meta: {
+    total_count: number;
+  };
+};
+/**
+ * This interface was referenced by `SearchIndexEvent`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type SearchIndexEventSelfTargetSchema = {
+  data: SearchIndexEvent;
 };
 /**
  * JSON API links
@@ -9649,6 +9912,10 @@ export type BuildTriggerAttributes = {
    * Wether Site Search is enabled or not. With Site Search, everytime the website is built, DatoCMS will respider it to get updated content
    */
   indexing_enabled: boolean;
+  /**
+   * Whether the build trigger is enabled or not
+   */
+  enabled: boolean;
 };
 /**
  * This interface was referenced by `BuildTrigger`'s JSON-Schema
@@ -9694,6 +9961,10 @@ export type BuildTriggerCreateSchema = {
        * Wether Site Search is enabled or not. With Site Search, everytime the website is built, DatoCMS will respider it to get updated content
        */
       indexing_enabled: boolean;
+      /**
+       * Whether the build trigger is enabled or not
+       */
+      enabled?: boolean;
       /**
        * The public URL of the frontend. If Site Search is enabled (indicated by `indexing_enabled`), this is the starting point from which the website's spidering will start
        */
@@ -9746,6 +10017,10 @@ export type BuildTriggerUpdateSchema = {
        */
       indexing_enabled?: boolean;
       /**
+       * Whether the build trigger is enabled or not
+       */
+      enabled?: boolean;
+      /**
        * The public URL of the frontend. If Site Search is enabled (indicated by `indexing_enabled`), this is the starting point from which the website's spidering will start
        */
       frontend_url?: string | null;
@@ -9775,6 +10050,197 @@ export type BuildTriggerUpdateTargetSchema = {
  */
 export type BuildTriggerDestroyTargetSchema = {
   data: BuildTrigger;
+};
+/**
+ * A Search Index represents a website that should be indexed by DatoCMS Site Search. When enabled, DatoCMS will periodically spider the website to update the search index.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "search_index".
+ */
+export type SearchIndex = {
+  type: SearchIndexType;
+  id: SearchIndexIdentity;
+  attributes: SearchIndexAttributes;
+  relationships: SearchIndexRelationships;
+  meta: SearchIndexMeta;
+};
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SearchIndexAttributes = {
+  /**
+   * Name of the search index
+   */
+  name: string;
+  /**
+   * Whether the search index is enabled or not
+   */
+  enabled: boolean;
+  /**
+   * Whether the spidering should automatically run after associated build triggers complete
+   */
+  build_trigger_indexing_enabled: boolean;
+  /**
+   * The public URL of the frontend. This is the starting point from which the website's spidering will start
+   */
+  frontend_url: string | null;
+  /**
+   * Optional suffix to append to the DatoCmsSearchBot user agent when indexing the website
+   */
+  user_agent_suffix: string | null;
+};
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type SearchIndexRelationships = {
+  /**
+   * The build triggers connected to this search index
+   */
+  build_triggers: {
+    data: BuildTriggerData[];
+  };
+};
+/**
+ * Meta information about the search index
+ *
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type SearchIndexMeta = {
+  /**
+   * Status of the site search indexing
+   */
+  indexing_status: 'unstarted' | 'pending' | 'success' | 'failed';
+  /**
+   * Timestamp of the last completed indexing
+   */
+  last_indexing_completed_at: string | null;
+};
+/**
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type SearchIndexInstancesTargetSchema = {
+  data: SearchIndex[];
+};
+/**
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type SearchIndexSelfTargetSchema = {
+  data: SearchIndex;
+};
+/**
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type SearchIndexCreateSchema = {
+  data: {
+    type: SearchIndexType;
+    attributes: {
+      /**
+       * Name of the search index
+       */
+      name: string;
+      /**
+       * Whether the search index is enabled or not
+       */
+      enabled: boolean;
+      /**
+       * Whether the spidering should automatically run after associated build triggers complete
+       */
+      build_trigger_indexing_enabled?: boolean;
+      /**
+       * The public URL of the frontend. This is the starting point from which the website's spidering will start
+       */
+      frontend_url: string | null;
+      /**
+       * Optional suffix to append to the DatoCmsSearchBot user agent when indexing the website
+       */
+      user_agent_suffix?: string | null;
+    };
+    /**
+     * JSON API links
+     */
+    relationships?: {
+      /**
+       * The build triggers connected to this search index
+       */
+      build_triggers?: {
+        data: BuildTriggerData[];
+      };
+    };
+  };
+};
+/**
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type SearchIndexCreateTargetSchema = {
+  data: SearchIndex;
+};
+/**
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type SearchIndexUpdateSchema = {
+  data: {
+    type: SearchIndexType;
+    id: SearchIndexIdentity;
+    attributes: {
+      /**
+       * Name of the search index
+       */
+      name?: string;
+      /**
+       * Whether the search index is enabled or not
+       */
+      enabled?: boolean;
+      /**
+       * Whether the spidering should automatically run after associated build triggers complete
+       */
+      build_trigger_indexing_enabled?: boolean;
+      /**
+       * The public URL of the frontend. This is the starting point from which the website's spidering will start
+       */
+      frontend_url?: string | null;
+      /**
+       * Optional suffix to append to the DatoCmsSearchBot user agent when indexing the website
+       */
+      user_agent_suffix?: string | null;
+    };
+    /**
+     * JSON API links
+     */
+    relationships?: {
+      /**
+       * The build triggers connected to this search index
+       */
+      build_triggers?: {
+        data: BuildTriggerData[];
+      };
+    };
+  };
+};
+/**
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type SearchIndexUpdateTargetSchema = {
+  data: SearchIndex;
+};
+/**
+ * This interface was referenced by `SearchIndex`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type SearchIndexDestroyTargetSchema = {
+  data: SearchIndex;
 };
 /**
  * In DatoCMS you can create filters to help you (and other editors) quickly search for records
