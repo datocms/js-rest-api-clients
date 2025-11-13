@@ -1,7 +1,10 @@
 import { deserializeResponseBody } from '@datocms/rest-client-utils';
 import type * as ApiTypes from '../generated/ApiTypes';
 import type * as RawApiTypes from '../generated/RawApiTypes';
-import { blockModelIdsReferencedInField } from './fieldsContainingReferences';
+import {
+  blockModelIdsReferencedInField,
+  modelIdsReferencedInField,
+} from './fieldsContainingReferences';
 
 interface GenericClient {
   itemTypes: {
@@ -265,9 +268,7 @@ export class SchemaRepository {
   async getItemTypeFields(
     itemType: ApiTypes.ItemType | RawApiTypes.ItemType,
   ): Promise<ApiTypes.Field[]> {
-    const rawResult = await this.getRawItemTypeFields(
-      itemType as RawApiTypes.ItemType,
-    );
+    const rawResult = await this.getRawItemTypeFields(itemType);
     return deserializeResponseBody<ApiTypes.Field[]>({
       data: rawResult,
     });
@@ -280,7 +281,7 @@ export class SchemaRepository {
    * @returns Promise that resolves to an array of fields
    */
   async getRawItemTypeFields(
-    itemType: RawApiTypes.ItemType,
+    itemType: ApiTypes.ItemType | RawApiTypes.ItemType,
   ): Promise<RawApiTypes.Field[]> {
     // Check if we already have the fields cached
     const cachedFields = this.fieldsByItemType.get(itemType.id);
@@ -304,9 +305,7 @@ export class SchemaRepository {
   async getItemTypeFieldsets(
     itemType: ApiTypes.ItemType | RawApiTypes.ItemType,
   ): Promise<ApiTypes.Fieldset[]> {
-    const rawResult = await this.getRawItemTypeFieldsets(
-      itemType as RawApiTypes.ItemType,
-    );
+    const rawResult = await this.getRawItemTypeFieldsets(itemType);
     return deserializeResponseBody<ApiTypes.Fieldset[]>({
       data: rawResult,
     });
@@ -319,7 +318,7 @@ export class SchemaRepository {
    * @returns Promise that resolves to an array of fieldsets
    */
   async getRawItemTypeFieldsets(
-    itemType: RawApiTypes.ItemType,
+    itemType: ApiTypes.ItemType | RawApiTypes.ItemType,
   ): Promise<RawApiTypes.Fieldset[]> {
     // Check if we already have the fieldsets cached
     const cachedFieldsets = this.fieldsetsByItemType.get(itemType.id);
@@ -585,6 +584,165 @@ export class SchemaRepository {
     blocks: Array<ApiTypes.ItemType | RawApiTypes.ItemType>,
   ): Promise<Array<ApiTypes.ItemType>> {
     const rawResult = await this.getRawModelsEmbeddingBlocks(blocks);
+    return deserializeResponseBody<ApiTypes.ItemType[]>({
+      data: rawResult,
+    });
+  }
+
+  /**
+   * Gets all block models that are directly or indirectly nested within the given item types.
+   * This method recursively traverses the schema to find all blocks that are nested
+   * within the provided item types, either directly through block fields or indirectly through
+   * other nested block models.
+   *
+   * @param itemTypes - Array of item types to find nested blocks for
+   * @returns Promise that resolves to array of all block models nested in these item types
+   */
+  async getRawNestedBlocks(
+    itemTypes: Array<ApiTypes.ItemType | RawApiTypes.ItemType>,
+  ): Promise<Array<RawApiTypes.ItemType>> {
+    await this.prefetchAllModelsAndFields();
+
+    const allItemTypes = await this.getAllRawItemTypes();
+    const visited = new Set<string>();
+    const nestedBlocks: Array<RawApiTypes.ItemType> = [];
+
+    // Helper function to recursively find nested blocks
+    const findNestedBlocks = async (
+      itemType: ApiTypes.ItemType | RawApiTypes.ItemType,
+      alreadyExplored: Set<string> = new Set(),
+    ): Promise<void> => {
+      if (alreadyExplored.has(itemType.id)) {
+        return;
+      }
+
+      alreadyExplored.add(itemType.id);
+
+      const fields = await this.getRawItemTypeFields(itemType);
+
+      for (const field of fields) {
+        const referencedBlockIds = blockModelIdsReferencedInField(field);
+
+        for (const blockId of referencedBlockIds) {
+          if (!visited.has(blockId)) {
+            visited.add(blockId);
+            const nestedBlock = allItemTypes.find((it) => it.id === blockId);
+            if (nestedBlock) {
+              nestedBlocks.push(nestedBlock);
+              // Recursively find blocks nested in this block
+              await findNestedBlocks(nestedBlock, new Set(alreadyExplored));
+            }
+          }
+        }
+      }
+    };
+
+    // Find nested blocks for each provided item type
+    for (const itemType of itemTypes) {
+      await findNestedBlocks(itemType);
+    }
+
+    return nestedBlocks;
+  }
+
+  /**
+   * Gets all block models that are directly or indirectly nested within the given item types.
+   * This method recursively traverses the schema to find all blocks that are nested
+   * within the provided item types, either directly through block fields or indirectly through
+   * other nested block models.
+   *
+   * @param itemTypes - Array of item types to find nested blocks for
+   * @returns Promise that resolves to array of all block models nested in these item types
+   */
+  async getNestedBlocks(
+    itemTypes: Array<ApiTypes.ItemType | RawApiTypes.ItemType>,
+  ): Promise<Array<ApiTypes.ItemType>> {
+    const rawResult = await this.getRawNestedBlocks(itemTypes);
+    return deserializeResponseBody<ApiTypes.ItemType[]>({
+      data: rawResult,
+    });
+  }
+
+  /**
+   * Gets all models that are directly or indirectly nested/referenced within the given item types.
+   * This method recursively traverses the schema to find all models that are referenced
+   * by the provided item types through link fields, either directly or indirectly through
+   * other referenced blocks.
+   *
+   * @param itemTypes - Array of item types to find nested models for
+   * @returns Promise that resolves to array of all models nested in these item types
+   */
+  async getRawNestedModels(
+    itemTypes: Array<ApiTypes.ItemType | RawApiTypes.ItemType>,
+  ): Promise<Array<RawApiTypes.ItemType>> {
+    await this.prefetchAllModelsAndFields();
+
+    const allItemTypes = await this.getAllRawItemTypes();
+    const visited = new Set<string>();
+    const nestedModels: Array<RawApiTypes.ItemType> = [];
+
+    // Helper function to recursively find nested models
+    const findNestedModels = async (
+      itemType: ApiTypes.ItemType | RawApiTypes.ItemType,
+      alreadyExplored: Set<string> = new Set(),
+    ): Promise<void> => {
+      if (alreadyExplored.has(itemType.id)) {
+        return;
+      }
+
+      alreadyExplored.add(itemType.id);
+
+      const fields = await this.getRawItemTypeFields(itemType);
+
+      for (const field of fields) {
+        // Find models directly referenced via link fields
+        const referencedModelIds = modelIdsReferencedInField(field);
+
+        for (const modelId of referencedModelIds) {
+          if (!visited.has(modelId)) {
+            visited.add(modelId);
+            const nestedModel = allItemTypes.find((it) => it.id === modelId);
+            if (nestedModel) {
+              nestedModels.push(nestedModel);
+              // Do NOT recurse into models, only into blocks
+            }
+          }
+        }
+
+        // Find blocks referenced via block fields, then recursively find models in those blocks
+        const referencedBlockIds = blockModelIdsReferencedInField(field);
+
+        for (const blockId of referencedBlockIds) {
+          const nestedBlock = allItemTypes.find((it) => it.id === blockId);
+          if (nestedBlock) {
+            // Recursively find models nested in this block
+            await findNestedModels(nestedBlock, new Set(alreadyExplored));
+          }
+        }
+      }
+    };
+
+    // Find nested models for each provided item type
+    for (const itemType of itemTypes) {
+      await findNestedModels(itemType);
+    }
+
+    return nestedModels;
+  }
+
+  /**
+   * Gets all models that are directly or indirectly nested/referenced within the given item types.
+   * This method recursively traverses the schema to find all models that are referenced
+   * by the provided item types through link fields, either directly or indirectly through
+   * other referenced blocks.
+   *
+   * @param itemTypes - Array of item types to find nested models for
+   * @returns Promise that resolves to array of all models nested in these item types
+   */
+  async getNestedModels(
+    itemTypes: Array<ApiTypes.ItemType | RawApiTypes.ItemType>,
+  ): Promise<Array<ApiTypes.ItemType>> {
+    const rawResult = await this.getRawNestedModels(itemTypes);
     return deserializeResponseBody<ApiTypes.ItemType[]>({
       data: rawResult,
     });

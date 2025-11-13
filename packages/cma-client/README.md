@@ -763,6 +763,8 @@ class SchemaRepository {
 
   // Higher-level utilities
   async getModelsEmbeddingBlocks(blocks: ItemType[]): Promise<ItemType[]>
+  async getNestedBlocks(itemTypes: ItemType[]): Promise<ItemType[]>
+  async getNestedModels(itemTypes: ItemType[]): Promise<ItemType[]>
 
   // Plugin methods
   async getAllPlugins(): Promise<Plugin[]>
@@ -772,6 +774,8 @@ class SchemaRepository {
   // Raw variants (return API response format)
   async getAllRawItemTypes(): Promise<RawItemType[]>
   async getRawItemTypeByApiKey(apiKey: string): Promise<RawItemType>
+  async getRawNestedBlocks(itemTypes: Array<ItemType | RawItemType>): Promise<Array<RawItemType>>
+  async getRawNestedModels(itemTypes: Array<ItemType | RawItemType>): Promise<Array<RawItemType>>
   // ... and more raw variants
 }
 ```
