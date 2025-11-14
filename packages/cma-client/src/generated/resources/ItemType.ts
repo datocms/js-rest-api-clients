@@ -7,7 +7,7 @@ export default class ItemType extends BaseResource {
   static readonly TYPE = 'item_type' as const;
 
   /**
-   * Create a new model
+   * Create a new model/block model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/create
    *
@@ -55,7 +55,7 @@ export default class ItemType extends BaseResource {
   }
 
   /**
-   * Create a new model
+   * Create a new model/block model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/create
    *
@@ -75,7 +75,7 @@ export default class ItemType extends BaseResource {
   }
 
   /**
-   * Update a model
+   * Update a model/block model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/update
    *
@@ -125,7 +125,7 @@ export default class ItemType extends BaseResource {
   }
 
   /**
-   * Update a model
+   * Update a model/block model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/update
    *
@@ -144,7 +144,7 @@ export default class ItemType extends BaseResource {
   }
 
   /**
-   * List all models
+   * List all models/block models
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/instances
    *
@@ -160,7 +160,7 @@ export default class ItemType extends BaseResource {
   }
 
   /**
-   * List all models
+   * List all models/block models
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/instances
    *
@@ -175,7 +175,7 @@ export default class ItemType extends BaseResource {
   }
 
   /**
-   * Retrieve a model
+   * Retrieve a model/block model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/self
    *
@@ -189,7 +189,7 @@ export default class ItemType extends BaseResource {
   }
 
   /**
-   * Retrieve a model
+   * Retrieve a model/block model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/self
    *
@@ -204,7 +204,7 @@ export default class ItemType extends BaseResource {
   }
 
   /**
-   * Duplicate model
+   * Duplicate model/block model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/duplicate
    *
@@ -220,7 +220,7 @@ export default class ItemType extends BaseResource {
   }
 
   /**
-   * Duplicate model
+   * Duplicate model/block model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/duplicate
    *
@@ -237,7 +237,7 @@ export default class ItemType extends BaseResource {
   }
 
   /**
-   * Delete a model
+   * Delete a model/block model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/destroy
    *
@@ -254,7 +254,7 @@ export default class ItemType extends BaseResource {
   }
 
   /**
-   * Delete a model
+   * Delete a model/block model
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item-type/destroy
    *

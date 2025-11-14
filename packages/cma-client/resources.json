@@ -951,7 +951,7 @@
         "rel": "create",
         "urlTemplate": "/item-types",
         "method": "POST",
-        "comment": "Create a new model",
+        "comment": "Create a new model/block model",
         "urlPlaceholders": [],
         "requestBodyType": "ItemTypeCreateSchema",
         "optionalRequestBody": false,
@@ -998,7 +998,7 @@
         "rel": "update",
         "urlTemplate": "/item-types/${itemTypeId}",
         "method": "PUT",
-        "comment": "Update a model",
+        "comment": "Update a model/block model",
         "urlPlaceholders": [
           {
             "variableName": "itemTypeId",
@@ -1057,7 +1057,7 @@
         "rel": "instances",
         "urlTemplate": "/item-types",
         "method": "GET",
-        "comment": "List all models",
+        "comment": "List all models/block models",
         "urlPlaceholders": [],
         "optionalRequestBody": false,
         "queryParamsRequired": false,
@@ -1073,7 +1073,7 @@
         "rel": "self",
         "urlTemplate": "/item-types/${itemTypeId}",
         "method": "GET",
-        "comment": "Retrieve a model",
+        "comment": "Retrieve a model/block model",
         "urlPlaceholders": [
           {
             "variableName": "itemTypeId",
@@ -1100,7 +1100,7 @@
         "rel": "duplicate",
         "urlTemplate": "/item-types/${itemTypeId}/duplicate",
         "method": "POST",
-        "comment": "Duplicate model",
+        "comment": "Duplicate model/block model",
         "urlPlaceholders": [
           {
             "variableName": "itemTypeId",
@@ -1127,7 +1127,7 @@
         "rel": "destroy",
         "urlTemplate": "/item-types/${itemTypeId}",
         "method": "DELETE",
-        "comment": "Delete a model",
+        "comment": "Delete a model/block model",
         "urlPlaceholders": [
           {
             "variableName": "itemTypeId",

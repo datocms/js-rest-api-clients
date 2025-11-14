@@ -4234,7 +4234,26 @@ export type UploadCollectionReorderJobSchema = {
   data: UploadCollection[];
 };
 /**
- * The way you define the kind of content you can edit inside your administrative area passes through the concept of Models, which are much like database tables. For backward-compatibility reasons, the API refers to models as "item types".
+ * The way you define the kind of content you can edit inside a DatoCMS project passes through the concept of **models** and **block models**. For backward-compatibility reasons, the API refers to both as "item types".
+ *
+ * ## Models
+ *
+ * Models are much like database tables — they define the structure of your main content types (e.g., blog posts, products, landing pages). Each model is composed of fields with custom validations. Records created from models exist independently and can be referenced by other records through link fields.
+ *
+ * ## Block Models
+ *
+ * Block models define complex and repeatable structures that can be embedded inside records. They are the foundation behind features like [Modular Content](/docs/content-modelling/modular-content.md) and [Structured Text](/docs/content-modelling/structured-text.md).
+ *
+ * ### Key differences:
+ *
+ * - **Models** create standalone records that can be referenced and have independent value
+ * - **Block models** create blocks that only exist within parent records and cannot be referenced via link fields
+ * - Block models defined in the library can be reused across different models
+ * - When a record gets deleted, all the blocks it contains are deleted with it
+ * - Blocks do not count towards your plan's records limit
+ *
+ * You can distinguish between models and block models using the `modular_block` attribute: `true` indicates a block model, `false` indicates a regular model.
+ *
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "item_type".
@@ -4254,11 +4273,11 @@ export type ItemType = {
  */
 export type ItemTypeAttributes = {
   /**
-   * Name of the model
+   * Name of the model/block model
    */
   name: string;
   /**
-   * API key of the model
+   * API key of the model/block model
    */
   api_key: string;
   /**
@@ -4266,11 +4285,11 @@ export type ItemTypeAttributes = {
    */
   collection_appeareance?: 'compact' | 'table';
   /**
-   * The way the model collection should be presented to the editors
+   * The way the model/block model collection should be presented to the editors
    */
   collection_appearance: 'compact' | 'table';
   /**
-   * Whether the model is single-instance or not
+   * Whether the model is single-instance or not. This property only applies to models, not block models
    */
   singleton: boolean;
   /**
@@ -4278,31 +4297,31 @@ export type ItemTypeAttributes = {
    */
   all_locales_required: boolean;
   /**
-   * Whether editors can sort records via drag & drop or not
+   * Whether editors can sort records via drag & drop or not. Must be false for block models
    */
   sortable: boolean;
   /**
-   * Whether this model is a modular content block or not
+   * Whether this is a block model or not. Block models define structures that can be embedded inside records, while regular models create standalone records
    */
   modular_block: boolean;
   /**
-   * Whether draft/published mode is active or not
+   * Whether draft/published mode is active or not. Must be false for block models
    */
   draft_mode_active: boolean;
   /**
-   * Whether draft records can be saved without satisfying the validations or not
+   * Whether draft records can be saved without satisfying the validations or not. Must be false for block models
    */
   draft_saving_active: boolean;
   /**
-   * Whether editors can organize records in a tree or not
+   * Whether editors can organize records in a tree or not. Must be false for block models
    */
   tree: boolean;
   /**
-   * If an ordering field is set, this fields specify the sorting direction
+   * If an ordering field is set, this field specifies the sorting direction. This property does not apply to block models
    */
   ordering_direction: null | 'asc' | 'desc';
   /**
-   * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field
+   * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field. This property does not apply to block models
    */
   ordering_meta:
     | null
@@ -4311,15 +4330,15 @@ export type ItemTypeAttributes = {
     | 'first_published_at'
     | 'published_at';
   /**
-   * If this model is single-instance, this tells the single-instance record has already been created or not
+   * If this model is single-instance, this tells whether the single-instance record has already been created or not. This property only applies to models, not block models
    */
   has_singleton_item: boolean;
   /**
-   * A hint shown to editors to help them understand the purpose of this model/block
+   * A hint shown to editors to help them understand the purpose of this model/block model
    */
   hint: string | null;
   /**
-   * Whether inverse relationships fields are expressed in GraphQL or not
+   * Whether inverse relationships fields are expressed in GraphQL or not. Must be false for block models
    */
   inverse_relationships_enabled: boolean;
 };
@@ -4331,19 +4350,19 @@ export type ItemTypeAttributes = {
  */
 export type ItemTypeRelationships = {
   /**
-   * The item instance related to this item type
+   * The record instance related to this model. This relationship only applies to single-instance models, not block models
    */
   singleton_item: {
     data: ItemData | null;
   };
   /**
-   * The list of item type fields
+   * The list of fields for this model/block model
    */
   fields: {
     data: FieldData[];
   };
   /**
-   * The list of item type fieldsets
+   * The list of fieldsets for this model/block model
    */
   fieldsets: {
     data: FieldsetData[];
@@ -4361,25 +4380,25 @@ export type ItemTypeRelationships = {
     data: FieldData | null;
   };
   /**
-   * The field to use as fallback title for SEO purposes
+   * The field to use as fallback title for SEO purposes. This relationship does not apply to block models
    */
   title_field: {
     data: FieldData | null;
   };
   /**
-   * The field to use as fallback image for SEO purposes
+   * The field to use as fallback image for SEO purposes. This relationship does not apply to block models
    */
   image_preview_field: {
     data: FieldData | null;
   };
   /**
-   * The field to use as fallback description for SEO purposes
+   * The field to use as fallback description for SEO purposes. This relationship does not apply to block models
    */
   excerpt_field: {
     data: FieldData | null;
   };
   /**
-   * The field upon which the collection is sorted
+   * The field upon which the collection is sorted. This relationship does not apply to block models
    */
   ordering_field: {
     data: FieldData | null;
@@ -4432,14 +4451,14 @@ export type WorkflowData = {
   id: WorkflowIdentity;
 };
 /**
- * Meta information regarding the item type
+ * Meta information regarding the model/block model
  *
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `definition` "meta".
  */
 export type ItemTypeMeta = {
   /**
-   * If this model is single-instance, this tells the single-instance record has already been created or not
+   * If this model is single-instance, this tells whether the single-instance record has already been created or not. This property only applies to models, not block models
    */
   has_singleton_item: boolean;
 };
@@ -4456,15 +4475,15 @@ export type ItemTypeCreateSchema = {
      */
     attributes: {
       /**
-       * Name of the model
+       * Name of the model/block model
        */
       name: string;
       /**
-       * API key of the model
+       * API key of the model/block model
        */
       api_key: string;
       /**
-       * Whether the model is single-instance or not
+       * Whether the model is single-instance or not. This property only applies to models, not block models
        */
       singleton?: boolean;
       /**
@@ -4472,31 +4491,31 @@ export type ItemTypeCreateSchema = {
        */
       all_locales_required?: boolean;
       /**
-       * Whether editors can sort records via drag & drop or not
+       * Whether editors can sort records via drag & drop or not. Must be false for block models
        */
       sortable?: boolean;
       /**
-       * Whether this model is a modular content block or not
+       * Whether this is a block model or not. Block models define structures that can be embedded inside records, while regular models create standalone records
        */
       modular_block?: boolean;
       /**
-       * Whether draft/published mode is active or not
+       * Whether draft/published mode is active or not. Must be false for block models
        */
       draft_mode_active?: boolean;
       /**
-       * Whether draft records can be saved without satisfying the validations or not
+       * Whether draft records can be saved without satisfying the validations or not. Must be false for block models
        */
       draft_saving_active?: boolean;
       /**
-       * Whether editors can organize records in a tree or not
+       * Whether editors can organize records in a tree or not. Must be false for block models
        */
       tree?: boolean;
       /**
-       * If an ordering field is set, this fields specify the sorting direction
+       * If an ordering field is set, this field specifies the sorting direction. This property does not apply to block models
        */
       ordering_direction?: null | 'asc' | 'desc';
       /**
-       * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field
+       * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field. This property does not apply to block models
        */
       ordering_meta?:
         | null
@@ -4509,21 +4528,21 @@ export type ItemTypeCreateSchema = {
        */
       collection_appeareance?: 'compact' | 'table';
       /**
-       * The way the model collection should be presented to the editors
+       * The way the model/block model collection should be presented to the editors
        */
       collection_appearance?: 'compact' | 'table';
       /**
-       * A hint shown to editors to help them understand the purpose of this model/block
+       * A hint shown to editors to help them understand the purpose of this model/block model
        */
       hint?: string | null;
       /**
-       * Whether inverse relationships fields are expressed in GraphQL or not
+       * Whether inverse relationships fields are expressed in GraphQL or not. Must be false for block models
        */
       inverse_relationships_enabled?: boolean;
     };
     relationships?: {
       /**
-       * The field upon which the collection is sorted
+       * The field upon which the collection is sorted. This relationship does not apply to block models
        */
       ordering_field?: {
         data: FieldData | null;
@@ -4541,19 +4560,19 @@ export type ItemTypeCreateSchema = {
         data: FieldData | null;
       };
       /**
-       * The field to use as fallback title for SEO purposes
+       * The field to use as fallback title for SEO purposes. This relationship does not apply to block models
        */
       title_field?: {
         data: FieldData | null;
       };
       /**
-       * The field to use as fallback image for SEO purposes
+       * The field to use as fallback image for SEO purposes. This relationship does not apply to block models
        */
       image_preview_field?: {
         data: FieldData | null;
       };
       /**
-       * The field to use as fallback description for SEO purposes
+       * The field to use as fallback description for SEO purposes. This relationship does not apply to block models
        */
       excerpt_field?: {
         data: FieldData | null;
@@ -4588,11 +4607,11 @@ export type ItemTypeUpdateSchema = {
      */
     attributes?: {
       /**
-       * Name of the model
+       * Name of the model/block model
        */
       name?: string;
       /**
-       * API key of the model
+       * API key of the model/block model
        */
       api_key?: string;
       /**
@@ -4600,11 +4619,11 @@ export type ItemTypeUpdateSchema = {
        */
       collection_appeareance?: 'compact' | 'table';
       /**
-       * The way the model collection should be presented to the editors
+       * The way the model/block model collection should be presented to the editors
        */
       collection_appearance?: 'compact' | 'table';
       /**
-       * Whether the model is single-instance or not
+       * Whether the model is single-instance or not. This property only applies to models, not block models
        */
       singleton?: boolean;
       /**
@@ -4612,31 +4631,31 @@ export type ItemTypeUpdateSchema = {
        */
       all_locales_required?: boolean;
       /**
-       * Whether editors can sort records via drag & drop or not
+       * Whether editors can sort records via drag & drop or not. Must be false for block models
        */
       sortable?: boolean;
       /**
-       * Whether this model is a modular content block or not
+       * Whether this is a block model or not. Block models define structures that can be embedded inside records, while regular models create standalone records
        */
       modular_block?: boolean;
       /**
-       * Whether draft/published mode is active or not
+       * Whether draft/published mode is active or not. Must be false for block models
        */
       draft_mode_active?: boolean;
       /**
-       * Whether draft records can be saved without satisfying the validations or not
+       * Whether draft records can be saved without satisfying the validations or not. Must be false for block models
        */
       draft_saving_active?: boolean;
       /**
-       * Whether editors can organize records in a tree or not
+       * Whether editors can organize records in a tree or not. Must be false for block models
        */
       tree?: boolean;
       /**
-       * If an ordering field is set, this fields specify the sorting direction
+       * If an ordering field is set, this field specifies the sorting direction. This property does not apply to block models
        */
       ordering_direction?: null | 'asc' | 'desc';
       /**
-       * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field
+       * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field. This property does not apply to block models
        */
       ordering_meta?:
         | null
@@ -4645,21 +4664,21 @@ export type ItemTypeUpdateSchema = {
         | 'first_published_at'
         | 'published_at';
       /**
-       * If this model is single-instance, this tells the single-instance record has already been created or not
+       * If this model is single-instance, this tells whether the single-instance record has already been created or not. This property only applies to models, not block models
        */
       has_singleton_item?: boolean;
       /**
-       * A hint shown to editors to help them understand the purpose of this model/block
+       * A hint shown to editors to help them understand the purpose of this model/block model
        */
       hint?: string | null;
       /**
-       * Whether inverse relationships fields are expressed in GraphQL or not
+       * Whether inverse relationships fields are expressed in GraphQL or not. Must be false for block models
        */
       inverse_relationships_enabled?: boolean;
     };
     relationships?: {
       /**
-       * The field upon which the collection is sorted
+       * The field upon which the collection is sorted. This relationship does not apply to block models
        */
       ordering_field?: {
         data: FieldData | null;
@@ -4677,19 +4696,19 @@ export type ItemTypeUpdateSchema = {
         data: FieldData | null;
       };
       /**
-       * The field to use as fallback title for SEO purposes
+       * The field to use as fallback title for SEO purposes. This relationship does not apply to block models
        */
       title_field?: {
         data: FieldData | null;
       };
       /**
-       * The field to use as fallback image for SEO purposes
+       * The field to use as fallback image for SEO purposes. This relationship does not apply to block models
        */
       image_preview_field?: {
         data: FieldData | null;
       };
       /**
-       * The field to use as fallback description for SEO purposes
+       * The field to use as fallback description for SEO purposes. This relationship does not apply to block models
        */
       excerpt_field?: {
         data: FieldData | null;
@@ -4703,7 +4722,7 @@ export type ItemTypeUpdateSchema = {
     };
     meta?: {
       /**
-       * If this model is single-instance, this tells the single-instance record has already been created or not
+       * If this model is single-instance, this tells whether the single-instance record has already been created or not. This property only applies to models, not block models
        */
       has_singleton_item?: boolean;
     };
