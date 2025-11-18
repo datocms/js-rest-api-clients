@@ -4053,7 +4053,7 @@
         "rel": "create",
         "urlTemplate": "/search-indexes",
         "method": "POST",
-        "comment": "Create search index",
+        "comment": "Create a search index",
         "urlPlaceholders": [],
         "requestBodyType": "SearchIndexCreateSchema",
         "optionalRequestBody": false,
@@ -4081,7 +4081,7 @@
         "rel": "update",
         "urlTemplate": "/search-indexes/${searchIndexId}",
         "method": "PUT",
-        "comment": "Update search index",
+        "comment": "Update a search index",
         "urlPlaceholders": [
           {
             "variableName": "searchIndexId",
@@ -4121,7 +4121,7 @@
         "rel": "trigger",
         "urlTemplate": "/search-indexes/${searchIndexId}/trigger",
         "method": "POST",
-        "comment": "Trigger a site search indexing",
+        "comment": "Trigger the indexing process",
         "urlPlaceholders": [
           {
             "variableName": "searchIndexId",
@@ -4147,7 +4147,7 @@
         "rel": "abort",
         "urlTemplate": "/search-indexes/${searchIndexId}/abort",
         "method": "DELETE",
-        "comment": "Abort a site search spidering and mark it as failed",
+        "comment": "Abort a the current indexing process and mark it as failed",
         "urlPlaceholders": [
           {
             "variableName": "searchIndexId",

@@ -69,7 +69,7 @@ export default class SearchIndex extends BaseResource {
   }
 
   /**
-   * Create search index
+   * Create a search index
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-index/create
    *
@@ -97,7 +97,7 @@ export default class SearchIndex extends BaseResource {
   }
 
   /**
-   * Create search index
+   * Create a search index
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-index/create
    *
@@ -115,7 +115,7 @@ export default class SearchIndex extends BaseResource {
   }
 
   /**
-   * Update search index
+   * Update a search index
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-index/update
    *
@@ -148,7 +148,7 @@ export default class SearchIndex extends BaseResource {
   }
 
   /**
-   * Update search index
+   * Update a search index
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-index/update
    *
@@ -167,7 +167,7 @@ export default class SearchIndex extends BaseResource {
   }
 
   /**
-   * Trigger a site search indexing
+   * Trigger the indexing process
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-index/trigger
    *
@@ -179,7 +179,7 @@ export default class SearchIndex extends BaseResource {
   }
 
   /**
-   * Trigger a site search indexing
+   * Trigger the indexing process
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-index/trigger
    *
@@ -194,7 +194,7 @@ export default class SearchIndex extends BaseResource {
   }
 
   /**
-   * Abort a site search spidering and mark it as failed
+   * Abort a the current indexing process and mark it as failed
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-index/abort
    *
@@ -206,7 +206,7 @@ export default class SearchIndex extends BaseResource {
   }
 
   /**
-   * Abort a site search spidering and mark it as failed
+   * Abort a the current indexing process and mark it as failed
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/search-index/abort
    *

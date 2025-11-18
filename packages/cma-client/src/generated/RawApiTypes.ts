@@ -1679,7 +1679,7 @@ export type RoleAttributes = {
    */
   can_edit_site: boolean;
   /**
-   * Can create/edit models and plugins
+   * Can create and edit models and plugins
    */
   can_edit_schema: boolean;
   /**
@@ -1699,31 +1699,31 @@ export type RoleAttributes = {
    */
   environments_access: 'all' | 'primary_only' | 'sandbox_only' | 'none';
   /**
-   * Can create/edit roles and invite/remove collaborators
+   * Can create and edit roles and invite/remove collaborators
    */
   can_manage_users: boolean;
   /**
-   * Can create/edit shared filters (both for models and the media area)
+   * Can create and edit shared filters (both for models and the media area)
    */
   can_manage_shared_filters: boolean;
   /**
-   * Can create/edit upload collections
+   * Can create and edit upload collections
    */
   can_manage_upload_collections: boolean;
   /**
-   * Can create/edit Build triggers
+   * Can create and edit build triggers
    */
   can_manage_build_triggers: boolean;
   /**
-   * Can create/edit Search Indexes
+   * Can create and edit search indexes
    */
   can_manage_search_indexes: boolean;
   /**
-   * Can create/edit webhooks
+   * Can create and edit webhooks
    */
   can_manage_webhooks: boolean;
   /**
-   * Can create/delete sandbox environments and promote them to primary environment
+   * Can create and delete sandbox environments and promote them to primary environment
    */
   can_manage_environments: boolean;
   /**
@@ -1735,7 +1735,7 @@ export type RoleAttributes = {
    */
   can_access_audit_log: boolean;
   /**
-   * Can create/edit workflows
+   * Can create and edit workflows
    */
   can_manage_workflows: boolean;
   /**
@@ -1897,13 +1897,13 @@ export type RoleAttributes = {
     build_trigger?: BuildTriggerIdentity | null;
   }[];
   /**
-   * Allowed search indexes for a role
+   * Search indexes that can be triggered by a role
    */
   positive_search_index_permissions: {
     search_index?: SearchIndexIdentity | null;
   }[];
   /**
-   * Prohibited search indexes for a role
+   * Search indexes that can't be triggered by a role
    */
   negative_search_index_permissions: {
     search_index?: SearchIndexIdentity | null;
@@ -1953,7 +1953,7 @@ export type RoleMeta = {
      */
     can_edit_site: boolean;
     /**
-     * Can create/edit models and plugins
+     * Can create and edit models and plugins
      */
     can_edit_schema: boolean;
     /**
@@ -1973,31 +1973,31 @@ export type RoleMeta = {
      */
     environments_access: 'all' | 'primary_only' | 'sandbox_only' | 'none';
     /**
-     * Can create/edit roles and invite/remove collaborators
+     * Can create and edit roles and invite/remove collaborators
      */
     can_manage_users: boolean;
     /**
-     * Can create/edit shared filters (both for models and the media area)
+     * Can create and edit shared filters (both for models and the media area)
      */
     can_manage_shared_filters: boolean;
     /**
-     * Can create/edit upload collections
+     * Can create and edit upload collections
      */
     can_manage_upload_collections: boolean;
     /**
-     * Can create/edit Build triggers
+     * Can create and edit build triggers
      */
     can_manage_build_triggers: boolean;
     /**
-     * Can create/edit Search Indexes
+     * Can create and edit search indexes
      */
     can_manage_search_indexes: boolean;
     /**
-     * Can create/edit webhooks
+     * Can create and edit webhooks
      */
     can_manage_webhooks: boolean;
     /**
-     * Can create/delete sandbox environments and promote them to primary environment
+     * Can create and delete sandbox environments and promote them to primary environment
      */
     can_manage_environments: boolean;
     /**
@@ -2009,7 +2009,7 @@ export type RoleMeta = {
      */
     can_access_audit_log: boolean;
     /**
-     * Can create/edit workflows
+     * Can create and edit workflows
      */
     can_manage_workflows: boolean;
     /**
@@ -2171,13 +2171,13 @@ export type RoleMeta = {
       build_trigger?: BuildTriggerIdentity | null;
     }[];
     /**
-     * Allowed search indexes for a role
+     * Search indexes that can be triggered by a role
      */
     positive_search_index_permissions: {
       search_index?: SearchIndexIdentity | null;
     }[];
     /**
-     * Prohibited search indexes for a role
+     * Search indexes that can't be triggered by a role
      */
     negative_search_index_permissions: {
       search_index?: SearchIndexIdentity | null;
@@ -2208,7 +2208,7 @@ export type RoleCreateSchema = {
        */
       can_edit_site?: boolean;
       /**
-       * Can create/edit models and plugins
+       * Can create and edit models and plugins
        */
       can_edit_schema?: boolean;
       /**
@@ -2228,31 +2228,31 @@ export type RoleCreateSchema = {
        */
       environments_access?: 'all' | 'primary_only' | 'sandbox_only' | 'none';
       /**
-       * Can create/edit roles and invite/remove collaborators
+       * Can create and edit roles and invite/remove collaborators
        */
       can_manage_users?: boolean;
       /**
-       * Can create/edit shared filters (both for models and the media area)
+       * Can create and edit shared filters (both for models and the media area)
        */
       can_manage_shared_filters?: boolean;
       /**
-       * Can create/edit Search Indexes
+       * Can create and edit search indexes
        */
       can_manage_search_indexes?: boolean;
       /**
-       * Can create/edit upload collections
+       * Can create and edit upload collections
        */
       can_manage_upload_collections?: boolean;
       /**
-       * Can create/edit Build triggers
+       * Can create and edit build triggers
        */
       can_manage_build_triggers?: boolean;
       /**
-       * Can create/edit webhooks
+       * Can create and edit webhooks
        */
       can_manage_webhooks?: boolean;
       /**
-       * Can create/delete sandbox environments and promote them to primary environment
+       * Can create and delete sandbox environments and promote them to primary environment
        */
       can_manage_environments?: boolean;
       /**
@@ -2264,7 +2264,7 @@ export type RoleCreateSchema = {
        */
       can_access_audit_log?: boolean;
       /**
-       * Can create/edit workflows
+       * Can create and edit workflows
        */
       can_manage_workflows?: boolean;
       /**
@@ -2426,13 +2426,13 @@ export type RoleCreateSchema = {
         build_trigger?: BuildTriggerIdentity | null;
       }[];
       /**
-       * Allowed search indexes for a role
+       * Search indexes that can be triggered by a role
        */
       positive_search_index_permissions?: {
         search_index?: SearchIndexIdentity | null;
       }[];
       /**
-       * Prohibited search indexes for a role
+       * Search indexes that can't be triggered by a role
        */
       negative_search_index_permissions?: {
         search_index?: SearchIndexIdentity | null;
@@ -2484,7 +2484,7 @@ export type RoleUpdateSchema = {
        */
       can_edit_site?: boolean;
       /**
-       * Can create/edit models and plugins
+       * Can create and edit models and plugins
        */
       can_edit_schema?: boolean;
       /**
@@ -2504,31 +2504,31 @@ export type RoleUpdateSchema = {
        */
       environments_access?: 'all' | 'primary_only' | 'sandbox_only' | 'none';
       /**
-       * Can create/edit roles and invite/remove collaborators
+       * Can create and edit roles and invite/remove collaborators
        */
       can_manage_users?: boolean;
       /**
-       * Can create/edit shared filters (both for models and the media area)
+       * Can create and edit shared filters (both for models and the media area)
        */
       can_manage_shared_filters?: boolean;
       /**
-       * Can create/edit Search Indexes
+       * Can create and edit search indexes
        */
       can_manage_search_indexes?: boolean;
       /**
-       * Can create/edit upload collections
+       * Can create and edit upload collections
        */
       can_manage_upload_collections?: boolean;
       /**
-       * Can create/edit Build triggers
+       * Can create and edit build triggers
        */
       can_manage_build_triggers?: boolean;
       /**
-       * Can create/edit webhooks
+       * Can create and edit webhooks
        */
       can_manage_webhooks?: boolean;
       /**
-       * Can create/delete sandbox environments and promote them to primary environment
+       * Can create and delete sandbox environments and promote them to primary environment
        */
       can_manage_environments?: boolean;
       /**
@@ -2540,7 +2540,7 @@ export type RoleUpdateSchema = {
        */
       can_access_audit_log?: boolean;
       /**
-       * Can create/edit workflows
+       * Can create and edit workflows
        */
       can_manage_workflows?: boolean;
       /**
@@ -2702,13 +2702,13 @@ export type RoleUpdateSchema = {
         build_trigger?: BuildTriggerIdentity | null;
       }[];
       /**
-       * Allowed search indexes for a role
+       * Search indexes that can be triggered by a role
        */
       positive_search_index_permissions?: {
         search_index?: SearchIndexIdentity | null;
       }[];
       /**
-       * Prohibited search indexes for a role
+       * Search indexes that can't be triggered by a role
        */
       negative_search_index_permissions?: {
         search_index?: SearchIndexIdentity | null;
@@ -7113,7 +7113,7 @@ export type SubscriptionFeatureInstancesTargetSchema = {
   data: SubscriptionFeature[];
 };
 /**
- * Represents an event occurred during the deploy process of your administrative area.
+ * Represents an event occurred during the deploy process of a build trigger.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "build_event".
@@ -7204,7 +7204,7 @@ export type BuildEventSelfTargetSchema = {
   data: BuildEvent;
 };
 /**
- * Represents an event occurred during the search indexing process.
+ * Represents an event occurred during the indexing process via search indexes.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "search_index_event".
@@ -9890,6 +9890,10 @@ export type BuildTriggerAttributes = {
    */
   name: string;
   /**
+   * Whether the build trigger is enabled or not
+   */
+  enabled: boolean;
+  /**
    * The type of build trigger
    */
   adapter: 'custom' | 'netlify' | 'vercel' | 'circle_ci' | 'gitlab' | 'travis';
@@ -9920,7 +9924,7 @@ export type BuildTriggerAttributes = {
    */
   indexing_status: string;
   /**
-   * The public URL of the frontend. If Site Search is enabled (indicated by `indexing_enabled`), this is the starting point from which the website's spidering will start
+   * The public URL of the frontend.
    */
   frontend_url: string | null;
   /**
@@ -9931,10 +9935,6 @@ export type BuildTriggerAttributes = {
    * Wether Site Search is enabled or not. With Site Search, everytime the website is built, DatoCMS will respider it to get updated content
    */
   indexing_enabled: boolean;
-  /**
-   * Whether the build trigger is enabled or not
-   */
-  enabled: boolean;
 };
 /**
  * This interface was referenced by `BuildTrigger`'s JSON-Schema
@@ -9985,7 +9985,7 @@ export type BuildTriggerCreateSchema = {
        */
       enabled?: boolean;
       /**
-       * The public URL of the frontend. If Site Search is enabled (indicated by `indexing_enabled`), this is the starting point from which the website's spidering will start
+       * The public URL of the frontend.
        */
       frontend_url: string | null;
       /**
@@ -10040,7 +10040,7 @@ export type BuildTriggerUpdateSchema = {
        */
       enabled?: boolean;
       /**
-       * The public URL of the frontend. If Site Search is enabled (indicated by `indexing_enabled`), this is the starting point from which the website's spidering will start
+       * The public URL of the frontend.
        */
       frontend_url?: string | null;
       /**
@@ -10071,7 +10071,7 @@ export type BuildTriggerDestroyTargetSchema = {
   data: BuildTrigger;
 };
 /**
- * A Search Index represents a website that should be indexed by DatoCMS Site Search. When enabled, DatoCMS will periodically spider the website to update the search index.
+ * A Search Index is used to index a website to provide DatoCMS Site Search functionality.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "search_index".
@@ -10103,7 +10103,7 @@ export type SearchIndexAttributes = {
    */
   build_trigger_indexing_enabled: boolean;
   /**
-   * The public URL of the frontend. This is the starting point from which the website's spidering will start
+   * The public URL of the website. This is the starting point from which the website's spidering will start
    */
   frontend_url: string | null;
   /**
@@ -10119,7 +10119,7 @@ export type SearchIndexAttributes = {
  */
 export type SearchIndexRelationships = {
   /**
-   * The build triggers connected to this search index
+   * The build triggers that can trigger this search index
    */
   build_triggers: {
     data: BuildTriggerData[];
@@ -10133,7 +10133,7 @@ export type SearchIndexRelationships = {
  */
 export type SearchIndexMeta = {
   /**
-   * Status of the site search indexing
+   * Status of the search indexing
    */
   indexing_status: 'unstarted' | 'pending' | 'success' | 'failed';
   /**
@@ -10176,7 +10176,7 @@ export type SearchIndexCreateSchema = {
        */
       build_trigger_indexing_enabled?: boolean;
       /**
-       * The public URL of the frontend. This is the starting point from which the website's spidering will start
+       * The public URL of the website. This is the starting point from which the website's spidering will start
        */
       frontend_url: string | null;
       /**
@@ -10189,7 +10189,7 @@ export type SearchIndexCreateSchema = {
      */
     relationships?: {
       /**
-       * The build triggers connected to this search index
+       * The build triggers that can trigger this search index
        */
       build_triggers?: {
         data: BuildTriggerData[];
@@ -10226,7 +10226,7 @@ export type SearchIndexUpdateSchema = {
        */
       build_trigger_indexing_enabled?: boolean;
       /**
-       * The public URL of the frontend. This is the starting point from which the website's spidering will start
+       * The public URL of the website. This is the starting point from which the website's spidering will start
        */
       frontend_url?: string | null;
       /**
@@ -10239,7 +10239,7 @@ export type SearchIndexUpdateSchema = {
      */
     relationships?: {
       /**
-       * The build triggers connected to this search index
+       * The build triggers that can trigger this search index
        */
       build_triggers?: {
         data: BuildTriggerData[];
