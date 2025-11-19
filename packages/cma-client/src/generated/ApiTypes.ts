@@ -962,19 +962,19 @@ export type ItemInstancesHrefSchema<
    */
   filter?: {
     /**
-     * Record (or block record) IDs to fetch, comma separated. If you use this filter, you _must not_ use `filter[type]` or `filter[fields]`
+     * Record (or block record) IDs to fetch, comma separated. If you use this filter, you _must not_ use `filter[type]`. You can combine it with meta fields (like `_published_at`, `_status`), but _must not_ use model-specific fields
      */
     ids?: string;
     /**
-     * Model ID or `api_key` to filter. If you use this filter, you _must not_ use `filter[ids]`. Comma separated values are accepted, but you _must not_ use `filter[fields]` in this case
+     * Model/Block model ID or `api_key` to filter. If you use this filter, you _must not_ use `filter[ids]`. When passing a single element, you can use both meta fields and model-specific fields (note: model-specific fields only work with models, not block models). When passing multiple comma-separated values, you can use meta fields but _must not_ use model-specific fields
      */
     type?: string;
     /**
-     * Textual query to match. You _must not_ use `filter[ids]`. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
+     * Textual query to match. Can be combined with other filters. When used, only records (not blocks) are returned. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
      */
     query?: string;
     /**
-     * Same as [GraphQL API records filters](/docs/content-delivery-api/filtering-records): you must use square brackets to indicate nesting levels. E.g. if you wanna [filter by parent record](/docs/content-delivery-api/filtering-records#parent) in a tree of records, you must use `filter[fields][parent][eq]=<ID_VALUE>`. Use snake_case for fields names. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
+     * Filter by record fields. Meta fields (like `_published_at`, `_status`) can be used in most cases. Model-specific fields (like `title`, `name`) require `filter[type]` to specify a single model, and only work with models (not block models). Same syntax as [GraphQL API records filters](/docs/content-delivery-api/filtering-records): use square brackets to indicate nesting levels. E.g. `filter[fields][parent][eq]=<ID_VALUE>`. Use snake_case for field names. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
      */
     fields?: ToItemHrefSchemaField<D>;
     /**
@@ -1043,7 +1043,7 @@ export type ItemSelfHrefSchema = {
    */
   nested?: boolean;
   /**
-   * Whether you want the currently published versions (`published`, default) of your records, or the latest available (`current`)
+   * Whether you want the currently published versions (`published`) of your records, or the latest available (`current`, default)
    */
   version?: string;
   [k: string]: unknown;
@@ -1421,11 +1421,11 @@ export type SearchResultInstancesHrefSchema = {
      */
     query: string;
     /**
-     * The search index ID or name on which the search will be performed. If not provided, the first enabled search index will be used.
+     * The search index ID on which the search will be performed. If not provided, the first enabled search index will be used.
      */
     search_index_id?: string;
     /**
-     * **[Deprecated]** Use `search_index_id` instead. The build trigger ID or name on which the search will be performed. This parameter is only supported for backward compatibility and will return an error if the build trigger has multiple search indexes associated.
+     * The build trigger ID or name on which the search will be performed.
      */
     build_trigger_id?: string;
     /**
@@ -9883,7 +9883,7 @@ export type BuildTriggerCreateSchema = {
   /**
    * Wether Site Search is enabled or not. With Site Search, everytime the website is built, DatoCMS will respider it to get updated content
    */
-  indexing_enabled: boolean;
+  indexing_enabled?: boolean;
   /**
    * Whether the build trigger is enabled or not
    */
@@ -9959,10 +9959,6 @@ export type SearchIndex = {
    */
   enabled: boolean;
   /**
-   * Whether the spidering should automatically run after associated build triggers complete
-   */
-  build_trigger_indexing_enabled: boolean;
-  /**
    * The public URL of the website. This is the starting point from which the website's spidering will start
    */
   frontend_url: string | null;
@@ -10009,10 +10005,6 @@ export type SearchIndexAttributes = {
    */
   enabled: boolean;
   /**
-   * Whether the spidering should automatically run after associated build triggers complete
-   */
-  build_trigger_indexing_enabled: boolean;
-  /**
    * The public URL of the website. This is the starting point from which the website's spidering will start
    */
   frontend_url: string | null;
@@ -10045,10 +10037,6 @@ export type SearchIndexCreateSchema = {
    */
   enabled: boolean;
   /**
-   * Whether the spidering should automatically run after associated build triggers complete
-   */
-  build_trigger_indexing_enabled?: boolean;
-  /**
    * The public URL of the website. This is the starting point from which the website's spidering will start
    */
   frontend_url: string | null;
@@ -10073,10 +10061,6 @@ export type SearchIndexUpdateSchema = {
    * Whether the search index is enabled or not
    */
   enabled?: boolean;
-  /**
-   * Whether the spidering should automatically run after associated build triggers complete
-   */
-  build_trigger_indexing_enabled?: boolean;
   /**
    * The public URL of the website. This is the starting point from which the website's spidering will start
    */

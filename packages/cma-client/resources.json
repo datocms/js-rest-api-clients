@@ -4062,7 +4062,6 @@
           "attributes": [
             "name",
             "enabled",
-            "build_trigger_indexing_enabled",
             "frontend_url",
             "user_agent_suffix"
           ],
@@ -4102,7 +4101,6 @@
           "attributes": [
             "name",
             "enabled",
-            "build_trigger_indexing_enabled",
             "frontend_url",
             "user_agent_suffix"
           ],

@@ -80,13 +80,7 @@ export default class SearchIndex extends BaseResource {
     return this.rawCreate(
       Utils.serializeRequestBody<RawApiTypes.SearchIndexCreateSchema>(body, {
         type: 'search_index',
-        attributes: [
-          'name',
-          'enabled',
-          'build_trigger_indexing_enabled',
-          'frontend_url',
-          'user_agent_suffix',
-        ],
+        attributes: ['name', 'enabled', 'frontend_url', 'user_agent_suffix'],
         relationships: ['build_triggers'],
       }),
     ).then((body) =>
@@ -131,13 +125,7 @@ export default class SearchIndex extends BaseResource {
       Utils.serializeRequestBody<RawApiTypes.SearchIndexUpdateSchema>(body, {
         id: Utils.toId(searchIndexId),
         type: 'search_index',
-        attributes: [
-          'name',
-          'enabled',
-          'build_trigger_indexing_enabled',
-          'frontend_url',
-          'user_agent_suffix',
-        ],
+        attributes: ['name', 'enabled', 'frontend_url', 'user_agent_suffix'],
         relationships: ['build_triggers'],
       }),
     ).then((body) =>

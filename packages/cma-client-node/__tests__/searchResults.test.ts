@@ -21,7 +21,6 @@ describe('Search Results', () => {
     const searchIndex = await client.searchIndexes.create({
       name: 'Test Search Index',
       enabled: true,
-      build_trigger_indexing_enabled: true,
       frontend_url: 'http://www.google.com/',
       build_triggers: [trigger],
     });
