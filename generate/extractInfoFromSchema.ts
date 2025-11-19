@@ -84,6 +84,10 @@ const relToMethodName: Record<string, string> = {
   me: 'findMe',
 };
 
+const pluralExceptions: Record<string, string> = {
+  search_index: 'search_indexes',
+};
+
 function hasLinks(
   schema: JsonRefParser.JSONSchema,
 ): schema is JSONSchemaWithLinks {
@@ -431,21 +435,22 @@ function generateResourceInfo(
     return endpointInfo;
   });
 
+  const shouldPluralize = endpoints.some(
+    (e) =>
+      e.name === 'query' ||
+      e.name === 'list' ||
+      e.name.endsWith('List') ||
+      (e.name === 'find' && e.urlPlaceholders.length === 1),
+  );
+
+  const namespace = shouldPluralize
+    ? pluralExceptions[jsonApiType] || `${jsonApiType}s`
+    : jsonApiType;
+
   return {
     jsonApiType,
     endpoints,
-    namespace: toSafeName(
-      endpoints.some(
-        (e) =>
-          e.name === 'query' ||
-          e.name === 'list' ||
-          e.name.endsWith('List') ||
-          (e.name === 'find' && e.urlPlaceholders.length === 1),
-      )
-        ? `${jsonApiType}s`
-        : jsonApiType,
-      false,
-    ),
+    namespace: toSafeName(namespace, false),
     resourceClassName: toSafeName(jsonApiType, true),
   };
 }
