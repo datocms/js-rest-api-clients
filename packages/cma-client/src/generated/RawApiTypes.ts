@@ -679,19 +679,19 @@ export type ItemInstancesHrefSchema<
    */
   filter?: {
     /**
-     * Record (or block record) IDs to fetch, comma separated. If you use this filter, you _must not_ use `filter[type]` or `filter[fields]`
+     * Record (or block record) IDs to fetch, comma separated. If you use this filter, you _must not_ use `filter[type]`. You can combine it with meta fields (like `_published_at`, `_status`), but _must not_ use model-specific fields
      */
     ids?: string;
     /**
-     * Model ID or `api_key` to filter. If you use this filter, you _must not_ use `filter[ids]`. Comma separated values are accepted, but you _must not_ use `filter[fields]` in this case
+     * Model/Block model ID or `api_key` to filter. If you use this filter, you _must not_ use `filter[ids]`. When passing a single element, you can use both meta fields and model-specific fields (note: model-specific fields only work with models, not block models). When passing multiple comma-separated values, you can use meta fields but _must not_ use model-specific fields
      */
     type?: string;
     /**
-     * Textual query to match. You _must not_ use `filter[ids]`. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
+     * Textual query to match. Can be combined with other filters. When used, only records (not blocks) are returned. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
      */
     query?: string;
     /**
-     * Same as [GraphQL API records filters](/docs/content-delivery-api/filtering-records): you must use square brackets to indicate nesting levels. E.g. if you wanna [filter by parent record](/docs/content-delivery-api/filtering-records#parent) in a tree of records, you must use `filter[fields][parent][eq]=<ID_VALUE>`. Use snake_case for fields names. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
+     * Filter by record fields. Meta fields (like `_published_at`, `_status`) can be used in most cases. Model-specific fields (like `title`, `name`) require `filter[type]` to specify a single model, and only work with models (not block models). Same syntax as [GraphQL API records filters](/docs/content-delivery-api/filtering-records): use square brackets to indicate nesting levels. E.g. `filter[fields][parent][eq]=<ID_VALUE>`. Use snake_case for field names. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
      */
     fields?: ToItemHrefSchemaField<D>;
     /**
@@ -752,7 +752,7 @@ export type ItemSelfHrefSchema = {
    */
   nested?: boolean;
   /**
-   * Whether you want the currently published versions (`published`, default) of your records, or the latest available (`current`)
+   * Whether you want the currently published versions (`published`) of your records, or the latest available (`current`, default)
    */
   version?: string;
   [k: string]: unknown;
@@ -3350,6 +3350,10 @@ export type SitePlanAttributes = {
    * The number of available encoding seconds to Mux.com
    */
   mux_encoding_seconds: null | number;
+  /**
+   * The number of images you can analyze for smart tags detections
+   */
+  smart_tags_detections: null | number;
   /**
    * The number of different API tokens you can generate, each which different permissions
    */
@@ -11005,6 +11009,10 @@ export type DailyUsageAttributes = {
    * Video encoding seconds
    */
   mux_encoded_seconds: number;
+  /**
+   * Number of images analyzed for smart tags
+   */
+  smart_tags_detections: number;
 };
 /**
  * JSON API data
