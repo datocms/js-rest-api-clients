@@ -467,7 +467,7 @@ export class SchemaRepository {
       });
 
       if (!included) {
-        throw new Error('This should not happen');
+        return;
       }
 
       const allItemTypes = included.filter(
