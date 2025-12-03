@@ -4060,6 +4060,10 @@ export type SitePlan = {
    */
   mux_encoding_seconds: null | number;
   /**
+   * The number of images you can analyze for smart tags detections
+   */
+  smart_tags_detections: null | number;
+  /**
    * The number of different API tokens you can generate, each which different permissions
    */
   access_tokens: null | number;
@@ -4303,6 +4307,10 @@ export type SitePlanAttributes = {
    * The number of available encoding seconds to Mux.com
    */
   mux_encoding_seconds: null | number;
+  /**
+   * The number of images you can analyze for smart tags detections
+   */
+  smart_tags_detections: null | number;
   /**
    * The number of different API tokens you can generate, each which different permissions
    */
@@ -11083,6 +11091,10 @@ export type DailyUsage = {
    * Video encoding seconds
    */
   mux_encoded_seconds: number;
+  /**
+   * Number of images analyzed for smart tags
+   */
+  smart_tags_detections: number;
 };
 /**
  * JSON API data
@@ -11137,6 +11149,10 @@ export type DailyUsageAttributes = {
    * Video encoding seconds
    */
   mux_encoded_seconds: number;
+  /**
+   * Number of images analyzed for smart tags
+   */
+  smart_tags_detections: number;
 };
 /**
  * You can use counters to analyze your project's data consumption over a period of time. Counters are especially useful if your project is exceeding its API calls/traffic quota limits, to better understand where and how requests are originating. Counters are updated every minute, so you can debug in real-time the results of your changes.

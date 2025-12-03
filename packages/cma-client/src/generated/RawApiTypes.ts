@@ -3524,6 +3524,10 @@ export type SitePlanAttributes = {
    */
   mux_encoding_seconds: null | number;
   /**
+   * The number of images you can analyze for smart tags detections
+   */
+  smart_tags_detections: null | number;
+  /**
    * The number of different API tokens you can generate, each which different permissions
    */
   access_tokens: null | number;
@@ -11459,6 +11463,10 @@ export type DailyUsageAttributes = {
    * Video encoding seconds
    */
   mux_encoded_seconds: number;
+  /**
+   * Number of images analyzed for smart tags
+   */
+  smart_tags_detections: number;
 };
 /**
  * JSON API data
