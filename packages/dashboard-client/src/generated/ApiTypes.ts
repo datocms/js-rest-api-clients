@@ -1669,6 +1669,7 @@ export type SiteDuplicateSchema = {
     item_types?: number;
     roles?: number;
     build_triggers?: number;
+    search_indexes?: number;
     access_tokens?: number;
     mux_encoding_seconds?: number;
     sandbox_environments?: number;
@@ -1715,6 +1716,7 @@ export type SiteSubscription = {
     item_types?: number;
     roles?: number;
     build_triggers?: number;
+    search_indexes?: number;
     access_tokens?: number;
     mux_encoding_seconds?: number;
     sandbox_environments?: number;
@@ -1752,6 +1754,7 @@ export type SiteSubscriptionAttributes = {
     item_types?: number;
     roles?: number;
     build_triggers?: number;
+    search_indexes?: number;
     access_tokens?: number;
     mux_encoding_seconds?: number;
     sandbox_environments?: number;
@@ -1790,6 +1793,7 @@ export type SiteSubscriptionCreateSchema = {
     item_types?: number;
     roles?: number;
     build_triggers?: number;
+    search_indexes?: number;
     access_tokens?: number;
     mux_encoding_seconds?: number;
     sandbox_environments?: number;
@@ -1818,6 +1822,7 @@ export type SiteSubscriptionSimulateSchema = {
     item_types?: number;
     roles?: number;
     build_triggers?: number;
+    search_indexes?: number;
     access_tokens?: number;
     mux_encoding_seconds?: number;
     sandbox_environments?: number;
@@ -1886,6 +1891,7 @@ export type SiteSubscriptionValidateSchema = {
     item_types?: number;
     roles?: number;
     build_triggers?: number;
+    search_indexes?: number;
     access_tokens?: number;
     mux_encoding_seconds?: number;
     sandbox_environments?: number;
@@ -2096,6 +2102,10 @@ export type SitePlan = {
    */
   build_triggers: null | number;
   /**
+   * Number of search indexes
+   */
+  search_indexes: null | number;
+  /**
    * Number of plugins
    */
   plugins: null | number;
@@ -2260,6 +2270,10 @@ export type SitePlan = {
       price: number;
     };
     build_triggers?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    search_indexes?: {
       amount_per_packet: number;
       price: number;
     };
@@ -2326,6 +2340,10 @@ export type SitePlanAttributes = {
    */
   build_triggers: null | number;
   /**
+   * Number of search indexes
+   */
+  search_indexes: null | number;
+  /**
    * Number of plugins
    */
   plugins: null | number;
@@ -2490,6 +2508,10 @@ export type SitePlanAttributes = {
       price: number;
     };
     build_triggers?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    search_indexes?: {
       amount_per_packet: number;
       price: number;
     };
@@ -3306,6 +3328,7 @@ export type SiteTransfer = {
     item_types?: number;
     roles?: number;
     build_triggers?: number;
+    search_indexes?: number;
     access_tokens?: number;
     mux_encoding_seconds?: number;
     sandbox_environments?: number;
@@ -3396,6 +3419,7 @@ export type SiteTransferAttributes = {
     item_types?: number;
     roles?: number;
     build_triggers?: number;
+    search_indexes?: number;
     access_tokens?: number;
     mux_encoding_seconds?: number;
     sandbox_environments?: number;

@@ -1713,6 +1713,7 @@ export type SiteDuplicateSchema = {
         item_types?: number;
         roles?: number;
         build_triggers?: number;
+        search_indexes?: number;
         access_tokens?: number;
         mux_encoding_seconds?: number;
         sandbox_environments?: number;
@@ -2217,6 +2218,7 @@ export type SiteSubscriptionAttributes = {
     item_types?: number;
     roles?: number;
     build_triggers?: number;
+    search_indexes?: number;
     access_tokens?: number;
     mux_encoding_seconds?: number;
     sandbox_environments?: number;
@@ -2272,6 +2274,7 @@ export type SiteSubscriptionCreateSchema = {
         item_types?: number;
         roles?: number;
         build_triggers?: number;
+        search_indexes?: number;
         access_tokens?: number;
         mux_encoding_seconds?: number;
         sandbox_environments?: number;
@@ -2337,6 +2340,7 @@ export type SiteSubscriptionSimulateSchema = {
         item_types?: number;
         roles?: number;
         build_triggers?: number;
+        search_indexes?: number;
         access_tokens?: number;
         mux_encoding_seconds?: number;
         sandbox_environments?: number;
@@ -2395,6 +2399,7 @@ export type SiteSubscriptionValidateSchema = {
         item_types?: number;
         roles?: number;
         build_triggers?: number;
+        search_indexes?: number;
         access_tokens?: number;
         mux_encoding_seconds?: number;
         sandbox_environments?: number;
@@ -2470,6 +2475,10 @@ export type SitePlanAttributes = {
    * Number of build triggers
    */
   build_triggers: null | number;
+  /**
+   * Number of search indexes
+   */
+  search_indexes: null | number;
   /**
    * Number of plugins
    */
@@ -2635,6 +2644,10 @@ export type SitePlanAttributes = {
       price: number;
     };
     build_triggers?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    search_indexes?: {
       amount_per_packet: number;
       price: number;
     };
@@ -3182,6 +3195,7 @@ export type SiteTransferAttributes = {
     item_types?: number;
     roles?: number;
     build_triggers?: number;
+    search_indexes?: number;
     access_tokens?: number;
     mux_encoding_seconds?: number;
     sandbox_environments?: number;

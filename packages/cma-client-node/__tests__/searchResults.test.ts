@@ -17,13 +17,33 @@ describe('Search Results', () => {
       indexing_enabled: true,
     });
 
-    const results = await client.searchResults.list({
-      filter: {
-        query: 'project',
-        build_trigger_id: trigger.id,
-      },
+    // Create a site search source linked to the build trigger
+    const searchIndex = await client.searchIndexes.create({
+      name: 'Test Search Index',
+      enabled: true,
+      frontend_url: 'http://www.google.com/',
+      build_triggers: [trigger],
     });
 
-    expect(results).toHaveLength(0);
+    const resultsWhenSearchingViaBuildTrigger = await client.searchResults.list(
+      {
+        filter: {
+          query: 'project',
+          build_trigger_id: trigger.id,
+        },
+      },
+    );
+
+    expect(resultsWhenSearchingViaBuildTrigger).toHaveLength(0);
+
+    const resultsWhenSearchingViaSiteSearchIndex =
+      await client.searchResults.list({
+        filter: {
+          query: 'project',
+          site_search_source_id: searchIndex.id,
+        },
+      });
+
+    expect(resultsWhenSearchingViaSiteSearchIndex).toHaveLength(0);
   });
 });
