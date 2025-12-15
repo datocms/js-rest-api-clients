@@ -3552,6 +3552,28 @@ export type AccessToken = {
    */
   can_access_cma: boolean;
   hardcoded_type: null | string;
+  /**
+   * When this API token was last used to access the Content Management API
+   */
+  last_cma_access:
+    | 'today'
+    | 'yesterday'
+    | 'this_week'
+    | 'last_week'
+    | 'this_month'
+    | 'last_month'
+    | 'never';
+  /**
+   * When this API token was last used to access the Content Delivery API
+   */
+  last_cda_access:
+    | 'today'
+    | 'yesterday'
+    | 'this_week'
+    | 'last_week'
+    | 'this_month'
+    | 'last_month'
+    | 'never';
   role: RoleData | null;
 };
 export type AccessTokenCreateTargetSchema = AccessToken;
@@ -3597,6 +3619,28 @@ export type AccessTokenAttributes = {
    */
   can_access_cma: boolean;
   hardcoded_type: null | string;
+  /**
+   * When this API token was last used to access the Content Management API
+   */
+  last_cma_access:
+    | 'today'
+    | 'yesterday'
+    | 'this_week'
+    | 'last_week'
+    | 'this_month'
+    | 'last_month'
+    | 'never';
+  /**
+   * When this API token was last used to access the Content Delivery API
+   */
+  last_cda_access:
+    | 'today'
+    | 'yesterday'
+    | 'this_week'
+    | 'last_week'
+    | 'this_month'
+    | 'last_month'
+    | 'never';
 };
 /**
  * JSON API links
@@ -7044,7 +7088,7 @@ export type Plugin = {
    */
   url: string;
   /**
-   * Global plugin configuration. Plugins can persist whatever information they want in this object to reuse it later.
+   * Global plugin configuration. Plugins can persist whatever information they want in this object to reuse it later. Refer to the CMA for details about technical limits.
    */
   parameters: {
     [k: string]: unknown;
@@ -7145,7 +7189,7 @@ export type PluginAttributes = {
    */
   url: string;
   /**
-   * Global plugin configuration. Plugins can persist whatever information they want in this object to reuse it later.
+   * Global plugin configuration. Plugins can persist whatever information they want in this object to reuse it later. Refer to the CMA for details about technical limits.
    */
   parameters: {
     [k: string]: unknown;
@@ -7277,7 +7321,7 @@ export type PluginUpdateSchema = {
    */
   url?: string;
   /**
-   * Global plugin configuration. Plugins can persist whatever information they want in this object to reuse it later.
+   * Global plugin configuration. Plugins can persist whatever information they want in this object to reuse it later. Refer to the CMA for details about technical limits.
    */
   parameters?: {
     [k: string]: unknown;
@@ -9768,7 +9812,7 @@ export type BuildTrigger = {
   /**
    * The type of build trigger
    */
-  adapter: 'custom' | 'netlify' | 'vercel' | 'circle_ci' | 'gitlab' | 'travis';
+  adapter: 'custom' | 'netlify' | 'vercel' | 'gitlab';
   /**
    * Additional settings for the build trigger. The value depends on the `adapter`.
    */
@@ -9830,7 +9874,7 @@ export type BuildTriggerAttributes = {
   /**
    * The type of build trigger
    */
-  adapter: 'custom' | 'netlify' | 'vercel' | 'circle_ci' | 'gitlab' | 'travis';
+  adapter: 'custom' | 'netlify' | 'vercel' | 'gitlab';
   /**
    * Additional settings for the build trigger. The value depends on the `adapter`.
    */
@@ -9887,7 +9931,7 @@ export type BuildTriggerCreateSchema = {
   /**
    * The type of build trigger
    */
-  adapter: 'custom' | 'netlify' | 'vercel' | 'circle_ci' | 'gitlab' | 'travis';
+  adapter: 'custom' | 'netlify' | 'vercel' | 'gitlab';
   /**
    * Wether Site Search is enabled or not. With Site Search, everytime the website is built, DatoCMS will respider it to get updated content
    */
@@ -9925,7 +9969,7 @@ export type BuildTriggerUpdateSchema = {
   /**
    * The type of build trigger
    */
-  adapter?: 'custom' | 'netlify' | 'vercel' | 'circle_ci' | 'gitlab' | 'travis';
+  adapter?: 'custom' | 'netlify' | 'vercel' | 'gitlab';
   /**
    * Wether Site Search is enabled or not. With Site Search, everytime the website is built, DatoCMS will respider it to get updated content
    */
