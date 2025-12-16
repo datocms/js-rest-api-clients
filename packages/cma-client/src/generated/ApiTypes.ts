@@ -107,6 +107,16 @@ export type WorkflowIdentity = string;
  */
 export type EnvironmentIdentity = string;
 /**
+ * RFC 4122 UUID of upload collection expressed in URL-safe base64 format
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `UploadCollection`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type UploadCollectionIdentity = string;
+/**
  * ID of build_trigger
  *
  * This interface was referenced by `BuildTrigger`'s JSON-Schema
@@ -485,16 +495,6 @@ export type SchemaMenuItemReorderSchema = {
  * via the `reorder.jobSchema` link.
  */
 export type SchemaMenuItemReorderJobSchema = SchemaMenuItem[];
-/**
- * RFC 4122 UUID of upload collection expressed in URL-safe base64 format
- *
- * This interface was referenced by `UploadCollection`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `UploadCollection`'s JSON-Schema
- * via the `definition` "id".
- */
-export type UploadCollectionIdentity = string;
 /**
  * JSON API type field
  *
@@ -2220,7 +2220,8 @@ export type Role = {
       | 'create'
       | 'delete'
       | 'edit_creator'
-      | 'replace_asset';
+      | 'replace_asset'
+      | 'move';
     /**
      * Permitted creator
      */
@@ -2233,6 +2234,8 @@ export type Role = {
      * Permitted localized content in this locale. Required when `localization_scope` is `localized`
      */
     locale?: string | null;
+    upload_collection?: UploadCollectionIdentity | null;
+    move_to_upload_collection?: UploadCollectionIdentity | null;
   }[];
   /**
    * Prohibited actions on a model (or all) for a role
@@ -2249,7 +2252,8 @@ export type Role = {
       | 'create'
       | 'delete'
       | 'edit_creator'
-      | 'replace_asset';
+      | 'replace_asset'
+      | 'move';
     /**
      * Permitted creator
      */
@@ -2262,6 +2266,8 @@ export type Role = {
      * Permitted localized content in this locale. Required when `localization_scope` is `localized`
      */
     locale?: string | null;
+    upload_collection?: UploadCollectionIdentity | null;
+    move_to_upload_collection?: UploadCollectionIdentity | null;
   }[];
   /**
    * Allowed build triggers for a role
@@ -2487,7 +2493,8 @@ export type RoleMeta = {
         | 'create'
         | 'delete'
         | 'edit_creator'
-        | 'replace_asset';
+        | 'replace_asset'
+        | 'move';
       /**
        * Permitted creator
        */
@@ -2500,6 +2507,8 @@ export type RoleMeta = {
        * Permitted localized content in this locale. Required when `localization_scope` is `localized`
        */
       locale?: string | null;
+      upload_collection?: UploadCollectionIdentity | null;
+      move_to_upload_collection?: UploadCollectionIdentity | null;
     }[];
     /**
      * Prohibited actions on a model (or all) for a role
@@ -2516,7 +2525,8 @@ export type RoleMeta = {
         | 'create'
         | 'delete'
         | 'edit_creator'
-        | 'replace_asset';
+        | 'replace_asset'
+        | 'move';
       /**
        * Permitted creator
        */
@@ -2529,6 +2539,8 @@ export type RoleMeta = {
        * Permitted localized content in this locale. Required when `localization_scope` is `localized`
        */
       locale?: string | null;
+      upload_collection?: UploadCollectionIdentity | null;
+      move_to_upload_collection?: UploadCollectionIdentity | null;
     }[];
     /**
      * Allowed build triggers for a role
@@ -2738,7 +2750,8 @@ export type RoleAttributes = {
       | 'create'
       | 'delete'
       | 'edit_creator'
-      | 'replace_asset';
+      | 'replace_asset'
+      | 'move';
     /**
      * Permitted creator
      */
@@ -2751,6 +2764,8 @@ export type RoleAttributes = {
      * Permitted localized content in this locale. Required when `localization_scope` is `localized`
      */
     locale?: string | null;
+    upload_collection?: UploadCollectionIdentity | null;
+    move_to_upload_collection?: UploadCollectionIdentity | null;
   }[];
   /**
    * Prohibited actions on a model (or all) for a role
@@ -2767,7 +2782,8 @@ export type RoleAttributes = {
       | 'create'
       | 'delete'
       | 'edit_creator'
-      | 'replace_asset';
+      | 'replace_asset'
+      | 'move';
     /**
      * Permitted creator
      */
@@ -2780,6 +2796,8 @@ export type RoleAttributes = {
      * Permitted localized content in this locale. Required when `localization_scope` is `localized`
      */
     locale?: string | null;
+    upload_collection?: UploadCollectionIdentity | null;
+    move_to_upload_collection?: UploadCollectionIdentity | null;
   }[];
   /**
    * Allowed build triggers for a role
@@ -2996,7 +3014,8 @@ export type RoleCreateSchema = {
       | 'create'
       | 'delete'
       | 'edit_creator'
-      | 'replace_asset';
+      | 'replace_asset'
+      | 'move';
     /**
      * Permitted creator
      */
@@ -3009,6 +3028,8 @@ export type RoleCreateSchema = {
      * Permitted localized content in this locale. Required when `localization_scope` is `localized`
      */
     locale?: string | null;
+    upload_collection?: UploadCollectionIdentity | null;
+    move_to_upload_collection?: UploadCollectionIdentity | null;
   }[];
   /**
    * Prohibited actions on a model (or all) for a role
@@ -3025,7 +3046,8 @@ export type RoleCreateSchema = {
       | 'create'
       | 'delete'
       | 'edit_creator'
-      | 'replace_asset';
+      | 'replace_asset'
+      | 'move';
     /**
      * Permitted creator
      */
@@ -3038,6 +3060,8 @@ export type RoleCreateSchema = {
      * Permitted localized content in this locale. Required when `localization_scope` is `localized`
      */
     locale?: string | null;
+    upload_collection?: UploadCollectionIdentity | null;
+    move_to_upload_collection?: UploadCollectionIdentity | null;
   }[];
   /**
    * Allowed build triggers for a role
@@ -3248,7 +3272,8 @@ export type RoleUpdateSchema = {
       | 'create'
       | 'delete'
       | 'edit_creator'
-      | 'replace_asset';
+      | 'replace_asset'
+      | 'move';
     /**
      * Permitted creator
      */
@@ -3261,6 +3286,8 @@ export type RoleUpdateSchema = {
      * Permitted localized content in this locale. Required when `localization_scope` is `localized`
      */
     locale?: string | null;
+    upload_collection?: UploadCollectionIdentity | null;
+    move_to_upload_collection?: UploadCollectionIdentity | null;
   }[];
   /**
    * Prohibited actions on a model (or all) for a role
@@ -3277,7 +3304,8 @@ export type RoleUpdateSchema = {
       | 'create'
       | 'delete'
       | 'edit_creator'
-      | 'replace_asset';
+      | 'replace_asset'
+      | 'move';
     /**
      * Permitted creator
      */
@@ -3290,6 +3318,8 @@ export type RoleUpdateSchema = {
      * Permitted localized content in this locale. Required when `localization_scope` is `localized`
      */
     locale?: string | null;
+    upload_collection?: UploadCollectionIdentity | null;
+    move_to_upload_collection?: UploadCollectionIdentity | null;
   }[];
   /**
    * Allowed build triggers for a role
@@ -8750,6 +8780,7 @@ export type UploadRequestCreateSchema = {
    * The original file name
    */
   filename?: string;
+  upload_collection?: UploadCollectionData | null;
 };
 /**
  * If the asset linked to an Upload entity is a video file, you have the option to include additional audio tracks and subtitle tracks to it.
