@@ -1005,7 +1005,7 @@ export type ItemInstancesHrefSchema<
    */
   order_by?: ToItemHrefSchemaOrderBy<D>;
   /**
-   * Whether you want the currently published versions (`published`, default) of your records, or the latest available (`current`)
+   * Whether you want the currently published versions (`published`) of your records, or the latest available (`current`, default)
    */
   version?: string;
   [k: string]: unknown;
@@ -11548,6 +11548,7 @@ export type SiteActivateImprovedBooleanFieldsTargetSchema = Site;
 export type SiteActivateDraftModeAsDefaultTargetSchema = Site;
 export type SiteActivateImprovedValidationAtPublishingTargetSchema = Site;
 export type SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema = Site;
+export type SiteActivateImprovedItemsListingTargetSchema = Site;
 export type SiteUpdateAssetsCdnDefaultSettingsTargetSchema = Site;
 /**
  * Meta attributes
@@ -11596,6 +11597,10 @@ export type SiteMeta = {
    * Whether the [Improved exposure of inline blocks in the Content Delivery API](https://www.datocms.com/product-updates/improved-exposure-of-inline-blocks-in-cda) opt-in product update is active or not
    */
   improved_exposure_of_inline_blocks_in_cda: boolean;
+  /**
+   * Whether the [Improved items listing](https://www.datocms.com/product-updates/improved-items-listing) opt-in product update is active or not
+   */
+  improved_items_listing: boolean;
 };
 /**
  * JSON API data
@@ -11951,6 +11956,10 @@ export type SiteUpdateSchema = {
      * Whether the [Improved exposure of inline blocks in the Content Delivery API](https://www.datocms.com/product-updates/improved-exposure-of-inline-blocks-in-cda) opt-in product update is active or not
      */
     improved_exposure_of_inline_blocks_in_cda?: boolean;
+    /**
+     * Whether the [Improved items listing](https://www.datocms.com/product-updates/improved-items-listing) opt-in product update is active or not
+     */
+    improved_items_listing?: boolean;
   };
 };
 /**
