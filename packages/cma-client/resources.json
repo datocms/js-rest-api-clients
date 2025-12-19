@@ -3001,7 +3001,7 @@
         "requestStructure": {
           "type": "upload_request",
           "attributes": ["filename"],
-          "relationships": []
+          "relationships": ["upload_collection"]
         },
         "queryParamsRequired": false,
         "responseType": "UploadRequestCreateTargetSchema",
