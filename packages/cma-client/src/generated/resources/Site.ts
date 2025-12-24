@@ -384,6 +384,43 @@ export default class Site extends BaseResource {
   }
 
   /**
+   * Activate improved items listing
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_items_listing
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  activateImprovedItemsListing() {
+    return this.rawActivateImprovedItemsListing().then((body) =>
+      Utils.deserializeResponseBody<ApiTypes.SiteActivateImprovedItemsListingTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Activate improved items listing
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_improved_items_listing
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawActivateImprovedItemsListing(): Promise<RawApiTypes.SiteActivateImprovedItemsListingTargetSchema> {
+    return this.client.request<RawApiTypes.SiteActivateImprovedItemsListingTargetSchema>(
+      {
+        method: 'PUT',
+        url: '/site/activate-improved-items-listing',
+      },
+    );
+  }
+
+  /**
    * Update CDN settings default assets
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site/update_assets_cdn_default_settings
