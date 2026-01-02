@@ -1299,6 +1299,17 @@ export type UploadInstancesHrefSchema = {
 };
 /**
  * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `update.hrefSchema` link.
+ */
+export type UploadUpdateHrefSchema = {
+  /**
+   * Strategy to use when replacing the asset file. If not specified, a new URL will be generated.
+   */
+  replace_strategy?: 'create_new_url' | 'keep_url';
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Upload`'s JSON-Schema
  * via the `references.targetSchema` link.
  */
 export type UploadReferencesTargetSchema<

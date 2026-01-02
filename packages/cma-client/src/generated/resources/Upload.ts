@@ -210,6 +210,7 @@ export default class Upload extends BaseResource {
   update(
     uploadId: string | ApiTypes.UploadData,
     body: ApiTypes.UploadUpdateSchema,
+    queryParams?: ApiTypes.UploadUpdateHrefSchema,
   ) {
     return this.rawUpdate(
       Utils.toId(uploadId),
@@ -227,6 +228,7 @@ export default class Upload extends BaseResource {
         ],
         relationships: ['creator', 'upload_collection'],
       }),
+      queryParams,
     ).then((body) =>
       Utils.deserializeResponseBody<ApiTypes.UploadUpdateJobSchema>(body),
     );
@@ -243,11 +245,13 @@ export default class Upload extends BaseResource {
   rawUpdate(
     uploadId: string,
     body: RawApiTypes.UploadUpdateSchema,
+    queryParams?: RawApiTypes.UploadUpdateHrefSchema,
   ): Promise<RawApiTypes.UploadUpdateJobSchema> {
     return this.client.request<RawApiTypes.UploadUpdateJobSchema>({
       method: 'PUT',
       url: `/uploads/${uploadId}`,
       body,
+      queryParams,
     });
   }
 
