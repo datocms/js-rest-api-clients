@@ -2880,6 +2880,7 @@
           ],
           "relationships": ["creator", "upload_collection"]
         },
+        "queryParamsType": "UploadUpdateHrefSchema",
         "queryParamsRequired": false,
         "responseType": "UploadUpdateJobSchema",
         "name": "update",
