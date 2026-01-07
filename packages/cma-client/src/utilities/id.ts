@@ -39,7 +39,13 @@ export function isValidId(id: string) {
     return intId <= maxDatoIntegerId;
   }
 
-  const bytes = fromUrlSafeBase64toUint8Array(id);
+  let bytes: Uint8Array;
+  try {
+    bytes = fromUrlSafeBase64toUint8Array(id);
+  } catch {
+    // If the string is not valid base64, it's not a valid ID
+    return false;
+  }
 
   // UUIDs are 16 bytes
   if (bytes.length !== 16) {
