@@ -807,7 +807,7 @@ export type ItemInstancesHrefSchema<
    */
   order_by?: ToItemHrefSchemaOrderBy<D>;
   /**
-   * Whether you want the currently published versions (`published`, default) of your records, or the latest available (`current`)
+   * Whether you want the currently published versions (`published`) of your records, or the latest available (`current`, default)
    */
   version?: string;
   [k: string]: unknown;
@@ -11928,6 +11928,10 @@ export type SiteMeta = {
    * Whether the [Improved exposure of inline blocks in the Content Delivery API](https://www.datocms.com/product-updates/improved-exposure-of-inline-blocks-in-cda) opt-in product update is active or not
    */
   improved_exposure_of_inline_blocks_in_cda: boolean;
+  /**
+   * Whether the [Improved items listing](https://www.datocms.com/product-updates/improved-items-listing) opt-in product update is active or not
+   */
+  improved_items_listing: boolean;
 };
 /**
  * JSON API data
@@ -12112,6 +12116,10 @@ export type SiteUpdateSchema = {
        * Whether the [Improved exposure of inline blocks in the Content Delivery API](https://www.datocms.com/product-updates/improved-exposure-of-inline-blocks-in-cda) opt-in product update is active or not
        */
       improved_exposure_of_inline_blocks_in_cda?: boolean;
+      /**
+       * Whether the [Improved items listing](https://www.datocms.com/product-updates/improved-items-listing) opt-in product update is active or not
+       */
+      improved_items_listing?: boolean;
     };
     relationships?: {
       sso_default_role?: {
@@ -12195,6 +12203,13 @@ export type SiteActivateImprovedValidationAtPublishingTargetSchema = {
  * via the `activate_improved_exposure_of_inline_blocks_in_cda.targetSchema` link.
  */
 export type SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema = {
+  data: Site;
+};
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_improved_items_listing.targetSchema` link.
+ */
+export type SiteActivateImprovedItemsListingTargetSchema = {
   data: Site;
 };
 /**
