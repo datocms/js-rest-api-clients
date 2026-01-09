@@ -11943,6 +11943,10 @@ export type SiteMeta = {
    * Whether the [Improved items listing](https://www.datocms.com/product-updates/improved-items-listing) opt-in product update is active or not
    */
   improved_items_listing: boolean;
+  /**
+   * Whether millisecond precision is enabled for datetime fields in the CDA/GraphQL API
+   */
+  milliseconds_in_datetime?: boolean;
 };
 /**
  * JSON API data
@@ -12221,6 +12225,13 @@ export type SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema = {
  * via the `activate_improved_items_listing.targetSchema` link.
  */
 export type SiteActivateImprovedItemsListingTargetSchema = {
+  data: Site;
+};
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_milliseconds_in_datetime.targetSchema` link.
+ */
+export type SiteActivateMillisecondsInDatetimeTargetSchema = {
   data: Site;
 };
 /**
