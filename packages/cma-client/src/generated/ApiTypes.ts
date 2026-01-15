@@ -11614,9 +11614,9 @@ export type SiteMeta = {
    */
   improved_items_listing: boolean;
   /**
-   * Whether millisecond precision is enabled for datetime fields in the CDA/GraphQL API
+   * Whether the [Milliseconds in datetime](https://www.datocms.com/product-updates/milliseconds-in-datetime) opt-in product update is active or not
    */
-  milliseconds_in_datetime?: boolean;
+  milliseconds_in_datetime: boolean;
 };
 /**
  * JSON API data
@@ -11976,6 +11976,10 @@ export type SiteUpdateSchema = {
      * Whether the [Improved items listing](https://www.datocms.com/product-updates/improved-items-listing) opt-in product update is active or not
      */
     improved_items_listing?: boolean;
+    /**
+     * Whether the [Milliseconds in datetime](https://www.datocms.com/product-updates/milliseconds-in-datetime) opt-in product update is active or not
+     */
+    milliseconds_in_datetime?: boolean;
   };
 };
 /**
