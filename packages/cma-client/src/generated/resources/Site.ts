@@ -421,6 +421,43 @@ export default class Site extends BaseResource {
   }
 
   /**
+   * Activate milliseconds in datetime
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_milliseconds_in_datetime
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  activateMillisecondsInDatetime() {
+    return this.rawActivateMillisecondsInDatetime().then((body) =>
+      Utils.deserializeResponseBody<ApiTypes.SiteActivateMillisecondsInDatetimeTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Activate milliseconds in datetime
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_milliseconds_in_datetime
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawActivateMillisecondsInDatetime(): Promise<RawApiTypes.SiteActivateMillisecondsInDatetimeTargetSchema> {
+    return this.client.request<RawApiTypes.SiteActivateMillisecondsInDatetimeTargetSchema>(
+      {
+        method: 'PUT',
+        url: '/site/activate-milliseconds-in-datetime',
+      },
+    );
+  }
+
+  /**
    * Update CDN settings default assets
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site/update_assets_cdn_default_settings
