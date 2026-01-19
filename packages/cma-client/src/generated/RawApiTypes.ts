@@ -11943,6 +11943,10 @@ export type SiteMeta = {
    * Whether the [Improved items listing](https://www.datocms.com/product-updates/improved-items-listing) opt-in product update is active or not
    */
   improved_items_listing: boolean;
+  /**
+   * Whether the [Milliseconds in datetime](https://www.datocms.com/product-updates/milliseconds-in-datetime) opt-in product update is active or not
+   */
+  milliseconds_in_datetime: boolean;
 };
 /**
  * JSON API data
@@ -12131,6 +12135,10 @@ export type SiteUpdateSchema = {
        * Whether the [Improved items listing](https://www.datocms.com/product-updates/improved-items-listing) opt-in product update is active or not
        */
       improved_items_listing?: boolean;
+      /**
+       * Whether the [Milliseconds in datetime](https://www.datocms.com/product-updates/milliseconds-in-datetime) opt-in product update is active or not
+       */
+      milliseconds_in_datetime?: boolean;
     };
     relationships?: {
       sso_default_role?: {
@@ -12221,6 +12229,13 @@ export type SiteActivateImprovedExposureOfInlineBlocksInCdaTargetSchema = {
  * via the `activate_improved_items_listing.targetSchema` link.
  */
 export type SiteActivateImprovedItemsListingTargetSchema = {
+  data: Site;
+};
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_milliseconds_in_datetime.targetSchema` link.
+ */
+export type SiteActivateMillisecondsInDatetimeTargetSchema = {
   data: Site;
 };
 /**
