@@ -946,6 +946,10 @@ export type Account = {
    * Whether 2-factor authentication is active for this account or not
    */
   is_2fa_active: boolean;
+  /**
+   * Pending email address awaiting confirmation (only present if confirmation token hasn't expired)
+   */
+  pending_email?: string | null;
   active_subscription: null | PerOwnerPricingSubscriptionData;
   billing_profile: null | PerOwnerPricingBillingProfileData;
   default_organization: null | OrganizationData;
@@ -953,6 +957,7 @@ export type Account = {
 export type AccountDestroyJobSchema = Account;
 export type AccountSelfTargetSchema = Account;
 export type AccountDeactivate_2FaTargetSchema = Account;
+export type AccountConfirmEmailChangeTargetSchema = Account;
 /**
  * JSON API data
  *
@@ -1014,6 +1019,10 @@ export type AccountAttributes = {
    * Whether 2-factor authentication is active for this account or not
    */
   is_2fa_active: boolean;
+  /**
+   * Pending email address awaiting confirmation (only present if confirmation token hasn't expired)
+   */
+  pending_email?: string | null;
 };
 /**
  * JSON API links
@@ -1346,6 +1355,17 @@ export type OrganizationDestroySchema = {
    * Current password
    */
   password: string;
+};
+/**
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `confirm_email_change.schema` link.
+ */
+export type AccountConfirmEmailChangeSchema = {
+  type?: AccountType;
+  /**
+   * Email confirmation token
+   */
+  token: string;
 };
 /**
  * A project represents a specific DatoCMS administrative area
