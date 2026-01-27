@@ -329,4 +329,45 @@ export default class Account extends BaseResource {
       },
     );
   }
+
+  /**
+   * Confirm email change
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  confirmEmailChange(body: ApiTypes.AccountConfirmEmailChangeSchema) {
+    return this.rawConfirmEmailChange(
+      Utils.serializeRequestBody<RawApiTypes.AccountConfirmEmailChangeSchema>(
+        body,
+        {
+          type: 'account',
+          attributes: ['token'],
+          relationships: [],
+        },
+      ),
+    ).then((body) =>
+      Utils.deserializeResponseBody<ApiTypes.AccountConfirmEmailChangeTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Confirm email change
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawConfirmEmailChange(
+    body: RawApiTypes.AccountConfirmEmailChangeSchema,
+  ): Promise<RawApiTypes.AccountConfirmEmailChangeTargetSchema> {
+    return this.client.request<RawApiTypes.AccountConfirmEmailChangeTargetSchema>(
+      {
+        method: 'POST',
+        url: '/account/confirm-email-change',
+        body,
+      },
+    );
+  }
 }
