@@ -176,7 +176,12 @@ export type UserSelfHrefSchema = {
  * This interface was referenced by `User`'s JSON-Schema
  * via the `me.targetSchema` link.
  */
-export type UserMeTargetSchema = User | SsoUser | AccessToken | Account;
+export type UserMeTargetSchema =
+  | User
+  | SsoUser
+  | AccessToken
+  | Account
+  | Organization;
 /**
  * ID of user
  *
@@ -283,6 +288,21 @@ export type AccountIdentity = string;
  */
 export type AccountType = 'account';
 /**
+ * ID of organization
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationIdentity = string;
+/**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationType = 'organization';
+/**
  * This interface was referenced by `User`'s JSON-Schema
  * via the `me.hrefSchema` link.
  */
@@ -328,21 +348,6 @@ export type AuditLogEventType = 'audit_log_event';
  * via the `query.targetSchema` link.
  */
 export type AuditLogEventQueryTargetSchema = AuditLogEvent[];
-/**
- * ID of organization
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "id".
- */
-export type OrganizationIdentity = string;
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "type".
- */
-export type OrganizationType = 'organization';
 /**
  * ID of plan
  *
@@ -3802,6 +3807,42 @@ export type AccountAttributes = {
   company: string | null;
 };
 /**
+ * DatoCMS organization
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization".
+ */
+export type Organization = {
+  id: OrganizationIdentity;
+  type: OrganizationType;
+  /**
+   * Name of the organization
+   */
+  name: string;
+};
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationData = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+};
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationAttributes = {
+  /**
+   * Name of the organization
+   */
+  name: string;
+};
+/**
  * If the Audit log functionality is enabled in a project, logged events can be queried using SQL-like language and fetched in full detail so that they can be exported or analyzed.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -4032,42 +4073,6 @@ export type AuditLogEventQuerySchema = {
   detailed_log?: boolean;
 };
 /**
- * DatoCMS organization
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "organization".
- */
-export type Organization = {
-  id: OrganizationIdentity;
-  type: OrganizationType;
-  /**
-   * Name of the organization
-   */
-  name: string;
-};
-/**
- * JSON API data
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "data".
- */
-export type OrganizationData = {
-  type: OrganizationType;
-  id: OrganizationIdentity;
-};
-/**
- * JSON API attributes
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type OrganizationAttributes = {
-  /**
-   * Name of the organization
-   */
-  name: string;
-};
-/**
  * Stores the information regarding the current plan for the project.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -4136,6 +4141,14 @@ export type SitePlan = {
    * The number of requests made to both our Content Management and Content Delivery APIs
    */
   api_calls: null | number;
+  /**
+   * The number of requests made to our Content Delivery API
+   */
+  cda_api_calls: null | number;
+  /**
+   * The number of requests made to our Content Management API
+   */
+  cma_api_calls: null | number;
   /**
    * The number of streaming seconds delivered by Mux.com
    */
@@ -4298,6 +4311,14 @@ export type SitePlan = {
       price: number;
     };
     api_calls?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    cda_api_calls?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    cma_api_calls?: {
       amount_per_packet: number;
       price: number;
     };
@@ -4385,6 +4406,14 @@ export type SitePlanAttributes = {
    */
   api_calls: null | number;
   /**
+   * The number of requests made to our Content Delivery API
+   */
+  cda_api_calls: null | number;
+  /**
+   * The number of requests made to our Content Management API
+   */
+  cma_api_calls: null | number;
+  /**
    * The number of streaming seconds delivered by Mux.com
    */
   mux_streaming_seconds: null | number;
@@ -4546,6 +4575,14 @@ export type SitePlanAttributes = {
       price: number;
     };
     api_calls?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    cda_api_calls?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    cma_api_calls?: {
       amount_per_packet: number;
       price: number;
     };

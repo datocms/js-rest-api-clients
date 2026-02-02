@@ -255,6 +255,21 @@ export type AccountType = 'account';
  */
 export type AccountIdentity = string;
 /**
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type OrganizationType = 'organization';
+/**
+ * ID of organization
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type OrganizationIdentity = string;
+/**
  * This interface was referenced by `User`'s JSON-Schema
  * via the `me.hrefSchema` link.
  */
@@ -295,21 +310,6 @@ export type AuditLogEventType = 'audit_log_event';
  * via the `definition` "id".
  */
 export type AuditLogEventIdentity = string;
-/**
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "type".
- */
-export type OrganizationType = 'organization';
-/**
- * ID of organization
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "id".
- */
-export type OrganizationIdentity = string;
 /**
  * This interface was referenced by `SitePlan`'s JSON-Schema
  * via the `definition` "type".
@@ -2922,7 +2922,7 @@ export type UserSelfTargetSchema = {
  * via the `me.targetSchema` link.
  */
 export type UserMeTargetSchema = {
-  data: User | SsoUser | AccessToken | Account;
+  data: User | SsoUser | AccessToken | Account | Organization;
   included?: Role[];
 };
 /**
@@ -3292,6 +3292,39 @@ export type AccountData = {
   id: AccountIdentity;
 };
 /**
+ * DatoCMS organization
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "organization".
+ */
+export type Organization = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+  attributes: OrganizationAttributes;
+};
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type OrganizationAttributes = {
+  /**
+   * Name of the organization
+   */
+  name: string;
+};
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type OrganizationData = {
+  type: OrganizationType;
+  id: OrganizationIdentity;
+};
+/**
  * This interface was referenced by `User`'s JSON-Schema
  * via the `destroy.targetSchema` link.
  */
@@ -3462,39 +3495,6 @@ export type AuditLogEventQueryTargetSchema = {
   };
 };
 /**
- * DatoCMS organization
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "organization".
- */
-export type Organization = {
-  type: OrganizationType;
-  id: OrganizationIdentity;
-  attributes: OrganizationAttributes;
-};
-/**
- * JSON API attributes
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type OrganizationAttributes = {
-  /**
-   * Name of the organization
-   */
-  name: string;
-};
-/**
- * JSON API data
- *
- * This interface was referenced by `Organization`'s JSON-Schema
- * via the `definition` "data".
- */
-export type OrganizationData = {
-  type: OrganizationType;
-  id: OrganizationIdentity;
-};
-/**
  * Stores the information regarding the current plan for the project.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -3572,6 +3572,14 @@ export type SitePlanAttributes = {
    * The number of requests made to both our Content Management and Content Delivery APIs
    */
   api_calls: null | number;
+  /**
+   * The number of requests made to our Content Delivery API
+   */
+  cda_api_calls: null | number;
+  /**
+   * The number of requests made to our Content Management API
+   */
+  cma_api_calls: null | number;
   /**
    * The number of streaming seconds delivered by Mux.com
    */
@@ -3734,6 +3742,14 @@ export type SitePlanAttributes = {
       price: number;
     };
     api_calls?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    cda_api_calls?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    cma_api_calls?: {
       amount_per_packet: number;
       price: number;
     };

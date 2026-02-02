@@ -1809,6 +1809,7 @@ export type PerOwnerPricingBillingProfileAttributes = {
     zip: string;
     vat_number: null | string;
     defaulting: boolean;
+    defaulting_since: null | string;
     credits: number;
     total_dues: number;
     cf_cod_fiscale: null | string;
@@ -2512,6 +2513,14 @@ export type SitePlanAttributes = {
    */
   api_calls: null | number;
   /**
+   * The number of requests made to our Content Delivery API
+   */
+  cda_api_calls: null | number;
+  /**
+   * The number of requests made to our Content Management API
+   */
+  cma_api_calls: null | number;
+  /**
    * The number of streaming seconds delivered by Mux.com
    */
   mux_streaming_seconds: null | number;
@@ -2676,6 +2685,14 @@ export type SitePlanAttributes = {
       amount_per_packet: number;
       price: number;
     };
+    cda_api_calls?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    cma_api_calls?: {
+      amount_per_packet: number;
+      price: number;
+    };
     mux_streaming_seconds?: {
       amount_per_packet: number;
       price: number;
@@ -2725,6 +2742,7 @@ export type PerSitePricingBillingProfileAttributes = {
     zip: string;
     vat_number: null | string;
     defaulting: boolean;
+    defaulting_since: null | string;
     credits: number;
     total_dues: number;
     cf_cod_fiscale: null | string;
