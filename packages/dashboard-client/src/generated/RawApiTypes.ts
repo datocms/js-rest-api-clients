@@ -811,6 +811,10 @@ export type AccountAttributes = {
    * Whether 2-factor authentication is active for this account or not
    */
   is_2fa_active: boolean;
+  /**
+   * Pending email address awaiting confirmation (only present if confirmation token hasn't expired)
+   */
+  pending_email?: string | null;
 };
 /**
  * JSON API links
@@ -2181,6 +2185,28 @@ export type OrganizationDestroyTargetSchema = {
  */
 export type OrganizationDestroyJobSchema = {
   data: Organization;
+};
+/**
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `confirm_email_change.schema` link.
+ */
+export type AccountConfirmEmailChangeSchema = {
+  data: {
+    type: AccountType;
+    attributes: {
+      /**
+       * Email confirmation token
+       */
+      token: string;
+    };
+  };
+};
+/**
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `confirm_email_change.targetSchema` link.
+ */
+export type AccountConfirmEmailChangeTargetSchema = {
+  data: Account;
 };
 /**
  * A per-project subscription record
