@@ -1,6 +1,6 @@
 {
   "name": "@datocms/dashboard-client",
-  "version": "5.2.9",
+  "version": "5.3.0",
   "description": "JS client for DatoCMS REST Content Management API",
   "keywords": [
     "datocms",
