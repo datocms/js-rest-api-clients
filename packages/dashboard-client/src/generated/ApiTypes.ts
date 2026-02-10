@@ -2140,11 +2140,11 @@ export type SitePlan = {
   /**
    * The number of requests made to our Content Delivery API
    */
-  cda_api_calls: null | number;
+  cda_api_calls?: null | number;
   /**
    * The number of requests made to our Content Management API
    */
-  cma_api_calls: null | number;
+  cma_api_calls?: null | number;
   /**
    * The number of streaming seconds delivered by Mux.com
    */
@@ -2394,11 +2394,11 @@ export type SitePlanAttributes = {
   /**
    * The number of requests made to our Content Delivery API
    */
-  cda_api_calls: null | number;
+  cda_api_calls?: null | number;
   /**
    * The number of requests made to our Content Management API
    */
-  cma_api_calls: null | number;
+  cma_api_calls?: null | number;
   /**
    * The number of streaming seconds delivered by Mux.com
    */
