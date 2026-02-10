@@ -225,6 +225,27 @@
         "responseType": "AccountConvertToOrganizationJobSchema",
         "name": "convertToOrganization",
         "rawName": "rawConvertToOrganization"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "rel": "confirm_email_change",
+        "urlTemplate": "/account/confirm-email-change",
+        "method": "POST",
+        "comment": "Confirm email change",
+        "urlPlaceholders": [],
+        "requestBodyType": "AccountConfirmEmailChangeSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "account",
+          "attributes": ["token"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "AccountConfirmEmailChangeTargetSchema",
+        "name": "confirmEmailChange",
+        "rawName": "rawConfirmEmailChange"
       }
     ],
     "namespace": "account",
