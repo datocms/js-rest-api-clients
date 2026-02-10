@@ -239,7 +239,7 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "account",
-          "attributes": ["token"],
+          "attributes": ["token", "account_id"],
           "relationships": []
         },
         "queryParamsRequired": false,

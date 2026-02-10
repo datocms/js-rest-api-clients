@@ -2198,6 +2198,10 @@ export type AccountConfirmEmailChangeSchema = {
        * Email confirmation token
        */
       token: string;
+      /**
+       * Account ID
+       */
+      account_id: string;
     };
   };
 };
@@ -2206,7 +2210,8 @@ export type AccountConfirmEmailChangeSchema = {
  * via the `confirm_email_change.targetSchema` link.
  */
 export type AccountConfirmEmailChangeTargetSchema = {
-  data: Account;
+  data: Session;
+  included: Account[];
 };
 /**
  * A per-project subscription record

@@ -342,7 +342,7 @@ export default class Account extends BaseResource {
         body,
         {
           type: 'account',
-          attributes: ['token'],
+          attributes: ['token', 'account_id'],
           relationships: [],
         },
       ),

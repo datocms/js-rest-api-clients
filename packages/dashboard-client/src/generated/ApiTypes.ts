@@ -872,6 +872,9 @@ export type TfaDeactivateRequestInstancesTargetSchema = TfaDeactivateRequest[];
  * This interface was referenced by `Account`'s JSON-Schema
  * via the `activate_2fa.targetSchema` link.
  *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `confirm_email_change.targetSchema` link.
+ *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "session".
  */
@@ -884,6 +887,7 @@ export type SessionCreateTargetSchema = Session;
 export type AccountCreateTargetSchema = Session;
 export type AccountUpdateTargetSchema = Session;
 export type AccountActivate_2FaTargetSchema = Session;
+export type AccountConfirmEmailChangeTargetSchema = Session;
 /**
  * JSON API data
  *
@@ -957,7 +961,6 @@ export type Account = {
 export type AccountDestroyJobSchema = Account;
 export type AccountSelfTargetSchema = Account;
 export type AccountDeactivate_2FaTargetSchema = Account;
-export type AccountConfirmEmailChangeTargetSchema = Account;
 /**
  * JSON API data
  *
@@ -1366,6 +1369,10 @@ export type AccountConfirmEmailChangeSchema = {
    * Email confirmation token
    */
   token: string;
+  /**
+   * Account ID
+   */
+  account_id: string;
 };
 /**
  * A project represents a specific DatoCMS administrative area
