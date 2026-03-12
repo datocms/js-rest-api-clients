@@ -3435,6 +3435,10 @@ export type AuditLogEventAttributes = {
       [k: string]: unknown;
     };
   };
+  /**
+   * Whether the action was performed during a debug (impersonation) session by DatoCMS staff
+   */
+  impersonated?: null | boolean;
 };
 /**
  * JSON API meta

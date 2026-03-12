@@ -3936,6 +3936,10 @@ export type AuditLogEvent = {
       [k: string]: unknown;
     };
   };
+  /**
+   * Whether the action was performed during a debug (impersonation) session by DatoCMS staff
+   */
+  impersonated?: null | boolean;
   meta: AuditLogEventMeta;
 };
 /**
@@ -4052,6 +4056,10 @@ export type AuditLogEventAttributes = {
       [k: string]: unknown;
     };
   };
+  /**
+   * Whether the action was performed during a debug (impersonation) session by DatoCMS staff
+   */
+  impersonated?: null | boolean;
 };
 /**
  * This interface was referenced by `AuditLogEvent`'s JSON-Schema
