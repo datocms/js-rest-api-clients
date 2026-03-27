@@ -8422,11 +8422,37 @@ export type Upload = {
     | UserData
     | SsoUserData
     | OrganizationData;
+  meta: UploadMeta;
 };
 export type UploadCreateJobSchema = Upload;
 export type UploadSelfTargetSchema = Upload;
 export type UploadDestroyTargetSchema = Upload;
 export type UploadUpdateJobSchema = Upload;
+/**
+ * Meta attributes
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type UploadMeta = {
+  /**
+   * Antivirus scan information
+   */
+  antivirus: {
+    /**
+     * Antivirus scan status of the asset
+     */
+    status: 'pending' | 'clean' | 'infected' | 'failed' | 'skipped';
+    /**
+     * Date of the last antivirus scan
+     */
+    checked_at: string | null;
+    /**
+     * Name of the threat detected by the antivirus scan, if any
+     */
+    threat_name: string | null;
+  };
+};
 /**
  * JSON API data
  *

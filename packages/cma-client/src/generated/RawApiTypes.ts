@@ -8437,6 +8437,7 @@ export type Upload = {
   id: UploadIdentity;
   attributes: UploadAttributes;
   relationships: UploadRelationships;
+  meta: UploadMeta;
 };
 /**
  * JSON API attributes
@@ -8630,6 +8631,31 @@ export type UploadRelationships = {
       | UserData
       | SsoUserData
       | OrganizationData;
+  };
+};
+/**
+ * Meta attributes
+ *
+ * This interface was referenced by `Upload`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type UploadMeta = {
+  /**
+   * Antivirus scan information
+   */
+  antivirus: {
+    /**
+     * Antivirus scan status of the asset
+     */
+    status: 'pending' | 'clean' | 'infected' | 'failed' | 'skipped';
+    /**
+     * Date of the last antivirus scan
+     */
+    checked_at: string | null;
+    /**
+     * Name of the threat detected by the antivirus scan, if any
+     */
+    threat_name: string | null;
   };
 };
 /**
