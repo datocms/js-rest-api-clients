@@ -18,7 +18,7 @@ export default class AuditLogEvent extends BaseResource {
     return this.rawQuery(
       Utils.serializeRequestBody<RawApiTypes.AuditLogEventQuerySchema>(body, {
         type: 'audit_log_query',
-        attributes: ['filter', 'next_token', 'detailed_log'],
+        attributes: ['since', 'before', 'filter', 'next_token', 'detailed_log'],
         relationships: [],
       }),
     ).then((body) =>

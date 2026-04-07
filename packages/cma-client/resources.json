@@ -452,7 +452,13 @@
         "optionalRequestBody": false,
         "requestStructure": {
           "type": "audit_log_query",
-          "attributes": ["filter", "next_token", "detailed_log"],
+          "attributes": [
+            "since",
+            "before",
+            "filter",
+            "next_token",
+            "detailed_log"
+          ],
           "relationships": []
         },
         "queryParamsRequired": false,

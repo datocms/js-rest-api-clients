@@ -3471,6 +3471,14 @@ export type AuditLogEventQuerySchema = {
     type: 'audit_log_query';
     attributes: {
       /**
+       * Only return events occurred at or after this ISO 8601 datetime
+       */
+      since?: string;
+      /**
+       * Only return events occurred before this ISO 8601 datetime
+       */
+      before?: string;
+      /**
        * An SQL-like expression to filter the events
        */
       filter?: string;
