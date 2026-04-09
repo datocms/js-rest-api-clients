@@ -1,6 +1,6 @@
 {
   "name": "@datocms/rest-api-reference",
-  "version": "5.4.0",
+  "version": "5.4.1",
   "description": "Utilities to browse DatoCMS REST API reference documentation",
   "keywords": [
     "datocms",
