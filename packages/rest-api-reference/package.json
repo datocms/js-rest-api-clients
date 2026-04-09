@@ -1,0 +1,47 @@
+{
+  "name": "@datocms/rest-api-reference",
+  "version": "5.4.0",
+  "description": "Utilities to browse DatoCMS REST API reference documentation",
+  "keywords": [
+    "datocms",
+    "api",
+    "reference",
+    "documentation"
+  ],
+  "author": "Stefano Verna <s.verna@datocms.com>",
+  "homepage": "https://github.com/datocms/js-rest-api-clients/tree/main/packages/rest-api-reference#readme",
+  "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "typings": "dist/types/index.d.ts",
+  "sideEffects": false,
+  "directories": {
+    "lib": "dist",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datocms/js-rest-api-clients.git"
+  },
+  "scripts": {
+    "build": "tsc && tsc --project ./tsconfig.esnext.json",
+    "prebuild": "rimraf dist"
+  },
+  "bugs": {
+    "url": "https://github.com/datocms/js-rest-api-clients/issues"
+  },
+  "dependencies": {
+    "@apidevtools/json-schema-ref-parser": "^11.7.0"
+  },
+  "gitHead": "ac4164968026ba62a2841d31d2b60c31eadb2cc8",
+  "devDependencies": {
+    "@types/json-schema": "^7.0.15"
+  }
+}

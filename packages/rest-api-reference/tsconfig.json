@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "es2015",
+    "declarationDir": "dist/types",
+    "outDir": "dist/cjs",
+    "typeRoots": [
+      "../../node_modules/@types",
+      "node_modules/@types",
+      "src/typings"
+    ]
+  },
+  "include": ["../../reset.d.ts", "src"]
+}
