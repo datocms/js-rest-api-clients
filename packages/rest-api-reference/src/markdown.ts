@@ -133,7 +133,7 @@ function renderNode(node: MarkdownNode, depth = 0): string {
     case 'blockquote':
       return `> ${childrenText}\n\n`;
     case 'hr':
-      return `---\n\n`;
+      return '---\n\n';
     case 'br':
       return '  \n';
     default:

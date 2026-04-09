@@ -74,9 +74,7 @@ describe('describeResource', () => {
 
   it('returns undefined when hyperschema entity not found', () => {
     const noProps: Hyperschema = { groups: [] };
-    expect(
-      describeResource(noProps, resourcesSchema, 'items'),
-    ).toBeUndefined();
+    expect(describeResource(noProps, resourcesSchema, 'items')).toBeUndefined();
   });
 
   it('renders resource description with available actions', () => {
@@ -105,11 +103,7 @@ describe('describeResource', () => {
   });
 
   it('handles entity with no description', () => {
-    const result = describeResource(
-      hyperschema,
-      resourcesSchema,
-      'uploads',
-    )!;
+    const result = describeResource(hyperschema, resourcesSchema, 'uploads')!;
     expect(result).toContain('# Available actions');
   });
 

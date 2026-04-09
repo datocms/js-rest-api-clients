@@ -35,9 +35,7 @@ export function listResources(
           description: (hyperschemaEntity.description || '').split(/\n/)[0],
         };
       })
-      .filter(
-        (r): r is NonNullable<typeof r> => r != null,
-      ),
+      .filter((r): r is NonNullable<typeof r> => r != null),
   }));
 
   return render(

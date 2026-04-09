@@ -1,11 +1,11 @@
-import { fetchHyperschema } from '../src/fetchHyperschema';
-import {
-  parseResourcesSchema,
-  type RawResourcesSchema,
-} from '../src/parseResourcesSchema';
-import { listResources } from '../src/listResources';
 import { describeResource } from '../src/describeResource';
 import { describeResourceAction } from '../src/describeResourceAction';
+import { fetchHyperschema } from '../src/fetchHyperschema';
+import { listResources } from '../src/listResources';
+import {
+  type RawResourcesSchema,
+  parseResourcesSchema,
+} from '../src/parseResourcesSchema';
 import type { Hyperschema, ResourcesSchema } from '../src/types';
 
 let hyperschema: Hyperschema;

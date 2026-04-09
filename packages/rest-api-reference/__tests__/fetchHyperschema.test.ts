@@ -31,9 +31,7 @@ describe('fetchHyperschema', () => {
 
     const result = await fetchHyperschema('https://example.com/schema.json');
 
-    expect(mockFetch).toHaveBeenCalledWith(
-      'https://example.com/schema.json',
-    );
+    expect(mockFetch).toHaveBeenCalledWith('https://example.com/schema.json');
     expect(result).toEqual(fakeSchema);
   });
 

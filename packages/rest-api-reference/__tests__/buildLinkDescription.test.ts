@@ -102,9 +102,7 @@ describe('buildLinkDescription', () => {
     });
 
     const result = buildLinkDescription(link);
-    const inlineCount = (
-      result.match(/Example: Inline One/g) || []
-    ).length;
+    const inlineCount = (result.match(/Example: Inline One/g) || []).length;
     expect(inlineCount).toBe(1);
     expect(result).toContain('Example: Appended');
   });
@@ -133,25 +131,19 @@ describe('buildLinkDescription', () => {
     });
 
     it('expands only matching inline examples', () => {
-      const result = buildLinkDescription(link, [
-        'Example: Basic creation',
-      ]);
+      const result = buildLinkDescription(link, ['Example: Basic creation']);
       expect(result).toContain('<details open>');
       expect(result).toContain('client.items.create()');
     });
 
     it('filters out non-matching inline examples', () => {
-      const result = buildLinkDescription(link, [
-        'Example: Advanced creation',
-      ]);
+      const result = buildLinkDescription(link, ['Example: Advanced creation']);
       expect(result).toContain('<details open>');
       expect(result).toContain('client.items.create({ complex: true })');
     });
 
     it('expands matching appended examples', () => {
-      const result = buildLinkDescription(link, [
-        'Example: Advanced creation',
-      ]);
+      const result = buildLinkDescription(link, ['Example: Advanced creation']);
       expect(result).toContain('Advanced creation');
       expect(result).toContain('<details open>');
     });

@@ -16,10 +16,13 @@ export function collapseDetails(
 
   if (hasFilter) {
     const matches: string[] = [];
-    let match: RegExpExecArray | null;
     const regex = new RegExp(detailsPattern);
 
-    while ((match = regex.exec(text)) !== null) {
+    for (
+      let match = regex.exec(text);
+      match !== null;
+      match = regex.exec(text)
+    ) {
       const content = match[2];
       if (!content) continue;
 

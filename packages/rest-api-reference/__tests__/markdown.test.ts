@@ -1,20 +1,20 @@
 import {
-  render,
+  a,
+  blockquote,
+  br,
+  code,
+  em,
   h1,
   h2,
   h3,
-  p,
-  strong,
-  em,
-  code,
-  pre,
-  a,
-  ul,
-  ol,
-  li,
-  blockquote,
   hr,
-  br,
+  li,
+  ol,
+  p,
+  pre,
+  render,
+  strong,
+  ul,
 } from '../src/markdown';
 
 describe('markdown', () => {
@@ -50,9 +50,7 @@ describe('markdown', () => {
     });
 
     it('renders inline code', () => {
-      expect(render(p('Use ', code('npm install')))).toBe(
-        'Use `npm install`',
-      );
+      expect(render(p('Use ', code('npm install')))).toBe('Use `npm install`');
     });
   });
 
@@ -86,15 +84,11 @@ describe('markdown', () => {
 
   describe('lists', () => {
     it('renders unordered list', () => {
-      expect(render(ul(li('First'), li('Second')))).toBe(
-        '- First\n- Second',
-      );
+      expect(render(ul(li('First'), li('Second')))).toBe('- First\n- Second');
     });
 
     it('renders ordered list', () => {
-      expect(render(ol(li('First'), li('Second')))).toBe(
-        '1. First\n2. Second',
-      );
+      expect(render(ol(li('First'), li('Second')))).toBe('1. First\n2. Second');
     });
   });
 
@@ -114,9 +108,7 @@ describe('markdown', () => {
 
   describe('render', () => {
     it('handles null and undefined children', () => {
-      expect(render(p('Hello', null, undefined, ' world'))).toBe(
-        'Hello world',
-      );
+      expect(render(p('Hello', null, undefined, ' world'))).toBe('Hello world');
     });
 
     it('renders multiple nodes', () => {

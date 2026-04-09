@@ -1,6 +1,6 @@
 import {
-  parseResourcesSchema,
   type RawResourcesSchema,
+  parseResourcesSchema,
 } from '../src/parseResourcesSchema';
 
 describe('parseResourcesSchema', () => {

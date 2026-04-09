@@ -1,9 +1,9 @@
 import {
   findHyperschemaEntity,
   findHyperschemaLink,
+  findResourcesEndpointByRel,
   findResourcesEntityByJsonApiType,
   findResourcesEntityByNamespace,
-  findResourcesEndpointByRel,
 } from '../src/finders';
 import type {
   Hyperschema,
@@ -84,9 +84,7 @@ describe('findHyperschemaLink', () => {
   });
 
   it('returns undefined for unknown rel', () => {
-    expect(
-      findHyperschemaLink(hyperschema, 'item', 'destroy'),
-    ).toBeUndefined();
+    expect(findHyperschemaLink(hyperschema, 'item', 'destroy')).toBeUndefined();
   });
 
   it('returns undefined for unknown type', () => {
