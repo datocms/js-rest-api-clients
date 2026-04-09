@@ -36,6 +36,51 @@ export default class OauthApplication extends BaseResource {
   }
 
   /**
+   * Update site access settings for an authorized application
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  update(
+    oauthApplicationId: string | ApiTypes.OauthApplicationData,
+    body: ApiTypes.OauthApplicationUpdateSchema,
+  ) {
+    return this.rawUpdate(
+      Utils.toId(oauthApplicationId),
+      Utils.serializeRequestBody<RawApiTypes.OauthApplicationUpdateSchema>(
+        body,
+        {
+          id: Utils.toId(oauthApplicationId),
+          type: 'oauth_application',
+          attributes: ['site_access_mode'],
+          relationships: ['granted_sites'],
+        },
+      ),
+    ).then((body) =>
+      Utils.deserializeResponseBody<ApiTypes.OauthApplicationUpdateTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Update site access settings for an authorized application
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawUpdate(
+    oauthApplicationId: string,
+    body: RawApiTypes.OauthApplicationUpdateSchema,
+  ): Promise<RawApiTypes.OauthApplicationUpdateTargetSchema> {
+    return this.client.request<RawApiTypes.OauthApplicationUpdateTargetSchema>({
+      method: 'PUT',
+      url: `/oauth_applications/${oauthApplicationId}`,
+      body,
+    });
+  }
+
+  /**
    * Delete an authorized application
    *
    * @throws {ApiError}

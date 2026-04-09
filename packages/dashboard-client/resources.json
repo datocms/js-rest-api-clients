@@ -1336,6 +1336,39 @@
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
+        "rel": "update",
+        "urlTemplate": "/oauth_applications/${oauthApplicationId}",
+        "method": "PUT",
+        "comment": "Update site access settings for an authorized application",
+        "urlPlaceholders": [
+          {
+            "variableName": "oauthApplicationId",
+            "isEntityId": true,
+            "relType": "OauthApplicationData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "oauthApplicationId",
+          "isEntityId": true,
+          "relType": "OauthApplicationData"
+        },
+        "requestBodyType": "OauthApplicationUpdateSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "oauth_application",
+          "idRequired": true,
+          "attributes": ["site_access_mode"],
+          "relationships": ["granted_sites"]
+        },
+        "queryParamsRequired": false,
+        "responseType": "OauthApplicationUpdateTargetSchema",
+        "name": "update",
+        "rawName": "rawUpdate"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "rel": "destroy",
         "urlTemplate": "/oauth_applications/${oauthApplicationId}",
         "method": "DELETE",

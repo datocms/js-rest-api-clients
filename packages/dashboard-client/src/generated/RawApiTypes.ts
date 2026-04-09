@@ -3532,6 +3532,7 @@ export type OauthApplication = {
   type: OauthApplicationType;
   id: OauthApplicationIdentity;
   attributes: OauthApplicationAttributes;
+  relationships: OauthApplicationRelationships;
 };
 /**
  * JSON API attributes
@@ -3548,6 +3549,24 @@ export type OauthApplicationAttributes = {
    * Date of token creation
    */
   created_at: string;
+  /**
+   * Whether the application can access all projects or only selected ones
+   */
+  site_access_mode: 'all' | 'selected';
+};
+/**
+ * JSON API relationships
+ *
+ * This interface was referenced by `OauthApplication`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type OauthApplicationRelationships = {
+  /**
+   * Projects the application has been granted access to (only relevant when site_access_mode is 'selected')
+   */
+  granted_sites: {
+    data: SiteData[];
+  };
 };
 /**
  * JSON API data
@@ -3565,9 +3584,37 @@ export type OauthApplicationData = {
  */
 export type OauthApplicationInstancesTargetSchema = {
   data: OauthApplication[];
-  meta: {
-    [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `OauthApplication`'s JSON-Schema
+ * via the `update.schema` link.
+ */
+export type OauthApplicationUpdateSchema = {
+  data: {
+    id: OauthApplicationIdentity;
+    type: OauthApplicationType;
+    attributes: {
+      /**
+       * Whether the application can access all projects or only selected ones
+       */
+      site_access_mode: 'all' | 'selected';
+    };
+    relationships?: {
+      /**
+       * Projects to grant access to (required when site_access_mode is 'selected')
+       */
+      granted_sites?: {
+        data: SiteData[];
+      };
+    };
   };
+};
+/**
+ * This interface was referenced by `OauthApplication`'s JSON-Schema
+ * via the `update.targetSchema` link.
+ */
+export type OauthApplicationUpdateTargetSchema = {
+  data: OauthApplication;
 };
 /**
  * Private entity to handle payments with Stripe
