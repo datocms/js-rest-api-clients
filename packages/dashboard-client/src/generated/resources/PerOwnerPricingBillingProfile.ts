@@ -118,4 +118,47 @@ export default class PerOwnerPricingBillingProfile extends BaseResource {
       },
     );
   }
+
+  /**
+   * Cancel subscription
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  cancelSubscription(
+    body: ApiTypes.PerOwnerPricingBillingProfileCancelSubscriptionSchema,
+  ) {
+    return this.rawCancelSubscription(
+      Utils.serializeRequestBody<RawApiTypes.PerOwnerPricingBillingProfileCancelSubscriptionSchema>(
+        body,
+        {
+          type: 'per_owner_pricing_billing_profile',
+          attributes: ['reason'],
+          relationships: [],
+        },
+      ),
+    ).then((body) =>
+      Utils.deserializeResponseBody<ApiTypes.PerOwnerPricingBillingProfileCancelSubscriptionTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Cancel subscription
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawCancelSubscription(
+    body: RawApiTypes.PerOwnerPricingBillingProfileCancelSubscriptionSchema,
+  ): Promise<RawApiTypes.PerOwnerPricingBillingProfileCancelSubscriptionTargetSchema> {
+    return this.client.request<RawApiTypes.PerOwnerPricingBillingProfileCancelSubscriptionTargetSchema>(
+      {
+        method: 'POST',
+        url: '/per-owner-pricing-billing-profile/cancel-subscription',
+        body,
+      },
+    );
+  }
 }

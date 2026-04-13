@@ -1812,6 +1812,9 @@ export type PerOwnerPricingBillingProfileAttributes = {
     state: string;
     zip: string;
     vat_number: null | string;
+    /**
+     * Whether the subscription has been cancelled and all associated projects are frozen.
+     */
     defaulting: boolean;
     defaulting_since: null | string;
     credits: number;
@@ -1879,6 +1882,25 @@ export type PerOwnerPricingBillingProfileUpdateInfoSchema = {
  * via the `update_info.targetSchema` link.
  */
 export type PerOwnerPricingBillingProfileUpdateInfoTargetSchema = {
+  data: PerOwnerPricingBillingProfile;
+};
+/**
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
+ * via the `cancel_subscription.schema` link.
+ */
+export type PerOwnerPricingBillingProfileCancelSubscriptionSchema = {
+  data: {
+    type: 'per_owner_pricing_billing_profile';
+    attributes: {
+      reason?: string | null;
+    };
+  };
+};
+/**
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
+ * via the `cancel_subscription.targetSchema` link.
+ */
+export type PerOwnerPricingBillingProfileCancelSubscriptionTargetSchema = {
   data: PerOwnerPricingBillingProfile;
 };
 /**
@@ -2772,6 +2794,9 @@ export type PerSitePricingBillingProfileAttributes = {
     state: string;
     zip: string;
     vat_number: null | string;
+    /**
+     * Whether the subscription has been cancelled and all associated projects are frozen.
+     */
     defaulting: boolean;
     defaulting_since: null | string;
     credits: number;
@@ -2860,6 +2885,25 @@ export type PerSitePricingBillingProfileUpdateInfoSchema = {
  * via the `update_info.targetSchema` link.
  */
 export type PerSitePricingBillingProfileUpdateInfoTargetSchema = {
+  data: PerSitePricingBillingProfile;
+};
+/**
+ * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
+ * via the `cancel_subscription.schema` link.
+ */
+export type PerSitePricingBillingProfileCancelSubscriptionSchema = {
+  data: {
+    type: 'per_site_pricing_billing_profile';
+    attributes: {
+      reason?: string | null;
+    };
+  };
+};
+/**
+ * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
+ * via the `cancel_subscription.targetSchema` link.
+ */
+export type PerSitePricingBillingProfileCancelSubscriptionTargetSchema = {
   data: PerSitePricingBillingProfile;
 };
 /**

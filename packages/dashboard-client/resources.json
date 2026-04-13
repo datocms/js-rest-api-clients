@@ -780,6 +780,38 @@
         "returnsItem": false,
         "requestBodyRequiresItem": false,
         "offersNestedItemsOptionInQueryParams": false,
+        "rel": "cancel_subscription",
+        "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/cancel-subscription",
+        "method": "POST",
+        "comment": "Cancel subscription",
+        "urlPlaceholders": [
+          {
+            "variableName": "perSitePricingBillingProfileId",
+            "isEntityId": true,
+            "relType": "PerSitePricingBillingProfileData"
+          }
+        ],
+        "entityIdPlaceholder": {
+          "variableName": "perSitePricingBillingProfileId",
+          "isEntityId": true,
+          "relType": "PerSitePricingBillingProfileData"
+        },
+        "requestBodyType": "PerSitePricingBillingProfileCancelSubscriptionSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "per_site_pricing_billing_profile",
+          "attributes": ["reason"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "PerSitePricingBillingProfileCancelSubscriptionTargetSchema",
+        "name": "cancelSubscription",
+        "rawName": "rawCancelSubscription"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
         "rel": "destroy",
         "urlTemplate": "/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}",
         "method": "DELETE",
@@ -865,6 +897,27 @@
         "responseType": "PerOwnerPricingBillingProfileUpdateInfoTargetSchema",
         "name": "updateInfo",
         "rawName": "rawUpdateInfo"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "rel": "cancel_subscription",
+        "urlTemplate": "/per-owner-pricing-billing-profile/cancel-subscription",
+        "method": "POST",
+        "comment": "Cancel subscription",
+        "urlPlaceholders": [],
+        "requestBodyType": "PerOwnerPricingBillingProfileCancelSubscriptionSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "per_owner_pricing_billing_profile",
+          "attributes": ["reason"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "responseType": "PerOwnerPricingBillingProfileCancelSubscriptionTargetSchema",
+        "name": "cancelSubscription",
+        "rawName": "rawCancelSubscription"
       }
     ],
     "namespace": "perOwnerPricingBillingProfile",

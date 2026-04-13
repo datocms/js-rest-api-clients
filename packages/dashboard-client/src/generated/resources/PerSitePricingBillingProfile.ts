@@ -173,6 +173,54 @@ export default class PerSitePricingBillingProfile extends BaseResource {
   }
 
   /**
+   * Cancel subscription
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  cancelSubscription(
+    perSitePricingBillingProfileId:
+      | string
+      | ApiTypes.PerSitePricingBillingProfileData,
+    body: ApiTypes.PerSitePricingBillingProfileCancelSubscriptionSchema,
+  ) {
+    return this.rawCancelSubscription(
+      Utils.toId(perSitePricingBillingProfileId),
+      Utils.serializeRequestBody<RawApiTypes.PerSitePricingBillingProfileCancelSubscriptionSchema>(
+        body,
+        {
+          type: 'per_site_pricing_billing_profile',
+          attributes: ['reason'],
+          relationships: [],
+        },
+      ),
+    ).then((body) =>
+      Utils.deserializeResponseBody<ApiTypes.PerSitePricingBillingProfileCancelSubscriptionTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Cancel subscription
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawCancelSubscription(
+    perSitePricingBillingProfileId: string,
+    body: RawApiTypes.PerSitePricingBillingProfileCancelSubscriptionSchema,
+  ): Promise<RawApiTypes.PerSitePricingBillingProfileCancelSubscriptionTargetSchema> {
+    return this.client.request<RawApiTypes.PerSitePricingBillingProfileCancelSubscriptionTargetSchema>(
+      {
+        method: 'POST',
+        url: `/per-site-pricing-billing-profiles/${perSitePricingBillingProfileId}/cancel-subscription`,
+        body,
+      },
+    );
+  }
+
+  /**
    * Delete a billing profile
    *
    * @throws {ApiError}

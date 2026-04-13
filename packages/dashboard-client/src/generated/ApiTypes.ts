@@ -2828,6 +2828,9 @@ export type PerSitePricingBillingProfile = {
     state: string;
     zip: string;
     vat_number: null | string;
+    /**
+     * Whether the subscription has been cancelled and all associated projects are frozen.
+     */
     defaulting: boolean;
     defaulting_since: null | string;
     credits: number;
@@ -2845,6 +2848,8 @@ export type PerSitePricingBillingProfileSelfTargetSchema =
 export type PerSitePricingBillingProfileUpdateCreditCardTargetSchema =
   PerSitePricingBillingProfile;
 export type PerSitePricingBillingProfileUpdateInfoTargetSchema =
+  PerSitePricingBillingProfile;
+export type PerSitePricingBillingProfileCancelSubscriptionTargetSchema =
   PerSitePricingBillingProfile;
 export type PerSitePricingBillingProfileDestroyTargetSchema =
   PerSitePricingBillingProfile;
@@ -2871,6 +2876,9 @@ export type PerSitePricingBillingProfileAttributes = {
     state: string;
     zip: string;
     vat_number: null | string;
+    /**
+     * Whether the subscription has been cancelled and all associated projects are frozen.
+     */
     defaulting: boolean;
     defaulting_since: null | string;
     credits: number;
@@ -2921,6 +2929,14 @@ export type PerSitePricingBillingProfileUpdateInfoSchema = {
   };
 };
 /**
+ * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
+ * via the `cancel_subscription.schema` link.
+ */
+export type PerSitePricingBillingProfileCancelSubscriptionSchema = {
+  type?: 'per_site_pricing_billing_profile';
+  reason?: string | null;
+};
+/**
  * A billing profile
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -2945,6 +2961,9 @@ export type PerOwnerPricingBillingProfile = {
     state: string;
     zip: string;
     vat_number: null | string;
+    /**
+     * Whether the subscription has been cancelled and all associated projects are frozen.
+     */
     defaulting: boolean;
     defaulting_since: null | string;
     credits: number;
@@ -2960,6 +2979,8 @@ export type PerOwnerPricingBillingProfileSelfTargetSchema =
 export type PerOwnerPricingBillingProfileUpdateCreditCardTargetSchema =
   PerOwnerPricingBillingProfile;
 export type PerOwnerPricingBillingProfileUpdateInfoTargetSchema =
+  PerOwnerPricingBillingProfile;
+export type PerOwnerPricingBillingProfileCancelSubscriptionTargetSchema =
   PerOwnerPricingBillingProfile;
 /**
  * Billing profile info
@@ -2984,6 +3005,9 @@ export type PerOwnerPricingBillingProfileAttributes = {
     state: string;
     zip: string;
     vat_number: null | string;
+    /**
+     * Whether the subscription has been cancelled and all associated projects are frozen.
+     */
     defaulting: boolean;
     defaulting_since: null | string;
     credits: number;
@@ -3023,6 +3047,14 @@ export type PerOwnerPricingBillingProfileUpdateInfoSchema = {
     cf_cod_fiscale?: null | string;
     po_number?: null | string;
   };
+};
+/**
+ * This interface was referenced by `PerOwnerPricingBillingProfile`'s JSON-Schema
+ * via the `cancel_subscription.schema` link.
+ */
+export type PerOwnerPricingBillingProfileCancelSubscriptionSchema = {
+  type?: 'per_owner_pricing_billing_profile';
+  reason?: string | null;
 };
 /**
  * An invoice
