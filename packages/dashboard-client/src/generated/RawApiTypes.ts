@@ -184,6 +184,22 @@ export type SiteTransferType = 'site_transfer';
  */
 export type SiteTransferIdentity = string;
 /**
+ * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
+ * via the `definition` "type".
+ */
+export type PerSitePricingBillingProfileType =
+  'per_site_pricing_billing_profile';
+/**
+ * ID of billing_profile
+ *
+ * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type PerSitePricingBillingProfileIdentity = string;
+/**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `self.hrefSchema` link.
  */
@@ -246,22 +262,6 @@ export type SiteCreateHrefSchema = {
   confirm_mux_encoding_consumption?: string;
   [k: string]: unknown;
 };
-/**
- * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
- * via the `definition` "type".
- */
-export type PerSitePricingBillingProfileType =
-  'per_site_pricing_billing_profile';
-/**
- * ID of billing_profile
- *
- * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
- * via the `definition` "id".
- */
-export type PerSitePricingBillingProfileIdentity = string;
 /**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `duplicate.hrefSchema` link.
@@ -1581,6 +1581,781 @@ export type SiteData = {
  */
 export type SiteSelfTargetSchema = {
   data: Site;
+  included?: (SiteSubscription | SitePlan | SiteTransfer)[];
+};
+/**
+ * A per-project subscription record
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "site_subscription".
+ */
+export type SiteSubscription = {
+  type: SiteSubscriptionType;
+  id: SiteSubscriptionIdentity;
+  attributes: SiteSubscriptionAttributes;
+  relationships: SiteSubscriptionRelationships;
+};
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SiteSubscription`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SiteSubscriptionAttributes = {
+  /**
+   * Date of creation of subscription
+   */
+  created_at: string;
+  /**
+   * Type of recurrence (yearly/monthly)
+   */
+  recurrence: 'yearly' | 'monthly';
+  price: number;
+  /**
+   * Extra packets
+   */
+  extra_packets: {
+    users?: number;
+    locales?: number;
+    item_types?: number;
+    roles?: number;
+    build_triggers?: number;
+    search_indexes?: number;
+    access_tokens?: number;
+    mux_encoding_seconds?: number;
+    sandbox_environments?: number;
+    items?: number;
+    uploadable_bytes?: number;
+  };
+};
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `SiteSubscription`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type SiteSubscriptionRelationships = {
+  /**
+   * Subscription plan
+   */
+  plan: {
+    data: SitePlanData;
+  };
+  /**
+   * Billing profile
+   */
+  billing_profile?: {
+    data: PerSitePricingBillingProfileData | null;
+  };
+  /**
+   * Subscription site
+   */
+  site?: {
+    data: SiteData;
+  };
+};
+/**
+ * JSON API data
+ *
+ * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
+ * via the `definition` "data".
+ */
+export type PerSitePricingBillingProfileData = {
+  type: PerSitePricingBillingProfileType;
+  id: PerSitePricingBillingProfileIdentity;
+};
+/**
+ * This interface was referenced by `SiteSubscription`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type SiteSubscriptionCreateSchema = {
+  data: {
+    type: SiteSubscriptionType;
+    attributes: {
+      payment_intent_id?: string;
+      /**
+       * Type of recurrence (yearly/monthly)
+       */
+      recurrence: 'yearly' | 'monthly';
+      /**
+       * Extra packets
+       */
+      extra_packets: {
+        users?: number;
+        locales?: number;
+        item_types?: number;
+        roles?: number;
+        build_triggers?: number;
+        search_indexes?: number;
+        access_tokens?: number;
+        mux_encoding_seconds?: number;
+        sandbox_environments?: number;
+        items?: number;
+        uploadable_bytes?: number;
+      };
+      billing_profile?: null | {
+        address_line: string;
+        city: string;
+        company?: null | string;
+        country: string;
+        email: string;
+        first_name: string;
+        last_name: string;
+        state: string;
+        vat_number?: null | string;
+        cf_cod_fiscale?: null | string;
+        zip: string;
+      };
+    };
+    relationships: {
+      /**
+       * Subscription plan
+       */
+      plan: {
+        data: SitePlanData;
+      };
+      /**
+       * Billing profile
+       */
+      billing_profile?: {
+        data: PerSitePricingBillingProfileData | null;
+      };
+    };
+  };
+};
+/**
+ * This interface was referenced by `SiteSubscription`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type SiteSubscriptionCreateTargetSchema = {
+  data: SiteSubscription;
+  included: Site[];
+};
+/**
+ * This interface was referenced by `SiteSubscription`'s JSON-Schema
+ * via the `simulate.schema` link.
+ */
+export type SiteSubscriptionSimulateSchema = {
+  data: {
+    type: SiteSubscriptionType;
+    attributes: {
+      /**
+       * Type of recurrence (yearly/monthly)
+       */
+      recurrence: 'yearly' | 'monthly';
+      /**
+       * Extra packets
+       */
+      extra_packets: {
+        users?: number;
+        locales?: number;
+        item_types?: number;
+        roles?: number;
+        build_triggers?: number;
+        search_indexes?: number;
+        access_tokens?: number;
+        mux_encoding_seconds?: number;
+        sandbox_environments?: number;
+        items?: number;
+        uploadable_bytes?: number;
+      };
+      is_duplicate?: boolean;
+      ignore_content?: boolean;
+      billing_profile?: null | {
+        address_line: string;
+        city: string;
+        country: string;
+        vat_number?: null | string;
+        cf_cod_fiscale?: null | string;
+        zip: string;
+        [k: string]: unknown;
+      };
+    };
+    relationships: {
+      /**
+       * Subscription plan
+       */
+      plan: {
+        data: SitePlanData;
+      };
+      /**
+       * Billing profile
+       */
+      billing_profile?: {
+        data: PerSitePricingBillingProfileData | null;
+      };
+    };
+  };
+};
+/**
+ * This interface was referenced by `SiteSubscription`'s JSON-Schema
+ * via the `simulate.targetSchema` link.
+ */
+export type SiteSubscriptionSimulateTargetSchema = {
+  data: NextInvoiceEstimate;
+};
+/**
+ * This interface was referenced by `SiteSubscription`'s JSON-Schema
+ * via the `validate.schema` link.
+ */
+export type SiteSubscriptionValidateSchema = {
+  data: {
+    type: SiteSubscriptionType;
+    attributes: {
+      /**
+       * Extra packets
+       */
+      extra_packets: {
+        users?: number;
+        locales?: number;
+        item_types?: number;
+        roles?: number;
+        build_triggers?: number;
+        search_indexes?: number;
+        access_tokens?: number;
+        mux_encoding_seconds?: number;
+        sandbox_environments?: number;
+        items?: number;
+        uploadable_bytes?: number;
+      };
+      /**
+       * Skip compatibility checks on content (number of records and uploads)
+       */
+      ignore_content?: boolean;
+      /**
+       * Specify is site is a duplicate of another site
+       */
+      is_duplicate?: boolean;
+    };
+    relationships: {
+      /**
+       * Subscription plan
+       */
+      plan: {
+        data: SitePlanData;
+      };
+    };
+  };
+};
+/**
+ * This interface was referenced by `SiteSubscription`'s JSON-Schema
+ * via the `validate.targetSchema` link.
+ */
+export type SiteSubscriptionValidateTargetSchema = {
+  data: SiteSubscription;
+  included: Site[];
+};
+/**
+ * Stores the information regarding the current plan for the project.
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "site_plan".
+ */
+export type SitePlan = {
+  type: SitePlanType;
+  id: SitePlanIdentity;
+  attributes: SitePlanAttributes;
+};
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SitePlan`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SitePlanAttributes = {
+  /**
+   * The name of the plan
+   */
+  name: string;
+  /**
+   * Whether this plan is active or legacy
+   */
+  active: boolean;
+  /**
+   * Whether custom domain can be enabled or not
+   */
+  custom_domain: boolean;
+  /**
+   * Number of users that can be invited
+   */
+  users: null | number;
+  /**
+   * Number of indexable pages
+   */
+  indexable_pages: null | number;
+  /**
+   * Number of build triggers
+   */
+  build_triggers: null | number;
+  /**
+   * Number of search indexes
+   */
+  search_indexes: null | number;
+  /**
+   * Number of plugins
+   */
+  plugins: null | number;
+  /**
+   * Number of webhooks
+   */
+  webhooks: null | number;
+  /**
+   * Number of records allowed
+   */
+  items: null | number;
+  /**
+   * Monthly price
+   */
+  monthly_price: number;
+  /**
+   * Yearly price
+   */
+  yearly_price: number;
+  /**
+   * Uploadable bytes
+   */
+  uploadable_bytes: null | number;
+  /**
+   * Amount of asset data transferred between our Asset CDN and GraphQL Content Delivery API and content consumers
+   */
+  traffic_bytes: null | number;
+  /**
+   * The number of requests made to both our Content Management and Content Delivery APIs
+   */
+  api_calls: null | number;
+  /**
+   * The number of requests made to our Content Delivery API
+   */
+  cda_api_calls?: null | number;
+  /**
+   * The number of requests made to our Content Management API
+   */
+  cma_api_calls?: null | number;
+  /**
+   * The number of streaming seconds delivered by Mux.com
+   */
+  mux_streaming_seconds: null | number;
+  /**
+   * The number of available encoding seconds to Mux.com
+   */
+  mux_encoding_seconds: null | number;
+  /**
+   * The number of images you can analyze for smart tags detections
+   */
+  smart_tags_detections: null | number;
+  /**
+   * The number of different API tokens you can generate, each which different permissions
+   */
+  access_tokens: null | number;
+  /**
+   * Number of roles allowed
+   */
+  roles: null | number;
+  /**
+   * Number of locales allowed
+   */
+  locales: null | number;
+  /**
+   * Number of sandbox environments allowed
+   */
+  sandbox_environments: null | number;
+  /**
+   * Number of models allowed
+   */
+  item_types: null | number;
+  /**
+   * Whether collaboration features are enabled or not
+   */
+  item_locking: boolean;
+  /**
+   * Whether project is in white-label mode or not
+   */
+  white_label: boolean;
+  /**
+   * Whether Single Sign-On feature is enabled or not
+   */
+  sso: boolean;
+  /**
+   * Whether built-in image editor and smart-tagging is enabled or not
+   */
+  advanced_media_area: boolean;
+  /**
+   * Maximum number of blocks a record can contain
+   */
+  blocks_per_item: number;
+  /**
+   * Maximum level of block nesting for a record
+   */
+  blocks_depth: number;
+  /**
+   * Whether video streaming with Mux.com is enabled or not
+   */
+  video: boolean;
+  /**
+   * Days of version history retention
+   */
+  history_retention_days: number | null;
+  /**
+   * Maximum number of clients connected at the same time to the Realtime Updates API. The limit is per-project
+   */
+  concurrent_realtime_connections: number;
+  /**
+   * The maximum GraphQL query complexity a client can perform on our CDA.
+   */
+  gql_complexity: number;
+  /**
+   * Period (in minutes) in which bursts of changes made to the same record by the same user (or API token) will be grouped into a single one
+   */
+  history_resolution_minutes: number;
+  /**
+   * Whether two-factor authentication can be enabled or not
+   */
+  otp: boolean;
+  /**
+   * Whether workflows are enabled or not
+   */
+  workflows: boolean;
+  /**
+   * Whether visual editing is enabled or not
+   */
+  visual_editing: boolean;
+  /**
+   * Number of workflows allowed
+   */
+  workflows_count: number;
+  /**
+   * Whether audit logs are enabled or not
+   */
+  audit_log: boolean;
+  /**
+   * Whether translator roles are enabled or not
+   */
+  translator_roles: boolean;
+  /**
+   * Whether or not use a static IP when sending webhooks
+   */
+  static_webhooks_ip: boolean;
+  /**
+   * Maximum size in bytes for a single file upload
+   */
+  maximum_single_upload_bytes: number;
+  /**
+   * Maximum size (in bytes) for a record, including its block records
+   */
+  item_size_bytes: number;
+  /**
+   * Available extra packets
+   */
+  extra_packets: {
+    users?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    locales?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    item_types?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    roles?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    build_triggers?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    search_indexes?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    access_tokens?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    mux_encoding_seconds?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    sandbox_environments?: {
+      amount_per_packet: number;
+      price: number;
+    };
+  };
+  /**
+   * Automatic packets
+   */
+  auto_packets: {
+    traffic_bytes?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    api_calls?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    cda_api_calls?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    cma_api_calls?: {
+      amount_per_packet: number;
+      price: number;
+    };
+    mux_streaming_seconds?: {
+      amount_per_packet: number;
+      price: number;
+    };
+  };
+};
+/**
+ * This interface was referenced by `SitePlan`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type SitePlanInstancesTargetSchema = {
+  data: SitePlan[];
+};
+/**
+ * A request to transfer a site to another account
+ *
+ * This interface was referenced by `DatoApi`'s JSON-Schema
+ * via the `definition` "site_transfer".
+ */
+export type SiteTransfer = {
+  type: SiteTransferType;
+  id: SiteTransferIdentity;
+  attributes: SiteTransferAttributes;
+  relationships: SiteTransferRelationships;
+  meta: SiteTransferMeta;
+};
+/**
+ * JSON API attributes
+ *
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `definition` "attributes".
+ */
+export type SiteTransferAttributes = {
+  source:
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'account';
+        /**
+         * Email of the account that owns the project
+         */
+        email: string;
+      }
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'organization';
+        /**
+         * Name of the organization that owns the project
+         */
+        name: string;
+        /**
+         * ID of the organization that owns the project
+         */
+        id: string;
+      };
+  destination:
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'account';
+        /**
+         * Email of the account that owns the project
+         */
+        email: string;
+      }
+    | {
+        /**
+         * Type of owner
+         */
+        type: 'organization';
+        /**
+         * Name of the organization that owns the project
+         */
+        name: string;
+        /**
+         * ID of the organization that owns the project
+         */
+        id: string;
+      };
+  /**
+   * Name of the site to transfer
+   */
+  site_name: string;
+  recurrence?: ('yearly' | 'monthly') | null;
+  extra_packets: {
+    users?: number;
+    locales?: number;
+    item_types?: number;
+    roles?: number;
+    build_triggers?: number;
+    search_indexes?: number;
+    access_tokens?: number;
+    mux_encoding_seconds?: number;
+    sandbox_environments?: number;
+    items?: number;
+    uploadable_bytes?: number;
+  } | null;
+};
+/**
+ * JSON API links
+ *
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `definition` "relationships".
+ */
+export type SiteTransferRelationships = {
+  /**
+   * Current plan
+   */
+  plan: {
+    data: SitePlanData | null;
+  };
+};
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type SiteTransferMeta = {
+  /**
+   * Date of site transfer creation
+   */
+  created_at: string;
+};
+/**
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `instances.targetSchema` link.
+ */
+export type SiteTransferInstancesTargetSchema = {
+  data: SiteTransfer[];
+};
+/**
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `self.targetSchema` link.
+ */
+export type SiteTransferSelfTargetSchema = {
+  data: SiteTransfer;
+  included?: SitePlan[];
+};
+/**
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `create.schema` link.
+ */
+export type SiteTransferCreateSchema = {
+  data: {
+    type: SiteTransferType;
+    attributes: {
+      destination?: AccountData | OrganizationData;
+    };
+  };
+};
+/**
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `create.targetSchema` link.
+ */
+export type SiteTransferCreateTargetSchema = {
+  data: Site;
+  included?: SiteTransfer[];
+};
+/**
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `destroy.targetSchema` link.
+ */
+export type SiteTransferDestroyTargetSchema = {
+  data: Site;
+};
+/**
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `simulate_accept.schema` link.
+ */
+export type SiteTransferSimulateAcceptSchema = {
+  data: {
+    id: SiteTransferIdentity;
+    type: SiteTransferType;
+    attributes?: {
+      billing_profile?: null | {
+        address_line: string;
+        city: string;
+        country: string;
+        vat_number?: null | string;
+        cf_cod_fiscale?: null | string;
+        zip: string;
+        [k: string]: unknown;
+      };
+    };
+    /**
+     * JSON API links
+     */
+    relationships: {
+      /**
+       * Billing profile
+       */
+      billing_profile: {
+        data: PerSitePricingBillingProfileData | null;
+      };
+    };
+  };
+};
+/**
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `simulate_accept.targetSchema` link.
+ */
+export type SiteTransferSimulateAcceptTargetSchema = {
+  data: NextInvoiceEstimate;
+};
+/**
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `accept.schema` link.
+ */
+export type SiteTransferAcceptSchema = {
+  data: {
+    id: SiteTransferIdentity;
+    type: SiteTransferType;
+    attributes?: {
+      payment_intent_id?: string;
+      billing_profile?: null | {
+        address_line: string;
+        city: string;
+        company?: null | string;
+        country: string;
+        email: string;
+        first_name: string;
+        last_name: string;
+        state: string;
+        vat_number?: null | string;
+        cf_cod_fiscale?: null | string;
+        zip: string;
+      };
+    };
+    /**
+     * JSON API links
+     */
+    relationships?: {
+      /**
+       * Billing profile
+       */
+      billing_profile: {
+        data: PerSitePricingBillingProfileData | null;
+      };
+    };
+  };
+};
+/**
+ * This interface was referenced by `SiteTransfer`'s JSON-Schema
+ * via the `accept.targetSchema` link.
+ */
+export type SiteTransferAcceptTargetSchema = {
+  data: Site;
 };
 /**
  * This interface was referenced by `Site`'s JSON-Schema
@@ -1592,6 +2367,7 @@ export type SiteInstancesTargetSchema = {
     total_count: number;
     total_owned_count: number;
   };
+  included?: (SiteSubscription | SitePlan | SiteTransfer)[];
 };
 /**
  * This interface was referenced by `Site`'s JSON-Schema
@@ -1753,16 +2529,6 @@ export type SiteDuplicateSchema = {
       };
     };
   };
-};
-/**
- * JSON API data
- *
- * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
- * via the `definition` "data".
- */
-export type PerSitePricingBillingProfileData = {
-  type: PerSitePricingBillingProfileType;
-  id: PerSitePricingBillingProfileIdentity;
 };
 /**
  * This interface was referenced by `Site`'s JSON-Schema
@@ -2236,530 +3002,6 @@ export type AccountConfirmEmailChangeTargetSchema = {
   included: Account[];
 };
 /**
- * A per-project subscription record
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "site_subscription".
- */
-export type SiteSubscription = {
-  type: SiteSubscriptionType;
-  id: SiteSubscriptionIdentity;
-  attributes: SiteSubscriptionAttributes;
-  relationships: SiteSubscriptionRelationships;
-};
-/**
- * JSON API attributes
- *
- * This interface was referenced by `SiteSubscription`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type SiteSubscriptionAttributes = {
-  /**
-   * Date of creation of subscription
-   */
-  created_at: string;
-  /**
-   * Type of recurrence (yearly/monthly)
-   */
-  recurrence: 'yearly' | 'monthly';
-  price: number;
-  /**
-   * Extra packets
-   */
-  extra_packets: {
-    users?: number;
-    locales?: number;
-    item_types?: number;
-    roles?: number;
-    build_triggers?: number;
-    search_indexes?: number;
-    access_tokens?: number;
-    mux_encoding_seconds?: number;
-    sandbox_environments?: number;
-    items?: number;
-    uploadable_bytes?: number;
-  };
-};
-/**
- * JSON API links
- *
- * This interface was referenced by `SiteSubscription`'s JSON-Schema
- * via the `definition` "relationships".
- */
-export type SiteSubscriptionRelationships = {
-  /**
-   * Subscription plan
-   */
-  plan: {
-    data: SitePlanData;
-  };
-  /**
-   * Billing profile
-   */
-  billing_profile?: {
-    data: PerSitePricingBillingProfileData | null;
-  };
-  /**
-   * Subscription site
-   */
-  site?: {
-    data: SiteData;
-  };
-};
-/**
- * This interface was referenced by `SiteSubscription`'s JSON-Schema
- * via the `create.schema` link.
- */
-export type SiteSubscriptionCreateSchema = {
-  data: {
-    type: SiteSubscriptionType;
-    attributes: {
-      payment_intent_id?: string;
-      /**
-       * Type of recurrence (yearly/monthly)
-       */
-      recurrence: 'yearly' | 'monthly';
-      /**
-       * Extra packets
-       */
-      extra_packets: {
-        users?: number;
-        locales?: number;
-        item_types?: number;
-        roles?: number;
-        build_triggers?: number;
-        search_indexes?: number;
-        access_tokens?: number;
-        mux_encoding_seconds?: number;
-        sandbox_environments?: number;
-        items?: number;
-        uploadable_bytes?: number;
-      };
-      billing_profile?: null | {
-        address_line: string;
-        city: string;
-        company?: null | string;
-        country: string;
-        email: string;
-        first_name: string;
-        last_name: string;
-        state: string;
-        vat_number?: null | string;
-        cf_cod_fiscale?: null | string;
-        zip: string;
-      };
-    };
-    relationships: {
-      /**
-       * Subscription plan
-       */
-      plan: {
-        data: SitePlanData;
-      };
-      /**
-       * Billing profile
-       */
-      billing_profile?: {
-        data: PerSitePricingBillingProfileData | null;
-      };
-    };
-  };
-};
-/**
- * This interface was referenced by `SiteSubscription`'s JSON-Schema
- * via the `create.targetSchema` link.
- */
-export type SiteSubscriptionCreateTargetSchema = {
-  data: SiteSubscription;
-  included: Site[];
-};
-/**
- * This interface was referenced by `SiteSubscription`'s JSON-Schema
- * via the `simulate.schema` link.
- */
-export type SiteSubscriptionSimulateSchema = {
-  data: {
-    type: SiteSubscriptionType;
-    attributes: {
-      /**
-       * Type of recurrence (yearly/monthly)
-       */
-      recurrence: 'yearly' | 'monthly';
-      /**
-       * Extra packets
-       */
-      extra_packets: {
-        users?: number;
-        locales?: number;
-        item_types?: number;
-        roles?: number;
-        build_triggers?: number;
-        search_indexes?: number;
-        access_tokens?: number;
-        mux_encoding_seconds?: number;
-        sandbox_environments?: number;
-        items?: number;
-        uploadable_bytes?: number;
-      };
-      is_duplicate?: boolean;
-      ignore_content?: boolean;
-      billing_profile?: null | {
-        address_line: string;
-        city: string;
-        country: string;
-        vat_number?: null | string;
-        cf_cod_fiscale?: null | string;
-        zip: string;
-        [k: string]: unknown;
-      };
-    };
-    relationships: {
-      /**
-       * Subscription plan
-       */
-      plan: {
-        data: SitePlanData;
-      };
-      /**
-       * Billing profile
-       */
-      billing_profile?: {
-        data: PerSitePricingBillingProfileData | null;
-      };
-    };
-  };
-};
-/**
- * This interface was referenced by `SiteSubscription`'s JSON-Schema
- * via the `simulate.targetSchema` link.
- */
-export type SiteSubscriptionSimulateTargetSchema = {
-  data: NextInvoiceEstimate;
-};
-/**
- * This interface was referenced by `SiteSubscription`'s JSON-Schema
- * via the `validate.schema` link.
- */
-export type SiteSubscriptionValidateSchema = {
-  data: {
-    type: SiteSubscriptionType;
-    attributes: {
-      /**
-       * Extra packets
-       */
-      extra_packets: {
-        users?: number;
-        locales?: number;
-        item_types?: number;
-        roles?: number;
-        build_triggers?: number;
-        search_indexes?: number;
-        access_tokens?: number;
-        mux_encoding_seconds?: number;
-        sandbox_environments?: number;
-        items?: number;
-        uploadable_bytes?: number;
-      };
-      /**
-       * Skip compatibility checks on content (number of records and uploads)
-       */
-      ignore_content?: boolean;
-      /**
-       * Specify is site is a duplicate of another site
-       */
-      is_duplicate?: boolean;
-    };
-    relationships: {
-      /**
-       * Subscription plan
-       */
-      plan: {
-        data: SitePlanData;
-      };
-    };
-  };
-};
-/**
- * This interface was referenced by `SiteSubscription`'s JSON-Schema
- * via the `validate.targetSchema` link.
- */
-export type SiteSubscriptionValidateTargetSchema = {
-  data: SiteSubscription;
-  included: Site[];
-};
-/**
- * Stores the information regarding the current plan for the project.
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "site_plan".
- */
-export type SitePlan = {
-  type: SitePlanType;
-  id: SitePlanIdentity;
-  attributes: SitePlanAttributes;
-};
-/**
- * JSON API attributes
- *
- * This interface was referenced by `SitePlan`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type SitePlanAttributes = {
-  /**
-   * The name of the plan
-   */
-  name: string;
-  /**
-   * Whether this plan is active or legacy
-   */
-  active: boolean;
-  /**
-   * Whether custom domain can be enabled or not
-   */
-  custom_domain: boolean;
-  /**
-   * Number of users that can be invited
-   */
-  users: null | number;
-  /**
-   * Number of indexable pages
-   */
-  indexable_pages: null | number;
-  /**
-   * Number of build triggers
-   */
-  build_triggers: null | number;
-  /**
-   * Number of search indexes
-   */
-  search_indexes: null | number;
-  /**
-   * Number of plugins
-   */
-  plugins: null | number;
-  /**
-   * Number of webhooks
-   */
-  webhooks: null | number;
-  /**
-   * Number of records allowed
-   */
-  items: null | number;
-  /**
-   * Monthly price
-   */
-  monthly_price: number;
-  /**
-   * Yearly price
-   */
-  yearly_price: number;
-  /**
-   * Uploadable bytes
-   */
-  uploadable_bytes: null | number;
-  /**
-   * Amount of asset data transferred between our Asset CDN and GraphQL Content Delivery API and content consumers
-   */
-  traffic_bytes: null | number;
-  /**
-   * The number of requests made to both our Content Management and Content Delivery APIs
-   */
-  api_calls: null | number;
-  /**
-   * The number of requests made to our Content Delivery API
-   */
-  cda_api_calls?: null | number;
-  /**
-   * The number of requests made to our Content Management API
-   */
-  cma_api_calls?: null | number;
-  /**
-   * The number of streaming seconds delivered by Mux.com
-   */
-  mux_streaming_seconds: null | number;
-  /**
-   * The number of available encoding seconds to Mux.com
-   */
-  mux_encoding_seconds: null | number;
-  /**
-   * The number of images you can analyze for smart tags detections
-   */
-  smart_tags_detections: null | number;
-  /**
-   * The number of different API tokens you can generate, each which different permissions
-   */
-  access_tokens: null | number;
-  /**
-   * Number of roles allowed
-   */
-  roles: null | number;
-  /**
-   * Number of locales allowed
-   */
-  locales: null | number;
-  /**
-   * Number of sandbox environments allowed
-   */
-  sandbox_environments: null | number;
-  /**
-   * Number of models allowed
-   */
-  item_types: null | number;
-  /**
-   * Whether collaboration features are enabled or not
-   */
-  item_locking: boolean;
-  /**
-   * Whether project is in white-label mode or not
-   */
-  white_label: boolean;
-  /**
-   * Whether Single Sign-On feature is enabled or not
-   */
-  sso: boolean;
-  /**
-   * Whether built-in image editor and smart-tagging is enabled or not
-   */
-  advanced_media_area: boolean;
-  /**
-   * Maximum number of blocks a record can contain
-   */
-  blocks_per_item: number;
-  /**
-   * Maximum level of block nesting for a record
-   */
-  blocks_depth: number;
-  /**
-   * Whether video streaming with Mux.com is enabled or not
-   */
-  video: boolean;
-  /**
-   * Days of version history retention
-   */
-  history_retention_days: number | null;
-  /**
-   * Maximum number of clients connected at the same time to the Realtime Updates API. The limit is per-project
-   */
-  concurrent_realtime_connections: number;
-  /**
-   * The maximum GraphQL query complexity a client can perform on our CDA.
-   */
-  gql_complexity: number;
-  /**
-   * Period (in minutes) in which bursts of changes made to the same record by the same user (or API token) will be grouped into a single one
-   */
-  history_resolution_minutes: number;
-  /**
-   * Whether two-factor authentication can be enabled or not
-   */
-  otp: boolean;
-  /**
-   * Whether workflows are enabled or not
-   */
-  workflows: boolean;
-  /**
-   * Whether visual editing is enabled or not
-   */
-  visual_editing: boolean;
-  /**
-   * Number of workflows allowed
-   */
-  workflows_count: number;
-  /**
-   * Whether audit logs are enabled or not
-   */
-  audit_log: boolean;
-  /**
-   * Whether translator roles are enabled or not
-   */
-  translator_roles: boolean;
-  /**
-   * Whether or not use a static IP when sending webhooks
-   */
-  static_webhooks_ip: boolean;
-  /**
-   * Maximum size in bytes for a single file upload
-   */
-  maximum_single_upload_bytes: number;
-  /**
-   * Maximum size (in bytes) for a record, including its block records
-   */
-  item_size_bytes: number;
-  /**
-   * Available extra packets
-   */
-  extra_packets: {
-    users?: {
-      amount_per_packet: number;
-      price: number;
-    };
-    locales?: {
-      amount_per_packet: number;
-      price: number;
-    };
-    item_types?: {
-      amount_per_packet: number;
-      price: number;
-    };
-    roles?: {
-      amount_per_packet: number;
-      price: number;
-    };
-    build_triggers?: {
-      amount_per_packet: number;
-      price: number;
-    };
-    search_indexes?: {
-      amount_per_packet: number;
-      price: number;
-    };
-    access_tokens?: {
-      amount_per_packet: number;
-      price: number;
-    };
-    mux_encoding_seconds?: {
-      amount_per_packet: number;
-      price: number;
-    };
-    sandbox_environments?: {
-      amount_per_packet: number;
-      price: number;
-    };
-  };
-  /**
-   * Automatic packets
-   */
-  auto_packets: {
-    traffic_bytes?: {
-      amount_per_packet: number;
-      price: number;
-    };
-    api_calls?: {
-      amount_per_packet: number;
-      price: number;
-    };
-    cda_api_calls?: {
-      amount_per_packet: number;
-      price: number;
-    };
-    cma_api_calls?: {
-      amount_per_packet: number;
-      price: number;
-    };
-    mux_streaming_seconds?: {
-      amount_per_packet: number;
-      price: number;
-    };
-  };
-};
-/**
- * This interface was referenced by `SitePlan`'s JSON-Schema
- * via the `instances.targetSchema` link.
- */
-export type SitePlanInstancesTargetSchema = {
-  data: SitePlan[];
-};
-/**
  * A billing profile
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
@@ -2835,6 +3077,7 @@ export type PerSitePricingBillingProfileInstancesTargetSchema = {
  */
 export type PerSitePricingBillingProfileSelfTargetSchema = {
   data: PerSitePricingBillingProfile;
+  included?: (SiteSubscription | SitePlan | Site)[];
 };
 /**
  * This interface was referenced by `PerSitePricingBillingProfile`'s JSON-Schema
@@ -3206,246 +3449,6 @@ export type JobResultData = {
  */
 export type JobResultSelfTargetSchema = {
   data: JobResult;
-};
-/**
- * A request to transfer a site to another account
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "site_transfer".
- */
-export type SiteTransfer = {
-  type: SiteTransferType;
-  id: SiteTransferIdentity;
-  attributes: SiteTransferAttributes;
-  relationships: SiteTransferRelationships;
-  meta: SiteTransferMeta;
-};
-/**
- * JSON API attributes
- *
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type SiteTransferAttributes = {
-  source:
-    | {
-        /**
-         * Type of owner
-         */
-        type: 'account';
-        /**
-         * Email of the account that owns the project
-         */
-        email: string;
-      }
-    | {
-        /**
-         * Type of owner
-         */
-        type: 'organization';
-        /**
-         * Name of the organization that owns the project
-         */
-        name: string;
-        /**
-         * ID of the organization that owns the project
-         */
-        id: string;
-      };
-  destination:
-    | {
-        /**
-         * Type of owner
-         */
-        type: 'account';
-        /**
-         * Email of the account that owns the project
-         */
-        email: string;
-      }
-    | {
-        /**
-         * Type of owner
-         */
-        type: 'organization';
-        /**
-         * Name of the organization that owns the project
-         */
-        name: string;
-        /**
-         * ID of the organization that owns the project
-         */
-        id: string;
-      };
-  /**
-   * Name of the site to transfer
-   */
-  site_name: string;
-  recurrence?: ('yearly' | 'monthly') | null;
-  extra_packets: {
-    users?: number;
-    locales?: number;
-    item_types?: number;
-    roles?: number;
-    build_triggers?: number;
-    search_indexes?: number;
-    access_tokens?: number;
-    mux_encoding_seconds?: number;
-    sandbox_environments?: number;
-    items?: number;
-    uploadable_bytes?: number;
-  } | null;
-};
-/**
- * JSON API links
- *
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `definition` "relationships".
- */
-export type SiteTransferRelationships = {
-  /**
-   * Current plan
-   */
-  plan: {
-    data: SitePlanData | null;
-  };
-};
-/**
- * JSON API meta
- *
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `definition` "meta".
- */
-export type SiteTransferMeta = {
-  /**
-   * Date of site transfer creation
-   */
-  created_at: string;
-};
-/**
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `instances.targetSchema` link.
- */
-export type SiteTransferInstancesTargetSchema = {
-  data: SiteTransfer[];
-};
-/**
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `self.targetSchema` link.
- */
-export type SiteTransferSelfTargetSchema = {
-  data: SiteTransfer;
-  included?: SitePlan[];
-};
-/**
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `create.schema` link.
- */
-export type SiteTransferCreateSchema = {
-  data: {
-    type: SiteTransferType;
-    attributes: {
-      destination?: AccountData | OrganizationData;
-    };
-  };
-};
-/**
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `create.targetSchema` link.
- */
-export type SiteTransferCreateTargetSchema = {
-  data: Site;
-  included?: SiteTransfer[];
-};
-/**
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `destroy.targetSchema` link.
- */
-export type SiteTransferDestroyTargetSchema = {
-  data: Site;
-};
-/**
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `simulate_accept.schema` link.
- */
-export type SiteTransferSimulateAcceptSchema = {
-  data: {
-    id: SiteTransferIdentity;
-    type: SiteTransferType;
-    attributes?: {
-      billing_profile?: null | {
-        address_line: string;
-        city: string;
-        country: string;
-        vat_number?: null | string;
-        cf_cod_fiscale?: null | string;
-        zip: string;
-        [k: string]: unknown;
-      };
-    };
-    /**
-     * JSON API links
-     */
-    relationships: {
-      /**
-       * Billing profile
-       */
-      billing_profile: {
-        data: PerSitePricingBillingProfileData | null;
-      };
-    };
-  };
-};
-/**
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `simulate_accept.targetSchema` link.
- */
-export type SiteTransferSimulateAcceptTargetSchema = {
-  data: NextInvoiceEstimate;
-};
-/**
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `accept.schema` link.
- */
-export type SiteTransferAcceptSchema = {
-  data: {
-    id: SiteTransferIdentity;
-    type: SiteTransferType;
-    attributes?: {
-      payment_intent_id?: string;
-      billing_profile?: null | {
-        address_line: string;
-        city: string;
-        company?: null | string;
-        country: string;
-        email: string;
-        first_name: string;
-        last_name: string;
-        state: string;
-        vat_number?: null | string;
-        cf_cod_fiscale?: null | string;
-        zip: string;
-      };
-    };
-    /**
-     * JSON API links
-     */
-    relationships?: {
-      /**
-       * Billing profile
-       */
-      billing_profile: {
-        data: PerSitePricingBillingProfileData | null;
-      };
-    };
-  };
-};
-/**
- * This interface was referenced by `SiteTransfer`'s JSON-Schema
- * via the `accept.targetSchema` link.
- */
-export type SiteTransferAcceptTargetSchema = {
-  data: Site;
 };
 /**
  * Site invitation
@@ -4325,6 +4328,7 @@ export type OrganizationMandateApprovedInstancesTargetSchema = {
  */
 export type OrganizationMandateGivenInstancesTargetSchema = {
   data: OrganizationMandate[];
+  included?: PerOwnerPricingPlan[];
 };
 /**
  * This interface was referenced by `OrganizationMandate`'s JSON-Schema
