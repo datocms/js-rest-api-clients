@@ -2,8 +2,8 @@
  * Markdown editor for Multiple-paragraph text fields.
  */
 export type MarkdownEditorConfiguration = {
-  /** Specify which buttons the toolbar should have */
-  toolbar: Array<
+  /** Specify which buttons the toolbar should have (default: all allowed values) */
+  toolbar?: Array<
     | 'heading'
     | 'bold'
     | 'italic'
