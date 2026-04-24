@@ -49,8 +49,20 @@ export function buildBlockRecord<
   // `__itemTypeId` so locally-built blocks support the same TS narrowing
   // pattern as blocks read from API responses. The field is TS-only and is
   // stripped again by the serializer when the outer request is sent.
+  //
+  // `item_type` is optional on `UpdateBlockRecordSchema` (id-only updates), so
+  // the ID may be absent here. Accept any source the caller provided and
+  // leave `__itemTypeId` unset when none is available — the property is
+  // declared optional, so consumers already handle the `undefined` case.
+  const itemTypeId =
+    body.__itemTypeId ??
+    body.item_type?.id ??
+    data.relationships?.item_type?.data?.id;
+
+  if (itemTypeId === undefined) return data;
+
   return {
     ...data,
-    __itemTypeId: data.relationships.item_type.data.id,
+    __itemTypeId: itemTypeId,
   } as NewBlockInRequest<NoInfer<D>>;
 }

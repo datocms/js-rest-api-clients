@@ -109,5 +109,25 @@ describe('narrowing with __itemTypeId', () => {
       });
       expect(raw.__itemTypeId).toBe(SESSION_BLOCK_ID);
     });
+
+    it('id-only update payload (no item_type) leaves __itemTypeId undefined and does not throw', () => {
+      // UpdateBlockRecordSchema.item_type is optional — callers updating an
+      // existing block by id may omit it. The helper must not assume
+      // item_type is present when deriving __itemTypeId.
+      const raw = buildBlockRecord<SessionBlock>({
+        id: 'someBlockId000000001X',
+        label: 'x',
+      });
+      expect(raw.__itemTypeId).toBeUndefined();
+    });
+
+    it('honors an explicit __itemTypeId on the input when item_type is absent', () => {
+      const raw = buildBlockRecord<SessionBlock>({
+        id: 'someBlockId000000001X',
+        __itemTypeId: SESSION_BLOCK_ID,
+        label: 'x',
+      });
+      expect(raw.__itemTypeId).toBe(SESSION_BLOCK_ID);
+    });
   });
 });
