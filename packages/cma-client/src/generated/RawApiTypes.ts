@@ -6365,7 +6365,7 @@ export type FieldUpdateSchemaStableShell = {
   data: {
     type: FieldType;
     id: FieldIdentity;
-    attributes: {
+    attributes?: {
       /**
        * Default value for Field. When field is localized accepts an object of default values with site locales as keys
        */
