@@ -37,11 +37,20 @@ export function buildBlockRecord<
     | CreateBlockRecordSchema<NoInfer<D>>
     | UpdateBlockRecordSchema<NoInfer<D>>,
 ): NewBlockInRequest<NoInfer<D>> {
-  return Utils.serializeRequestBody<{
+  const data = Utils.serializeRequestBody<{
     data: NewBlockInRequest<NoInfer<D>>;
   }>(body, {
     type: Item.TYPE,
     attributes: '*',
     relationships: ['item_type'],
   }).data;
+
+  // Mirror the deserializer: expose `item_type.data.id` as a top-level
+  // `__itemTypeId` so locally-built blocks support the same TS narrowing
+  // pattern as blocks read from API responses. The field is TS-only and is
+  // stripped again by the serializer when the outer request is sent.
+  return {
+    ...data,
+    __itemTypeId: data.relationships.item_type.data.id,
+  } as NewBlockInRequest<NoInfer<D>>;
 }

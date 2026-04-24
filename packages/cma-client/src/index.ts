@@ -9,6 +9,7 @@ export * from './utilities/duplicateBlockRecord';
 export * from './utilities/fieldsContainingReferences';
 export * from './utilities/id';
 export * from './utilities/inspectItem';
+export * from './utilities/isBlockOfType';
 export * from './utilities/itemDefinition';
 export * from './utilities/normalizedFieldValues';
 export * from './utilities/recursiveBlocks';

@@ -296,6 +296,61 @@ async function duplicateBlockRecord<D extends ItemTypeDefinition>(
 **Returns:** New block record without IDs, ready to be created
 </details>
 
+### Narrowing Block Types
+
+#### isBlockOfType()
+
+Builds a type guard that narrows a union of block shapes to the one matching a given model. Meant for `Array#filter` / `Array#find` over block-bearing fields — either nested-response arrays (from `client.items.find(..., { nested: true })`) or request-payload arrays you're inspecting before sending.
+
+TypeScript doesn't auto-narrow on discriminators buried in nested properties, so the natural-looking check `block.relationships.item_type.data.id === SOME_ID` won't narrow the block's type. This guard does the walk and returns a proper type-guard predicate.
+
+<details>
+<summary>View details</summary>
+
+**TypeScript Signature:**
+```typescript
+function isBlockOfType<Id extends string>(
+  itemTypeId: Id,
+): <T>(block: T) => block is NarrowBlockByItemType<T, Id>
+
+type NarrowBlockByItemType<T, Id extends string> = Extract<
+  T,
+  { relationships: { item_type: { data: { type: 'item_type'; id: Id } } } }
+>
+```
+
+**Parameters:**
+- `itemTypeId`: The item-type ID literal. For narrowing to work, the argument must be typed as a literal — use `as const` on pre-set ID constants. No `ItemTypeDefinition` type parameter is needed: `Extract` walks the input union using just the ID.
+
+**Returns:** A predicate `(block) => block is D-typed-block` that:
+- Narrows blocks carrying `relationships.item_type.data.id` — that covers `BlockInNestedResponse<D>` and the object variants of `BlockInRequest<D>` (`UpdatedBlockInRequest`, `NewBlockInRequest`).
+- Returns `false` for plain string IDs (unchanged-reference form in request payloads) and for any non-block input.
+
+The default (non-nested) response shape, where block fields are arrays of plain string IDs, is deliberately not supported — there's no way to recover the type from an ID alone.
+
+**Usage Example:**
+```typescript
+import { isBlockOfType } from '@datocms/cma-client';
+
+// ID of the ImageBlock model, one of several allowed inside Article `content`
+const IMAGE_BLOCK_ID = 'FJM79jjKRMSVg-fR6k6X2A' as const;
+
+const article = await client.items.find<Schema.Article>(articleId, { nested: true });
+
+// Before: inline === check does not narrow
+const images = article.content.filter(
+  (b) => b.relationships.item_type.data.id === IMAGE_BLOCK_ID,
+);
+images[0].attributes.upload_id; // ❌ property does not exist on union
+
+// After: guard narrows the filter result
+const images = article.content.filter(isBlockOfType(IMAGE_BLOCK_ID));
+images[0].attributes.upload_id; // ✅ narrowed
+```
+
+Use the `__itemTypeId` discriminator for inline `if` / `switch` narrowing on a single value — that's simpler and doesn't need a helper. Reach for `isBlockOfType` when you need a predicate for `.filter` / `.find`.
+</details>
+
 ### Recursive Block Operations
 
 DatoCMS supports three field types that can contain blocks: Modular Content (arrays of blocks), Single Block fields, and Structured Text (rich-text with embedded blocks). These functions abstract away the differences between field types and can traverse blocks recursively, processing nested blocks within blocks. They require a `SchemaRepository` instance to look up field definitions for nested blocks.
