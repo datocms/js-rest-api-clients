@@ -17,6 +17,7 @@ export {
   fromNormalizedFieldValueEntries,
   generateId,
   inspectItem,
+  isBlockObjectInRequest,
   isBlockOfType,
   isBooleanFieldValue,
   isColorFieldValue,
