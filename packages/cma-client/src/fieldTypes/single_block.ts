@@ -68,7 +68,7 @@ export type UpdatedBlockInRequest<
   __itemTypeId?: D['itemTypeId'];
   type: RawApiTypes.ItemType1;
   id: RawApiTypes.ItemIdentity;
-  relationships: RawApiTypes.ItemRelationships<D>;
+  relationships?: RawApiTypes.ItemRelationships<D>;
   meta?: RawApiTypes.ItemMeta;
   attributes: ToItemAttributesInRequest<D>;
 };
@@ -205,6 +205,34 @@ export function isLocalizedSingleBlockFieldValue(
 }
 
 /**
+ * Shape check for a block object on the *request* side. Accepts every object
+ * form the CMA allows inside a request payload:
+ *
+ *   1. New block (no id, full body):
+ *        { type: 'item', attributes, relationships: { item_type } }
+ *   2. Updated block, full body:
+ *        { type: 'item', id, attributes, relationships: { item_type } }
+ *   3. Updated block, id-only (patch some attributes of an existing block):
+ *        { type: 'item', id, attributes }                       ← no relationships
+ *
+ * Case 3 is what `buildBlockRecord` produces when the caller omits
+ * `item_type` — the server derives the model from the existing block's id,
+ * so re-specifying it in `relationships` is redundant.
+ */
+export function isBlockObjectInRequest(block: unknown): block is {
+  type: RawApiTypes.ItemType1;
+  attributes: Record<string, unknown>;
+} {
+  return (
+    typeof block === 'object' &&
+    block !== null &&
+    'type' in block &&
+    block.type === 'item' &&
+    'attributes' in block
+  );
+}
+
+/**
  * Type guard for Single Block field values in API request format.
  * Allows block as string ID, full object with ID, or object without ID.
  */
@@ -216,8 +244,9 @@ export function isSingleBlockFieldValueInRequest<
   // String ID - referencing existing block
   if (isItemId(value)) return true;
 
-  // Object (either with or without ID for updates/creation)
-  return isItemWithOptionalIdAndMeta(value);
+  // Object (either with or without ID for updates/creation, including
+  // id-only updates without `relationships`)
+  return isBlockObjectInRequest(value);
 }
 
 export function isLocalizedSingleBlockFieldValueInRequest<

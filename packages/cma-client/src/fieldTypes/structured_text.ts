@@ -18,8 +18,8 @@ import type { StructuredTextEditorConfiguration } from './appearance/structured_
 import {
   type BlockInNestedResponse,
   type BlockInRequest,
+  isBlockObjectInRequest,
   isItemId,
-  isItemWithOptionalIdAndMeta,
   isItemWithOptionalMeta,
 } from './single_block';
 import type { RequiredValidator } from './validators';
@@ -217,8 +217,8 @@ export function isStructuredTextFieldValueInRequest<
     // String ID
     if (isItemId(item)) return true;
 
-    // Object (either with or without ID)
-    return isItemWithOptionalIdAndMeta(item);
+    // Object (new, updated, or id-only update — with or without `relationships`)
+    return isBlockObjectInRequest(item);
   });
 }
 

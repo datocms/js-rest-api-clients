@@ -680,4 +680,57 @@ describe('inspectItem', () => {
 
     expect(output).toMatchSnapshot();
   });
+
+  it('renders id-only update blocks (no relationships) as rich_text, not UNKNOWN', () => {
+    // Scenario: the user is building an update payload that patches a single
+    // attribute of an existing block inside a rich_text field. They call
+    // buildBlockRecord without `item_type` (not needed for an update by id),
+    // so the produced block has shape `{ type, id, attributes }` — no
+    // `relationships`. The `is*FieldValueInRequest` guards must still
+    // recognise the array as a rich_text value, otherwise inspectItem falls
+    // back to UNKNOWN rendering.
+    const idOnlyUpdate = buildBlockRecord<Block>({
+      id: 'LuQ0EAxMQZ2wiV9QbtH6gg',
+      title: 'Patched title',
+    });
+
+    // Sanity-check the precondition that makes this scenario interesting:
+    expect(idOnlyUpdate).not.toHaveProperty('relationships');
+
+    const update: RawApiTypes.ItemUpdateSchema<ComprehensiveModel>['data'] = {
+      type: 'item',
+      id: 'IdMLV2GJTXyQ0Bfns7R4IQ',
+      relationships: {
+        item_type: {
+          data: { type: 'item_type', id: 'O9BXqTayQ_Wf-Yw6d863LQ' },
+        },
+      },
+      meta: {
+        created_at: '2023-01-01T00:00:00Z',
+        updated_at: '2023-01-01T00:00:00Z',
+        published_at: null,
+        first_published_at: null,
+        publication_scheduled_at: null,
+        unpublishing_scheduled_at: null,
+        is_valid: true,
+        is_current_version_valid: true,
+        is_published_version_valid: false,
+        stage: 'draft',
+        current_version: '1',
+        status: 'draft',
+        has_children: false,
+      },
+      attributes: {
+        rich_text: [idOnlyUpdate],
+      } as ApiTypes.ItemUpdateSchema<ComprehensiveModel>['rich_text'] extends infer R
+        ? { rich_text: R }
+        : never,
+    };
+
+    const output = inspectItem(update);
+
+    expect(output).not.toMatch(/UNKNOWN/);
+    expect(output).toMatch(/rich_text/);
+    expect(output).toMatch(/Patched title/);
+  });
 });

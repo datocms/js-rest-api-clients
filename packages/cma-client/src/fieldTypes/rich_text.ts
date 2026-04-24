@@ -8,8 +8,8 @@ import type { RichTextEditorConfiguration } from './appearance/rich_text';
 import {
   type BlockInNestedResponse,
   type BlockInRequest,
+  isBlockObjectInRequest,
   isItemId,
-  isItemWithOptionalIdAndMeta,
   isItemWithOptionalMeta,
 } from './single_block';
 import type { RichTextBlocksValidator } from './validators/rich_text_blocks';
@@ -129,8 +129,8 @@ export function isRichTextFieldValueInRequest<
     // String ID - referencing existing block
     if (isItemId(block)) return true;
 
-    // Object (either with or without ID for updates/creation)
-    return isItemWithOptionalIdAndMeta(block);
+    // Object (new, updated, or id-only update — with or without `relationships`)
+    return isBlockObjectInRequest(block);
   });
 }
 
