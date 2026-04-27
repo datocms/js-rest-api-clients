@@ -1,0 +1,56 @@
+{
+  "name": "@datocms/cma-client-analysis",
+  "version": "5.4.7",
+  "description": "TypeScript-based static analysis utilities for the @datocms/cma-client-node Client class. Extracts method signatures, referenced types, and endpoint mappings.",
+  "keywords": [
+    "datocms",
+    "client",
+    "analysis",
+    "typescript"
+  ],
+  "author": "Stefano Verna <s.verna@datocms.com>",
+  "homepage": "https://github.com/datocms/js-rest-api-clients/tree/main/packages/cma-client-analysis#readme",
+  "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "typings": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/cjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "directories": {
+    "lib": "dist"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datocms/js-rest-api-clients.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prebuild": "rimraf dist",
+    "test": "jest --config ../../jest.config.js --globalSetup= --testPathPattern=packages/cma-client-analysis"
+  },
+  "bugs": {
+    "url": "https://github.com/datocms/js-rest-api-clients/issues"
+  },
+  "peerDependencies": {
+    "@datocms/cma-client-node": "^5.4.7",
+    "@datocms/rest-api-reference": "^5.4.1",
+    "typescript": ">=5.0.0"
+  },
+  "devDependencies": {
+    "@datocms/cma-client-node": "^5.4.7",
+    "@datocms/rest-api-reference": "^5.4.1",
+    "typescript": "^5.0.0"
+  }
+}

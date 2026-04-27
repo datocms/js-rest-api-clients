@@ -1,0 +1,1382 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TypeScript Compiler API - Unit Tests ApiTypes vs RawApiTypes disambiguation should extract different type definitions for list vs rawList 1`] = `
+{
+  "listResult": {
+    "expandedTypes": "export type ItemTypeInstancesTargetSchema = ItemType[];
+
+export type ItemType = {
+    id: ItemTypeIdentity;
+    type: ItemTypeType;
+    /**
+     * Name of the model/block model
+     */
+    name: string;
+    /**
+     * API key of the model/block model
+     */
+    api_key: string;
+    /**
+     * The way the model collection should be presented to the editors
+     */
+    collection_appeareance?: 'compact' | 'table';
+    /**
+     * The way the model/block model collection should be presented to the editors
+     */
+    collection_appearance: 'compact' | 'table';
+    /**
+     * Whether the model is single-instance or not. This property only applies to models, not block models
+     */
+    singleton: boolean;
+    /**
+     * Whether we require all the project locales to be present for each localized field or not
+     */
+    all_locales_required: boolean;
+    /**
+     * Whether editors can sort records via drag & drop or not. Must be false for block models
+     */
+    sortable: boolean;
+    /**
+     * Whether this is a block model or not. Block models define structures that can be embedded inside records, while regular models create standalone records
+     */
+    modular_block: boolean;
+    /**
+     * Whether draft/published mode is active or not. Must be false for block models
+     */
+    draft_mode_active: boolean;
+    /**
+     * Whether draft records can be saved without satisfying the validations or not. Must be false for block models
+     */
+    draft_saving_active: boolean;
+    /**
+     * Whether editors can organize records in a tree or not. Must be false for block models
+     */
+    tree: boolean;
+    /**
+     * If an ordering field is set, this field specifies the sorting direction. This property does not apply to block models
+     */
+    ordering_direction: null | 'asc' | 'desc';
+    /**
+     * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field. This property does not apply to block models
+     */
+    ordering_meta: null | 'created_at' | 'updated_at' | 'first_published_at' | 'published_at';
+    /**
+     * If this model is single-instance, this tells whether the single-instance record has already been created or not. This property only applies to models, not block models
+     */
+    has_singleton_item: boolean;
+    /**
+     * A hint shown to editors to help them understand the purpose of this model/block model
+     */
+    hint: string | null;
+    /**
+     * Whether inverse relationships fields are expressed in GraphQL or not. Must be false for block models
+     */
+    inverse_relationships_enabled: boolean;
+    singleton_item: ItemData | null;
+    fields: FieldData[];
+    fieldsets: FieldsetData[];
+    presentation_title_field: FieldData | null;
+    presentation_image_field: FieldData | null;
+    title_field: FieldData | null;
+    image_preview_field: FieldData | null;
+    excerpt_field: FieldData | null;
+    ordering_field: FieldData | null;
+    workflow: WorkflowData | null;
+    meta: ItemTypeMeta;
+};",
+    "notExpandedTypes": [
+      "FieldData",
+      "FieldIdentity",
+      "FieldType",
+      "FieldsetData",
+      "FieldsetIdentity",
+      "FieldsetType",
+      "ItemData",
+      "ItemIdentity",
+      "ItemType1",
+      "ItemTypeIdentity",
+      "ItemTypeMeta",
+      "ItemTypeType",
+      "WorkflowData",
+      "WorkflowIdentity",
+      "WorkflowType",
+    ],
+  },
+  "rawListResult": {
+    "expandedTypes": "export type ItemTypeInstancesTargetSchema = {
+    data: ItemType[];
+};
+
+export type ItemType = {
+    type: ItemTypeType;
+    id: ItemTypeIdentity;
+    attributes: ItemTypeAttributes;
+    relationships: ItemTypeRelationships;
+    meta: ItemTypeMeta;
+};",
+    "notExpandedTypes": [
+      "FieldData",
+      "FieldIdentity",
+      "FieldType",
+      "FieldsetData",
+      "FieldsetIdentity",
+      "FieldsetType",
+      "ItemData",
+      "ItemIdentity",
+      "ItemType1",
+      "ItemTypeAttributes",
+      "ItemTypeIdentity",
+      "ItemTypeMeta",
+      "ItemTypeRelationships",
+      "ItemTypeType",
+      "WorkflowData",
+      "WorkflowIdentity",
+      "WorkflowType",
+    ],
+  },
+}
+`;
+
+exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies itemTypes.list with expandTypes: [*] 1`] = `
+{
+  "expandedTypes": "export type ItemTypeInstancesTargetSchema = ItemType[];
+
+export type ItemType = {
+    id: ItemTypeIdentity;
+    type: ItemTypeType;
+    /**
+     * Name of the model/block model
+     */
+    name: string;
+    /**
+     * API key of the model/block model
+     */
+    api_key: string;
+    /**
+     * The way the model collection should be presented to the editors
+     */
+    collection_appeareance?: 'compact' | 'table';
+    /**
+     * The way the model/block model collection should be presented to the editors
+     */
+    collection_appearance: 'compact' | 'table';
+    /**
+     * Whether the model is single-instance or not. This property only applies to models, not block models
+     */
+    singleton: boolean;
+    /**
+     * Whether we require all the project locales to be present for each localized field or not
+     */
+    all_locales_required: boolean;
+    /**
+     * Whether editors can sort records via drag & drop or not. Must be false for block models
+     */
+    sortable: boolean;
+    /**
+     * Whether this is a block model or not. Block models define structures that can be embedded inside records, while regular models create standalone records
+     */
+    modular_block: boolean;
+    /**
+     * Whether draft/published mode is active or not. Must be false for block models
+     */
+    draft_mode_active: boolean;
+    /**
+     * Whether draft records can be saved without satisfying the validations or not. Must be false for block models
+     */
+    draft_saving_active: boolean;
+    /**
+     * Whether editors can organize records in a tree or not. Must be false for block models
+     */
+    tree: boolean;
+    /**
+     * If an ordering field is set, this field specifies the sorting direction. This property does not apply to block models
+     */
+    ordering_direction: null | 'asc' | 'desc';
+    /**
+     * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field. This property does not apply to block models
+     */
+    ordering_meta: null | 'created_at' | 'updated_at' | 'first_published_at' | 'published_at';
+    /**
+     * If this model is single-instance, this tells whether the single-instance record has already been created or not. This property only applies to models, not block models
+     */
+    has_singleton_item: boolean;
+    /**
+     * A hint shown to editors to help them understand the purpose of this model/block model
+     */
+    hint: string | null;
+    /**
+     * Whether inverse relationships fields are expressed in GraphQL or not. Must be false for block models
+     */
+    inverse_relationships_enabled: boolean;
+    singleton_item: ItemData | null;
+    fields: FieldData[];
+    fieldsets: FieldsetData[];
+    presentation_title_field: FieldData | null;
+    presentation_image_field: FieldData | null;
+    title_field: FieldData | null;
+    image_preview_field: FieldData | null;
+    excerpt_field: FieldData | null;
+    ordering_field: FieldData | null;
+    workflow: WorkflowData | null;
+    meta: ItemTypeMeta;
+};
+
+export type ItemTypeIdentity = string;
+
+export type ItemTypeType = 'item_type';
+
+export type ItemData = {
+    type: ItemType1;
+    id: ItemIdentity;
+};
+
+export type ItemType1 = 'item';
+
+export type ItemIdentity = string;
+
+export type FieldData = {
+    type: FieldType;
+    id: FieldIdentity;
+};
+
+export type FieldType = 'field';
+
+export type FieldIdentity = string;
+
+export type FieldsetData = {
+    type: FieldsetType;
+    id: FieldsetIdentity;
+};
+
+export type FieldsetType = 'fieldset';
+
+export type FieldsetIdentity = string;
+
+export type WorkflowData = {
+    type: WorkflowType;
+    id: WorkflowIdentity;
+};
+
+export type WorkflowType = 'workflow';
+
+export type WorkflowIdentity = string;
+
+export type ItemTypeMeta = {
+    /**
+     * If this model is single-instance, this tells whether the single-instance record has already been created or not. This property only applies to models, not block models
+     */
+    has_singleton_item: boolean;
+};",
+  "notExpandedTypes": [],
+}
+`;
+
+exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies itemTypes.list with maxDepth 0 (no types) 1`] = `
+{
+  "expandedTypes": "",
+  "notExpandedTypes": [
+    "FieldData",
+    "FieldIdentity",
+    "FieldType",
+    "FieldsetData",
+    "FieldsetIdentity",
+    "FieldsetType",
+    "ItemData",
+    "ItemIdentity",
+    "ItemType",
+    "ItemType1",
+    "ItemTypeIdentity",
+    "ItemTypeInstancesTargetSchema",
+    "ItemTypeMeta",
+    "ItemTypeType",
+    "WorkflowData",
+    "WorkflowIdentity",
+    "WorkflowType",
+  ],
+}
+`;
+
+exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies itemTypes.list with maxDepth 1 1`] = `
+{
+  "expandedTypes": "export type ItemTypeInstancesTargetSchema = ItemType[];
+
+export type ItemType = {
+    id: ItemTypeIdentity;
+    type: ItemTypeType;
+    /**
+     * Name of the model/block model
+     */
+    name: string;
+    /**
+     * API key of the model/block model
+     */
+    api_key: string;
+    /**
+     * The way the model collection should be presented to the editors
+     */
+    collection_appeareance?: 'compact' | 'table';
+    /**
+     * The way the model/block model collection should be presented to the editors
+     */
+    collection_appearance: 'compact' | 'table';
+    /**
+     * Whether the model is single-instance or not. This property only applies to models, not block models
+     */
+    singleton: boolean;
+    /**
+     * Whether we require all the project locales to be present for each localized field or not
+     */
+    all_locales_required: boolean;
+    /**
+     * Whether editors can sort records via drag & drop or not. Must be false for block models
+     */
+    sortable: boolean;
+    /**
+     * Whether this is a block model or not. Block models define structures that can be embedded inside records, while regular models create standalone records
+     */
+    modular_block: boolean;
+    /**
+     * Whether draft/published mode is active or not. Must be false for block models
+     */
+    draft_mode_active: boolean;
+    /**
+     * Whether draft records can be saved without satisfying the validations or not. Must be false for block models
+     */
+    draft_saving_active: boolean;
+    /**
+     * Whether editors can organize records in a tree or not. Must be false for block models
+     */
+    tree: boolean;
+    /**
+     * If an ordering field is set, this field specifies the sorting direction. This property does not apply to block models
+     */
+    ordering_direction: null | 'asc' | 'desc';
+    /**
+     * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field. This property does not apply to block models
+     */
+    ordering_meta: null | 'created_at' | 'updated_at' | 'first_published_at' | 'published_at';
+    /**
+     * If this model is single-instance, this tells whether the single-instance record has already been created or not. This property only applies to models, not block models
+     */
+    has_singleton_item: boolean;
+    /**
+     * A hint shown to editors to help them understand the purpose of this model/block model
+     */
+    hint: string | null;
+    /**
+     * Whether inverse relationships fields are expressed in GraphQL or not. Must be false for block models
+     */
+    inverse_relationships_enabled: boolean;
+    singleton_item: ItemData | null;
+    fields: FieldData[];
+    fieldsets: FieldsetData[];
+    presentation_title_field: FieldData | null;
+    presentation_image_field: FieldData | null;
+    title_field: FieldData | null;
+    image_preview_field: FieldData | null;
+    excerpt_field: FieldData | null;
+    ordering_field: FieldData | null;
+    workflow: WorkflowData | null;
+    meta: ItemTypeMeta;
+};",
+  "notExpandedTypes": [
+    "FieldData",
+    "FieldIdentity",
+    "FieldType",
+    "FieldsetData",
+    "FieldsetIdentity",
+    "FieldsetType",
+    "ItemData",
+    "ItemIdentity",
+    "ItemType1",
+    "ItemTypeIdentity",
+    "ItemTypeMeta",
+    "ItemTypeType",
+    "WorkflowData",
+    "WorkflowIdentity",
+    "WorkflowType",
+  ],
+}
+`;
+
+exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies itemTypes.list with maxDepth 2 (default) 1`] = `
+{
+  "expandedTypes": "export type ItemTypeInstancesTargetSchema = ItemType[];
+
+export type ItemType = {
+    id: ItemTypeIdentity;
+    type: ItemTypeType;
+    /**
+     * Name of the model/block model
+     */
+    name: string;
+    /**
+     * API key of the model/block model
+     */
+    api_key: string;
+    /**
+     * The way the model collection should be presented to the editors
+     */
+    collection_appeareance?: 'compact' | 'table';
+    /**
+     * The way the model/block model collection should be presented to the editors
+     */
+    collection_appearance: 'compact' | 'table';
+    /**
+     * Whether the model is single-instance or not. This property only applies to models, not block models
+     */
+    singleton: boolean;
+    /**
+     * Whether we require all the project locales to be present for each localized field or not
+     */
+    all_locales_required: boolean;
+    /**
+     * Whether editors can sort records via drag & drop or not. Must be false for block models
+     */
+    sortable: boolean;
+    /**
+     * Whether this is a block model or not. Block models define structures that can be embedded inside records, while regular models create standalone records
+     */
+    modular_block: boolean;
+    /**
+     * Whether draft/published mode is active or not. Must be false for block models
+     */
+    draft_mode_active: boolean;
+    /**
+     * Whether draft records can be saved without satisfying the validations or not. Must be false for block models
+     */
+    draft_saving_active: boolean;
+    /**
+     * Whether editors can organize records in a tree or not. Must be false for block models
+     */
+    tree: boolean;
+    /**
+     * If an ordering field is set, this field specifies the sorting direction. This property does not apply to block models
+     */
+    ordering_direction: null | 'asc' | 'desc';
+    /**
+     * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field. This property does not apply to block models
+     */
+    ordering_meta: null | 'created_at' | 'updated_at' | 'first_published_at' | 'published_at';
+    /**
+     * If this model is single-instance, this tells whether the single-instance record has already been created or not. This property only applies to models, not block models
+     */
+    has_singleton_item: boolean;
+    /**
+     * A hint shown to editors to help them understand the purpose of this model/block model
+     */
+    hint: string | null;
+    /**
+     * Whether inverse relationships fields are expressed in GraphQL or not. Must be false for block models
+     */
+    inverse_relationships_enabled: boolean;
+    singleton_item: ItemData | null;
+    fields: FieldData[];
+    fieldsets: FieldsetData[];
+    presentation_title_field: FieldData | null;
+    presentation_image_field: FieldData | null;
+    title_field: FieldData | null;
+    image_preview_field: FieldData | null;
+    excerpt_field: FieldData | null;
+    ordering_field: FieldData | null;
+    workflow: WorkflowData | null;
+    meta: ItemTypeMeta;
+};",
+  "notExpandedTypes": [
+    "FieldData",
+    "FieldIdentity",
+    "FieldType",
+    "FieldsetData",
+    "FieldsetIdentity",
+    "FieldsetType",
+    "ItemData",
+    "ItemIdentity",
+    "ItemType1",
+    "ItemTypeIdentity",
+    "ItemTypeMeta",
+    "ItemTypeType",
+    "WorkflowData",
+    "WorkflowIdentity",
+    "WorkflowType",
+  ],
+}
+`;
+
+exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies itemTypes.rawList with maxDepth 2 1`] = `
+{
+  "expandedTypes": "export type ItemTypeInstancesTargetSchema = {
+    data: ItemType[];
+};
+
+export type ItemType = {
+    type: ItemTypeType;
+    id: ItemTypeIdentity;
+    attributes: ItemTypeAttributes;
+    relationships: ItemTypeRelationships;
+    meta: ItemTypeMeta;
+};",
+  "notExpandedTypes": [
+    "FieldData",
+    "FieldIdentity",
+    "FieldType",
+    "FieldsetData",
+    "FieldsetIdentity",
+    "FieldsetType",
+    "ItemData",
+    "ItemIdentity",
+    "ItemType1",
+    "ItemTypeAttributes",
+    "ItemTypeIdentity",
+    "ItemTypeMeta",
+    "ItemTypeRelationships",
+    "ItemTypeType",
+    "WorkflowData",
+    "WorkflowIdentity",
+    "WorkflowType",
+  ],
+}
+`;
+
+exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies items.find with maxDepth 2 1`] = `
+{
+  "expandedTypes": "export type ItemData = {
+    type: ItemType1;
+    id: ItemIdentity;
+};
+
+export type ItemType1 = 'item';
+
+export type ItemIdentity = string;
+
+export type ItemSelfHrefSchema = {
+    /**
+     * For Modular Content, Structured Text and Single Block fields. If set, returns full payload for nested blocks instead of IDs
+     */
+    nested?: boolean;
+    /**
+     * Whether you want the currently published versions (\`published\`) of your records, or the latest available (\`current\`, default)
+     */
+    version?: string;
+    [k: string]: unknown;
+};
+
+export type ItemInNestedResponse<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+    __itemTypeId?: D['itemTypeId'];
+    id: ItemIdentity;
+    type: ItemType1;
+    item_type: ItemTypeData<D>;
+    creator?: AccountData | AccessTokenData | UserData | SsoUserData | OrganizationData;
+    meta: ItemMeta;
+} & ToItemAttributesInNestedResponse<D>;
+
+export type ItemTypeDefinition<Settings extends {
+    locales: string;
+} = {
+    locales: string;
+}, ItemTypeId extends string = string, FieldDefinitions extends Record<string, FieldDefinition> = {}> = {
+    settings: Settings;
+    itemTypeId: ItemTypeId;
+    fields: FieldDefinitions;
+};
+
+export type ItemTypeData<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+    type: ItemTypeType;
+    id: D extends ItemTypeDefinition ? D['itemTypeId'] : ItemTypeIdentity;
+};
+
+export type AccountData = {
+    type: AccountType;
+    id: AccountIdentity;
+};
+
+export type AccessTokenData = {
+    type: AccessTokenType;
+    id: AccessTokenIdentity;
+};
+
+export type UserData = {
+    type: UserType;
+    id: UserIdentity;
+};
+
+export type SsoUserData = {
+    type: SsoUserType;
+    id: SsoUserIdentity;
+};
+
+export type OrganizationData = {
+    type: OrganizationType;
+    id: OrganizationIdentity;
+};
+
+export type ItemMeta = {
+    /**
+     * Date of creation
+     */
+    created_at: string;
+    /**
+     * Last update time
+     */
+    updated_at: string;
+    /**
+     * Date of last publication
+     */
+    published_at: null | string;
+    /**
+     * Date of first publication
+     */
+    first_published_at: null | string;
+    /**
+     * Date of future publication
+     */
+    publication_scheduled_at: null | string;
+    /**
+     * Date of future unpublishing
+     */
+    unpublishing_scheduled_at: null | string;
+    /**
+     * Status
+     */
+    status: null | ('draft' | 'updated' | 'published');
+    /**
+     * Whether the current record is valid or not
+     */
+    is_valid: boolean;
+    /**
+     * Whether the current version of the record is valid or not
+     */
+    is_current_version_valid: null | boolean;
+    /**
+     * Whether the published version of record is valid or not
+     */
+    is_published_version_valid: null | boolean;
+    /**
+     * The ID of the current record version
+     */
+    current_version: string;
+    /**
+     * Workflow stage in which the item is
+     */
+    stage: null | string;
+    /**
+     * When the records can be organized in a tree, indicates whether the record has children
+     */
+    has_children: null | boolean;
+};
+
+export type ToItemAttributesInNestedResponse<T extends ItemTypeDefinition<any, any, any>> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields> ? keyof Fields extends never ? Record<string, unknown> : {
+    [K in keyof Fields]: Fields[K] extends FieldDefinition ? FieldDefinitionToFieldValueInNestedResponse<Fields[K], Settings['locales']> : never;
+} : never;
+
+export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+    __itemTypeId?: D['itemTypeId'];
+    id: ItemIdentity;
+    type: ItemType1;
+    item_type: ItemTypeData<D>;
+    creator?: AccountData | AccessTokenData | UserData | SsoUserData | OrganizationData;
+    meta: ItemMeta;
+} & ToItemAttributes<D>;
+
+export type ToItemAttributes<T extends ItemTypeDefinition<any, any, any>> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields> ? keyof Fields extends never ? Record<string, unknown> : {
+    [K in keyof Fields]: Fields[K] extends FieldDefinition ? FieldDefinitionToFieldValue<Fields[K], Settings['locales']> : never;
+} : never;",
+  "notExpandedTypes": [
+    "AccessTokenIdentity",
+    "AccessTokenType",
+    "AccountIdentity",
+    "AccountType",
+    "BaseFieldDefinition",
+    "Block",
+    "BlockId",
+    "BlockInNestedResponse",
+    "BlockType",
+    "Blockquote",
+    "BlockquoteType",
+    "BooleanFieldValue",
+    "Code",
+    "CodeType",
+    "ColorFieldValue",
+    "DateFieldValue",
+    "DateTimeFieldValue",
+    "DefaultMark",
+    "Document",
+    "DocumentInNestedResponse",
+    "FieldDefinition",
+    "FieldDefinitionToFieldValue",
+    "FieldDefinitionToFieldValueInNestedResponse",
+    "FieldTypeToValue",
+    "FileFieldValue",
+    "FloatFieldValue",
+    "GalleryFieldValue",
+    "GalleryItem",
+    "Heading",
+    "HeadingType",
+    "InlineBlock",
+    "InlineBlockType",
+    "InlineItem",
+    "InlineItemType",
+    "InlineNode",
+    "IntegerFieldValue",
+    "ItemLink",
+    "ItemLinkType",
+    "ItemTypeIdentity",
+    "ItemTypeType",
+    "JsonFieldValue",
+    "LatLonFieldValue",
+    "Link",
+    "LinkFieldValue",
+    "LinkType",
+    "LinksFieldValue",
+    "List",
+    "ListItem",
+    "ListItemType",
+    "ListType",
+    "LocalizeIfNeeded",
+    "LocalizedFieldValue",
+    "Mark",
+    "MetaEntry",
+    "OrganizationIdentity",
+    "OrganizationType",
+    "Paragraph",
+    "ParagraphType",
+    "RichTextFieldDefinition",
+    "RichTextFieldValue",
+    "RichTextFieldValueInNestedResponse",
+    "Root",
+    "RootType",
+    "SeoFieldValue",
+    "SingleBlockFieldDefinition",
+    "SingleBlockFieldValue",
+    "SingleBlockFieldValueInNestedResponse",
+    "SlugFieldValue",
+    "Span",
+    "SpanType",
+    "SsoUserIdentity",
+    "SsoUserType",
+    "StringFieldValue",
+    "StructuredTextFieldDefinition",
+    "StructuredTextFieldValue",
+    "StructuredTextFieldValueInNestedResponse",
+    "TextFieldValue",
+    "ThematicBreak",
+    "ThematicBreakType",
+    "UserIdentity",
+    "UserType",
+    "VideoFieldValue",
+  ],
+}
+`;
+
+exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies items.list with maxDepth 2 1`] = `
+{
+  "expandedTypes": "export type ItemInstancesHrefSchema<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+    /**
+     * For Modular Content, Structured Text and Single Block fields. If set, returns full payload for nested blocks instead of IDs
+     */
+    nested?: boolean;
+    /**
+     * Attributes to filter records
+     */
+    filter?: {
+        /**
+         * Record (or block record) IDs to fetch, comma separated. If you use this filter, you _must not_ use \`filter[type]\`. You can combine it with meta fields (like \`_published_at\`, \`_status\`), but _must not_ use model-specific fields
+         */
+        ids?: string;
+        /**
+         * Model/Block model ID or \`api_key\` to filter. If you use this filter, you _must not_ use \`filter[ids]\`. When passing a single element, you can use both meta fields and model-specific fields (note: model-specific fields only work with models, not block models). When passing multiple comma-separated values, you can use meta fields but _must not_ use model-specific fields
+         */
+        type?: string;
+        /**
+         * Textual query to match. Can be combined with other filters. When used, only records (not blocks) are returned. If \`locale\` is defined, search within that locale. Otherwise environment's main locale will be used.
+         */
+        query?: string;
+        /**
+         * Filter by record fields. Meta fields (like \`_published_at\`, \`_status\`) can be used in most cases. Model-specific fields (like \`title\`, \`name\`) require \`filter[type]\` to specify a single model, and only work with models (not block models). Same syntax as [GraphQL API records filters](/docs/content-delivery-api/filtering-records): use square brackets to indicate nesting levels. E.g. \`filter[fields][parent][eq]=<ID_VALUE>\`. Use snake_case for field names. If \`locale\` is defined, search within that locale. Otherwise environment's main locale will be used.
+         */
+        fields?: ToItemHrefSchemaField<D>;
+        /**
+         * When set, only valid records are included in the results.
+         */
+        only_valid?: string;
+        [k: string]: unknown;
+    };
+    /**
+     * When \`filter[query]\` or \`field[fields]\` is defined, filter by this locale. Default: environment's main locale
+     */
+    locale?: string;
+    /**
+     * Parameters to control offset-based pagination
+     */
+    page?: {
+        /**
+         * The (zero-based) offset of the first entity returned in the collection (defaults to 0)
+         */
+        offset?: number;
+        /**
+         * The maximum number of entities to return (defaults to 30, maximum is 500)
+         */
+        limit?: number;
+    };
+    /**
+     * Fields used to order results. You **must** specify also \`filter[type]\` with one element only to be able use this option. Format: \`<field_name>_(ASC|DESC)\`, where \`<field_name>\` can be either the API key of a model's field, or one of the following meta columns: \`id\`, \`_updated_at\`, \`_created_at\`, \`_status\`, \`_published_at\`, \`_first_published_at\`, \`_publication_scheduled_at\`, \`_unpublishing_scheduled_at\`, \`_is_valid\`, \`position\` (only for sortable models). You can pass multiple comma separated rules.
+     */
+    order_by?: ToItemHrefSchemaOrderBy<D>;
+    /**
+     * Whether you want the currently published versions (\`published\`) of your records, or the latest available (\`current\`, default)
+     */
+    version?: string;
+    [k: string]: unknown;
+};
+
+export type ItemTypeDefinition<Settings extends {
+    locales: string;
+} = {
+    locales: string;
+}, ItemTypeId extends string = string, FieldDefinitions extends Record<string, FieldDefinition> = {}> = {
+    settings: Settings;
+    itemTypeId: ItemTypeId;
+    fields: FieldDefinitions;
+};
+
+export type ToItemHrefSchemaField<T extends ItemTypeDefinition<any, any, any>> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields> ? keyof Fields extends never ? Record<string, unknown> : ItemMetaFilter & Partial<{
+    [K in keyof Fields]: K extends 'position' ? PositionFilter : K extends 'parent_id' ? ParentIdFilter : Fields[K] extends FieldDefinition ? FieldTypeToHrefFilter[Fields[K]['type']] : never;
+}> : never;
+
+export type ToItemHrefSchemaOrderBy<T extends ItemTypeDefinition<any, any, any>> = (T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields> ? keyof Fields extends never ? string : {
+    [K in keyof Fields]: Fields[K] extends FieldDefinition ? Fields[K]['type'] extends 'boolean' | 'date' | 'date_time' | 'float' | 'integer' | 'string' ? \`\${K & string}_ASC\` | \`\${K & string}_DESC\` : never : never;
+}[keyof Fields] : never) | ItemMetaOrderBy;
+
+export type ItemInNestedResponse<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+    __itemTypeId?: D['itemTypeId'];
+    id: ItemIdentity;
+    type: ItemType1;
+    item_type: ItemTypeData<D>;
+    creator?: AccountData | AccessTokenData | UserData | SsoUserData | OrganizationData;
+    meta: ItemMeta;
+} & ToItemAttributesInNestedResponse<D>;
+
+export type ItemIdentity = string;
+
+export type ItemType1 = 'item';
+
+export type ItemTypeData<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+    type: ItemTypeType;
+    id: D extends ItemTypeDefinition ? D['itemTypeId'] : ItemTypeIdentity;
+};
+
+export type AccountData = {
+    type: AccountType;
+    id: AccountIdentity;
+};
+
+export type AccessTokenData = {
+    type: AccessTokenType;
+    id: AccessTokenIdentity;
+};
+
+export type UserData = {
+    type: UserType;
+    id: UserIdentity;
+};
+
+export type SsoUserData = {
+    type: SsoUserType;
+    id: SsoUserIdentity;
+};
+
+export type OrganizationData = {
+    type: OrganizationType;
+    id: OrganizationIdentity;
+};
+
+export type ItemMeta = {
+    /**
+     * Date of creation
+     */
+    created_at: string;
+    /**
+     * Last update time
+     */
+    updated_at: string;
+    /**
+     * Date of last publication
+     */
+    published_at: null | string;
+    /**
+     * Date of first publication
+     */
+    first_published_at: null | string;
+    /**
+     * Date of future publication
+     */
+    publication_scheduled_at: null | string;
+    /**
+     * Date of future unpublishing
+     */
+    unpublishing_scheduled_at: null | string;
+    /**
+     * Status
+     */
+    status: null | ('draft' | 'updated' | 'published');
+    /**
+     * Whether the current record is valid or not
+     */
+    is_valid: boolean;
+    /**
+     * Whether the current version of the record is valid or not
+     */
+    is_current_version_valid: null | boolean;
+    /**
+     * Whether the published version of record is valid or not
+     */
+    is_published_version_valid: null | boolean;
+    /**
+     * The ID of the current record version
+     */
+    current_version: string;
+    /**
+     * Workflow stage in which the item is
+     */
+    stage: null | string;
+    /**
+     * When the records can be organized in a tree, indicates whether the record has children
+     */
+    has_children: null | boolean;
+};
+
+export type ToItemAttributesInNestedResponse<T extends ItemTypeDefinition<any, any, any>> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields> ? keyof Fields extends never ? Record<string, unknown> : {
+    [K in keyof Fields]: Fields[K] extends FieldDefinition ? FieldDefinitionToFieldValueInNestedResponse<Fields[K], Settings['locales']> : never;
+} : never;
+
+export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+    __itemTypeId?: D['itemTypeId'];
+    id: ItemIdentity;
+    type: ItemType1;
+    item_type: ItemTypeData<D>;
+    creator?: AccountData | AccessTokenData | UserData | SsoUserData | OrganizationData;
+    meta: ItemMeta;
+} & ToItemAttributes<D>;
+
+export type ToItemAttributes<T extends ItemTypeDefinition<any, any, any>> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields> ? keyof Fields extends never ? Record<string, unknown> : {
+    [K in keyof Fields]: Fields[K] extends FieldDefinition ? FieldDefinitionToFieldValue<Fields[K], Settings['locales']> : never;
+} : never;",
+  "notExpandedTypes": [
+    "AccessTokenIdentity",
+    "AccessTokenType",
+    "AccountIdentity",
+    "AccountType",
+    "BaseFieldDefinition",
+    "Block",
+    "BlockId",
+    "BlockInNestedResponse",
+    "BlockType",
+    "Blockquote",
+    "BlockquoteType",
+    "BooleanFieldValue",
+    "BooleanHrefFilter",
+    "Code",
+    "CodeType",
+    "ColorFieldValue",
+    "ColorHrefFilter",
+    "DateFieldValue",
+    "DateHrefFilter",
+    "DateTimeFieldValue",
+    "DateTimeHrefFilter",
+    "DefaultMark",
+    "Document",
+    "DocumentInNestedResponse",
+    "FieldDefinition",
+    "FieldDefinitionToFieldValue",
+    "FieldDefinitionToFieldValueInNestedResponse",
+    "FieldTypeToHrefFilter",
+    "FieldTypeToValue",
+    "FileFieldValue",
+    "FileHrefFilter",
+    "FloatFieldValue",
+    "FloatHrefFilter",
+    "GalleryFieldValue",
+    "GalleryHrefFilter",
+    "GalleryItem",
+    "Heading",
+    "HeadingType",
+    "InlineBlock",
+    "InlineBlockType",
+    "InlineItem",
+    "InlineItemType",
+    "InlineNode",
+    "IntegerFieldValue",
+    "IntegerHrefFilter",
+    "ItemIdFilter",
+    "ItemLink",
+    "ItemLinkType",
+    "ItemMetaFilter",
+    "ItemMetaOrderBy",
+    "ItemTypeIdentity",
+    "ItemTypeType",
+    "JsonFieldValue",
+    "JsonHrefFilter",
+    "LatLonFieldValue",
+    "LatLonHrefFilter",
+    "LatLonNearFilter",
+    "Link",
+    "LinkFieldValue",
+    "LinkHrefFilter",
+    "LinkType",
+    "LinksFieldValue",
+    "LinksHrefFilter",
+    "List",
+    "ListItem",
+    "ListItemType",
+    "ListType",
+    "LocalizeIfNeeded",
+    "LocalizedFieldValue",
+    "Mark",
+    "MetaEntry",
+    "OrganizationIdentity",
+    "OrganizationType",
+    "Paragraph",
+    "ParagraphType",
+    "ParentIdFilter",
+    "PositionFilter",
+    "RichTextFieldDefinition",
+    "RichTextFieldValue",
+    "RichTextFieldValueInNestedResponse",
+    "RichTextHrefFilter",
+    "Root",
+    "RootType",
+    "SeoFieldValue",
+    "SeoHrefFilter",
+    "SingleBlockFieldDefinition",
+    "SingleBlockFieldValue",
+    "SingleBlockFieldValueInNestedResponse",
+    "SingleBlockHrefFilter",
+    "SlugFieldValue",
+    "SlugHrefFilter",
+    "Span",
+    "SpanType",
+    "SsoUserIdentity",
+    "SsoUserType",
+    "StatusFilter",
+    "StringFieldValue",
+    "StringHrefFilter",
+    "StringMatchesFilter",
+    "StructuredTextFieldDefinition",
+    "StructuredTextFieldValue",
+    "StructuredTextFieldValueInNestedResponse",
+    "StructuredTextHrefFilter",
+    "TextFieldValue",
+    "TextHrefFilter",
+    "ThematicBreak",
+    "ThematicBreakType",
+    "UserIdentity",
+    "UserType",
+    "VideoFieldValue",
+    "VideoHrefFilter",
+  ],
+}
+`;
+
+exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies uploads.create with maxDepth 2 1`] = `
+{
+  "expandedTypes": "export type UploadCreateSchema = {
+    id?: UploadIdentity;
+    type?: UploadType;
+    /**
+     * Upload path
+     */
+    path: string;
+    /**
+     * Copyright
+     */
+    copyright?: string | null;
+    /**
+     * Author
+     */
+    author?: string | null;
+    /**
+     * Notes
+     */
+    notes?: string | null;
+    /**
+     * For each of the project's locales, the default metadata to apply if nothing is specified at record's level.
+     */
+    default_field_metadata?: {
+        /**
+         * This interface was referenced by \`undefined\`'s JSON-Schema definition
+         * via the \`patternProperty\` "^(?<languagecode>[a-z]{0,3}(-[A-Za-z]+)?(-[A-Z]{0,3})?)$".
+         */
+        [k: string]: {
+            /**
+             * Alternate text for the asset
+             */
+            alt?: string | null;
+            /**
+             * Title for the asset
+             */
+            title?: string | null;
+            /**
+             * Object with arbitrary metadata
+             */
+            custom_data?: {
+                [k: string]: unknown;
+            };
+            /**
+             * Focal point (only for image assets)
+             */
+            focal_point?: {
+                /**
+                 * Horizontal position expressed as float between 0 and 1
+                 */
+                x: number;
+                /**
+                 * Vertical position expressed as float between 0 and 1
+                 */
+                y: number;
+            } | null;
+        };
+    };
+    /**
+     * Tags
+     */
+    tags?: string[];
+    upload_collection?: UploadCollectionData | null;
+};
+
+export type UploadIdentity = string;
+
+export type UploadType = 'upload';
+
+export type UploadCollectionData = {
+    type: UploadCollectionType;
+    id: UploadCollectionIdentity;
+};
+
+export type Upload = {
+    id: UploadIdentity;
+    type: UploadType;
+    /**
+     * size of the upload
+     */
+    size: number;
+    /**
+     * Width of image
+     */
+    width: null | number;
+    /**
+     * Height of image
+     */
+    height: null | number;
+    /**
+     * Upload path
+     */
+    path: string;
+    /**
+     * Upload basename
+     */
+    basename: string;
+    /**
+     * Upload filename
+     */
+    filename: string;
+    /**
+     * Upload URL
+     */
+    url: string;
+    /**
+     * Format
+     */
+    format: string | null;
+    /**
+     * Author
+     */
+    author: string | null;
+    /**
+     * Copyright
+     */
+    copyright: string | null;
+    /**
+     * Notes
+     */
+    notes: string | null;
+    /**
+     * The MD5 hash of the asset
+     */
+    md5: string;
+    /**
+     * Seconds of duration for the video
+     */
+    duration: number | null;
+    /**
+     * Frame rate (FPS) for the video
+     */
+    frame_rate: number | null;
+    /**
+     * Blurhash for the asset
+     */
+    blurhash: string | null;
+    /**
+     * Base64 encoded ThumbHash for the asset
+     */
+    thumbhash: string | null;
+    /**
+     * Public Mux playback ID. Used with stream.mux.com to create the source URL for a video player.
+     */
+    mux_playback_id: string | null;
+    /**
+     * Maximum quality of MP4 rendition available
+     */
+    mux_mp4_highest_res: null | 'high' | 'medium' | 'low';
+    /**
+     * For each of the project's locales, the default metadata to apply if nothing is specified at record's level.
+     */
+    default_field_metadata: {
+        /**
+         * This interface was referenced by \`undefined\`'s JSON-Schema definition
+         * via the \`patternProperty\` "^(?<languagecode>[a-z]{0,3}(-[A-Za-z]+)?(-[A-Z]{0,3})?)$".
+         */
+        [k: string]: {
+            /**
+             * Alternate text for the asset
+             */
+            alt: string | null;
+            /**
+             * Title for the asset
+             */
+            title: string | null;
+            /**
+             * Object with arbitrary metadata
+             */
+            custom_data: {
+                [k: string]: unknown;
+            };
+            /**
+             * Focal point (only for image assets)
+             */
+            focal_point: {
+                /**
+                 * Horizontal position expressed as float between 0 and 1
+                 */
+                x: number;
+                /**
+                 * Vertical position expressed as float between 0 and 1
+                 */
+                y: number;
+            } | null;
+        };
+    };
+    /**
+     * Is this upload an image?
+     */
+    is_image: boolean;
+    /**
+     * Date of upload
+     */
+    created_at: null | string;
+    /**
+     * Date of last update
+     */
+    updated_at: null | string;
+    /**
+     * Mime type of upload
+     */
+    mime_type: null | string;
+    /**
+     * Tags
+     */
+    tags: string[];
+    /**
+     * Smart tags
+     */
+    smart_tags: string[];
+    /**
+     * Exif information
+     */
+    exif_info: {
+        [k: string]: unknown;
+    };
+    /**
+     * Dominant colors of the image
+     */
+    colors: {
+        /**
+         * Red value (from 0 to 255)
+         */
+        red: number;
+        /**
+         * Green value (from 0 to 255)
+         */
+        green: number;
+        /**
+         * Blue value (from 0 to 255)
+         */
+        blue: number;
+        /**
+         * Alpha value (from 0 to 255)
+         */
+        alpha: number;
+    }[];
+    upload_collection: UploadCollectionData | null;
+    creator: AccountData | AccessTokenData | UserData | SsoUserData | OrganizationData;
+    meta: UploadMeta;
+};
+
+export type AccountData = {
+    type: AccountType;
+    id: AccountIdentity;
+};
+
+export type AccessTokenData = {
+    type: AccessTokenType;
+    id: AccessTokenIdentity;
+};
+
+export type UserData = {
+    type: UserType;
+    id: UserIdentity;
+};
+
+export type SsoUserData = {
+    type: SsoUserType;
+    id: SsoUserIdentity;
+};
+
+export type OrganizationData = {
+    type: OrganizationType;
+    id: OrganizationIdentity;
+};
+
+export type UploadMeta = {
+    /**
+     * Antivirus scan information
+     */
+    antivirus: {
+        /**
+         * Antivirus scan status of the asset
+         */
+        status: 'pending' | 'clean' | 'infected' | 'failed' | 'skipped';
+        /**
+         * Date of the last antivirus scan
+         */
+        checked_at: string | null;
+        /**
+         * Name of the threat detected by the antivirus scan, if any
+         */
+        threat_name: string | null;
+    };
+};",
+  "notExpandedTypes": [
+    "AccessTokenIdentity",
+    "AccessTokenType",
+    "AccountIdentity",
+    "AccountType",
+    "OrganizationIdentity",
+    "OrganizationType",
+    "SsoUserIdentity",
+    "SsoUserType",
+    "UploadCollectionIdentity",
+    "UploadCollectionType",
+    "UserIdentity",
+    "UserType",
+  ],
+}
+`;

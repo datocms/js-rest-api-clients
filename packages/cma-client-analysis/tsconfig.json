@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "declarationDir": "dist/types",
+    "outDir": "dist/cjs",
+    "typeRoots": ["../../node_modules/@types", "node_modules/@types"]
+  },
+  "include": ["../../reset.d.ts", "src"]
+}
