@@ -309,9 +309,16 @@ TypeScript doesn't auto-narrow on discriminators buried in nested properties, so
 
 **TypeScript Signature:**
 ```typescript
+// Curried — returns a predicate (use with .filter / .find)
 function isBlockOfType<Id extends string>(
   itemTypeId: Id,
 ): <T>(block: T) => block is NarrowBlockByItemType<T, Id>
+
+// Direct — checks a single block inline (use inside `if`)
+function isBlockOfType<T, Id extends string>(
+  itemTypeId: Id,
+  block: T,
+): block is NarrowBlockByItemType<T, Id>
 
 type NarrowBlockByItemType<T, Id extends string> = Extract<
   T,
@@ -321,8 +328,13 @@ type NarrowBlockByItemType<T, Id extends string> = Extract<
 
 **Parameters:**
 - `itemTypeId`: The item-type ID literal. For narrowing to work, the argument must be typed as a literal — use `as const` on pre-set ID constants. No `ItemTypeDefinition` type parameter is needed: `Extract` walks the input union using just the ID.
+- `block` (direct form only): The block to check.
 
-**Returns:** A predicate `(block) => block is D-typed-block` that:
+**Returns:**
+- Curried form: a predicate `(block) => block is D-typed-block`.
+- Direct form: a `boolean` that also acts as a type guard on `block`.
+
+In both cases the guard:
 - Narrows blocks carrying `relationships.item_type.data.id` — that covers `BlockInNestedResponse<D>` and the object variants of `BlockInRequest<D>` (`UpdatedBlockInRequest`, `NewBlockInRequest`).
 - Returns `false` for plain string IDs (unchanged-reference form in request payloads) and for any non-block input.
 
@@ -343,12 +355,18 @@ const images = article.content.filter(
 );
 images[0].attributes.upload_id; // ❌ property does not exist on union
 
-// After: guard narrows the filter result
+// After (curried): guard narrows the filter result
 const images = article.content.filter(isBlockOfType(IMAGE_BLOCK_ID));
 images[0].attributes.upload_id; // ✅ narrowed
+
+// After (direct): inline narrowing on a single block
+const first = article.content[0];
+if (isBlockOfType(IMAGE_BLOCK_ID, first)) {
+  first.attributes.upload_id; // ✅ narrowed
+}
 ```
 
-Use the `__itemTypeId` discriminator for inline `if` / `switch` narrowing on a single value — that's simpler and doesn't need a helper. Reach for `isBlockOfType` when you need a predicate for `.filter` / `.find`.
+Use the curried form when you need a predicate for `.filter` / `.find`; use the direct form for one-off `if` checks. The `__itemTypeId` discriminator is also available for inline `switch` narrowing on a single value.
 </details>
 
 ### Recursive Block Operations

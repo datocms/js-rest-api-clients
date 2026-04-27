@@ -14,14 +14,19 @@ export type NarrowBlockByItemType<T, Id extends string> = Extract<
 >;
 
 /**
- * Builds a type guard that narrows a block to a specific model.
+ * Type guard that narrows a block to a specific model.
  *
- * Call it with the block's `itemTypeId` literal — the ID generic is inferred
- * from the argument, so no explicit type parameter is needed. The returned
- * predicate is generic: given any input type `T`, it narrows to
- * `Extract<T, { relationships: { item_type: { data: { id: Id } } } }>`. It's
- * meant to plug into `Array#filter` / `Array#find` over block-bearing fields
- * in any of these contexts:
+ * Two call styles, same narrowing behavior:
+ *
+ * - Curried: `isBlockOfType(itemTypeId)` returns a predicate, ideal for
+ *   `Array#filter` / `Array#find`.
+ * - Direct: `isBlockOfType(itemTypeId, block)` checks a single value inline,
+ *   handy inside `if` statements when you already have the block in hand.
+ *
+ * The ID generic is inferred from the first argument, so no explicit type
+ * parameter is needed. Given any input type `T`, the result narrows to
+ * `Extract<T, { relationships: { item_type: { data: { id: Id } } } }>`,
+ * which covers:
  *
  * - `ItemInNestedResponse<D>` (responses with `nested: true`)
  * - `ItemCreateSchema<D>` / `ItemUpdateSchema<D>` (request payloads, object
@@ -40,14 +45,29 @@ export type NarrowBlockByItemType<T, Id extends string> = Extract<
  * const SESSION_BLOCK_ID = 'abc123' as const;
  *
  * const record = await client.items.find<Schema.ConferenceDay>(id, { nested: true });
+ *
+ * // Curried — predicate for filter/find
  * const sessions = record.agenda.filter(isBlockOfType(SESSION_BLOCK_ID));
  * sessions[0].attributes.signup_url; // OK — narrowed
+ *
+ * // Direct — inline check on a single block
+ * if (isBlockOfType(SESSION_BLOCK_ID, record.agenda[0])) {
+ *   record.agenda[0].attributes.signup_url; // OK — narrowed
+ * }
  * ```
  */
 export function isBlockOfType<Id extends string>(
   itemTypeId: Id,
-): <T>(block: T) => block is NarrowBlockByItemType<T, Id> {
-  return <T>(block: T): block is NarrowBlockByItemType<T, Id> => {
+): <T>(block: T) => block is NarrowBlockByItemType<T, Id>;
+export function isBlockOfType<T, Id extends string>(
+  itemTypeId: Id,
+  block: T,
+): block is NarrowBlockByItemType<T, Id>;
+export function isBlockOfType<Id extends string>(
+  itemTypeId: Id,
+  ...rest: [block: unknown] | []
+): boolean | (<T>(block: T) => block is NarrowBlockByItemType<T, Id>) {
+  const check = (block: unknown): boolean => {
     if (typeof block !== 'object' || block === null) return false;
     const relationships = (block as { relationships?: unknown }).relationships;
     if (typeof relationships !== 'object' || relationships === null)
@@ -58,4 +78,6 @@ export function isBlockOfType<Id extends string>(
     if (typeof data !== 'object' || data === null) return false;
     return (data as { id?: unknown }).id === itemTypeId;
   };
+  if (rest.length > 0) return check(rest[0]);
+  return <T>(block: T): block is NarrowBlockByItemType<T, Id> => check(block);
 }

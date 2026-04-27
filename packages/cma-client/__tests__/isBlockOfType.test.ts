@@ -140,4 +140,32 @@ describe('isBlockOfType', () => {
       expect(urls).toEqual(['y']);
     });
   });
+
+  describe('direct (non-curried) form', () => {
+    it('returns true for a matching block and narrows in an `if`', () => {
+      const block: ReturnType<typeof sessionBlock | typeof breakBlock> =
+        sessionBlock('Intro', 'https://x/1');
+
+      expect(isBlockOfType(SESSION_BLOCK_ID, block)).toBe(true);
+
+      if (isBlockOfType(SESSION_BLOCK_ID, block)) {
+        // Narrowed to SessionBlock — `signup_url` would be a type error otherwise.
+        const url: string | null | undefined = block.attributes.signup_url;
+        expect(url).toBe('https://x/1');
+      } else {
+        throw new Error('expected narrowing branch to be taken');
+      }
+    });
+
+    it('returns false for a non-matching block', () => {
+      expect(isBlockOfType(SESSION_BLOCK_ID, breakBlock(5))).toBe(false);
+    });
+
+    it('returns false for null / undefined / primitives', () => {
+      expect(isBlockOfType(SESSION_BLOCK_ID, null)).toBe(false);
+      expect(isBlockOfType(SESSION_BLOCK_ID, undefined)).toBe(false);
+      expect(isBlockOfType(SESSION_BLOCK_ID, 'abc')).toBe(false);
+      expect(isBlockOfType(SESSION_BLOCK_ID, 42)).toBe(false);
+    });
+  });
 });
