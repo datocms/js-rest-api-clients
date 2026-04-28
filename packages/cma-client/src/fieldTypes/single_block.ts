@@ -99,7 +99,10 @@ export type BlockInRequest<D extends ItemTypeDefinition = ItemTypeDefinition> =
   [D] extends [never]
     ? UnchangedBlockInRequest
     : D extends unknown
-      ? UnchangedBlockInRequest | UpdatedBlockInRequest<D> | NewBlockInRequest<D>
+      ?
+          | UnchangedBlockInRequest
+          | UpdatedBlockInRequest<D>
+          | NewBlockInRequest<D>
       : never;
 
 export type BlockInNestedResponse<
