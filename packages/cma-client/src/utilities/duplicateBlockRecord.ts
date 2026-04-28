@@ -13,7 +13,13 @@ export async function duplicateBlockRecord<
 >(
   existingBlock: ItemWithOptionalIdAndMeta<NoInfer<D>>,
   schemaRepository: SchemaRepository,
-): Promise<NewBlockInRequest<NoInfer<D>>> {
+): Promise<
+  NoInfer<D> extends infer ND
+    ? ND extends unknown
+      ? NewBlockInRequest<ND & ItemTypeDefinition>
+      : never
+    : never
+> {
   const { __itemTypeId, type, attributes, relationships } = existingBlock;
 
   const itemType = await schemaRepository.getRawItemTypeById(
@@ -54,5 +60,9 @@ export async function duplicateBlockRecord<
       );
   }
 
-  return newBlock as NewBlockInRequest<NoInfer<D>>;
+  return newBlock as NoInfer<D> extends infer ND
+    ? ND extends unknown
+      ? NewBlockInRequest<ND & ItemTypeDefinition>
+      : never
+    : never;
 }

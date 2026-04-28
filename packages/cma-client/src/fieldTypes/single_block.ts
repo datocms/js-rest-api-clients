@@ -93,9 +93,14 @@ export type NewBlockInRequest<
  * Also, 'meta' can always be omitted
  */
 export type BlockInRequest<D extends ItemTypeDefinition = ItemTypeDefinition> =
-  D extends unknown
-    ? UnchangedBlockInRequest | UpdatedBlockInRequest<D> | NewBlockInRequest<D>
-    : never;
+  // For block-less structured_text fields (D=never), only string references
+  // are meaningful — distributing would collapse the type to `never` and
+  // break round-trips that produce `string` block ids (e.g. dastdown).
+  [D] extends [never]
+    ? UnchangedBlockInRequest
+    : D extends unknown
+      ? UnchangedBlockInRequest | UpdatedBlockInRequest<D> | NewBlockInRequest<D>
+      : never;
 
 export type BlockInNestedResponse<
   D extends ItemTypeDefinition = ItemTypeDefinition,
