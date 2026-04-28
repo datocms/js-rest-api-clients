@@ -19,11 +19,11 @@ export type ItemType = {
     /**
      * The way the model collection should be presented to the editors
      */
-    collection_appeareance?: "compact" | "table";
+    collection_appeareance?: 'compact' | 'table';
     /**
      * The way the model/block model collection should be presented to the editors
      */
-    collection_appearance: "compact" | "table";
+    collection_appearance: 'compact' | 'table';
     /**
      * Whether the model is single-instance or not. This property only applies to models, not block models
      */
@@ -55,11 +55,11 @@ export type ItemType = {
     /**
      * If an ordering field is set, this field specifies the sorting direction. This property does not apply to block models
      */
-    ordering_direction: null | "asc" | "desc";
+    ordering_direction: null | 'asc' | 'desc';
     /**
      * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field. This property does not apply to block models
      */
-    ordering_meta: null | "created_at" | "updated_at" | "first_published_at" | "published_at";
+    ordering_meta: null | 'created_at' | 'updated_at' | 'first_published_at' | 'published_at';
     /**
      * If this model is single-instance, this tells whether the single-instance record has already been created or not. This property only applies to models, not block models
      */
@@ -155,11 +155,11 @@ export type ItemType = {
     /**
      * The way the model collection should be presented to the editors
      */
-    collection_appeareance?: "compact" | "table";
+    collection_appeareance?: 'compact' | 'table';
     /**
      * The way the model/block model collection should be presented to the editors
      */
-    collection_appearance: "compact" | "table";
+    collection_appearance: 'compact' | 'table';
     /**
      * Whether the model is single-instance or not. This property only applies to models, not block models
      */
@@ -191,11 +191,11 @@ export type ItemType = {
     /**
      * If an ordering field is set, this field specifies the sorting direction. This property does not apply to block models
      */
-    ordering_direction: null | "asc" | "desc";
+    ordering_direction: null | 'asc' | 'desc';
     /**
      * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field. This property does not apply to block models
      */
-    ordering_meta: null | "created_at" | "updated_at" | "first_published_at" | "published_at";
+    ordering_meta: null | 'created_at' | 'updated_at' | 'first_published_at' | 'published_at';
     /**
      * If this model is single-instance, this tells whether the single-instance record has already been created or not. This property only applies to models, not block models
      */
@@ -223,14 +223,14 @@ export type ItemType = {
 
 export type ItemTypeIdentity = string;
 
-export type ItemTypeType = "item_type";
+export type ItemTypeType = 'item_type';
 
 export type ItemData = {
     type: ItemType1;
     id: ItemIdentity;
 };
 
-export type ItemType1 = "item";
+export type ItemType1 = 'item';
 
 export type ItemIdentity = string;
 
@@ -239,7 +239,7 @@ export type FieldData = {
     id: FieldIdentity;
 };
 
-export type FieldType = "field";
+export type FieldType = 'field';
 
 export type FieldIdentity = string;
 
@@ -248,7 +248,7 @@ export type FieldsetData = {
     id: FieldsetIdentity;
 };
 
-export type FieldsetType = "fieldset";
+export type FieldsetType = 'fieldset';
 
 export type FieldsetIdentity = string;
 
@@ -257,7 +257,7 @@ export type WorkflowData = {
     id: WorkflowIdentity;
 };
 
-export type WorkflowType = "workflow";
+export type WorkflowType = 'workflow';
 
 export type WorkflowIdentity = string;
 
@@ -314,11 +314,11 @@ export type ItemType = {
     /**
      * The way the model collection should be presented to the editors
      */
-    collection_appeareance?: "compact" | "table";
+    collection_appeareance?: 'compact' | 'table';
     /**
      * The way the model/block model collection should be presented to the editors
      */
-    collection_appearance: "compact" | "table";
+    collection_appearance: 'compact' | 'table';
     /**
      * Whether the model is single-instance or not. This property only applies to models, not block models
      */
@@ -350,11 +350,11 @@ export type ItemType = {
     /**
      * If an ordering field is set, this field specifies the sorting direction. This property does not apply to block models
      */
-    ordering_direction: null | "asc" | "desc";
+    ordering_direction: null | 'asc' | 'desc';
     /**
      * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field. This property does not apply to block models
      */
-    ordering_meta: null | "created_at" | "updated_at" | "first_published_at" | "published_at";
+    ordering_meta: null | 'created_at' | 'updated_at' | 'first_published_at' | 'published_at';
     /**
      * If this model is single-instance, this tells whether the single-instance record has already been created or not. This property only applies to models, not block models
      */
@@ -417,11 +417,11 @@ export type ItemType = {
     /**
      * The way the model collection should be presented to the editors
      */
-    collection_appeareance?: "compact" | "table";
+    collection_appeareance?: 'compact' | 'table';
     /**
      * The way the model/block model collection should be presented to the editors
      */
-    collection_appearance: "compact" | "table";
+    collection_appearance: 'compact' | 'table';
     /**
      * Whether the model is single-instance or not. This property only applies to models, not block models
      */
@@ -453,11 +453,11 @@ export type ItemType = {
     /**
      * If an ordering field is set, this field specifies the sorting direction. This property does not apply to block models
      */
-    ordering_direction: null | "asc" | "desc";
+    ordering_direction: null | 'asc' | 'desc';
     /**
      * Specifies the model's sorting method. Cannot be set in concurrency with ordering_field. This property does not apply to block models
      */
-    ordering_meta: null | "created_at" | "updated_at" | "first_published_at" | "published_at";
+    ordering_meta: null | 'created_at' | 'updated_at' | 'first_published_at' | 'published_at';
     /**
      * If this model is single-instance, this tells whether the single-instance record has already been created or not. This property only applies to models, not block models
      */
@@ -544,7 +544,7 @@ exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies items.find
     id: ItemIdentity;
 };
 
-export type ItemType1 = "item";
+export type ItemType1 = 'item';
 
 export type ItemIdentity = string;
 
@@ -637,7 +637,7 @@ export type ItemMeta = {
     /**
      * Status
      */
-    status: null | ("draft" | "updated" | "published");
+    status: null | ('draft' | 'updated' | 'published');
     /**
      * Whether the current record is valid or not
      */
@@ -857,7 +857,7 @@ export type ItemInNestedResponse<D extends ItemTypeDefinition = ItemTypeDefiniti
 
 export type ItemIdentity = string;
 
-export type ItemType1 = "item";
+export type ItemType1 = 'item';
 
 export type ItemTypeData<D extends ItemTypeDefinition = ItemTypeDefinition> = {
     type: ItemTypeType;
@@ -917,7 +917,7 @@ export type ItemMeta = {
     /**
      * Status
      */
-    status: null | ("draft" | "updated" | "published");
+    status: null | ('draft' | 'updated' | 'published');
     /**
      * Whether the current record is valid or not
      */
@@ -1144,7 +1144,7 @@ exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies uploads.cr
 
 export type UploadIdentity = string;
 
-export type UploadType = "upload";
+export type UploadType = 'upload';
 
 export type UploadCollectionData = {
     type: UploadCollectionType;
@@ -1225,7 +1225,7 @@ export type Upload = {
     /**
      * Maximum quality of MP4 rendition available
      */
-    mux_mp4_highest_res: null | "high" | "medium" | "low";
+    mux_mp4_highest_res: null | 'high' | 'medium' | 'low';
     /**
      * For each of the project's locales, the default metadata to apply if nothing is specified at record's level.
      */
@@ -1353,7 +1353,7 @@ export type UploadMeta = {
         /**
          * Antivirus scan status of the asset
          */
-        status: "pending" | "clean" | "infected" | "failed" | "skipped";
+        status: 'pending' | 'clean' | 'infected' | 'failed' | 'skipped';
         /**
          * Date of the last antivirus scan
          */
