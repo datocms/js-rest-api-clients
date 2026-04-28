@@ -93,9 +93,9 @@ export type NewBlockInRequest<
  * Also, 'meta' can always be omitted
  */
 export type BlockInRequest<D extends ItemTypeDefinition = ItemTypeDefinition> =
-  | UnchangedBlockInRequest
-  | UpdatedBlockInRequest<D>
-  | NewBlockInRequest<D>;
+  D extends unknown
+    ? UnchangedBlockInRequest | UpdatedBlockInRequest<D> | NewBlockInRequest<D>
+    : never;
 
 export type BlockInNestedResponse<
   D extends ItemTypeDefinition = ItemTypeDefinition,
