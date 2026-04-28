@@ -8,25 +8,25 @@ import {
   isDocument,
   isInlineBlock,
 } from 'datocms-structured-text-utils';
-import { isValidId } from '../utilities/id';
-import type { ItemTypeDefinition } from '../utilities/itemDefinition';
+import { isValidId } from '../utilities/id.js';
+import type { ItemTypeDefinition } from '../utilities/itemDefinition.js';
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { StructuredTextEditorConfiguration } from './appearance/structured_text';
+} from '../utilities/normalizedFieldValues.js';
+import type { StructuredTextEditorConfiguration } from './appearance/structured_text.js';
 import {
   type BlockInNestedResponse,
   type BlockInRequest,
   isBlockObjectInRequest,
   isItemId,
   isItemWithOptionalMeta,
-} from './single_block';
-import type { RequiredValidator } from './validators';
-import type { LengthValidator } from './validators/length';
-import type { StructuredTextBlocksValidator } from './validators/structured_text_blocks';
-import type { StructuredTextInlineBlocksValidator } from './validators/structured_text_inline_blocks';
-import type { StructuredTextLinksValidator } from './validators/structured_text_links';
+} from './single_block.js';
+import type { RequiredValidator } from './validators/index.js';
+import type { LengthValidator } from './validators/length.js';
+import type { StructuredTextBlocksValidator } from './validators/structured_text_blocks.js';
+import type { StructuredTextInlineBlocksValidator } from './validators/structured_text_inline_blocks.js';
+import type { StructuredTextLinksValidator } from './validators/structured_text_links.js';
 
 /**
  * STRUCTURED TEXT TYPE SYSTEM FOR DATOCMS

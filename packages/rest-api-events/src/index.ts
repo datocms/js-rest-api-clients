@@ -1,3 +1,3 @@
-export { subscribeToEvents } from './subscribeToEvents';
-export { JobResultsFetcher } from './JobResultsFetcher';
-export { withEventsSubscription } from './withEventsSubscription';
+export { subscribeToEvents } from './subscribeToEvents.js';
+export { JobResultsFetcher } from './JobResultsFetcher.js';
+export { withEventsSubscription } from './withEventsSubscription.js';

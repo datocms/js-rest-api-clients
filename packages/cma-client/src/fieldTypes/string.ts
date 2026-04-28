@@ -1,15 +1,15 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { SingleLineEditorConfiguration } from './appearance/single_line';
-import type { StringRadioGroupEditorConfiguration } from './appearance/string_radio_group';
-import type { StringSelectEditorConfiguration } from './appearance/string_select';
-import type { EnumValidator } from './validators/enum';
-import type { FormatValidator } from './validators/format';
-import type { LengthValidator } from './validators/length';
-import type { RequiredValidator } from './validators/required';
-import type { UniqueValidator } from './validators/unique';
+} from '../utilities/normalizedFieldValues.js';
+import type { SingleLineEditorConfiguration } from './appearance/single_line.js';
+import type { StringRadioGroupEditorConfiguration } from './appearance/string_radio_group.js';
+import type { StringSelectEditorConfiguration } from './appearance/string_select.js';
+import type { EnumValidator } from './validators/enum.js';
+import type { FormatValidator } from './validators/format.js';
+import type { LengthValidator } from './validators/length.js';
+import type { RequiredValidator } from './validators/required.js';
+import type { UniqueValidator } from './validators/unique.js';
 
 export type StringFieldValue = string | null;
 

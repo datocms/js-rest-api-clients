@@ -1,14 +1,14 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { MarkdownEditorConfiguration } from './appearance/markdown';
-import type { TextareaEditorConfiguration } from './appearance/textarea';
-import type { WysiwygEditorConfiguration } from './appearance/wysiwyg';
-import type { SanitizedHtmlValidator } from './validators';
-import type { FormatValidator } from './validators/format';
-import type { LengthValidator } from './validators/length';
-import type { RequiredValidator } from './validators/required';
+} from '../utilities/normalizedFieldValues.js';
+import type { MarkdownEditorConfiguration } from './appearance/markdown.js';
+import type { TextareaEditorConfiguration } from './appearance/textarea.js';
+import type { WysiwygEditorConfiguration } from './appearance/wysiwyg.js';
+import type { FormatValidator } from './validators/format.js';
+import type { SanitizedHtmlValidator } from './validators/index.js';
+import type { LengthValidator } from './validators/length.js';
+import type { RequiredValidator } from './validators/required.js';
 
 export type TextFieldValue = string | null;
 

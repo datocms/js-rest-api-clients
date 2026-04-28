@@ -1,10 +1,10 @@
 import { deserializeResponseBody } from '@datocms/rest-client-utils';
-import type * as ApiTypes from '../generated/ApiTypes';
-import type * as RawApiTypes from '../generated/RawApiTypes';
+import type * as ApiTypes from '../generated/ApiTypes.js';
+import type * as RawApiTypes from '../generated/RawApiTypes.js';
 import {
   blockModelIdsReferencedInField,
   modelIdsReferencedInField,
-} from './fieldsContainingReferences';
+} from './fieldsContainingReferences.js';
 
 interface GenericClient {
   itemTypes: {

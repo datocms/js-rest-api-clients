@@ -7,7 +7,7 @@ import {
 import {
   type OnProgressInfo,
   uploadFileOrBlobAndReturnPath,
-} from '../utils/uploadFileOrBlobAndReturnPath';
+} from '../utils/uploadFileOrBlobAndReturnPath.js';
 
 export type OnProgressCreatingUploadTrackObjectInfo = {
   type: 'CREATING_UPLOAD_TRACK_OBJECT';

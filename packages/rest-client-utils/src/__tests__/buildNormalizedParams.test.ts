@@ -1,4 +1,4 @@
-import { buildNormalizedParams } from '../buildNormalizedParams';
+import { buildNormalizedParams } from '../buildNormalizedParams.js';
 
 describe('buildNormalizedParams', () => {
   it('encodes complex params', async () => {

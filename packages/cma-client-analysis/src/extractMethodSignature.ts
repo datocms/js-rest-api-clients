@@ -1,5 +1,8 @@
 import ts from 'typescript';
-import { isPrimitiveOrBuiltInType, shouldIncludeTypeName } from './typeFilters';
+import {
+  isPrimitiveOrBuiltInType,
+  shouldIncludeTypeName,
+} from './typeFilters.js';
 
 export interface MethodSignatureInfo {
   methodName: string;

@@ -1,5 +1,5 @@
-import { pre, render } from './markdown';
-import type { HyperschemaLinkJsExample } from './types';
+import { pre, render } from './markdown.js';
+import type { HyperschemaLinkJsExample } from './types.js';
 
 /**
  * Renders a JavaScript example as a Markdown `<details>` block.

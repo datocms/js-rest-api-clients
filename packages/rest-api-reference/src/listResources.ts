@@ -1,9 +1,9 @@
 import {
   findHyperschemaEntity,
   findResourcesEntityByJsonApiType,
-} from './finders';
-import { code, h1, h2, li, p, render, ul } from './markdown';
-import type { Hyperschema, ResourcesSchema } from './types';
+} from './finders.js';
+import { code, h1, h2, li, p, render, ul } from './markdown.js';
+import type { Hyperschema, ResourcesSchema } from './types.js';
 
 /**
  * Returns a Markdown listing of all available API resources, grouped by theme.

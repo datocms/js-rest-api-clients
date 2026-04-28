@@ -1,7 +1,7 @@
 import * as Utils from '@datocms/rest-client-utils';
-import BaseResource from '../../BaseResource';
-import type * as ApiTypes from '../ApiTypes';
-import type * as RawApiTypes from '../RawApiTypes';
+import BaseResource from '../../BaseResource.js';
+import type * as ApiTypes from '../ApiTypes.js';
+import type * as RawApiTypes from '../RawApiTypes.js';
 
 export default class AccessToken extends BaseResource {
   static readonly TYPE = 'access_token' as const;

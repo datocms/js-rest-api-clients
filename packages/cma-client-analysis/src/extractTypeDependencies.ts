@@ -3,7 +3,7 @@ import {
   BUILT_IN_TYPE_NAMES,
   isFromTrackedPackage,
   isTypeParameter,
-} from './typeFilters';
+} from './typeFilters.js';
 
 export interface TypeExtractionResult {
   expandedTypes: string;

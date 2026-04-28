@@ -3,8 +3,8 @@ import {
   pollJobResult,
   request,
 } from '@datocms/rest-client-utils';
-import type { JobResult } from './ApiTypes';
-import * as Resources from './resources';
+import type { JobResult } from './ApiTypes.js';
+import * as Resources from './resources/index.js';
 
 export type RequestOptions = {
   method: 'GET' | 'PUT' | 'POST' | 'DELETE';

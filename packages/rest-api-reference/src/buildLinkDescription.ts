@@ -1,6 +1,6 @@
-import { collapseDetails } from './collapseDetails';
-import { renderExample } from './renderExample';
-import type { HyperschemaLink } from './types';
+import { collapseDetails } from './collapseDetails.js';
+import { renderExample } from './renderExample.js';
+import type { HyperschemaLink } from './types.js';
 
 /** Pattern matching inline example references (e.g. `::example[create-upload]`). */
 const exampleRefPattern = /::example\[([^\]]+)\]/g;

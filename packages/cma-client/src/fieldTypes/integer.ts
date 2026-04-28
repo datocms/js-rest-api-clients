@@ -1,10 +1,10 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { IntegerEditorConfiguration } from './appearance/integer';
-import type { NumberRangeValidator } from './validators/number_range';
-import type { RequiredValidator } from './validators/required';
+} from '../utilities/normalizedFieldValues.js';
+import type { IntegerEditorConfiguration } from './appearance/integer.js';
+import type { NumberRangeValidator } from './validators/number_range.js';
+import type { RequiredValidator } from './validators/required.js';
 
 export type IntegerFieldValue = number | null;
 

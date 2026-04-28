@@ -1,14 +1,14 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { FileEditorConfiguration } from './appearance/file';
-import type { ExtensionValidator } from './validators/extension';
-import type { FileSizeValidator } from './validators/file_size';
-import type { ImageAspectRatioValidator } from './validators/image_aspect_ratio';
-import type { ImageDimensionsValidator } from './validators/image_dimensions';
-import type { RequiredValidator } from './validators/required';
-import type { RequiredAltTitleValidator } from './validators/required_alt_title';
+} from '../utilities/normalizedFieldValues.js';
+import type { FileEditorConfiguration } from './appearance/file.js';
+import type { ExtensionValidator } from './validators/extension.js';
+import type { FileSizeValidator } from './validators/file_size.js';
+import type { ImageAspectRatioValidator } from './validators/image_aspect_ratio.js';
+import type { ImageDimensionsValidator } from './validators/image_dimensions.js';
+import type { RequiredValidator } from './validators/required.js';
+import type { RequiredAltTitleValidator } from './validators/required_alt_title.js';
 
 /**
  * FILE FIELD TYPE SYSTEM FOR DATOCMS

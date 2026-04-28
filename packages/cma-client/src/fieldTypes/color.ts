@@ -1,9 +1,9 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { ColorPickerEditorConfiguration } from './appearance/color_picker';
-import type { RequiredValidator } from './validators/required';
+} from '../utilities/normalizedFieldValues.js';
+import type { ColorPickerEditorConfiguration } from './appearance/color_picker.js';
+import type { RequiredValidator } from './validators/required.js';
 
 export type ColorFieldValue = {
   red: number;

@@ -1,14 +1,14 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { SeoEditorConfiguration } from './appearance/seo';
-import type { DescriptionLengthValidator } from './validators/description_length';
-import type { FileSizeValidator } from './validators/file_size';
-import type { ImageAspectRatioValidator } from './validators/image_aspect_ratio';
-import type { ImageDimensionsValidator } from './validators/image_dimensions';
-import type { RequiredSeoFieldsValidator } from './validators/required_seo_fields';
-import type { TitleLengthValidator } from './validators/title_length';
+} from '../utilities/normalizedFieldValues.js';
+import type { SeoEditorConfiguration } from './appearance/seo.js';
+import type { DescriptionLengthValidator } from './validators/description_length.js';
+import type { FileSizeValidator } from './validators/file_size.js';
+import type { ImageAspectRatioValidator } from './validators/image_aspect_ratio.js';
+import type { ImageDimensionsValidator } from './validators/image_dimensions.js';
+import type { RequiredSeoFieldsValidator } from './validators/required_seo_fields.js';
+import type { TitleLengthValidator } from './validators/title_length.js';
 
 export type SeoFieldValue = {
   title?: string | null;

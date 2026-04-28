@@ -1,11 +1,11 @@
 import * as Utils from '@datocms/rest-client-utils';
-import type { NewBlockInRequest } from '../fieldTypes';
-import type * as ApiTypes from '../generated/ApiTypes';
-import { Item } from '../generated/resources';
+import type { NewBlockInRequest } from '../fieldTypes/index.js';
+import type * as ApiTypes from '../generated/ApiTypes.js';
+import { Item } from '../generated/resources/index.js';
 import type {
   ItemTypeDefinition,
   ToItemAttributesInRequest,
-} from './itemDefinition';
+} from './itemDefinition.js';
 
 type NoInfer<T> = [T][T extends any ? 0 : never];
 

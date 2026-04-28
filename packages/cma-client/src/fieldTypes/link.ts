@@ -1,13 +1,13 @@
-import { isValidId } from '../utilities/id';
+import { isValidId } from '../utilities/id.js';
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { LinkEmbedEditorConfiguration } from './appearance/link_embed';
-import type { LinkSelectEditorConfiguration } from './appearance/link_select';
-import type { ItemItemTypeValidator } from './validators/item_item_type';
-import type { RequiredValidator } from './validators/required';
-import type { UniqueValidator } from './validators/unique';
+} from '../utilities/normalizedFieldValues.js';
+import type { LinkEmbedEditorConfiguration } from './appearance/link_embed.js';
+import type { LinkSelectEditorConfiguration } from './appearance/link_select.js';
+import type { ItemItemTypeValidator } from './validators/item_item_type.js';
+import type { RequiredValidator } from './validators/required.js';
+import type { UniqueValidator } from './validators/unique.js';
 
 export type LinkFieldValue = string | null;
 

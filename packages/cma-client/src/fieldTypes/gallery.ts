@@ -1,20 +1,20 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { GalleryEditorConfiguration } from './appearance/gallery';
+} from '../utilities/normalizedFieldValues.js';
+import type { GalleryEditorConfiguration } from './appearance/gallery.js';
 import {
   type FileFieldValue,
   type FileFieldValueInRequest,
   isFileFieldValue,
   isFileFieldValueInRequest,
-} from './file';
-import type { ExtensionValidator } from './validators/extension';
-import type { FileSizeValidator } from './validators/file_size';
-import type { ImageAspectRatioValidator } from './validators/image_aspect_ratio';
-import type { ImageDimensionsValidator } from './validators/image_dimensions';
-import type { RequiredAltTitleValidator } from './validators/required_alt_title';
-import type { SizeValidator } from './validators/size';
+} from './file.js';
+import type { ExtensionValidator } from './validators/extension.js';
+import type { FileSizeValidator } from './validators/file_size.js';
+import type { ImageAspectRatioValidator } from './validators/image_aspect_ratio.js';
+import type { ImageDimensionsValidator } from './validators/image_dimensions.js';
+import type { RequiredAltTitleValidator } from './validators/required_alt_title.js';
+import type { SizeValidator } from './validators/size.js';
 
 /**
  * Gallery field type system - similar to File field but for arrays.

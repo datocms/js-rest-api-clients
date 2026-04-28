@@ -1,19 +1,19 @@
-import { isValidId } from '../utilities/id';
-import type { ItemTypeDefinition } from '../utilities/itemDefinition';
+import { isValidId } from '../utilities/id.js';
+import type { ItemTypeDefinition } from '../utilities/itemDefinition.js';
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { RichTextEditorConfiguration } from './appearance/rich_text';
+} from '../utilities/normalizedFieldValues.js';
+import type { RichTextEditorConfiguration } from './appearance/rich_text.js';
 import {
   type BlockInNestedResponse,
   type BlockInRequest,
   isBlockObjectInRequest,
   isItemId,
   isItemWithOptionalMeta,
-} from './single_block';
-import type { RichTextBlocksValidator } from './validators/rich_text_blocks';
-import type { SizeValidator } from './validators/size';
+} from './single_block.js';
+import type { RichTextBlocksValidator } from './validators/rich_text_blocks.js';
+import type { SizeValidator } from './validators/size.js';
 
 /**
  * MODULAR CONTENT FIELD TYPE SYSTEM FOR DATOCMS

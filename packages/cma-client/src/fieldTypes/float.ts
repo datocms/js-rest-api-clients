@@ -1,10 +1,10 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { FloatEditorConfiguration } from './appearance/float';
-import type { NumberRangeValidator } from './validators/number_range';
-import type { RequiredValidator } from './validators/required';
+} from '../utilities/normalizedFieldValues.js';
+import type { FloatEditorConfiguration } from './appearance/float.js';
+import type { NumberRangeValidator } from './validators/number_range.js';
+import type { RequiredValidator } from './validators/required.js';
 
 export type FloatFieldValue = number | null;
 

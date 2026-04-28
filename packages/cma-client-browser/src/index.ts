@@ -263,8 +263,8 @@ export type {
 // </AUTO-GENERATED-EXPORTS>
 export { CanceledPromiseError } from '@datocms/rest-client-utils';
 export type { CancelablePromise } from '@datocms/rest-client-utils';
-export * from './buildClient';
-export * from './Client';
-export * as Resources from './generated/resources';
-export * from './utils/uploadFileOrBlobAndReturnPath';
-export * from './utils/uploadFileOrBlobToS3';
+export * from './buildClient.js';
+export * from './Client.js';
+export * as Resources from './generated/resources.js';
+export * from './utils/uploadFileOrBlobAndReturnPath.js';
+export * from './utils/uploadFileOrBlobToS3.js';

@@ -3,6 +3,9 @@ module.exports = {
   testEnvironment: "node",
   testTimeout: 240000,
   testMatch: ["**/*.test.ts"],
+  moduleNameMapper: {
+    "^(\\.{1,2}/.*)\\.js$": "$1",
+  },
   transformIgnorePatterns: [
     "/packages/cma-client-node/node_modules/(?!(got|p-cancelable|@szmarczak|lowercase-keys)/)",
   ],

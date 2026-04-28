@@ -1,11 +1,11 @@
-import { buildLinkDescription } from './buildLinkDescription';
+import { buildLinkDescription } from './buildLinkDescription.js';
 import {
   findHyperschemaLink,
   findResourcesEndpointByRel,
   findResourcesEntityByNamespace,
-} from './finders';
-import { h1, render } from './markdown';
-import type { Hyperschema, ResourcesSchema } from './types';
+} from './finders.js';
+import { h1, render } from './markdown.js';
+import type { Hyperschema, ResourcesSchema } from './types.js';
 
 /**
  * Returns a Markdown description of a specific resource action, including

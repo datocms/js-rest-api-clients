@@ -3,7 +3,7 @@
     GenericFieldAttributes,
     FieldCreateConfig,
     FieldUpdateConfig,
-  } from '../fieldTypes/schema';
+  } from '../fieldTypes/schema.js';
 
   import type {
     ItemTypeDefinition,
@@ -12,7 +12,7 @@
     ToItemAttributesInNestedResponse,
     ToItemHrefSchemaField,
     ToItemHrefSchemaOrderBy,
-  } from '../utilities/itemDefinition';
+  } from '../utilities/itemDefinition.js';
 
   {{#if simpleVariant}}
   export type Field = GenericFieldAttributes<FieldStableShell>;

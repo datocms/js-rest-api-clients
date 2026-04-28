@@ -1,18 +1,18 @@
-import type * as RawApiTypes from '../generated/RawApiTypes';
-import { isValidId } from '../utilities/id';
+import type * as RawApiTypes from '../generated/RawApiTypes.js';
+import { isValidId } from '../utilities/id.js';
 import type {
   ItemTypeDefinition,
   ToItemAttributesInRequest,
-} from '../utilities/itemDefinition';
+} from '../utilities/itemDefinition.js';
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
+} from '../utilities/normalizedFieldValues.js';
 
-import type { FramedSingleBlockEditorConfiguration } from './appearance/framed_single_block';
-import type { FramelessSingleBlockEditorConfiguration } from './appearance/frameless_single_block';
-import type { RequiredValidator } from './validators/required';
-import type { SingleBlockBlocksValidator } from './validators/single_block_blocks';
+import type { FramedSingleBlockEditorConfiguration } from './appearance/framed_single_block.js';
+import type { FramelessSingleBlockEditorConfiguration } from './appearance/frameless_single_block.js';
+import type { RequiredValidator } from './validators/required.js';
+import type { SingleBlockBlocksValidator } from './validators/single_block_blocks.js';
 
 /**
  * SINGLE BLOCK FIELD TYPE SYSTEM FOR DATOCMS

@@ -64,12 +64,12 @@ import {
   isStructuredTextFieldValueInRequest,
   isTextFieldValue,
   isVideoFieldValue,
-} from '../fieldTypes';
-import { Item as ItemResource } from '../generated/resources';
+} from '../fieldTypes/index.js';
+import { Item as ItemResource } from '../generated/resources/index.js';
 
-import type { ApiTypes, RawApiTypes } from '../index';
-import type { LocalizedFieldValue } from './normalizedFieldValues';
-import { isLocalizedFieldValue } from './normalizedFieldValues';
+import type { ApiTypes, RawApiTypes } from '../index.js';
+import type { LocalizedFieldValue } from './normalizedFieldValues.js';
+import { isLocalizedFieldValue } from './normalizedFieldValues.js';
 
 type Item =
   | ApiTypes.Item

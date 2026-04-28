@@ -1,10 +1,10 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { DatePickerEditorConfiguration } from './appearance/date_picker';
-import type { DateRangeValidator } from './validators/date_range';
-import type { RequiredValidator } from './validators/required';
+} from '../utilities/normalizedFieldValues.js';
+import type { DatePickerEditorConfiguration } from './appearance/date_picker.js';
+import type { DateRangeValidator } from './validators/date_range.js';
+import type { RequiredValidator } from './validators/required.js';
 
 export type DateFieldValue = string | null;
 

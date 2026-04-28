@@ -1,5 +1,5 @@
-import type * as ApiTypes from '../generated/ApiTypes';
-import type * as RawApiTypes from '../generated/RawApiTypes';
+import type * as ApiTypes from '../generated/ApiTypes.js';
+import type * as RawApiTypes from '../generated/RawApiTypes.js';
 
 /*
  * Localized Field Value Operations Utilities

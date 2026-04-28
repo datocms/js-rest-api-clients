@@ -1,5 +1,5 @@
 import $RefParser from '@apidevtools/json-schema-ref-parser';
-import type { Hyperschema } from './types';
+import type { Hyperschema } from './types.js';
 
 const KNOWN_URLS: Record<string, string> = {
   cma: 'https://site-api.datocms.com/docs/site-api-hyperschema.json',

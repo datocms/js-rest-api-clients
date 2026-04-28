@@ -1,18 +1,18 @@
 /// <reference lib="dom" />
 
-import { buildNormalizedParams } from './buildNormalizedParams';
+import { buildNormalizedParams } from './buildNormalizedParams.js';
 import {
   ApiError,
   type ApiErrorInitObject,
   TimeoutError,
   type TimeoutErrorInitObject,
-} from './errors';
-import type { JobResult } from './internalTypes';
+} from './errors.js';
+import type { JobResult } from './internalTypes.js';
 import {
   CanceledPromiseError,
   makeCancelablePromise,
-} from './makeCancelablePromise';
-import { wait } from './wait';
+} from './makeCancelablePromise.js';
+import { wait } from './wait.js';
 
 const isBrowser =
   typeof window !== 'undefined' && typeof window.document !== 'undefined';

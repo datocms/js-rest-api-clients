@@ -1,9 +1,9 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { MapEditorConfiguration } from './appearance/map';
-import type { RequiredValidator } from './validators/required';
+} from '../utilities/normalizedFieldValues.js';
+import type { MapEditorConfiguration } from './appearance/map.js';
+import type { RequiredValidator } from './validators/required.js';
 
 export type LatLonFieldValue = {
   latitude: number;

@@ -1,10 +1,10 @@
-export { fetchHyperschema } from './fetchHyperschema';
-export { parseResourcesSchema } from './parseResourcesSchema';
-export type { RawResourcesSchema } from './parseResourcesSchema';
+export { fetchHyperschema } from './fetchHyperschema.js';
+export { parseResourcesSchema } from './parseResourcesSchema.js';
+export type { RawResourcesSchema } from './parseResourcesSchema.js';
 
-export { listResources } from './listResources';
-export { describeResource } from './describeResource';
-export { describeResourceAction } from './describeResourceAction';
+export { listResources } from './listResources.js';
+export { describeResource } from './describeResource.js';
+export { describeResourceAction } from './describeResourceAction.js';
 
 export {
   findHyperschemaEntity,
@@ -12,11 +12,11 @@ export {
   findResourcesEntityByJsonApiType,
   findResourcesEntityByNamespace,
   findResourcesEndpointByRel,
-} from './finders';
+} from './finders.js';
 
-export { buildLinkDescription } from './buildLinkDescription';
-export { collapseDetails } from './collapseDetails';
-export { renderExample } from './renderExample';
+export { buildLinkDescription } from './buildLinkDescription.js';
+export { collapseDetails } from './collapseDetails.js';
+export { renderExample } from './renderExample.js';
 
 export {
   render,
@@ -35,7 +35,7 @@ export {
   blockquote,
   hr,
   br,
-} from './markdown';
+} from './markdown.js';
 
 export type {
   Hyperschema,
@@ -48,4 +48,4 @@ export type {
   ResourcesEntity,
   ResourcesEndpoint,
   ResourcesRawEndpoint,
-} from './types';
+} from './types.js';

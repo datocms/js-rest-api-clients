@@ -1,8 +1,8 @@
 import {
   JobResultsFetcher,
   type SubscribeToEventsSubscriptionConfig,
-} from './JobResultsFetcher';
-import type { GenericClient } from './internalTypes';
+} from './JobResultsFetcher.js';
+import type { GenericClient } from './internalTypes.js';
 
 type UnsubscribeToEventsFn = () => void;
 

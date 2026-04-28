@@ -1,10 +1,10 @@
 import type {
   ItemWithOptionalIdAndMeta,
   NewBlockInRequest,
-} from '../fieldTypes';
-import type { ItemTypeDefinition } from './itemDefinition';
-import { mapBlocksInNonLocalizedFieldValue } from './recursiveBlocks';
-import type { SchemaRepository } from './schemaRepository';
+} from '../fieldTypes/index.js';
+import type { ItemTypeDefinition } from './itemDefinition.js';
+import { mapBlocksInNonLocalizedFieldValue } from './recursiveBlocks.js';
+import type { SchemaRepository } from './schemaRepository.js';
 
 type NoInfer<T> = [T][T extends any ? 0 : never];
 

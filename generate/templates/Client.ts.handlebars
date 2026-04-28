@@ -1,6 +1,6 @@
-import * as Resources from './resources';
+import * as Resources from './resources/index.js';
 import { request, pollJobResult, LogLevel } from '@datocms/rest-client-utils';
-import { JobResult } from './ApiTypes';
+import { JobResult } from './ApiTypes.js';
 
 export type RequestOptions = {
   method: 'GET' | 'PUT' | 'POST' | 'DELETE';

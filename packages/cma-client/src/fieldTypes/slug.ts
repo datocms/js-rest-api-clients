@@ -1,13 +1,13 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { SlugEditorConfiguration } from './appearance/slug';
-import type { UniqueValidator } from './validators';
-import type { LengthValidator } from './validators/length';
-import type { RequiredValidator } from './validators/required';
-import type { SlugFormatValidator } from './validators/slug_format';
-import type { SlugTitleFieldValidator } from './validators/slug_title_field';
+} from '../utilities/normalizedFieldValues.js';
+import type { SlugEditorConfiguration } from './appearance/slug.js';
+import type { UniqueValidator } from './validators/index.js';
+import type { LengthValidator } from './validators/length.js';
+import type { RequiredValidator } from './validators/required.js';
+import type { SlugFormatValidator } from './validators/slug_format.js';
+import type { SlugTitleFieldValidator } from './validators/slug_title_field.js';
 
 export type SlugFieldValue = string | null;
 

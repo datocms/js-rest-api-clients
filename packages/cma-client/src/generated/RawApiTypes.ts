@@ -2,7 +2,7 @@ import type {
   FieldCreateConfig,
   FieldUpdateConfig,
   GenericFieldAttributes,
-} from '../fieldTypes/schema';
+} from '../fieldTypes/schema.js';
 
 import type {
   ItemTypeDefinition,
@@ -11,7 +11,7 @@ import type {
   ToItemAttributesInRequest,
   ToItemHrefSchemaField,
   ToItemHrefSchemaOrderBy,
-} from '../utilities/itemDefinition';
+} from '../utilities/itemDefinition.js';
 
 export type Field = FieldStableShell;
 

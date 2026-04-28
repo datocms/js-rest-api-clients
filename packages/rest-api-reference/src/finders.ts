@@ -5,7 +5,7 @@ import type {
   ResourcesEndpoint,
   ResourcesEntity,
   ResourcesSchema,
-} from './types';
+} from './types.js';
 
 // ---------------------------------------------------------------------------
 // Hyperschema finders

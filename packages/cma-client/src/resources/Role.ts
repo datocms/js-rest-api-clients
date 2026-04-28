@@ -1,5 +1,5 @@
-import type * as ApiTypes from '../generated/ApiTypes';
-import BaseRole from '../generated/resources/Role';
+import type * as ApiTypes from '../generated/ApiTypes.js';
+import BaseRole from '../generated/resources/Role.js';
 
 export type UpdateRoleDiff<T> = {
   add?: Omit<T, 'environment'>[];

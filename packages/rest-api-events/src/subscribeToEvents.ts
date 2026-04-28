@@ -1,5 +1,5 @@
 import Pusher, { type Channel, type Options } from 'pusher-js';
-import type { JobResult } from './internalTypes';
+import type { JobResult } from './internalTypes.js';
 
 export type EventsSubscription = {
   channel: Channel;

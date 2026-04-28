@@ -10,9 +10,9 @@ import {
   type StructuredTextFieldValueInNestedResponse,
   type StructuredTextFieldValueInRequest,
   isItemWithOptionalIdAndMeta,
-} from '../fieldTypes';
-import type * as ApiTypes from '../generated/ApiTypes';
-import type { ExtractNestedBlocksFromFieldValue } from './itemDefinition';
+} from '../fieldTypes/index.js';
+import type * as ApiTypes from '../generated/ApiTypes.js';
+import type { ExtractNestedBlocksFromFieldValue } from './itemDefinition.js';
 import {
   nonRecursiveFilterBlocksInNonLocalizedFieldValueAsync,
   nonRecursiveFindAllBlocksInNonLocalizedFieldValueAsync,
@@ -20,8 +20,8 @@ import {
   nonRecursiveReduceBlocksInNonLocalizedFieldValueAsync,
   nonRecursiveSomeBlocksInNonLocalizedFieldValueAsync,
   nonRecursiveVisitBlocksInNonLocalizedFieldValueAsync,
-} from './nonRecursiveBlocks';
-import type { SchemaRepository } from './schemaRepository';
+} from './nonRecursiveBlocks.js';
+import type { SchemaRepository } from './schemaRepository.js';
 
 type RecognizableFieldValue =
   | RichTextFieldValueInNestedResponse

@@ -5,7 +5,7 @@ import {
   CanceledPromiseError,
   makeCancelablePromise,
 } from '@datocms/rest-client-utils';
-import { uploadLocalFileToS3 } from './uploadLocalFileToS3';
+import { uploadLocalFileToS3 } from './uploadLocalFileToS3.js';
 
 export type OnProgressDownloadingFileInfo = {
   type: 'DOWNLOADING_FILE';

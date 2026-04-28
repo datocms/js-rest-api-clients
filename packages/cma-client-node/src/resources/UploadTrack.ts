@@ -7,7 +7,7 @@ import {
 import {
   type OnProgressInfo,
   uploadLocalFileAndReturnPath,
-} from '../utils/uploadLocalFileAndReturnPath';
+} from '../utils/uploadLocalFileAndReturnPath.js';
 
 export type OnProgressCreatingUploadTrackObjectInfo = {
   type: 'CREATING_UPLOAD_TRACK_OBJECT';

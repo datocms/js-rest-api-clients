@@ -40,8 +40,8 @@ import type {
   StructuredTextFieldValue,
   StructuredTextFieldValueInNestedResponse,
   StructuredTextFieldValueInRequest,
-} from '../fieldTypes';
-import type * as ApiTypes from '../generated/ApiTypes';
+} from '../fieldTypes/index.js';
+import type * as ApiTypes from '../generated/ApiTypes.js';
 
 type PossibleRichTextValue =
   | RichTextFieldValue

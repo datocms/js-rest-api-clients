@@ -2,7 +2,7 @@ import type {
   ResourcesEndpoint,
   ResourcesRawEndpoint,
   ResourcesSchema,
-} from './types';
+} from './types.js';
 
 /**
  * Raw schema structure as stored in a resources.json file.

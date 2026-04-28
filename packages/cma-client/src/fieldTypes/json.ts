@@ -1,11 +1,11 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { JsonEditorConfiguration } from './appearance/json';
-import type { StringCheckboxGroupEditorConfiguration } from './appearance/string_checkbox_group';
-import type { StringMultiSelectEditorConfiguration } from './appearance/string_multi_select';
-import type { RequiredValidator } from './validators/required';
+} from '../utilities/normalizedFieldValues.js';
+import type { JsonEditorConfiguration } from './appearance/json.js';
+import type { StringCheckboxGroupEditorConfiguration } from './appearance/string_checkbox_group.js';
+import type { StringMultiSelectEditorConfiguration } from './appearance/string_multi_select.js';
+import type { RequiredValidator } from './validators/required.js';
 
 export type JsonFieldValue = string | null;
 

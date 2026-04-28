@@ -1,9 +1,9 @@
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { VideoEditorConfiguration } from './appearance/video';
-import type { RequiredValidator } from './validators/required';
+} from '../utilities/normalizedFieldValues.js';
+import type { VideoEditorConfiguration } from './appearance/video.js';
+import type { RequiredValidator } from './validators/required.js';
 
 export type VideoFieldValue = {
   provider: 'youtube' | 'vimeo' | 'facebook';

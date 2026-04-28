@@ -8,7 +8,7 @@ import {
   type request,
 } from '@datocms/rest-client-utils';
 import mime from 'mime-types';
-import type { OnProgressInfo } from './uploadLocalFileAndReturnPath';
+import type { OnProgressInfo } from './uploadLocalFileAndReturnPath.js';
 
 type Options = {
   onProgress?: (info: OnProgressInfo) => void;

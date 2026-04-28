@@ -1,10 +1,10 @@
 import type { ResourcesEndpoint } from '@datocms/rest-api-reference';
 import type ts from 'typescript';
-import { extractAllMethodNames } from './extractAllMethodNames';
+import { extractAllMethodNames } from './extractAllMethodNames.js';
 import {
   extractMethodSignature,
   formatMethodSignature,
-} from './extractMethodSignature';
+} from './extractMethodSignature.js';
 
 /**
  * Represents a method extracted from the JS Client for a specific endpoint.

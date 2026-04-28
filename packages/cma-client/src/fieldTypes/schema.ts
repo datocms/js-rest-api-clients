@@ -50,7 +50,7 @@ import type {
   VideoFieldAppearance,
   VideoFieldValidators,
 } from '..';
-import type { FieldAttributesStableShell } from '../generated/RawApiTypes';
+import type { FieldAttributesStableShell } from '../generated/RawApiTypes.js';
 
 /**
  * Enhanced appearance configuration with field-specific types and addon support

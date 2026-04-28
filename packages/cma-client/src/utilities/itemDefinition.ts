@@ -29,7 +29,7 @@ import type {
   StructuredTextFieldValueInRequest,
   TextFieldValue,
   VideoFieldValue,
-} from '../fieldTypes';
+} from '../fieldTypes/index.js';
 import type {
   BooleanHrefFilter,
   ColorHrefFilter,
@@ -55,8 +55,8 @@ import type {
   StructuredTextHrefFilter,
   TextHrefFilter,
   VideoHrefFilter,
-} from './itemInstancesHrefSchema';
-import type { LocalizedFieldValue } from './normalizedFieldValues';
+} from './itemInstancesHrefSchema.js';
+import type { LocalizedFieldValue } from './normalizedFieldValues.js';
 
 /** Base field definition */
 type BaseFieldDefinition<Type extends string> = {

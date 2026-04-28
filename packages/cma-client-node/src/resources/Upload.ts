@@ -4,12 +4,12 @@ import {
   CanceledPromiseError,
   makeCancelablePromise,
 } from '@datocms/rest-client-utils';
-import { type DownloadResult, downloadFile } from '../utils/downloadFile';
-import md5 from '../utils/md5';
+import { type DownloadResult, downloadFile } from '../utils/downloadFile.js';
+import md5 from '../utils/md5.js';
 import {
   type OnProgressInfo,
   uploadLocalFileAndReturnPath,
-} from '../utils/uploadLocalFileAndReturnPath';
+} from '../utils/uploadLocalFileAndReturnPath.js';
 
 export type OnProgressCreatingUploadObjectInfo = {
   type: 'CREATING_UPLOAD_OBJECT';

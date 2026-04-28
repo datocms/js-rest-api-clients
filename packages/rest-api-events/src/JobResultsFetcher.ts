@@ -1,9 +1,9 @@
-import type { GenericClient, JobResult } from './internalTypes';
+import type { GenericClient, JobResult } from './internalTypes.js';
 import {
   type EventsSubscription,
   type SubscriptionConfig,
   subscribeToEvents,
-} from './subscribeToEvents';
+} from './subscribeToEvents.js';
 
 export type SubscribeToEventsSubscriptionConfig = Pick<
   SubscriptionConfig,

@@ -1,8 +1,8 @@
 import * as Utils from '@datocms/rest-client-utils';
-import BaseResource from '../../BaseResource';
-import type { ItemTypeDefinition } from '../../utilities/itemDefinition';
-import type * as ApiTypes from '../ApiTypes';
-import type * as RawApiTypes from '../RawApiTypes';
+import BaseResource from '../../BaseResource.js';
+import type { ItemTypeDefinition } from '../../utilities/itemDefinition.js';
+import type * as ApiTypes from '../ApiTypes.js';
+import type * as RawApiTypes from '../RawApiTypes.js';
 
 type NoInfer<T> = [T][T extends any ? 0 : never];
 

@@ -1,5 +1,5 @@
 import { Scheduler } from 'async-scheduler';
-import { deserializeRawItem } from './deserialize';
+import { deserializeRawItem } from './deserialize.js';
 
 export type IteratorOptions = {
   perPage?: number;

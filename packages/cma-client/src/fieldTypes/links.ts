@@ -1,12 +1,12 @@
-import { isValidId } from '../utilities/id';
+import { isValidId } from '../utilities/id.js';
 import {
   type LocalizedFieldValue,
   isLocalizedFieldValue,
-} from '../utilities/normalizedFieldValues';
-import type { LinksEmbedEditorConfiguration } from './appearance/links_embed';
-import type { LinksSelectEditorConfiguration } from './appearance/links_select';
-import type { ItemsItemTypeValidator } from './validators/items_item_type';
-import type { SizeValidator } from './validators/size';
+} from '../utilities/normalizedFieldValues.js';
+import type { LinksEmbedEditorConfiguration } from './appearance/links_embed.js';
+import type { LinksSelectEditorConfiguration } from './appearance/links_select.js';
+import type { ItemsItemTypeValidator } from './validators/items_item_type.js';
+import type { SizeValidator } from './validators/size.js';
 
 export type LinksFieldValue = string[];
 

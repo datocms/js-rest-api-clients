@@ -2,7 +2,7 @@ import {
   Client as BaseClient,
   type ClientConfigOptions,
 } from '@datocms/cma-client';
-import * as Resources from './generated/resources';
+import * as Resources from './generated/resources.js';
 
 export class Client extends BaseClient {
   uploads: Resources.Upload;

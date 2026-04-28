@@ -1,10 +1,10 @@
-import { collapseDetails } from './collapseDetails';
+import { collapseDetails } from './collapseDetails.js';
 import {
   findHyperschemaEntity,
   findResourcesEntityByNamespace,
-} from './finders';
-import { code, h1, li, p, render, ul } from './markdown';
-import type { Hyperschema, ResourcesSchema } from './types';
+} from './finders.js';
+import { code, h1, li, p, render, ul } from './markdown.js';
+import type { Hyperschema, ResourcesSchema } from './types.js';
 
 /**
  * Returns a Markdown description of a single resource and its available

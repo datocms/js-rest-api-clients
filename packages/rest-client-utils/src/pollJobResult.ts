@@ -1,6 +1,6 @@
-import { ApiError } from './errors';
-import type { JobResult } from './internalTypes';
-import { wait } from './wait';
+import { ApiError } from './errors.js';
+import type { JobResult } from './internalTypes.js';
+import { wait } from './wait.js';
 
 export async function pollJobResult(
   fetcher: () => Promise<JobResult>,
