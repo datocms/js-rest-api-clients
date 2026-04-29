@@ -66,6 +66,13 @@ export type FieldValueInRequest<
  *
  * The first parameter accepts any item-shaped value the CMA produces, or an
  * `ItemTypeDefinition` directly.
+ *
+ * @example
+ * // Read nested, then collect just the block IDs for an outline view.
+ * const page = await client.items.find<LandingPage>(id, { nested: true });
+ * const sectionIds: FieldValue<typeof page, 'sections'> = page.sections.map(
+ *   (block) => block.id,
+ * );
  */
 export type FieldValue<
   T,
@@ -82,6 +89,11 @@ export type FieldValue<
  *
  * The first parameter accepts any item-shaped value the CMA produces, or an
  * `ItemTypeDefinition` directly.
+ *
+ * @example
+ * const page = await client.items.find<LandingPage>(id, { nested: true });
+ * const sections: FieldValueInNestedResponse<typeof page, 'sections'> = page.sections;
+ * // sections elements are full block objects, not ID strings.
  */
 export type FieldValueInNestedResponse<
   T,

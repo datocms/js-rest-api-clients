@@ -145,87 +145,6 @@ describe('FieldValueInRequest', () => {
     });
   });
 
-  describe('FieldValue (standard response)', () => {
-    it('resolves to the response shape (block fields are ID strings)', () => {
-      // In a non-nested response, modular-content fields come back as arrays
-      // of block ID strings — not as full block objects.
-      type Sections = NonNullable<
-        FieldValue<ApiTypes.Item<LandingPage>, 'sections'>
-      >;
-      const sections: Sections = ['blockId0000000000001'];
-      expect(sections).toHaveLength(1);
-    });
-
-    it('accepts an ItemTypeDefinition passed directly', () => {
-      type Title = FieldValue<LandingPage, 'title'>;
-      const title: Title = 'hello';
-      expect(title).toBe('hello');
-    });
-  });
-
-  describe('FieldValueInNestedResponse', () => {
-    it('resolves to the nested-response shape (block fields are inlined objects, not ID strings)', () => {
-      // With { nested: true }, modular-content elements are full
-      // nested-response block objects (the raw JSON:API shape with
-      // `relationships` / `attributes`) — not ID strings.
-      type Sections = NonNullable<
-        FieldValueInNestedResponse<
-          ApiTypes.ItemInNestedResponse<LandingPage>,
-          'sections'
-        >
-      >;
-      type Element = Sections[number];
-
-      // A nested-response SessionBlock must be assignable to Element —
-      // proving the element type carries the full block shape.
-      const block = {} as RawApiTypes.ItemInNestedResponse<SessionBlock>;
-      const ok: Element = block;
-      void ok;
-
-      // @ts-expect-error — bare ID strings are the *non*-nested shape; in
-      // nested mode the element is an object, so a string is rejected.
-      const bad: Element = 'someBlockId000000001';
-      void bad;
-
-      expect(true).toBe(true);
-    });
-
-    it('accepts an ItemTypeDefinition passed directly', () => {
-      type Label = FieldValueInNestedResponse<SessionBlock, 'label'>;
-      const label: Label = 'hello';
-      expect(label).toBe('hello');
-    });
-  });
-
-  describe('field key constraint (FieldValue, FieldValueInNestedResponse)', () => {
-    // Mirrors the FieldValueInRequest test above: the K extends … constraint
-    // is per-type, so we re-prove it for each variant. Beyond the compile
-    // error, the body must resolve to `never` — only `never` is assignable
-    // to `never`.
-
-    it('FieldValue rejects unknown field keys and resolves the body to `never`', () => {
-      // @ts-expect-error — `'nonexistent'` isn't a key of LandingPage's attributes shape.
-      type Bad = FieldValue<ApiTypes.Item<LandingPage>, 'nonexistent'>;
-      const probe = undefined as unknown as Bad;
-      const asNever: never = probe;
-      void asNever;
-      expect(true).toBe(true);
-    });
-
-    it('FieldValueInNestedResponse rejects unknown field keys and resolves the body to `never`', () => {
-      // prettier-ignore
-      // @ts-expect-error — `'nonexistent'` isn't a key of LandingPage's nested-response attributes shape.
-      type Bad = FieldValueInNestedResponse<
-        ApiTypes.ItemInNestedResponse<LandingPage>,
-        'nonexistent'
-      >;
-      const probe = undefined as unknown as Bad;
-      const asNever: never = probe;
-      void asNever;
-      expect(true).toBe(true);
-    });
-  });
-
   describe('round trip with buildBlockRecord', () => {
     it('lets you collect mixed string IDs and built blocks into a typed array', () => {
       // The canonical use case: read a nested-mode record, rebuild the field
@@ -240,5 +159,85 @@ describe('FieldValueInRequest', () => {
 
       expect(sections).toHaveLength(2);
     });
+  });
+});
+
+describe('FieldValue', () => {
+  it('resolves to the response shape (block fields are ID strings)', () => {
+    // In a non-nested response, modular-content fields come back as arrays
+    // of block ID strings — not as full block objects.
+    type Sections = NonNullable<
+      FieldValue<ApiTypes.Item<LandingPage>, 'sections'>
+    >;
+    const sections: Sections = ['blockId0000000000001'];
+    expect(sections).toHaveLength(1);
+  });
+
+  it('accepts an ItemTypeDefinition passed directly', () => {
+    type Title = FieldValue<LandingPage, 'title'>;
+    const title: Title = 'hello';
+    expect(title).toBe('hello');
+  });
+
+  it('rejects unknown field keys and resolves the body to `never`', () => {
+    // The K extends … constraint is per-type, so we re-prove it for each
+    // variant. Beyond the compile error, the body must resolve to `never` —
+    // only `never` is assignable to `never`.
+    // @ts-expect-error — `'nonexistent'` isn't a key of LandingPage's attributes shape.
+    type Bad = FieldValue<ApiTypes.Item<LandingPage>, 'nonexistent'>;
+    const probe = undefined as unknown as Bad;
+    const asNever: never = probe;
+    void asNever;
+    expect(true).toBe(true);
+  });
+});
+
+describe('FieldValueInNestedResponse', () => {
+  it('resolves to the nested-response shape (block fields are inlined objects, not ID strings)', () => {
+    // With { nested: true }, modular-content elements are full
+    // nested-response block objects (the raw JSON:API shape with
+    // `relationships` / `attributes`) — not ID strings.
+    type Sections = NonNullable<
+      FieldValueInNestedResponse<
+        ApiTypes.ItemInNestedResponse<LandingPage>,
+        'sections'
+      >
+    >;
+    type Element = Sections[number];
+
+    // A nested-response SessionBlock must be assignable to Element —
+    // proving the element type carries the full block shape.
+    const block = {} as RawApiTypes.ItemInNestedResponse<SessionBlock>;
+    const ok: Element = block;
+    void ok;
+
+    // @ts-expect-error — bare ID strings are the *non*-nested shape; in
+    // nested mode the element is an object, so a string is rejected.
+    const bad: Element = 'someBlockId000000001';
+    void bad;
+
+    expect(true).toBe(true);
+  });
+
+  it('accepts an ItemTypeDefinition passed directly', () => {
+    type Label = FieldValueInNestedResponse<SessionBlock, 'label'>;
+    const label: Label = 'hello';
+    expect(label).toBe('hello');
+  });
+
+  it('rejects unknown field keys and resolves the body to `never`', () => {
+    // The K extends … constraint is per-type, so we re-prove it for each
+    // variant. Beyond the compile error, the body must resolve to `never` —
+    // only `never` is assignable to `never`.
+    // The intermediate alias keeps the `type Bad =` line short enough that
+    // no formatter wraps it — the `@ts-expect-error` directive only
+    // suppresses errors on the immediately-following line.
+    type NestedPage = ApiTypes.ItemInNestedResponse<LandingPage>;
+    // @ts-expect-error — `'nonexistent'` isn't a key of LandingPage's nested-response attributes shape.
+    type Bad = FieldValueInNestedResponse<NestedPage, 'nonexistent'>;
+    const probe = undefined as unknown as Bad;
+    const asNever: never = probe;
+    void asNever;
+    expect(true).toBe(true);
   });
 });
