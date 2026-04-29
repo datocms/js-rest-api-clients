@@ -128,6 +128,7 @@ export type {
   ExtensionValidator,
   ExtractNestedBlocksFromFieldValue,
   FieldDefinition,
+  FieldValueInRequest,
   FileEditorConfiguration,
   FileFieldAppearance,
   FileFieldValidators,
