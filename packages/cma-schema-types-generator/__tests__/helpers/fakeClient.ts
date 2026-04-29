@@ -51,7 +51,6 @@ export function fakeClient(opts: {
 }) {
   return {
     site: {
-      // biome-ignore lint/suspicious/noExplicitAny: test fake matches structural shape only
       rawFind: async (_params: { include: string }): Promise<any> => ({
         data: {
           attributes: { locales: opts.locales },
@@ -59,6 +58,5 @@ export function fakeClient(opts: {
         included: [...opts.itemTypes, ...opts.fields],
       }),
     },
-    // biome-ignore lint/suspicious/noExplicitAny: cast for structural compatibility
   } as any;
 }
