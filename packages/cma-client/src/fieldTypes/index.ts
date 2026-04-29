@@ -1,16 +1,23 @@
 import type * as ApiTypes from '../generated/ApiTypes.js';
 import type * as RawApiTypes from '../generated/RawApiTypes.js';
-import type { ToItemAttributesInRequest } from '../utilities/itemDefinition.js';
+import type {
+  ItemTypeDefinition,
+  ToItemAttributes,
+  ToItemAttributesInNestedResponse,
+  ToItemAttributesInRequest,
+} from '../utilities/itemDefinition.js';
 
-type ItemTypeDefinitionOf<T> = T extends ApiTypes.Item<infer D>
-  ? D
-  : T extends ApiTypes.ItemInNestedResponse<infer D>
+type ItemTypeDefinitionOf<T> = T extends ItemTypeDefinition<any, any, any>
+  ? T
+  : T extends ApiTypes.Item<infer D>
     ? D
-    : T extends RawApiTypes.Item<infer D>
+    : T extends ApiTypes.ItemInNestedResponse<infer D>
       ? D
-      : T extends RawApiTypes.ItemInNestedResponse<infer D>
+      : T extends RawApiTypes.Item<infer D>
         ? D
-        : never;
+        : T extends RawApiTypes.ItemInNestedResponse<infer D>
+          ? D
+          : never;
 
 /**
  * Given a record or block you've read from the CMA and one of its field keys,
@@ -23,10 +30,9 @@ type ItemTypeDefinitionOf<T> = T extends ApiTypes.Item<infer D>
  *
  * The first parameter accepts any item-shaped value the CMA produces:
  * top-level records as well as nested blocks inside a parent record's
- * modular-content / structured-text / single-block field.
- *
- * The resulting type preserves `null`. Every CMA field can be cleared by
- * sending `null`, so the type reflects that.
+ * modular-content / structured-text / single-block field. You can also pass
+ * an `ItemTypeDefinition` directly when you already have the definition type
+ * in hand and don't need to round-trip through an `ApiTypes.Item<…>` shape.
  *
  * @example
  * // Read a record with nested blocks, edit one block, write the whole field
@@ -50,6 +56,38 @@ export type FieldValueInRequest<
   K extends keyof ToItemAttributesInRequest<ItemTypeDefinitionOf<T>>,
 > = K extends keyof ToItemAttributesInRequest<ItemTypeDefinitionOf<T>>
   ? Required<ToItemAttributesInRequest<ItemTypeDefinitionOf<T>>>[K]
+  : never;
+
+/**
+ * Given a record or block you've read from the CMA and one of its field keys,
+ * resolves to the field's value type as it appears in a standard (non-nested)
+ * response — for example, what you'd read off `record.attributes[fieldKey]`
+ * after `client.items.find(id)`.
+ *
+ * The first parameter accepts any item-shaped value the CMA produces, or an
+ * `ItemTypeDefinition` directly.
+ */
+export type FieldValue<
+  T,
+  K extends keyof ToItemAttributes<ItemTypeDefinitionOf<T>>,
+> = K extends keyof ToItemAttributes<ItemTypeDefinitionOf<T>>
+  ? ToItemAttributes<ItemTypeDefinitionOf<T>>[K]
+  : never;
+
+/**
+ * Given a record or block you've read from the CMA and one of its field keys,
+ * resolves to the field's value type in a nested response — i.e. what you'd
+ * read off the field after `client.items.find(id, { nested: true })`, where
+ * blocks are inlined as full objects instead of ID strings.
+ *
+ * The first parameter accepts any item-shaped value the CMA produces, or an
+ * `ItemTypeDefinition` directly.
+ */
+export type FieldValueInNestedResponse<
+  T,
+  K extends keyof ToItemAttributesInNestedResponse<ItemTypeDefinitionOf<T>>,
+> = K extends keyof ToItemAttributesInNestedResponse<ItemTypeDefinitionOf<T>>
+  ? ToItemAttributesInNestedResponse<ItemTypeDefinitionOf<T>>[K]
   : never;
 
 export * from './appearance/index.js';
