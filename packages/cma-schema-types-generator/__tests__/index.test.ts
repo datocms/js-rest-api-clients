@@ -1,7 +1,4 @@
-import {
-  generateSchemaTypes,
-  generateSchemaTypesForMigration,
-} from '../src';
+import { generateSchemaTypes, generateSchemaTypesForMigration } from '../src';
 import { fakeClient, field, itemType } from './helpers/fakeClient';
 
 describe('generateSchemaTypes', () => {
@@ -395,6 +392,107 @@ describe('generateSchemaTypes', () => {
     });
   });
 
+  describe('runtime ID/REF constants', () => {
+    it('emits `export const X = { ID, REF } as const` for each item type', async () => {
+      const client = fakeClient({
+        locales: ['en'],
+        itemTypes: [
+          itemType({ id: 'UZyfjdBES8y2W2ruMEHSoA', api_key: 'book' }),
+          itemType({
+            id: 'Dy9C52o4S6eF3mqSOmeUtg',
+            api_key: 'hero',
+            modular_block: true,
+          }),
+        ],
+        fields: [],
+      });
+
+      const code = await generateSchemaTypes(client);
+
+      expect(code).toMatch(
+        /export const Book = \{\s*ID: 'UZyfjdBES8y2W2ruMEHSoA',\s*REF: \{ type: 'item_type', id: 'UZyfjdBES8y2W2ruMEHSoA' \},?\s*\} as const;/,
+      );
+      expect(code).toMatch(
+        /export const Hero = \{\s*ID: 'Dy9C52o4S6eF3mqSOmeUtg',\s*REF: \{ type: 'item_type', id: 'Dy9C52o4S6eF3mqSOmeUtg' \},?\s*\} as const;/,
+      );
+    });
+
+    it('preserves `as const` literally in the output', async () => {
+      const client = fakeClient({
+        locales: ['en'],
+        itemTypes: [itemType({ id: '42', api_key: 'article' })],
+        fields: [],
+      });
+
+      const code = await generateSchemaTypes(client);
+      expect(code).toContain('} as const;');
+    });
+
+    it('emits a const for every item type kind (model and block)', async () => {
+      const client = fakeClient({
+        locales: ['en'],
+        itemTypes: [
+          itemType({ id: '1', api_key: 'page' }),
+          itemType({ id: '2', api_key: 'hero', modular_block: true }),
+        ],
+        fields: [],
+      });
+
+      const code = await generateSchemaTypes(client);
+
+      expect(code).toMatch(/export const Page = \{/);
+      expect(code).toMatch(/export const Hero = \{/);
+    });
+
+    it('the migration variant also emits the const declarations', async () => {
+      const client = fakeClient({
+        locales: ['en'],
+        itemTypes: [itemType({ id: '42', api_key: 'article' })],
+        fields: [],
+      });
+
+      const code = await generateSchemaTypesForMigration(client);
+
+      expect(code).not.toContain('import type');
+      expect(code).toMatch(/export type Article =/);
+      expect(code).toMatch(
+        /export const Article = \{\s*ID: '42',\s*REF: \{ type: 'item_type', id: '42' \},?\s*\} as const;/,
+      );
+    });
+
+    it('does not emit consts for the AnyBlock / AnyModel / AnyBlockOrModel union types', async () => {
+      const client = fakeClient({
+        locales: ['en'],
+        itemTypes: [
+          itemType({ id: '1', api_key: 'blog_post' }),
+          itemType({ id: '2', api_key: 'hero', modular_block: true }),
+        ],
+        fields: [],
+      });
+
+      const code = await generateSchemaTypes(client);
+
+      expect(code).not.toMatch(/export const AnyBlock\b/);
+      expect(code).not.toMatch(/export const AnyModel\b/);
+      expect(code).not.toMatch(/export const AnyBlockOrModel\b/);
+    });
+
+    it('handles a project with zero item types without crashing', async () => {
+      const client = fakeClient({
+        locales: ['en'],
+        itemTypes: [],
+        fields: [],
+      });
+
+      const code = await generateSchemaTypes(client);
+
+      expect(code).toContain('type EnvironmentSettings');
+      expect(code).toMatch(/export type AnyBlock = never;/);
+      expect(code).toMatch(/export type AnyModel = never;/);
+      expect(code).not.toMatch(/export const /);
+    });
+  });
+
   describe('blank-line separation between top-level declarations', () => {
     it('separates import, EnvironmentSettings, each item type, and the unions block with blank lines', async () => {
       const client = fakeClient({
@@ -421,10 +519,12 @@ describe('generateSchemaTypes', () => {
       );
       // EnvironmentSettings → blank line → first item type
       expect(code).toMatch(/^\};\n\nexport type BlogPost =/m);
-      // BlogPost → blank line → Hero (each item type separated)
-      expect(code).toMatch(/^>;\n\nexport type Hero =/m);
-      // last item type → blank line → AnyBlock
-      expect(code).toMatch(/Hero = ItemTypeDefinition<[^>]*>;\n\nexport type AnyBlock =/);
+      // BlogPost type → BlogPost const (no blank line between the pair)
+      expect(code).toMatch(/^>;\nexport const BlogPost =/m);
+      // BlogPost const → blank line → Hero type (blank line between pairs)
+      expect(code).toMatch(/^\} as const;\n\nexport type Hero =/m);
+      // last item type pair → blank line → AnyBlock
+      expect(code).toMatch(/\} as const;\n\nexport type AnyBlock =/);
     });
 
     it('keeps the three Any* unions grouped together (no blank lines between them)', async () => {
@@ -457,44 +557,8 @@ describe('generateSchemaTypes', () => {
       expect(code).toMatch(/^type EnvironmentSettings/);
       // EnvironmentSettings → blank line → first item type
       expect(code).toMatch(/^\};\n\nexport type BlogPost =/m);
-      // item type → blank line → AnyBlock
-      expect(code).toMatch(/>;\n\nexport type AnyBlock =/);
-    });
-
-    it('separates import from the declare-global wrapper with a blank line', async () => {
-      const client = fakeClient({
-        locales: ['en'],
-        itemTypes: [itemType({ id: '1', api_key: 'blog_post' })],
-        fields: [],
-      });
-
-      const code = await generateSchemaTypes(client, {
-        wrapInGlobalNamespace: true,
-      });
-
-      expect(code).toMatch(
-        /from '@datocms\/cma-client';\n\ndeclare global \{/,
-      );
-    });
-  });
-
-  describe('wrapInGlobalNamespace', () => {
-    it('wraps all declarations in `declare global { namespace Schema { … } }`', async () => {
-      const client = fakeClient({
-        locales: ['en'],
-        itemTypes: [itemType({ id: '1', api_key: 'blog_post' })],
-        fields: [],
-      });
-
-      const code = await generateSchemaTypes(client, {
-        wrapInGlobalNamespace: true,
-      });
-
-      expect(code).toMatch(/declare global \{/);
-      expect(code).toMatch(/namespace Schema \{/);
-      expect(code).toMatch(
-        /^import type \{ ItemTypeDefinition \} from '@datocms\/cma-client';/m,
-      );
+      // item type pair → blank line → AnyBlock
+      expect(code).toMatch(/\} as const;\n\nexport type AnyBlock =/);
     });
   });
 });

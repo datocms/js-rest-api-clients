@@ -22,14 +22,6 @@ import * as ts from 'typescript';
 
 export interface SchemaTypesGeneratorOptions {
   itemTypesFilter?: string;
-  /**
-   * If true, the generated type declarations are wrapped in
-   * `declare global { namespace Schema { … } }` so they become accessible
-   * as `Schema.<TypeName>` from any module in the project. The file remains
-   * a module (the `@datocms/cma-client` import keeps it so), allowing
-   * `declare global` to apply.
-   */
-  wrapInGlobalNamespace?: boolean;
 }
 
 /**
@@ -90,7 +82,6 @@ export async function generateSchemaTypes(
     fields,
     locales,
     '@datocms/cma-client',
-    { wrapInGlobalNamespace: options.wrapInGlobalNamespace },
   );
 
   return prettier.format(generatedCode, {
@@ -586,6 +577,73 @@ function createItemTypeDeclarations(
 }
 
 /**
+ * Creates the paired `export const X = { ID, REF } as const` declarations.
+ * Each declaration merges with the same-named type alias so consumers can
+ * use `Schema.X` in both type and value position.
+ *
+ * Example generated code:
+ * ```typescript
+ * export const BlogPost = {
+ *   ID: '12345',
+ *   REF: { type: 'item_type', id: '12345' },
+ * } as const;
+ * ```
+ */
+function createItemTypeConstDeclarations(
+  itemTypes: RawApiTypes.ItemType[],
+): ts.VariableStatement[] {
+  return itemTypes.map((itemType) => {
+    const idLiteral = ts.factory.createStringLiteral(itemType.id);
+    const refObject = ts.factory.createObjectLiteralExpression(
+      [
+        ts.factory.createPropertyAssignment(
+          'type',
+          ts.factory.createStringLiteral('item_type'),
+        ),
+        ts.factory.createPropertyAssignment(
+          'id',
+          ts.factory.createStringLiteral(itemType.id),
+        ),
+      ],
+      false,
+    );
+
+    const objectLiteral = ts.factory.createObjectLiteralExpression(
+      [
+        ts.factory.createPropertyAssignment('ID', idLiteral),
+        ts.factory.createPropertyAssignment('REF', refObject),
+      ],
+      true,
+    );
+
+    const asConst = ts.factory.createAsExpression(
+      objectLiteral,
+      ts.factory.createTypeReferenceNode(
+        ts.factory.createIdentifier('const'),
+        undefined,
+      ),
+    );
+
+    return ts.factory.createVariableStatement(
+      [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
+      ts.factory.createVariableDeclarationList(
+        [
+          ts.factory.createVariableDeclaration(
+            ts.factory.createIdentifier(
+              toPascalCase(itemType.attributes.api_key),
+            ),
+            undefined,
+            undefined,
+            asConst,
+          ),
+        ],
+        ts.NodeFlags.Const,
+      ),
+    );
+  });
+}
+
+/**
  * Creates the AnyBlock, AnyModel, and AnyBlockOrModel union types.
  *
  * Example generated code:
@@ -684,15 +742,13 @@ function createUnionTypes(
  * export type AnyBlockOrModel = AnyBlock | AnyModel;
  * ```
  */
-function printTypeDeclarations(
-  parts: {
-    importDeclaration?: ts.ImportDeclaration;
-    environmentSettingsType: ts.TypeAliasDeclaration;
-    itemTypeDeclarations: ts.TypeAliasDeclaration[];
-    unionTypes: ts.TypeAliasDeclaration[];
-  },
-  options: { wrapInGlobalNamespace?: boolean } = {},
-): string {
+function printTypeDeclarations(parts: {
+  importDeclaration?: ts.ImportDeclaration;
+  environmentSettingsType: ts.TypeAliasDeclaration;
+  itemTypeDeclarations: ts.TypeAliasDeclaration[];
+  itemTypeConstDeclarations: ts.VariableStatement[];
+  unionTypes: ts.TypeAliasDeclaration[];
+}): string {
   const sourceFile = ts.createSourceFile(
     'schema.ts',
     '',
@@ -716,56 +772,25 @@ function printTypeDeclarations(
 
   const groups: string[] = [];
 
-  if (options.wrapInGlobalNamespace) {
-    const allTypes = [
-      parts.environmentSettingsType,
-      ...parts.itemTypeDeclarations,
-      ...parts.unionTypes,
-    ];
-    if (parts.importDeclaration) {
-      groups.push(printGroup([parts.importDeclaration]));
-    }
-    groups.push(printGroup([wrapDeclarationsInGlobalNamespace(allTypes)]));
-  } else {
-    if (parts.importDeclaration) {
-      groups.push(printGroup([parts.importDeclaration]));
-    }
-    groups.push(printGroup([parts.environmentSettingsType]));
-    for (const decl of parts.itemTypeDeclarations) {
-      groups.push(printGroup([decl]));
-    }
-    // The three Any* unions stay grouped together (no blank line between
-    // them) since they form a single logical block.
-    if (parts.unionTypes.length > 0) {
-      groups.push(printGroup(parts.unionTypes));
-    }
+  if (parts.importDeclaration) {
+    groups.push(printGroup([parts.importDeclaration]));
+  }
+  groups.push(printGroup([parts.environmentSettingsType]));
+  // Each item type emits as a (type alias, const) pair grouped together so
+  // they sit on adjacent lines without a blank separator, with blank lines
+  // between pairs.
+  for (let i = 0; i < parts.itemTypeDeclarations.length; i++) {
+    const typeDecl = parts.itemTypeDeclarations[i]!;
+    const constDecl = parts.itemTypeConstDeclarations[i]!;
+    groups.push(printGroup([typeDecl, constDecl]));
+  }
+  // The three Any* unions stay grouped together (no blank line between
+  // them) since they form a single logical block.
+  if (parts.unionTypes.length > 0) {
+    groups.push(printGroup(parts.unionTypes));
   }
 
   return groups.join('\n');
-}
-
-/**
- * Wraps type aliases in `declare global { namespace Schema { … } }` so that
- * `Schema.<TypeName>` resolves as an ambient namespace member from any file
- * in the project. The host file must be a module (have at least one
- * import/export) for `declare global` to apply.
- */
-function wrapDeclarationsInGlobalNamespace(
-  typeDeclarations: ts.TypeAliasDeclaration[],
-): ts.ModuleDeclaration {
-  const schemaNamespace = ts.factory.createModuleDeclaration(
-    undefined,
-    ts.factory.createIdentifier('Schema'),
-    ts.factory.createModuleBlock(typeDeclarations),
-    ts.NodeFlags.Namespace,
-  );
-
-  return ts.factory.createModuleDeclaration(
-    [ts.factory.createToken(ts.SyntaxKind.DeclareKeyword)],
-    ts.factory.createIdentifier('global'),
-    ts.factory.createModuleBlock([schemaNamespace]),
-    ts.NodeFlags.GlobalAugmentation,
-  );
 }
 
 function filterItemTypesAndFields(
@@ -890,7 +915,6 @@ function generateTypeDefinitions(
   fields: RawApiTypes.Field[],
   locales: string[],
   importPath: string,
-  options: { wrapInGlobalNamespace?: boolean } = {},
 ): string {
   const { fieldsByItemType, itemTypeIdToTypeName } = createMapsFromData(
     itemTypes,
@@ -919,17 +943,16 @@ function generateTypeDefinitions(
     fieldsByItemType,
     itemTypeIdToTypeName,
   );
+  const itemTypeConstDeclarations = createItemTypeConstDeclarations(itemTypes);
   const unionTypes = createUnionTypes(itemTypes);
 
-  return printTypeDeclarations(
-    {
-      importDeclaration,
-      environmentSettingsType,
-      itemTypeDeclarations,
-      unionTypes,
-    },
-    { wrapInGlobalNamespace: options.wrapInGlobalNamespace },
-  );
+  return printTypeDeclarations({
+    importDeclaration,
+    environmentSettingsType,
+    itemTypeDeclarations,
+    itemTypeConstDeclarations,
+    unionTypes,
+  });
 }
 
 /**
@@ -960,11 +983,13 @@ function generateTypeDefinitionsOnly(
     fieldsByItemType,
     itemTypeIdToTypeName,
   );
+  const itemTypeConstDeclarations = createItemTypeConstDeclarations(itemTypes);
   const unionTypes = createUnionTypes(itemTypes);
 
   return printTypeDeclarations({
     environmentSettingsType,
     itemTypeDeclarations,
+    itemTypeConstDeclarations,
     unionTypes,
   });
 }
