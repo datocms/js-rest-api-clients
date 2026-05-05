@@ -2,6 +2,6 @@
  * Built-in editor for Modular content fields.
  */
 export type RichTextEditorConfiguration = {
-  /** Whether you want block records collapsed by default or not */
+  /** Whether you want block records collapsed by default or not (default: false) */
   start_collapsed?: boolean;
 };

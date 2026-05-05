@@ -3,5 +3,5 @@
  */
 export type SanitizedHtmlValidator = {
   /** Content is actively sanitized before applying the validation */
-  sanitize_before_validation: boolean;
+  sanitize_before_validation?: boolean;
 };
