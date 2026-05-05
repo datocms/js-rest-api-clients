@@ -124,4 +124,56 @@ describe('describeResource', () => {
       expect(result).toBe('');
     });
   });
+
+  describe("with '*' wildcard", () => {
+    it('returns the full output with all details expanded', () => {
+      const result = describeResource(hyperschema, resourcesSchema, 'items', [
+        '*',
+      ])!;
+      expect(result).toContain('Items are content records.');
+      expect(result).toContain('# Available actions');
+      expect(result).toContain('<details open>');
+      expect(result).toContain('Full schema here.');
+    });
+  });
+
+  describe('with autoExpandIfBelow', () => {
+    it('expands all details when output is below threshold', () => {
+      const result = describeResource(
+        hyperschema,
+        resourcesSchema,
+        'items',
+        undefined,
+        10_000,
+      )!;
+      expect(result).toContain('<details open>');
+      expect(result).toContain('Full schema here.');
+      expect(result).toContain('# Available actions');
+    });
+
+    it('keeps details collapsed when output exceeds threshold', () => {
+      const result = describeResource(
+        hyperschema,
+        resourcesSchema,
+        'items',
+        undefined,
+        5,
+      )!;
+      expect(result).not.toContain('<details open>');
+      expect(result).toContain(
+        '<details><summary>Schema info</summary></details>',
+      );
+    });
+
+    it('is ignored when an explicit filter is active', () => {
+      const result = describeResource(
+        hyperschema,
+        resourcesSchema,
+        'items',
+        ['Schema info'],
+        10_000,
+      )!;
+      expect(result).not.toContain('# Available actions');
+    });
+  });
 });

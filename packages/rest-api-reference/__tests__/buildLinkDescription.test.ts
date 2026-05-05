@@ -148,4 +148,76 @@ describe('buildLinkDescription', () => {
       expect(result).toContain('<details open>');
     });
   });
+
+  describe("with '*' wildcard", () => {
+    const link = makeLink({
+      description: 'Creates an item.\n\n::example[basic]',
+      documentation: {
+        javascript: {
+          examples: [
+            {
+              id: 'basic',
+              title: 'Basic creation',
+              description: 'A basic example.',
+              request: { code: 'client.items.create()' },
+            },
+            {
+              id: 'advanced',
+              title: 'Advanced creation',
+              description: 'An advanced example.',
+              request: { code: 'client.items.create({ complex: true })' },
+            },
+          ],
+        },
+      },
+    });
+
+    it('expands every example, inline and appended, keeping prose', () => {
+      const result = buildLinkDescription(link, ['*']);
+      expect(result).toContain('Creates an item.');
+      expect(result).toContain('client.items.create()');
+      expect(result).toContain('client.items.create({ complex: true })');
+      const opens = result.match(/<details open>/g) ?? [];
+      expect(opens.length).toBe(2);
+    });
+  });
+
+  describe('with autoExpandIfBelow', () => {
+    const link = makeLink({
+      description: 'Short.\n\n::example[basic]',
+      documentation: {
+        javascript: {
+          examples: [
+            {
+              id: 'basic',
+              title: 'Basic creation',
+              description: 'A basic example.',
+              request: { code: 'client.items.create()' },
+            },
+          ],
+        },
+      },
+    });
+
+    it('expands when collapsed result is below threshold', () => {
+      const result = buildLinkDescription(link, undefined, 10_000);
+      expect(result).toContain('<details open>');
+      expect(result).toContain('client.items.create()');
+    });
+
+    it('keeps collapsed when result exceeds threshold', () => {
+      const result = buildLinkDescription(link, undefined, 5);
+      expect(result).not.toContain('<details open>');
+      expect(result).toContain('<details><summary>');
+    });
+
+    it('is ignored when an explicit filter is active', () => {
+      const result = buildLinkDescription(
+        link,
+        ['Example: Basic creation'],
+        10_000,
+      );
+      expect(result).not.toContain('Short.');
+    });
+  });
 });

@@ -162,4 +162,63 @@ describe('describeResourceAction', () => {
       expect(result).toBe('');
     });
   });
+
+  describe("with '*' wildcard", () => {
+    it('returns the full output with all details expanded', () => {
+      const result = describeResourceAction(
+        hyperschema,
+        resourcesSchema,
+        'items',
+        'create',
+        ['*'],
+      )!;
+      expect(result).toContain('# Action: items.create');
+      expect(result).toContain('HTTP POST /items');
+      expect(result).toContain('<details open>');
+      expect(result).toContain('client.items.create');
+    });
+  });
+
+  describe('with autoExpandIfBelow', () => {
+    it('expands all details when output is below threshold', () => {
+      const result = describeResourceAction(
+        hyperschema,
+        resourcesSchema,
+        'items',
+        'create',
+        undefined,
+        10_000,
+      )!;
+      expect(result).toContain('<details open>');
+      expect(result).toContain('client.items.create');
+      expect(result).toContain('# Action: items.create');
+    });
+
+    it('keeps details collapsed when output exceeds threshold', () => {
+      const result = describeResourceAction(
+        hyperschema,
+        resourcesSchema,
+        'items',
+        'create',
+        undefined,
+        5,
+      )!;
+      expect(result).not.toContain('<details open>');
+      expect(result).toContain(
+        '<details><summary>Example: Basic creation</summary></details>',
+      );
+    });
+
+    it('is ignored when an explicit filter is active', () => {
+      const result = describeResourceAction(
+        hyperschema,
+        resourcesSchema,
+        'items',
+        'create',
+        ['Example: Basic creation'],
+        10_000,
+      )!;
+      expect(result).not.toContain('# Action: items.create');
+    });
+  });
 });

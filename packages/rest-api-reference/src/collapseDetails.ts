@@ -1,18 +1,27 @@
 /**
  * Processes HTML `<details>` tags in text to control their display.
  *
- * When `expandDetails` is undefined or empty, all `<details>` blocks are
- * collapsed: only their `<summary>` line is kept.
+ * - `expandDetails` undefined or empty → all `<details>` collapsed (summary only),
+ *   surrounding prose preserved.
+ * - `expandDetails` contains `'*'` → every `<details>` expanded in-place,
+ *   surrounding prose preserved.
+ * - `expandDetails` contains specific summary texts → only matching details
+ *   are returned, fully expanded; everything else (including prose and
+ *   non-matching details) is stripped.
  *
- * When `expandDetails` is provided, **only** matching details (by summary
- * text) are returned — fully expanded — and everything else is stripped.
+ * `autoExpandIfBelow`, when provided and no `expandDetails` filter is active,
+ * triggers `'*'`-style expansion if the collapsed result is shorter than the
+ * given character count.
  */
 export function collapseDetails(
   text: string,
   expandDetails?: string[],
+  autoExpandIfBelow?: number,
 ): string {
   const detailsPattern = /<details(\s+open)?>([\s\S]*?)<\/details>/gi;
-  const hasFilter = expandDetails && expandDetails.length > 0;
+  const expandAll = expandDetails?.includes('*') ?? false;
+  const hasFilter =
+    !expandAll && expandDetails !== undefined && expandDetails.length > 0;
 
   if (hasFilter) {
     const matches: string[] = [];
@@ -30,7 +39,7 @@ export function collapseDetails(
 
       if (summaryMatch?.[1]) {
         const summaryText = summaryMatch[1].trim();
-        if (expandDetails.some((s) => s === summaryText)) {
+        if (expandDetails!.some((s) => s === summaryText)) {
           matches.push(`<details open>${content}</details>`);
         }
       }
@@ -39,6 +48,28 @@ export function collapseDetails(
     return matches.join('\n\n');
   }
 
+  if (expandAll) {
+    return expandAllInPlace(text, detailsPattern);
+  }
+
+  const collapsed = collapseAllInPlace(text, detailsPattern);
+
+  if (autoExpandIfBelow !== undefined && collapsed.length < autoExpandIfBelow) {
+    return expandAllInPlace(text, detailsPattern);
+  }
+
+  return collapsed;
+}
+
+function expandAllInPlace(text: string, detailsPattern: RegExp): string {
+  return text.replace(detailsPattern, (_match, _openAttr, content) => {
+    const hasSummary = /<summary>[\s\S]*?<\/summary>/i.test(content as string);
+    if (!hasSummary) return '';
+    return `<details open>${content as string}</details>`;
+  });
+}
+
+function collapseAllInPlace(text: string, detailsPattern: RegExp): string {
   return text.replace(detailsPattern, (_match, _openAttr, content) => {
     const summaryMatch = (content as string).match(
       /<summary>([\s\S]*?)<\/summary>/i,
