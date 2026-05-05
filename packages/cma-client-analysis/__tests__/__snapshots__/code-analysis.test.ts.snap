@@ -560,14 +560,14 @@ export type ItemSelfHrefSchema = {
     [k: string]: unknown;
 };
 
-export type ItemInNestedResponse<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+export type ItemInNestedResponse<D extends ItemTypeDefinition = ItemTypeDefinition> = D extends ItemTypeDefinition ? {
     __itemTypeId?: D['itemTypeId'];
     id: ItemIdentity;
     type: ItemType1;
     item_type: ItemTypeData<D>;
     creator?: AccountData | AccessTokenData | UserData | SsoUserData | OrganizationData;
     meta: ItemMeta;
-} & ToItemAttributesInNestedResponse<D>;
+} & ToItemAttributesInNestedResponse<D> : never;
 
 export type ItemTypeDefinition<Settings extends {
     locales: string;
@@ -668,14 +668,14 @@ export type ToItemAttributesInNestedResponse<T extends ItemTypeDefinition<any, a
     [K in keyof Fields]: Fields[K] extends FieldDefinition ? FieldDefinitionToFieldValueInNestedResponse<Fields[K], Settings['locales']> : never;
 } : never;
 
-export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> = D extends ItemTypeDefinition ? {
     __itemTypeId?: D['itemTypeId'];
     id: ItemIdentity;
     type: ItemType1;
     item_type: ItemTypeData<D>;
     creator?: AccountData | AccessTokenData | UserData | SsoUserData | OrganizationData;
     meta: ItemMeta;
-} & ToItemAttributes<D>;
+} & ToItemAttributes<D> : never;
 
 export type ToItemAttributes<T extends ItemTypeDefinition<any, any, any>> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields> ? keyof Fields extends never ? Record<string, unknown> : {
     [K in keyof Fields]: Fields[K] extends FieldDefinition ? FieldDefinitionToFieldValue<Fields[K], Settings['locales']> : never;
@@ -846,14 +846,14 @@ export type ToItemHrefSchemaOrderBy<T extends ItemTypeDefinition<any, any, any>>
     [K in keyof Fields]: Fields[K] extends FieldDefinition ? Fields[K]['type'] extends 'boolean' | 'date' | 'date_time' | 'float' | 'integer' | 'string' ? \`\${K & string}_ASC\` | \`\${K & string}_DESC\` : never : never;
 }[keyof Fields] : never) | ItemMetaOrderBy;
 
-export type ItemInNestedResponse<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+export type ItemInNestedResponse<D extends ItemTypeDefinition = ItemTypeDefinition> = D extends ItemTypeDefinition ? {
     __itemTypeId?: D['itemTypeId'];
     id: ItemIdentity;
     type: ItemType1;
     item_type: ItemTypeData<D>;
     creator?: AccountData | AccessTokenData | UserData | SsoUserData | OrganizationData;
     meta: ItemMeta;
-} & ToItemAttributesInNestedResponse<D>;
+} & ToItemAttributesInNestedResponse<D> : never;
 
 export type ItemIdentity = string;
 
@@ -948,14 +948,14 @@ export type ToItemAttributesInNestedResponse<T extends ItemTypeDefinition<any, a
     [K in keyof Fields]: Fields[K] extends FieldDefinition ? FieldDefinitionToFieldValueInNestedResponse<Fields[K], Settings['locales']> : never;
 } : never;
 
-export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> = {
+export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> = D extends ItemTypeDefinition ? {
     __itemTypeId?: D['itemTypeId'];
     id: ItemIdentity;
     type: ItemType1;
     item_type: ItemTypeData<D>;
     creator?: AccountData | AccessTokenData | UserData | SsoUserData | OrganizationData;
     meta: ItemMeta;
-} & ToItemAttributes<D>;
+} & ToItemAttributes<D> : never;
 
 export type ToItemAttributes<T extends ItemTypeDefinition<any, any, any>> = T extends ItemTypeDefinition<infer Settings, infer ItemTypeId, infer Fields> ? keyof Fields extends never ? Record<string, unknown> : {
     [K in keyof Fields]: Fields[K] extends FieldDefinition ? FieldDefinitionToFieldValue<Fields[K], Settings['locales']> : never;
