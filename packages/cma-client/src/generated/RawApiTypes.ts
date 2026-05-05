@@ -39,25 +39,30 @@ export type ItemTypeData<D extends ItemTypeDefinition = ItemTypeDefinition> = {
   id: D extends ItemTypeDefinition ? D['itemTypeId'] : ItemTypeIdentity;
 };
 
-export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> = {
-  __itemTypeId?: D['itemTypeId'];
-  type: ItemType1;
-  id: ItemIdentity;
-  relationships: ItemRelationships<D>;
-  meta: ItemMeta;
-  attributes: ToItemAttributes<D>;
-};
+export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> =
+  D extends ItemTypeDefinition
+    ? {
+        __itemTypeId?: D['itemTypeId'];
+        type: ItemType1;
+        id: ItemIdentity;
+        relationships: ItemRelationships<D>;
+        meta: ItemMeta;
+        attributes: ToItemAttributes<D>;
+      }
+    : never;
 
 export type ItemInNestedResponse<
   D extends ItemTypeDefinition = ItemTypeDefinition,
-> = {
-  __itemTypeId?: D['itemTypeId'];
-  type: ItemType1;
-  id: ItemIdentity;
-  relationships: ItemRelationships<D>;
-  meta: ItemMeta;
-  attributes: ToItemAttributesInNestedResponse<D>;
-};
+> = D extends ItemTypeDefinition
+  ? {
+      __itemTypeId?: D['itemTypeId'];
+      type: ItemType1;
+      id: ItemIdentity;
+      relationships: ItemRelationships<D>;
+      meta: ItemMeta;
+      attributes: ToItemAttributesInNestedResponse<D>;
+    }
+  : never;
 
 /* tslint:disable */
 /**

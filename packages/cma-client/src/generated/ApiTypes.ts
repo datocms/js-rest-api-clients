@@ -27,35 +27,40 @@ export type ItemTypeData<D extends ItemTypeDefinition = ItemTypeDefinition> = {
   id: D extends ItemTypeDefinition ? D['itemTypeId'] : ItemTypeIdentity;
 };
 
-export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> = {
-  __itemTypeId?: D['itemTypeId'];
-  id: ItemIdentity;
-  type: ItemType1;
-  item_type: ItemTypeData<D>;
-  creator?:
-    | AccountData
-    | AccessTokenData
-    | UserData
-    | SsoUserData
-    | OrganizationData;
-  meta: ItemMeta;
-} & ToItemAttributes<D>;
+export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> =
+  D extends ItemTypeDefinition
+    ? {
+        __itemTypeId?: D['itemTypeId'];
+        id: ItemIdentity;
+        type: ItemType1;
+        item_type: ItemTypeData<D>;
+        creator?:
+          | AccountData
+          | AccessTokenData
+          | UserData
+          | SsoUserData
+          | OrganizationData;
+        meta: ItemMeta;
+      } & ToItemAttributes<D>
+    : never;
 
 export type ItemInNestedResponse<
   D extends ItemTypeDefinition = ItemTypeDefinition,
-> = {
-  __itemTypeId?: D['itemTypeId'];
-  id: ItemIdentity;
-  type: ItemType1;
-  item_type: ItemTypeData<D>;
-  creator?:
-    | AccountData
-    | AccessTokenData
-    | UserData
-    | SsoUserData
-    | OrganizationData;
-  meta: ItemMeta;
-} & ToItemAttributesInNestedResponse<D>;
+> = D extends ItemTypeDefinition
+  ? {
+      __itemTypeId?: D['itemTypeId'];
+      id: ItemIdentity;
+      type: ItemType1;
+      item_type: ItemTypeData<D>;
+      creator?:
+        | AccountData
+        | AccessTokenData
+        | UserData
+        | SsoUserData
+        | OrganizationData;
+      meta: ItemMeta;
+    } & ToItemAttributesInNestedResponse<D>
+  : never;
 
 /* tslint:disable */
 /**

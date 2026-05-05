@@ -50,51 +50,63 @@
   };
 
   {{#if simpleVariant}}
-    export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> = {
-      __itemTypeId?: D['itemTypeId'];
-      id: ItemIdentity;
-      type: ItemType1;
-      item_type: ItemTypeData<D>;
-      creator?:
-        | AccountData
-        | AccessTokenData
-        | UserData
-        | SsoUserData
-        | OrganizationData;
-      meta: ItemMeta;
-    } & ToItemAttributes<D>;
+    export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> =
+      D extends ItemTypeDefinition
+        ? {
+            __itemTypeId?: D['itemTypeId'];
+            id: ItemIdentity;
+            type: ItemType1;
+            item_type: ItemTypeData<D>;
+            creator?:
+              | AccountData
+              | AccessTokenData
+              | UserData
+              | SsoUserData
+              | OrganizationData;
+            meta: ItemMeta;
+          } & ToItemAttributes<D>
+        : never;
 
-    export type ItemInNestedResponse<D extends ItemTypeDefinition = ItemTypeDefinition> = {
-      __itemTypeId?: D['itemTypeId'];
-      id: ItemIdentity;
-      type: ItemType1;
-      item_type: ItemTypeData<D>;
-      creator?:
-        | AccountData
-        | AccessTokenData
-        | UserData
-        | SsoUserData
-        | OrganizationData;
-      meta: ItemMeta;
-    } & ToItemAttributesInNestedResponse<D>;
+    export type ItemInNestedResponse<D extends ItemTypeDefinition = ItemTypeDefinition> =
+      D extends ItemTypeDefinition
+        ? {
+            __itemTypeId?: D['itemTypeId'];
+            id: ItemIdentity;
+            type: ItemType1;
+            item_type: ItemTypeData<D>;
+            creator?:
+              | AccountData
+              | AccessTokenData
+              | UserData
+              | SsoUserData
+              | OrganizationData;
+            meta: ItemMeta;
+          } & ToItemAttributesInNestedResponse<D>
+        : never;
   {{else}}
-    export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> = {
-      __itemTypeId?: D['itemTypeId'];
-      type: ItemType1;
-      id: ItemIdentity;
-      relationships: ItemRelationships<D>;
-      meta: ItemMeta;
-      attributes: ToItemAttributes<D>;
-    };
+    export type Item<D extends ItemTypeDefinition = ItemTypeDefinition> =
+      D extends ItemTypeDefinition
+        ? {
+            __itemTypeId?: D['itemTypeId'];
+            type: ItemType1;
+            id: ItemIdentity;
+            relationships: ItemRelationships<D>;
+            meta: ItemMeta;
+            attributes: ToItemAttributes<D>;
+          }
+        : never;
 
-    export type ItemInNestedResponse<D extends ItemTypeDefinition = ItemTypeDefinition> = {
-      __itemTypeId?: D['itemTypeId'];
-      type: ItemType1;
-      id: ItemIdentity;
-      relationships: ItemRelationships<D>;
-      meta: ItemMeta;
-      attributes: ToItemAttributesInNestedResponse<D>;
-    };
+    export type ItemInNestedResponse<D extends ItemTypeDefinition = ItemTypeDefinition> =
+      D extends ItemTypeDefinition
+        ? {
+            __itemTypeId?: D['itemTypeId'];
+            type: ItemType1;
+            id: ItemIdentity;
+            relationships: ItemRelationships<D>;
+            meta: ItemMeta;
+            attributes: ToItemAttributesInNestedResponse<D>;
+          }
+        : never;
   {{/if}}
 {{/if}}
 

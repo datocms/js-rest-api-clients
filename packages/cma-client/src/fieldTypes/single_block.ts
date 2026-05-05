@@ -107,7 +107,7 @@ export type BlockInRequest<D extends ItemTypeDefinition = ItemTypeDefinition> =
 
 export type BlockInNestedResponse<
   D extends ItemTypeDefinition = ItemTypeDefinition,
-> = D extends unknown ? RawApiTypes.ItemInNestedResponse<D> : never;
+> = RawApiTypes.ItemInNestedResponse<D>;
 
 /**
  * Single Block field value for API requests - allows flexible block representations:
