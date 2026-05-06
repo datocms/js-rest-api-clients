@@ -221,7 +221,8 @@ describe('TypeScript Compiler API - Unit Tests', () => {
     const makeEndpoint = (
       namespace: string,
       docUrl: string,
-    ): ResourcesEndpoint => ({ namespace, docUrl }) as unknown as ResourcesEndpoint;
+    ): ResourcesEndpoint =>
+      ({ namespace, docUrl }) as unknown as ResourcesEndpoint;
 
     it('groups items.list/rawList/listPagedIterator/rawListPagedIterator under /item/instances', () => {
       const { checker, clientClass } = cma;
@@ -237,12 +238,7 @@ describe('TypeScript Compiler API - Unit Tests', () => {
 
       const names = methods.map((m) => m.name).sort();
       expect(names).toEqual(
-        [
-          'list',
-          'listPagedIterator',
-          'rawList',
-          'rawListPagedIterator',
-        ].sort(),
+        ['list', 'listPagedIterator', 'rawList', 'rawListPagedIterator'].sort(),
       );
 
       for (const m of methods) {

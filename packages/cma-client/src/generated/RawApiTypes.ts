@@ -1682,7 +1682,7 @@ export type SiteSelfHrefSchema = {
  * Positive entries (and entries pulled in via `relationships.inherits_permissions_from`) grant access. Negative entries always win when they overlap. The idiomatic recipe for "almost everything" is a single `action: "all"` positive entry plus targeted negative entries to subtract — instead of enumerating each allowed action.
  *
  * > [!WARNING] ⚠️ Send `positive_*` and `negative_*` together
- * > For each resource family (records, uploads, build triggers, search indexes), the matching `positive_*` and `negative_*` arrays must be **both present or both absent** in a create/update payload. On **update**, sent arrays *replace* the stored ones wholesale, so always read the role first and pass back the existing entries on the side you're not changing — sending `[]` to satisfy the constraint will erase everything that was there. (On create, `[]` is fine since there's nothing to lose.)
+ * > For each resource family (records, uploads, build triggers, search indexes), the matching `positive_*` and `negative_*` arrays must be **both present or both absent** in a create/update payload. On **update**, sent arrays *replace* the stored ones wholesale, so always read the role first and pass back the existing entries on the side you're not changing — sending `[]` to satisfy the constraint will erase everything that was there. (On create, `[]` is fine since there's nothing to lose.) The [Update endpoint](/docs/content-management-api/resources/role/update) documents an SDK helper that handles this diff for records and uploads.
  *
  * The computed result is exposed on every role response under `meta.final_permissions`; the raw declared values stay on `attributes.*`. See [Effective vs declared permissions](#effective-vs-declared-permissions) below.
  *
@@ -1961,6 +1961,7 @@ export type RoleItemTypePermissionAll = {
    * For `action: "all"` this must be `"all"`.
    */
   localization_scope: 'all';
+  [k: string]: unknown;
 };
 /**
  * Item-type permission entry granting `read` on records. `localization_scope` and `locale` must be omitted (or null).
@@ -1986,6 +1987,7 @@ export type RoleItemTypePermissionRead = {
    * Permitted creator
    */
   on_creator: 'anyone' | 'self' | 'role';
+  [k: string]: unknown;
 };
 /**
  * Item-type permission entry granting `create` on records. Requires `localization_scope`; if `localization_scope: "localized"`, `locale` is also required. `on_creator`, `on_stage`, and `to_stage` are not applicable and must be omitted (or null).
@@ -2015,6 +2017,7 @@ export type RoleItemTypePermissionCreate = {
    * Required (non-null) when `localization_scope` is `"localized"`; must be omitted otherwise.
    */
   locale?: string | null;
+  [k: string]: unknown;
 };
 /**
  * Item-type permission entry granting `update` or `publish` on records. Requires `localization_scope`; if `localization_scope: "localized"`, `locale` is also required.
@@ -2052,6 +2055,7 @@ export type RoleItemTypePermissionUpdateOrPublish = {
    * Required (non-null) when `localization_scope` is `"localized"`; must be omitted otherwise.
    */
   locale?: string | null;
+  [k: string]: unknown;
 };
 /**
  * Item-type permission entry granting `duplicate` on records. `on_creator`, `localization_scope` and `locale` are not applicable and must be omitted (or null).
@@ -2077,6 +2081,7 @@ export type RoleItemTypePermissionDuplicate = {
    * Restrict to records currently on a workflow stage.
    */
   on_stage?: string | null;
+  [k: string]: unknown;
 };
 /**
  * Item-type permission entry granting `delete`, `edit_creator`, or `take_over` on records. `localization_scope` and `locale` must be omitted (or null).
@@ -2106,6 +2111,7 @@ export type RoleItemTypePermissionDeleteOrEditCreatorOrTakeOver = {
    * Permitted creator
    */
   on_creator: 'anyone' | 'self' | 'role';
+  [k: string]: unknown;
 };
 /**
  * Item-type permission entry granting `move_to_stage` on records. `localization_scope` and `locale` must be omitted (or null).
@@ -2139,6 +2145,7 @@ export type RoleItemTypePermissionMoveToStage = {
    * Permitted creator
    */
   on_creator: 'anyone' | 'self' | 'role';
+  [k: string]: unknown;
 };
 /**
  * Upload permission entry granting all actions on uploads. Requires `localization_scope: "all"`.
@@ -2164,6 +2171,7 @@ export type RoleUploadPermissionAll = {
    * For `action: "all"` this must be `"all"`.
    */
   localization_scope: 'all';
+  [k: string]: unknown;
 };
 /**
  * Upload permission entry granting `update` on uploads. Requires `localization_scope`; if `localization_scope: "localized"`, `locale` is also required.
@@ -2193,6 +2201,7 @@ export type RoleUploadPermissionUpdate = {
    * Required (non-null) when `localization_scope` is `"localized"`; must be omitted otherwise.
    */
   locale?: string | null;
+  [k: string]: unknown;
 };
 /**
  * Upload permission entry granting `create` on uploads. `on_creator`, `localization_scope` and `locale` are not applicable and must be omitted (or null).
@@ -2210,6 +2219,7 @@ export type RoleUploadPermissionCreate = {
    * Restricts the permission to a specific upload collection. When `null`, the permission applies to all collections.
    */
   upload_collection?: UploadCollectionIdentity | null;
+  [k: string]: unknown;
 };
 /**
  * Upload permission entry granting `read`, `delete`, `edit_creator`, or `replace_asset` on uploads. `localization_scope` and `locale` must be omitted (or null).
@@ -2231,6 +2241,7 @@ export type RoleUploadPermissionReadOrDeleteOrEditCreatorOrReplaceAsset = {
    * Permitted creator
    */
   on_creator: 'anyone' | 'self' | 'role';
+  [k: string]: unknown;
 };
 /**
  * Upload permission entry granting `move` on uploads. `localization_scope` and `locale` must be omitted (or null). `move_to_upload_collection` is only valid here.
@@ -2256,6 +2267,7 @@ export type RoleUploadPermissionMove = {
    * Permitted creator
    */
   on_creator: 'anyone' | 'self' | 'role';
+  [k: string]: unknown;
 };
 /**
  * JSON API links
