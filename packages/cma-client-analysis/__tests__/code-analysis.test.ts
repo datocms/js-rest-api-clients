@@ -1,8 +1,10 @@
 import assert from 'node:assert';
+import type { ResourcesEndpoint } from '@datocms/rest-api-reference';
 import {
   type CmaClientProgram,
   extractAllMethodNames,
   extractMethodSignature,
+  extractResourcesEndpointMethods,
   extractTypeDependencies,
   getCmaClientProgram,
 } from '../src';
@@ -49,6 +51,19 @@ describe('TypeScript Compiler API - Unit Tests', () => {
       expect(methodNames).toContain('update');
       expect(methodNames).toContain('updateFromLocalFile');
       expect(methodNames).toContain('updateFromUrl');
+    }, 10000);
+
+    it('should extract all method names from roles resource including special methods', () => {
+      const { checker, clientClass } = cma;
+
+      const methodNames = extractAllMethodNames(checker, clientClass, 'roles');
+
+      expect(methodNames).toBeDefined();
+      expect(methodNames.length).toBeGreaterThan(0);
+      expect(methodNames).toContain('create');
+      expect(methodNames).toContain('update');
+      expect(methodNames).toContain('duplicate');
+      expect(methodNames).toContain('updateCurrentEnvironmentPermissions');
     }, 10000);
 
     it('should return empty array for invalid resource', () => {
@@ -196,6 +211,89 @@ describe('TypeScript Compiler API - Unit Tests', () => {
       );
 
       expect(signature).toBeFalsy();
+    }, 10000);
+  });
+
+  describe('extractResourcesEndpointMethods', () => {
+    // Minimal endpoint shape: extractResourcesEndpointMethods only reads
+    // `namespace` and `docUrl`. Cast through unknown to avoid spelling out
+    // every required field on ResourcesEndpoint.
+    const makeEndpoint = (
+      namespace: string,
+      docUrl: string,
+    ): ResourcesEndpoint => ({ namespace, docUrl }) as unknown as ResourcesEndpoint;
+
+    it('groups items.list/rawList/listPagedIterator/rawListPagedIterator under /item/instances', () => {
+      const { checker, clientClass } = cma;
+
+      const methods = extractResourcesEndpointMethods(
+        checker,
+        clientClass,
+        makeEndpoint(
+          'items',
+          'https://www.datocms.com/docs/content-management-api/resources/item/instances',
+        ),
+      );
+
+      const names = methods.map((m) => m.name).sort();
+      expect(names).toEqual(
+        [
+          'list',
+          'listPagedIterator',
+          'rawList',
+          'rawListPagedIterator',
+        ].sort(),
+      );
+
+      for (const m of methods) {
+        expect(m.functionDefinition).toContain(m.name);
+        expect(m.referencedTypes.size).toBeGreaterThan(0);
+      }
+    }, 10000);
+
+    it('groups roles.update and rawUpdate under /role/update', () => {
+      const { checker, clientClass } = cma;
+
+      const methods = extractResourcesEndpointMethods(
+        checker,
+        clientClass,
+        makeEndpoint(
+          'roles',
+          'https://www.datocms.com/docs/content-management-api/resources/role/update',
+        ),
+      );
+
+      const names = methods.map((m) => m.name).sort();
+      expect(names).toContain('update');
+      expect(names).toContain('rawUpdate');
+      expect(names).toContain('updateCurrentEnvironmentPermissions');
+    }, 10000);
+
+    it('returns empty array for an unknown docUrl', () => {
+      const { checker, clientClass } = cma;
+
+      const methods = extractResourcesEndpointMethods(
+        checker,
+        clientClass,
+        makeEndpoint('items', 'https://example.invalid/does/not/exist'),
+      );
+
+      expect(methods).toEqual([]);
+    }, 10000);
+
+    it('returns empty array for an unknown namespace', () => {
+      const { checker, clientClass } = cma;
+
+      const methods = extractResourcesEndpointMethods(
+        checker,
+        clientClass,
+        makeEndpoint(
+          'invalid_resource_xyz',
+          'https://www.datocms.com/docs/content-management-api/resources/item/instances',
+        ),
+      );
+
+      expect(methods).toEqual([]);
     }, 10000);
   });
 

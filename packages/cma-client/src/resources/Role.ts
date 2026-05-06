@@ -95,6 +95,8 @@ function applyChanges<T extends Record<PropertyKey, unknown>>(
 export default class RoleResource extends BaseRole {
   /**
    * Applies a set of changes to the permissions of the current environment
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/role/update
    */
   async updateCurrentEnvironmentPermissions(
     roleId: string | ApiTypes.RoleData,
