@@ -1,9 +1,13 @@
 import type * as ApiTypes from '../generated/ApiTypes.js';
 import BaseRole from '../generated/resources/Role.js';
 
+type DistributiveOmit<T, K extends PropertyKey> = T extends any
+  ? Omit<T, K>
+  : never;
+
 export type UpdateRoleDiff<T> = {
-  add?: Omit<T, 'environment'>[];
-  remove?: Omit<T, 'environment'>[];
+  add?: DistributiveOmit<T, 'environment'>[];
+  remove?: DistributiveOmit<T, 'environment'>[];
 };
 
 export type RoleItemTypePermission =

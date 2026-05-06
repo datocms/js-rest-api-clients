@@ -84,6 +84,16 @@ export type RoleType = 'role';
  */
 export type RoleIdentity = string;
 /**
+ * ID of environment. Can only contain lowercase letters, numbers and dashes
+ *
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `definition` "identity".
+ *
+ * This interface was referenced by `Environment`'s JSON-Schema
+ * via the `definition` "id".
+ */
+export type EnvironmentIdentity = string;
+/**
  * RFC 4122 UUID of item type expressed in URL-safe base64 format
  *
  * This interface was referenced by `ItemType`'s JSON-Schema
@@ -103,16 +113,6 @@ export type ItemTypeIdentity = string;
  * via the `definition` "id".
  */
 export type WorkflowIdentity = string;
-/**
- * ID of environment. Can only contain lowercase letters, numbers and dashes
- *
- * This interface was referenced by `Environment`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `Environment`'s JSON-Schema
- * via the `definition` "id".
- */
-export type EnvironmentIdentity = string;
 /**
  * RFC 4122 UUID of upload collection expressed in URL-safe base64 format
  *
@@ -235,9 +235,14 @@ export type AccessTokenIdentity = string;
  */
 export type AccessTokenDestroyHrefSchema = {
   /**
-   * New owner for resources previously owned by the deleted access token. This argument specifies the new owner type.
+   * New owner for resources previously owned by the deleted access token. This argument specifies the new owner type. Use `account` or `organization` to reassign to the project's owner — `client.site.find().owner` returns the right type/id pair to pass.
    */
-  destination_user_type?: 'account' | 'user' | 'access_token' | 'sso_user';
+  destination_user_type?:
+    | 'account'
+    | 'organization'
+    | 'user'
+    | 'access_token'
+    | 'sso_user';
   /**
    * New owner for resources previously owned by the deleted access token. This argument specifies the new owner ID.
    */
@@ -1663,7 +1668,82 @@ export type SiteSelfHrefSchema = {
   [k: string]: unknown;
 };
 /**
- * A Role represents a specific set of actions an editor (or an API token) can perform on your administrative area.
+ * A Role groups the permissions that govern what a credential can do in a project. The same role definition is applied to **collaborators**, **SSO users**, and **API tokens** alike — design roles around what the *credential* should be allowed to do, not who is holding it.
+ *
+ * > [!PROTIP] 📘 Same role, different identities
+ * > Ask "what is the *credential* allowed to do?" — not "what is this *person* allowed to do?". For API tokens specifically, the role's permissions are further constrained by the token's API surface flags (`can_access_cda`, `can_access_cda_preview`, `can_access_cma`); see the [API token](/docs/content-management-api/resources/access-token) resource for details.
+ *
+ * ## How permissions are computed
+ *
+ * Most of the granular permissions on a role come as a `positive_<resource>_permissions` / `negative_<resource>_permissions` pair: build triggers, search indexes, records (`item_type`), uploads. They all follow the same rule:
+ *
+ * > Effective permissions = `(inherited ∪ positive_*) − negative_*`
+ *
+ * Positive entries (and entries pulled in via `relationships.inherits_permissions_from`) grant access. Negative entries always win when they overlap. The idiomatic recipe for "almost everything" is a single `action: "all"` positive entry plus targeted negative entries to subtract — instead of enumerating each allowed action.
+ *
+ * > [!WARNING] ⚠️ Send `positive_*` and `negative_*` together
+ * > For each resource family (records, uploads, build triggers, search indexes), the matching `positive_*` and `negative_*` arrays must be **both present or both absent** in a create/update payload. On **update**, sent arrays *replace* the stored ones wholesale, so always read the role first and pass back the existing entries on the side you're not changing — sending `[]` to satisfy the constraint will erase everything that was there. (On create, `[]` is fine since there's nothing to lose.)
+ *
+ * The computed result is exposed on every role response under `meta.final_permissions`; the raw declared values stay on `attributes.*`. See [Effective vs declared permissions](#effective-vs-declared-permissions) below.
+ *
+ * ## Project-level permissions
+ *
+ * These attributes gate access to project-wide capabilities. They apply uniformly across the whole project; granular control over individual records and uploads lives under [Per-environment content permissions](#per-environment-content-permissions).
+ *
+ * - **Project-wide flags.** Boolean attributes named `can_*` (`can_edit_schema`, `can_manage_environments`, `can_manage_access_tokens`, …) cover the schema, environments, users, webhooks, and so on — see the property table for the full list.
+ * - **Environment access.** `environments_access` controls *which* environments the credential can enter at all (`all`, `primary_only`, `sandbox_only`, or `none`). Use `none` when the role is meant only to be inherited from.
+ * - **Build triggers.** The role may **manually fire** the build triggers listed in `positive_build_trigger_permissions`, minus those listed in `negative_build_trigger_permissions`. Use `build_trigger: null` on an entry to cover every trigger at once. Creating, editing, or deleting trigger definitions is gated separately by `can_manage_build_triggers`.
+ * - **Search indexes.** The role may **manually re-index** the search indexes listed in `positive_search_index_permissions`, minus those listed in `negative_search_index_permissions`. Use `search_index: null` on an entry to cover every index. Managing the index definitions themselves is gated separately by `can_manage_search_indexes`.
+ *
+ * ## Per-environment content permissions
+ *
+ * The role's access to **records** and **uploads** is governed by two positive/negative array pairs. Every entry is **scoped to a single environment** via the required `environment` field — to grant the same permission across multiple environments, repeat the entry once per environment id (or use `inherits_permissions_from` together with `environments_access`). The computation is the same `(inherited ∪ positive_*) − negative_*` rule from [How permissions are computed](#how-permissions-are-computed), evaluated per environment.
+ *
+ * ###### Records
+ *
+ * Permission entries live in `positive_item_type_permissions` (and the `negative_*` counterpart). Each entry is a discriminated union keyed by `action`:
+ *
+ * - `all` — every action below
+ * - `read` — read records
+ * - `create` — create new records
+ * - `update` — edit existing records
+ * - `publish` — publish/unpublish records
+ * - `duplicate` — duplicate records
+ * - `delete` — destroy records
+ * - `edit_creator` — change a record's `creator` relationship
+ * - `take_over` — wrest a record from another user currently editing it
+ * - `move_to_stage` — move a record between workflow stages
+ *
+ * Per entry you can also restrict by:
+ *
+ * - `item_type` — restrict to a specific model (`null` = all models)
+ * - `workflow` — restrict to records associated with a workflow (mutually exclusive with `item_type`)
+ * - `on_creator` — `anyone`, `self` (records the credential created), or `role` (records created by anyone with this role)
+ * - `localization_scope` + `locale` — for `create`/`update`/`publish`/`all`: restrict to localized vs non-localized content, optionally pinning to one locale (on `all` the scope is forced to `"all"`)
+ * - `on_stage` / `to_stage` — for workflow-aware actions: restrict to records currently on a stage, or to moves towards a stage
+ *
+ * The shape of each entry depends on the `action` — see the property tables on each endpoint for which sub-fields are valid per branch.
+ *
+ * > [!WARNING] ⚠️ Some restrictors require an Enterprise plan
+ * > Workflow-aware permissions — the `move_to_stage` action and the `workflow` / `on_stage` / `to_stage` restrictors — require [Workflows](https://www.datocms.com/features/workflows), an Enterprise feature. Per-content-scope restrictions are also gated: only `localization_scope: "all"` is available on every plan, while `"localized"` (with its companion `locale`) and `"not_localized"` both require Enterprise. Setting any of these on a non-Enterprise project will return an error — check the [pricing page](https://www.datocms.com/pricing) before relying on them.
+ *
+ * ###### Uploads
+ *
+ * Permission entries live in `positive_upload_permissions` (and the `negative_*` counterpart). Same discriminated-union shape as records, with the upload-relevant actions (`read`, `create`, `update`, `delete`, `edit_creator`, `replace_asset`, `move`, `all`), scoped by `upload_collection` instead of `item_type`. The `move` action also accepts `move_to_upload_collection` to restrict the destination of the move.
+ *
+ * ## Inheriting from other roles
+ *
+ * `relationships.inherits_permissions_from` accepts a list of role ids whose permissions are unioned into this role's positive set before the negative set is subtracted (per [How permissions are computed](#how-permissions-are-computed)). This is how built-in roles are typically extended without copying their full permission tree — duplicate the closest built-in role, then add a `negative_*` entry to take something away, or set `inherits_permissions_from` and add only the positive entries that differ.
+ *
+ * ## Effective vs declared permissions
+ *
+ * Two views of a role's permissions are surfaced on the response:
+ *
+ * - **`attributes.*`** — the permissions declared *on this role directly*. This is what was sent on create/update; it does not reflect anything inherited from `relationships.inherits_permissions_from`.
+ * - **`meta.final_permissions`** — the **effective** permissions after walking the inheritance chain and applying the rule from [How permissions are computed](#how-permissions-are-computed). This is the set actually enforced when a credential bound to this role makes a request.
+ *
+ * When debugging "why can't this user do X?", read `meta.final_permissions`, not `attributes`.
+ *
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "role".
@@ -1691,11 +1771,11 @@ export type RoleAttributes = {
    */
   can_edit_favicon: boolean;
   /**
-   * Can change project global properties
+   * Can change project-wide settings (project name, internal subdomain, frontend preview URL, deployment settings)
    */
   can_edit_site: boolean;
   /**
-   * Can create and edit models and plugins
+   * Can create and edit the project schema: models, block models, fields, fieldsets, validators, and plugins
    */
   can_edit_schema: boolean;
   /**
@@ -1703,11 +1783,11 @@ export type RoleAttributes = {
    */
   can_manage_menu: boolean;
   /**
-   * Can change locales, timezone and UI theme
+   * Can edit per-environment settings of the environments this role has access to: locales, timezone, and UI theme. This is *not* about creating or switching environments — see `can_manage_environments` for that, and `environments_access` for which environments this role can enter at all.
    */
   can_edit_environment: boolean;
   /**
-   * Can promote environments to primary and manage maintenance mode
+   * Can promote a sandbox environment to primary (atomic swap) and toggle the project's maintenance mode. Distinct from `can_manage_environments`, which covers creating/forking/deleting sandboxes.
    */
   can_promote_environments: boolean;
   /**
@@ -1739,7 +1819,7 @@ export type RoleAttributes = {
    */
   can_manage_webhooks: boolean;
   /**
-   * Can create and delete sandbox environments and promote them to primary environment
+   * Can create, fork, and delete sandbox environments. Promotion to primary is gated separately by `can_promote_environments`.
    */
   can_manage_environments: boolean;
   /**
@@ -1771,165 +1851,411 @@ export type RoleAttributes = {
    */
   can_access_search_index_events_log: boolean;
   /**
-   * Allowed actions on a model (or all) for a role
+   * Allowed actions on a model (or all) for a role.
+   *
+   * The shape of each entry depends on the `action` (discriminated union). Idiomatic recipes:
+   * - To grant every action, use a single `action: "all"` entry with `localization_scope: "all"`.
+   * - To grant a subset (e.g. create+read+update but not delete), prefer a single `action: "all"` entry plus `negative_item_type_permissions` entries for the actions to exclude — instead of listing each allowed action separately.
    */
-  positive_item_type_permissions: {
-    item_type?: ItemTypeIdentity | null;
-    workflow?: WorkflowIdentity | null;
-    on_stage?: null | string;
-    to_stage?: null | string;
-    environment: EnvironmentIdentity;
-    /**
-     * Permitted action
-     */
-    action:
-      | 'all'
-      | 'read'
-      | 'update'
-      | 'create'
-      | 'duplicate'
-      | 'delete'
-      | 'publish'
-      | 'edit_creator'
-      | 'take_over'
-      | 'move_to_stage';
-    /**
-     * Permitted creator
-     */
-    on_creator?: 'anyone' | 'self' | 'role' | null;
-    /**
-     * Permitted content scope
-     */
-    localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-    /**
-     * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-     */
-    locale?: string | null;
-  }[];
+  positive_item_type_permissions: (
+    | RoleItemTypePermissionAll
+    | RoleItemTypePermissionRead
+    | RoleItemTypePermissionCreate
+    | RoleItemTypePermissionUpdateOrPublish
+    | RoleItemTypePermissionDuplicate
+    | RoleItemTypePermissionDeleteOrEditCreatorOrTakeOver
+    | RoleItemTypePermissionMoveToStage
+  )[];
   /**
-   * Prohibited actions on a model (or all) for a role
+   * Prohibited actions on a model (or all) for a role. Negative permissions take precedence and are typically paired with a broader positive `action: "all"` entry to subtract specific actions (e.g. forbid `delete`).
    */
-  negative_item_type_permissions: {
-    item_type?: ItemTypeIdentity | null;
-    workflow?: WorkflowIdentity | null;
-    on_stage?: null | string;
-    to_stage?: null | string;
-    environment: EnvironmentIdentity;
-    /**
-     * Permitted action
-     */
-    action:
-      | 'all'
-      | 'read'
-      | 'update'
-      | 'create'
-      | 'duplicate'
-      | 'delete'
-      | 'publish'
-      | 'edit_creator'
-      | 'take_over'
-      | 'move_to_stage';
-    /**
-     * Permitted creator
-     */
-    on_creator?: 'anyone' | 'self' | 'role' | null;
-    /**
-     * Permitted content scope
-     */
-    localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-    /**
-     * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-     */
-    locale?: string | null;
-  }[];
+  negative_item_type_permissions: (
+    | RoleItemTypePermissionAll
+    | RoleItemTypePermissionRead
+    | RoleItemTypePermissionCreate
+    | RoleItemTypePermissionUpdateOrPublish
+    | RoleItemTypePermissionDuplicate
+    | RoleItemTypePermissionDeleteOrEditCreatorOrTakeOver
+    | RoleItemTypePermissionMoveToStage
+  )[];
   /**
-   * Allowed actions on a model (or all) for a role
+   * Allowed actions on uploads (or all) for a role.
+   *
+   * The shape of each entry depends on the `action` (discriminated union). To grant a subset, prefer a single `action: "all"` entry plus `negative_upload_permissions` entries for the actions to exclude.
    */
-  positive_upload_permissions: {
-    environment: EnvironmentIdentity;
-    /**
-     * Permitted action
-     */
-    action:
-      | 'all'
-      | 'read'
-      | 'update'
-      | 'create'
-      | 'delete'
-      | 'edit_creator'
-      | 'replace_asset'
-      | 'move';
-    /**
-     * Permitted creator
-     */
-    on_creator?: 'anyone' | 'self' | 'role' | null;
-    /**
-     * Permitted content scope
-     */
-    localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-    /**
-     * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-     */
-    locale?: string | null;
-    upload_collection?: UploadCollectionIdentity | null;
-    move_to_upload_collection?: UploadCollectionIdentity | null;
-  }[];
+  positive_upload_permissions: (
+    | RoleUploadPermissionAll
+    | RoleUploadPermissionUpdate
+    | RoleUploadPermissionCreate
+    | RoleUploadPermissionReadOrDeleteOrEditCreatorOrReplaceAsset
+    | RoleUploadPermissionMove
+  )[];
   /**
-   * Prohibited actions on a model (or all) for a role
+   * Prohibited actions on uploads (or all) for a role. Negative permissions take precedence and are typically paired with a broader positive `action: "all"` entry to subtract specific actions.
    */
-  negative_upload_permissions: {
-    environment: EnvironmentIdentity;
-    /**
-     * Permitted action
-     */
-    action:
-      | 'all'
-      | 'read'
-      | 'update'
-      | 'create'
-      | 'delete'
-      | 'edit_creator'
-      | 'replace_asset'
-      | 'move';
-    /**
-     * Permitted creator
-     */
-    on_creator?: 'anyone' | 'self' | 'role' | null;
-    /**
-     * Permitted content scope
-     */
-    localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-    /**
-     * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-     */
-    locale?: string | null;
-    upload_collection?: UploadCollectionIdentity | null;
-    move_to_upload_collection?: UploadCollectionIdentity | null;
-  }[];
+  negative_upload_permissions: (
+    | RoleUploadPermissionAll
+    | RoleUploadPermissionUpdate
+    | RoleUploadPermissionCreate
+    | RoleUploadPermissionReadOrDeleteOrEditCreatorOrReplaceAsset
+    | RoleUploadPermissionMove
+  )[];
   /**
-   * Allowed build triggers for a role
+   * Build triggers this role is allowed to **manually fire**. An entry with `build_trigger: null` covers every build trigger. Note: this does not control creating/editing build triggers themselves — that is gated by `can_manage_build_triggers`.
    */
   positive_build_trigger_permissions: {
     build_trigger?: BuildTriggerIdentity | null;
   }[];
   /**
-   * Prohibited build triggers for a role
+   * Build triggers this role is **forbidden** from manually firing. Negative entries take precedence over positive ones; pair with a `build_trigger: null` positive entry to allow all-but-N.
    */
   negative_build_trigger_permissions: {
     build_trigger?: BuildTriggerIdentity | null;
   }[];
   /**
-   * Search indexes that can be triggered by a role
+   * Search indexes this role is allowed to **manually re-index**. An entry with `search_index: null` covers every search index. Note: this does not control creating/editing search indexes themselves — that is gated by `can_manage_search_indexes`.
    */
   positive_search_index_permissions: {
     search_index?: SearchIndexIdentity | null;
   }[];
   /**
-   * Search indexes that can't be triggered by a role
+   * Search indexes this role is **forbidden** from manually re-indexing. Negative entries take precedence over positive ones; pair with a `search_index: null` positive entry to allow all-but-N.
    */
   negative_search_index_permissions: {
     search_index?: SearchIndexIdentity | null;
   }[];
+};
+/**
+ * Item-type permission entry granting all actions on a model. Requires `localization_scope: "all"`.
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "item_type_permission_all".
+ */
+export type RoleItemTypePermissionAll = {
+  /**
+   * Permitted action
+   */
+  action: 'all';
+  environment: EnvironmentIdentity;
+  /**
+   * Restricts the permission to a specific model. When `null`, the permission applies to all models.
+   */
+  item_type?: ItemTypeIdentity | null;
+  /**
+   * Restricts the permission to records associated with a specific workflow. Mutually exclusive with `item_type`.
+   */
+  workflow?: WorkflowIdentity | null;
+  /**
+   * Restrict to records currently on a workflow stage.
+   */
+  on_stage?: string | null;
+  /**
+   * Restrict to moves towards a specific workflow stage.
+   */
+  to_stage?: string | null;
+  /**
+   * Permitted creator
+   */
+  on_creator: 'anyone' | 'self' | 'role';
+  /**
+   * For `action: "all"` this must be `"all"`.
+   */
+  localization_scope: 'all';
+};
+/**
+ * Item-type permission entry granting `read` on records. `localization_scope` and `locale` must be omitted (or null).
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "item_type_permission_read".
+ */
+export type RoleItemTypePermissionRead = {
+  /**
+   * Permitted action
+   */
+  action: 'read';
+  environment: EnvironmentIdentity;
+  /**
+   * Restricts the permission to a specific model. When `null`, the permission applies to all models.
+   */
+  item_type?: ItemTypeIdentity | null;
+  /**
+   * Restricts the permission to records associated with a specific workflow. Mutually exclusive with `item_type`.
+   */
+  workflow?: WorkflowIdentity | null;
+  /**
+   * Permitted creator
+   */
+  on_creator: 'anyone' | 'self' | 'role';
+};
+/**
+ * Item-type permission entry granting `create` on records. Requires `localization_scope`; if `localization_scope: "localized"`, `locale` is also required. `on_creator`, `on_stage`, and `to_stage` are not applicable and must be omitted (or null).
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "item_type_permission_create".
+ */
+export type RoleItemTypePermissionCreate = {
+  /**
+   * Permitted action
+   */
+  action: 'create';
+  environment: EnvironmentIdentity;
+  /**
+   * Restricts the permission to a specific model. When `null`, the permission applies to all models.
+   */
+  item_type?: ItemTypeIdentity | null;
+  /**
+   * Restricts the permission to records associated with a specific workflow. Mutually exclusive with `item_type`.
+   */
+  workflow?: WorkflowIdentity | null;
+  /**
+   * Permitted content scope
+   */
+  localization_scope: 'all' | 'localized' | 'not_localized';
+  /**
+   * Required (non-null) when `localization_scope` is `"localized"`; must be omitted otherwise.
+   */
+  locale?: string | null;
+};
+/**
+ * Item-type permission entry granting `update` or `publish` on records. Requires `localization_scope`; if `localization_scope: "localized"`, `locale` is also required.
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "item_type_permission_update_or_publish".
+ */
+export type RoleItemTypePermissionUpdateOrPublish = {
+  /**
+   * Permitted action
+   */
+  action: 'update' | 'publish';
+  environment: EnvironmentIdentity;
+  /**
+   * Restricts the permission to a specific model. When `null`, the permission applies to all models.
+   */
+  item_type?: ItemTypeIdentity | null;
+  /**
+   * Restricts the permission to records associated with a specific workflow. Mutually exclusive with `item_type`.
+   */
+  workflow?: WorkflowIdentity | null;
+  /**
+   * Restrict to records currently on a workflow stage.
+   */
+  on_stage?: string | null;
+  /**
+   * Permitted creator
+   */
+  on_creator: 'anyone' | 'self' | 'role';
+  /**
+   * Permitted content scope
+   */
+  localization_scope: 'all' | 'localized' | 'not_localized';
+  /**
+   * Required (non-null) when `localization_scope` is `"localized"`; must be omitted otherwise.
+   */
+  locale?: string | null;
+};
+/**
+ * Item-type permission entry granting `duplicate` on records. `on_creator`, `localization_scope` and `locale` are not applicable and must be omitted (or null).
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "item_type_permission_duplicate".
+ */
+export type RoleItemTypePermissionDuplicate = {
+  /**
+   * Permitted action
+   */
+  action: 'duplicate';
+  environment: EnvironmentIdentity;
+  /**
+   * Restricts the permission to a specific model. When `null`, the permission applies to all models.
+   */
+  item_type?: ItemTypeIdentity | null;
+  /**
+   * Restricts the permission to records associated with a specific workflow. Mutually exclusive with `item_type`.
+   */
+  workflow?: WorkflowIdentity | null;
+  /**
+   * Restrict to records currently on a workflow stage.
+   */
+  on_stage?: string | null;
+};
+/**
+ * Item-type permission entry granting `delete`, `edit_creator`, or `take_over` on records. `localization_scope` and `locale` must be omitted (or null).
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "item_type_permission_delete_or_edit_creator_or_take_over".
+ */
+export type RoleItemTypePermissionDeleteOrEditCreatorOrTakeOver = {
+  /**
+   * Permitted action
+   */
+  action: 'delete' | 'edit_creator' | 'take_over';
+  environment: EnvironmentIdentity;
+  /**
+   * Restricts the permission to a specific model. When `null`, the permission applies to all models.
+   */
+  item_type?: ItemTypeIdentity | null;
+  /**
+   * Restricts the permission to records associated with a specific workflow. Mutually exclusive with `item_type`.
+   */
+  workflow?: WorkflowIdentity | null;
+  /**
+   * Restrict to records currently on a workflow stage.
+   */
+  on_stage?: string | null;
+  /**
+   * Permitted creator
+   */
+  on_creator: 'anyone' | 'self' | 'role';
+};
+/**
+ * Item-type permission entry granting `move_to_stage` on records. `localization_scope` and `locale` must be omitted (or null).
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "item_type_permission_move_to_stage".
+ */
+export type RoleItemTypePermissionMoveToStage = {
+  /**
+   * Permitted action
+   */
+  action: 'move_to_stage';
+  environment: EnvironmentIdentity;
+  /**
+   * Restricts the permission to a specific model. When `null`, the permission applies to all models.
+   */
+  item_type?: ItemTypeIdentity | null;
+  /**
+   * Restricts the permission to records associated with a specific workflow. Mutually exclusive with `item_type`.
+   */
+  workflow?: WorkflowIdentity | null;
+  /**
+   * Restrict to records currently on a workflow stage.
+   */
+  on_stage?: string | null;
+  /**
+   * Restrict to moves towards a specific workflow stage.
+   */
+  to_stage?: string | null;
+  /**
+   * Permitted creator
+   */
+  on_creator: 'anyone' | 'self' | 'role';
+};
+/**
+ * Upload permission entry granting all actions on uploads. Requires `localization_scope: "all"`.
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "upload_permission_all".
+ */
+export type RoleUploadPermissionAll = {
+  /**
+   * Permitted action
+   */
+  action: 'all';
+  environment: EnvironmentIdentity;
+  /**
+   * Restricts the permission to a specific upload collection. When `null`, the permission applies to all collections.
+   */
+  upload_collection?: UploadCollectionIdentity | null;
+  /**
+   * Permitted creator
+   */
+  on_creator: 'anyone' | 'self' | 'role';
+  /**
+   * For `action: "all"` this must be `"all"`.
+   */
+  localization_scope: 'all';
+};
+/**
+ * Upload permission entry granting `update` on uploads. Requires `localization_scope`; if `localization_scope: "localized"`, `locale` is also required.
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "upload_permission_update".
+ */
+export type RoleUploadPermissionUpdate = {
+  /**
+   * Permitted action
+   */
+  action: 'update';
+  environment: EnvironmentIdentity;
+  /**
+   * Restricts the permission to a specific upload collection. When `null`, the permission applies to all collections.
+   */
+  upload_collection?: UploadCollectionIdentity | null;
+  /**
+   * Permitted creator
+   */
+  on_creator: 'anyone' | 'self' | 'role';
+  /**
+   * Permitted content scope
+   */
+  localization_scope: 'all' | 'localized' | 'not_localized';
+  /**
+   * Required (non-null) when `localization_scope` is `"localized"`; must be omitted otherwise.
+   */
+  locale?: string | null;
+};
+/**
+ * Upload permission entry granting `create` on uploads. `on_creator`, `localization_scope` and `locale` are not applicable and must be omitted (or null).
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "upload_permission_create".
+ */
+export type RoleUploadPermissionCreate = {
+  /**
+   * Permitted action
+   */
+  action: 'create';
+  environment: EnvironmentIdentity;
+  /**
+   * Restricts the permission to a specific upload collection. When `null`, the permission applies to all collections.
+   */
+  upload_collection?: UploadCollectionIdentity | null;
+};
+/**
+ * Upload permission entry granting `read`, `delete`, `edit_creator`, or `replace_asset` on uploads. `localization_scope` and `locale` must be omitted (or null).
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "upload_permission_read_or_delete_or_edit_creator_or_replace_asset".
+ */
+export type RoleUploadPermissionReadOrDeleteOrEditCreatorOrReplaceAsset = {
+  /**
+   * Permitted action
+   */
+  action: 'read' | 'delete' | 'edit_creator' | 'replace_asset';
+  environment: EnvironmentIdentity;
+  /**
+   * Restricts the permission to a specific upload collection. When `null`, the permission applies to all collections.
+   */
+  upload_collection?: UploadCollectionIdentity | null;
+  /**
+   * Permitted creator
+   */
+  on_creator: 'anyone' | 'self' | 'role';
+};
+/**
+ * Upload permission entry granting `move` on uploads. `localization_scope` and `locale` must be omitted (or null). `move_to_upload_collection` is only valid here.
+ *
+ * This interface was referenced by `Role`'s JSON-Schema
+ * via the `definition` "upload_permission_move".
+ */
+export type RoleUploadPermissionMove = {
+  /**
+   * Permitted action
+   */
+  action: 'move';
+  environment: EnvironmentIdentity;
+  /**
+   * Restricts the permission to a specific upload collection. When `null`, the permission applies to all collections.
+   */
+  upload_collection?: UploadCollectionIdentity | null;
+  /**
+   * Restricts the destination upload collection of the move action. When `null`, any destination is allowed.
+   */
+  move_to_upload_collection?: UploadCollectionIdentity | null;
+  /**
+   * Permitted creator
+   */
+  on_creator: 'anyone' | 'self' | 'role';
 };
 /**
  * JSON API links
@@ -1971,11 +2297,11 @@ export type RoleMeta = {
      */
     can_edit_favicon: boolean;
     /**
-     * Can change project global properties
+     * Can change project-wide settings (project name, internal subdomain, frontend preview URL, deployment settings)
      */
     can_edit_site: boolean;
     /**
-     * Can create and edit models and plugins
+     * Can create and edit the project schema: models, block models, fields, fieldsets, validators, and plugins
      */
     can_edit_schema: boolean;
     /**
@@ -1983,11 +2309,11 @@ export type RoleMeta = {
      */
     can_manage_menu: boolean;
     /**
-     * Can change locales, timezone and UI theme
+     * Can edit per-environment settings of the environments this role has access to: locales, timezone, and UI theme. This is *not* about creating or switching environments — see `can_manage_environments` for that, and `environments_access` for which environments this role can enter at all.
      */
     can_edit_environment: boolean;
     /**
-     * Can promote environments to primary and manage maintenance mode
+     * Can promote a sandbox environment to primary (atomic swap) and toggle the project's maintenance mode. Distinct from `can_manage_environments`, which covers creating/forking/deleting sandboxes.
      */
     can_promote_environments: boolean;
     /**
@@ -2019,7 +2345,7 @@ export type RoleMeta = {
      */
     can_manage_webhooks: boolean;
     /**
-     * Can create and delete sandbox environments and promote them to primary environment
+     * Can create, fork, and delete sandbox environments. Promotion to primary is gated separately by `can_promote_environments`.
      */
     can_manage_environments: boolean;
     /**
@@ -2051,161 +2377,75 @@ export type RoleMeta = {
      */
     can_access_search_index_events_log: boolean;
     /**
-     * Allowed actions on a model (or all) for a role
+     * Allowed actions on a model (or all) for a role.
+     *
+     * The shape of each entry depends on the `action` (discriminated union). Idiomatic recipes:
+     * - To grant every action, use a single `action: "all"` entry with `localization_scope: "all"`.
+     * - To grant a subset (e.g. create+read+update but not delete), prefer a single `action: "all"` entry plus `negative_item_type_permissions` entries for the actions to exclude — instead of listing each allowed action separately.
      */
-    positive_item_type_permissions: {
-      item_type?: ItemTypeIdentity | null;
-      workflow?: WorkflowIdentity | null;
-      on_stage?: null | string;
-      to_stage?: null | string;
-      environment: EnvironmentIdentity;
-      /**
-       * Permitted action
-       */
-      action:
-        | 'all'
-        | 'read'
-        | 'update'
-        | 'create'
-        | 'duplicate'
-        | 'delete'
-        | 'publish'
-        | 'edit_creator'
-        | 'take_over'
-        | 'move_to_stage';
-      /**
-       * Permitted creator
-       */
-      on_creator?: 'anyone' | 'self' | 'role' | null;
-      /**
-       * Permitted content scope
-       */
-      localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-      /**
-       * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-       */
-      locale?: string | null;
-    }[];
+    positive_item_type_permissions: (
+      | RoleItemTypePermissionAll
+      | RoleItemTypePermissionRead
+      | RoleItemTypePermissionCreate
+      | RoleItemTypePermissionUpdateOrPublish
+      | RoleItemTypePermissionDuplicate
+      | RoleItemTypePermissionDeleteOrEditCreatorOrTakeOver
+      | RoleItemTypePermissionMoveToStage
+    )[];
     /**
-     * Prohibited actions on a model (or all) for a role
+     * Prohibited actions on a model (or all) for a role. Negative permissions take precedence and are typically paired with a broader positive `action: "all"` entry to subtract specific actions (e.g. forbid `delete`).
      */
-    negative_item_type_permissions: {
-      item_type?: ItemTypeIdentity | null;
-      workflow?: WorkflowIdentity | null;
-      on_stage?: null | string;
-      to_stage?: null | string;
-      environment: EnvironmentIdentity;
-      /**
-       * Permitted action
-       */
-      action:
-        | 'all'
-        | 'read'
-        | 'update'
-        | 'create'
-        | 'duplicate'
-        | 'delete'
-        | 'publish'
-        | 'edit_creator'
-        | 'take_over'
-        | 'move_to_stage';
-      /**
-       * Permitted creator
-       */
-      on_creator?: 'anyone' | 'self' | 'role' | null;
-      /**
-       * Permitted content scope
-       */
-      localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-      /**
-       * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-       */
-      locale?: string | null;
-    }[];
+    negative_item_type_permissions: (
+      | RoleItemTypePermissionAll
+      | RoleItemTypePermissionRead
+      | RoleItemTypePermissionCreate
+      | RoleItemTypePermissionUpdateOrPublish
+      | RoleItemTypePermissionDuplicate
+      | RoleItemTypePermissionDeleteOrEditCreatorOrTakeOver
+      | RoleItemTypePermissionMoveToStage
+    )[];
     /**
-     * Allowed actions on a model (or all) for a role
+     * Allowed actions on uploads (or all) for a role.
+     *
+     * The shape of each entry depends on the `action` (discriminated union). To grant a subset, prefer a single `action: "all"` entry plus `negative_upload_permissions` entries for the actions to exclude.
      */
-    positive_upload_permissions: {
-      environment: EnvironmentIdentity;
-      /**
-       * Permitted action
-       */
-      action:
-        | 'all'
-        | 'read'
-        | 'update'
-        | 'create'
-        | 'delete'
-        | 'edit_creator'
-        | 'replace_asset'
-        | 'move';
-      /**
-       * Permitted creator
-       */
-      on_creator?: 'anyone' | 'self' | 'role' | null;
-      /**
-       * Permitted content scope
-       */
-      localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-      /**
-       * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-       */
-      locale?: string | null;
-      upload_collection?: UploadCollectionIdentity | null;
-      move_to_upload_collection?: UploadCollectionIdentity | null;
-    }[];
+    positive_upload_permissions: (
+      | RoleUploadPermissionAll
+      | RoleUploadPermissionUpdate
+      | RoleUploadPermissionCreate
+      | RoleUploadPermissionReadOrDeleteOrEditCreatorOrReplaceAsset
+      | RoleUploadPermissionMove
+    )[];
     /**
-     * Prohibited actions on a model (or all) for a role
+     * Prohibited actions on uploads (or all) for a role. Negative permissions take precedence and are typically paired with a broader positive `action: "all"` entry to subtract specific actions.
      */
-    negative_upload_permissions: {
-      environment: EnvironmentIdentity;
-      /**
-       * Permitted action
-       */
-      action:
-        | 'all'
-        | 'read'
-        | 'update'
-        | 'create'
-        | 'delete'
-        | 'edit_creator'
-        | 'replace_asset'
-        | 'move';
-      /**
-       * Permitted creator
-       */
-      on_creator?: 'anyone' | 'self' | 'role' | null;
-      /**
-       * Permitted content scope
-       */
-      localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-      /**
-       * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-       */
-      locale?: string | null;
-      upload_collection?: UploadCollectionIdentity | null;
-      move_to_upload_collection?: UploadCollectionIdentity | null;
-    }[];
+    negative_upload_permissions: (
+      | RoleUploadPermissionAll
+      | RoleUploadPermissionUpdate
+      | RoleUploadPermissionCreate
+      | RoleUploadPermissionReadOrDeleteOrEditCreatorOrReplaceAsset
+      | RoleUploadPermissionMove
+    )[];
     /**
-     * Allowed build triggers for a role
+     * Build triggers this role is allowed to **manually fire**. An entry with `build_trigger: null` covers every build trigger. Note: this does not control creating/editing build triggers themselves — that is gated by `can_manage_build_triggers`.
      */
     positive_build_trigger_permissions: {
       build_trigger?: BuildTriggerIdentity | null;
     }[];
     /**
-     * Prohibited build triggers for a role
+     * Build triggers this role is **forbidden** from manually firing. Negative entries take precedence over positive ones; pair with a `build_trigger: null` positive entry to allow all-but-N.
      */
     negative_build_trigger_permissions: {
       build_trigger?: BuildTriggerIdentity | null;
     }[];
     /**
-     * Search indexes that can be triggered by a role
+     * Search indexes this role is allowed to **manually re-index**. An entry with `search_index: null` covers every search index. Note: this does not control creating/editing search indexes themselves — that is gated by `can_manage_search_indexes`.
      */
     positive_search_index_permissions: {
       search_index?: SearchIndexIdentity | null;
     }[];
     /**
-     * Search indexes that can't be triggered by a role
+     * Search indexes this role is **forbidden** from manually re-indexing. Negative entries take precedence over positive ones; pair with a `search_index: null` positive entry to allow all-but-N.
      */
     negative_search_index_permissions: {
       search_index?: SearchIndexIdentity | null;
@@ -2232,11 +2472,11 @@ export type RoleCreateSchema = {
        */
       can_edit_favicon?: boolean;
       /**
-       * Can change project global properties
+       * Can change project-wide settings (project name, internal subdomain, frontend preview URL, deployment settings)
        */
       can_edit_site?: boolean;
       /**
-       * Can create and edit models and plugins
+       * Can create and edit the project schema: models, block models, fields, fieldsets, validators, and plugins
        */
       can_edit_schema?: boolean;
       /**
@@ -2244,11 +2484,11 @@ export type RoleCreateSchema = {
        */
       can_manage_menu?: boolean;
       /**
-       * Can change locales, timezone and UI theme
+       * Can edit per-environment settings of the environments this role has access to: locales, timezone, and UI theme. This is *not* about creating or switching environments — see `can_manage_environments` for that, and `environments_access` for which environments this role can enter at all.
        */
       can_edit_environment?: boolean;
       /**
-       * Can promote environments to primary and manage maintenance mode
+       * Can promote a sandbox environment to primary (atomic swap) and toggle the project's maintenance mode. Distinct from `can_manage_environments`, which covers creating/forking/deleting sandboxes.
        */
       can_promote_environments?: boolean;
       /**
@@ -2280,7 +2520,7 @@ export type RoleCreateSchema = {
        */
       can_manage_webhooks?: boolean;
       /**
-       * Can create and delete sandbox environments and promote them to primary environment
+       * Can create, fork, and delete sandbox environments. Promotion to primary is gated separately by `can_promote_environments`.
        */
       can_manage_environments?: boolean;
       /**
@@ -2312,161 +2552,75 @@ export type RoleCreateSchema = {
        */
       can_access_search_index_events_log?: boolean;
       /**
-       * Allowed actions on a model (or all) for a role
+       * Allowed actions on a model (or all) for a role.
+       *
+       * The shape of each entry depends on the `action` (discriminated union). Idiomatic recipes:
+       * - To grant every action, use a single `action: "all"` entry with `localization_scope: "all"`.
+       * - To grant a subset (e.g. create+read+update but not delete), prefer a single `action: "all"` entry plus `negative_item_type_permissions` entries for the actions to exclude — instead of listing each allowed action separately.
        */
-      positive_item_type_permissions?: {
-        item_type?: ItemTypeIdentity | null;
-        workflow?: WorkflowIdentity | null;
-        on_stage?: null | string;
-        to_stage?: null | string;
-        environment: EnvironmentIdentity;
-        /**
-         * Permitted action
-         */
-        action:
-          | 'all'
-          | 'read'
-          | 'update'
-          | 'create'
-          | 'duplicate'
-          | 'delete'
-          | 'publish'
-          | 'edit_creator'
-          | 'take_over'
-          | 'move_to_stage';
-        /**
-         * Permitted creator
-         */
-        on_creator?: 'anyone' | 'self' | 'role' | null;
-        /**
-         * Permitted content scope
-         */
-        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-        /**
-         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-         */
-        locale?: string | null;
-      }[];
+      positive_item_type_permissions?: (
+        | RoleItemTypePermissionAll
+        | RoleItemTypePermissionRead
+        | RoleItemTypePermissionCreate
+        | RoleItemTypePermissionUpdateOrPublish
+        | RoleItemTypePermissionDuplicate
+        | RoleItemTypePermissionDeleteOrEditCreatorOrTakeOver
+        | RoleItemTypePermissionMoveToStage
+      )[];
       /**
-       * Prohibited actions on a model (or all) for a role
+       * Prohibited actions on a model (or all) for a role. Negative permissions take precedence and are typically paired with a broader positive `action: "all"` entry to subtract specific actions (e.g. forbid `delete`).
        */
-      negative_item_type_permissions?: {
-        item_type?: ItemTypeIdentity | null;
-        workflow?: WorkflowIdentity | null;
-        on_stage?: null | string;
-        to_stage?: null | string;
-        environment: EnvironmentIdentity;
-        /**
-         * Permitted action
-         */
-        action:
-          | 'all'
-          | 'read'
-          | 'update'
-          | 'create'
-          | 'duplicate'
-          | 'delete'
-          | 'publish'
-          | 'edit_creator'
-          | 'take_over'
-          | 'move_to_stage';
-        /**
-         * Permitted creator
-         */
-        on_creator?: 'anyone' | 'self' | 'role' | null;
-        /**
-         * Permitted content scope
-         */
-        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-        /**
-         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-         */
-        locale?: string | null;
-      }[];
+      negative_item_type_permissions?: (
+        | RoleItemTypePermissionAll
+        | RoleItemTypePermissionRead
+        | RoleItemTypePermissionCreate
+        | RoleItemTypePermissionUpdateOrPublish
+        | RoleItemTypePermissionDuplicate
+        | RoleItemTypePermissionDeleteOrEditCreatorOrTakeOver
+        | RoleItemTypePermissionMoveToStage
+      )[];
       /**
-       * Allowed actions on a model (or all) for a role
+       * Allowed actions on uploads (or all) for a role.
+       *
+       * The shape of each entry depends on the `action` (discriminated union). To grant a subset, prefer a single `action: "all"` entry plus `negative_upload_permissions` entries for the actions to exclude.
        */
-      positive_upload_permissions?: {
-        environment: EnvironmentIdentity;
-        /**
-         * Permitted action
-         */
-        action:
-          | 'all'
-          | 'read'
-          | 'update'
-          | 'create'
-          | 'delete'
-          | 'edit_creator'
-          | 'replace_asset'
-          | 'move';
-        /**
-         * Permitted creator
-         */
-        on_creator?: 'anyone' | 'self' | 'role' | null;
-        /**
-         * Permitted content scope
-         */
-        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-        /**
-         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-         */
-        locale?: string | null;
-        upload_collection?: UploadCollectionIdentity | null;
-        move_to_upload_collection?: UploadCollectionIdentity | null;
-      }[];
+      positive_upload_permissions?: (
+        | RoleUploadPermissionAll
+        | RoleUploadPermissionUpdate
+        | RoleUploadPermissionCreate
+        | RoleUploadPermissionReadOrDeleteOrEditCreatorOrReplaceAsset
+        | RoleUploadPermissionMove
+      )[];
       /**
-       * Prohibited actions on a model (or all) for a role
+       * Prohibited actions on uploads (or all) for a role. Negative permissions take precedence and are typically paired with a broader positive `action: "all"` entry to subtract specific actions.
        */
-      negative_upload_permissions?: {
-        environment: EnvironmentIdentity;
-        /**
-         * Permitted action
-         */
-        action:
-          | 'all'
-          | 'read'
-          | 'update'
-          | 'create'
-          | 'delete'
-          | 'edit_creator'
-          | 'replace_asset'
-          | 'move';
-        /**
-         * Permitted creator
-         */
-        on_creator?: 'anyone' | 'self' | 'role' | null;
-        /**
-         * Permitted content scope
-         */
-        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-        /**
-         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-         */
-        locale?: string | null;
-        upload_collection?: UploadCollectionIdentity | null;
-        move_to_upload_collection?: UploadCollectionIdentity | null;
-      }[];
+      negative_upload_permissions?: (
+        | RoleUploadPermissionAll
+        | RoleUploadPermissionUpdate
+        | RoleUploadPermissionCreate
+        | RoleUploadPermissionReadOrDeleteOrEditCreatorOrReplaceAsset
+        | RoleUploadPermissionMove
+      )[];
       /**
-       * Allowed build triggers for a role
+       * Build triggers this role is allowed to **manually fire**. An entry with `build_trigger: null` covers every build trigger. Note: this does not control creating/editing build triggers themselves — that is gated by `can_manage_build_triggers`.
        */
       positive_build_trigger_permissions?: {
         build_trigger?: BuildTriggerIdentity | null;
       }[];
       /**
-       * Prohibited build triggers for a role
+       * Build triggers this role is **forbidden** from manually firing. Negative entries take precedence over positive ones; pair with a `build_trigger: null` positive entry to allow all-but-N.
        */
       negative_build_trigger_permissions?: {
         build_trigger?: BuildTriggerIdentity | null;
       }[];
       /**
-       * Search indexes that can be triggered by a role
+       * Search indexes this role is allowed to **manually re-index**. An entry with `search_index: null` covers every search index. Note: this does not control creating/editing search indexes themselves — that is gated by `can_manage_search_indexes`.
        */
       positive_search_index_permissions?: {
         search_index?: SearchIndexIdentity | null;
       }[];
       /**
-       * Search indexes that can't be triggered by a role
+       * Search indexes this role is **forbidden** from manually re-indexing. Negative entries take precedence over positive ones; pair with a `search_index: null` positive entry to allow all-but-N.
        */
       negative_search_index_permissions?: {
         search_index?: SearchIndexIdentity | null;
@@ -2514,11 +2668,11 @@ export type RoleUpdateSchema = {
        */
       can_edit_favicon?: boolean;
       /**
-       * Can change project global properties
+       * Can change project-wide settings (project name, internal subdomain, frontend preview URL, deployment settings)
        */
       can_edit_site?: boolean;
       /**
-       * Can create and edit models and plugins
+       * Can create and edit the project schema: models, block models, fields, fieldsets, validators, and plugins
        */
       can_edit_schema?: boolean;
       /**
@@ -2526,11 +2680,11 @@ export type RoleUpdateSchema = {
        */
       can_manage_menu?: boolean;
       /**
-       * Can change locales, timezone and UI theme
+       * Can edit per-environment settings of the environments this role has access to: locales, timezone, and UI theme. This is *not* about creating or switching environments — see `can_manage_environments` for that, and `environments_access` for which environments this role can enter at all.
        */
       can_edit_environment?: boolean;
       /**
-       * Can promote environments to primary and manage maintenance mode
+       * Can promote a sandbox environment to primary (atomic swap) and toggle the project's maintenance mode. Distinct from `can_manage_environments`, which covers creating/forking/deleting sandboxes.
        */
       can_promote_environments?: boolean;
       /**
@@ -2562,7 +2716,7 @@ export type RoleUpdateSchema = {
        */
       can_manage_webhooks?: boolean;
       /**
-       * Can create and delete sandbox environments and promote them to primary environment
+       * Can create, fork, and delete sandbox environments. Promotion to primary is gated separately by `can_promote_environments`.
        */
       can_manage_environments?: boolean;
       /**
@@ -2594,161 +2748,75 @@ export type RoleUpdateSchema = {
        */
       can_access_search_index_events_log?: boolean;
       /**
-       * Allowed actions on a model (or all) for a role
+       * Allowed actions on a model (or all) for a role.
+       *
+       * The shape of each entry depends on the `action` (discriminated union). Idiomatic recipes:
+       * - To grant every action, use a single `action: "all"` entry with `localization_scope: "all"`.
+       * - To grant a subset (e.g. create+read+update but not delete), prefer a single `action: "all"` entry plus `negative_item_type_permissions` entries for the actions to exclude — instead of listing each allowed action separately.
        */
-      positive_item_type_permissions?: {
-        item_type?: ItemTypeIdentity | null;
-        workflow?: WorkflowIdentity | null;
-        on_stage?: null | string;
-        to_stage?: null | string;
-        environment: EnvironmentIdentity;
-        /**
-         * Permitted action
-         */
-        action:
-          | 'all'
-          | 'read'
-          | 'update'
-          | 'create'
-          | 'duplicate'
-          | 'delete'
-          | 'publish'
-          | 'edit_creator'
-          | 'take_over'
-          | 'move_to_stage';
-        /**
-         * Permitted creator
-         */
-        on_creator?: 'anyone' | 'self' | 'role' | null;
-        /**
-         * Permitted content scope
-         */
-        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-        /**
-         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-         */
-        locale?: string | null;
-      }[];
+      positive_item_type_permissions?: (
+        | RoleItemTypePermissionAll
+        | RoleItemTypePermissionRead
+        | RoleItemTypePermissionCreate
+        | RoleItemTypePermissionUpdateOrPublish
+        | RoleItemTypePermissionDuplicate
+        | RoleItemTypePermissionDeleteOrEditCreatorOrTakeOver
+        | RoleItemTypePermissionMoveToStage
+      )[];
       /**
-       * Prohibited actions on a model (or all) for a role
+       * Prohibited actions on a model (or all) for a role. Negative permissions take precedence and are typically paired with a broader positive `action: "all"` entry to subtract specific actions (e.g. forbid `delete`).
        */
-      negative_item_type_permissions?: {
-        item_type?: ItemTypeIdentity | null;
-        workflow?: WorkflowIdentity | null;
-        on_stage?: null | string;
-        to_stage?: null | string;
-        environment: EnvironmentIdentity;
-        /**
-         * Permitted action
-         */
-        action:
-          | 'all'
-          | 'read'
-          | 'update'
-          | 'create'
-          | 'duplicate'
-          | 'delete'
-          | 'publish'
-          | 'edit_creator'
-          | 'take_over'
-          | 'move_to_stage';
-        /**
-         * Permitted creator
-         */
-        on_creator?: 'anyone' | 'self' | 'role' | null;
-        /**
-         * Permitted content scope
-         */
-        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-        /**
-         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-         */
-        locale?: string | null;
-      }[];
+      negative_item_type_permissions?: (
+        | RoleItemTypePermissionAll
+        | RoleItemTypePermissionRead
+        | RoleItemTypePermissionCreate
+        | RoleItemTypePermissionUpdateOrPublish
+        | RoleItemTypePermissionDuplicate
+        | RoleItemTypePermissionDeleteOrEditCreatorOrTakeOver
+        | RoleItemTypePermissionMoveToStage
+      )[];
       /**
-       * Allowed actions on a model (or all) for a role
+       * Allowed actions on uploads (or all) for a role.
+       *
+       * The shape of each entry depends on the `action` (discriminated union). To grant a subset, prefer a single `action: "all"` entry plus `negative_upload_permissions` entries for the actions to exclude.
        */
-      positive_upload_permissions?: {
-        environment: EnvironmentIdentity;
-        /**
-         * Permitted action
-         */
-        action:
-          | 'all'
-          | 'read'
-          | 'update'
-          | 'create'
-          | 'delete'
-          | 'edit_creator'
-          | 'replace_asset'
-          | 'move';
-        /**
-         * Permitted creator
-         */
-        on_creator?: 'anyone' | 'self' | 'role' | null;
-        /**
-         * Permitted content scope
-         */
-        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-        /**
-         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-         */
-        locale?: string | null;
-        upload_collection?: UploadCollectionIdentity | null;
-        move_to_upload_collection?: UploadCollectionIdentity | null;
-      }[];
+      positive_upload_permissions?: (
+        | RoleUploadPermissionAll
+        | RoleUploadPermissionUpdate
+        | RoleUploadPermissionCreate
+        | RoleUploadPermissionReadOrDeleteOrEditCreatorOrReplaceAsset
+        | RoleUploadPermissionMove
+      )[];
       /**
-       * Prohibited actions on a model (or all) for a role
+       * Prohibited actions on uploads (or all) for a role. Negative permissions take precedence and are typically paired with a broader positive `action: "all"` entry to subtract specific actions.
        */
-      negative_upload_permissions?: {
-        environment: EnvironmentIdentity;
-        /**
-         * Permitted action
-         */
-        action:
-          | 'all'
-          | 'read'
-          | 'update'
-          | 'create'
-          | 'delete'
-          | 'edit_creator'
-          | 'replace_asset'
-          | 'move';
-        /**
-         * Permitted creator
-         */
-        on_creator?: 'anyone' | 'self' | 'role' | null;
-        /**
-         * Permitted content scope
-         */
-        localization_scope?: 'all' | 'localized' | 'not_localized' | null;
-        /**
-         * Permitted localized content in this locale. Required when `localization_scope` is `localized`
-         */
-        locale?: string | null;
-        upload_collection?: UploadCollectionIdentity | null;
-        move_to_upload_collection?: UploadCollectionIdentity | null;
-      }[];
+      negative_upload_permissions?: (
+        | RoleUploadPermissionAll
+        | RoleUploadPermissionUpdate
+        | RoleUploadPermissionCreate
+        | RoleUploadPermissionReadOrDeleteOrEditCreatorOrReplaceAsset
+        | RoleUploadPermissionMove
+      )[];
       /**
-       * Allowed build triggers for a role
+       * Build triggers this role is allowed to **manually fire**. An entry with `build_trigger: null` covers every build trigger. Note: this does not control creating/editing build triggers themselves — that is gated by `can_manage_build_triggers`.
        */
       positive_build_trigger_permissions?: {
         build_trigger?: BuildTriggerIdentity | null;
       }[];
       /**
-       * Prohibited build triggers for a role
+       * Build triggers this role is **forbidden** from manually firing. Negative entries take precedence over positive ones; pair with a `build_trigger: null` positive entry to allow all-but-N.
        */
       negative_build_trigger_permissions?: {
         build_trigger?: BuildTriggerIdentity | null;
       }[];
       /**
-       * Search indexes that can be triggered by a role
+       * Search indexes this role is allowed to **manually re-index**. An entry with `search_index: null` covers every search index. Note: this does not control creating/editing search indexes themselves — that is gated by `can_manage_search_indexes`.
        */
       positive_search_index_permissions?: {
         search_index?: SearchIndexIdentity | null;
       }[];
       /**
-       * Search indexes that can't be triggered by a role
+       * Search indexes this role is **forbidden** from manually re-indexing. Negative entries take precedence over positive ones; pair with a `search_index: null` positive entry to allow all-but-N.
        */
       negative_search_index_permissions?: {
         search_index?: SearchIndexIdentity | null;
@@ -3052,7 +3120,16 @@ export type SsoUserDestroyTargetSchema = {
   data: SsoUser;
 };
 /**
- * An API token allows access to our API. It is linked to a Role, which describes what actions can be performed.
+ * An API token authenticates programmatic access to a project. Each token combines two layers of access control:
+ *
+ * 1. A **Role** that defines what actions are permitted (the same Role resource used for human collaborators).
+ * 2. A set of **API surface flags** (`can_access_cda`, `can_access_cda_preview`, `can_access_cma`) that gate which APIs the token can hit at all.
+ *
+ * The token's effective capabilities are the *intersection* of the two.
+ *
+ * > [!PROTIP] 💡 A CDA-only token can safely reuse a write-capable Role
+ * > A token with only `can_access_cda: true` is safe to attach to a Role that grants `update`/`publish`/`delete` — the Content Delivery API exposes no write endpoints, so those actions have no surface to act on. This makes it practical to share a single Role definition between an editor (acting via the dashboard / CMA) and a public read token (used by a frontend / CDA) for the same project.
+ *
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "access_token".
@@ -3075,21 +3152,24 @@ export type AccessTokenAttributes = {
    */
   name: string;
   /**
-   * The actual API token (or null if the current user has no permission to read the token)
+   * The secret value used as the `Authorization: Bearer <token>` credential. Returned on every endpoint (create, update, retrieve, list, rotate) to callers whose current role has `can_manage_access_tokens`; otherwise `null`.
    */
   token?: null | string;
   /**
-   * Whether this API token can access the Content Delivery API published content endpoint
+   * Whether this API token can call the Content Delivery API (`graphql.datocms.com`) to fetch **published** content.
    */
   can_access_cda: boolean;
   /**
-   * Whether this API token can access the Content Delivery API draft content endpoint
+   * Whether this API token can call the Content Delivery API with the `X-Include-Drafts: true` header to fetch **draft** (current, unpublished) content. There is no separate endpoint — the CDA is a single GraphQL endpoint and this flag governs whether requesting drafts is allowed.
    */
   can_access_cda_preview: boolean;
   /**
    * Whether this API token can access the Content Management API
    */
   can_access_cma: boolean;
+  /**
+   * Internal marker for the project's built-in factory tokens (e.g. read-only API token), seeded by DatoCMS when the project is created. Read-only attribute. When non-null, attribute updates are rejected with `NON_EDITABLE_ACCESS_TOKEN`, but the token can still be deleted and regenerated. `null` for any token created via this API.
+   */
   hardcoded_type: null | string;
   /**
    * When this API token was last used to access the Content Management API
@@ -3151,11 +3231,11 @@ export type AccessTokenCreateSchema = {
        */
       name: string;
       /**
-       * Whether this API token can access the Content Delivery API published content endpoint
+       * Whether this API token can call the Content Delivery API (`graphql.datocms.com`) to fetch **published** content.
        */
       can_access_cda: boolean;
       /**
-       * Whether this API token can access the Content Delivery API draft content endpoint
+       * Whether this API token can call the Content Delivery API with the `X-Include-Drafts: true` header to fetch **draft** (current, unpublished) content. There is no separate endpoint — the CDA is a single GraphQL endpoint and this flag governs whether requesting drafts is allowed.
        */
       can_access_cda_preview: boolean;
       /**
@@ -3194,11 +3274,11 @@ export type AccessTokenUpdateSchema = {
        */
       name: string;
       /**
-       * Whether this API token can access the Content Delivery API published content endpoint
+       * Whether this API token can call the Content Delivery API (`graphql.datocms.com`) to fetch **published** content.
        */
       can_access_cda: boolean;
       /**
-       * Whether this API token can access the Content Delivery API draft content endpoint
+       * Whether this API token can call the Content Delivery API with the `X-Include-Drafts: true` header to fetch **draft** (current, unpublished) content. There is no separate endpoint — the CDA is a single GraphQL endpoint and this flag governs whether requesting drafts is allowed.
        */
       can_access_cda_preview: boolean;
       /**
