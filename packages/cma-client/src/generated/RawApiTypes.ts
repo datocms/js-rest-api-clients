@@ -3260,7 +3260,7 @@ export type AccessTokenCreateSchema = {
        * Role
        */
       role: {
-        data: RoleData | null;
+        data: RoleData;
       };
     };
   };
@@ -3298,12 +3298,12 @@ export type AccessTokenUpdateSchema = {
        */
       can_access_cma: boolean;
     };
-    relationships: {
+    relationships?: {
       /**
        * Role
        */
       role: {
-        data: RoleData | null;
+        data: RoleData;
       };
     };
   };

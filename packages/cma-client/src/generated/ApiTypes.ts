@@ -3733,7 +3733,7 @@ export type AccessTokenCreateSchema = {
    * Whether this API token can access the Content Management API
    */
   can_access_cma: boolean;
-  role: RoleData | null;
+  role: RoleData;
 };
 /**
  * This interface was referenced by `AccessToken`'s JSON-Schema
@@ -3758,7 +3758,7 @@ export type AccessTokenUpdateSchema = {
    * Whether this API token can access the Content Management API
    */
   can_access_cma: boolean;
-  role: RoleData | null;
+  role?: RoleData;
 };
 /**
  * DatoCMS account
