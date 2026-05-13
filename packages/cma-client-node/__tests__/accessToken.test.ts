@@ -26,8 +26,10 @@ describe('Access tokens', () => {
     expect(allAccessToken).toHaveLength(2);
 
     const updatedToken = await client.accessTokens.update(token, {
-      ...token,
       name: 'Updated',
+      can_access_cda: token.can_access_cda,
+      can_access_cda_preview: token.can_access_cda_preview,
+      can_access_cma: token.can_access_cma,
     });
     expect(updatedToken.name).toEqual('Updated');
 
