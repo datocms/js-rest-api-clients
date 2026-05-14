@@ -59,15 +59,11 @@ export function describeResourceAction(
     !expandAll && expandDetails !== undefined && expandDetails.length > 0;
 
   if (hasFilter) {
-    return hyperschemaLink.description
-      ? buildLinkDescription(hyperschemaLink, expandDetails)
-      : '';
+    return buildLinkDescription(hyperschemaLink, expandDetails);
   }
 
   const renderFull = (effectiveExpand: string[] | undefined): string => {
-    const description = hyperschemaLink.description
-      ? buildLinkDescription(hyperschemaLink, effectiveExpand)
-      : '';
+    const description = buildLinkDescription(hyperschemaLink, effectiveExpand);
 
     return render(
       description ? `${description}\n\n` : '',
