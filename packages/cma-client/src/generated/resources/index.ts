@@ -18,7 +18,7 @@ export { default as BuildEvent } from './BuildEvent.js';
 export { default as SearchIndexEvent } from './SearchIndexEvent.js';
 export { default as Item } from './Item.js';
 export { default as ItemVersion } from './ItemVersion.js';
-export { default as Upload } from './Upload.js';
+export { default as Upload } from '../../resources/Upload.js';
 export { default as UploadRequest } from './UploadRequest.js';
 export { default as UploadTrack } from './UploadTrack.js';
 export { default as ScheduledPublication } from './ScheduledPublication.js';
