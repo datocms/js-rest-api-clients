@@ -8341,42 +8341,28 @@ export type Upload = {
    */
   mux_mp4_highest_res: null | 'high' | 'medium' | 'low';
   /**
-   * For each of the project's locales, the default metadata to apply if nothing is specified at record's level.
+   * Per-asset default metadata applied when no record-level overrides are present. `alt`, `title`, and `custom_data` are objects keyed by locale; `focal_point` is non-localized — a single value per asset, applied across every locale (only meaningful for image assets).
+   *
+   * > [!PROTIP] 📘 Requires the `non_localized_focal_points` environment opt-in
+   * > This shape is returned and accepted in environments where the opt-in is active. The opt-in is the path forward and will become the default for all projects. Environments where it is still inactive use a legacy locale-keyed shape under the hood (kept working for compatibility) — opt in to align with this documentation.
    */
   default_field_metadata: {
+    alt: LocalizedAlt;
+    title: LocalizedTitle;
+    custom_data: LocalizedCustomData;
     /**
-     * This interface was referenced by `undefined`'s JSON-Schema definition
-     * via the `patternProperty` "^(?<languagecode>[a-z]{0,3}(-[A-Za-z]+)?(-[A-Z]{0,3})?)$".
+     * Focal point — non-localized; a single value applies across every locale (only meaningful for image assets)
      */
-    [k: string]: {
+    focal_point: {
       /**
-       * Alternate text for the asset
+       * Horizontal position expressed as float between 0 and 1
        */
-      alt: string | null;
+      x: number;
       /**
-       * Title for the asset
+       * Vertical position expressed as float between 0 and 1
        */
-      title: string | null;
-      /**
-       * Object with arbitrary metadata
-       */
-      custom_data: {
-        [k: string]: unknown;
-      };
-      /**
-       * Focal point (only for image assets)
-       */
-      focal_point: {
-        /**
-         * Horizontal position expressed as float between 0 and 1
-         */
-        x: number;
-        /**
-         * Vertical position expressed as float between 0 and 1
-         */
-        y: number;
-      } | null;
-    };
+      y: number;
+    } | null;
   };
   /**
    * Is this upload an image?
@@ -8442,6 +8428,44 @@ export type UploadCreateJobSchema = Upload;
 export type UploadSelfTargetSchema = Upload;
 export type UploadDestroyTargetSchema = Upload;
 export type UploadUpdateJobSchema = Upload;
+/**
+ * Alternate text per locale
+ */
+export type LocalizedAlt = {
+  /**
+   * Alternate text for the asset in this locale
+   *
+   * This interface was referenced by `LocalizedAlt`'s JSON-Schema definition
+   * via the `patternProperty` "^(?<languagecode>[a-z]{0,3}(-[A-Za-z]+)?(-[A-Z]{0,3})?)$".
+   */
+  [k: string]: string | null;
+};
+/**
+ * Title per locale
+ */
+export type LocalizedTitle = {
+  /**
+   * Title for the asset in this locale
+   *
+   * This interface was referenced by `LocalizedTitle`'s JSON-Schema definition
+   * via the `patternProperty` "^(?<languagecode>[a-z]{0,3}(-[A-Za-z]+)?(-[A-Z]{0,3})?)$".
+   */
+  [k: string]: string | null;
+};
+/**
+ * Object with arbitrary metadata, per locale
+ */
+export type LocalizedCustomData = {
+  /**
+   * Arbitrary metadata for the asset in this locale
+   *
+   * This interface was referenced by `LocalizedCustomData`'s JSON-Schema definition
+   * via the `patternProperty` "^(?<languagecode>[a-z]{0,3}(-[A-Za-z]+)?(-[A-Z]{0,3})?)$".
+   */
+  [k: string]: {
+    [k: string]: unknown;
+  };
+};
 /**
  * Meta attributes
  *
@@ -8557,42 +8581,28 @@ export type UploadAttributes = {
    */
   mux_mp4_highest_res: null | 'high' | 'medium' | 'low';
   /**
-   * For each of the project's locales, the default metadata to apply if nothing is specified at record's level.
+   * Per-asset default metadata applied when no record-level overrides are present. `alt`, `title`, and `custom_data` are objects keyed by locale; `focal_point` is non-localized — a single value per asset, applied across every locale (only meaningful for image assets).
+   *
+   * > [!PROTIP] 📘 Requires the `non_localized_focal_points` environment opt-in
+   * > This shape is returned and accepted in environments where the opt-in is active. The opt-in is the path forward and will become the default for all projects. Environments where it is still inactive use a legacy locale-keyed shape under the hood (kept working for compatibility) — opt in to align with this documentation.
    */
   default_field_metadata: {
+    alt: LocalizedAlt;
+    title: LocalizedTitle;
+    custom_data: LocalizedCustomData;
     /**
-     * This interface was referenced by `undefined`'s JSON-Schema definition
-     * via the `patternProperty` "^(?<languagecode>[a-z]{0,3}(-[A-Za-z]+)?(-[A-Z]{0,3})?)$".
+     * Focal point — non-localized; a single value applies across every locale (only meaningful for image assets)
      */
-    [k: string]: {
+    focal_point: {
       /**
-       * Alternate text for the asset
+       * Horizontal position expressed as float between 0 and 1
        */
-      alt: string | null;
+      x: number;
       /**
-       * Title for the asset
+       * Vertical position expressed as float between 0 and 1
        */
-      title: string | null;
-      /**
-       * Object with arbitrary metadata
-       */
-      custom_data: {
-        [k: string]: unknown;
-      };
-      /**
-       * Focal point (only for image assets)
-       */
-      focal_point: {
-        /**
-         * Horizontal position expressed as float between 0 and 1
-         */
-        x: number;
-        /**
-         * Vertical position expressed as float between 0 and 1
-         */
-        y: number;
-      } | null;
-    };
+      y: number;
+    } | null;
   };
   /**
    * Is this upload an image?
@@ -8685,42 +8695,25 @@ export type UploadCreateSchema = {
    */
   notes?: string | null;
   /**
-   * For each of the project's locales, the default metadata to apply if nothing is specified at record's level.
+   * Patch the asset's default metadata. Send any subset of `alt`/`title`/`custom_data`/`focal_point` — missing keys preserve their stored values. See the response shape for the full structure and per-key semantics.
    */
   default_field_metadata?: {
+    alt?: LocalizedAlt;
+    title?: LocalizedTitle;
+    custom_data?: LocalizedCustomData;
     /**
-     * This interface was referenced by `undefined`'s JSON-Schema definition
-     * via the `patternProperty` "^(?<languagecode>[a-z]{0,3}(-[A-Za-z]+)?(-[A-Z]{0,3})?)$".
+     * Focal point — non-localized; a single value applies across every locale (only meaningful for image assets)
      */
-    [k: string]: {
+    focal_point?: {
       /**
-       * Alternate text for the asset
+       * Horizontal position expressed as float between 0 and 1
        */
-      alt?: string | null;
+      x: number;
       /**
-       * Title for the asset
+       * Vertical position expressed as float between 0 and 1
        */
-      title?: string | null;
-      /**
-       * Object with arbitrary metadata
-       */
-      custom_data?: {
-        [k: string]: unknown;
-      };
-      /**
-       * Focal point (only for image assets)
-       */
-      focal_point?: {
-        /**
-         * Horizontal position expressed as float between 0 and 1
-         */
-        x: number;
-        /**
-         * Vertical position expressed as float between 0 and 1
-         */
-        y: number;
-      } | null;
-    };
+      y: number;
+    } | null;
   };
   /**
    * Tags
@@ -8760,42 +8753,25 @@ export type UploadUpdateSchema = {
    */
   tags?: string[];
   /**
-   * For each of the project's locales, the default metadata to apply if nothing is specified at record's level.
+   * Patch the asset's default metadata. Send any subset of `alt`/`title`/`custom_data`/`focal_point` — missing keys preserve their stored values. See the response shape for the full structure and per-key semantics.
    */
   default_field_metadata?: {
+    alt?: LocalizedAlt;
+    title?: LocalizedTitle;
+    custom_data?: LocalizedCustomData;
     /**
-     * This interface was referenced by `undefined`'s JSON-Schema definition
-     * via the `patternProperty` "^(?<languagecode>[a-z]{0,3}(-[A-Za-z]+)?(-[A-Z]{0,3})?)$".
+     * Focal point — non-localized; a single value applies across every locale (only meaningful for image assets)
      */
-    [k: string]: {
+    focal_point?: {
       /**
-       * Alternate text for the asset
+       * Horizontal position expressed as float between 0 and 1
        */
-      alt?: string | null;
+      x: number;
       /**
-       * Title for the asset
+       * Vertical position expressed as float between 0 and 1
        */
-      title?: string | null;
-      /**
-       * Object with arbitrary metadata
-       */
-      custom_data?: {
-        [k: string]: unknown;
-      };
-      /**
-       * Focal point (only for image assets)
-       */
-      focal_point?: {
-        /**
-         * Horizontal position expressed as float between 0 and 1
-         */
-        x: number;
-        /**
-         * Vertical position expressed as float between 0 and 1
-         */
-        y: number;
-      } | null;
-    };
+      y: number;
+    } | null;
   };
   creator?:
     | AccountData
@@ -11710,6 +11686,10 @@ export type SiteMeta = {
    * Whether the [Milliseconds in datetime](https://www.datocms.com/product-updates/milliseconds-in-datetime) opt-in product update is active or not
    */
   milliseconds_in_datetime: boolean;
+  /**
+   * Whether the non-localized focal points opt-in is active for the environment. When active, an upload's `focal_point` is stored once per asset rather than once per locale, and the CMA `default_field_metadata` attribute is exposed in its field-keyed shape (with `alt`/`title`/`custom_data` keyed by locale and a single top-level `focal_point`). When inactive, the CMA continues to accept and return the legacy locale-keyed shape — the single stored focal_point is replicated into every locale entry on read. The CDA's behavior is unaffected: it already returns a single `focalPoint` value.
+   */
+  non_localized_focal_points: boolean;
 };
 /**
  * JSON API data
@@ -12073,6 +12053,10 @@ export type SiteUpdateSchema = {
      * Whether the [Milliseconds in datetime](https://www.datocms.com/product-updates/milliseconds-in-datetime) opt-in product update is active or not
      */
     milliseconds_in_datetime?: boolean;
+    /**
+     * Whether the non-localized focal points opt-in is active for the environment. When active, an upload's `focal_point` is stored once per asset rather than once per locale, and the CMA `default_field_metadata` attribute is exposed in its field-keyed shape (with `alt`/`title`/`custom_data` keyed by locale and a single top-level `focal_point`). When inactive, the CMA continues to accept and return the legacy locale-keyed shape — the single stored focal_point is replicated into every locale entry on read. The CDA's behavior is unaffected: it already returns a single `focalPoint` value.
+     */
+    non_localized_focal_points?: boolean;
   };
 };
 /**
