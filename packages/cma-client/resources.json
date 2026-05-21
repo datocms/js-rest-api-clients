@@ -1649,6 +1649,22 @@
         "deprecated": "This API call is to be considered private and might change without notice",
         "name": "create",
         "rawName": "rawCreate"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "docUrl": "https://www.datocms.com/docs/content-management-api/resources/session/destroy",
+        "rel": "destroy",
+        "urlTemplate": "/session",
+        "method": "DELETE",
+        "comment": "Destroy the current session",
+        "urlPlaceholders": [],
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "deprecated": "This API call is to be considered private and might change without notice",
+        "name": "destroy",
+        "rawName": "rawDestroy"
       }
     ],
     "namespace": "session",

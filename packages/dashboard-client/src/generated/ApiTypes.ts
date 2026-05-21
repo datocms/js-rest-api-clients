@@ -1971,8 +1971,6 @@ export type PerOwnerPricingSubscription = {
 };
 export type PerOwnerPricingSubscriptionCreateTargetSchema =
   PerOwnerPricingSubscription;
-export type PerOwnerPricingSubscriptionValidateTargetSchema =
-  PerOwnerPricingSubscription;
 /**
  * JSON API data
  *
@@ -2056,6 +2054,7 @@ export type PerOwnerPricingSubscriptionCreateSchema = {
     state: string;
     vat_number?: null | string;
     cf_cod_fiscale?: null | string;
+    cf_gruppo_iva?: null | string;
     po_number?: null | string;
     zip: string;
   };
@@ -2081,6 +2080,7 @@ export type PerOwnerPricingSubscriptionSimulateSchema = {
     country: string;
     vat_number?: null | string;
     cf_cod_fiscale?: null | string;
+    cf_gruppo_iva?: null | string;
     po_number?: null | string;
     zip: string;
     [k: string]: unknown;
@@ -2836,6 +2836,7 @@ export type PerSitePricingBillingProfile = {
     credits: number;
     total_dues: number;
     cf_cod_fiscale: null | string;
+    cf_gruppo_iva: null | string;
     coupons: string[];
     is_active: boolean;
     next_monthly_billing_at: null | string;
@@ -2884,6 +2885,7 @@ export type PerSitePricingBillingProfileAttributes = {
     credits: number;
     total_dues: number;
     cf_cod_fiscale: null | string;
+    cf_gruppo_iva: null | string;
     coupons: string[];
     is_active: boolean;
     next_monthly_billing_at: null | string;
@@ -2926,6 +2928,7 @@ export type PerSitePricingBillingProfileUpdateInfoSchema = {
     zip: string;
     vat_number?: null | string;
     cf_cod_fiscale?: null | string;
+    cf_gruppo_iva?: null | string;
   };
 };
 /**
@@ -2969,6 +2972,7 @@ export type PerOwnerPricingBillingProfile = {
     credits: number;
     total_dues: number;
     cf_cod_fiscale: null | string;
+    cf_gruppo_iva: null | string;
     po_number: null | string;
     unbilled_charges: number;
     discount_percentage: number;
@@ -3013,6 +3017,7 @@ export type PerOwnerPricingBillingProfileAttributes = {
     credits: number;
     total_dues: number;
     cf_cod_fiscale: null | string;
+    cf_gruppo_iva: null | string;
     po_number: null | string;
     unbilled_charges: number;
     discount_percentage: number;
@@ -3045,6 +3050,7 @@ export type PerOwnerPricingBillingProfileUpdateInfoSchema = {
     zip: string;
     vat_number?: null | string;
     cf_cod_fiscale?: null | string;
+    cf_gruppo_iva?: null | string;
     po_number?: null | string;
   };
 };

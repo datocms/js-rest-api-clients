@@ -109,10 +109,6 @@ export default class PerOwnerPricingSubscription extends BaseResource {
           relationships: ['plan'],
         },
       ),
-    ).then((body) =>
-      Utils.deserializeResponseBody<ApiTypes.PerOwnerPricingSubscriptionValidateTargetSchema>(
-        body,
-      ),
     );
   }
 
@@ -124,13 +120,11 @@ export default class PerOwnerPricingSubscription extends BaseResource {
    */
   rawValidate(
     body: RawApiTypes.PerOwnerPricingSubscriptionValidateSchema,
-  ): Promise<RawApiTypes.PerOwnerPricingSubscriptionValidateTargetSchema> {
-    return this.client.request<RawApiTypes.PerOwnerPricingSubscriptionValidateTargetSchema>(
-      {
-        method: 'POST',
-        url: '/per-owner-pricing-subscriptions/validate',
-        body,
-      },
-    );
+  ): Promise<void> {
+    return this.client.request<void>({
+      method: 'POST',
+      url: '/per-owner-pricing-subscriptions/validate',
+      body,
+    });
   }
 }

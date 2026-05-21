@@ -47,4 +47,35 @@ export default class Session extends BaseResource {
       body,
     });
   }
+
+  /**
+   * Destroy the current session
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/session/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  destroy() {
+    return this.rawDestroy();
+  }
+
+  /**
+   * Destroy the current session
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/session/destroy
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawDestroy(): Promise<void> {
+    return this.client.request<void>({
+      method: 'DELETE',
+      url: '/session',
+    });
+  }
 }
