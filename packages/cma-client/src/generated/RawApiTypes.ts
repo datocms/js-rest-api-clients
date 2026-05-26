@@ -8278,6 +8278,14 @@ export type ItemVersionMeta = {
    */
   is_published: boolean;
   /**
+   * Date this version became the published version of the record, or `null` if it has never been published. May also be `null` for versions that were published before publication-history tracking was introduced; in that case, fall back to `is_published` to determine the live status.
+   */
+  published_from: string | null;
+  /**
+   * Date this version stopped being the published version of the record (either replaced by a newer published version, or explicitly unpublished). `null` when the version is currently published or has never been published.
+   */
+  published_until: string | null;
+  /**
    * Whether the record version is the most recent version or not
    */
   is_current: boolean;
