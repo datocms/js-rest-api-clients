@@ -76,7 +76,7 @@ export function isValidId(id: string) {
 }
 
 export function generateId() {
-  const bytes = v4(null, new Uint8Array(16));
+  const bytes = v4(undefined, new Uint8Array(16));
 
   // Here we unset the first bit to ensure [A-Za-f] as the first char.
   //

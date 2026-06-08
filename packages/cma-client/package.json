@@ -39,11 +39,10 @@
   "dependencies": {
     "@datocms/rest-client-utils": "^5.4.9",
     "datocms-structured-text-utils": "^5.1.4",
-    "uuid": "^9.0.1"
+    "uuid": "^11.1.1"
   },
   "devDependencies": {
-    "@datocms/dashboard-client": "^5.4.21",
-    "@types/uuid": "^9.0.7"
+    "@datocms/dashboard-client": "^5.4.21"
   },
   "gitHead": "ac4164968026ba62a2841d31d2b60c31eadb2cc8"
 }
