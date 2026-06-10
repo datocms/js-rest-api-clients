@@ -8616,17 +8616,14 @@ export type UploadAttributes = {
    */
   mux_mp4_highest_res: null | 'high' | 'medium' | 'low';
   /**
-   * Per-asset default metadata applied when no record-level overrides are present. `alt`, `title`, and `custom_data` are objects keyed by locale; `focal_point` is non-localized — a single value per asset, applied across every locale (only meaningful for image assets).
-   *
-   * > [!PROTIP] 📘 Requires the `non_localized_focal_points` environment opt-in
-   * > This shape is returned and accepted in environments where the opt-in is active. The opt-in is the path forward and will become the default for all projects. Environments where it is still inactive use a legacy locale-keyed shape under the hood (kept working for compatibility) — opt in to align with this documentation.
+   * Per-asset default metadata applied when no record-level overrides are present. `alt`, `title`, and `custom_data` are objects keyed by locale; `focal_point` is a single value per asset (only meaningful for image assets). See [non-localized focal points](https://www.datocms.com/product-updates/non-localized-focal-points) for more info.
    */
   default_field_metadata: {
     alt: LocalizedAlt;
     title: LocalizedTitle;
     custom_data: LocalizedCustomData;
     /**
-     * Focal point — non-localized; a single value applies across every locale (only meaningful for image assets)
+     * Focal point (only for image assets)
      */
     focal_point: {
       /**
@@ -8822,7 +8819,7 @@ export type UploadCreateSchema = {
         title?: LocalizedTitle;
         custom_data?: LocalizedCustomData;
         /**
-         * Focal point — non-localized; a single value applies across every locale (only meaningful for image assets)
+         * Focal point (only for image assets)
          */
         focal_point?: {
           /**
@@ -8930,7 +8927,7 @@ export type UploadUpdateSchema = {
         title?: LocalizedTitle;
         custom_data?: LocalizedCustomData;
         /**
-         * Focal point — non-localized; a single value applies across every locale (only meaningful for image assets)
+         * Focal point (only for image assets)
          */
         focal_point?: {
           /**
@@ -12089,7 +12086,7 @@ export type SiteMeta = {
    */
   milliseconds_in_datetime: boolean;
   /**
-   * Whether the non-localized focal points opt-in is active for the environment. When active, an upload's `focal_point` is stored once per asset rather than once per locale, and the CMA `default_field_metadata` attribute is exposed in its field-keyed shape (with `alt`/`title`/`custom_data` keyed by locale and a single top-level `focal_point`). When inactive, the CMA continues to accept and return the legacy locale-keyed shape — the single stored focal_point is replicated into every locale entry on read. The CDA's behavior is unaffected: it already returns a single `focalPoint` value.
+   * Whether the [Non-localized focal points](https://www.datocms.com/product-updates/non-localized-focal-points) opt-in product update is active or not
    */
   non_localized_focal_points: boolean;
 };
@@ -12285,7 +12282,7 @@ export type SiteUpdateSchema = {
        */
       milliseconds_in_datetime?: boolean;
       /**
-       * Whether the non-localized focal points opt-in is active for the environment. When active, an upload's `focal_point` is stored once per asset rather than once per locale, and the CMA `default_field_metadata` attribute is exposed in its field-keyed shape (with `alt`/`title`/`custom_data` keyed by locale and a single top-level `focal_point`). When inactive, the CMA continues to accept and return the legacy locale-keyed shape — the single stored focal_point is replicated into every locale entry on read. The CDA's behavior is unaffected: it already returns a single `focalPoint` value.
+       * Whether the [Non-localized focal points](https://www.datocms.com/product-updates/non-localized-focal-points) opt-in product update is active or not
        */
       non_localized_focal_points?: boolean;
     };
@@ -12385,6 +12382,13 @@ export type SiteActivateImprovedItemsListingTargetSchema = {
  * via the `activate_milliseconds_in_datetime.targetSchema` link.
  */
 export type SiteActivateMillisecondsInDatetimeTargetSchema = {
+  data: Site;
+};
+/**
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `activate_non_localized_focal_points.targetSchema` link.
+ */
+export type SiteActivateNonLocalizedFocalPointsTargetSchema = {
   data: Site;
 };
 /**

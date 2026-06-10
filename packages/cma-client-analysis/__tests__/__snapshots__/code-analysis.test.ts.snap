@@ -1105,7 +1105,7 @@ exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies uploads.cr
         title?: LocalizedTitle;
         custom_data?: LocalizedCustomData;
         /**
-         * Focal point — non-localized; a single value applies across every locale (only meaningful for image assets)
+         * Focal point (only for image assets)
          */
         focal_point?: {
             /**
@@ -1242,17 +1242,14 @@ export type Upload = {
      */
     mux_mp4_highest_res: null | 'high' | 'medium' | 'low';
     /**
-     * Per-asset default metadata applied when no record-level overrides are present. \`alt\`, \`title\`, and \`custom_data\` are objects keyed by locale; \`focal_point\` is non-localized — a single value per asset, applied across every locale (only meaningful for image assets).
-     *
-     * > [!PROTIP] 📘 Requires the \`non_localized_focal_points\` environment opt-in
-     * > This shape is returned and accepted in environments where the opt-in is active. The opt-in is the path forward and will become the default for all projects. Environments where it is still inactive use a legacy locale-keyed shape under the hood (kept working for compatibility) — opt in to align with this documentation.
+     * Per-asset default metadata applied when no record-level overrides are present. \`alt\`, \`title\`, and \`custom_data\` are objects keyed by locale; \`focal_point\` is a single value per asset (only meaningful for image assets). See [non-localized focal points](https://www.datocms.com/product-updates/non-localized-focal-points) for more info.
      */
     default_field_metadata: {
         alt: LocalizedAlt;
         title: LocalizedTitle;
         custom_data: LocalizedCustomData;
         /**
-         * Focal point — non-localized; a single value applies across every locale (only meaningful for image assets)
+         * Focal point (only for image assets)
          */
         focal_point: {
             /**
