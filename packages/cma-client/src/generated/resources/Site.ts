@@ -458,6 +458,43 @@ export default class Site extends BaseResource {
   }
 
   /**
+   * Activate non-localized focal points
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_non_localized_focal_points
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  activateNonLocalizedFocalPoints() {
+    return this.rawActivateNonLocalizedFocalPoints().then((body) =>
+      Utils.deserializeResponseBody<ApiTypes.SiteActivateNonLocalizedFocalPointsTargetSchema>(
+        body,
+      ),
+    );
+  }
+
+  /**
+   * Activate non-localized focal points
+   *
+   * Read more: https://www.datocms.com/docs/content-management-api/resources/site/activate_non_localized_focal_points
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   *
+   * @deprecated This API call is to be considered private and might change without notice
+   */
+  rawActivateNonLocalizedFocalPoints(): Promise<RawApiTypes.SiteActivateNonLocalizedFocalPointsTargetSchema> {
+    return this.client.request<RawApiTypes.SiteActivateNonLocalizedFocalPointsTargetSchema>(
+      {
+        method: 'PUT',
+        url: '/site/activate-non-localized-focal-points',
+      },
+    );
+  }
+
+  /**
    * Update CDN settings default assets
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/site/update_assets_cdn_default_settings

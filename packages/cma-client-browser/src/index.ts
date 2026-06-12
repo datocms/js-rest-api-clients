@@ -257,6 +257,8 @@ export type {
   UnchangedBlockInRequest,
   UniqueValidator,
   UpdatedBlockInRequest,
+  UploadLocaleKeyedDefaultFieldMetadata,
+  UploadLocaleKeyedDefaultFieldMetadataInRequest,
   VideoEditorConfiguration,
   VideoFieldAppearance,
   VideoFieldValidators,
