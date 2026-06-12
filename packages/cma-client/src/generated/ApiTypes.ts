@@ -11078,32 +11078,125 @@ export type PublicInfo = {
    */
   custom_i18n_messages_template_url: null | string;
   /**
-   * Specifies the color-scheme for the project
+   * Specifies the color-scheme for the project. For monochromatic themes the response only includes type and hue — frontends must derive the palette from the hue. For custom themes the primary_color, light_color, accent_color, and dark_color fields are returned.
    */
   theme: {
-    primary_color: {
+    /**
+     * Whether the project is using a custom color palette or a monochromatic one derived from a hue.
+     */
+    type: 'custom' | 'monochromatic';
+    /**
+     * If the type is monochromatic, the value will fall between 0 and 359. If it's not, the value will be null.
+     */
+    hue: number | null;
+    /**
+     * An integer color channel value (0-255)
+     */
+    color_channel?: number;
+    /**
+     * An RGBA color value
+     */
+    color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
       [k: string]: unknown;
     };
-    light_color: {
+    /**
+     * An RGBA color value
+     */
+    primary_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
-    accent_color: {
+    /**
+     * An RGBA color value
+     */
+    light_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
-    dark_color: {
+    /**
+     * An RGBA color value
+     */
+    accent_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
+      alpha: number;
+    };
+    /**
+     * An RGBA color value
+     */
+    dark_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
+      red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
+      green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
+      blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
   };
@@ -11156,32 +11249,125 @@ export type PublicInfoAttributes = {
    */
   custom_i18n_messages_template_url: null | string;
   /**
-   * Specifies the color-scheme for the project
+   * Specifies the color-scheme for the project. For monochromatic themes the response only includes type and hue — frontends must derive the palette from the hue. For custom themes the primary_color, light_color, accent_color, and dark_color fields are returned.
    */
   theme: {
-    primary_color: {
+    /**
+     * Whether the project is using a custom color palette or a monochromatic one derived from a hue.
+     */
+    type: 'custom' | 'monochromatic';
+    /**
+     * If the type is monochromatic, the value will fall between 0 and 359. If it's not, the value will be null.
+     */
+    hue: number | null;
+    /**
+     * An integer color channel value (0-255)
+     */
+    color_channel?: number;
+    /**
+     * An RGBA color value
+     */
+    color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
       [k: string]: unknown;
     };
-    light_color: {
+    /**
+     * An RGBA color value
+     */
+    primary_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
-    accent_color: {
+    /**
+     * An RGBA color value
+     */
+    light_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
-    dark_color: {
+    /**
+     * An RGBA color value
+     */
+    accent_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
+      alpha: number;
+    };
+    /**
+     * An RGBA color value
+     */
+    dark_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
+      red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
+      green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
+      blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
   };
@@ -11529,7 +11715,7 @@ export type Site = {
     };
   };
   /**
-   * Specifies the theme to use in administrative area
+   * Specifies the theme to use in administrative area. For monochromatic themes the response only includes type, hue, and logo — frontends must derive the palette from the hue. For custom themes the primary_color, light_color, accent_color, and dark_color fields are returned.
    */
   theme: {
     /**
@@ -11540,28 +11726,113 @@ export type Site = {
      * If the type is monochromatic, the value will fall between 0 and 359. If it's not, the value will be null.
      */
     hue: number | null;
-    primary_color: {
+    /**
+     * An integer color channel value (0-255)
+     */
+    color_channel?: number;
+    /**
+     * An RGBA color value
+     */
+    color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
-    light_color: {
+    /**
+     * An RGBA color value
+     */
+    primary_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
-    accent_color: {
+    /**
+     * An RGBA color value
+     */
+    light_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
-    dark_color: {
+    /**
+     * An RGBA color value
+     */
+    accent_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
+      alpha: number;
+    };
+    /**
+     * An RGBA color value
+     */
+    dark_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
+      red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
+      green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
+      blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
     /**
@@ -11787,7 +12058,7 @@ export type SiteAttributes = {
     };
   };
   /**
-   * Specifies the theme to use in administrative area
+   * Specifies the theme to use in administrative area. For monochromatic themes the response only includes type, hue, and logo — frontends must derive the palette from the hue. For custom themes the primary_color, light_color, accent_color, and dark_color fields are returned.
    */
   theme: {
     /**
@@ -11798,28 +12069,113 @@ export type SiteAttributes = {
      * If the type is monochromatic, the value will fall between 0 and 359. If it's not, the value will be null.
      */
     hue: number | null;
-    primary_color: {
+    /**
+     * An integer color channel value (0-255)
+     */
+    color_channel?: number;
+    /**
+     * An RGBA color value
+     */
+    color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
-    light_color: {
+    /**
+     * An RGBA color value
+     */
+    primary_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
-    accent_color: {
+    /**
+     * An RGBA color value
+     */
+    light_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
-    dark_color: {
+    /**
+     * An RGBA color value
+     */
+    accent_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
       red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
+      alpha: number;
+    };
+    /**
+     * An RGBA color value
+     */
+    dark_color?: {
+      /**
+       * An integer color channel value (0-255)
+       */
+      red: number;
+      /**
+       * An integer color channel value (0-255)
+       */
+      green: number;
+      /**
+       * An integer color channel value (0-255)
+       */
+      blue: number;
+      /**
+       * An integer color channel value (0-255)
+       */
       alpha: number;
     };
     /**
@@ -11956,28 +12312,88 @@ export type SiteUpdateSchema = {
          * The upload ID that is used as the logo for the project
          */
         logo: string | null;
+        /**
+         * An RGBA color value
+         */
         primary_color: {
+          /**
+           * An integer color channel value (0-255)
+           */
           red: number;
+          /**
+           * An integer color channel value (0-255)
+           */
           green: number;
+          /**
+           * An integer color channel value (0-255)
+           */
           blue: number;
+          /**
+           * An integer color channel value (0-255)
+           */
           alpha: number;
         };
+        /**
+         * An RGBA color value
+         */
         light_color: {
+          /**
+           * An integer color channel value (0-255)
+           */
           red: number;
+          /**
+           * An integer color channel value (0-255)
+           */
           green: number;
+          /**
+           * An integer color channel value (0-255)
+           */
           blue: number;
+          /**
+           * An integer color channel value (0-255)
+           */
           alpha: number;
         };
+        /**
+         * An RGBA color value
+         */
         accent_color: {
+          /**
+           * An integer color channel value (0-255)
+           */
           red: number;
+          /**
+           * An integer color channel value (0-255)
+           */
           green: number;
+          /**
+           * An integer color channel value (0-255)
+           */
           blue: number;
+          /**
+           * An integer color channel value (0-255)
+           */
           alpha: number;
         };
+        /**
+         * An RGBA color value
+         */
         dark_color?: {
+          /**
+           * An integer color channel value (0-255)
+           */
           red: number;
+          /**
+           * An integer color channel value (0-255)
+           */
           green: number;
+          /**
+           * An integer color channel value (0-255)
+           */
           blue: number;
+          /**
+           * An integer color channel value (0-255)
+           */
           alpha: number;
         };
         [k: string]: unknown;
