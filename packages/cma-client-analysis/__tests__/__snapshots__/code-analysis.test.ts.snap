@@ -1098,7 +1098,7 @@ exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies uploads.cr
      */
     notes?: string | null;
     /**
-     * Patch the asset's default metadata. Send any subset of \`alt\`/\`title\`/\`custom_data\`/\`focal_point\` — missing keys preserve their stored values. See the response shape for the full structure and per-key semantics.
+     * Patch the asset's default metadata. Send any subset of \`alt\`/\`title\`/\`custom_data\`/\`focal_point\`/\`poster_time\` — missing keys preserve their stored values. See the response shape for the full structure and per-key semantics.
      */
     default_field_metadata?: {
         alt?: LocalizedAlt;
@@ -1117,6 +1117,10 @@ exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies uploads.cr
              */
             y: number;
         } | null;
+        /**
+         * Poster time in seconds (only for video assets). Float seconds into the video used to generate the thumbnail; null uses Mux's default (middle of the video)
+         */
+        poster_time?: number | null;
     };
     /**
      * Tags
@@ -1242,7 +1246,7 @@ export type Upload = {
      */
     mux_mp4_highest_res: null | 'high' | 'medium' | 'low';
     /**
-     * Per-asset default metadata applied when no record-level overrides are present. \`alt\`, \`title\`, and \`custom_data\` are objects keyed by locale; \`focal_point\` is a single value per asset (only meaningful for image assets). See [non-localized focal points](https://www.datocms.com/product-updates/non-localized-focal-points) for more info.
+     * Per-asset default metadata applied when no record-level overrides are present. \`alt\`, \`title\`, and \`custom_data\` are objects keyed by locale; \`focal_point\` (image assets) and \`poster_time\` (video assets) are a single value per asset. See [non-localized focal points](https://www.datocms.com/product-updates/non-localized-focal-points) for more info.
      */
     default_field_metadata: {
         alt: LocalizedAlt;
@@ -1261,6 +1265,10 @@ export type Upload = {
              */
             y: number;
         } | null;
+        /**
+         * Poster time in seconds (only for video assets). Float seconds into the video used to generate the thumbnail; null uses Mux's default (middle of the video)
+         */
+        poster_time: number | null;
     };
     /**
      * Is this upload an image?
