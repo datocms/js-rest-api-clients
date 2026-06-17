@@ -8278,6 +8278,14 @@ export type ItemVersionMeta = {
    */
   is_published: boolean;
   /**
+   * Date this version became the published version of the record, or `null` if it has never been published. May also be `null` for versions that were published before publication-history tracking was introduced; in that case, fall back to `is_published` to determine the live status.
+   */
+  published_from: string | null;
+  /**
+   * Date this version stopped being the published version of the record (either replaced by a newer published version, or explicitly unpublished). `null` when the version is currently published or has never been published.
+   */
+  published_until: string | null;
+  /**
    * Whether the record version is the most recent version or not
    */
   is_current: boolean;
@@ -8616,7 +8624,7 @@ export type UploadAttributes = {
    */
   mux_mp4_highest_res: null | 'high' | 'medium' | 'low';
   /**
-   * Per-asset default metadata applied when no record-level overrides are present. `alt`, `title`, and `custom_data` are objects keyed by locale; `focal_point` is a single value per asset (only meaningful for image assets). See [non-localized focal points](https://www.datocms.com/product-updates/non-localized-focal-points) for more info.
+   * Per-asset default metadata applied when no record-level overrides are present. `alt`, `title`, and `custom_data` are objects keyed by locale; `focal_point` (image assets) and `poster_time` (video assets) are a single value per asset. See [non-localized focal points](https://www.datocms.com/product-updates/non-localized-focal-points) for more info.
    */
   default_field_metadata: {
     alt: LocalizedAlt;
@@ -8635,6 +8643,10 @@ export type UploadAttributes = {
        */
       y: number;
     } | null;
+    /**
+     * Poster time in seconds (only for video assets). Float seconds into the video used to generate the thumbnail; null uses Mux's default (middle of the video)
+     */
+    poster_time: number | null;
   };
   /**
    * Is this upload an image?
@@ -8812,7 +8824,7 @@ export type UploadCreateSchema = {
        */
       notes?: string | null;
       /**
-       * Patch the asset's default metadata. Send any subset of `alt`/`title`/`custom_data`/`focal_point` — missing keys preserve their stored values. See the response shape for the full structure and per-key semantics.
+       * Patch the asset's default metadata. Send any subset of `alt`/`title`/`custom_data`/`focal_point`/`poster_time` — missing keys preserve their stored values. See the response shape for the full structure and per-key semantics.
        */
       default_field_metadata?: {
         alt?: LocalizedAlt;
@@ -8831,6 +8843,10 @@ export type UploadCreateSchema = {
            */
           y: number;
         } | null;
+        /**
+         * Poster time in seconds (only for video assets). Float seconds into the video used to generate the thumbnail; null uses Mux's default (middle of the video)
+         */
+        poster_time?: number | null;
       };
       /**
        * Tags
@@ -8920,7 +8936,7 @@ export type UploadUpdateSchema = {
        */
       tags?: string[];
       /**
-       * Patch the asset's default metadata. Send any subset of `alt`/`title`/`custom_data`/`focal_point` — missing keys preserve their stored values. See the response shape for the full structure and per-key semantics.
+       * Patch the asset's default metadata. Send any subset of `alt`/`title`/`custom_data`/`focal_point`/`poster_time` — missing keys preserve their stored values. See the response shape for the full structure and per-key semantics.
        */
       default_field_metadata?: {
         alt?: LocalizedAlt;
@@ -8939,6 +8955,10 @@ export type UploadUpdateSchema = {
            */
           y: number;
         } | null;
+        /**
+         * Poster time in seconds (only for video assets). Float seconds into the video used to generate the thumbnail; null uses Mux's default (middle of the video)
+         */
+        poster_time?: number | null;
       };
       [k: string]: unknown;
     };
