@@ -370,4 +370,64 @@ export default class Account extends BaseResource {
       },
     );
   }
+
+  /**
+   * Complete email verification
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  completeEmailVerification(
+    body: ApiTypes.AccountCompleteEmailVerificationSchema,
+  ) {
+    return this.rawCompleteEmailVerification(
+      Utils.serializeRequestBody<RawApiTypes.AccountCompleteEmailVerificationSchema>(
+        body,
+        {
+          type: 'email_verification',
+          attributes: ['token', 'account_id'],
+          relationships: [],
+        },
+      ),
+    );
+  }
+
+  /**
+   * Complete email verification
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawCompleteEmailVerification(
+    body: RawApiTypes.AccountCompleteEmailVerificationSchema,
+  ): Promise<void> {
+    return this.client.request<void>({
+      method: 'POST',
+      url: '/account/complete-email-verification',
+      body,
+    });
+  }
+
+  /**
+   * Request email verification
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  requestEmailVerification() {
+    return this.rawRequestEmailVerification();
+  }
+
+  /**
+   * Request email verification
+   *
+   * @throws {ApiError}
+   * @throws {TimeoutError}
+   */
+  rawRequestEmailVerification(): Promise<void> {
+    return this.client.request<void>({
+      method: 'POST',
+      url: '/account/request-email-verification',
+    });
+  }
 }

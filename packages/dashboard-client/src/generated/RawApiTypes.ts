@@ -779,6 +779,7 @@ export type Account = {
   id: AccountIdentity;
   attributes: AccountAttributes;
   relationships: AccountRelationships;
+  meta: AccountMeta;
 };
 /**
  * JSON API attributes
@@ -862,6 +863,22 @@ export type PerOwnerPricingBillingProfileData = {
 export type OrganizationData = {
   type: OrganizationType;
   id: OrganizationIdentity;
+};
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type AccountMeta = {
+  /**
+   * Whether the account email address has been verified
+   */
+  email_verified: boolean;
+  /**
+   * Timestamp of when the last email verification token was sent, or null if none was sent yet
+   */
+  email_verification_token_sent_at: string | null;
 };
 /**
  * This interface was referenced by `Account`'s JSON-Schema
@@ -1848,6 +1865,25 @@ export type AccountConfirmEmailChangeSchema = {
 export type AccountConfirmEmailChangeTargetSchema = {
   data: Session;
   included: Account[];
+};
+/**
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `complete_email_verification.schema` link.
+ */
+export type AccountCompleteEmailVerificationSchema = {
+  data: {
+    type: 'email_verification';
+    attributes: {
+      /**
+       * Email verification token
+       */
+      token: string;
+      /**
+       * Account ID
+       */
+      account_id: string;
+    };
+  };
 };
 /**
  * A project represents a specific DatoCMS administrative area

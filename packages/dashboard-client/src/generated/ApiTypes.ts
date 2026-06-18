@@ -957,6 +957,7 @@ export type Account = {
   active_subscription: null | PerOwnerPricingSubscriptionData;
   billing_profile: null | PerOwnerPricingBillingProfileData;
   default_organization: null | OrganizationData;
+  meta: AccountMeta;
 };
 export type AccountDestroyJobSchema = Account;
 export type AccountSelfTargetSchema = Account;
@@ -990,6 +991,22 @@ export type PerOwnerPricingBillingProfileData = {
 export type OrganizationData = {
   type: OrganizationType;
   id: OrganizationIdentity;
+};
+/**
+ * JSON API meta
+ *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `definition` "meta".
+ */
+export type AccountMeta = {
+  /**
+   * Whether the account email address has been verified
+   */
+  email_verified: boolean;
+  /**
+   * Timestamp of when the last email verification token was sent, or null if none was sent yet
+   */
+  email_verification_token_sent_at: string | null;
 };
 /**
  * JSON API attributes
@@ -1367,6 +1384,21 @@ export type AccountConfirmEmailChangeSchema = {
   type?: AccountType;
   /**
    * Email confirmation token
+   */
+  token: string;
+  /**
+   * Account ID
+   */
+  account_id: string;
+};
+/**
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `complete_email_verification.schema` link.
+ */
+export type AccountCompleteEmailVerificationSchema = {
+  type?: 'email_verification';
+  /**
+   * Email verification token
    */
   token: string;
   /**

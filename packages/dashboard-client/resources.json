@@ -246,6 +246,40 @@
         "responseType": "AccountConfirmEmailChangeTargetSchema",
         "name": "confirmEmailChange",
         "rawName": "rawConfirmEmailChange"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "rel": "complete_email_verification",
+        "urlTemplate": "/account/complete-email-verification",
+        "method": "POST",
+        "comment": "Complete email verification",
+        "urlPlaceholders": [],
+        "requestBodyType": "AccountCompleteEmailVerificationSchema",
+        "optionalRequestBody": false,
+        "requestStructure": {
+          "type": "email_verification",
+          "attributes": ["token", "account_id"],
+          "relationships": []
+        },
+        "queryParamsRequired": false,
+        "name": "completeEmailVerification",
+        "rawName": "rawCompleteEmailVerification"
+      },
+      {
+        "returnsItem": false,
+        "requestBodyRequiresItem": false,
+        "offersNestedItemsOptionInQueryParams": false,
+        "rel": "request_email_verification",
+        "urlTemplate": "/account/request-email-verification",
+        "method": "POST",
+        "comment": "Request email verification",
+        "urlPlaceholders": [],
+        "optionalRequestBody": false,
+        "queryParamsRequired": false,
+        "name": "requestEmailVerification",
+        "rawName": "rawRequestEmailVerification"
       }
     ],
     "namespace": "account",
