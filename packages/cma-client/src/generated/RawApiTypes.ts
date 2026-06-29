@@ -7599,11 +7599,11 @@ export type ItemValidateExistingSchema<
      * The JSON data associated to the record
      */
     attributes: ToItemAttributesInRequest<D>;
-    relationships: {
+    relationships?: {
       /**
        * The record's model
        */
-      item_type: {
+      item_type?: {
         data: ItemTypeData<D>;
       };
       /**

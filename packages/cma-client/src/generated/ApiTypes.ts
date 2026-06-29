@@ -7892,7 +7892,7 @@ export type ItemValidateExistingSchema<
 > = {
   id?: ItemIdentity;
   type?: ItemType1;
-  item_type: ItemTypeData<D>;
+  item_type?: ItemTypeData<D>;
   creator?:
     | AccountData
     | AccessTokenData
