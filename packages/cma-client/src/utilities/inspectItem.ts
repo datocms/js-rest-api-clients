@@ -387,6 +387,10 @@ function fileInspectionTreeNodes(
     nodes.push({ label: `focal_point: x=${x}% y=${y}%` });
   }
 
+  if (typeof value.poster_time === 'number') {
+    nodes.push({ label: `poster_time: ${value.poster_time}s` });
+  }
+
   return nodes;
 }
 
@@ -430,6 +434,10 @@ function galleryInspectionTreeNodes(
       const x = item.focal_point.x * 100;
       const y = item.focal_point.y * 100;
       nodes.push({ label: `focal_point: x=${x}% y=${y}%` });
+    }
+
+    if (typeof item.poster_time === 'number') {
+      nodes.push({ label: `poster_time: ${item.poster_time}s` });
     }
 
     return {

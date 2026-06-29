@@ -398,6 +398,7 @@ describe('inspectItem', () => {
             title: 'English file title',
             custom_data: {},
             focal_point: null,
+            poster_time: null,
           },
           it: {
             upload_id: 'italian-file-id',
@@ -405,6 +406,7 @@ describe('inspectItem', () => {
             title: 'Titolo file italiano',
             custom_data: { locale: 'it' },
             focal_point: { x: 0.6, y: 0.4 },
+            poster_time: null,
           },
         },
 

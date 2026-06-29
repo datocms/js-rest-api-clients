@@ -17,13 +17,14 @@ import type { RequiredAltTitleValidator } from './validators/required_alt_title.
  * which contain file uploads with optional metadata like alt text, title, custom data, and focal points.
  *
  * The challenge we're solving:
- * - DatoCMS File fields can have optional metadata fields (alt, title, custom_data, focal_point)
+ * - DatoCMS File fields can have optional metadata fields (alt, title, custom_data, focal_point, poster_time)
  * - For API requests, all these fields are optional and can be omitted
  * - For API responses, DatoCMS provides default values for missing fields:
  *   - alt: null
  *   - title: null
  *   - custom_data: {}
  *   - focal_point: null
+ *   - poster_time: null
  * - This creates a need for different type variants for the same conceptual data structure
  *
  * This module provides separate types for:
@@ -52,6 +53,7 @@ export type FileFieldValue = {
     x: number;
     y: number;
   } | null;
+  poster_time: number | null;
 } | null;
 
 /**
@@ -75,6 +77,7 @@ export type FileFieldValueInRequest = {
     x: number;
     y: number;
   } | null;
+  poster_time?: number | null;
 } | null;
 
 /**
@@ -95,7 +98,8 @@ export function isFileFieldValue(value: unknown): value is FileFieldValue {
     'alt' in value &&
     'title' in value &&
     'custom_data' in value &&
-    'focal_point' in value
+    'focal_point' in value &&
+    'poster_time' in value
   );
 }
 
