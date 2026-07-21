@@ -1910,6 +1910,14 @@ export type NextInvoiceEstimate = {
   next_billing_at: string;
   discount_percentage?: number;
   tax_label: null | string;
+  /**
+   * VAT/tax percentage applied to the estimate, if any.
+   */
+  tax_rate?: null | number;
+  /**
+   * Amount (in cents) deducted from the estimated invoice thanks to credits (promotional credits, refundable credits, or proration from an existing subscription)
+   */
+  credits_applied?: number;
 };
 export type SiteSubscriptionSimulateTargetSchema = NextInvoiceEstimate;
 export type SiteTransferSimulateAcceptTargetSchema = NextInvoiceEstimate;
@@ -1934,6 +1942,14 @@ export type NextInvoiceEstimateAttributes = {
   next_billing_at: string;
   discount_percentage?: number;
   tax_label: null | string;
+  /**
+   * VAT/tax percentage applied to the estimate, if any.
+   */
+  tax_rate?: null | number;
+  /**
+   * Amount (in cents) deducted from the estimated invoice thanks to credits (promotional credits, refundable credits, or proration from an existing subscription)
+   */
+  credits_applied?: number;
 };
 /**
  * This interface was referenced by `SiteSubscription`'s JSON-Schema
@@ -2217,6 +2233,14 @@ export type SitePlan = {
    */
   smart_tags_detections: null | number;
   /**
+   * Monthly cumulative execution-time budget (in seconds) for scripts run in the remote MCP sandbox
+   */
+  mcp_sandbox_execution_seconds: number;
+  /**
+   * Per-execution timeout ceiling (in seconds) for scripts run in the remote MCP sandbox
+   */
+  mcp_sandbox_timeout_seconds: number;
+  /**
    * The number of different API tokens you can generate, each which different permissions
    */
   access_tokens: null | number;
@@ -2470,6 +2494,14 @@ export type SitePlanAttributes = {
    * The number of images you can analyze for smart tags detections
    */
   smart_tags_detections: null | number;
+  /**
+   * Monthly cumulative execution-time budget (in seconds) for scripts run in the remote MCP sandbox
+   */
+  mcp_sandbox_execution_seconds: number;
+  /**
+   * Per-execution timeout ceiling (in seconds) for scripts run in the remote MCP sandbox
+   */
+  mcp_sandbox_timeout_seconds: number;
   /**
    * The number of different API tokens you can generate, each which different permissions
    */

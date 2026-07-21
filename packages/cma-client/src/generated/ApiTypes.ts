@@ -4192,6 +4192,14 @@ export type SitePlan = {
    */
   smart_tags_detections: null | number;
   /**
+   * Monthly cumulative execution-time budget (in seconds) for scripts run in the remote MCP sandbox
+   */
+  mcp_sandbox_execution_seconds: number;
+  /**
+   * Per-execution timeout ceiling (in seconds) for scripts run in the remote MCP sandbox
+   */
+  mcp_sandbox_timeout_seconds: number;
+  /**
    * The number of different API tokens you can generate, each which different permissions
    */
   access_tokens: null | number;
@@ -4455,6 +4463,14 @@ export type SitePlanAttributes = {
    * The number of images you can analyze for smart tags detections
    */
   smart_tags_detections: null | number;
+  /**
+   * Monthly cumulative execution-time budget (in seconds) for scripts run in the remote MCP sandbox
+   */
+  mcp_sandbox_execution_seconds: number;
+  /**
+   * Per-execution timeout ceiling (in seconds) for scripts run in the remote MCP sandbox
+   */
+  mcp_sandbox_timeout_seconds: number;
   /**
    * The number of different API tokens you can generate, each which different permissions
    */
