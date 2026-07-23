@@ -1203,7 +1203,7 @@ export type JobData = {
  * via the `reset_password.schema` link.
  */
 export type AccountResetPasswordSchema = {
-  type?: AccountType;
+  type?: 'password_reset';
   /**
    * Email
    */
@@ -1261,7 +1261,7 @@ export type AccountDeactivate_2FaSchema = {
  * via the `convert_to_organization.schema` link.
  */
 export type AccountConvertToOrganizationSchema = {
-  type?: OrganizationType;
+  type?: 'organization_conversion';
   /**
    * Name of the organization
    */
@@ -1381,7 +1381,7 @@ export type OrganizationDestroySchema = {
  * via the `confirm_email_change.schema` link.
  */
 export type AccountConfirmEmailChangeSchema = {
-  type?: AccountType;
+  type?: 'email_change_confirmation';
   /**
    * Email confirmation token
    */
@@ -1705,7 +1705,7 @@ export type SiteUpdateSchema = {
  * via the `duplicate.schema` link.
  */
 export type SiteDuplicateSchema = {
-  type?: SiteType;
+  type?: 'site_duplication';
   /**
    * Site name
    */
@@ -1867,7 +1867,7 @@ export type SiteSubscriptionCreateSchema = {
  * via the `simulate.schema` link.
  */
 export type SiteSubscriptionSimulateSchema = {
-  type?: SiteSubscriptionType;
+  type?: 'site_subscription_simulation';
   /**
    * Type of recurrence (yearly/monthly)
    */
@@ -1956,7 +1956,7 @@ export type NextInvoiceEstimateAttributes = {
  * via the `validate.schema` link.
  */
 export type SiteSubscriptionValidateSchema = {
-  type?: SiteSubscriptionType;
+  type?: 'site_subscription_validation';
   /**
    * Extra packets
    */
@@ -2117,7 +2117,7 @@ export type PerOwnerPricingSubscriptionCreateSchema = {
  * via the `simulate.schema` link.
  */
 export type PerOwnerPricingSubscriptionSimulateSchema = {
-  type?: PerOwnerPricingSubscriptionType;
+  type?: 'per_owner_pricing_subscription_simulation';
   /**
    * Type of recurrence (yearly/monthly)
    */
@@ -2140,7 +2140,7 @@ export type PerOwnerPricingSubscriptionSimulateSchema = {
  * via the `validate.schema` link.
  */
 export type PerOwnerPricingSubscriptionValidateSchema = {
-  type?: PerOwnerPricingSubscriptionType;
+  type?: 'per_owner_pricing_subscription_validation';
   plan: PerOwnerPricingPlanData;
 };
 /**
@@ -3614,8 +3614,7 @@ export type SiteTransferCreateSchema = {
  * via the `simulate_accept.schema` link.
  */
 export type SiteTransferSimulateAcceptSchema = {
-  id?: SiteTransferIdentity;
-  type?: SiteTransferType;
+  type?: 'site_transfer_acceptance_simulation';
   billing_profile: PerSitePricingBillingProfileData | null;
 };
 /**
@@ -3623,8 +3622,7 @@ export type SiteTransferSimulateAcceptSchema = {
  * via the `accept.schema` link.
  */
 export type SiteTransferAcceptSchema = {
-  id?: SiteTransferIdentity;
-  type?: SiteTransferType;
+  type?: 'site_transfer_acceptance';
   payment_intent_id?: string;
   billing_profile?: PerSitePricingBillingProfileData | null;
 };

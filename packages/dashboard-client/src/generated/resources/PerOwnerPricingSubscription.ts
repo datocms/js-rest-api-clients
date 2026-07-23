@@ -63,7 +63,7 @@ export default class PerOwnerPricingSubscription extends BaseResource {
       Utils.serializeRequestBody<RawApiTypes.PerOwnerPricingSubscriptionSimulateSchema>(
         body,
         {
-          type: 'per_owner_pricing_subscription',
+          type: 'per_owner_pricing_subscription_simulation',
           attributes: ['recurrence', 'billing_profile'],
           relationships: ['plan'],
         },
@@ -104,7 +104,7 @@ export default class PerOwnerPricingSubscription extends BaseResource {
       Utils.serializeRequestBody<RawApiTypes.PerOwnerPricingSubscriptionValidateSchema>(
         body,
         {
-          type: 'per_owner_pricing_subscription',
+          type: 'per_owner_pricing_subscription_validation',
           attributes: [],
           relationships: ['plan'],
         },

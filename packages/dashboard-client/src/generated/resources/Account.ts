@@ -164,7 +164,7 @@ export default class Account extends BaseResource {
   resetPassword(body: ApiTypes.AccountResetPasswordSchema) {
     return this.rawResetPassword(
       Utils.serializeRequestBody<RawApiTypes.AccountResetPasswordSchema>(body, {
-        type: 'account',
+        type: 'password_reset',
         attributes: ['email'],
         relationships: [],
       }),
@@ -300,7 +300,7 @@ export default class Account extends BaseResource {
       Utils.serializeRequestBody<RawApiTypes.AccountConvertToOrganizationSchema>(
         body,
         {
-          type: 'organization',
+          type: 'organization_conversion',
           attributes: ['name'],
           relationships: [],
         },
@@ -341,7 +341,7 @@ export default class Account extends BaseResource {
       Utils.serializeRequestBody<RawApiTypes.AccountConfirmEmailChangeSchema>(
         body,
         {
-          type: 'account',
+          type: 'email_change_confirmation',
           attributes: ['token', 'account_id'],
           relationships: [],
         },

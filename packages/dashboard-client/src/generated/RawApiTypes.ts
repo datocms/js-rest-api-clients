@@ -1324,7 +1324,7 @@ export type PerOwnerPricingSubscriptionCreateTargetSchema = {
  */
 export type PerOwnerPricingSubscriptionSimulateSchema = {
   data: {
-    type: PerOwnerPricingSubscriptionType;
+    type: 'per_owner_pricing_subscription_simulation';
     attributes: {
       /**
        * Type of recurrence (yearly/monthly)
@@ -1404,7 +1404,7 @@ export type NextInvoiceEstimateData = {
  */
 export type PerOwnerPricingSubscriptionValidateSchema = {
   data: {
-    type: PerOwnerPricingSubscriptionType;
+    type: 'per_owner_pricing_subscription_validation';
     relationships: {
       /**
        * Subscription plan
@@ -1548,7 +1548,7 @@ export type PerOwnerPricingBillingProfileCancelSubscriptionTargetSchema = {
  */
 export type AccountResetPasswordSchema = {
   data: {
-    type: AccountType;
+    type: 'password_reset';
     attributes: {
       /**
        * Email
@@ -1663,7 +1663,7 @@ export type AccountDeactivate_2FaTargetSchema = {
  */
 export type AccountConvertToOrganizationSchema = {
   data: {
-    type: OrganizationType;
+    type: 'organization_conversion';
     attributes: {
       /**
        * Name of the organization
@@ -1853,7 +1853,7 @@ export type OrganizationDestroyJobSchema = {
  */
 export type AccountConfirmEmailChangeSchema = {
   data: {
-    type: AccountType;
+    type: 'email_change_confirmation';
     attributes: {
       /**
        * Email confirmation token
@@ -2235,7 +2235,7 @@ export type SiteSubscriptionCreateTargetSchema = {
  */
 export type SiteSubscriptionSimulateSchema = {
   data: {
-    type: SiteSubscriptionType;
+    type: 'site_subscription_simulation';
     attributes: {
       /**
        * Type of recurrence (yearly/monthly)
@@ -2299,7 +2299,7 @@ export type SiteSubscriptionSimulateTargetSchema = {
  */
 export type SiteSubscriptionValidateSchema = {
   data: {
-    type: SiteSubscriptionType;
+    type: 'site_subscription_validation';
     attributes: {
       /**
        * Extra packets
@@ -2787,8 +2787,7 @@ export type SiteTransferDestroyTargetSchema = {
  */
 export type SiteTransferSimulateAcceptSchema = {
   data: {
-    id: SiteTransferIdentity;
-    type: SiteTransferType;
+    type: 'site_transfer_acceptance_simulation';
     attributes?: {
       billing_profile?: null | {
         address_line: string;
@@ -2827,8 +2826,7 @@ export type SiteTransferSimulateAcceptTargetSchema = {
  */
 export type SiteTransferAcceptSchema = {
   data: {
-    id: SiteTransferIdentity;
-    type: SiteTransferType;
+    type: 'site_transfer_acceptance';
     attributes?: {
       payment_intent_id?: string;
       billing_profile?: null | {
@@ -2978,7 +2976,7 @@ export type SiteDestroyJobSchema = {
  */
 export type SiteDuplicateSchema = {
   data: {
-    type: SiteType;
+    type: 'site_duplication';
     attributes: {
       /**
        * Site name

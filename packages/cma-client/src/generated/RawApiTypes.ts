@@ -774,7 +774,7 @@ export type ItemInstancesHrefSchema<
    */
   filter?: {
     /**
-     * Record (or block record) IDs to fetch, comma separated. If you use this filter, you _must not_ use `filter[type]`. You can combine it with meta fields (like `_published_at`, `_status`), but _must not_ use model-specific fields
+     * Record (or block record) IDs to fetch, comma separated. If you use this filter, you _must not_ use `filter[type]`. You can combine it with meta fields (like `_published_at`, `_status`, `_creator`), but _must not_ use model-specific fields
      */
     ids?: string;
     /**
@@ -786,7 +786,7 @@ export type ItemInstancesHrefSchema<
      */
     query?: string;
     /**
-     * Filter by record fields. Meta fields (like `_published_at`, `_status`) can be used in most cases. Model-specific fields (like `title`, `name`) require `filter[type]` to specify a single model, and only work with models (not block models). Same syntax as [GraphQL API records filters](/docs/content-delivery-api/filtering-records): use square brackets to indicate nesting levels. E.g. `filter[fields][parent][eq]=<ID_VALUE>`. Use snake_case for field names. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
+     * Filter by record fields. Meta fields (like `_published_at`, `_status`, `_creator`) can be used in most cases. Model-specific fields (like `title`, `name`) require `filter[type]` to specify a single model, and only work with models (not block models). Same syntax as [GraphQL API records filters](/docs/content-delivery-api/filtering-records): use square brackets to indicate nesting levels. E.g. `filter[fields][parent][eq]=<ID_VALUE>`. Use snake_case for field names. The `_creator` meta filter is CMA-only (not available via the GraphQL API) and accepts polymorphic creator references in the form `{ "type": "user" | "account" | "organization" | "sso_user" | "access_token", "id": "<ID>" }`. If `locale` is defined, search within that locale. Otherwise environment's main locale will be used.
      */
     fields?: ToItemHrefSchemaField<D>;
     /**
@@ -6289,6 +6289,10 @@ export type FieldAttributesStableShell = {
    * Whether deep filtering for block models is enabled in GraphQL or not
    */
   deep_filtering_enabled: boolean;
+  /**
+   * Whether Content Link (visual editing) encoding is emitted for this field's value in the Content Delivery API. Defaults to `true`; can only be set to `false` on `string`, `text` and `structured_text` fields
+   */
+  content_link_enabled: boolean;
 };
 /**
  * JSON API links
@@ -6433,6 +6437,10 @@ export type FieldCreateSchemaStableShell = {
        * Whether deep filtering for block models is enabled in GraphQL or not
        */
       deep_filtering_enabled?: boolean;
+      /**
+       * Whether Content Link (visual editing) encoding is emitted for this field's value in the Content Delivery API. Defaults to `true`; can only be set to `false` on `string`, `text` and `structured_text` fields
+       */
+      content_link_enabled?: boolean;
     };
     /**
      * JSON API links
@@ -6582,6 +6590,10 @@ export type FieldUpdateSchemaStableShell = {
        * Whether deep filtering for block models is enabled in GraphQL or not
        */
       deep_filtering_enabled?: boolean;
+      /**
+       * Whether Content Link (visual editing) encoding is emitted for this field's value in the Content Delivery API. Defaults to `true`; can only be set to `false` on `string`, `text` and `structured_text` fields
+       */
+      content_link_enabled?: boolean;
     };
     /**
      * JSON API links
@@ -9343,7 +9355,7 @@ export type UploadTrackDestroyJobSchema = {
  */
 export type UploadTrackGenerateSubtitlesSchema = {
   data: {
-    type: UploadTrackType;
+    type: 'subtitles_generation';
     attributes: {
       /**
        * The human-readable name of the track
@@ -12551,11 +12563,6 @@ export type SiteUpdateSchema = {
        * Whether the [Non-localized focal points](https://www.datocms.com/product-updates/non-localized-focal-points) opt-in product update is active or not
        */
       non_localized_focal_points?: boolean;
-    };
-    relationships?: {
-      sso_default_role?: {
-        data: RoleData;
-      };
     };
   };
 };

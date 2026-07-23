@@ -1260,7 +1260,8 @@
             "position",
             "hint",
             "default_value",
-            "deep_filtering_enabled"
+            "deep_filtering_enabled",
+            "content_link_enabled"
           ],
           "relationships": ["fieldset"]
         },
@@ -1306,7 +1307,8 @@
             "position",
             "field_type",
             "hint",
-            "deep_filtering_enabled"
+            "deep_filtering_enabled",
+            "content_link_enabled"
           ],
           "relationships": ["fieldset"]
         },
@@ -3145,7 +3147,7 @@
         "requestBodyType": "UploadTrackGenerateSubtitlesSchema",
         "optionalRequestBody": false,
         "requestStructure": {
-          "type": "upload_track",
+          "type": "subtitles_generation",
           "attributes": ["name", "language_code"],
           "relationships": []
         },
@@ -5175,7 +5177,7 @@
             "ip_tracking_enabled",
             "force_use_of_sandbox_environments"
           ],
-          "relationships": ["sso_default_role"]
+          "relationships": []
         },
         "queryParamsRequired": false,
         "responseType": "SiteUpdateJobSchema",

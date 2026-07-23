@@ -140,7 +140,7 @@
         "requestBodyType": "AccountResetPasswordSchema",
         "optionalRequestBody": false,
         "requestStructure": {
-          "type": "account",
+          "type": "password_reset",
           "attributes": ["email"],
           "relationships": []
         },
@@ -217,7 +217,7 @@
         "requestBodyType": "AccountConvertToOrganizationSchema",
         "optionalRequestBody": false,
         "requestStructure": {
-          "type": "organization",
+          "type": "organization_conversion",
           "attributes": ["name"],
           "relationships": []
         },
@@ -238,7 +238,7 @@
         "requestBodyType": "AccountConfirmEmailChangeSchema",
         "optionalRequestBody": false,
         "requestStructure": {
-          "type": "account",
+          "type": "email_change_confirmation",
           "attributes": ["token", "account_id"],
           "relationships": []
         },
@@ -450,7 +450,7 @@
         "requestBodyType": "SiteDuplicateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
-          "type": "site",
+          "type": "site_duplication",
           "attributes": [
             "name",
             "ignore_content",
@@ -522,7 +522,7 @@
         "requestBodyType": "SiteSubscriptionSimulateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
-          "type": "site_subscription",
+          "type": "site_subscription_simulation",
           "attributes": [
             "recurrence",
             "extra_packets",
@@ -554,7 +554,7 @@
         "requestBodyType": "SiteSubscriptionValidateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
-          "type": "site_subscription",
+          "type": "site_subscription_validation",
           "attributes": ["extra_packets", "ignore_content", "is_duplicate"],
           "relationships": ["plan"]
         },
@@ -608,7 +608,7 @@
         "requestBodyType": "PerOwnerPricingSubscriptionSimulateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
-          "type": "per_owner_pricing_subscription",
+          "type": "per_owner_pricing_subscription_simulation",
           "attributes": ["recurrence", "billing_profile"],
           "relationships": ["plan"]
         },
@@ -629,7 +629,7 @@
         "requestBodyType": "PerOwnerPricingSubscriptionValidateSchema",
         "optionalRequestBody": false,
         "requestStructure": {
-          "type": "per_owner_pricing_subscription",
+          "type": "per_owner_pricing_subscription_validation",
           "attributes": [],
           "relationships": ["plan"]
         },
@@ -1240,8 +1240,7 @@
         "requestBodyType": "SiteTransferSimulateAcceptSchema",
         "optionalRequestBody": false,
         "requestStructure": {
-          "type": "site_transfer",
-          "idRequired": true,
+          "type": "site_transfer_acceptance_simulation",
           "attributes": ["billing_profile"],
           "relationships": ["billing_profile"]
         },
@@ -1272,8 +1271,7 @@
         "requestBodyType": "SiteTransferAcceptSchema",
         "optionalRequestBody": false,
         "requestStructure": {
-          "type": "site_transfer",
-          "idRequired": true,
+          "type": "site_transfer_acceptance",
           "attributes": ["payment_intent_id", "billing_profile"],
           "relationships": ["billing_profile"]
         },

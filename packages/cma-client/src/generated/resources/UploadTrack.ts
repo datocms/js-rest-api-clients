@@ -145,7 +145,7 @@ export default class UploadTrack extends BaseResource {
       Utils.serializeRequestBody<RawApiTypes.UploadTrackGenerateSubtitlesSchema>(
         body,
         {
-          type: 'upload_track',
+          type: 'subtitles_generation',
           attributes: ['name', 'language_code'],
           relationships: [],
         },

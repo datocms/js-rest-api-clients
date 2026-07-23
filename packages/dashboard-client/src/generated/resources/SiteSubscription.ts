@@ -57,7 +57,7 @@ export default class SiteSubscription extends BaseResource {
       Utils.serializeRequestBody<RawApiTypes.SiteSubscriptionValidateSchema>(
         body,
         {
-          type: 'site_subscription',
+          type: 'site_subscription_validation',
           attributes: ['extra_packets', 'ignore_content', 'is_duplicate'],
           relationships: ['plan'],
         },
