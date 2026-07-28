@@ -11713,6 +11713,27 @@ export type PublicInfoAttributes = {
     blocks_depth: number;
     blocks_per_item: number;
     maximum_single_upload_bytes: number;
+    /**
+     * Amount of each resource included in the current plan before additional charges may apply.
+     */
+    overage_thresholds: {
+      /**
+       * Number of sandbox environments included in the current plan before additional charges may apply
+       */
+      environments?: number;
+      /**
+       * Number of project collaborators included in the current plan before additional charges may apply
+       */
+      collaborators?: number;
+      /**
+       * Number of locales included in the current plan before additional charges may apply
+       */
+      locales?: number;
+      /**
+       * Number of models included in the current plan before additional charges may apply
+       */
+      models?: number;
+    };
     [k: string]: unknown;
   };
 };
