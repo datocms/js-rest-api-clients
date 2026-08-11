@@ -12328,6 +12328,10 @@ export type SiteMeta = {
    * Whether the [Non-localized focal points](https://www.datocms.com/product-updates/non-localized-focal-points) opt-in product update is active or not
    */
   non_localized_focal_points: boolean;
+  /**
+   * Whether the project can still use a custom color palette for the theme. Custom palettes are deprecated.
+   */
+  allow_custom_theme: boolean;
 };
 /**
  * JSON API data
