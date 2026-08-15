@@ -1,6 +1,6 @@
 {
   "name": "@datocms/cma-client-analysis",
-  "version": "5.6.2",
+  "version": "5.7.0",
   "description": "TypeScript-based static analysis utilities for the @datocms/cma-client-node Client class. Extracts method signatures, referenced types, and endpoint mappings.",
   "keywords": [
     "datocms",
@@ -49,8 +49,8 @@
     "typescript": ">=5.0.0"
   },
   "devDependencies": {
-    "@datocms/cma-client-node": "^5.6.2",
-    "@datocms/rest-api-reference": "^5.4.19",
+    "@datocms/cma-client-node": "^5.7.0",
+    "@datocms/rest-api-reference": "^5.7.0",
     "typescript": "^5.0.0"
   }
 }
