@@ -59,6 +59,19 @@ export type ApiErrorResponse = {
   body?: unknown;
 };
 
+/**
+ * Brands stamped on error instances.
+ *
+ * `Symbol.for()` looks up the cross-realm global symbol registry, so every copy
+ * of this module — CJS or ESM, inlined by a bundler or not — resolves these to
+ * the very same symbols. Since these packages ship parallel CJS and ESM builds
+ * with no guarantee that a consumer ends up with a single copy, identity is
+ * carried by these brands rather than by class identity alone, so `instanceof`
+ * keeps working across duplicated copies.
+ */
+const TIMEOUT_ERROR = Symbol.for('@datocms/rest-client-utils:TimeoutError');
+const API_ERROR = Symbol.for('@datocms/rest-client-utils:ApiError');
+
 export type TimeoutErrorInitObject = {
   request: ApiErrorRequest;
   preCallStack?: string;
@@ -68,12 +81,44 @@ export class TimeoutError extends Error {
   request: ApiErrorRequest;
   preCallStack?: string;
 
+  declare readonly [TIMEOUT_ERROR]: true;
+
+  static [Symbol.hasInstance](value: unknown): value is TimeoutError {
+    if (
+      typeof value !== 'object' ||
+      value === null ||
+      !(TIMEOUT_ERROR in value)
+    ) {
+      return false;
+    }
+
+    // `this` is the constructor `instanceof` was invoked on: when it is a
+    // subclass, defer to a real prototype-chain check so subclasses stay exact.
+    // biome-ignore lint/complexity/noThisInStatic: dynamic `this` is required here; hardcoding the class would break subclass checks
+    const invokedOn = this as unknown as { prototype: object };
+
+    if (invokedOn !== TimeoutError) {
+      return Object.prototype.isPrototypeOf.call(invokedOn.prototype, value);
+    }
+
+    return true;
+  }
+
   constructor(initObject: TimeoutErrorInitObject) {
     super('API Error!');
     Object.setPrototypeOf(this, new.target.prototype);
 
+    Object.defineProperty(this, TIMEOUT_ERROR, {
+      value: true,
+      enumerable: false,
+      writable: false,
+      configurable: false,
+    });
+
+    this.name = 'TimeoutError';
+
     if ('captureStackTrace' in Error) {
-      Error.captureStackTrace(this, ApiError);
+      Error.captureStackTrace(this, TimeoutError);
     } else {
       this.stack = new (Error as any)().stack;
     }
@@ -100,9 +145,37 @@ export class ApiError extends Error {
   response: ApiErrorResponse;
   preCallStack?: string;
 
+  declare readonly [API_ERROR]: true;
+
+  static [Symbol.hasInstance](value: unknown): value is ApiError {
+    if (typeof value !== 'object' || value === null || !(API_ERROR in value)) {
+      return false;
+    }
+
+    // `this` is the constructor `instanceof` was invoked on: when it is a
+    // subclass, defer to a real prototype-chain check so subclasses stay exact.
+    // biome-ignore lint/complexity/noThisInStatic: dynamic `this` is required here; hardcoding the class would break subclass checks
+    const invokedOn = this as unknown as { prototype: object };
+
+    if (invokedOn !== ApiError) {
+      return Object.prototype.isPrototypeOf.call(invokedOn.prototype, value);
+    }
+
+    return true;
+  }
+
   constructor(initObject: ApiErrorInitObject) {
     super('API Error!');
     Object.setPrototypeOf(this, new.target.prototype);
+
+    Object.defineProperty(this, API_ERROR, {
+      value: true,
+      enumerable: false,
+      writable: false,
+      configurable: false,
+    });
+
+    this.name = 'ApiError';
 
     if ('captureStackTrace' in Error) {
       Error.captureStackTrace(this, ApiError);
