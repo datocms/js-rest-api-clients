@@ -1,6 +1,6 @@
 {
   "name": "@datocms/cma-client",
-  "version": "5.7.0",
+  "version": "5.7.1",
   "description": "JS client for DatoCMS REST Content Management API",
   "keywords": [
     "datocms",
@@ -53,7 +53,7 @@
     "uuid": "^11.1.1"
   },
   "devDependencies": {
-    "@datocms/dashboard-client": "^5.7.0"
+    "@datocms/dashboard-client": "^5.7.1"
   },
   "gitHead": "ac4164968026ba62a2841d31d2b60c31eadb2cc8"
 }
