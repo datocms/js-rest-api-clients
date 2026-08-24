@@ -22,6 +22,7 @@ export default class Account extends BaseResource {
           'last_name',
           'company',
           'password',
+          'captcha_token',
           'signup_to_newsletter',
           'role_description',
           'role_context',

@@ -909,6 +909,10 @@ export type AccountCreateSchema = {
        */
       password: string;
       /**
+       * Cloudflare Turnstile token proving the sign up was not automated. Obtained from the Turnstile widget rendered next to the sign up form, and valid for 300 seconds and a single verification. Required for browser-based sign ups.
+       */
+      captcha_token?: string;
+      /**
        * Whether the user opts-in to signup to DatoCMS newletter
        */
       signup_to_newsletter?: boolean;
