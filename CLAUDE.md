@@ -10,7 +10,7 @@ together on the same version number.
   everything else on top of those.
 - `generate/` — the code generator that turns the DatoCMS JSON hyperschema into
   TypeScript, plus its handlebars templates.
-- `bin/publish.sh` — the release process.
+- `bin/publish.mjs` — the release process.
 
 ## Generated code
 
@@ -86,15 +86,19 @@ everything that can fail (build, tests, npm auth, being out of sync with
 tagged, so a half-finished release can never leave a tag pointing at something
 that was never published.
 
-**There is no rollback, on purpose.** If it dies halfway, run it again: it
-detects the release commit, skips straight to publishing, and `changeset publish`
-only pushes the packages that aren't on the registry yet. Never "clean up" a
-failed release by deleting tags or force-pushing — that is exactly the bug this
-process was built to eliminate.
+**There is no rollback, on purpose.** If it dies halfway, run it again. Every
+step is idempotent — `changeset publish` skips versions already on the registry,
+tagging skips tags that exist, a GitHub release skips itself — so the rerun finds
+no pending changesets, skips build, tests, bump and commit, and picks up exactly
+what the previous run didn't finish. Never "clean up" a failed release by
+deleting tags or force-pushing: that is the bug this process was built to
+eliminate.
 
-`changeset publish` runs with `--no-git-tag`: it would otherwise tag all nine
-packages separately, and they move in lockstep, so the script creates the single
-`vX.Y.Z` tag this repo has always used — after the publish, so a partial release
-leaves no tag at all. The tag then carries a GitHub release whose body is built
-from the `CHANGELOG.md`s: a section per package that has something to say, and a
-footer listing everything that shipped at that version.
+**One tag and one GitHub release per package** (`@datocms/cma-client@5.9.0`),
+written by `changeset publish` itself — it publishes first and tags only the
+packages npm accepted, which is the ordering that matters. Each release's body is
+that package's own `CHANGELOG.md` section; in a fixed group most of those say
+only that a sibling moved, which is the honest note for a package that moved for
+that reason. What the release covers is read from
+`changeset publish-plan --output`, not reconstructed. Releases up to v5.8.0 used
+a single `vX.Y.Z` tag; those stay where they are.
