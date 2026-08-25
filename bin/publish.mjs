@@ -204,15 +204,18 @@ const main = async () => {
 
   if (bumping) {
     step('Committing the release');
-    // `release: v5.9.0` when everything moved together — which for a fixed
-    // group is every time — and the explicit list if a package is ever added
-    // outside the `@datocms/*` glob and stops moving with the rest.
+    // A `linked` group shares one version across whatever it releases
+    // together, so `release: v5.9.0` is right when the whole set moves — but a
+    // release can carry one package alone, and calling that "v5.8.1" would
+    // claim the other eight moved too. Name it instead when it is the only one.
     const tags = plan.map((entry) => `${entry.name}@${entry.version}`);
     const versions = new Set(plan.map((entry) => entry.version));
     const subject =
-      versions.size === 1
-        ? `release: v${[...versions][0]}`
-        : `release: ${tags.join(', ')}`;
+      tags.length === 1
+        ? `release: ${tags[0]}`
+        : versions.size === 1
+          ? `release: v${[...versions][0]}`
+          : `release: ${tags.join(', ')}`;
     run('git', ['add', '-A']);
     run('git', ['commit', '-m', subject]);
   }

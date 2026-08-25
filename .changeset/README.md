@@ -10,9 +10,16 @@ At release time `npm run publish` consumes every pending file: it computes the
 resulting version, updates the `package.json`s and the `CHANGELOG.md`s, and
 deletes the files.
 
-Note that all `@datocms/*` packages are a `fixed` group: they always share the
-same version and are released together, so the package list inside a changeset
-matters far less than the bump level you pick.
+Note that all `@datocms/*` packages are a `linked` group: whatever is released
+together lands on the same version, but a package nobody touched keeps the
+version it had. This is what Lerna's `"version": "5.8.0"` did before the
+migration — despite the nine packages all sitting on the same number today,
+Lerna had always skipped the ones that had not changed. `@datocms/rest-api-reference`
+has published 7 times against `@datocms/cma-client`'s 210.
+
+So do list the packages whose own behaviour changed. You do **not** need to list
+the ones that merely depend on them: changesets bumps a dependent by itself,
+and only when the new version falls outside the range that dependent declares.
 
 Schema-only updates produced by `npm run generate` write their own changeset
 automatically — see `generate/writeChangeset.ts`.

@@ -4,8 +4,8 @@
   "commit": false,
   "access": "public",
   "baseBranch": "main",
-  "fixed": [["@datocms/*"]],
-  "linked": [],
+  "fixed": [],
+  "linked": [["@datocms/*"]],
   "updateInternalDependencies": "patch",
   "ignore": []
 }

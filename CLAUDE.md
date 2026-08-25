@@ -1,7 +1,7 @@
 # js-rest-api-clients
 
-npm workspaces monorepo publishing nine `@datocms/*` packages, all released
-together on the same version number.
+npm workspaces monorepo publishing nine `@datocms/*` packages. Packages released
+together share a version number; ones nobody touched keep theirs.
 
 ## Layout
 
@@ -70,9 +70,11 @@ Bump levels are a convention here, not a formality:
 - `minor` — new API surface, a schema sync included.
 - `major` — something removed or renamed.
 
-All `@datocms/*` packages are a `fixed` group, so they always end up on the same
-version regardless of which ones a changeset lists. The bump level is what
-actually matters.
+All `@datocms/*` packages are a `linked` group: the ones a release touches land
+on the same version, and the rest stay where they are. So the package list in a
+changeset matters — name every package whose own behaviour changed, and leave
+out the ones that merely depend on them, which changesets bumps by itself when a
+declared range actually breaks.
 
 ## Releasing
 
@@ -97,8 +99,7 @@ eliminate.
 **One tag and one GitHub release per package** (`@datocms/cma-client@5.9.0`),
 written by `changeset publish` itself — it publishes first and tags only the
 packages npm accepted, which is the ordering that matters. Each release's body is
-that package's own `CHANGELOG.md` section; in a fixed group most of those say
-only that a sibling moved, which is the honest note for a package that moved for
-that reason. What the release covers is read from
+that package's own `CHANGELOG.md` section; when a package moved only because a
+sibling did, that section says exactly that, which is the honest note for it. What the release covers is read from
 `changeset publish-plan --output`, not reconstructed. Releases up to v5.8.0 used
 a single `vX.Y.Z` tag; those stay where they are.
