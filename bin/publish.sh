@@ -26,6 +26,8 @@ done
 step() { printf '\n\033[1m==> %s\033[0m\n' "$1"; }
 fail() { printf '\n\033[31mAborted: %s\033[0m\n' "$1" >&2; exit 1; }
 
+BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
 pkg_version() { node -p "require('./packages/$1/package.json').version"; }
 pending_changesets() { find .changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' '; }
 
@@ -66,6 +68,10 @@ unpublished() {
 # The section of a package's CHANGELOG for one version, without its "## x.y.z"
 # heading — changesets has already written exactly the prose we want.
 changelog_section() { # $1 = package location, $2 = version
+  # A package that has never been released under changesets has no CHANGELOG.md
+  # yet, and awk failing inside a `section="$(...)"` assignment would abort the
+  # whole script under `set -e` — at the release notes, after npm and git.
+  [ -f "$1/CHANGELOG.md" ] || return 0
   awk -v want="## $2" '$0 == want { found = 1; next } found && /^## / { exit } found' "$1/CHANGELOG.md"
 }
 
@@ -80,10 +86,29 @@ has_prose() {
   grep -vE '^- Updated dependencies( \[[0-9a-f]+\])?$|^ *- [^ ]+@[0-9][^ ]*$' <<<"$1" | grep -qE '^- '
 }
 
-# The body of the GitHub release. All nine packages move in lockstep, so one
-# release covers them all — but only the ones with something to say get a
-# section, or the page fills up with each package restating that the others
-# moved too. The footer keeps every published package visible.
+# The packages that landed on the release version — i.e. the ones this release
+# actually publishes. Today that is all nine, because the `fixed` group in
+# .changeset/config.json covers every `@datocms/*` package and a fixed group
+# moves as one. Asserting that rather than assuming it is what keeps the footer
+# honest if a package is ever added outside the glob: it would otherwise be
+# listed as "released in lockstep" at the version it has been sitting at.
+released_packages() {
+  local name ver loc
+  while read -r name ver loc; do
+    # An `if` rather than `[ ... ] && echo`: under `set -e` an AND-list that
+    # ends false is the loop body's exit status, so a non-matching *last*
+    # package would abort the whole script — right at the release notes, after
+    # npm and git have already been written to.
+    if [ "$ver" = "$1" ]; then
+      echo "$name $ver $loc"
+    fi
+  done < <(packages)
+}
+
+# The body of the GitHub release. The packages move in lockstep, so one release
+# covers them all — but only the ones with something to say get a section, or
+# the page fills up with each package restating that the others moved too. The
+# footer keeps every published package visible.
 release_notes() {
   local name ver loc section shipped=""
   while read -r name ver loc; do
@@ -92,7 +117,7 @@ release_notes() {
     section="$(changelog_section "$loc" "$VERSION")"
     has_prose "$section" || continue
     printf '## %s\n%s\n\n' "$name" "$section"
-  done < <(packages)
+  done < <(released_packages "$VERSION")
   printf -- '---\n\nReleased in lockstep:%s\n' "$shipped"
 }
 
@@ -101,19 +126,26 @@ release_notes() {
 # ---------------------------------------------------------------------------
 step "Preflight"
 
-[ "$(git rev-parse --abbrev-ref HEAD)" = "main" ] || fail "you are not on main."
+# Normal releases happen on main. Prereleases are routinely cut from a feature
+# branch, so --tag only asks that the branch be clean and pushed.
+if [ -z "$DIST_TAG" ]; then
+  [ "$BRANCH" = "main" ] || fail "you are not on main. Use --tag to publish a prerelease from a branch."
+  [ ! -f .changeset/pre.json ] || fail "the repo is in changesets pre mode (.changeset/pre.json).
+  Run 'npx changeset pre exit' before cutting a real release."
+fi
+
 [ -z "$(git status --porcelain)" ] || fail "working tree is dirty. Commit or stash first."
 
-git fetch --quiet origin main
-[ "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)" ] || \
-  fail "main and origin/main have diverged. Pull (or push) first."
+git fetch --quiet origin "$BRANCH"
+[ "$(git rev-parse HEAD)" = "$(git rev-parse "origin/$BRANCH")" ] || \
+  fail "$BRANCH and origin/$BRANCH have diverged. Pull (or push) first."
 
 npm whoami >/dev/null 2>&1 || fail "you are not logged in to npm. Run 'npm login'."
 
 command -v gh >/dev/null 2>&1 || fail "the GitHub CLI is not installed, so the release notes can't be published."
 gh auth status >/dev/null 2>&1 || fail "you are not logged in to GitHub. Run 'gh auth login'."
 
-echo "on main, in sync with origin, npm user: $(npm whoami)"
+echo "on $BRANCH, in sync with origin, npm user: $(npm whoami)"
 
 # ---------------------------------------------------------------------------
 # Decide between a fresh release and resuming an interrupted one.
@@ -197,7 +229,7 @@ else
 fi
 
 step "Pushing to GitHub"
-git push --follow-tags origin main
+git push --follow-tags origin "$BRANCH"
 
 # ---------------------------------------------------------------------------
 # The release notes. Last, because it's the only step a human can redo by hand
