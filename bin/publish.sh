@@ -28,7 +28,6 @@ fail() { printf '\n\033[31mAborted: %s\033[0m\n' "$1" >&2; exit 1; }
 
 pkg_version() { node -p "require('./packages/$1/package.json').version"; }
 pending_changesets() { find .changeset -maxdepth 1 -name '*.md' ! -name 'README.md' | wc -l | tr -d ' '; }
-is_published() { npm view "@datocms/cma-client@$1" version >/dev/null 2>&1; }
 
 # Every publishable workspace package, as "name version location" triples.
 #
@@ -50,6 +49,18 @@ packages() {
       }
     }
   '
+}
+
+# The resume condition: every package whose local version is not yet on the
+# registry. Asking about a single package would be wrong — the nine publish one
+# after another, so a run that dies partway leaves some of them on npm and the
+# rest not, and "is cma-client published?" then answers "nothing to do".
+unpublished() {
+  local name ver loc missing=""
+  while read -r name ver loc; do
+    npm view "$name@$ver" version >/dev/null 2>&1 || missing="$missing $name@$ver"
+  done < <(packages)
+  echo "${missing# }"
 }
 
 # The section of a package's CHANGELOG for one version, without its "## x.y.z"
@@ -110,11 +121,11 @@ echo "on main, in sync with origin, npm user: $(npm whoami)"
 CURRENT="$(pkg_version cma-client)"
 
 if [ "$(pending_changesets)" -eq 0 ]; then
-  if is_published "$CURRENT"; then
-    fail "no pending changesets: there is nothing to release.
+  MISSING="$(unpublished)"
+  [ -n "$MISSING" ] || fail "no pending changesets: there is nothing to release.
   Describe your changes with 'npx changeset' first."
-  fi
   step "Resuming the interrupted release of v$CURRENT"
+  echo "still missing from npm:$(printf ' %s' $MISSING)"
   RESUMING=1
 else
   RESUMING=0
@@ -142,7 +153,7 @@ if [ "$RESUMING" -eq 0 ]; then
   [ "$NEXT" != "$CURRENT" ] || fail "changeset version did not bump anything."
   echo "$CURRENT -> $NEXT"
 
-  is_published "$NEXT" && fail "version $NEXT is already on npm. Aborting before overwriting anything."
+  [ -n "$(unpublished)" ] || fail "version $NEXT is already on npm. Aborting before overwriting anything."
 
   step "Stamping the client version and refreshing the lockfile"
   ./generate/setClientVersion.ts
