@@ -64,9 +64,11 @@ npm run publish
 ```
 
 The script refuses to start unless you're on an up-to-date `main`, with a clean
-tree and logged in to npm. It then builds and runs the whole test suite *before*
-touching anything, applies the pending changesets, commits the release, pushes
-to npm, and only then tags and pushes to GitHub.
+tree and logged in to both npm and GitHub (`gh auth login`). It then builds and
+runs the whole test suite *before* touching anything, applies the pending
+changesets, commits the release, pushes to npm, and only then tags `vX.Y.Z`,
+pushes, and publishes the GitHub release — whose notes are the changelog entries
+changesets just wrote. It prints the link to it when it's done.
 
 If it fails partway through, there is nothing to undo: run it again and it will
 resume the publish where it stopped.
