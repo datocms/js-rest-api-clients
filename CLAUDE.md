@@ -91,3 +91,10 @@ detects the release commit, skips straight to publishing, and `changeset publish
 only pushes the packages that aren't on the registry yet. Never "clean up" a
 failed release by deleting tags or force-pushing — that is exactly the bug this
 process was built to eliminate.
+
+`changeset publish` runs with `--no-git-tag`: it would otherwise tag all nine
+packages separately, and they move in lockstep, so the script creates the single
+`vX.Y.Z` tag this repo has always used — after the publish, so a partial release
+leaves no tag at all. The tag then carries a GitHub release whose body is built
+from the `CHANGELOG.md`s: a section per package that has something to say, and a
+footer listing everything that shipped at that version.
