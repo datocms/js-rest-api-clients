@@ -29,7 +29,6 @@ After checking out the repo, run the following:
 
 ```
 npm install
-lerna bootstrap
 npm run build
 ```
 
@@ -41,6 +40,36 @@ To regenerate the code based on the latest DatoCMS JSON API schema:
 npm run generate
 npm run build
 ```
+
+`npm run generate` writes its own changeset describing the schema sync, so the
+release notes stay accurate without an extra step.
+
+### Describing your changes
+
+Every change worth mentioning in a release needs a changeset — a small markdown
+file under `.changeset/` that records which packages changed and how big the
+bump is. Create one with:
+
+```
+npm run changeset
+```
+
+Use `patch` for bug fixes only, `minor` for new API surface (a schema sync
+included), and `major` when something is removed or renamed.
+
+### Releasing
+
+```
+npm run publish
+```
+
+The script refuses to start unless you're on an up-to-date `main`, with a clean
+tree and logged in to npm. It then builds and runs the whole test suite *before*
+touching anything, applies the pending changesets, commits the release, pushes
+to npm, and only then tags and pushes to GitHub.
+
+If it fails partway through, there is nothing to undo: run it again and it will
+resume the publish where it stopped.
 
 ## Contributing
 

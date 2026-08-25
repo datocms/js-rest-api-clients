@@ -22,9 +22,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm ci
-      - run: ./node_modules/.bin/lerna -v
-      - run: ./node_modules/.bin/lerna bootstrap --no-ci
-      - run: npm run build --if-present
+      - run: npm run build
       - run: npm test
         env:
           DATOCMS_ACCOUNT_EMAIL: ${{ secrets.DATOCMS_ACCOUNT_EMAIL }}

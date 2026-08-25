@@ -166,4 +166,9 @@ Promise.all([
   generate('dashboard', `${baseUrl}/docs/account-api-hyperschema.json`),
 ])
   .then(() => console.log('Done'))
-  .catch((e) => console.error(e));
+  .catch((e) => {
+    console.error(e);
+    // Without this the process exits 0 and every `npm run generate && ...`
+    // chain happily carries on with a half-generated tree.
+    process.exitCode = 1;
+  });

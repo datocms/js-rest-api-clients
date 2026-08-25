@@ -1,27 +1,31 @@
 {
   "name": "js-rest-api-clients",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "prepare": "husky install",
     "lint": "biome ci packages",
     "format": "biome check generate packages --write --unsafe",
+    "changeset": "changeset",
+    "generate": "./generate/index.ts && ./generate/setClientVersion.ts && npm run format && ./generate/writeChangeset.ts",
+    "generate-next": "GENERATE_FROM_DEV=true npm run generate",
+    "build": "turbo run build",
     "test": "npm run lint && jest --maxConcurrency=5",
     "test-next": "ACCOUNT_API_BASE_URL=http://account-api.lvh.me:3001 SITE_API_BASE_URL=http://site-api.lvh.me:3001 PUSHER_APP_KEY=12a5ddac68784be0fc59 PUSHER_CLUSTER=eu npm run test",
-    "generate": "./generate/index.ts && npm run format",
-    "generate-next": "GENERATE_FROM_DEV=true ./generate/index.ts && npm run format",
-    "build": "lerna run build",
-    "prepublishOnly": "npm run generate && ./generate/setClientVersion.ts && npm run build && npm run test",
     "publish": "./bin/publish.sh",
-    "publish-next": "GENERATE_FROM_DEV=true ACCOUNT_API_BASE_URL=http://account-api.lvh.me:3001 SITE_API_BASE_URL=http://site-api.lvh.me:3001 PUSHER_APP_KEY=12a5ddac68784be0fc59 PUSHER_CLUSTER=eu ./bin/publish.sh --dist-tag next"
+    "publish-next": "GENERATE_FROM_DEV=true ACCOUNT_API_BASE_URL=http://account-api.lvh.me:3001 SITE_API_BASE_URL=http://site-api.lvh.me:3001 PUSHER_APP_KEY=12a5ddac68784be0fc59 PUSHER_CLUSTER=eu ./bin/publish.sh --tag next"
   },
   "author": "Stefano Verna <s.verna@datocms.com>",
   "license": "MIT",
   "devDependencies": {
     "@apidevtools/json-schema-ref-parser": "^11.7.0",
     "@biomejs/biome": "1.8.3",
+    "@changesets/cli": "^3.0.1",
     "@total-typescript/ts-reset": "^0.5.1",
     "@types/jest": "^29.5.6",
-    "@types/node": "*",
+    "@types/node": "^22.13.10",
     "@types/rimraf": "^3.0.2",
     "@whatwg-node/fetch": "^0.9.14",
     "concurrent-promise-queue": "^1.0.3",
@@ -32,12 +36,12 @@
     "husky": "^8.0.2",
     "hyperschema-to-ts": "^0.0.11",
     "jest": "^29.7.0",
-    "lerna": "^4.0.0",
     "lint-staged": "^13.1.0",
     "rimraf": "^3.0.2",
     "ts-jest": "^29.1.1",
     "ts-morph": "^27.0.0",
     "ts-node": "^10.7.0",
+    "turbo": "^2.10.11",
     "typescript": "^4.6.3"
   },
   "homepage": "https://github.com/datocms/js-rest-api-clients",
@@ -54,5 +58,6 @@
     "src/**/*.{js,jsx,ts,tsx}": [
       "biome ci"
     ]
-  }
+  },
+  "packageManager": "npm@10.9.8"
 }
