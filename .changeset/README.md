@@ -22,7 +22,7 @@ the ones that merely depend on them: changesets bumps a dependent by itself,
 and only when the new version falls outside the range that dependent declares.
 
 Schema-only updates produced by `npm run generate` write their own changeset
-automatically — see `generate/writeChangeset.ts`.
+automatically — see `toolchain/generate/writeChangeset.ts`.
 
 ## Which bump level?
 

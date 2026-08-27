@@ -181,7 +181,7 @@ const main = async () => {
     // ships has to be the one made from the stamped source, hence the second
     // build below rather than reusing the one that gated the release.
     step('Stamping the client version and refreshing the lockfile');
-    run('./generate/setClientVersion.ts', []);
+    run('./toolchain/generate/setClientVersion.ts', []);
     run('npm', ['install', '--package-lock-only']);
 
     step('Rebuilding with the stamped version');

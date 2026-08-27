@@ -17,7 +17,7 @@ const handlebarOptions: Handlebars.RuntimeOptions = {
 
 function readTemplate<T>(template: string) {
   return Handlebars.compile<T>(
-    readFileSync(`./generate/templates/${template}.handlebars`, {
+    readFileSync(`./toolchain/generate/templates/${template}.handlebars`, {
       encoding: 'utf-8',
     }),
   );
