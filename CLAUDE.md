@@ -8,14 +8,14 @@ together share a version number; ones nobody touched keep theirs.
 - `packages/*` — the published packages. `rest-client-utils` is at the bottom of
   the dependency graph, `cma-client` and `dashboard-client` sit on top of it,
   everything else on top of those.
-- `generate/` — the code generator that turns the DatoCMS JSON hyperschema into
-  TypeScript, plus its handlebars templates.
-- `bin/publish.mjs` — the release process.
+- `toolchain/` — everything that acts on the repo rather than shipping to a user:
+  the codegen under `toolchain/generate/`, and `toolchain/publish.mjs`, the
+  release process. Nothing in here is published. See `toolchain/README.md`.
 
 ## Generated code
 
 **Anything under `packages/*/src/generated/` is written by a script — never edit
-it by hand.** Change `generate/templates/*.handlebars` and re-run:
+it by hand.** Change `toolchain/generate/templates/*.handlebars` and re-run:
 
 ```
 npm run generate
