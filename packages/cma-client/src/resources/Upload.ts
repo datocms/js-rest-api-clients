@@ -16,6 +16,7 @@ export type UploadLocaleKeyedDefaultFieldMetadata = {
     title: string | null;
     custom_data: { [k: string]: unknown };
     focal_point: { x: number; y: number } | null;
+    poster_time: number | null;
   };
 };
 
@@ -30,6 +31,7 @@ export type UploadLocaleKeyedDefaultFieldMetadataInRequest = {
     title?: string | null;
     custom_data?: { [k: string]: unknown };
     focal_point?: { x: number; y: number } | null;
+    poster_time?: number | null;
   };
 };
 
