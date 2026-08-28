@@ -7,7 +7,7 @@ export * as Resources from './generated/resources/index.js';
 export type {
   UploadLocaleKeyedDefaultFieldMetadata,
   UploadLocaleKeyedDefaultFieldMetadataInRequest,
-} from './resources/Upload.js';
+} from './utilities/defaultFieldMetadata.js';
 export * from './utilities/buildBlockRecord.js';
 export * from './utilities/duplicateBlockRecord.js';
 export * from './utilities/fieldsContainingReferences.js';
