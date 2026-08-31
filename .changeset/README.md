@@ -6,7 +6,7 @@ Whenever you change something worth mentioning in a release, run `npx changeset`
 and answer the two prompts (which packages, and whether it's a patch/minor/major).
 That writes a small markdown file here, which you commit along with your changes.
 
-At release time `npm run publish` consumes every pending file: it computes the
+At release time `npm run release` consumes every pending file: it computes the
 resulting version, updates the `package.json`s and the `CHANGELOG.md`s, and
 deletes the files.
 

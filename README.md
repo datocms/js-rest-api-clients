@@ -77,7 +77,7 @@ resolving after a while. Never commit one to a `package.json` that ships.
 ### Releasing
 
 ```
-npm run publish
+npm run release
 ```
 
 The script refuses to start unless you're on an up-to-date `main`, with a clean
@@ -90,6 +90,12 @@ when it's done.
 
 If it fails partway through, there is nothing to undo: run it again and it will
 resume the publish where it stopped.
+
+The script is [`@datocms/release-toolchain`](https://github.com/datocms/release-toolchain),
+shared with every other DatoCMS repository and pinned here by tag;
+`toolchain/release.mjs` is the handful of lines that are only true here, where
+the version has to be stamped into the clients' User-Agent between the bump and
+the release commit.
 
 ## Contributing
 
