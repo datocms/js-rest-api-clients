@@ -17,6 +17,8 @@
 // whatever a loop last evaluated becomes the loop's exit status, and this script
 // twice sat one non-matching last package away from dying between `npm publish`
 // and `git push`.
+//
+// Read main() at the bottom first: it is the release, one line per step.
 
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync, rmSync } from 'node:fs';
@@ -31,6 +33,10 @@ process.chdir(ROOT);
 // Normal releases happen here. Prereleases are routinely cut from a feature
 // branch, so --tag only asks that the branch be clean and pushed.
 const RELEASE_BRANCH = 'main';
+
+// ---------------------------------------------------------------------------
+// Talking to the shell, and to the human watching it
+// ---------------------------------------------------------------------------
 
 /** A refusal we wrote ourselves, as opposed to a step that failed. */
 class Aborted extends Error {}
@@ -64,28 +70,21 @@ const succeeds = (file, args) => {
   }
 };
 
-const pendingChangesets = () =>
-  readdirSync('.changeset').filter(
+// ---------------------------------------------------------------------------
+// Questions about the repo. No mutations, no output.
+// ---------------------------------------------------------------------------
+
+const hasPendingChangesets = () =>
+  readdirSync('.changeset').some(
     (entry) => entry.endsWith('.md') && entry !== 'README.md',
   );
 
-/**
- * What this release covers, as `{ kind, name, version }` entries: `publish` for
- * a version not yet on the registry, `tag-only` for one that got there before a
- * previous run died. Asked of changesets rather than reconstructed here — it is
- * the same plan `changeset publish` is about to execute, registry lookups
- * included, so the two cannot disagree about what is being released.
- */
-const publishPlan = () => {
-  const file = path.join(tmpdir(), `publish-plan-${process.pid}.json`);
-  try {
-    // Captured, not shown: `changeset publish` prints the same registry
-    // summary again a moment later.
-    capture('npx', ['changeset', 'publish-plan', '--output', file]);
-    return JSON.parse(readFileSync(file, 'utf8')).plan.flat();
-  } finally {
-    rmSync(file, { force: true });
-  }
+/** Where each package lives, by package name. */
+const packageDirs = async () => {
+  const { packages } = await getPackages(ROOT);
+  return new Map(
+    packages.map((pkg) => [pkg.packageJson.name, pkg.relativeDir]),
+  );
 };
 
 /**
@@ -102,16 +101,37 @@ const changelogSection = (dir, version) => {
   return section.split('\n## ')[0].trim();
 };
 
-const main = async () => {
-  // The only flag: `--tag next` publishes under that npm dist-tag instead of
-  // `latest`, and marks the GitHub releases as prereleases.
-  const [flag, distTag = ''] = process.argv.slice(2);
+/**
+ * A `linked` group shares one version across whatever it releases together, so
+ * `release: v5.9.0` is right when the whole set moves — but a release can carry
+ * one package alone, and calling that "v5.8.1" would claim the other eight moved
+ * too. Name it instead when it is the only one.
+ */
+const releaseSubject = (plan) => {
+  const tags = plan.map((entry) => `${entry.name}@${entry.version}`);
+  const versions = new Set(plan.map((entry) => entry.version));
+  if (tags.length === 1) return `release: ${tags[0]}`;
+  if (versions.size === 1) return `release: v${[...versions][0]}`;
+  return `release: ${tags.join(', ')}`;
+};
+
+// ---------------------------------------------------------------------------
+// The steps. One per thing that can go wrong.
+// ---------------------------------------------------------------------------
+
+/**
+ * The only flag: `--tag next` publishes under that npm dist-tag instead of
+ * `latest`, and marks the GitHub releases as prereleases.
+ */
+const parseOptions = (argv) => {
+  const [flag, distTag = ''] = argv;
   if (flag && flag !== '--tag') fail(`unknown option: ${flag}`);
   if (flag && !distTag) fail('--tag needs a value.');
+  return { distTag };
+};
 
-  // -------------------------------------------------------------------------
-  // Preflight: no mutations, just refuse to start from a state we can't finish.
-  // -------------------------------------------------------------------------
+/** Refuses to start from a state we could not finish. Returns the branch. */
+const preflight = (distTag) => {
   step('Preflight');
 
   const branch = capture('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
@@ -153,43 +173,59 @@ const main = async () => {
   const npmUser = capture('npm', ['whoami']);
   console.log(`on ${branch}, in sync with origin, npm user: ${npmUser}`);
 
-  // -------------------------------------------------------------------------
-  // Everything that can fail. Nothing has been mutated yet, so a network
-  // timeout here costs you nothing but the rerun.
-  //
-  // Skipped when there are no changesets to apply, which is what a resumed
-  // release looks like: the versions were bumped and committed by the run that
-  // died, and the plan below picks up whatever it didn't finish.
-  // -------------------------------------------------------------------------
-  const bumping = pendingChangesets().length > 0;
+  return branch;
+};
 
-  if (bumping) {
-    step('Building');
-    run('npm', ['run', 'build']);
+/**
+ * Everything that can fail. Nothing has been mutated yet, so a network timeout
+ * here costs nothing but the rerun.
+ */
+const buildAndTest = () => {
+  step('Building');
+  run('npm', ['run', 'build']);
 
-    step('Testing');
-    run('npm', ['test']);
+  step('Testing');
+  run('npm', ['test']);
+};
 
-    // -----------------------------------------------------------------------
-    // Mutations, local only. Still nothing pushed, still nothing published.
-    // -----------------------------------------------------------------------
-    step('Applying pending changesets');
-    run('npx', ['changeset', 'version']);
+/** Mutations, local only. Still nothing pushed, still nothing published. */
+const applyPendingChangesets = () => {
+  step('Applying pending changesets');
+  run('npx', ['changeset', 'version']);
 
-    // The clients send their own version in a User-Agent header, so the number
-    // has to be stamped into the source *after* the bump — and the build that
-    // ships has to be the one made from the stamped source, hence the second
-    // build below rather than reusing the one that gated the release.
-    step('Stamping the client version and refreshing the lockfile');
-    run('./toolchain/generate/setClientVersion.ts', []);
-    run('npm', ['install', '--package-lock-only']);
+  // The clients send their own version in a User-Agent header, so the number has
+  // to be stamped into the source *after* the bump — and the build that ships
+  // has to be the one made from the stamped source, hence the second build
+  // rather than reusing the one that gated the release.
+  step('Stamping the client version and refreshing the lockfile');
+  run('./toolchain/generate/setClientVersion.ts', []);
+  run('npm', ['install', '--package-lock-only']);
 
-    step('Rebuilding with the stamped version');
-    run('npm', ['run', 'build']);
+  step('Rebuilding with the stamped version');
+  run('npm', ['run', 'build']);
+};
+
+/**
+ * What this release covers, as `{ kind, name, version }` entries: `publish` for
+ * a version not yet on the registry, `tag-only` for one that got there before a
+ * previous run died. Asked of changesets rather than reconstructed here — it is
+ * the same plan `changeset publish` is about to execute, registry lookups
+ * included, so the two cannot disagree about what is being released.
+ */
+const readPublishPlan = () => {
+  step('Reading the publish plan');
+
+  const file = path.join(tmpdir(), `publish-plan-${process.pid}.json`);
+  let plan;
+  try {
+    // Captured, not shown: `changeset publish` prints the same registry summary
+    // again a moment later.
+    capture('npx', ['changeset', 'publish-plan', '--output', file]);
+    plan = JSON.parse(readFileSync(file, 'utf8')).plan.flat();
+  } finally {
+    rmSync(file, { force: true });
   }
 
-  step('Reading the publish plan');
-  const plan = publishPlan();
   for (const { kind, name, version } of plan) {
     console.log(
       `  ${name}@${version}${kind === 'tag-only' ? ' (already on npm)' : ''}`,
@@ -202,44 +238,37 @@ const main = async () => {
     );
   }
 
-  if (bumping) {
-    step('Committing the release');
-    // A `linked` group shares one version across whatever it releases
-    // together, so `release: v5.9.0` is right when the whole set moves — but a
-    // release can carry one package alone, and calling that "v5.8.1" would
-    // claim the other eight moved too. Name it instead when it is the only one.
-    const tags = plan.map((entry) => `${entry.name}@${entry.version}`);
-    const versions = new Set(plan.map((entry) => entry.version));
-    const subject =
-      tags.length === 1
-        ? `release: ${tags[0]}`
-        : versions.size === 1
-          ? `release: v${[...versions][0]}`
-          : `release: ${tags.join(', ')}`;
-    run('git', ['add', '-A']);
-    run('git', ['commit', '-m', subject]);
-  }
+  return plan;
+};
 
-  // -------------------------------------------------------------------------
-  // The irreversible step: npm, then one annotated `name@version` tag for each
-  // package npm accepted.
-  // -------------------------------------------------------------------------
+const commitRelease = (plan) => {
+  step('Committing the release');
+  run('git', ['add', '-A']);
+  run('git', ['commit', '-m', releaseSubject(plan)]);
+};
+
+/**
+ * The irreversible step: npm, then one annotated `name@version` tag for each
+ * package npm accepted.
+ */
+const publishAndTag = (distTag) => {
   step('Publishing to npm and tagging');
   run('npx', ['changeset', 'publish', ...(distTag ? ['--tag', distTag] : [])]);
+};
 
+const push = (branch) => {
   step('Pushing to GitHub');
   run('git', ['push', '--follow-tags', 'origin', branch]);
+};
 
-  // -------------------------------------------------------------------------
-  // The release notes: one GitHub release per tag, its body the CHANGELOG
-  // section changesets just wrote. Last, because it's the only step a human can
-  // redo by hand from the changelog if it goes wrong.
-  // -------------------------------------------------------------------------
+/**
+ * One GitHub release per tag, its body the CHANGELOG section changesets just
+ * wrote. Last, because it's the only step a human can redo by hand from the
+ * changelog if it goes wrong.
+ */
+const publishReleaseNotes = async (plan, distTag) => {
   step('Publishing the release notes');
-  const { packages } = await getPackages(ROOT);
-  const dirOf = new Map(
-    packages.map((pkg) => [pkg.packageJson.name, pkg.relativeDir]),
-  );
+  const dirOf = await packageDirs();
 
   for (const { name, version } of plan) {
     const tag = `${name}@${version}`;
@@ -260,6 +289,32 @@ const main = async () => {
       stdio: ['pipe', 'inherit', 'inherit'],
     });
   }
+};
+
+// ---------------------------------------------------------------------------
+// The release
+// ---------------------------------------------------------------------------
+
+/** Bumps, builds and commits a new release, and returns what it will publish. */
+const prepareRelease = () => {
+  buildAndTest();
+  applyPendingChangesets();
+  const plan = readPublishPlan();
+  commitRelease(plan);
+  return plan;
+};
+
+const main = async () => {
+  const { distTag } = parseOptions(process.argv.slice(2));
+  const branch = preflight(distTag);
+
+  // Pending changesets mean a release to cut. None means one already bumped and
+  // committed by a run that died later: the plan alone says what it left over.
+  const plan = hasPendingChangesets() ? prepareRelease() : readPublishPlan();
+
+  publishAndTag(distTag);
+  push(branch);
+  await publishReleaseNotes(plan, distTag);
 
   console.log('\n\x1b[32mReleased\x1b[0m');
 };
