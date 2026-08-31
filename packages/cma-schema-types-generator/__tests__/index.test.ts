@@ -288,8 +288,8 @@ describe('generateSchemaTypes', () => {
 
       const code = await generateSchemaTypes(client);
 
-      expect(code).toMatch(/export type AnyBlock = Hero \| CallToAction;/);
-      expect(code).toMatch(/export type AnyModel = BlogPost \| Author;/);
+      expect(code).toMatch(/export type AnyBlock = CallToAction \| Hero;/);
+      expect(code).toMatch(/export type AnyModel = Author \| BlogPost;/);
       expect(code).toMatch(
         /export type AnyBlockOrModel = AnyBlock \| AnyModel;/,
       );
@@ -560,6 +560,89 @@ describe('generateSchemaTypes', () => {
       // item type pair → blank line → AnyBlock
       expect(code).toMatch(/\} as const;\n\nexport type AnyBlock =/);
     });
+  });
+});
+
+describe('stable ordering', () => {
+  const schema = {
+    locales: ['en'],
+    itemTypes: [
+      itemType({ id: '1', api_key: 'page' }),
+      itemType({ id: '2', api_key: 'image_block', modular_block: true }),
+      itemType({ id: '3', api_key: 'video_block', modular_block: true }),
+    ],
+    fields: [
+      field({
+        id: '10',
+        api_key: 'title',
+        field_type: 'string',
+        item_type_id: '1',
+        position: 0,
+      }),
+      field({
+        id: '11',
+        api_key: 'body',
+        field_type: 'text',
+        item_type_id: '1',
+        position: 1,
+      }),
+    ],
+  };
+
+  it('produces identical output whatever order the API returns things in', async () => {
+    const code = await generateSchemaTypes(fakeClient(schema));
+    const shuffled = await generateSchemaTypes(
+      fakeClient({
+        ...schema,
+        itemTypes: [...schema.itemTypes].reverse(),
+        fields: [...schema.fields].reverse(),
+      }),
+    );
+
+    expect(shuffled).toEqual(code);
+  });
+
+  it('orders item types by the type name it emits', async () => {
+    const code = await generateSchemaTypes(fakeClient(schema));
+
+    expect(code.indexOf('export type ImageBlock')).toBeLessThan(
+      code.indexOf('export type Page'),
+    );
+    expect(code.indexOf('export type Page')).toBeLessThan(
+      code.indexOf('export type VideoBlock'),
+    );
+    expect(code).toMatch(/export type AnyBlock = ImageBlock \| VideoBlock;/);
+  });
+
+  it('keeps fields in position order, breaking ties by api_key', async () => {
+    const code = await generateSchemaTypes(
+      fakeClient({
+        ...schema,
+        fields: [
+          ...schema.fields,
+          // Same position as `title`: only the api_key can order these two.
+          field({
+            id: '12',
+            api_key: 'abstract',
+            field_type: 'text',
+            item_type_id: '1',
+            position: 0,
+          }),
+        ].reverse(),
+      }),
+    );
+
+    expect(code.indexOf('abstract:')).toBeLessThan(code.indexOf('title:'));
+    expect(code.indexOf('title:')).toBeLessThan(code.indexOf('body:'));
+  });
+
+  it('also applies to the migration variant', async () => {
+    const code = await generateSchemaTypesForMigration(fakeClient(schema));
+    const shuffled = await generateSchemaTypesForMigration(
+      fakeClient({ ...schema, itemTypes: [...schema.itemTypes].reverse() }),
+    );
+
+    expect(shuffled).toEqual(code);
   });
 });
 

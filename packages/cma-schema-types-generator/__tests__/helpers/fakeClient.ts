@@ -12,6 +12,7 @@ type FieldOpts = {
   field_type: string;
   item_type_id: string;
   localized?: boolean;
+  position?: number;
   validators?: Record<string, unknown>;
 };
 
@@ -36,6 +37,7 @@ export function field(opts: FieldOpts) {
       api_key: opts.api_key,
       field_type: opts.field_type,
       localized: opts.localized ?? false,
+      position: opts.position ?? 0,
       validators: opts.validators ?? {},
     },
     relationships: {

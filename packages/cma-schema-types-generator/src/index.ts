@@ -11,6 +11,7 @@
  * - Filtering by specific item types with automatic dependency resolution
  * - Support for localized fields, rich text, structured text, and block fields
  * - Virtual fields for sortable and tree models
+ * - Deterministic ordering, so regenerating an unchanged schema is a no-op
  */
 
 import type { Client, RawApiTypes } from '@datocms/cma-client';
@@ -71,10 +72,8 @@ export async function generateSchemaTypes(
     (item): item is RawApiTypes.Field => item.type === 'field',
   );
 
-  const { itemTypes, fields } = filterItemTypesAndFields(
-    allItemTypes,
-    allFields,
-    options.itemTypesFilter,
+  const { itemTypes, fields } = sortSchema(
+    filterItemTypesAndFields(allItemTypes, allFields, options.itemTypesFilter),
   );
 
   const generatedCode = generateTypeDefinitions(
@@ -137,10 +136,8 @@ export async function generateSchemaTypesForMigration(
     (item): item is RawApiTypes.Field => item.type === 'field',
   );
 
-  const { itemTypes, fields } = filterItemTypesAndFields(
-    allItemTypes,
-    allFields,
-    options.itemTypesFilter,
+  const { itemTypes, fields } = sortSchema(
+    filterItemTypesAndFields(allItemTypes, allFields, options.itemTypesFilter),
   );
 
   const generatedCode = generateTypeDefinitionsOnly(itemTypes, fields, locales);
@@ -791,6 +788,57 @@ function printTypeDeclarations(parts: {
   }
 
   return groups.join('\n');
+}
+
+/**
+ * Compares two strings by code unit, so the ordering doesn't depend on the
+ * machine's locale the way `localeCompare` does.
+ */
+function compareStrings(a: string, b: string): number {
+  return a < b ? -1 : a > b ? 1 : 0;
+}
+
+/**
+ * Puts the schema in a deterministic order.
+ *
+ * The API returns item types in no guaranteed order, so two runs against an
+ * unchanged project can emit the same declarations in a different sequence,
+ * turning every regeneration into a diff. Item types are ordered by the name
+ * we're about to emit for them; fields keep the position the editor gave them,
+ * with api_key breaking the ties that positions leave open (they restart inside
+ * each fieldset). `id` settles the rest, so the output is a pure function of
+ * the schema.
+ *
+ * Fields are sorted across item types at once: they get grouped by item type
+ * later on, and grouping preserves the relative order within each group.
+ */
+function sortSchema({
+  itemTypes,
+  fields,
+}: {
+  itemTypes: RawApiTypes.ItemType[];
+  fields: RawApiTypes.Field[];
+}): {
+  itemTypes: RawApiTypes.ItemType[];
+  fields: RawApiTypes.Field[];
+} {
+  return {
+    itemTypes: [...itemTypes].sort(
+      (a, b) =>
+        compareStrings(
+          toPascalCase(a.attributes.api_key),
+          toPascalCase(b.attributes.api_key),
+        ) ||
+        compareStrings(a.attributes.api_key, b.attributes.api_key) ||
+        compareStrings(a.id, b.id),
+    ),
+    fields: [...fields].sort(
+      (a, b) =>
+        a.attributes.position - b.attributes.position ||
+        compareStrings(a.attributes.api_key, b.attributes.api_key) ||
+        compareStrings(a.id, b.id),
+    ),
+  };
 }
 
 function filterItemTypesAndFields(
