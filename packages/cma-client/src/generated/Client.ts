@@ -151,7 +151,7 @@ export class Client {
       ...this.config,
       ...options,
       logFn: this.config.logFn || console.log,
-      userAgent: '@datocms/cma-client v5.8.1',
+      userAgent: '@datocms/cma-client v6.0.0',
       baseUrl: this.baseUrl,
       preCallStack: new Error().stack,
       extraHeaders: {
