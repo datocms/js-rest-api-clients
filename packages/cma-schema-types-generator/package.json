@@ -1,6 +1,6 @@
 {
   "name": "@datocms/cma-schema-types-generator",
-  "version": "6.1.0",
+  "version": "6.1.2",
   "description": "Generate TypeScript type definitions from a DatoCMS project schema",
   "keywords": [
     "datocms",
