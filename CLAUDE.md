@@ -9,8 +9,10 @@ together share a version number; ones nobody touched keep theirs.
   the dependency graph, `cma-client` and `dashboard-client` sit on top of it,
   everything else on top of those.
 - `toolchain/` — everything that acts on the repo rather than shipping to a user:
-  the codegen under `toolchain/generate/`, and `toolchain/publish.mjs`, the
-  release process. Nothing in here is published. See `toolchain/README.md`.
+  the codegen under `toolchain/generate/`, and `toolchain/release.mjs`, which is
+  this repo's hook into the shared
+  [`@datocms/release-toolchain`](https://github.com/datocms/release-toolchain).
+  Nothing in here is published. See `toolchain/README.md`.
 
 ## Generated code
 
@@ -79,10 +81,11 @@ declared range actually breaks.
 ## Releasing
 
 ```
-npm run publish
+npm run release
 ```
 
-The script's ordering is deliberate and worth preserving if you touch it:
+The script lives in another repository now, pinned here by git tag. Its ordering
+is deliberate and worth preserving if you touch it:
 everything that can fail (build, tests, npm auth, being out of sync with
 `origin`) runs *before* anything is mutated, and npm is published *before* git is
 tagged, so a half-finished release can never leave a tag pointing at something
