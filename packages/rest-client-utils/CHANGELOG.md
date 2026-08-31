@@ -1,5 +1,30 @@
 # @datocms/rest-client-utils
 
+## 6.1.1
+
+### Patch Changes
+
+- fadc5af: Stop `ApiError` and `TimeoutError` from carrying the API token
+
+  The `authorization` header used for a failed call was stored verbatim in
+  `error.request.headers`, so anything that read or serialized the error — a
+  `console.error()` shipped to a log aggregator, an error tracker, an HTTP
+  handler echoing the error back — got the token with it. It is now replaced by
+  `[REDACTED, ending in abcd]`, which still tells two tokens apart while
+  debugging. The real header is only ever handed to `fetch()`.
+
+  For the same reason, `request`, `response` and `preCallStack` are now
+  non-enumerable: reading `error.request` explicitly works exactly as before, but
+  the payload of the failed call no longer travels through `console.error()`,
+  `JSON.stringify()`, object spread or `serialize-error` by accident.
+
+- fadc5af: Clear the request timeout timer when a request fails
+
+  The timer that cancels a hanging request was only cleared once a response came
+  back. When `fetch()` rejected instead, it stayed pending for its full duration
+  (30 seconds by default), keeping Node's event loop alive and delaying the exit
+  of short-lived scripts.
+
 ## 6.1.0
 
 ### Minor Changes
