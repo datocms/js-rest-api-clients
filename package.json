@@ -23,7 +23,7 @@
     "@apidevtools/json-schema-ref-parser": "^11.7.0",
     "@biomejs/biome": "1.8.3",
     "@changesets/cli": "^3.0.1",
-    "@datocms/release-toolchain": "github:datocms/release-toolchain#v1.1.0",
+    "@datocms/release-toolchain": "github:datocms/release-toolchain#v1.2.0",
     "@total-typescript/ts-reset": "^0.5.1",
     "@types/jest": "^29.5.6",
     "@types/node": "^22.13.10",
