@@ -72,6 +72,19 @@ export type ApiErrorResponse = {
 const TIMEOUT_ERROR = Symbol.for('@datocms/rest-client-utils:TimeoutError');
 const API_ERROR = Symbol.for('@datocms/rest-client-utils:ApiError');
 
+/**
+ * Hides properties from anything that walks own enumerable keys —
+ * `console.error()`, `JSON.stringify()`, object spread, `serialize-error`,
+ * error trackers. Reading `error.request` explicitly keeps working exactly as
+ * before; the data just stops travelling by accident, since the request and
+ * response of a failed call can carry credentials and other secrets.
+ */
+function hideProperties(target: object, keys: string[]) {
+  for (const key of keys) {
+    Object.defineProperty(target, key, { enumerable: false });
+  }
+}
+
 export type TimeoutErrorInitObject = {
   request: ApiErrorRequest;
   preCallStack?: string;
@@ -125,6 +138,8 @@ export class TimeoutError extends Error {
 
     this.request = initObject.request;
     this.preCallStack = initObject.preCallStack;
+
+    hideProperties(this, ['request', 'preCallStack']);
 
     this.message = `${initObject.request.method} ${initObject.request.url}: Timeout error`;
 
@@ -186,6 +201,8 @@ export class ApiError extends Error {
     this.request = initObject.request;
     this.response = initObject.response;
     this.preCallStack = initObject.preCallStack;
+
+    hideProperties(this, ['request', 'response', 'preCallStack']);
 
     let message = `${initObject.request.method} ${initObject.request.url}: ${this.response.status} ${this.response.statusText}`;
 

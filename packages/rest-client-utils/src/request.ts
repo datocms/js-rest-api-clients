@@ -68,6 +68,36 @@ function headersToObject(headers: Headers): Record<string, string> {
   return result;
 }
 
+/**
+ * Headers whose value must never end up inside an error object.
+ *
+ * Right now this client only ever sets one of them, but the list is the point:
+ * a header added here is redacted everywhere an error can reach.
+ */
+const SENSITIVE_HEADERS = ['authorization'];
+
+/**
+ * Returns a copy of the request headers with every sensitive value blanked out.
+ *
+ * Errors travel: they get logged, serialized, sent to error trackers, and — as
+ * we learned the hard way — occasionally echoed back to an HTTP client. The
+ * real headers are only ever handed to `fetch()`; what we keep on the error is
+ * this redacted copy.
+ */
+function redactHeaders(
+  headers: Record<string, string>,
+): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(headers).map(([key, value]) =>
+      SENSITIVE_HEADERS.includes(key.toLowerCase())
+        ? // The last 4 characters are enough to tell two tokens apart while
+          // debugging, and useless to whoever gets hold of the log.
+          [key, `[REDACTED, ending in ${value.slice(-4)}]`]
+        : [key, value],
+    ),
+  );
+}
+
 function buildApiErrorInitObject(
   method: string,
   url: string,
@@ -191,6 +221,8 @@ export async function request<T>(options: RequestOptions): Promise<T> {
     delete headers['user-agent'];
   }
 
+  const redactedHeaders = redactHeaders(headers);
+
   const baseUrl = options.baseUrl.replace(/\/$/, '');
   const body = options.body ? JSON.stringify(options.body, null, 2) : undefined;
 
@@ -206,7 +238,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
   if (logLevel >= LogLevel.BASIC) {
     log(`[${requestId}] ${options.method} ${url}`);
     if (logLevel >= LogLevel.BODY_AND_HEADERS) {
-      for (const [key, value] of Object.entries(headers || {})) {
+      for (const [key, value] of Object.entries(redactedHeaders)) {
         log(`[${requestId}] ${key}: ${value}`);
       }
     }
@@ -214,6 +246,10 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       log(`[${requestId}] ${body}`);
     }
   }
+
+  // Declared out here so that the `finally` below can always clear it: a timer
+  // left pending keeps Node's event loop alive for as long as it runs.
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
   try {
     const requestPromise = makeCancelablePromise(
@@ -224,13 +260,11 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       }),
     );
 
-    const timeoutId = setTimeout(() => {
+    timeoutId = setTimeout(() => {
       requestPromise.cancel();
     }, options.requestTimeout || 30000);
 
     const response = await requestPromise;
-
-    clearTimeout(timeoutId);
 
     const responseContentType = response.headers.get('Content-Type');
     const invalidContentType =
@@ -242,7 +276,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
           buildApiErrorInitObject(
             options.method,
             url,
-            headers,
+            redactedHeaders,
             options.body,
             response,
             undefined,
@@ -308,7 +342,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
           buildApiErrorInitObjectFromJobResult(
             options.method,
             url,
-            headers,
+            redactedHeaders,
             options.body,
             jobResult.status,
             jobResult.payload,
@@ -328,7 +362,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       buildApiErrorInitObject(
         options.method,
         url,
-        headers,
+        redactedHeaders,
         options.body,
         response,
         responseBody,
@@ -373,7 +407,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
         buildTimeoutErrorInitObject(
           options.method,
           url,
-          headers,
+          redactedHeaders,
           options.body,
           preCallStack,
         ),
@@ -381,5 +415,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
     }
 
     throw error;
+  } finally {
+    clearTimeout(timeoutId);
   }
 }
