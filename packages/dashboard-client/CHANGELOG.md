@@ -1,4 +1,4 @@
-# @datocms/cma-client-browser
+# @datocms/dashboard-client
 
 ## 6.1.0
 
@@ -22,11 +22,3 @@
 
 - Updated dependencies [5c69784]
   - @datocms/rest-client-utils@6.1.0
-  - @datocms/cma-client@6.1.0
-
-## 6.0.0
-
-### Patch Changes
-
-- Updated dependencies [39025ca]
-  - @datocms/cma-client@6.0.0

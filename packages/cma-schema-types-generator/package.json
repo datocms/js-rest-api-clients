@@ -1,6 +1,6 @@
 {
   "name": "@datocms/cma-schema-types-generator",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "Generate TypeScript type definitions from a DatoCMS project schema",
   "keywords": [
     "datocms",
@@ -48,7 +48,7 @@
     "url": "https://github.com/datocms/js-rest-api-clients/issues"
   },
   "peerDependencies": {
-    "@datocms/cma-client": "^6.0.0"
+    "@datocms/cma-client": "^6.1.0"
   },
   "dependencies": {
     "@prettier/sync": "^0.6.1",
@@ -56,6 +56,6 @@
     "typescript": "5.7.2"
   },
   "devDependencies": {
-    "@datocms/cma-client": "^6.0.0"
+    "@datocms/cma-client": "^6.1.0"
   }
 }

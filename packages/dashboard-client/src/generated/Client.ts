@@ -114,7 +114,7 @@ export class Client {
       ...this.config,
       ...options,
       logFn: this.config.logFn || console.log,
-      userAgent: '@datocms/dashboard-client v5.8.0',
+      userAgent: '@datocms/dashboard-client v6.1.0',
       baseUrl: this.baseUrl,
       preCallStack: new Error().stack,
       extraHeaders: {

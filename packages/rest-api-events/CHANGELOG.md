@@ -1,4 +1,4 @@
-# @datocms/cma-client-browser
+# @datocms/rest-api-events
 
 ## 6.1.0
 
@@ -17,16 +17,3 @@
   is that `dist/esm` now expects an ES2018 runtime: Node 10 or later, and browsers
   with `Symbol.asyncIterator`. The bundle shipped in `@datocms/cma-client-browser`
   already targeted ES2018.
-
-### Patch Changes
-
-- Updated dependencies [5c69784]
-  - @datocms/rest-client-utils@6.1.0
-  - @datocms/cma-client@6.1.0
-
-## 6.0.0
-
-### Patch Changes
-
-- Updated dependencies [39025ca]
-  - @datocms/cma-client@6.0.0
