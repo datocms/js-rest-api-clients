@@ -57,6 +57,23 @@ npm run changeset
 Use `patch` for bug fixes only, `minor` for new API surface (a schema sync
 included), and `major` when something is removed or renamed.
 
+### Trying a change before it's released
+
+Every push to a branch here publishes a preview of all the packages, which you
+can install anywhere — no npm release, no `npm link`:
+
+```
+npm i https://pkg.pr.new/@datocms/cma-client@<commit-sha>
+```
+
+The exact URLs show up in the commit's check run on GitHub, and in a comment on
+the pull request once there is one. This is the supported way to try a client
+change inside a consumer that lives in another repository, so nothing needs to
+be pinned to a git branch by hand.
+
+Previews are throwaway: they are never published to npm, and the URL stops
+resolving after a while. Never commit one to a `package.json` that ships.
+
 ### Releasing
 
 ```
