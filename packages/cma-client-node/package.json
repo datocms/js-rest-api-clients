@@ -46,7 +46,7 @@
     "@datocms/dashboard-client": "^6.1.0",
     "@types/mime-types": "^2.1.1",
     "@types/tmp": "^0.2.3",
-    "datocms-structured-text-utils": "^5.1.4",
+    "datocms-structured-text-utils": "^6.0.1",
     "unist-builder": "^2.0.3",
     "unist-util-map": "^2.0.1"
   },
