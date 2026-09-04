@@ -12,7 +12,7 @@ import {
   CanceledPromiseError,
   makeCancelablePromise,
 } from './makeCancelablePromise.js';
-import { wait } from './wait.js';
+import { wait, withJitter } from './wait.js';
 
 const isBrowser =
   typeof window !== 'undefined' && typeof window.document !== 'undefined';
@@ -301,7 +301,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
         }
       }
 
-      await wait(waitTimeInSecs * 1000);
+      await wait(withJitter(waitTimeInSecs) * 1000);
 
       return request({ ...options, retryCount: retryCount + 1 });
     }
@@ -380,7 +380,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
         );
       }
 
-      await wait(retryCount * 1000);
+      await wait(withJitter(retryCount) * 1000);
 
       return request({ ...options, retryCount: retryCount + 1 });
     }
@@ -398,7 +398,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
           );
         }
 
-        await wait(retryCount * 1000);
+        await wait(withJitter(retryCount) * 1000);
 
         return request({ ...options, retryCount: retryCount + 1 });
       }
