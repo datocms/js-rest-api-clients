@@ -1,5 +1,12 @@
 # @datocms/cma-client
 
+## 6.2.0
+
+### Minor Changes
+
+- 0b870ef: Add `_creator` to the typed `filter.fields` meta filters accepted by `client.items.list()`, matching what the CMA already supports
+- f597606: Sync generated code with the latest DatoCMS API schema (ApiTypes, Plugin, RawApiTypes, resources)
+
 ## 6.1.3
 
 ### Patch Changes
