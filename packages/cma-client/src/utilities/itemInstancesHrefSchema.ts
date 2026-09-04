@@ -1,3 +1,5 @@
+import type * as ApiTypes from '../generated/ApiTypes.js';
+
 // String matching filter for text-based filters
 export type StringMatchesFilter = {
   /** Pattern to match against */
@@ -275,8 +277,29 @@ export type PositionFilter = {
   neq?: number;
 };
 
+// Polymorphic reference to whoever created a record, same shape as `Item['creator']`
+export type CreatorReference =
+  | ApiTypes.AccountData
+  | ApiTypes.AccessTokenData
+  | ApiTypes.UserData
+  | ApiTypes.SsoUserData
+  | ApiTypes.OrganizationData;
+
+// Creator filter for the _creator meta field
+export type CreatorFilter = {
+  /** Search records created by the specified creator */
+  eq?: CreatorReference;
+  /** Exclude records created by the specified creator */
+  neq?: CreatorReference;
+  /** Search records created by one of the specified creators */
+  in?: CreatorReference[];
+  /** Search records not created by any of the specified creators */
+  notIn?: CreatorReference[];
+};
+
 export type ItemMetaFilter = {
   _created_at?: DateTimeHrefFilter;
+  _creator?: CreatorFilter;
   _first_published_at?: DateTimeHrefFilter;
   _is_valid?: BooleanHrefFilter;
   _publication_scheduled_at?: DateTimeHrefFilter;
