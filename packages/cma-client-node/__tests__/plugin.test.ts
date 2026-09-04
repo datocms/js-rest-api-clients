@@ -10,9 +10,12 @@ describe('plugins', () => {
 
     await client.plugins.fields(plugin.id);
 
-    await client.plugins.update(plugin.id, {
+    const updatedPlugin = await client.plugins.update(plugin.id, {
       parameters: { development_mode: true },
+      enabled: false,
     });
+
+    expect(updatedPlugin.enabled).toBe(false);
 
     await client.plugins.destroy(plugin.id);
   });

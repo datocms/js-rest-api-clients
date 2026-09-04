@@ -7273,6 +7273,10 @@ export type Plugin = {
     global: unknown[];
     instance: unknown[];
   };
+  /**
+   * Whether the plugin is enabled or not. When disabled, the plugin behaves as if it didn't exist: fields using it as editor/addon fall back to the default editor, and any sidebar panel/page/config screen/asset source it registers does not render.
+   */
+  enabled: boolean;
   meta: PluginMeta;
 };
 export type PluginCreateTargetSchema = Plugin;
@@ -7374,6 +7378,10 @@ export type PluginAttributes = {
     global: unknown[];
     instance: unknown[];
   };
+  /**
+   * Whether the plugin is enabled or not. When disabled, the plugin behaves as if it didn't exist: fields using it as editor/addon fall back to the default editor, and any sidebar panel/page/config screen/asset source it registers does not render.
+   */
+  enabled: boolean;
 };
 /**
  * This interface was referenced by `Plugin`'s JSON-Schema
@@ -7440,6 +7448,10 @@ export type PluginCreateSchema = {
    * NPM version of the plugin
    */
   package_version?: null | string;
+  /**
+   * Whether the plugin is enabled or not. Defaults to `true`.
+   */
+  enabled?: boolean;
 };
 /**
  * This interface was referenced by `Plugin`'s JSON-Schema
@@ -7461,6 +7473,10 @@ export type PluginUpdateSchema = {
    */
   url?: string;
   /**
+   * Turns a private plugin into a Marketplace plugin, installing the specified package from the DatoCMS Marketplace. Only accepted for private, non-legacy plugins, and cannot be combined with other attributes (except `enabled`). Name, description, URL, version and permissions are replaced with the ones published in the Marketplace, while the existing `parameters` are preserved.
+   */
+  package_name?: string;
+  /**
    * Global plugin configuration. Plugins can persist whatever information they want in this object to reuse it later. Refer to the CMA for details about technical limits.
    */
   parameters?: {
@@ -7474,6 +7490,10 @@ export type PluginUpdateSchema = {
    * Permissions granted to this plugin
    */
   permissions?: 'currentUserAccessToken'[];
+  /**
+   * Whether the plugin is enabled or not. When disabled, the plugin behaves as if it didn't exist: fields using it as editor/addon fall back to the default editor, and any sidebar panel/page/config screen/asset source it registers does not render.
+   */
+  enabled?: boolean;
   meta?: {
     [k: string]: unknown;
   };
