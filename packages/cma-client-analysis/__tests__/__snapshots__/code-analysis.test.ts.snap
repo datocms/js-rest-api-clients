@@ -978,6 +978,8 @@ export type ToItemAttributes<T extends ItemTypeDefinition<any, any, any>> = T ex
     "CodeType",
     "ColorFieldValue",
     "ColorHrefFilter",
+    "CreatorFilter",
+    "CreatorReference",
     "DateFieldValue",
     "DateHrefFilter",
     "DateTimeFieldValue",
