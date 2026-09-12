@@ -12029,7 +12029,7 @@ export type SiteAttributes = {
    */
   domain: string | null;
   /**
-   * Google API Key to be used by the LatLon widget
+   * Google API Key to be used by the LatLon field editor. Only the DatoCMS interface uses it: it returns `null` for any other caller.
    */
   google_maps_api_token: string | null;
   /**
@@ -12037,7 +12037,7 @@ export type SiteAttributes = {
    */
   imgix_host: string | null;
   /**
-   * DatoCMS internal domain for the administrative area
+   * DatoCMS internal domain for the administrative area. Returns `null` if the credentials you are using cannot change the project's settings.
    */
   internal_domain: string | null;
   /**
@@ -12061,13 +12061,13 @@ export type SiteAttributes = {
    */
   last_data_change_at: null | string;
   /**
-   * Specifies whether all users of this site need to authenticate using two-factor authentication
+   * Specifies whether all users of this site need to authenticate using two-factor authentication. Returns `null` if the credentials you are using cannot change the project's settings.
    */
-  require_2fa: boolean;
+  require_2fa: boolean | null;
   /**
-   * Specifies whether you want IPs to be tracked in the Project usages section
+   * Specifies whether you want IPs to be tracked in the Project usages section. Returns `null` if the credentials you are using cannot change the project's settings.
    */
-  ip_tracking_enabled: boolean;
+  ip_tracking_enabled: boolean | null;
   /**
    * If enabled, blocks schema changes of primary environment
    */
@@ -12543,11 +12543,11 @@ export type SiteUpdateSchema = {
        */
       timezone?: string;
       /**
-       * Specifies whether all users of this site need to authenticate using two-factor authentication
+       * Specifies whether all users of this site need to authenticate using two-factor authentication.
        */
       require_2fa?: boolean;
       /**
-       * Specifies whether you want IPs to be tracked in the Project usages section
+       * Specifies whether you want IPs to be tracked in the Project usages section.
        */
       ip_tracking_enabled?: boolean;
       /**

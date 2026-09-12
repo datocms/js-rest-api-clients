@@ -3657,6 +3657,13 @@ export type OauthApplicationAttributes = {
    * Whether the application can access all projects or only selected ones
    */
   site_access_mode: 'all' | 'selected';
+  /**
+   * The level of access the account granted to the application, on top of its own permissions. Read-only: it is picked when authorizing the application, and changing it means authorizing the application again
+   */
+  read_sites_permission_cap:
+    | 'content_view_only'
+    | 'content_only'
+    | 'unrestricted';
 };
 /**
  * JSON API relationships
