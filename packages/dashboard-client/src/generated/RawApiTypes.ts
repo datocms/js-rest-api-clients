@@ -3646,7 +3646,7 @@ export type OauthApplication = {
  */
 export type OauthApplicationAttributes = {
   /**
-   * Name of application
+   * Name of application. For an MCP client that DatoCMS cannot verify, the name carries a warning and the host that identifies the client, e.g. "ChatGPT (unverified · evil.example)"
    */
   name: string;
   /**
@@ -3664,6 +3664,23 @@ export type OauthApplicationAttributes = {
     | 'content_view_only'
     | 'content_only'
     | 'unrestricted';
+  /**
+   * Details of an MCP client application (for example ChatGPT, Claude or Cursor), which has its own projects and level of access. Null for any other application
+   */
+  mcp_client: {
+    /**
+     * Name of the MCP client, without the note that name adds when DatoCMS cannot verify the client
+     */
+    raw_name: string;
+    /**
+     * How the MCP client obtained its application
+     */
+    registration: 'cimd' | 'dcr';
+    /**
+     * How much DatoCMS trusts the identity of the MCP client
+     */
+    trust_level: 'verified' | 'local' | 'unverified';
+  } | null;
 };
 /**
  * JSON API relationships

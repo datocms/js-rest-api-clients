@@ -2908,9 +2908,9 @@ export type UserAttributes = {
    */
   email: string;
   /**
-   * Whether 2-factor authentication is active for this account or not
+   * Whether 2-factor authentication is active for this account or not. It returns `null` if the credentials you are using cannot manage the collaborators of the project.
    */
-  is_2fa_active: boolean;
+  is_2fa_active: boolean | null;
   /**
    * Full name
    */
@@ -2942,7 +2942,7 @@ export type UserRelationships = {
  */
 export type UserMeta = {
   /**
-   * Date of last reading/interaction
+   * Date of last reading/interaction. It returns `null` if the credentials you are using cannot manage the collaborators of the project.
    */
   last_access: string | null;
 };
@@ -3035,7 +3035,7 @@ export type SsoUserAttributes = {
    */
   username: string;
   /**
-   * Identity provider ID
+   * Identity provider ID. It returns `null` if the credentials you are using cannot manage the SSO users of the project.
    */
   external_id: string | null;
   /**
@@ -3089,7 +3089,7 @@ export type SsoGroupData = {
  */
 export type SsoUserMeta = {
   /**
-   * Date of last reading/interaction
+   * Date of last reading/interaction. It returns `null` if the credentials you are using cannot manage the SSO users of the project.
    */
   last_access: string | null;
 };
@@ -3184,9 +3184,10 @@ export type AccessTokenAttributes = {
    */
   hardcoded_type: null | string;
   /**
-   * When this API token was last used to access the Content Management API
+   * When this API token was last used to access the Content Management API. It returns `null` if the credentials you are using cannot manage the API tokens of the project.
    */
   last_cma_access:
+    | null
     | 'today'
     | 'yesterday'
     | 'this_week'
@@ -3195,9 +3196,10 @@ export type AccessTokenAttributes = {
     | 'last_month'
     | 'never';
   /**
-   * When this API token was last used to access the Content Delivery API
+   * When this API token was last used to access the Content Delivery API. It returns `null` if the credentials you are using cannot manage the API tokens of the project.
    */
   last_cda_access:
+    | null
     | 'today'
     | 'yesterday'
     | 'this_week'
@@ -6952,9 +6954,9 @@ export type PluginAttributes = {
    */
   url: string;
   /**
-   * Global plugin configuration. Plugins can persist whatever information they want in this object to reuse it later. Refer to the CMA for details about technical limits.
+   * Global plugin configuration. Plugins can persist whatever information they want in this object to reuse it later. Refer to the CMA for details about technical limits. It returns `null` if the credentials you are using cannot edit the schema of the project.
    */
-  parameters: {
+  parameters: null | {
     [k: string]: unknown;
   };
   /**
@@ -9704,13 +9706,13 @@ export type WebhookAttributes = {
    */
   http_basic_user: string | null;
   /**
-   * HTTP Basic Authorization password
+   * HTTP Basic Authorization password. It is `null` when the webhook has no basic auth, or when the credentials you are using cannot manage the webhooks of the project.
    */
   http_basic_password: string | null;
   /**
-   * Additional headers that will be sent
+   * Additional headers that will be sent. It returns `null` if the credentials you are using cannot manage the webhooks of the project.
    */
-  headers: {
+  headers: null | {
     [k: string]: string;
   };
   events: {
@@ -9843,7 +9845,7 @@ export type WebhookCreateSchema = {
        */
       http_basic_user: string | null;
       /**
-       * HTTP Basic Authorization password
+       * HTTP Basic Authorization password. It is `null` when the webhook has no basic auth, or when the credentials you are using cannot manage the webhooks of the project.
        */
       http_basic_password: string | null;
       /**
@@ -9942,7 +9944,7 @@ export type WebhookUpdateSchema = {
        */
       http_basic_user?: string | null;
       /**
-       * HTTP Basic Authorization password
+       * HTTP Basic Authorization password. It is `null` when the webhook has no basic auth, or when the credentials you are using cannot manage the webhooks of the project.
        */
       http_basic_password?: string | null;
       /**
@@ -10161,9 +10163,9 @@ export type BuildTriggerAttributes = {
    */
   adapter: 'custom' | 'netlify' | 'vercel' | 'gitlab';
   /**
-   * Additional settings for the build trigger. The value depends on the `adapter`.
+   * Additional settings for the build trigger. The value depends on the `adapter`. It returns `null` if the credentials you are using cannot manage the build triggers of the project.
    */
-  adapter_settings: {
+  adapter_settings: null | {
     [k: string]: unknown;
   };
   /**
@@ -10175,13 +10177,13 @@ export type BuildTriggerAttributes = {
    */
   build_status: string;
   /**
-   * Unique token for the webhook (it's the same token present in `webhook_url`)
+   * Unique token for the webhook (it's the same token present in `webhook_url`). It returns `null` if the credentials you are using cannot manage the build triggers of the project.
    */
-  webhook_token?: string;
+  webhook_token: null | string;
   /**
-   * The URL of the webhook your service has to call when the build completes to report it's status (success or error)
+   * The URL of the webhook your service has to call when the build completes to report it's status (success or error). It returns `null` if the credentials you are using cannot manage the build triggers of the project.
    */
-  webhook_url: string;
+  webhook_url: null | string;
   /**
    * Status of Site Search for the frontend
    */
@@ -12037,7 +12039,7 @@ export type SiteAttributes = {
    */
   imgix_host: string | null;
   /**
-   * DatoCMS internal domain for the administrative area. Returns `null` if the credentials you are using cannot change the project's settings.
+   * DatoCMS internal domain for the administrative area. Returns `null` if the credentials you are using cannot read the configuration of the project.
    */
   internal_domain: string | null;
   /**
@@ -12061,11 +12063,11 @@ export type SiteAttributes = {
    */
   last_data_change_at: null | string;
   /**
-   * Specifies whether all users of this site need to authenticate using two-factor authentication. Returns `null` if the credentials you are using cannot change the project's settings.
+   * Specifies whether all users of this site need to authenticate using two-factor authentication. Returns `null` if the credentials you are using cannot read the configuration of the project.
    */
   require_2fa: boolean | null;
   /**
-   * Specifies whether you want IPs to be tracked in the Project usages section. Returns `null` if the credentials you are using cannot change the project's settings.
+   * Specifies whether you want IPs to be tracked in the Project usages section. Returns `null` if the credentials you are using cannot read the configuration of the project.
    */
   ip_tracking_enabled: boolean | null;
   /**
