@@ -23,6 +23,35 @@ import * as ts from 'typescript';
 
 export interface SchemaTypesGeneratorOptions {
   itemTypesFilter?: string;
+  /**
+   * Formats the generated code with Prettier. Defaults to `true`.
+   *
+   * Prettier runs in a worker thread, and the memory of that worker is not
+   * released to the main process. On projects with many models and fields this
+   * can add hundreds of megabytes to the peak memory use. Set this to `false`
+   * when the generated code goes to a compiler and not to a person: the
+   * TypeScript printer already emits indented, multi-line code, and only the
+   * quote style and the line breaks are different.
+   */
+  format?: boolean;
+}
+
+/**
+ * Formats the code with Prettier, if the caller did not disable it.
+ */
+function formatCode(
+  code: string,
+  options: SchemaTypesGeneratorOptions,
+): string {
+  if (options.format === false) {
+    return code;
+  }
+
+  return prettier.format(code, {
+    parser: 'typescript',
+    singleQuote: true,
+    trailingComma: 'all',
+  });
 }
 
 /**
@@ -83,11 +112,7 @@ export async function generateSchemaTypes(
     '@datocms/cma-client',
   );
 
-  return prettier.format(generatedCode, {
-    parser: 'typescript',
-    singleQuote: true,
-    trailingComma: 'all',
-  });
+  return formatCode(generatedCode, options);
 }
 
 /**
@@ -142,11 +167,7 @@ export async function generateSchemaTypesForMigration(
 
   const generatedCode = generateTypeDefinitionsOnly(itemTypes, fields, locales);
 
-  return prettier.format(generatedCode, {
-    parser: 'typescript',
-    singleQuote: true,
-    trailingComma: 'all',
-  });
+  return formatCode(generatedCode, options);
 }
 
 function toPascalCase(str: string): string {

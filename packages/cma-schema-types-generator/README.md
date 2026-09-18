@@ -110,6 +110,13 @@ object:
   include. Block dependencies referenced by the kept models (through
   `rich_text`, `structured_text`, `single_block`) are pulled in
   automatically. Unknown api keys are ignored.
+- **`format`** — formats the output with Prettier. Defaults to `true`.
+  Prettier runs in a worker thread whose memory does not go back to the
+  main process: on a project with thousands of fields this adds hundreds
+  of megabytes to the peak memory use. Set it to `false` when the code
+  goes to a compiler and not to a person. The TypeScript printer already
+  emits indented, multi-line code; only the quote style and the line
+  breaks are different.
 
 ### Migration variant
 

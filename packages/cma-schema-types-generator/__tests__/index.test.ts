@@ -1,5 +1,12 @@
+import prettier from '@prettier/sync';
 import { generateSchemaTypes, generateSchemaTypesForMigration } from '../src';
 import { fakeClient, field, itemType } from './helpers/fakeClient';
+
+const PRETTIER_OPTIONS = {
+  parser: 'typescript',
+  singleQuote: true,
+  trailingComma: 'all',
+} as const;
 
 describe('generateSchemaTypes', () => {
   it('emits the ItemTypeDefinition import and EnvironmentSettings with the locales union', async () => {
@@ -684,5 +691,53 @@ describe('generateSchemaTypesForMigration', () => {
 
     expect(code).toContain('export type BlogPost =');
     expect(code).not.toContain('export type Author =');
+  });
+});
+
+describe('format option', () => {
+  const client = () =>
+    fakeClient({
+      locales: ['en', 'it'],
+      itemTypes: [
+        itemType({ id: '1', api_key: 'blog_post' }),
+        itemType({ id: '2', api_key: 'hero', modular_block: true }),
+      ],
+      fields: [
+        field({
+          id: '101',
+          api_key: 'title',
+          field_type: 'string',
+          item_type_id: '1',
+          localized: true,
+        }),
+        field({
+          id: '102',
+          api_key: 'body',
+          field_type: 'structured_text',
+          item_type_id: '1',
+          validators: { structured_text_blocks: { item_types: ['2'] } },
+        }),
+      ],
+    });
+
+  it('gives the same declarations with and without Prettier', async () => {
+    const formatted = await generateSchemaTypes(client());
+    const unformatted = await generateSchemaTypes(client(), { format: false });
+
+    expect(unformatted).toContain('export type BlogPost =');
+    expect(unformatted).toContain('export type AnyBlockOrModel =');
+    // The two differ only in quote style and line breaks, so re-formatting the
+    // unformatted output must give back the formatted one.
+    expect(prettier.format(unformatted, PRETTIER_OPTIONS)).toEqual(formatted);
+  });
+
+  it('also applies to the migration variant', async () => {
+    const formatted = await generateSchemaTypesForMigration(client());
+    const unformatted = await generateSchemaTypesForMigration(client(), {
+      format: false,
+    });
+
+    expect(unformatted).not.toContain('import type');
+    expect(prettier.format(unformatted, PRETTIER_OPTIONS)).toEqual(formatted);
   });
 });
