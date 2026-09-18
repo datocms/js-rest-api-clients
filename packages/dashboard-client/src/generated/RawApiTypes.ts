@@ -1460,6 +1460,10 @@ export type PerOwnerPricingBillingProfileAttributes = {
     defaulting_since: null | string;
     credits: number;
     total_dues: number;
+    /**
+     * Sum of the unpaid invoices (posted, payment due, not paid), in cents. Unlike `total_dues`, it includes posted invoices that are still within their payment terms.
+     */
+    total_outstanding: number;
     cf_cod_fiscale: null | string;
     cf_cod_fiscale_partecipante_gruppo_iva: null | string;
     po_number: null | string;
