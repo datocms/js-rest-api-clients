@@ -1,5 +1,16 @@
 # @datocms/cma-schema-types-generator
 
+## 6.5.0
+
+### Minor Changes
+
+- 7ef8c85: Add a `format` option to `generateSchemaTypes()` and
+  `generateSchemaTypesForMigration()`, defaulting to `true`.
+
+  Pass `format: false` to skip Prettier. On large schemas this cuts the peak
+  memory use considerably, and the output is the same code: only the quote style
+  and the line breaks are different.
+
 ## 6.1.2
 
 ### Patch Changes
