@@ -1,5 +1,11 @@
 # @datocms/rest-api-events
 
+## 6.6.0
+
+### Patch Changes
+
+- 5a8d7c0: Update the default Pusher app key. The old one no longer exists, so any `withEventsSubscription()` call that didn't pass its own `appKey` hung instead of connecting.
+
 ## 6.1.0
 
 ### Minor Changes
