@@ -21,7 +21,7 @@ type JobResultMessage = {
   payload: JobResult['payload'];
 };
 
-const DEFAULT_APP_KEY = '75e6ef0fe5d39f481626';
+const DEFAULT_APP_KEY = 'db8d1f38c1e95cd705d0';
 
 const channelPromisesCache: Record<string, Promise<EventsSubscription>> = {};
 
