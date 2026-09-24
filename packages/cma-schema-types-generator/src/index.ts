@@ -55,6 +55,62 @@ function formatCode(
 }
 
 /**
+ * The attributes and the relationships that the generator reads, for each
+ * entity type. The API serializes only these (JSON:API sparse fieldsets).
+ *
+ * On a large project, the full response is slow because the API must
+ * serialize attributes such as `default_value` and `appearance` for each
+ * field. The generator does not use these attributes, and the API does not
+ * compute an attribute that the fieldset does not name.
+ *
+ * If you read a new attribute or relationship in this file, add it here.
+ * If you do not add it, its value is `undefined`. The `included` list does
+ * not change, because the `include` parameter controls it, not the fieldset.
+ */
+const SCHEMA_FIELDSETS = {
+  site: ['locales', 'item_types'],
+  item_type: ['api_key', 'modular_block', 'sortable', 'tree'],
+  field: [
+    'api_key',
+    'field_type',
+    'localized',
+    'validators',
+    'position',
+    'item_type',
+  ],
+};
+
+/**
+ * Gets the locales, the item types and the fields of the project in one
+ * request.
+ */
+async function fetchSchema(client: Client): Promise<{
+  locales: string[];
+  allItemTypes: RawApiTypes.ItemType[];
+  allFields: RawApiTypes.Field[];
+}> {
+  const { data, included = [] } = await client.site.rawFind({
+    include: 'item_types,item_types.fields',
+    fields: Object.fromEntries(
+      Object.entries(SCHEMA_FIELDSETS).map(([type, names]) => [
+        type,
+        names.join(','),
+      ]),
+    ),
+  });
+
+  return {
+    locales: data.attributes.locales,
+    allItemTypes: included.filter(
+      (item): item is RawApiTypes.ItemType => item.type === 'item_type',
+    ),
+    allFields: included.filter(
+      (item): item is RawApiTypes.Field => item.type === 'field',
+    ),
+  };
+}
+
+/**
  * Generates complete TypeScript schema definitions with imports.
  * Used for generating standalone schema files.
  *
@@ -86,20 +142,7 @@ export async function generateSchemaTypes(
   client: Client,
   options: SchemaTypesGeneratorOptions = {},
 ): Promise<string> {
-  const response = await client.site.rawFind({
-    include: 'item_types,item_types.fields',
-  });
-
-  const { data } = response;
-  const included = response.included || [];
-
-  const locales = data.attributes.locales;
-  const allItemTypes = included.filter(
-    (item): item is RawApiTypes.ItemType => item.type === 'item_type',
-  );
-  const allFields = included.filter(
-    (item): item is RawApiTypes.Field => item.type === 'field',
-  );
+  const { locales, allItemTypes, allFields } = await fetchSchema(client);
 
   const { itemTypes, fields } = sortSchema(
     filterItemTypesAndFields(allItemTypes, allFields, options.itemTypesFilter),
@@ -145,21 +188,7 @@ export async function generateSchemaTypesForMigration(
   client: Client,
   options: SchemaTypesGeneratorOptions = {},
 ): Promise<string> {
-  const { data, included } = await client.site.rawFind({
-    include: 'item_types,item_types.fields',
-  });
-
-  if (!included) {
-    throw new Error('This should not happen');
-  }
-
-  const locales = data.attributes.locales;
-  const allItemTypes = included.filter(
-    (item): item is RawApiTypes.ItemType => item.type === 'item_type',
-  );
-  const allFields = included.filter(
-    (item): item is RawApiTypes.Field => item.type === 'field',
-  );
+  const { locales, allItemTypes, allFields } = await fetchSchema(client);
 
   const { itemTypes, fields } = sortSchema(
     filterItemTypesAndFields(allItemTypes, allFields, options.itemTypesFilter),

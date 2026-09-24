@@ -46,6 +46,40 @@ export function field(opts: FieldOpts) {
   };
 }
 
+/**
+ * Keeps only the attributes and the relationships that the sparse fieldset
+ * names, as the API does. If the fieldset does not name an entity type, the
+ * entity stays as it is.
+ */
+function applyFieldset(
+  entity: {
+    type: string;
+    attributes: Record<string, unknown>;
+    relationships?: Record<string, unknown>;
+  },
+  fields: Record<string, string> | undefined,
+) {
+  const fieldset = fields?.[entity.type];
+
+  if (fieldset === undefined) {
+    return entity;
+  }
+
+  const names = fieldset.split(',');
+  const pick = (object: Record<string, unknown>) =>
+    Object.fromEntries(
+      Object.entries(object).filter(([name]) => names.includes(name)),
+    );
+
+  return {
+    ...entity,
+    attributes: pick(entity.attributes),
+    ...(entity.relationships
+      ? { relationships: pick(entity.relationships) }
+      : {}),
+  };
+}
+
 export function fakeClient(opts: {
   locales: string[];
   itemTypes: ReturnType<typeof itemType>[];
@@ -53,11 +87,17 @@ export function fakeClient(opts: {
 }) {
   return {
     site: {
-      rawFind: async (_params: { include: string }): Promise<any> => ({
-        data: {
-          attributes: { locales: opts.locales },
-        },
-        included: [...opts.itemTypes, ...opts.fields],
+      rawFind: async (params: {
+        include: string;
+        fields?: Record<string, string>;
+      }): Promise<any> => ({
+        data: applyFieldset(
+          { type: 'site', attributes: { locales: opts.locales } },
+          params.fields,
+        ),
+        included: [...opts.itemTypes, ...opts.fields].map((entity) =>
+          applyFieldset(entity, params.fields),
+        ),
       }),
     },
   } as any;
