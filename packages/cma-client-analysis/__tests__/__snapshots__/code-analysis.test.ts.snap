@@ -3,7 +3,20 @@
 exports[`TypeScript Compiler API - Unit Tests ApiTypes vs RawApiTypes disambiguation should extract different type definitions for list vs rawList 1`] = `
 {
   "listResult": {
-    "expandedTypes": "export type ItemTypeInstancesTargetSchema = ItemType[];
+    "expandedTypes": "export type ItemTypeInstancesHrefSchema = {
+    /**
+     * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+     */
+    fields?: {
+        item_type?: ItemTypeSparseFieldset;
+        [k: string]: unknown;
+    };
+    [k: string]: unknown;
+};
+
+export type ItemTypeSparseFieldset = string;
+
+export type ItemTypeInstancesTargetSchema = ItemType[];
 
 export type ItemType = {
     id: ItemTypeIdentity;
@@ -103,7 +116,20 @@ export type ItemType = {
     ],
   },
   "rawListResult": {
-    "expandedTypes": "export type ItemTypeInstancesTargetSchema = {
+    "expandedTypes": "export type ItemTypeInstancesHrefSchema = {
+    /**
+     * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+     */
+    fields?: {
+        item_type?: ItemTypeSparseFieldset;
+        [k: string]: unknown;
+    };
+    [k: string]: unknown;
+};
+
+export type ItemTypeSparseFieldset = string;
+
+export type ItemTypeInstancesTargetSchema = {
     data: ItemType[];
 };
 
@@ -139,7 +165,20 @@ export type ItemType = {
 
 exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies itemTypes.list with expandTypes: [*] 1`] = `
 {
-  "expandedTypes": "export type ItemTypeInstancesTargetSchema = ItemType[];
+  "expandedTypes": "export type ItemTypeInstancesHrefSchema = {
+    /**
+     * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+     */
+    fields?: {
+        item_type?: ItemTypeSparseFieldset;
+        [k: string]: unknown;
+    };
+    [k: string]: unknown;
+};
+
+export type ItemTypeSparseFieldset = string;
+
+export type ItemTypeInstancesTargetSchema = ItemType[];
 
 export type ItemType = {
     id: ItemTypeIdentity;
@@ -286,8 +325,10 @@ exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies itemTypes.
     "ItemType",
     "ItemType1",
     "ItemTypeIdentity",
+    "ItemTypeInstancesHrefSchema",
     "ItemTypeInstancesTargetSchema",
     "ItemTypeMeta",
+    "ItemTypeSparseFieldset",
     "ItemTypeType",
     "WorkflowData",
     "WorkflowIdentity",
@@ -298,7 +339,18 @@ exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies itemTypes.
 
 exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies itemTypes.list with maxDepth 1 1`] = `
 {
-  "expandedTypes": "export type ItemTypeInstancesTargetSchema = ItemType[];
+  "expandedTypes": "export type ItemTypeInstancesHrefSchema = {
+    /**
+     * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+     */
+    fields?: {
+        item_type?: ItemTypeSparseFieldset;
+        [k: string]: unknown;
+    };
+    [k: string]: unknown;
+};
+
+export type ItemTypeInstancesTargetSchema = ItemType[];
 
 export type ItemType = {
     id: ItemTypeIdentity;
@@ -391,6 +443,7 @@ export type ItemType = {
     "ItemType1",
     "ItemTypeIdentity",
     "ItemTypeMeta",
+    "ItemTypeSparseFieldset",
     "ItemTypeType",
     "WorkflowData",
     "WorkflowIdentity",
@@ -401,7 +454,20 @@ export type ItemType = {
 
 exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies itemTypes.list with maxDepth 2 (default) 1`] = `
 {
-  "expandedTypes": "export type ItemTypeInstancesTargetSchema = ItemType[];
+  "expandedTypes": "export type ItemTypeInstancesHrefSchema = {
+    /**
+     * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+     */
+    fields?: {
+        item_type?: ItemTypeSparseFieldset;
+        [k: string]: unknown;
+    };
+    [k: string]: unknown;
+};
+
+export type ItemTypeSparseFieldset = string;
+
+export type ItemTypeInstancesTargetSchema = ItemType[];
 
 export type ItemType = {
     id: ItemTypeIdentity;
@@ -504,7 +570,20 @@ export type ItemType = {
 
 exports[`TypeScript Compiler API - Unit Tests extractTypeDependencies itemTypes.rawList with maxDepth 2 1`] = `
 {
-  "expandedTypes": "export type ItemTypeInstancesTargetSchema = {
+  "expandedTypes": "export type ItemTypeInstancesHrefSchema = {
+    /**
+     * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+     */
+    fields?: {
+        item_type?: ItemTypeSparseFieldset;
+        [k: string]: unknown;
+    };
+    [k: string]: unknown;
+};
+
+export type ItemTypeSparseFieldset = string;
+
+export type ItemTypeInstancesTargetSchema = {
     data: ItemType[];
 };
 
