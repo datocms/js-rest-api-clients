@@ -1,5 +1,16 @@
 # @datocms/cma-schema-types-generator
 
+## 6.7.0
+
+### Minor Changes
+
+- 264f3a2: Fetch only the schema attributes that the generator uses. On projects with many models and fields, generating the types is now much faster and uses less memory.
+
+### Patch Changes
+
+- Updated dependencies [3cc1d1e]
+  - @datocms/cma-client@6.7.0
+
 ## 6.5.0
 
 ### Minor Changes

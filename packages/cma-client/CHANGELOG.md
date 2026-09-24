@@ -1,5 +1,11 @@
 # @datocms/cma-client
 
+## 6.7.0
+
+### Minor Changes
+
+- 3cc1d1e: Sync generated code with the latest DatoCMS API schema (ApiTypes, Field, Fieldset, Item, ItemType, RawApiTypes, resources)
+
 ## 6.4.0
 
 ### Minor Changes
