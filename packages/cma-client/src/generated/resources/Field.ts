@@ -127,8 +127,11 @@ export default class Field extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(itemTypeId: string | ApiTypes.ItemTypeData) {
-    return this.rawList(Utils.toId(itemTypeId)).then((body) =>
+  list(
+    itemTypeId: string | ApiTypes.ItemTypeData,
+    queryParams?: ApiTypes.FieldInstancesHrefSchema,
+  ) {
+    return this.rawList(Utils.toId(itemTypeId), queryParams).then((body) =>
       Utils.deserializeResponseBody<ApiTypes.FieldInstancesTargetSchema>(body),
     );
   }
@@ -141,10 +144,14 @@ export default class Field extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(itemTypeId: string): Promise<RawApiTypes.FieldInstancesTargetSchema> {
+  rawList(
+    itemTypeId: string,
+    queryParams?: RawApiTypes.FieldInstancesHrefSchema,
+  ): Promise<RawApiTypes.FieldInstancesTargetSchema> {
     return this.client.request<RawApiTypes.FieldInstancesTargetSchema>({
       method: 'GET',
       url: `/item-types/${itemTypeId}/fields`,
+      queryParams,
     });
   }
 
@@ -156,11 +163,15 @@ export default class Field extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  referencing(itemTypeId: string | ApiTypes.ItemTypeData) {
-    return this.rawReferencing(Utils.toId(itemTypeId)).then((body) =>
-      Utils.deserializeResponseBody<ApiTypes.FieldReferencingTargetSchema>(
-        body,
-      ),
+  referencing(
+    itemTypeId: string | ApiTypes.ItemTypeData,
+    queryParams?: ApiTypes.FieldReferencingHrefSchema,
+  ) {
+    return this.rawReferencing(Utils.toId(itemTypeId), queryParams).then(
+      (body) =>
+        Utils.deserializeResponseBody<ApiTypes.FieldReferencingTargetSchema>(
+          body,
+        ),
     );
   }
 
@@ -174,10 +185,12 @@ export default class Field extends BaseResource {
    */
   rawReferencing(
     itemTypeId: string,
+    queryParams?: RawApiTypes.FieldReferencingHrefSchema,
   ): Promise<RawApiTypes.FieldReferencingTargetSchema> {
     return this.client.request<RawApiTypes.FieldReferencingTargetSchema>({
       method: 'GET',
       url: `/item-types/${itemTypeId}/fields/referencing`,
+      queryParams,
     });
   }
 
@@ -191,8 +204,11 @@ export default class Field extends BaseResource {
    *
    * @deprecated This API call is to be considered private and might change without notice
    */
-  related(itemTypeId: string | ApiTypes.ItemTypeData) {
-    return this.rawRelated(Utils.toId(itemTypeId)).then((body) =>
+  related(
+    itemTypeId: string | ApiTypes.ItemTypeData,
+    queryParams?: ApiTypes.FieldRelatedHrefSchema,
+  ) {
+    return this.rawRelated(Utils.toId(itemTypeId), queryParams).then((body) =>
       Utils.deserializeResponseBody<ApiTypes.FieldRelatedTargetSchema>(body),
     );
   }
@@ -209,10 +225,12 @@ export default class Field extends BaseResource {
    */
   rawRelated(
     itemTypeId: string,
+    queryParams?: RawApiTypes.FieldRelatedHrefSchema,
   ): Promise<RawApiTypes.FieldRelatedTargetSchema> {
     return this.client.request<RawApiTypes.FieldRelatedTargetSchema>({
       method: 'GET',
       url: `/item-types/${itemTypeId}/fields/related`,
+      queryParams,
     });
   }
 
@@ -224,8 +242,11 @@ export default class Field extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(fieldId: string | ApiTypes.FieldData) {
-    return this.rawFind(Utils.toId(fieldId)).then((body) =>
+  find(
+    fieldId: string | ApiTypes.FieldData,
+    queryParams?: ApiTypes.FieldSelfHrefSchema,
+  ) {
+    return this.rawFind(Utils.toId(fieldId), queryParams).then((body) =>
       Utils.deserializeResponseBody<ApiTypes.FieldSelfTargetSchema>(body),
     );
   }
@@ -238,10 +259,14 @@ export default class Field extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(fieldId: string): Promise<RawApiTypes.FieldSelfTargetSchema> {
+  rawFind(
+    fieldId: string,
+    queryParams?: RawApiTypes.FieldSelfHrefSchema,
+  ): Promise<RawApiTypes.FieldSelfTargetSchema> {
     return this.client.request<RawApiTypes.FieldSelfTargetSchema>({
       method: 'GET',
       url: `/fields/${fieldId}`,
+      queryParams,
     });
   }
 

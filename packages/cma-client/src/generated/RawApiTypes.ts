@@ -265,6 +265,13 @@ export type AccountType = 'account';
  */
 export type AccountIdentity = string;
 /**
+ * Attributes and relationships to return for each `account` that this endpoint returns.
+ *
+ * This interface was referenced by `Account`'s JSON-Schema
+ * via the `definition` "sparse_fieldset".
+ */
+export type AccountSparseFieldset = string;
+/**
  * This interface was referenced by `Organization`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -279,6 +286,13 @@ export type OrganizationType = 'organization';
  * via the `definition` "id".
  */
 export type OrganizationIdentity = string;
+/**
+ * Attributes and relationships to return for each `organization` that this endpoint returns.
+ *
+ * This interface was referenced by `Organization`'s JSON-Schema
+ * via the `definition` "sparse_fieldset".
+ */
+export type OrganizationSparseFieldset = string;
 /**
  * This interface was referenced by `User`'s JSON-Schema
  * via the `me.hrefSchema` link.
@@ -496,6 +510,13 @@ export type FieldsetIdentity = string;
  */
 export type WorkflowType = 'workflow';
 /**
+ * Attributes and relationships to return for each `item_type` that this endpoint returns.
+ *
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `definition` "sparse_fieldset".
+ */
+export type ItemTypeSparseFieldset = string;
+/**
  * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `create.hrefSchema` link.
  */
@@ -516,6 +537,42 @@ export type ItemTypeCreateHrefSchema = {
 };
 /**
  * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type ItemTypeInstancesHrefSchema = {
+  /**
+   * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+   */
+  fields?: {
+    item_type?: ItemTypeSparseFieldset;
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type ItemTypeSelfHrefSchema = {
+  /**
+   * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+   */
+  fields?: {
+    item_type?: ItemTypeSparseFieldset;
+    field?: FieldSparseFieldset;
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
+};
+/**
+ * Attributes and relationships to return for each `field` that this endpoint returns.
+ *
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `definition` "sparse_fieldset".
+ */
+export type FieldSparseFieldset = string;
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
  * via the `destroy.hrefSchema` link.
  */
 export type ItemTypeDestroyHrefSchema = {
@@ -523,6 +580,111 @@ export type ItemTypeDestroyHrefSchema = {
    * Skip the deletion of the menu items linked to the model
    */
   skip_menu_items_deletion?: boolean;
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `ItemType`'s JSON-Schema
+ * via the `referencing.hrefSchema` link.
+ */
+export type ItemTypeReferencingHrefSchema = {
+  /**
+   * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+   */
+  fields?: {
+    item_type?: ItemTypeSparseFieldset;
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type FieldInstancesHrefSchema = {
+  /**
+   * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+   */
+  fields?: {
+    field?: FieldSparseFieldset;
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `referencing.hrefSchema` link.
+ */
+export type FieldReferencingHrefSchema = {
+  /**
+   * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+   */
+  fields?: {
+    field?: FieldSparseFieldset;
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `related.hrefSchema` link.
+ */
+export type FieldRelatedHrefSchema = {
+  /**
+   * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+   */
+  fields?: {
+    field?: FieldSparseFieldset;
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Field`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type FieldSelfHrefSchema = {
+  /**
+   * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+   */
+  fields?: {
+    field?: FieldSparseFieldset;
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
+};
+/**
+ * Attributes and relationships to return for each `fieldset` that this endpoint returns.
+ *
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `definition` "sparse_fieldset".
+ */
+export type FieldsetSparseFieldset = string;
+/**
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `instances.hrefSchema` link.
+ */
+export type FieldsetInstancesHrefSchema = {
+  /**
+   * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+   */
+  fields?: {
+    fieldset?: FieldsetSparseFieldset;
+    [k: string]: unknown;
+  };
+  [k: string]: unknown;
+};
+/**
+ * This interface was referenced by `Fieldset`'s JSON-Schema
+ * via the `self.hrefSchema` link.
+ */
+export type FieldsetSelfHrefSchema = {
+  /**
+   * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+   */
+  fields?: {
+    fieldset?: FieldsetSparseFieldset;
+    [k: string]: unknown;
+  };
   [k: string]: unknown;
 };
 /**
@@ -1657,6 +1819,13 @@ export type SiteType = 'site';
  */
 export type SiteIdentity = string;
 /**
+ * Attributes and relationships to return for each `site` that this endpoint returns.
+ *
+ * This interface was referenced by `Site`'s JSON-Schema
+ * via the `definition` "sparse_fieldset".
+ */
+export type SiteSparseFieldset = string;
+/**
  * This interface was referenced by `Site`'s JSON-Schema
  * via the `self.hrefSchema` link.
  */
@@ -1665,6 +1834,18 @@ export type SiteSelfHrefSchema = {
    * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
    */
   include?: string;
+  /**
+   * Sparse fieldsets: for each entity type, the attributes and the relationships to return, separated by commas. Each entity declares its attributes and its relationships in its own schema.
+   */
+  fields?: {
+    site?: SiteSparseFieldset;
+    item_type?: ItemTypeSparseFieldset;
+    field?: FieldSparseFieldset;
+    fieldset?: FieldsetSparseFieldset;
+    account?: AccountSparseFieldset;
+    organization?: OrganizationSparseFieldset;
+    [k: string]: unknown;
+  };
   [k: string]: unknown;
 };
 /**

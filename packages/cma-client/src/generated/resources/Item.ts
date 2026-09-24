@@ -180,7 +180,7 @@ export default class Item extends BaseResource {
   }
 
   /**
-   * Validates an existing record field
+   * Validate an existing record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/validate_existing
    *
@@ -207,7 +207,7 @@ export default class Item extends BaseResource {
   }
 
   /**
-   * Validates an existing record field
+   * Validate an existing record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/validate_existing
    *
@@ -228,7 +228,7 @@ export default class Item extends BaseResource {
   }
 
   /**
-   * Validates a record field
+   * Validate a new record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/validate_new
    *
@@ -253,7 +253,7 @@ export default class Item extends BaseResource {
   }
 
   /**
-   * Validates a record field
+   * Validate a new record
    *
    * Read more: https://www.datocms.com/docs/content-management-api/resources/item/validate_new
    *

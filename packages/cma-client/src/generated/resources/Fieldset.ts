@@ -113,8 +113,11 @@ export default class Fieldset extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list(itemTypeId: string | ApiTypes.ItemTypeData) {
-    return this.rawList(Utils.toId(itemTypeId)).then((body) =>
+  list(
+    itemTypeId: string | ApiTypes.ItemTypeData,
+    queryParams?: ApiTypes.FieldsetInstancesHrefSchema,
+  ) {
+    return this.rawList(Utils.toId(itemTypeId), queryParams).then((body) =>
       Utils.deserializeResponseBody<ApiTypes.FieldsetInstancesTargetSchema>(
         body,
       ),
@@ -131,10 +134,12 @@ export default class Fieldset extends BaseResource {
    */
   rawList(
     itemTypeId: string,
+    queryParams?: RawApiTypes.FieldsetInstancesHrefSchema,
   ): Promise<RawApiTypes.FieldsetInstancesTargetSchema> {
     return this.client.request<RawApiTypes.FieldsetInstancesTargetSchema>({
       method: 'GET',
       url: `/item-types/${itemTypeId}/fieldsets`,
+      queryParams,
     });
   }
 
@@ -146,8 +151,11 @@ export default class Fieldset extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(fieldsetId: string | ApiTypes.FieldsetData) {
-    return this.rawFind(Utils.toId(fieldsetId)).then((body) =>
+  find(
+    fieldsetId: string | ApiTypes.FieldsetData,
+    queryParams?: ApiTypes.FieldsetSelfHrefSchema,
+  ) {
+    return this.rawFind(Utils.toId(fieldsetId), queryParams).then((body) =>
       Utils.deserializeResponseBody<ApiTypes.FieldsetSelfTargetSchema>(body),
     );
   }
@@ -160,10 +168,14 @@ export default class Fieldset extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(fieldsetId: string): Promise<RawApiTypes.FieldsetSelfTargetSchema> {
+  rawFind(
+    fieldsetId: string,
+    queryParams?: RawApiTypes.FieldsetSelfHrefSchema,
+  ): Promise<RawApiTypes.FieldsetSelfTargetSchema> {
     return this.client.request<RawApiTypes.FieldsetSelfTargetSchema>({
       method: 'GET',
       url: `/fieldsets/${fieldsetId}`,
+      queryParams,
     });
   }
 

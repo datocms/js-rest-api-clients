@@ -151,8 +151,8 @@ export default class ItemType extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  list() {
-    return this.rawList().then((body) =>
+  list(queryParams?: ApiTypes.ItemTypeInstancesHrefSchema) {
+    return this.rawList(queryParams).then((body) =>
       Utils.deserializeResponseBody<ApiTypes.ItemTypeInstancesTargetSchema>(
         body,
       ),
@@ -167,10 +167,13 @@ export default class ItemType extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawList(): Promise<RawApiTypes.ItemTypeInstancesTargetSchema> {
+  rawList(
+    queryParams?: RawApiTypes.ItemTypeInstancesHrefSchema,
+  ): Promise<RawApiTypes.ItemTypeInstancesTargetSchema> {
     return this.client.request<RawApiTypes.ItemTypeInstancesTargetSchema>({
       method: 'GET',
       url: '/item-types',
+      queryParams,
     });
   }
 
@@ -182,8 +185,11 @@ export default class ItemType extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  find(itemTypeId: string | ApiTypes.ItemTypeData) {
-    return this.rawFind(Utils.toId(itemTypeId)).then((body) =>
+  find(
+    itemTypeId: string | ApiTypes.ItemTypeData,
+    queryParams?: ApiTypes.ItemTypeSelfHrefSchema,
+  ) {
+    return this.rawFind(Utils.toId(itemTypeId), queryParams).then((body) =>
       Utils.deserializeResponseBody<ApiTypes.ItemTypeSelfTargetSchema>(body),
     );
   }
@@ -196,10 +202,14 @@ export default class ItemType extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  rawFind(itemTypeId: string): Promise<RawApiTypes.ItemTypeSelfTargetSchema> {
+  rawFind(
+    itemTypeId: string,
+    queryParams?: RawApiTypes.ItemTypeSelfHrefSchema,
+  ): Promise<RawApiTypes.ItemTypeSelfTargetSchema> {
     return this.client.request<RawApiTypes.ItemTypeSelfTargetSchema>({
       method: 'GET',
       url: `/item-types/${itemTypeId}`,
+      queryParams,
     });
   }
 
@@ -280,11 +290,15 @@ export default class ItemType extends BaseResource {
    * @throws {ApiError}
    * @throws {TimeoutError}
    */
-  referencing(itemTypeId: string | ApiTypes.ItemTypeData) {
-    return this.rawReferencing(Utils.toId(itemTypeId)).then((body) =>
-      Utils.deserializeResponseBody<ApiTypes.ItemTypeReferencingTargetSchema>(
-        body,
-      ),
+  referencing(
+    itemTypeId: string | ApiTypes.ItemTypeData,
+    queryParams?: ApiTypes.ItemTypeReferencingHrefSchema,
+  ) {
+    return this.rawReferencing(Utils.toId(itemTypeId), queryParams).then(
+      (body) =>
+        Utils.deserializeResponseBody<ApiTypes.ItemTypeReferencingTargetSchema>(
+          body,
+        ),
     );
   }
 
@@ -298,10 +312,12 @@ export default class ItemType extends BaseResource {
    */
   rawReferencing(
     itemTypeId: string,
+    queryParams?: RawApiTypes.ItemTypeReferencingHrefSchema,
   ): Promise<RawApiTypes.ItemTypeReferencingTargetSchema> {
     return this.client.request<RawApiTypes.ItemTypeReferencingTargetSchema>({
       method: 'GET',
       url: `/item-types/${itemTypeId}/referencing`,
+      queryParams,
     });
   }
 

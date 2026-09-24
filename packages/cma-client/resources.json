@@ -1074,6 +1074,7 @@
         "comment": "List all models/block models",
         "urlPlaceholders": [],
         "optionalRequestBody": false,
+        "queryParamsType": "ItemTypeInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "ItemTypeInstancesTargetSchema",
         "name": "list",
@@ -1101,6 +1102,7 @@
           "relType": "ItemTypeData"
         },
         "optionalRequestBody": false,
+        "queryParamsType": "ItemTypeSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "ItemTypeSelfTargetSchema",
         "name": "find",
@@ -1183,6 +1185,7 @@
           "relType": "ItemTypeData"
         },
         "optionalRequestBody": false,
+        "queryParamsType": "ItemTypeReferencingHrefSchema",
         "queryParamsRequired": false,
         "responseType": "ItemTypeReferencingTargetSchema",
         "name": "referencing",
@@ -1334,6 +1337,7 @@
           }
         ],
         "optionalRequestBody": false,
+        "queryParamsType": "FieldInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "FieldInstancesTargetSchema",
         "name": "list",
@@ -1356,6 +1360,7 @@
           }
         ],
         "optionalRequestBody": false,
+        "queryParamsType": "FieldReferencingHrefSchema",
         "queryParamsRequired": false,
         "responseType": "FieldReferencingTargetSchema",
         "name": "referencing",
@@ -1378,6 +1383,7 @@
           }
         ],
         "optionalRequestBody": false,
+        "queryParamsType": "FieldRelatedHrefSchema",
         "queryParamsRequired": false,
         "responseType": "FieldRelatedTargetSchema",
         "deprecated": "This API call is to be considered private and might change without notice",
@@ -1406,6 +1412,7 @@
           "relType": "FieldData"
         },
         "optionalRequestBody": false,
+        "queryParamsType": "FieldSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "FieldSelfTargetSchema",
         "name": "find",
@@ -1563,6 +1570,7 @@
           }
         ],
         "optionalRequestBody": false,
+        "queryParamsType": "FieldsetInstancesHrefSchema",
         "queryParamsRequired": false,
         "responseType": "FieldsetInstancesTargetSchema",
         "name": "list",
@@ -1590,6 +1598,7 @@
           "relType": "FieldsetData"
         },
         "optionalRequestBody": false,
+        "queryParamsType": "FieldsetSelfHrefSchema",
         "queryParamsRequired": false,
         "responseType": "FieldsetSelfTargetSchema",
         "name": "find",
@@ -2272,7 +2281,7 @@
         "rel": "validate_existing",
         "urlTemplate": "/items/${itemId}/validate",
         "method": "POST",
-        "comment": "Validates an existing record field",
+        "comment": "Validate an existing record",
         "urlPlaceholders": [
           {
             "variableName": "itemId",
@@ -2306,7 +2315,7 @@
         "rel": "validate_new",
         "urlTemplate": "/items/validate",
         "method": "POST",
-        "comment": "Validates a record field",
+        "comment": "Validate a new record",
         "urlPlaceholders": [],
         "requestBodyType": "ItemValidateNewSchema",
         "optionalRequestBody": false,
