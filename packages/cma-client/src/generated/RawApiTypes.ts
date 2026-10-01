@@ -921,6 +921,13 @@ export type SearchIndexEventInstancesHrefSchema = {
   [k: string]: unknown;
 };
 /**
+ * Attributes and relationships to return for each `item` that this endpoint returns.
+ *
+ * This interface was referenced by `Item`'s JSON-Schema
+ * via the `definition` "sparse_fieldset".
+ */
+export type ItemSparseFieldset = string;
+/**
  * This interface was referenced by `Item`'s JSON-Schema
  * via the `instances.hrefSchema` link.
  */
@@ -1831,7 +1838,7 @@ export type SiteSparseFieldset = string;
  */
 export type SiteSelfHrefSchema = {
   /**
-   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`.
+   * Comma-separated list of [relationship paths](https://jsonapi.org/format/#fetching-includes). A relationship path is a dot-separated list of relationship names. Allowed relationship paths: `item_types`, `item_types.fields`, `item_types.fieldsets`, `item_types.singleton_item`, `account`, `owner`.
    */
   include?: string;
   /**
@@ -1842,6 +1849,7 @@ export type SiteSelfHrefSchema = {
     item_type?: ItemTypeSparseFieldset;
     field?: FieldSparseFieldset;
     fieldset?: FieldsetSparseFieldset;
+    item?: ItemSparseFieldset;
     account?: AccountSparseFieldset;
     organization?: OrganizationSparseFieldset;
     [k: string]: unknown;
@@ -3784,6 +3792,10 @@ export type AuditLogEventQueryTargetSchema = {
      * If the response request exceeds the response payload limit DatoCMS will set this value in the response. If set, you can use that this value in the subsequent request to get the remaining results
      */
     next_token: null | string;
+    /**
+     * Events are searched from the most recent backwards. When a next_token is returned, this is the ISO 8601 datetime the search has reached so far: all events that occurred after it have already been examined, and the remaining results are older. Null when the search is complete
+     */
+    scanned_until: null | string;
   };
 };
 /**
@@ -7135,7 +7147,7 @@ export type PluginAttributes = {
    */
   url: string;
   /**
-   * Global plugin configuration. Plugins can persist whatever information they want in this object to reuse it later. Refer to the CMA for details about technical limits. It returns `null` if the credentials you are using cannot edit the schema of the project.
+   * Global plugin configuration. Plugins can persist whatever information they want in this object to reuse it later. Refer to the CMA for details about technical limits. Collaborators always receive it. API tokens and OAuth applications receive it only if they can edit the schema of the project, otherwise it returns `null`.
    */
   parameters: null | {
     [k: string]: unknown;
@@ -7818,6 +7830,12 @@ export type ItemValidateExistingSchema<
      * The JSON data associated to the record
      */
     attributes: ToItemAttributesInRequest<D>;
+    /**
+     * Accepted so you can validate the same payload you will send to update the record, but ignored
+     */
+    meta?: {
+      [k: string]: unknown;
+    };
     relationships?: {
       /**
        * The record's model
@@ -7849,10 +7867,17 @@ export type ItemValidateNewSchema<
 > = {
   data: {
     type: ItemType1;
+    id?: ItemIdentity;
     /**
      * The JSON data associated to the record
      */
     attributes: ToItemAttributesInRequest<D>;
+    /**
+     * Accepted so you can validate the same payload you will send to create the record, but ignored
+     */
+    meta?: {
+      [k: string]: unknown;
+    };
     relationships: {
       /**
        * The record's model
