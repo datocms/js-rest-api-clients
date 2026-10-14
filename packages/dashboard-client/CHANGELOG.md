@@ -1,5 +1,11 @@
 # @datocms/dashboard-client
 
+## 6.10.0
+
+### Minor Changes
+
+- 7c478ed: Sync generated code with the latest DatoCMS API schema (ApiTypes, RawApiTypes)
+
 ## 6.9.0
 
 ### Minor Changes
