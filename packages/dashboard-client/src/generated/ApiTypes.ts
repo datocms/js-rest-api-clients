@@ -260,7 +260,9 @@ export type SiteInstancesHrefSchema = {
     | 'last_data_change_at'
     | '-last_data_change_at'
     | 'plan'
-    | '-plan';
+    | '-plan'
+    | 'created_at'
+    | '-created_at';
   filters?: {
     /**
      * Filter by project name
