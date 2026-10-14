@@ -3352,9 +3352,38 @@ export type ResourceUsageAttributes = {
         site_id: string;
         site_name: string;
         current_usage: number;
+        /**
+         * The project was deleted this month. A deleted project shows only when it adds to the usage of a metered resource
+         */
+        recently_deleted: boolean;
       }[];
   usage_status: null | string;
   forecast_message: null | string;
+  /**
+   * The forecast of the end of the month. Null when the resource is not metered
+   */
+  forecast: null | {
+    /**
+     * The usage expected at the end of the month, at the current rate. On the first day of the month, the usage until now
+     */
+    expected_usage: number;
+    /**
+     * The expected price of the extra usage at the end of the month, in euros, before taxes. Null when the plan has no extra packets for this resource
+     */
+    expected_extra_price: null | number;
+    /**
+     * The price of the extra usage until now, in euros, before taxes. Null when the plan has no extra packets for this resource
+     */
+    current_extra_price: null | number;
+    /**
+     * The cheapest plan that includes the expected usage. Null when the current plan includes it, or when no plan does
+     */
+    upgrade_plan: null | {
+      id: string;
+      name: string;
+      free_of_charge_usage: number;
+    };
+  };
 };
 /**
  * JSON API data
