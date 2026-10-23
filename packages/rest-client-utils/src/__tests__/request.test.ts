@@ -1,5 +1,5 @@
 import { ApiError, TimeoutError } from '../errors';
-import { request } from '../request';
+import { LogLevel, request } from '../request';
 
 const API_TOKEN = 'aaaabbbbccccdddd';
 
@@ -101,5 +101,32 @@ describe('request()', () => {
     expect(Object.keys(error)).not.toContain('response');
     expect(JSON.stringify(error)).not.toContain('s3cr3t');
     expect(JSON.stringify({ ...error })).not.toContain('s3cr3t');
+  });
+
+  it('sends the body as compact JSON, and logs it indented', async () => {
+    let sentBody: unknown;
+    const logged: string[] = [];
+
+    const fetchFn = jest.fn(async (_url: unknown, init?: RequestInit) => {
+      sentBody = init?.body;
+      return jsonResponse(200, { data: {} });
+    }) as unknown as typeof fetch;
+
+    const body = {
+      data: { attributes: { content: [{ attributes: { title: 'A' } }] } },
+    };
+
+    await request({
+      ...buildOptions(fetchFn),
+      method: 'PUT',
+      body,
+      logLevel: LogLevel.BODY,
+      logFn: (message: string) => logged.push(message),
+    });
+
+    expect(sentBody).toBe(JSON.stringify(body));
+    expect(
+      logged.some((line) => line.endsWith(JSON.stringify(body, null, 2))),
+    ).toBe(true);
   });
 });

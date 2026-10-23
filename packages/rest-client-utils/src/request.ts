@@ -224,7 +224,9 @@ export async function request<T>(options: RequestOptions): Promise<T> {
   const redactedHeaders = redactHeaders(headers);
 
   const baseUrl = options.baseUrl.replace(/\/$/, '');
-  const body = options.body ? JSON.stringify(options.body, null, 2) : undefined;
+  // No indentation: it grows with nesting depth, and makes records with deep
+  // blocks several times larger than the data they carry.
+  const body = options.body ? JSON.stringify(options.body) : undefined;
 
   const queryString =
     options.queryParams && Object.keys(options.queryParams).length > 0
@@ -243,7 +245,7 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       }
     }
     if (logLevel >= LogLevel.BODY && body) {
-      log(`[${requestId}] ${body}`);
+      log(`[${requestId}] ${JSON.stringify(options.body, null, 2)}`);
     }
   }
 
