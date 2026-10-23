@@ -245,7 +245,8 @@ export async function request<T>(options: RequestOptions): Promise<T> {
       }
     }
     if (logLevel >= LogLevel.BODY && body) {
-      log(`[${requestId}] ${JSON.stringify(options.body, null, 2)}`);
+      // Exactly as sent, so the log shows the size that reaches the API.
+      log(`[${requestId}] ${body}`);
     }
   }
 
