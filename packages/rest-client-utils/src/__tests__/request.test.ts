@@ -103,7 +103,7 @@ describe('request()', () => {
     expect(JSON.stringify({ ...error })).not.toContain('s3cr3t');
   });
 
-  it('sends the body as compact JSON, and logs it indented', async () => {
+  it('sends and logs the body as compact JSON', async () => {
     let sentBody: unknown;
     const logged: string[] = [];
 
@@ -124,9 +124,11 @@ describe('request()', () => {
       logFn: (message: string) => logged.push(message),
     });
 
-    expect(sentBody).toBe(JSON.stringify(body));
+    const compact = JSON.stringify(body);
+    expect(sentBody).toBe(compact);
     expect(
-      logged.some((line) => line.endsWith(JSON.stringify(body, null, 2))),
-    ).toBe(true);
+      logged.filter((line) => line.replace(/^\[\d+\] /, '') === compact),
+    ).toHaveLength(1);
+    expect(logged.join('\n')).not.toContain(JSON.stringify(body, null, 2));
   });
 });
