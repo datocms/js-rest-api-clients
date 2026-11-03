@@ -12253,7 +12253,7 @@ export type SiteAttributes = {
    */
   locales: [string, ...string[]];
   /**
-   * Site default timezone
+   * Site default timezone, as an IANA time zone identifier
    */
   timezone: string;
   /**
@@ -12747,7 +12747,7 @@ export type SiteUpdateSchema = {
        */
       locales?: [string, ...string[]];
       /**
-       * Site default timezone
+       * Site default timezone, as an IANA time zone identifier
        */
       timezone?: string;
       /**
