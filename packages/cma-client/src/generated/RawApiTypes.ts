@@ -11239,6 +11239,10 @@ export type EditingSessionAttributes = {
    */
   last_activity_at: string | null;
   /**
+   * Always `null`
+   */
+  locked_at: null;
+  /**
    * What this session has locked in its active record: fields (each in one locale) and full locales
    */
   locks: {

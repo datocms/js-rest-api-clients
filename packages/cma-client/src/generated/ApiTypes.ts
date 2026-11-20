@@ -10986,6 +10986,10 @@ export type EditingSession = {
    */
   last_activity_at: string | null;
   /**
+   * Always `null`
+   */
+  locked_at: null;
+  /**
    * What this session has locked in its active record: fields (each in one locale) and full locales
    */
   locks: {
@@ -11034,6 +11038,10 @@ export type EditingSessionAttributes = {
    * The time of the last call of this session. Each call gives a later time, also when the clock of the server does not: a client that gets the states of a session in any order keeps the one with the latest time
    */
   last_activity_at: string | null;
+  /**
+   * Always `null`
+   */
+  locked_at: null;
   /**
    * What this session has locked in its active record: fields (each in one locale) and full locales
    */
