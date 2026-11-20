@@ -1922,44 +1922,84 @@ export type EditingSessionUpdateSchema =
       /**
        * JSON API type
        */
-      type?: 'editing_session_take_over_item';
-      item: ItemData;
-    }
-  | {
-      /**
-       * JSON API type
-       */
-      type?: 'editing_session_lock_item';
-      item: ItemData;
-    }
-  | {
-      /**
-       * JSON API type
-       */
       type?: 'editing_session_unlock_item';
+    }
+  | {
+      /**
+       * JSON API type
+       */
+      type?: 'editing_session_lock_field';
+      /**
+       * The locale of the field. It is `null` when the field is not localized
+       */
+      locale: string | null;
+      item: ItemData;
+      field: FieldData;
+    }
+  | {
+      /**
+       * JSON API type
+       */
+      type?: 'editing_session_unlock_field';
+      /**
+       * The locale of the field. It is `null` when the field is not localized
+       */
+      locale: string | null;
+      item: ItemData;
+      field: FieldData;
+    }
+  | {
+      /**
+       * JSON API type
+       */
+      type?: 'editing_session_take_over_field';
+      /**
+       * The locale of the field. It is `null` when the field is not localized
+       */
+      locale: string | null;
+      item: ItemData;
+      field: FieldData;
+    }
+  | {
+      /**
+       * JSON API type
+       */
+      type?: 'editing_session_lock_locale';
+      /**
+       * The locale of the record
+       */
+      locale: string;
+      item: ItemData;
+    }
+  | {
+      /**
+       * JSON API type
+       */
+      type?: 'editing_session_unlock_locale';
+      /**
+       * The locale of the record
+       */
+      locale: string;
+      item: ItemData;
+    }
+  | {
+      /**
+       * JSON API type
+       */
+      type?: 'editing_session_take_over_locale';
+      /**
+       * The locale of the record
+       */
+      locale: string;
+      item: ItemData;
+    }
+  | {
+      /**
+       * JSON API type
+       */
+      type?: 'editing_session_kick_out_others';
+      item: ItemData;
     };
-/**
- * This interface was referenced by `EditingSession`'s JSON-Schema
- * via the `update.targetSchema` link.
- */
-export type EditingSessionUpdateTargetSchema =
-  | EditingSession
-  | [EditingSession, FormData];
-/**
- * ID of form data
- *
- * This interface was referenced by `FormData`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `FormData`'s JSON-Schema
- * via the `definition` "id".
- */
-export type FormDataIdentity = 'form_data';
-/**
- * This interface was referenced by `FormData`'s JSON-Schema
- * via the `definition` "type".
- */
-export type FormDataType = 'form_data';
 /**
  * This interface was referenced by `SsoGroup`'s JSON-Schema
  * via the `instances.targetSchema` link.
@@ -7204,7 +7244,7 @@ export type FieldUpdateSchemaStableShell = {
   fieldset?: null | FieldsetData;
 };
 /**
- * Fields can be organized and grouped into fieldset to better present them to editors.
+ * Fields can be organized and grouped into fieldset to better present them to editors. Only models can have fieldsets: block models can't.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "fieldset".
@@ -10942,13 +10982,30 @@ export type EditingSession = {
   id: EditingSessionIdentity;
   type: EditingSessionType;
   /**
-   * User entered at
+   * The time of the last call of this session. Each call gives a later time, also when the clock of the server does not: a client that gets the states of a session in any order keeps the one with the latest time
    */
   last_activity_at: string | null;
   /**
-   * User locked record at
+   * Always `null`
    */
-  locked_at: string | null;
+  locked_at: null;
+  /**
+   * What this session has locked in its active record: fields (each in one locale) and full locales
+   */
+  locks: {
+    /**
+     * ID of the locked field. It is `null` when the lock is on a full locale of the record
+     */
+    field_id: string | null;
+    /**
+     * The locked locale. It is `null` when the field is not localized
+     */
+    locale: string | null;
+    /**
+     * When the session got the lock
+     */
+    locked_at: string;
+  }[];
   active_item: ItemData;
   active_item_type: ItemTypeData;
   editor:
@@ -10958,6 +11015,7 @@ export type EditingSession = {
     | SsoUserData
     | OrganizationData;
 };
+export type EditingSessionUpdateTargetSchema = EditingSession;
 export type EditingSessionDestroyTargetSchema = EditingSession;
 /**
  * JSON API data
@@ -10977,13 +11035,30 @@ export type EditingSessionData = {
  */
 export type EditingSessionAttributes = {
   /**
-   * User entered at
+   * The time of the last call of this session. Each call gives a later time, also when the clock of the server does not: a client that gets the states of a session in any order keeps the one with the latest time
    */
   last_activity_at: string | null;
   /**
-   * User locked record at
+   * Always `null`
    */
-  locked_at: string | null;
+  locked_at: null;
+  /**
+   * What this session has locked in its active record: fields (each in one locale) and full locales
+   */
+  locks: {
+    /**
+     * ID of the locked field. It is `null` when the lock is on a full locale of the record
+     */
+    field_id: string | null;
+    /**
+     * The locked locale. It is `null` when the field is not localized
+     */
+    locale: string | null;
+    /**
+     * When the session got the lock
+     */
+    locked_at: string;
+  }[];
 };
 /**
  * JSON API links
@@ -11000,50 +11075,6 @@ export type EditingSessionRelationships = {
     | UserData
     | SsoUserData
     | OrganizationData;
-};
-/**
- * Form contents for an editing session
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "form_data".
- */
-export type FormData = {
-  id: FormDataIdentity;
-  type: FormDataType;
-  form_data: null | {
-    [k: string]: unknown;
-  };
-  editor: AccountData;
-};
-/**
- * JSON API data
- *
- * This interface was referenced by `FormData`'s JSON-Schema
- * via the `definition` "data".
- */
-export type FormDataData = {
-  type: FormDataType;
-  id: FormDataIdentity;
-};
-/**
- * JSON API attributes
- *
- * This interface was referenced by `FormData`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type FormDataAttributes = {
-  form_data: null | {
-    [k: string]: unknown;
-  };
-};
-/**
- * JSON API links
- *
- * This interface was referenced by `FormData`'s JSON-Schema
- * via the `definition` "relationships".
- */
-export type FormDataRelationships = {
-  editor: AccountData;
 };
 /**
  * A Single Sign-On group exists when a DatoCMS project is connected to an Identity Provider. These groups can be used to link DatoCMS roles to the Identity Provider's groups.

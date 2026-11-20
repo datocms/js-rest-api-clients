@@ -1576,21 +1576,6 @@ export type EditingSessionType = 'editing_session';
  */
 export type EditingSessionIdentity = string;
 /**
- * This interface was referenced by `FormData`'s JSON-Schema
- * via the `definition` "type".
- */
-export type FormDataType = 'form_data';
-/**
- * ID of form data
- *
- * This interface was referenced by `FormData`'s JSON-Schema
- * via the `definition` "identity".
- *
- * This interface was referenced by `FormData`'s JSON-Schema
- * via the `definition` "id".
- */
-export type FormDataIdentity = 'form_data';
-/**
  * This interface was referenced by `SsoSettings`'s JSON-Schema
  * via the `definition` "type".
  */
@@ -6877,7 +6862,7 @@ export type FieldDuplicateJobSchema = {
   included: ItemType[];
 };
 /**
- * Fields can be organized and grouped into fieldset to better present them to editors.
+ * Fields can be organized and grouped into fieldset to better present them to editors. Only models can have fieldsets: block models can't.
  *
  * This interface was referenced by `DatoApi`'s JSON-Schema
  * via the `definition` "fieldset".
@@ -11250,13 +11235,30 @@ export type EditingSession = {
  */
 export type EditingSessionAttributes = {
   /**
-   * User entered at
+   * The time of the last call of this session. Each call gives a later time, also when the clock of the server does not: a client that gets the states of a session in any order keeps the one with the latest time
    */
   last_activity_at: string | null;
   /**
-   * User locked record at
+   * Always `null`
    */
-  locked_at: string | null;
+  locked_at: null;
+  /**
+   * What this session has locked in its active record: fields (each in one locale) and full locales
+   */
+  locks: {
+    /**
+     * ID of the locked field. It is `null` when the lock is on a full locale of the record
+     */
+    field_id: string | null;
+    /**
+     * The locked locale. It is `null` when the field is not localized
+     */
+    locale: string | null;
+    /**
+     * When the session got the lock
+     */
+    locked_at: string;
+  }[];
 };
 /**
  * JSON API links
@@ -11333,41 +11335,198 @@ export type EditingSessionUpdateSchema = {
         /**
          * JSON API type
          */
-        type: 'editing_session_take_over_item';
-        /**
-         * JSON API relationships
-         */
-        relationships: {
-          /**
-           * The active item in the session
-           */
-          item: {
-            data: ItemData;
-          };
-        };
-      }
-    | {
-        /**
-         * JSON API type
-         */
-        type: 'editing_session_lock_item';
-        /**
-         * JSON API relationships
-         */
-        relationships: {
-          /**
-           * The active item in the session
-           */
-          item: {
-            data: ItemData;
-          };
-        };
-      }
-    | {
-        /**
-         * JSON API type
-         */
         type: 'editing_session_unlock_item';
+      }
+    | {
+        /**
+         * JSON API type
+         */
+        type: 'editing_session_lock_field';
+        /**
+         * JSON API attributes
+         */
+        attributes: {
+          /**
+           * The locale of the field. It is `null` when the field is not localized
+           */
+          locale: string | null;
+        };
+        /**
+         * JSON API relationships
+         */
+        relationships: {
+          /**
+           * The active item in the session
+           */
+          item: {
+            data: ItemData;
+          };
+          /**
+           * The field of the record
+           */
+          field: {
+            data: FieldData;
+          };
+        };
+      }
+    | {
+        /**
+         * JSON API type
+         */
+        type: 'editing_session_unlock_field';
+        /**
+         * JSON API attributes
+         */
+        attributes: {
+          /**
+           * The locale of the field. It is `null` when the field is not localized
+           */
+          locale: string | null;
+        };
+        /**
+         * JSON API relationships
+         */
+        relationships: {
+          /**
+           * The active item in the session
+           */
+          item: {
+            data: ItemData;
+          };
+          /**
+           * The field of the record
+           */
+          field: {
+            data: FieldData;
+          };
+        };
+      }
+    | {
+        /**
+         * JSON API type
+         */
+        type: 'editing_session_take_over_field';
+        /**
+         * JSON API attributes
+         */
+        attributes: {
+          /**
+           * The locale of the field. It is `null` when the field is not localized
+           */
+          locale: string | null;
+        };
+        /**
+         * JSON API relationships
+         */
+        relationships: {
+          /**
+           * The active item in the session
+           */
+          item: {
+            data: ItemData;
+          };
+          /**
+           * The field of the record
+           */
+          field: {
+            data: FieldData;
+          };
+        };
+      }
+    | {
+        /**
+         * JSON API type
+         */
+        type: 'editing_session_lock_locale';
+        /**
+         * JSON API attributes
+         */
+        attributes: {
+          /**
+           * The locale of the record
+           */
+          locale: string;
+        };
+        /**
+         * JSON API relationships
+         */
+        relationships: {
+          /**
+           * The active item in the session
+           */
+          item: {
+            data: ItemData;
+          };
+        };
+      }
+    | {
+        /**
+         * JSON API type
+         */
+        type: 'editing_session_unlock_locale';
+        /**
+         * JSON API attributes
+         */
+        attributes: {
+          /**
+           * The locale of the record
+           */
+          locale: string;
+        };
+        /**
+         * JSON API relationships
+         */
+        relationships: {
+          /**
+           * The active item in the session
+           */
+          item: {
+            data: ItemData;
+          };
+        };
+      }
+    | {
+        /**
+         * JSON API type
+         */
+        type: 'editing_session_take_over_locale';
+        /**
+         * JSON API attributes
+         */
+        attributes: {
+          /**
+           * The locale of the record
+           */
+          locale: string;
+        };
+        /**
+         * JSON API relationships
+         */
+        relationships: {
+          /**
+           * The active item in the session
+           */
+          item: {
+            data: ItemData;
+          };
+        };
+      }
+    | {
+        /**
+         * JSON API type
+         */
+        type: 'editing_session_kick_out_others';
+        /**
+         * JSON API relationships
+         */
+        relationships: {
+          /**
+           * The active item in the session
+           */
+          item: {
+            data: ItemData;
+          };
+        };
       };
 };
 /**
@@ -11375,54 +11534,7 @@ export type EditingSessionUpdateSchema = {
  * via the `update.targetSchema` link.
  */
 export type EditingSessionUpdateTargetSchema = {
-  data: EditingSession | [EditingSession, FormData];
-};
-/**
- * Form contents for an editing session
- *
- * This interface was referenced by `DatoApi`'s JSON-Schema
- * via the `definition` "form_data".
- */
-export type FormData = {
-  type: FormDataType;
-  id: FormDataIdentity;
-  attributes: FormDataAttributes;
-  relationships: FormDataRelationships;
-};
-/**
- * JSON API attributes
- *
- * This interface was referenced by `FormData`'s JSON-Schema
- * via the `definition` "attributes".
- */
-export type FormDataAttributes = {
-  form_data: null | {
-    [k: string]: unknown;
-  };
-};
-/**
- * JSON API links
- *
- * This interface was referenced by `FormData`'s JSON-Schema
- * via the `definition` "relationships".
- */
-export type FormDataRelationships = {
-  /**
-   * Account that's currently editing an item
-   */
-  editor: {
-    data: AccountData;
-  };
-};
-/**
- * JSON API data
- *
- * This interface was referenced by `FormData`'s JSON-Schema
- * via the `definition` "data".
- */
-export type FormDataData = {
-  type: FormDataType;
-  id: FormDataIdentity;
+  data: EditingSession;
 };
 /**
  * This interface was referenced by `EditingSession`'s JSON-Schema
